@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>WALDSENSOR.SH – Aktive Nodes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; }
+    #map { height: 100vh; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([54.5, 9.5], 9);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var nodes = [
+      {
+        name: "Node 1: Waldkante bei Husum",
+        lat: 54.651397869916885,
+        lon: 8.956861978868044
+      },
+      {
+        name: "Node 2: Schleswig",
+        lat: 54.521,
+        lon: 9.556
+      }
+    ];
+
+    nodes.forEach(node => {
+      L.marker([node.lat, node.lon])
+        .addTo(map)
+        .bindPopup(`<strong>${node.name}</strong>`);
+    });
+  </script>
+</body>
+</html>
