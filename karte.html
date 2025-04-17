@@ -27,6 +27,8 @@
     fetch("data/sensor-node-01.json")
       .then(res => res.json())
       .then(data => {
+
+console.log("Geladene Gateways:", data.gateways);
         data.gateways.forEach(gw => {
           if (gw.lat && gw.lon) {
             L.marker([gw.lat, gw.lon])
