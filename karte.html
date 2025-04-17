@@ -6,29 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
-    body { font-family: sans-serif; margin: 0; padding: 0; }
+    html, body { margin: 0; padding: 0; height: 100%; }
     #map { height: 100vh; width: 100%; }
   </style>
 </head>
 <body>
   <div id="map"></div>
- <!-- ✅ DAS HAT GEFEHLT -->
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    // Karte erstellen
-    var map = L.map('map').setView([54.4, 9.7], 9);
+    console.log("🏁 Skript gestartet");
 
-    // OpenStreetMap-Kacheln hinzufügen
+    const map = L.map('map').setView([54.36, 9.73], 10);
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Sensor-Node-Daten laden
     fetch("data/sensor-node-01.json")
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Fehler beim Laden: " + res.status);
+        }
+        return res.json();
+      })
       .then(data => {
+        console.log("📦 Geladene Daten:", data);
 
-console.log("Geladene Gateways:", data.gateways);
         data.gateways.forEach(gw => {
           if (gw.lat && gw.lon) {
             L.marker([gw.lat, gw.lon])
@@ -38,11 +42,14 @@ console.log("Geladene Gateways:", data.gateways);
                 <strong>RSSI:</strong> ${gw.rssi} dBm<br>
                 <strong>SNR:</strong> ${gw.snr} dB
               `);
+            console.log("📍 Marker gesetzt für:", gw.id);
+          } else {
+            console.warn("⚠️ Ungültige Koordinaten:", gw);
           }
         });
       })
       .catch(err => {
-        console.error("Fehler beim Laden der JSON-Datei:", err);
+        console.error("❌ Fehler beim Laden der JSON-Datei:", err);
       });
   </script>
 </body>
