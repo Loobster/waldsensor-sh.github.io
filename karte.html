@@ -13,56 +13,61 @@
 <body>
   <div id="map"></div>
 
+  <!-- Leaflet laden -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <script>
     console.log("🏁 Skript gestartet");
 
+    // 🌍 Karte initialisieren
     const map = L.map('map').setView([54.36, 9.73], 10);
-// 📍 Feste Nodes aus nodes.json laden
-fetch("data/nodes.json")
-  .then(res => res.json())
-  .then(nodes => {
-    nodes.forEach(node => {
-      L.marker([node.lat, node.lon])
-        .addTo(map)
-        .bindPopup(`<strong>${node.name}</strong><br>ID: ${node.id}`);
-    });
-  })
-  .catch(err => {
-    console.error("Fehler beim Laden der Nodes:", err);
-  });
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    fetch("data/sensor-node-01.json")
-      .then(res => {
-        if (!res.ok) {
-          throw new Error("Fehler beim Laden: " + res.status);
-        }
-        return res.json();
-      })
-      .then(data => {
-        console.log("📦 Geladene Daten:", data);
-
-        data.gateways.forEach(gw => {
-          if (gw.lat && gw.lon) {
-            L.marker([gw.lat, gw.lon])
-              .addTo(map)
-              .bindPopup(`
-                <strong>Gateway:</strong> ${gw.id}<br>
-                <strong>RSSI:</strong> ${gw.rssi} dBm<br>
-                <strong>SNR:</strong> ${gw.snr} dB
-              `);
-            console.log("📍 Marker gesetzt für:", gw.id);
-          } else {
-            console.warn("⚠️ Ungültige Koordinaten:", gw);
-          }
+    // 📍 Feste Sensor-Nodes aus nodes.json laden
+    fetch("data/nodes.json")
+      .then(res => res.json())
+      .then(nodes => {
+        nodes.forEach(node => {
+          L.marker([node.lat, node.lon])
+            .addTo(map)
+            .bindPopup(`<strong>${node.name}</strong><br>ID: ${node.id}`);
         });
       })
       .catch(err => {
-        console.error("❌ Fehler beim Laden der JSON-Datei:", err);
+        console.error("❌ Fehler beim Laden der Nodes:", err);
       });
+
+    // 📡 Gateways für alle Nodes dynamisch anzeigen
+    const nodeFiles = ["sensor-node-01.json", "sensor-node-02.json"]; // Weitere Nodes hier ergänzen
+
+    nodeFiles.forEach(file => {
+      fetch(`data/${file}`)
+        .then(res => res.json())
+        .then(data => {
+          console.log("📦 Geladene Daten:", data);
+
+          data.gateways.forEach(gw => {
+            if (gw.lat && gw.lon) {
+              L.marker([gw.lat, gw.lon])
+                .addTo(map)
+                .bindPopup(`
+                  <strong>Gateway:</strong> ${gw.id}<br>
+                  <strong>Empfangen von:</strong> ${data.node}<br>
+                  RSSI: ${gw.rssi} dBm<br>
+                  SNR: ${gw.snr} dB
+                `);
+              console.log("📍 Marker gesetzt für:", gw.id);
+            } else {
+              console.warn("⚠️ Ungültige Koordinaten:", gw);
+            }
+          });
+        })
+        .catch(err => {
+          console.error("❌ Fehler beim Laden der JSON-Datei:", err);
+        });
+    });
   </script>
 </body>
-</html>
