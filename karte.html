@@ -1,119 +1,81 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <title>WALDSENSOR.SH – Nodes & Gateways</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>WALDSENSOR.SH – Aktive Nodes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     html, body { margin: 0; padding: 0; height: 100%; }
     #map { height: 100vh; width: 100%; }
-
-    .blinking {
-      animation: blink 1s ease-in-out 3;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
   </style>
 </head>
 <body>
   <div id="map"></div>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    console.log("🌍 Karte wird geladen...");
+    console.log("🏁 Karte geladen");
 
-    const map = L.map('map').setView([54.4, 9.6], 9);
+    const map = L.map('map').setView([54.4, 9.7], 9);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    let gatewayInfo = {};
+    // 🔵 Blau für Nodes
+    const nodeIcon = L.icon({
+      iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
 
-    // Lade gateways.json mit festen Koordinaten
-    fetch("data/gateways.json")
+    // 🟢 Grün für Gateways
+    const gatewayIcon = L.icon({
+      iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
+
+    // Erst nodes.json laden
+    fetch("data/nodes.json")
       .then(res => res.json())
-      .then(gws => {
-        gatewayInfo = gws;
-        console.log("📡 Gateways geladen:", gatewayInfo);
-        loadNodes(); // Starte erst danach das Laden der Nodes
-      })
-      .catch(err => {
-        console.error("❌ Fehler beim Laden von gateways.json:", err);
-        loadNodes(); // Fallback: trotzdem Nodes laden
-      });
+      .then(nodes => {
+        nodes.forEach(node => {
+          // 📦 Gateway-Daten pro Node laden
+          fetch(`data/${node.id}.json`)
+            .then(res => res.json())
+            .then(data => {
+              console.log("📦 Gateways von", node.id, data);
 
-    function loadNodes() {
-      fetch("data/nodes.json")
-        .then(res => res.json())
-        .then(nodes => {
-          nodes.forEach(node => {
-            // Node-Marker
-            L.marker([node.lat, node.lon])
-              .addTo(map)
-              .bindPopup(`<strong>${node.name}</strong><br>ID: ${node.id}`);
+              // 🔵 Node-Marker
+              L.marker([node.lat, node.lon], { icon: nodeIcon })
+                .addTo(map)
+                .bindPopup(`<strong>${node.name}</strong><br>ID: ${node.id}`);
 
-            // Lade zugehörige Gateway-Infos
-            fetch(`data/${node.id}.json`)
-              .then(res => {
-                if (!res.ok) throw new Error(`Keine Daten für ${node.id}`);
-                return res.json();
-              })
-              .then(data => {
-                data.gateways.forEach(gw => {
-                  let lat = gw.lat;
-                  let lon = gw.lon;
-                  let name = gw.id;
+              // 🟢 Gateway-Marker setzen
+              data.gateways.forEach(gw => {
+                if (gw.lat && gw.lon) {
+                  const name = gw.id.startsWith("eui-") ? "Unbekannt " + gw.id.slice(-3) : gw.id;
 
-                  // Ergänze fehlende Koordinaten aus gateways.json
-                  if ((!lat || !lon) && gatewayInfo[gw.id]) {
-                    lat = gatewayInfo[gw.id].lat;
-                    lon = gatewayInfo[gw.id].lon;
-                    name = gatewayInfo[gw.id].name;
-                  }
-
-                  if (lat && lon) {
-                    const gwIcon = L.divIcon({
-                      className: 'blinking',
-                      html: `<div style="width:12px;height:12px;background:red;border-radius:50%;"></div>`,
-                      iconSize: [12, 12]
-                    });
-
-                    const marker = L.marker([lat, lon], { icon: gwIcon })
-                      .addTo(map)
-                      .bindPopup(`
-                        <strong>Gateway:</strong> ${name}<br>
-                        <strong>RSSI:</strong> ${gw.rssi} dBm<br>
-                        <strong>SNR:</strong> ${gw.snr} dB<br>
-                        Empfangen von: ${node.id}
-                      `);
-
-                    // Nach 3 Sekunden: Normales Icon setzen
-                    setTimeout(() => {
-                      marker.setIcon(L.icon({
-                        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-                        iconSize: [25, 41],
-                        iconAnchor: [12, 41],
-                        popupAnchor: [1, -34],
-                        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-                        shadowSize: [41, 41]
-                      }));
-                    }, 3000);
-                  }
-                });
-              })
-              .catch(err => {
-                console.warn(`⚠️ Keine Gateway-Daten für ${node.id}:`, err);
+                  L.marker([gw.lat, gw.lon], { icon: gatewayIcon })
+                    .addTo(map)
+                    .bindPopup(`
+                      <strong>Gateway:</strong> ${name}<br>
+                      <strong>RSSI:</strong> ${gw.rssi} dBm<br>
+                      <strong>SNR:</strong> ${gw.snr} dB<br>
+                      <em>Empfangen von:</em> ${data.node}
+                    `);
+                }
               });
-          });
-        })
-        .catch(err => {
-          console.error("❌ Fehler beim Laden von nodes.json:", err);
+            })
+            .catch(err => {
+              console.warn(`⚠️ Fehler bei ${node.id}:`, err);
+            });
         });
-    }
+      });
   </script>
 </body>
 </html>
