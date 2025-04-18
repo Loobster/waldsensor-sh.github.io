@@ -1,130 +1,109 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>WALDSENSOR.SH – Aktive Nodes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>WALDSENSOR.SH – Live-Karte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     html, body { margin: 0; padding: 0; height: 100%; }
     #map { height: 100vh; width: 100%; }
-    .blinking {
-      animation: blinker 1s linear infinite;
+    .blink {
+      animation: blinker 1s ease-in-out 3;
     }
     @keyframes blinker {
-      50% { opacity: 0; }
+      50% { opacity: 0.2; }
     }
   </style>
 </head>
 <body>
   <div id="map"></div>
-
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([54.4, 9.7], 9);
+    console.log("🚀 Karte geladen");
 
+    const map = L.map('map').setView([54.5, 9.0], 9);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    const iconNode = L.icon({
-      iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png',
-      iconSize: [24, 24],
-      iconAnchor: [12, 24],
-      popupAnchor: [0, -24]
-    });
+    let nodeMarkers = {};
+    let gwMarkers = {};
+    let connectionLines = [];
 
-    const iconGateway = L.icon({
-      iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png',
-      iconSize: [24, 24],
-      iconAnchor: [12, 24],
-      popupAnchor: [0, -24]
-    });
+    async function loadDataAndUpdateMap() {
+      // Alte Linien löschen
+      connectionLines.forEach(line => map.removeLayer(line));
+      connectionLines = [];
 
-    // Lade Gateways-Namen
-    let gatewayMeta = {};
-    fetch('data/gateways.json')
-      .then(r => r.json())
-      .then(gwData => {
-        gatewayMeta = gwData;
-      });
+      // Gateways laden
+      const gateways = await fetch('data/gateways.json').then(r => r.json());
 
-    // Für Offset bei fast gleichen Koordinaten
-    const usedCoords = new Set();
-    function offsetIfExists(lat, lon) {
-      let key = lat.toFixed(5) + ',' + lon.toFixed(5);
-      let offset = 0.0002;
-      while (usedCoords.has(key)) {
-        lat += offset;
-        lon += offset;
-        key = lat.toFixed(5) + ',' + lon.toFixed(5);
+      // Nodes laden
+      const nodes = await fetch('data/nodes.json').then(r => r.json());
+
+      for (const node of nodes) {
+        const nodeId = node.id;
+
+        // Node-Marker setzen (einmalig)
+        if (!nodeMarkers[nodeId]) {
+          const marker = L.marker([node.lat, node.lon], { title: node.name });
+          marker.bindPopup(`<strong>${node.name}</strong><br>ID: ${nodeId}`);
+          marker.addTo(map);
+          nodeMarkers[nodeId] = marker;
+        }
+
+        // Sensor-JSON laden
+        try {
+          const res = await fetch(`data/${nodeId}.json`);
+          if (!res.ok) continue;
+          const data = await res.json();
+
+          // Gateways visualisieren
+          data.gateways.forEach(gw => {
+            const gwData = gateways[gw.id];
+            if (!gwData || !gwData.lat || !gwData.lon) return;
+
+            // Marker neu oder aktualisieren
+            let gwMarker = gwMarkers[gw.id];
+            if (!gwMarker) {
+              gwMarker = L.circleMarker([gwData.lat, gwData.lon], {
+                radius: 6,
+                color: 'red',
+                fillOpacity: 0.8
+              }).addTo(map);
+              gwMarkers[gw.id] = gwMarker;
+            }
+
+            // Popup + Blinken
+            gwMarker.setStyle({ color: 'red' });
+            gwMarker.bindPopup(`
+              <strong>Gateway:</strong> ${gwData.name}<br>
+              <strong>ID:</strong> ${gw.id}<br>
+              RSSI: ${gw.rssi ?? "?"} dBm<br>
+              SNR: ${gw.snr ?? "?"} dB
+            `);
+            gwMarker._path.classList.add('blink');
+
+            // Linie vom Node zum Gateway
+            const line = L.polyline([[node.lat, node.lon], [gwData.lat, gwData.lon]], {
+              color: 'red',
+              weight: 1,
+              dashArray: '5, 5'
+            }).addTo(map);
+            connectionLines.push(line);
+          });
+        } catch (err) {
+          console.warn(`⚠️ Fehler beim Laden von ${nodeId}.json:`, err);
+        }
       }
-      usedCoords.add(key);
-      return [lat, lon];
     }
 
-    // Erst Nodes anzeigen
-    fetch("data/nodes.json")
-      .then(res => res.json())
-      .then(nodes => {
-        nodes.forEach(node => {
-          const [lat, lon] = offsetIfExists(node.lat, node.lon);
-          L.marker([lat, lon], { icon: iconNode })
-            .addTo(map)
-            .bindPopup(`<strong>${node.name}</strong><br><code>${node.id}</code>`);
-        });
-      });
+    // Initialer Aufruf
+    loadDataAndUpdateMap();
 
-    // Dann prüfen, ob für einen Node aktuelle Daten vorliegen
-    fetch("data")
-      .then(() => {
-        const nodes = ["sensor-node-01", "sensor-node-02", "sensor-node-03", "s31-lb", "se01-lb"];
-        nodes.forEach(id => {
-          fetch(`data/${id}.json`)
-            .then(res => res.ok ? res.json() : null)
-            .then(data => {
-              if (!data || !data.gateways) return;
-              const node = data.node;
-              // Hole Koordinaten aus nodes.json (für Linie)
-              fetch("data/nodes.json")
-                .then(res => res.json())
-                .then(allNodes => {
-                  const nodeData = allNodes.find(n => n.id === node);
-                  if (!nodeData) return;
-                  const nodeLat = nodeData.lat;
-                  const nodeLon = nodeData.lon;
-
-                  data.gateways.forEach(gw => {
-                    const meta = gatewayMeta[gw.id] || {};
-                    if (!meta.lat || !meta.lon) return;
-
-                    const marker = L.marker([meta.lat, meta.lon], { icon: iconGateway })
-                      .addTo(map)
-                      .bindPopup(`
-                        <strong>${meta.name || gw.id}</strong><br>
-                        RSSI: ${gw.rssi} dBm<br>
-                        SNR: ${gw.snr} dB
-                      `);
-
-                    // Blinken für 1 Sekunde
-                    const el = marker.getElement();
-                    if (el) {
-                      el.classList.add("blinking");
-                      setTimeout(() => el.classList.remove("blinking"), 1000);
-                    }
-
-                    // Linie vom Node zum GW
-                    const line = L.polyline(
-                      [[nodeLat, nodeLon], [meta.lat, meta.lon]],
-                      { color: "red" }
-                    ).addTo(map);
-                    setTimeout(() => map.removeLayer(line), 60000); // 1 Minute
-                  });
-                });
-            });
-        });
-      });
+    // Automatisch alle 30 Sekunden
+    setInterval(loadDataAndUpdateMap, 30000);
   </script>
 </body>
 </html>
-
