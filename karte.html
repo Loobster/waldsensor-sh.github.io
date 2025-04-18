@@ -1,82 +1,130 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <title>WALDSENSOR.SH – Aktive Nodes & Gateways</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>WALDSENSOR.SH – Aktive Nodes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     html, body { margin: 0; padding: 0; height: 100%; }
     #map { height: 100vh; width: 100%; }
+    .blinking {
+      animation: blinker 1s linear infinite;
+    }
+    @keyframes blinker {
+      50% { opacity: 0; }
+    }
   </style>
 </head>
 <body>
   <div id="map"></div>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([54.5, 9.3], 9);
+    const map = L.map('map').setView([54.4, 9.7], 9);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Icons
-    const nodeIcon = L.icon({
-      iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png',
-      iconSize: [32, 32],
-      iconAnchor: [16, 32]
-    });
-
-    const gwIcon = L.icon({
+    const iconNode = L.icon({
       iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png',
-      iconSize: [32, 32],
-      iconAnchor: [16, 32]
+      iconSize: [24, 24],
+      iconAnchor: [12, 24],
+      popupAnchor: [0, -24]
     });
 
-    // Gateways aus externer Datei laden
-    let knownGateways = {};
-    fetch("data/gateways.json")
-      .then(res => res.json())
-      .then(gwdata => {
-        knownGateways = gwdata;
+    const iconGateway = L.icon({
+      iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png',
+      iconSize: [24, 24],
+      iconAnchor: [12, 24],
+      popupAnchor: [0, -24]
+    });
+
+    // Lade Gateways-Namen
+    let gatewayMeta = {};
+    fetch('data/gateways.json')
+      .then(r => r.json())
+      .then(gwData => {
+        gatewayMeta = gwData;
       });
 
-    // Nodes laden und Marker setzen
+    // Für Offset bei fast gleichen Koordinaten
+    const usedCoords = new Set();
+    function offsetIfExists(lat, lon) {
+      let key = lat.toFixed(5) + ',' + lon.toFixed(5);
+      let offset = 0.0002;
+      while (usedCoords.has(key)) {
+        lat += offset;
+        lon += offset;
+        key = lat.toFixed(5) + ',' + lon.toFixed(5);
+      }
+      usedCoords.add(key);
+      return [lat, lon];
+    }
+
+    // Erst Nodes anzeigen
     fetch("data/nodes.json")
       .then(res => res.json())
       .then(nodes => {
         nodes.forEach(node => {
-          const nodeMarker = L.marker([node.lat, node.lon], { icon: nodeIcon })
+          const [lat, lon] = offsetIfExists(node.lat, node.lon);
+          L.marker([lat, lon], { icon: iconNode })
             .addTo(map)
-            .bindPopup(`<strong>${node.name}</strong>`);
-          
-          // Lade zugehörige sensor-node-XX.json Datei
-          fetch(`data/${node.id}.json`)
-            .then(res => res.json())
+            .bindPopup(`<strong>${node.name}</strong><br><code>${node.id}</code>`);
+        });
+      });
+
+    // Dann prüfen, ob für einen Node aktuelle Daten vorliegen
+    fetch("data")
+      .then(() => {
+        const nodes = ["sensor-node-01", "sensor-node-02", "sensor-node-03", "s31-lb", "se01-lb"];
+        nodes.forEach(id => {
+          fetch(`data/${id}.json`)
+            .then(res => res.ok ? res.json() : null)
             .then(data => {
-              data.gateways.forEach(gw => {
-                if (gw.lat && gw.lon) {
-                  const gwInfo = knownGateways[gw.id];
-                  const name = gwInfo ? gwInfo.name : gw.id;
+              if (!data || !data.gateways) return;
+              const node = data.node;
+              // Hole Koordinaten aus nodes.json (für Linie)
+              fetch("data/nodes.json")
+                .then(res => res.json())
+                .then(allNodes => {
+                  const nodeData = allNodes.find(n => n.id === node);
+                  if (!nodeData) return;
+                  const nodeLat = nodeData.lat;
+                  const nodeLon = nodeData.lon;
 
-                  const gwMarker = L.marker([gw.lat, gw.lon], { icon: gwIcon })
-                    .addTo(map)
-                    .bindPopup(`<strong>Gateway:</strong> ${name}<br><strong>RSSI:</strong> ${gw.rssi} dBm<br><strong>SNR:</strong> ${gw.snr} dB`);
+                  data.gateways.forEach(gw => {
+                    const meta = gatewayMeta[gw.id] || {};
+                    if (!meta.lat || !meta.lon) return;
 
-                  // Linie zwischen Node und Gateway
-                  L.polyline([[node.lat, node.lon], [gw.lat, gw.lon]], {
-                    color: "red",
-                    dashArray: "5, 5"
-                  }).addTo(map);
-                }
-              });
-            })
-            .catch(err => {
-              console.warn(`⚠️ Datei für ${node.id} nicht gefunden oder fehlerhaft`, err);
+                    const marker = L.marker([meta.lat, meta.lon], { icon: iconGateway })
+                      .addTo(map)
+                      .bindPopup(`
+                        <strong>${meta.name || gw.id}</strong><br>
+                        RSSI: ${gw.rssi} dBm<br>
+                        SNR: ${gw.snr} dB
+                      `);
+
+                    // Blinken für 1 Sekunde
+                    const el = marker.getElement();
+                    if (el) {
+                      el.classList.add("blinking");
+                      setTimeout(() => el.classList.remove("blinking"), 1000);
+                    }
+
+                    // Linie vom Node zum GW
+                    const line = L.polyline(
+                      [[nodeLat, nodeLon], [meta.lat, meta.lon]],
+                      { color: "red" }
+                    ).addTo(map);
+                    setTimeout(() => map.removeLayer(line), 60000); // 1 Minute
+                  });
+                });
             });
         });
       });
   </script>
 </body>
 </html>
+
