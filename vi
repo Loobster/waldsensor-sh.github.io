@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>WALDSENSOR.SH – Aktive Nodes & Gateways</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; }
+    #map { height: 100vh; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    console.log("🏁 Karte geladen");
+
+    const map = L.map('map').setView([54.4, 9.6], 9);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Erst nodes.json laden
+    fetch("data/nodes.json")
+      .then(res => res.json())
+      .then(nodes => {
+        nodes.forEach(node => {
+          // Marker für festen Node setzen
+          const marker = L.marker([node.lat, node.lon]).addTo(map);
+          marker.bindPopup(`<strong>${node.name}</strong><br>ID: ${node.id}`);
+
+          // Dynamisch Gateway-Daten laden
+          fetch(`data/${node.id}.json`)
+            .then(res => {
+              if (!res.ok) throw new Error(`Keine Daten für ${node.id}`);
+              return res.json();
+            })
+            .then(data => {
+              console.log(`📡 Gateways von ${node.id}`, data);
+              data.gateways.forEach(gw => {
+                if (gw.lat && gw.lon) {
+                  L.marker([gw.lat, gw.lon], { opacity: 0.8 })
+                    .addTo(map)
+                    .bindPopup(`
+                      <strong>Gateway:</strong> ${gw.id}<br>
+                      <strong>Empfangen von:</strong> ${node.id}<br>
+                      RSSI: ${gw.rssi} dBm<br>
+                      SNR: ${gw.snr} dB
+                    `);
+                }
+              });
+            })
+            .catch(err => console.warn(`⚠️ Fehler bei ${node.id}:`, err));
+        });
+      })
+      .catch(err => console.error("❌ Fehler beim Laden von nodes.json", err));
+  </script>
+</body>
+</html>
