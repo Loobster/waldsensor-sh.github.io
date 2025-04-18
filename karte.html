@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>WALDSENSOR.SH – Aktive Nodes & Gateways</title>
+  <title>WALDSENSOR.SH – Nodes & Gateways</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
@@ -23,64 +23,97 @@
   <div id="map"></div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    console.log("🏁 Karte gestartet");
+    console.log("🌍 Karte wird geladen...");
+
     const map = L.map('map').setView([54.4, 9.6], 9);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    fetch("data/nodes.json")
+    let gatewayInfo = {};
+
+    // Lade gateways.json mit festen Koordinaten
+    fetch("data/gateways.json")
       .then(res => res.json())
-      .then(nodes => {
-        nodes.forEach(node => {
-          // Statische Node-Marker
-          const nodeMarker = L.marker([node.lat, node.lon])
-            .addTo(map)
-            .bindPopup(`<strong>${node.name}</strong><br>ID: ${node.id}`);
-
-          // Dynamische Gateway-Daten laden
-          fetch(`data/${node.id}.json`)
-            .then(res => {
-              if (!res.ok) throw new Error(`Keine Daten für ${node.id}`);
-              return res.json();
-            })
-            .then(data => {
-              data.gateways.forEach(gw => {
-                if (gw.lat && gw.lon) {
-                  const gwIcon = L.divIcon({
-                    className: 'blinking',
-                    html: `<div style="width:12px;height:12px;background:red;border-radius:50%;"></div>`,
-                    iconSize: [12, 12]
-                  });
-
-                  const marker = L.marker([gw.lat, gw.lon], { icon: gwIcon })
-                    .addTo(map)
-                    .bindPopup(`
-                      <strong>Gateway:</strong> ${gw.id}<br>
-                      <strong>RSSI:</strong> ${gw.rssi} dBm<br>
-                      <strong>SNR:</strong> ${gw.snr} dB<br>
-                      Empfangen von: ${node.id}
-                    `);
-
-                  // Nach 3 Sekunden: Blinken beenden (ersetze durch Standardmarker)
-                  setTimeout(() => {
-                    marker.setIcon(L.icon({
-                      iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-                      iconSize: [25, 41],
-                      iconAnchor: [12, 41],
-                      popupAnchor: [1, -34],
-                      shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-                      shadowSize: [41, 41]
-                    }));
-                  }, 3000);
-                }
-              });
-            })
-            .catch(err => console.warn(`⚠️ Fehler bei ${node.id}:`, err));
-        });
+      .then(gws => {
+        gatewayInfo = gws;
+        console.log("📡 Gateways geladen:", gatewayInfo);
+        loadNodes(); // Starte erst danach das Laden der Nodes
       })
-      .catch(err => console.error("❌ Fehler beim Laden von nodes.json", err));
+      .catch(err => {
+        console.error("❌ Fehler beim Laden von gateways.json:", err);
+        loadNodes(); // Fallback: trotzdem Nodes laden
+      });
+
+    function loadNodes() {
+      fetch("data/nodes.json")
+        .then(res => res.json())
+        .then(nodes => {
+          nodes.forEach(node => {
+            // Node-Marker
+            L.marker([node.lat, node.lon])
+              .addTo(map)
+              .bindPopup(`<strong>${node.name}</strong><br>ID: ${node.id}`);
+
+            // Lade zugehörige Gateway-Infos
+            fetch(`data/${node.id}.json`)
+              .then(res => {
+                if (!res.ok) throw new Error(`Keine Daten für ${node.id}`);
+                return res.json();
+              })
+              .then(data => {
+                data.gateways.forEach(gw => {
+                  let lat = gw.lat;
+                  let lon = gw.lon;
+                  let name = gw.id;
+
+                  // Ergänze fehlende Koordinaten aus gateways.json
+                  if ((!lat || !lon) && gatewayInfo[gw.id]) {
+                    lat = gatewayInfo[gw.id].lat;
+                    lon = gatewayInfo[gw.id].lon;
+                    name = gatewayInfo[gw.id].name;
+                  }
+
+                  if (lat && lon) {
+                    const gwIcon = L.divIcon({
+                      className: 'blinking',
+                      html: `<div style="width:12px;height:12px;background:red;border-radius:50%;"></div>`,
+                      iconSize: [12, 12]
+                    });
+
+                    const marker = L.marker([lat, lon], { icon: gwIcon })
+                      .addTo(map)
+                      .bindPopup(`
+                        <strong>Gateway:</strong> ${name}<br>
+                        <strong>RSSI:</strong> ${gw.rssi} dBm<br>
+                        <strong>SNR:</strong> ${gw.snr} dB<br>
+                        Empfangen von: ${node.id}
+                      `);
+
+                    // Nach 3 Sekunden: Normales Icon setzen
+                    setTimeout(() => {
+                      marker.setIcon(L.icon({
+                        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+                        shadowSize: [41, 41]
+                      }));
+                    }, 3000);
+                  }
+                });
+              })
+              .catch(err => {
+                console.warn(`⚠️ Keine Gateway-Daten für ${node.id}:`, err);
+              });
+          });
+        })
+        .catch(err => {
+          console.error("❌ Fehler beim Laden von nodes.json:", err);
+        });
+    }
   </script>
 </body>
 </html>
