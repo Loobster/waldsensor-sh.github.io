@@ -18,7 +18,19 @@
     console.log("🏁 Skript gestartet");
 
     const map = L.map('map').setView([54.36, 9.73], 10);
-
+// 📍 Feste Nodes aus nodes.json laden
+fetch("data/nodes.json")
+  .then(res => res.json())
+  .then(nodes => {
+    nodes.forEach(node => {
+      L.marker([node.lat, node.lon])
+        .addTo(map)
+        .bindPopup(`<strong>${node.name}</strong><br>ID: ${node.id}`);
+    });
+  })
+  .catch(err => {
+    console.error("Fehler beim Laden der Nodes:", err);
+  });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
