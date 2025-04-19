@@ -17,8 +17,8 @@
       padding: 0;
     }
     #map {
-      width: 100%;
       height: 100vh;
+      width: 100%;
     }
     .blinking-node {
       animation: blink-node 1s ease-in-out infinite;
@@ -54,36 +54,30 @@
         const id = node.id;
         const pos = [node.lat, node.lon];
 
-        // Falls Marker noch nicht existiert
         if (!nodeMarkers[id]) {
-          const marker = L.marker(pos).addTo(map);
+          const marker = L.marker(pos).addTo(map).bindPopup(node.name || id);
           nodeMarkers[id] = { ...node, marker };
         }
 
-        // Hole Live-Daten für diesen Node
         const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
 
         const now = Date.now();
         const time = Date.parse(data.time);
+        const age = now - time;
 
-        // Popup mit Zeitstempel aktualisieren
-        const timestamp = new Date(data.time).toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
-        const popupContent = `<b>${node.name || id}</b><br>ID: ${id}<br>Letzte Übertragung: ${data.time}`;
-        nodeMarkers[id].marker.bindPopup(popupContent);
-
-        // Nur wenn innerhalb der letzten 60s, dann blinken
-        if (now - time < 60000) {
+        if (age < 60_000) {
           const pulse = L.circleMarker(pos, {
             radius: 12,
             className: 'blinking-node'
           }).addTo(map);
+
           setTimeout(() => map.removeLayer(pulse), 3000);
         }
       }
     }
 
-    loadData(); // Initialer Aufruf
-    setInterval(loadData, 30000); // alle 30 Sekunden neu laden
+    loadData(); // initial
+    setInterval(loadData, 30_000); // alle 30 Sekunden
   </script>
 </body>
 </html>
