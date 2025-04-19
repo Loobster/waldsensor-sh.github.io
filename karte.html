@@ -6,9 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-sA+z0pGz7SojTbGfT2SXBUNmft3zt3MoYdFfDX8Ceco="
-    crossorigin=""
+    href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
   />
   <style>
     html, body {
@@ -56,38 +54,29 @@
         const id = node.id;
         const pos = [node.lat, node.lon];
 
-        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
-        const payloadTime = data.time;
-
-        const popupText = `
-          <strong>${node.name}</strong><br />
-          ID: ${id}<br />
-          Letzte Übertragung: ${payloadTime}
-        `;
-
+        // Marker erzeugen, falls nicht vorhanden
         if (!nodeMarkers[id]) {
-          const marker = L.marker(pos).addTo(map).bindPopup(popupText);
+          const marker = L.marker(pos).addTo(map).bindPopup(`${node.name}<br>ID: ${id}`);
           nodeMarkers[id] = { ...node, marker };
-        } else {
-          nodeMarkers[id].marker.setPopupContent(popupText);
         }
 
+        // Live-Daten abholen
+        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
+        const payloadTime = Date.parse(data.time);
         const now = Date.now();
-        const age = now - Date.parse(payloadTime);
 
-        if (age < 60000) {
+        if (now - payloadTime < 60000) {
           const pulse = L.circleMarker(pos, {
             radius: 12,
             className: 'blinking-node'
           }).addTo(map);
-
           setTimeout(() => map.removeLayer(pulse), 3000);
         }
       }
     }
 
-    loadData();                  // Erstes Laden
-    setInterval(loadData, 30000); // Alle 30 Sekunden neu laden
+    loadData(); // Initial
+    setInterval(loadData, 30000); // Alle 30 Sek. neu laden
   </script>
 </body>
 </html>
