@@ -54,41 +54,47 @@
         const id = node.id;
         const pos = [node.lat, node.lon];
 
-        // Marker erzeugen, falls nicht vorhanden
         if (!nodeMarkers[id]) {
           const marker = L.marker(pos).addTo(map);
           nodeMarkers[id] = { ...node, marker };
         }
 
-        // Versuche, Live-Daten zu laden
         try {
           const res = await fetch(`data/${id}.json?t=${t}`);
           if (!res.ok) continue;
 
           const data = await res.json();
-          const payloadTime = Date.parse(data.time);
           const now = Date.now();
-          const timeStr = new Date(data.time).toLocaleString();
 
-          // Popup nur mit Zeitstempel, wenn gültige Daten vorhanden
-          nodeMarkers[id].marker.bindPopup(`${node.name}<br>ID: ${id}<br>Letzte Übertragung: ${timeStr}`);
+          let popupText = `${node.name}<br>ID: ${id}`;
 
-          // Blinken, wenn Übertragung jünger als 60 Sek.
-          if (now - payloadTime < 60000) {
-            const pulse = L.circleMarker(pos, {
-              radius: 12,
-              className: 'blinking-node'
-            }).addTo(map);
-            setTimeout(() => map.removeLayer(pulse), 3000);
+          // Dummy-Zeit ignorieren
+          if (data.time && data.time !== "2025-04-19T13:00:00.000Z") {
+            const payloadTime = Date.parse(data.time);
+            const timeStr = new Date(data.time).toLocaleString();
+            popupText += `<br>Letzte Übertragung: ${timeStr}`;
+
+            if (now - payloadTime < 60000) {
+              const pulse = L.circleMarker(pos, {
+                radius: 12,
+                className: 'blinking-node'
+              }).addTo(map);
+              setTimeout(() => map.removeLayer(pulse), 3000);
+            }
+          } else {
+            popupText += `<br>Noch keine Übertragung`;
           }
+
+          nodeMarkers[id].marker.bindPopup(popupText);
+
         } catch (e) {
-          console.warn(`⚠️ Keine Daten für ${id}:`, e);
+          console.warn(`⚠️ Fehler bei Node ${id}:`, e);
         }
       }
     }
 
-    loadData();                  // Initial
-    setInterval(loadData, 30000); // Alle 30 Sek.
+    loadData();
+    setInterval(loadData, 30000);
   </script>
 </body>
 </html>
