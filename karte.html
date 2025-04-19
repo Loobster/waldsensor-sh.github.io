@@ -7,7 +7,6 @@
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-sA+z0pGz7SojTbGfT2SXBUNmft3zt3MoYdFfDX8Ceco="
     crossorigin=""
   />
   <style>
@@ -16,18 +15,15 @@
       margin: 0;
       padding: 0;
     }
-
     #map {
       height: 100%;
       width: 100%;
     }
-
     .blinking-node {
       animation: blink-node 1s ease-in-out infinite;
       background-color: red;
       border-radius: 50%;
     }
-
     @keyframes blink-node {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
@@ -56,26 +52,21 @@
         const id = node.id;
         const pos = [node.lat, node.lon];
 
-        // Marker anlegen oder aktualisieren
+        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
+        const payloadTime = data.time;
+        const time = Date.parse(payloadTime);
+        const now = Date.now();
+        const age = now - time;
+
+        const popupText = `${node.name || id}<br>Letzte Übertragung: ${payloadTime}`;
+
         if (!nodeMarkers[id]) {
-          const marker = L.marker(pos).addTo(map);
+          const marker = L.marker(pos).addTo(map).bindPopup(popupText);
           nodeMarkers[id] = { ...node, marker };
+        } else {
+          nodeMarkers[id].marker.setPopupContent(popupText);
         }
 
-        // Live-Daten holen
-        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
-        const payloadTime = Date.parse(data.time);
-        const now = Date.now();
-        const age = now - payloadTime;
-
-        // Popup aktualisieren
-        const popupContent = `
-          <strong>${node.name}</strong><br/>
-          Letzte Übertragung: ${data.time}
-        `;
-        nodeMarkers[id].marker.bindPopup(popupContent);
-
-        // Blinken, wenn unter 60 Sek. alt
         if (age < 60000) {
           const pulse = L.circleMarker(pos, {
             radius: 12,
@@ -86,8 +77,8 @@
       }
     }
 
-    loadData();                  // Erstes Laden
-    setInterval(loadData, 30000); // Alle 30 Sekunden neu laden
+    loadData();
+    setInterval(loadData, 30000);
   </script>
 </body>
 </html>
