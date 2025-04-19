@@ -14,20 +14,10 @@
     html, body {
       height: 100%;
       margin: 0;
-      padding: 0;
     }
     #map {
       width: 100%;
-      height: 100%;
-    }
-    .blinking-node {
-      animation: blink-node 1s ease-in-out infinite;
-      background-color: red;
-      border-radius: 50%;
-    }
-    @keyframes blink-node {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+      height: 100vh;
     }
   </style>
 </head>
@@ -43,45 +33,17 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    const nodeMarkers = {};
+    const t = Date.now();
 
-    async function loadData() {
-      const t = Date.now();
-
-      const nodes = await fetch(`data/nodes.json?t=${t}`).then(r => r.json());
-
-      for (const node of nodes) {
-        const id = node.id;
-        const pos = [node.lat, node.lon];
-
-        // Falls noch kein Marker da ist
-        if (!nodeMarkers[id]) {
-          const marker = L.marker(pos).addTo(map);
-          nodeMarkers[id] = { ...node, marker };
-        }
-
-        // Lade Live-Daten des Nodes
-        try {
-          const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
-          const now = Date.now();
-          const time = Date.parse(data.time);
-
-          // Wenn Daten frisch sind, blinke
-          if (now - time < 60_000) {
-            const pulse = L.circleMarker(pos, {
-              radius: 12,
-              className: 'blinking-node'
-            }).addTo(map);
-            setTimeout(() => map.removeLayer(pulse), 3000);
-          }
-        } catch (e) {
-          console.warn(`⚠️ Fehler beim Laden von ${id}.json`, e);
-        }
-      }
-    }
-
-    loadData();
-    setInterval(loadData, 30000);
+    fetch(`data/nodes.json?t=${t}`)
+      .then(r => r.json())
+      .then(nodes => {
+        nodes.forEach(node => {
+          L.marker([node.lat, node.lon])
+            .addTo(map)
+            .bindPopup(node.name || node.id);
+        });
+      });
   </script>
 </body>
 </html>
