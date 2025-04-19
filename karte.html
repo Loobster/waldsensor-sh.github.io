@@ -61,7 +61,9 @@
         try {
           const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
           const payloadTime = Date.parse(data.time);
-          const now = Date.now();
+const now = Date.now();
+const delta = now - payloadTime;
+console.log(`[DEBUG] ID: ${id}, now: ${new Date(now).toISOString()}, payload: ${data.time}, delta: ${delta} ms`);
 
           if (!isNaN(payloadTime)) {
             const dt = new Date(payloadTime);
