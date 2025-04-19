@@ -16,18 +16,15 @@
       margin: 0;
       padding: 0;
     }
-
     #map {
-      height: 100%;
+      height: 100vh;
       width: 100%;
     }
-
     .blinking-node {
       animation: blink-node 1s ease-in-out infinite;
       background-color: red;
       border-radius: 50%;
     }
-
     @keyframes blink-node {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
@@ -50,32 +47,25 @@
 
     async function loadData() {
       const t = Date.now();
+
       const nodes = await fetch(`data/nodes.json?t=${t}`).then(r => r.json());
 
       for (const node of nodes) {
         const id = node.id;
         const pos = [node.lat, node.lon];
 
-        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
-        const payloadTime = data.time;
-
-        const popupText = `
-          <strong>${node.name}</strong><br />
-          ID: ${id}<br />
-          Letzte Übertragung: ${payloadTime}
-        `;
-
         if (!nodeMarkers[id]) {
-          const marker = L.marker(pos).addTo(map).bindPopup(popupText);
+          const marker = L.marker(pos).addTo(map).bindPopup(node.name || id);
           nodeMarkers[id] = { ...node, marker };
-        } else {
-          nodeMarkers[id].marker.setPopupContent(popupText);
         }
 
-        const now = Date.now();
-        const age = now - Date.parse(payloadTime);
+        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
 
-        if (age < 60000) {
+        const now = Date.now();
+        const time = Date.parse(data.time);
+        const age = now - time;
+
+        if (age < 60_000) {
           const pulse = L.circleMarker(pos, {
             radius: 12,
             className: 'blinking-node'
@@ -86,8 +76,8 @@
       }
     }
 
-    loadData();                  // Erstes Laden
-    setInterval(loadData, 30000); // Alle 30 Sekunden neu laden
+    loadData(); // initial
+    setInterval(loadData, 30_000); // alle 30 Sekunden
   </script>
 </body>
 </html>
