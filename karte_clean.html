@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Waldsensor-Karte (Clean)</title>
+  <title>Waldsensor-Karte</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     rel="stylesheet"
@@ -16,9 +16,21 @@
       margin: 0;
       padding: 0;
     }
+
     #map {
       height: 100%;
       width: 100%;
+    }
+
+    .blinking-node {
+      animation: blink-node 1s ease-in-out infinite;
+      background-color: red;
+      border-radius: 50%;
+    }
+
+    @keyframes blink-node {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
   </style>
 </head>
@@ -34,29 +46,44 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    const t = Date.now();
+    const nodeMarkers = {};
 
-    async function loadNodes() {
+    async function loadData() {
+      const t = Date.now();
       const nodes = await fetch(`data/nodes.json?t=${t}`).then(r => r.json());
 
       for (const node of nodes) {
+        const id = node.id;
         const pos = [node.lat, node.lon];
 
-        let timeText = '';
-        try {
-          const data = await fetch(`data/${node.id}.json?t=${t}`).then(r => r.json());
-          timeText = `<br><b>Letzte Übertragung:</b> ${data.time}`;
-        } catch (e) {
-          timeText = '<br><i>Keine Live-Daten</i>';
+        if (!nodeMarkers[id]) {
+          const marker = L.marker(pos).addTo(map)
+            .bindPopup(`<b>${node.name}</b><br>Letzte Übertragung: ...`);
+          nodeMarkers[id] = { ...node, marker };
         }
 
-        L.marker(pos)
-          .addTo(map)
-          .bindPopup(`<b>${node.name}</b>${timeText}`);
+        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
+        const payloadTime = Date.parse(data.time);
+        const now = Date.now();
+
+        // Blinken bei frischer Übertragung
+        if (now - payloadTime < 60000) {
+          const pulse = L.circleMarker(pos, {
+            radius: 12,
+            className: 'blinking-node'
+          }).addTo(map);
+          setTimeout(() => map.removeLayer(pulse), 3000);
+        }
+
+        // Popup aktualisieren
+        nodeMarkers[id].marker.setPopupContent(
+          `<b>${node.name}</b><br><b>Letzte Übertragung:</b><br>${data.time}`
+        );
       }
     }
 
-    loadNodes();
+    loadData(); // Initial
+    setInterval(loadData, 30000); // Alle 30s neu laden
   </script>
 </body>
 </html>
