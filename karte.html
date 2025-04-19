@@ -1,18 +1,35 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <title>WALDSENSOR.SH – Aktive Nodes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>Waldsensor-Karte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-sA+z0pGz7SojTbGfT2SXBUNmft3zt3MoYdFfDX8Ceco="
+    crossorigin=""
   />
   <style>
-    html, body { margin: 0; padding: 0; height: 100%; }
-    #map { height: 100vh; width: 100%; }
-    .node-marker { color: green; }
-    .gw-marker { color: red; }
+    #map { height: 100vh; }
+    .blinking-node {
+      animation: blink-node 1s ease-in-out infinite;
+      background-color: red;
+      border-radius: 50%;
+    }
+    .blinking-gw {
+      animation: blink-gw 1s ease-in-out infinite;
+      background-color: blue;
+      border-radius: 50%;
+    }
+    @keyframes blink-node {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    @keyframes blink-gw {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
   </style>
 </head>
 <body>
@@ -20,88 +37,70 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    console.log("🏁 Skript gestartet");
+    const map = L.map('map').setView([54.6, 9.0], 10);
 
-    const map = L.map("map").setView([54.4, 9.3], 9);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap contributors"
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    async function load() {
-      // Lade Gateways
-      const gateways = await fetch("data/gateways.json").then(r => r.json());
-      console.log("📡 Geladene Gateways:", gateways);
+    const t = Date.now(); // Cache-Buster für frische Daten
 
-      // Lade Nodes
-      const nodes = await fetch("data/nodes.json").then(r => r.json());
-      console.log("🌲 Geladene Nodes:", nodes);
+    const nodeMarkers = {};
+    const activeOverlays = [];
 
-      nodes.forEach(node => {
-        const { id, name, lat, lon } = node;
+    // Nodes laden
+    fetch(`data/nodes.json?t=${t}`)
+      .then(res => res.json())
+      .then(nodes => {
+        nodes.forEach(node => {
+          const marker = L.marker([node.lat, node.lon])
+            .addTo(map);
+          nodeMarkers[node.id] = { ...node, marker };
+        });
 
-        if (!lat || !lon) {
-          console.warn("⚠️ Node hat keine gültigen Koordinaten:", id);
-          return;
-        }
+        // Daten je Node laden (Gateways etc.)
+        nodes.forEach(node => {
+          fetch(`data/${node.id}.json?t=${t}`)
+            .then(res => res.json())
+            .then(data => {
+              const nodePos = [node.lat, node.lon];
 
-        const marker = L.marker([lat, lon], { title: name }).addTo(map);
-        marker.bindPopup(`<strong>${name}</strong><br>ID: ${id}`);
+              // Node blinkt kurz
+              const pulse = L.circleMarker(nodePos, {
+                radius: 12,
+                className: 'blinking-node'
+              }).addTo(map);
+              setTimeout(() => map.removeLayer(pulse), 3000);
 
-        // Versuche passende Gateway-Daten anzuzeigen
-        fetch(`data/${id}.json`)
-          .then(r => r.json())
-          .then(data => {
-            console.log(`📨 Daten von ${id}:`, data);
+              // Gateways verarbeiten
+              data.gateways.forEach(gw => {
+                if (!gw.lat || !gw.lon) return; // überspringen wenn Position fehlt
 
-            data.gateways.forEach(gw => {
-              const gwInfo = gateways.find(g => g.id === gw.id);
-              if (gw.lat && gw.lon) {
-                const gMarker = L.circleMarker([gw.lat, gw.lon], {
-                  radius: 8,
-                  color: "red",
-                  fillOpacity: 0.7
+                const gwPos = [gw.lat, gw.lon];
+
+                const gwMarker = L.circleMarker(gwPos, {
+                  radius: 10,
+                  className: 'blinking-gw'
                 }).addTo(map);
-                gMarker.bindPopup(`
-                  <strong>Gateway:</strong> ${gw.id}<br>
-                  <strong>RSSI:</strong> ${gw.rssi}<br>
-                  <strong>SNR:</strong> ${gw.snr}
-                `);
 
-                // Linie zum Node
-                L.polyline([[lat, lon], [gw.lat, gw.lon]], {
-                  color: "red",
-                  dashArray: "4"
-                }).addTo(map);
-              } else if (gwInfo) {
-                const { lat, lon, name } = gwInfo;
-                const gMarker = L.circleMarker([lat, lon], {
-                  radius: 8,
-                  color: "red",
-                  fillOpacity: 0.7
-                }).addTo(map);
-                gMarker.bindPopup(`
-                  <strong>${name}</strong><br>
-                  <strong>ID:</strong> ${gw.id}<br>
-                  <strong>RSSI:</strong> ${gw.rssi}<br>
-                  <strong>SNR:</strong> ${gw.snr}
-                `);
+                const line = L.polyline([gwPos, nodePos], { color: 'red' }).addTo(map);
 
-                L.polyline([[node.lat, node.lon], [lat, lon]], {
-                  color: "red",
-                  dashArray: "4"
-                }).addTo(map);
-              } else {
-                console.warn("⚠️ Kein Eintrag in gateways.json gefunden für:", gw.id);
-              }
+                activeOverlays.push(gwMarker, line);
+
+                // Nach 5 Sek. hört das GW auf zu blinken, bleibt aber sichtbar
+                setTimeout(() => gwMarker.setStyle({ className: '' }), 5000);
+
+                // Nach 60 Sek. verschwinden Marker + Linie
+                setTimeout(() => {
+                  map.removeLayer(gwMarker);
+                  map.removeLayer(line);
+                }, 60000);
+              });
             });
-          })
-          .catch(err => {
-            console.error(`❌ Fehler beim Laden der Datei ${id}.json:`, err);
-          });
+        });
       });
-    }
-
-    load();
   </script>
 </body>
 </html>
+
