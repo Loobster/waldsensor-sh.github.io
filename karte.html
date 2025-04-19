@@ -14,20 +14,10 @@
     html, body {
       height: 100%;
       margin: 0;
-      padding: 0;
     }
     #map {
-      height: 100vh;
       width: 100%;
-    }
-    .blinking-node {
-      animation: blink-node 1s ease-in-out infinite;
-      background-color: red;
-      border-radius: 50%;
-    }
-    @keyframes blink-node {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+      height: 100vh;
     }
   </style>
 </head>
@@ -43,41 +33,25 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    const nodeMarkers = {};
+    const t = Date.now();
 
-    async function loadData() {
-      const t = Date.now();
-
-      const nodes = await fetch(`data/nodes.json?t=${t}`).then(r => r.json());
-
-      for (const node of nodes) {
-        const id = node.id;
-        const pos = [node.lat, node.lon];
-
-        if (!nodeMarkers[id]) {
-          const marker = L.marker(pos).addTo(map).bindPopup(node.name || id);
-          nodeMarkers[id] = { ...node, marker };
-        }
-
-        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
-
-        const now = Date.now();
-        const time = Date.parse(data.time);
-        const age = now - time;
-
-        if (age < 60_000) {
-          const pulse = L.circleMarker(pos, {
-            radius: 12,
-            className: 'blinking-node'
-          }).addTo(map);
-
-          setTimeout(() => map.removeLayer(pulse), 3000);
-        }
-      }
-    }
-
-    loadData(); // initial
-    setInterval(loadData, 30_000); // alle 30 Sekunden
+    fetch(`data/nodes.json?t=${t}`)
+      .then(r => r.json())
+      .then(nodes => {
+        nodes.forEach(node => {
+          fetch(`data/${node.id}.json?t=${t}`)
+            .then(r => r.json())
+            .then(data => {
+              const marker = L.marker([node.lat, node.lon])
+                .addTo(map)
+                .bindPopup(`
+                  <strong>${node.name || node.id}</strong><br>
+                  ID: ${node.id}<br>
+                  Letzte Übertragung: ${data.time}
+                `);
+            });
+        });
+      });
   </script>
 </body>
 </html>
