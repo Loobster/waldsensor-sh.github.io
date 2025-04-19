@@ -16,12 +16,18 @@
       margin: 0;
       padding: 0;
     }
-    #map { height: 100vh; }
+
+    #map {
+      height: 100%;
+      width: 100%;
+    }
+
     .blinking-node {
       animation: blink-node 1s ease-in-out infinite;
       background-color: red;
       border-radius: 50%;
     }
+
     @keyframes blink-node {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
@@ -44,26 +50,25 @@
 
     async function loadData() {
       const t = Date.now();
-
       const nodes = await fetch(`data/nodes.json?t=${t}`).then(r => r.json());
 
       for (const node of nodes) {
         const id = node.id;
         const pos = [node.lat, node.lon];
 
-        // Falls noch kein Marker da ist
+        // Marker anlegen, falls noch nicht vorhanden
         if (!nodeMarkers[id]) {
           const marker = L.marker(pos).addTo(map);
           nodeMarkers[id] = { ...node, marker };
         }
 
-        // Lade Live-Daten des Nodes
+        // Daten des Nodes laden
         const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
-
-        // Zeit vergleichen: nur wenn max 60s alt, dann blinken
         const now = Date.now();
-        const time = Date.parse(data.time);
-        if (now - time < 60_000) {
+        const payloadTime = Date.parse(data.time);
+
+        // Wenn Zeitstempel jünger als 60 Sek., dann blinken
+        if (now - payloadTime < 60000) {
           const pulse = L.circleMarker(pos, {
             radius: 12,
             className: 'blinking-node'
@@ -73,7 +78,7 @@
       }
     }
 
-    loadData(); // Initialer Aufruf
+    loadData();                  // Erstes Laden
     setInterval(loadData, 30000); // Alle 30 Sekunden neu laden
   </script>
 </body>
