@@ -53,42 +53,41 @@
       for (const node of nodes) {
         const id = node.id;
         const pos = [node.lat, node.lon];
+        const name = node.name || id;
+        let popupText = `<b>${name}</b><br>ID: ${id}<br>Letzte Übertragung: unbekannt`;
 
-        if (!nodeMarkers[id]) {
-          const marker = L.marker(pos).addTo(map);
-          nodeMarkers[id] = { ...node, marker };
-        }
+        let shouldBlink = false;
 
         try {
-          const res = await fetch(`data/${id}.json?t=${t}`);
-          if (!res.ok) continue;
-
-          const data = await res.json();
+          const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
+          const payloadTime = Date.parse(data.time);
           const now = Date.now();
 
-          let popupText = `${node.name}<br>ID: ${id}`;
-
-          // Dummy-Zeit ignorieren
-          if (data.time && data.time !== "2025-04-19T13:00:00.000Z") {
-            const payloadTime = Date.parse(data.time);
-            const timeStr = new Date(data.time).toLocaleString();
-            popupText += `<br>Letzte Übertragung: ${timeStr}`;
+          if (!isNaN(payloadTime)) {
+            const dt = new Date(payloadTime);
+            popupText = `<b>${name}</b><br>ID: ${id}<br>Letzte Übertragung: ${dt.toLocaleString()}`;
 
             if (now - payloadTime < 60000) {
-              const pulse = L.circleMarker(pos, {
-                radius: 12,
-                className: 'blinking-node'
-              }).addTo(map);
-              setTimeout(() => map.removeLayer(pulse), 3000);
+              shouldBlink = true;
             }
-          } else {
-            popupText += `<br>Noch keine Übertragung`;
           }
-
-          nodeMarkers[id].marker.bindPopup(popupText);
-
         } catch (e) {
-          console.warn(`⚠️ Fehler bei Node ${id}:`, e);
+          // Kein JSON vorhanden = noch keine Übertragung
+        }
+
+        if (!nodeMarkers[id]) {
+          const marker = L.marker(pos).addTo(map).bindPopup(popupText);
+          nodeMarkers[id] = { marker };
+        } else {
+          nodeMarkers[id].marker.setPopupContent(popupText);
+        }
+
+        if (shouldBlink) {
+          const pulse = L.circleMarker(pos, {
+            radius: 12,
+            className: 'blinking-node'
+          }).addTo(map);
+          setTimeout(() => map.removeLayer(pulse), 3000);
         }
       }
     }
