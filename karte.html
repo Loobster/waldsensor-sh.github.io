@@ -47,6 +47,8 @@
     const nodeMarkers = {};
 
     async function loadData() {
+      console.log("📡 loadData() wurde aufgerufen");
+
       const t = Date.now();
       const nodes = await fetch(`data/nodes.json?t=${t}`).then(r => r.json());
 
@@ -69,9 +71,8 @@
             const dt = new Date(payloadTime);
             const delta = now - payloadTime;
 
-            console.debug(`[DEBUG] ID: ${id}, now: ${new Date(now).toISOString()}, payload: ${data.time}, delta: ${delta} ms`);
+            console.log(`[DEBUG] ID: ${id}, now: ${new Date(now).toISOString()}, payload: ${data.time}, delta: ${delta} ms`);
 
-            // Nur wenn Zeitdifferenz < 10 Minuten
             if (delta < 10 * 60 * 1000) {
               const pulse = L.circleMarker(pos, {
                 radius: 12,
@@ -85,6 +86,7 @@
             popupText += `<br>Letzte Übertragung: unbekannt`;
           }
         } catch (err) {
+          console.warn(`❌ Fehler beim Laden der Daten für ${id}:`, err);
           popupText += `<br>Letzte Übertragung: unbekannt`;
         }
 
@@ -92,7 +94,7 @@
       }
     }
 
-    loadData();
+    loadData(); // Initial
     setInterval(loadData, 30000); // Alle 30 Sekunden
   </script>
 </body>
