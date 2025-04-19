@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
   />
   <style>
     html, body {
@@ -14,18 +15,15 @@
       margin: 0;
       padding: 0;
     }
-
     #map {
       height: 100%;
       width: 100%;
     }
-
     .blinking-node {
       animation: blink-node 1s ease-in-out infinite;
       background-color: red;
       border-radius: 50%;
     }
-
     @keyframes blink-node {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
@@ -54,18 +52,22 @@
         const id = node.id;
         const pos = [node.lat, node.lon];
 
-        // Marker erzeugen, falls nicht vorhanden
+        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
+        const payloadTime = data.time;
+        const time = Date.parse(payloadTime);
+        const now = Date.now();
+        const age = now - time;
+
+        const popupText = `${node.name || id}<br>Letzte Übertragung: ${payloadTime}`;
+
         if (!nodeMarkers[id]) {
-          const marker = L.marker(pos).addTo(map).bindPopup(`${node.name}<br>ID: ${id}`);
+          const marker = L.marker(pos).addTo(map).bindPopup(popupText);
           nodeMarkers[id] = { ...node, marker };
+        } else {
+          nodeMarkers[id].marker.setPopupContent(popupText);
         }
 
-        // Live-Daten abholen
-        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
-        const payloadTime = Date.parse(data.time);
-        const now = Date.now();
-
-        if (now - payloadTime < 60000) {
+        if (age < 60000) {
           const pulse = L.circleMarker(pos, {
             radius: 12,
             className: 'blinking-node'
@@ -75,8 +77,8 @@
       }
     }
 
-    loadData(); // Initial
-    setInterval(loadData, 30000); // Alle 30 Sek. neu laden
+    loadData();
+    setInterval(loadData, 30000);
   </script>
 </body>
 </html>
