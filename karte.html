@@ -10,19 +10,26 @@
     integrity="sha256-sA+z0pGz7SojTbGfT2SXBUNmft3zt3MoYdFfDX8Ceco="
     crossorigin=""
   />
-<style>
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  #map {
-    width: 100%;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-  }
-</style>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      width: 100%;
+      height: 100vh;
+    }
+    .blinking-node {
+      animation: blink-node 1s ease-in-out infinite;
+      background-color: red;
+      border-radius: 50%;
+    }
+    @keyframes blink-node {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
 </head>
 <body>
   <div id="map"></div>
@@ -36,17 +43,47 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    const t = Date.now();
+    const nodeMarkers = {};
 
-    fetch(`data/nodes.json?t=${t}`)
-      .then(r => r.json())
-      .then(nodes => {
-        nodes.forEach(node => {
-          L.marker([node.lat, node.lon])
-            .addTo(map)
-            .bindPopup(node.name || node.id);
-        });
-      });
+    async function loadData() {
+      const t = Date.now();
+
+      const nodes = await fetch(`data/nodes.json?t=${t}`).then(r => r.json());
+
+      for (const node of nodes) {
+        const id = node.id;
+        const pos = [node.lat, node.lon];
+
+        // Falls Marker noch nicht existiert
+        if (!nodeMarkers[id]) {
+          const marker = L.marker(pos).addTo(map);
+          nodeMarkers[id] = { ...node, marker };
+        }
+
+        // Hole Live-Daten für diesen Node
+        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
+
+        const now = Date.now();
+        const time = Date.parse(data.time);
+
+        // Popup mit Zeitstempel aktualisieren
+        const timestamp = new Date(data.time).toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
+        const popupContent = `<b>${node.name || id}</b><br>ID: ${id}<br>Letzte Übertragung: ${data.time}`;
+        nodeMarkers[id].marker.bindPopup(popupContent);
+
+        // Nur wenn innerhalb der letzten 60s, dann blinken
+        if (now - time < 60000) {
+          const pulse = L.circleMarker(pos, {
+            radius: 12,
+            className: 'blinking-node'
+          }).addTo(map);
+          setTimeout(() => map.removeLayer(pulse), 3000);
+        }
+      }
+    }
+
+    loadData(); // Initialer Aufruf
+    setInterval(loadData, 30000); // alle 30 Sekunden neu laden
   </script>
 </body>
 </html>
