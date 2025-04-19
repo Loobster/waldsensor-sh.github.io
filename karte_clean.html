@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Waldsensor-Karte (Basis)</title>
+  <title>Waldsensor-Karte (Clean)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     rel="stylesheet"
@@ -17,8 +17,8 @@
       padding: 0;
     }
     #map {
-      height: 100vh;
-      width: 100vw;
+      height: 100%;
+      width: 100%;
     }
   </style>
 </head>
@@ -33,6 +33,30 @@
       maxZoom: 18,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+
+    const t = Date.now();
+
+    async function loadNodes() {
+      const nodes = await fetch(`data/nodes.json?t=${t}`).then(r => r.json());
+
+      for (const node of nodes) {
+        const pos = [node.lat, node.lon];
+
+        let timeText = '';
+        try {
+          const data = await fetch(`data/${node.id}.json?t=${t}`).then(r => r.json());
+          timeText = `<br><b>Letzte Übertragung:</b> ${data.time}`;
+        } catch (e) {
+          timeText = '<br><i>Keine Live-Daten</i>';
+        }
+
+        L.marker(pos)
+          .addTo(map)
+          .bindPopup(`<b>${node.name}</b>${timeText}`);
+      }
+    }
+
+    loadNodes();
   </script>
 </body>
 </html>
