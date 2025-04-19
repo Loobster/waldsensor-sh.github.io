@@ -2,20 +2,29 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>WALDSENSOR.SH – Aktive Nodes</title>
+  <title>Waldsensor-Karte</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-sA+z0pGz7SojTbGfT2SXBUNmft3zt3MoYdFfDX8Ceco="
+    crossorigin=""
   />
   <style>
     html, body {
       height: 100%;
       margin: 0;
+      padding: 0;
     }
-    #map {
-      height: 100vh;
-      width: 100%;
+    #map { height: 100vh; }
+    .blinking-node {
+      animation: blink-node 1s ease-in-out infinite;
+      background-color: red;
+      border-radius: 50%;
+    }
+    @keyframes blink-node {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
   </style>
 </head>
@@ -24,38 +33,48 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    console.log("🏁 Skript gestartet");
+    const map = L.map('map').setView([54.6, 9.0], 10);
 
-    const map = L.map("map").setView([54.6, 9.0], 10);
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap contributors",
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    fetch("data/nodes.json")
-      .then((res) => res.json())
-      .then((nodes) => {
-        nodes.forEach((node) => {
-          fetch(`data/${node.id}.json`)
-            .then((res) => res.json())
-            .then((data) => {
-              const marker = L.marker([node.lat, node.lon])
-                .addTo(map)
-                .bindPopup(`
-                  <strong>${node.name}</strong><br />
-                  ID: ${node.id}<br />
-                  Letzte Übertragung: ${data.time || "Unbekannt"}
-                `);
-              console.log(`📍 Marker gesetzt für ${node.id}`);
-            })
-            .catch((err) => {
-              console.warn(`⚠️ Fehler beim Laden von ${node.id}:`, err);
-            });
-        });
-      })
-      .catch((err) => {
-        console.error("❌ Fehler beim Laden der nodes.json:", err);
-      });
+    const nodeMarkers = {};
+
+    async function loadData() {
+      const t = Date.now();
+
+      const nodes = await fetch(`data/nodes.json?t=${t}`).then(r => r.json());
+
+      for (const node of nodes) {
+        const id = node.id;
+        const pos = [node.lat, node.lon];
+
+        // Falls noch kein Marker da ist
+        if (!nodeMarkers[id]) {
+          const marker = L.marker(pos).addTo(map);
+          nodeMarkers[id] = { ...node, marker };
+        }
+
+        // Lade Live-Daten des Nodes
+        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
+
+        // Zeit vergleichen: nur wenn max 60s alt, dann blinken
+        const now = Date.now();
+        const time = Date.parse(data.time);
+        if (now - time < 60_000) {
+          const pulse = L.circleMarker(pos, {
+            radius: 12,
+            className: 'blinking-node'
+          }).addTo(map);
+          setTimeout(() => map.removeLayer(pulse), 3000);
+        }
+      }
+    }
+
+    loadData(); // Initialer Aufruf
+    setInterval(loadData, 30000); // Alle 30 Sekunden neu laden
   </script>
 </body>
 </html>
