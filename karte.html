@@ -1,39 +1,21 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Waldsensor-Karte</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>WALDSENSOR.SH – Aktive Nodes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-sA+z0pGz7SojTbGfT2SXBUNmft3zt3MoYdFfDX8Ceco="
-    crossorigin=""
   />
   <style>
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-    #map { height: 100vh; }
-    .blinking-node {
-      animation: blink-node 1s ease-in-out infinite;
-      background-color: red;
-      border-radius: 50%;
+    html, body {
+      height: 100%;
+      margin: 0;
     }
-    .blinking-gw {
-      animation: blink-gw 1s ease-in-out infinite;
-      background-color: blue;
-      border-radius: 50%;
-    }
-    @keyframes blink-node {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-    @keyframes blink-gw {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+    #map {
+      height: 100vh;
+      width: 100%;
     }
   </style>
 </head>
@@ -42,70 +24,38 @@ html, body {
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([54.6, 9.0], 10);
+    console.log("🏁 Skript gestartet");
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 18,
-  attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
+    const map = L.map("map").setView([54.6, 9.0], 10);
 
-    const t = Date.now(); // Cache-Buster für frische Daten
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors",
+    }).addTo(map);
 
-    const nodeMarkers = {};
-    const activeOverlays = [];
-
-    // Nodes laden
-    fetch(`data/nodes.json?t=${t}`)
-      .then(res => res.json())
-      .then(nodes => {
-        nodes.forEach(node => {
-          const marker = L.marker([node.lat, node.lon])
-            .addTo(map);
-          nodeMarkers[node.id] = { ...node, marker };
-        });
-
-        // Daten je Node laden (Gateways etc.)
-        nodes.forEach(node => {
-          fetch(`data/${node.id}.json?t=${t}`)
-            .then(res => res.json())
-            .then(data => {
-              const nodePos = [node.lat, node.lon];
-
-              // Node blinkt kurz
-              const pulse = L.circleMarker(nodePos, {
-                radius: 12,
-                className: 'blinking-node'
-              }).addTo(map);
-              setTimeout(() => map.removeLayer(pulse), 3000);
-
-              // Gateways verarbeiten
-              data.gateways.forEach(gw => {
-                if (!gw.lat || !gw.lon) return; // überspringen wenn Position fehlt
-
-                const gwPos = [gw.lat, gw.lon];
-
-                const gwMarker = L.circleMarker(gwPos, {
-                  radius: 10,
-                  className: 'blinking-gw'
-                }).addTo(map);
-
-                const line = L.polyline([gwPos, nodePos], { color: 'red' }).addTo(map);
-
-                activeOverlays.push(gwMarker, line);
-
-                // Nach 5 Sek. hört das GW auf zu blinken, bleibt aber sichtbar
-                setTimeout(() => gwMarker.setStyle({ className: '' }), 5000);
-
-                // Nach 60 Sek. verschwinden Marker + Linie
-                setTimeout(() => {
-                  map.removeLayer(gwMarker);
-                  map.removeLayer(line);
-                }, 60000);
-              });
+    fetch("data/nodes.json")
+      .then((res) => res.json())
+      .then((nodes) => {
+        nodes.forEach((node) => {
+          fetch(`data/${node.id}.json`)
+            .then((res) => res.json())
+            .then((data) => {
+              const marker = L.marker([node.lat, node.lon])
+                .addTo(map)
+                .bindPopup(`
+                  <strong>${node.name}</strong><br />
+                  ID: ${node.id}<br />
+                  Letzte Übertragung: ${data.time || "Unbekannt"}
+                `);
+              console.log(`📍 Marker gesetzt für ${node.id}`);
+            })
+            .catch((err) => {
+              console.warn(`⚠️ Fehler beim Laden von ${node.id}:`, err);
             });
         });
+      })
+      .catch((err) => {
+        console.error("❌ Fehler beim Laden der nodes.json:", err);
       });
   </script>
 </body>
 </html>
-
