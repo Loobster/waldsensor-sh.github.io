@@ -6,8 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    crossorigin=""
+    href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
   />
   <style>
     html, body {
@@ -15,15 +14,18 @@
       margin: 0;
       padding: 0;
     }
+
     #map {
       height: 100%;
       width: 100%;
     }
+
     .blinking-node {
       animation: blink-node 1s ease-in-out infinite;
       background-color: red;
       border-radius: 50%;
     }
+
     @keyframes blink-node {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
@@ -52,33 +54,41 @@
         const id = node.id;
         const pos = [node.lat, node.lon];
 
-        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
-        const payloadTime = data.time;
-        const time = Date.parse(payloadTime);
-        const now = Date.now();
-        const age = now - time;
-
-        const popupText = `${node.name || id}<br>Letzte Übertragung: ${payloadTime}`;
-
+        // Marker erzeugen, falls nicht vorhanden
         if (!nodeMarkers[id]) {
-          const marker = L.marker(pos).addTo(map).bindPopup(popupText);
+          const marker = L.marker(pos).addTo(map);
           nodeMarkers[id] = { ...node, marker };
-        } else {
-          nodeMarkers[id].marker.setPopupContent(popupText);
         }
 
-        if (age < 60000) {
-          const pulse = L.circleMarker(pos, {
-            radius: 12,
-            className: 'blinking-node'
-          }).addTo(map);
-          setTimeout(() => map.removeLayer(pulse), 3000);
+        // Versuche, Live-Daten zu laden
+        try {
+          const res = await fetch(`data/${id}.json?t=${t}`);
+          if (!res.ok) continue;
+
+          const data = await res.json();
+          const payloadTime = Date.parse(data.time);
+          const now = Date.now();
+          const timeStr = new Date(data.time).toLocaleString();
+
+          // Popup nur mit Zeitstempel, wenn gültige Daten vorhanden
+          nodeMarkers[id].marker.bindPopup(`${node.name}<br>ID: ${id}<br>Letzte Übertragung: ${timeStr}`);
+
+          // Blinken, wenn Übertragung jünger als 60 Sek.
+          if (now - payloadTime < 60000) {
+            const pulse = L.circleMarker(pos, {
+              radius: 12,
+              className: 'blinking-node'
+            }).addTo(map);
+            setTimeout(() => map.removeLayer(pulse), 3000);
+          }
+        } catch (e) {
+          console.warn(`⚠️ Keine Daten für ${id}:`, e);
         }
       }
     }
 
-    loadData();
-    setInterval(loadData, 30000);
+    loadData();                  // Initial
+    setInterval(loadData, 30000); // Alle 30 Sek.
   </script>
 </body>
 </html>
