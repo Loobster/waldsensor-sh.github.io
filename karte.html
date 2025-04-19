@@ -53,49 +53,47 @@
       for (const node of nodes) {
         const id = node.id;
         const pos = [node.lat, node.lon];
-        const name = node.name || id;
-        let popupText = `<b>${name}</b><br>ID: ${id}<br>Letzte Übertragung: unbekannt`;
 
-        let shouldBlink = false;
+        if (!nodeMarkers[id]) {
+          const marker = L.marker(pos).addTo(map);
+          nodeMarkers[id] = { ...node, marker };
+        }
+
+        let popupText = `<b>${node.name}</b><br>ID: ${id}`;
 
         try {
           const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
-          const payloadTime = Date.parse(data.time);
-const now = Date.now();
-const delta = now - payloadTime;
-console.log(`[DEBUG] ID: ${id}, now: ${new Date(now).toISOString()}, payload: ${data.time}, delta: ${delta} ms`);
-
-          if (!isNaN(payloadTime)) {
+          if (data.time) {
+            const payloadTime = Date.parse(data.time);
+            const now = Date.now();
             const dt = new Date(payloadTime);
-            popupText = `<b>${name}</b><br>ID: ${id}<br>Letzte Übertragung: ${dt.toLocaleString()}`;
+            const delta = now - payloadTime;
 
-            if (now - payloadTime < 60000) {
-              shouldBlink = true;
+            console.debug(`[DEBUG] ID: ${id}, now: ${new Date(now).toISOString()}, payload: ${data.time}, delta: ${delta} ms`);
+
+            // Nur wenn Zeitdifferenz < 10 Minuten
+            if (delta < 10 * 60 * 1000) {
+              const pulse = L.circleMarker(pos, {
+                radius: 12,
+                className: 'blinking-node'
+              }).addTo(map);
+              setTimeout(() => map.removeLayer(pulse), 3000);
             }
+
+            popupText += `<br>Letzte Übertragung: ${dt.toLocaleString()}`;
+          } else {
+            popupText += `<br>Letzte Übertragung: unbekannt`;
           }
-        } catch (e) {
-          // Kein JSON vorhanden = noch keine Übertragung
+        } catch (err) {
+          popupText += `<br>Letzte Übertragung: unbekannt`;
         }
 
-        if (!nodeMarkers[id]) {
-          const marker = L.marker(pos).addTo(map).bindPopup(popupText);
-          nodeMarkers[id] = { marker };
-        } else {
-          nodeMarkers[id].marker.setPopupContent(popupText);
-        }
-
-        if (shouldBlink) {
-          const pulse = L.circleMarker(pos, {
-            radius: 12,
-            className: 'blinking-node'
-          }).addTo(map);
-          setTimeout(() => map.removeLayer(pulse), 3000);
-        }
+        nodeMarkers[id].marker.bindPopup(popupText);
       }
     }
 
     loadData();
-    setInterval(loadData, 30000);
+    setInterval(loadData, 30000); // Alle 30 Sekunden
   </script>
 </body>
 </html>
