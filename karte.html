@@ -16,18 +16,15 @@
       margin: 0;
       padding: 0;
     }
-
     #map {
-      height: 100%;
       width: 100%;
+      height: 100%;
     }
-
     .blinking-node {
       animation: blink-node 1s ease-in-out infinite;
       background-color: red;
       border-radius: 50%;
     }
-
     @keyframes blink-node {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
@@ -50,36 +47,41 @@
 
     async function loadData() {
       const t = Date.now();
+
       const nodes = await fetch(`data/nodes.json?t=${t}`).then(r => r.json());
 
       for (const node of nodes) {
         const id = node.id;
         const pos = [node.lat, node.lon];
 
-        // Marker anlegen, falls noch nicht vorhanden
+        // Falls noch kein Marker da ist
         if (!nodeMarkers[id]) {
           const marker = L.marker(pos).addTo(map);
           nodeMarkers[id] = { ...node, marker };
         }
 
-        // Daten des Nodes laden
-        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
-        const now = Date.now();
-        const payloadTime = Date.parse(data.time);
+        // Lade Live-Daten des Nodes
+        try {
+          const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
+          const now = Date.now();
+          const time = Date.parse(data.time);
 
-        // Wenn Zeitstempel jünger als 60 Sek., dann blinken
-        if (now - payloadTime < 60000) {
-          const pulse = L.circleMarker(pos, {
-            radius: 12,
-            className: 'blinking-node'
-          }).addTo(map);
-          setTimeout(() => map.removeLayer(pulse), 3000);
+          // Wenn Daten frisch sind, blinke
+          if (now - time < 60_000) {
+            const pulse = L.circleMarker(pos, {
+              radius: 12,
+              className: 'blinking-node'
+            }).addTo(map);
+            setTimeout(() => map.removeLayer(pulse), 3000);
+          }
+        } catch (e) {
+          console.warn(`⚠️ Fehler beim Laden von ${id}.json`, e);
         }
       }
     }
 
-    loadData();                  // Erstes Laden
-    setInterval(loadData, 30000); // Alle 30 Sekunden neu laden
+    loadData();
+    setInterval(loadData, 30000);
   </script>
 </body>
 </html>
