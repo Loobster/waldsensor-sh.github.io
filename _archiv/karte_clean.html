@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Waldsensor-Karte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
+  />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      height: 100%;
+      width: 100%;
+    }
+    .blinking-node {
+      animation: blink-node 1s ease-in-out infinite;
+      background-color: red;
+      border-radius: 50%;
+    }
+    @keyframes blink-node {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([54.6, 9.0], 10);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const nodeMarkers = {};
+
+    async function loadData() {
+      const t = Date.now();
+      const nodes = await fetch(`data/nodes.json?t=${t}`).then(r => r.json());
+
+      for (const node of nodes) {
+        const id = node.id;
+        const pos = [node.lat, node.lon];
+
+        const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
+        const payloadTime = data.time;
+        const time = Date.parse(payloadTime);
+        const now = Date.now();
+        const age = now - time;
+
+        const popupText = `${node.name || id}<br>Letzte Übertragung: ${payloadTime}`;
+
+        if (!nodeMarkers[id]) {
+          const marker = L.marker(pos).addTo(map).bindPopup(popupText);
+          nodeMarkers[id] = { ...node, marker };
+        } else {
+          nodeMarkers[id].marker.setPopupContent(popupText);
+        }
+
+        if (age < 60000) {
+          const pulse = L.circleMarker(pos, {
+            radius: 12,
+            className: 'blinking-node'
+          }).addTo(map);
+          setTimeout(() => map.removeLayer(pulse), 3000);
+        }
+      }
+    }
+
+    loadData();
+    setInterval(loadData, 30000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>WALDSENSOR.SH – Aktive Nodes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; }
+    #map { height: 100vh; width: 100%; }
+    .node-marker { color: green; }
+    .gw-marker { color: red; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    console.log("🏁 Skript gestartet");
+
+    const map = L.map("map").setView([54.4, 9.3], 9);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
+
+    async function load() {
+      // Lade Gateways
+      const gateways = await fetch("data/gateways.json").then(r => r.json());
+      console.log("📡 Geladene Gateways:", gateways);
+
+      // Lade Nodes
+      const nodes = await fetch("data/nodes.json").then(r => r.json());
+      console.log("🌲 Geladene Nodes:", nodes);
+
+      nodes.forEach(node => {
+        const { id, name, lat, lon } = node;
+
+        if (!lat || !lon) {
+          console.warn("⚠️ Node hat keine gültigen Koordinaten:", id);
+          return;
+        }
+
+        const marker = L.marker([lat, lon], { title: name }).addTo(map);
+        marker.bindPopup(`<strong>${name}</strong><br>ID: ${id}`);
+
+        // Versuche passende Gateway-Daten anzuzeigen
+        fetch(`data/${id}.json`)
+          .then(r => r.json())
+          .then(data => {
+            console.log(`📨 Daten von ${id}:`, data);
+
+            data.gateways.forEach(gw => {
+              const gwInfo = gateways.find(g => g.id === gw.id);
+              if (gw.lat && gw.lon) {
+                const gMarker = L.circleMarker([gw.lat, gw.lon], {
+                  radius: 8,
+                  color: "red",
+                  fillOpacity: 0.7
+                }).addTo(map);
+                gMarker.bindPopup(`
+                  <strong>Gateway:</strong> ${gw.id}<br>
+                  <strong>RSSI:</strong> ${gw.rssi}<br>
+                  <strong>SNR:</strong> ${gw.snr}
+                `);
+
+                // Linie zum Node
+                L.polyline([[lat, lon], [gw.lat, gw.lon]], {
+                  color: "red",
+                  dashArray: "4"
+                }).addTo(map);
+              } else if (gwInfo) {
+                const { lat, lon, name } = gwInfo;
+                const gMarker = L.circleMarker([lat, lon], {
+                  radius: 8,
+                  color: "red",
+                  fillOpacity: 0.7
+                }).addTo(map);
+                gMarker.bindPopup(`
+                  <strong>${name}</strong><br>
+                  <strong>ID:</strong> ${gw.id}<br>
+                  <strong>RSSI:</strong> ${gw.rssi}<br>
+                  <strong>SNR:</strong> ${gw.snr}
+                `);
+
+                L.polyline([[node.lat, node.lon], [lat, lon]], {
+                  color: "red",
+                  dashArray: "4"
+                }).addTo(map);
+              } else {
+                console.warn("⚠️ Kein Eintrag in gateways.json gefunden für:", gw.id);
+              }
+            });
+          })
+          .catch(err => {
+            console.error(`❌ Fehler beim Laden der Datei ${id}.json:`, err);
+          });
+      });
+    }
+
+    load();
+  </script>
+</body>
+</html>

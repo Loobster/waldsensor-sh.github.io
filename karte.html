@@ -7,7 +7,8 @@
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
-  />
+/>
+<script src="https://unpkg.com/overlapping-marker-spiderfier-leaflet/dist/oms.min.js"></script>
   <style>
     html, body {
       height: 100%;
@@ -38,7 +39,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     const map = L.map('map').setView([54.6, 9.0], 10);
-
+const oms = new OverlappingMarkerSpiderfier(map); // <-- direkt nach map-Init
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
       attribution: '&copy; OpenStreetMap contributors'
@@ -56,11 +57,11 @@
         const id = node.id;
         const pos = [node.lat, node.lon];
 
-        if (!nodeMarkers[id]) {
-          const marker = L.marker(pos).addTo(map);
-          nodeMarkers[id] = { ...node, marker };
-        }
-
+if (!nodeMarkers[id]) {
+  const marker = L.marker(pos).addTo(map);
+  oms.addMarker(marker); // <-- Das sagt dem Spiderfier: „Merke dir diesen Marker!“
+  nodeMarkers[id] = { ...node, marker };
+}
         let popupText = `<b>${node.name}</b><br>ID: ${id}`;
 
         try {
@@ -93,7 +94,6 @@ const payloadTime = new Date(data.time).getTime();
         nodeMarkers[id].marker.bindPopup(popupText);
       }
     }
-
     loadData(); // Initial
     setInterval(loadData, 30000); // Alle 30 Sekunden
   </script>
