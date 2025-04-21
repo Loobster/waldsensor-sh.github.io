@@ -4,29 +4,23 @@
   <meta charset="utf-8" />
   <title>Waldsensor SH (Testkarte)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
   <style>
     html, body, #map { height: 100%; margin: 0; }
   </style>
-
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-  <!-- OMS (Overlapping Marker Spiderfier) lokal eingebunden -->
-  <script src="scripts/oms.min.js"></script>
 </head>
 <body>
   <div id="map"></div>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/overlapping-marker-spiderfier-leaflet@1.0.3/oms.min.js"></script>
+
   <script>
-    console.log("📍 Karte wurde geladen");
+    console.log("🗺️ Karte wurde geladen");
 
     const map = L.map("map").setView([54.5, 9.0], 9);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>',
     }).addTo(map);
 
     const oms = new OverlappingMarkerSpiderfier(map);
