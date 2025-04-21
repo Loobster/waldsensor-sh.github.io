@@ -62,5 +62,16 @@
     loadData();
     setInterval(loadData, 60_000); // jede Minute neu laden
   </script>
+<script>
+  // Test: Prüfe, ob die JSON-Datei geladen wird
+  fetch("data/s31-lb.json")
+    .then(res => res.json())
+    .then(data => {
+      alert("✔ JSON geladen!\n\n" + JSON.stringify(data, null, 2));
+    })
+    .catch(err => {
+      alert("❌ Fehler beim Laden der JSON-Datei:\n" + err);
+    });
+</script>
 </body>
 </html>
