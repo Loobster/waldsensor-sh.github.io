@@ -1,101 +1,66 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <title>Waldsensor-Karte</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
-/>
-<script src="https://cdn.jsdelivr.net/npm/overlapping-marker-spiderfier-leaflet@0.2.7/oms.min.js"></script>  
-<style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
+  <meta charset="utf-8" />
+  <title>Waldsensor SH (Live)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    #map {
-      height: 100%;
-      width: 100%;
-    }
-
-    .blinking-node {
-      animation: blink-node 1s ease-in-out infinite;
-      background-color: red;
-      border-radius: 50%;
-    }
-
-    @keyframes blink-node {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
   </style>
 </head>
 <body>
   <div id="map"></div>
 
+  <!-- Leaflet & Overlapping Marker Spiderfier -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="scripts/oms.min.js"></script>
+
   <script>
-    const map = L.map('map').setView([54.6, 9.0], 10);
-const oms = new OverlappingMarkerSpiderfier(map); // <-- direkt nach map-Init
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      attribution: '&copy; OpenStreetMap contributors'
+    console.log("📡 loadData() wurde aufgerufen");
+
+    const map = L.map("map").setView([54.5, 9.0], 9);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>',
     }).addTo(map);
 
-    const nodeMarkers = {};
+    const oms = new OverlappingMarkerSpiderfier(map);
+    const markers = {};
 
     async function loadData() {
-      console.log("📡 loadData() wurde aufgerufen");
+      const urls = ["data/s31-lb.json", "data/se01-lb.json"];
+      const now = new Date();
 
-      const t = Date.now();
-      const nodes = await fetch(`data/nodes.json?t=${t}`).then(r => r.json());
+      for (const url of urls) {
+        const res = await fetch(url);
+        const json = await res.json();
+        const { node, time, gateways } = json;
 
-      for (const node of nodes) {
-        const id = node.id;
-        const pos = [node.lat, node.lon];
+        const timestamp = new Date(time);
+        const diff = now - timestamp;
 
-if (!nodeMarkers[id]) {
-  const marker = L.marker(pos).addTo(map);
-  oms.addMarker(marker); // <-- Das sagt dem Spiderfier: „Merke dir diesen Marker!“
-  nodeMarkers[id] = { ...node, marker };
-}
-        let popupText = `<b>${node.name}</b><br>ID: ${id}`;
+        console.log(`[DEBUG] ID: ${node}, now: ${now.toISOString()}, payload: ${time}, delta: ${diff} ms`);
 
-        try {
-          const data = await fetch(`data/${id}.json?t=${t}`).then(r => r.json());
-          if (data.time) {
-const payloadTime = new Date(data.time).getTime();
-            const now = Date.now();
-            const dt = new Date(payloadTime);
-            const delta = now - payloadTime;
+        if (diff > 10 * 60 * 1000) continue; // älter als 10 Minuten → ausblenden
 
-            console.log(`[DEBUG] ID: ${id}, now: ${new Date(now).toISOString()}, payload: ${data.time}, delta: ${delta} ms`);
+        for (const gw of gateways) {
+          const popup = `
+            <b>Sensor ${node === "s31-lb" ? "Waldkante bei Husum" : "Sander Einsatz" } (live)</b><br>
+            ID: ${node}<br>
+            Letzte Übertragung: ${new Date(time).toLocaleString()}
+          `;
 
-            if (delta < 10 * 60 * 1000) {
-              const pulse = L.circleMarker(pos, {
-                radius: 12,
-                className: 'blinking-node'
-              }).addTo(map);
-              setTimeout(() => map.removeLayer(pulse), 3000);
-            }
-
-            popupText += `<br>Letzte Übertragung: ${dt.toLocaleString()}`;
-          } else {
-            popupText += `<br>Letzte Übertragung: unbekannt`;
-          }
-        } catch (err) {
-          console.warn(`❌ Fehler beim Laden der Daten für ${id}:`, err);
-          popupText += `<br>Letzte Übertragung: unbekannt`;
+          const marker = L.marker([gw.lat, gw.lon]).bindPopup(popup);
+          marker.addTo(map);
+          oms.addMarker(marker);
+          markers[node] = marker;
         }
-
-        nodeMarkers[id].marker.bindPopup(popupText);
       }
     }
-    loadData(); // Initial
-    setInterval(loadData, 30000); // Alle 30 Sekunden
+
+    loadData();
+    setInterval(loadData, 60_000); // jede Minute neu laden
   </script>
 </body>
 </html>
