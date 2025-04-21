@@ -13,9 +13,8 @@
 <body>
   <div id="map"></div>
 
-  <!-- Leaflet & Overlapping Marker Spiderfier -->
+  <!-- Leaflet -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="scripts/oms.min.js"></script>
 
   <script>
     console.log("📡 loadData() wurde aufgerufen");
@@ -25,7 +24,6 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>',
     }).addTo(map);
 
-    const oms = new OverlappingMarkerSpiderfier(map);
     const markers = {};
 
     async function loadData() {
@@ -42,36 +40,24 @@
 
         console.log(`[DEBUG] ID: ${node}, now: ${now.toISOString()}, payload: ${time}, delta: ${diff} ms`);
 
-        if (diff > 10 * 60 * 1000) continue; // älter als 10 Minuten → ausblenden
+        if (diff > 10 * 60 * 1000) continue;
 
         for (const gw of gateways) {
           const popup = `
-            <b>Sensor ${node === "s31-lb" ? "Waldkante bei Husum" : "Sander Einsatz" } (live)</b><br>
+            <b>Sensor ${node === "s31-lb" ? "Waldkante bei Husum" : "Sander Einsatz"} (live)</b><br>
             ID: ${node}<br>
             Letzte Übertragung: ${new Date(time).toLocaleString()}
           `;
 
           const marker = L.marker([gw.lat, gw.lon]).bindPopup(popup);
           marker.addTo(map);
-          oms.addMarker(marker);
           markers[node] = marker;
         }
       }
     }
 
     loadData();
-    setInterval(loadData, 60_000); // jede Minute neu laden
+    setInterval(loadData, 60_000);
   </script>
-<script>
-  // Test: Prüfe, ob die JSON-Datei geladen wird
-  fetch("data/s31-lb.json")
-    .then(res => res.json())
-    .then(data => {
-      alert("✔ JSON geladen!\n\n" + JSON.stringify(data, null, 2));
-    })
-    .catch(err => {
-      alert("❌ Fehler beim Laden der JSON-Datei:\n" + err);
-    });
-</script>
 </body>
 </html>
