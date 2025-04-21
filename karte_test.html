@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <title>Waldsensor SH (Test)</title>
+  <title>Waldsensor SH (Live Test)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
@@ -12,19 +12,19 @@
 <body>
   <div id="map"></div>
 
+  <!-- Leaflet und OMS laden -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="scripts/oms.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/overlapping-marker-spiderfier-leaflet@0.2.7/oms.min.js"></script>
 
   <script>
-    console.log("📡 loadData() wurde aufgerufen");
+    console.log("🛰️ Karte wurde geladen");
 
     const map = L.map("map").setView([54.5, 9.0], 9);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>'
     }).addTo(map);
 
     const oms = new OverlappingMarkerSpiderfier(map);
-    const markers = {};
 
     async function loadData() {
       const urls = ["data/s31-lb.json", "data/se01-lb.json"];
@@ -34,31 +34,28 @@
         const res = await fetch(url);
         const json = await res.json();
         const { node, time, gateways } = json;
-
         const timestamp = new Date(time);
         const diff = now - timestamp;
 
         console.log(`[DEBUG] ID: ${node}, now: ${now.toISOString()}, payload: ${time}, delta: ${diff} ms`);
 
-        if (diff > 3 * 60 * 60 * 1000) continue;  // erlaubt bis zu 3 Stunden alte Daten
+        if (diff > 10 * 60 * 1000) continue; // älter als 10 Minuten
 
         for (const gw of gateways) {
           const popup = `
             <b>Sensor ${node === "s31-lb" ? "Waldkante bei Husum" : "Sander Einsatz"} (live)</b><br>
             ID: ${node}<br>
-            Letzte Übertragung: ${new Date(time).toLocaleString()}
+            Letzte Übertragung: ${timestamp.toLocaleString()}
           `;
-
           const marker = L.marker([gw.lat, gw.lon]).bindPopup(popup);
           marker.addTo(map);
           oms.addMarker(marker);
-          markers[node] = marker;
         }
       }
     }
 
     loadData();
-    setInterval(loadData, 60_000);
+    setInterval(loadData, 60000); // alle 60 Sekunden
   </script>
 </body>
 </html>
