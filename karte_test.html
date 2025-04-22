@@ -51,7 +51,7 @@
           const diff = now - timestamp;
 
           console.log(`[DEBUG] ID: ${node}, now: ${now.toISOString()}, payload: ${time}, delta: ${diff} ms`);
-          if (diff > 15 * 60 * 1000) continue;
+          if (diff > 999 * 60 * 1000) continue;
 
           for (const gw of gateways) {
             const meta = gatewayMap[gw.id];
