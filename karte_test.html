@@ -40,7 +40,7 @@
 
           console.log(`[DEBUG] ID: ${node}, now: ${now.toISOString()}, payload: ${time}, delta: ${diff} ms`);
 
-          if (diff > 10 * 60 * 1000) continue;
+          if (diff > 60 * 60 * 1000) continue;
 
           for (const gw of gateways) {
             const popup = `
