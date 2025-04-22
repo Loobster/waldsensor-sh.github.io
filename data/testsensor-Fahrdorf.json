@@ -1,5 +1,14 @@
 {
-  "node": "testsensor-Fahrdorf",
-  "time": null,
-  "gateways": []
+"node": "tests-fahrdorf",
+  "time": "2025-04-22T09:15:00Z",
+  "gateways": [
+    {
+      "id": "eui-testgateway123",
+      "rssi": -80,
+      "snr": 10.0,
+      "lat": 54.4833,
+      "lon": 9.5833
+   "lon": 9.5833
+    }
+  ]
 }
