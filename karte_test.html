@@ -2,13 +2,17 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <title>Waldsensor SH – Testkarte</title>
+  <title>Waldsensor SH – Testkarte mit Blinken</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
-    html, body, #map {
-      height: 100%;
-      margin: 0;
+    html, body, #map { height: 100%; margin: 0; }
+    .blinking-marker {
+      animation: blinker 1s linear infinite;
+    }
+    @keyframes blinker {
+      50% { opacity: 0.2; }
     }
   </style>
 </head>
@@ -17,57 +21,59 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="scripts/oms.min.js"></script>
+
   <script>
-    const map = L.map("map").setView([54.5, 9.2], 9);
+    const map = L.map("map").setView([54.5, 9.0], 9);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>',
     }).addTo(map);
 
     const oms = new OverlappingMarkerSpiderfier(map);
+    const gatewayInfo = {};
 
-    const nodeFiles = [
-      "data/s31-lb.json",
-      "data/se01-lb.json",
-      "data/testsensor-Fahrdorf.json"
-    ];
+    fetch("data/gateways.json")
+      .then(res => res.json())
+      .then(gws => {
+        gws.forEach(gw => gatewayInfo[gw.id] = gw);
+        loadData();
+        setInterval(loadData, 60000);
+      });
 
-    async function loadData() {
+    function loadData() {
+      const files = ["s31-lb", "se01-lb", "testsensor-Fahrdorf"].map(id => `data/${id}.json`);
       const now = new Date();
-      console.log("📡 loadData gestartet um:", now.toISOString());
 
-      for (const file of nodeFiles) {
-        try {
-          const res = await fetch(file);
-          const data = await res.json();
-          const timestamp = new Date(data.time);
-          const delta = now - timestamp;
+      files.forEach(url => {
+        fetch(url)
+          .then(res => res.json())
+          .then(data => {
+            const { node, time, gateways } = data;
+            const payloadTime = new Date(time);
+            const diff = now - payloadTime;
+            if (diff > 10 * 60 * 1000) return;
 
-          console.log(`[DEBUG] Node ${data.node}, Zeit: ${data.time}, Delta: ${delta} ms`);
+            const nodePos = gateways[0]; // Position vom Node (nicht GW!)
+            const nodeLatLng = [nodePos.lat, nodePos.lon];
 
-          // Wenn älter als 3 Stunden → nicht anzeigen
-          if (delta > 3 * 60 * 60 * 1000) {
-            console.log(`⚠️ ${data.node} ist älter als 3 Stunden – wird übersprungen`);
-            continue;
-          }
+            const popup = `<b>Sensor ${node}</b><br>Letzte Übertragung: ${payloadTime.toLocaleString()}`;
+            const nodeMarker = L.marker(nodeLatLng).bindPopup(popup).addTo(map);
+            oms.addMarker(nodeMarker);
 
-          data.gateways.forEach(gw => {
-            const marker = L.marker([gw.lat, gw.lon]).bindPopup(`
-              <b>Sensor: ${data.node}</b><br>
-              Letzte Zeit: ${timestamp.toLocaleString()}<br>
-              RSSI: ${gw.rssi}, SNR: ${gw.snr}
-            `);
-            marker.addTo(map);
-            oms.addMarker(marker);
+            // Blinke die Gateways, die diesen Node empfangen haben
+            gateways.forEach(gw => {
+              const gwMeta = gatewayInfo[gw.id];
+              if (!gwMeta) return;
+              const gwMarker = L.circleMarker([gwMeta.lat, gwMeta.lon], {
+                radius: 8,
+                color: "red",
+                className: "blinking-marker"
+              }).bindPopup(`<b>Gateway:</b> ${gwMeta.name || gw.id}`).addTo(map);
+
+              setTimeout(() => map.removeLayer(gwMarker), 3000);
+            });
           });
-
-        } catch (err) {
-          console.error(`❌ Fehler beim Laden der Datei ${file}:`, err);
-        }
-      }
+      });
     }
-
-    loadData();
-    setInterval(loadData, 60_000); // jede Minute
   </script>
 </body>
 </html>
