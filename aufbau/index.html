@@ -6,64 +6,71 @@
   <style>
     body {
       font-family: sans-serif;
-      padding: 2em;
-      background: #f9f9f9;
-      color: #333;
-    }
-    h1 {
       text-align: center;
     }
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5em;
-      margin-top: 2em;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
     }
-    .photo {
-      background: white;
-      padding: 1em;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      text-align: center;
+    .gallery a {
+      display: inline-block;
+      width: 300px;
+      height: 200px;
+      overflow: hidden;
+      border: 1px solid #ccc;
     }
-    .photo img {
-      max-width: 100%;
-      border-radius: 4px;
-    }
-    .caption {
-      margin-top: 0.5em;
-      font-size: 0.95em;
-      color: #555;
+    .gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* wichtig: schneidet ggf. etwas ab, aber sorgt für gleichmäßige Größe */
+      display: block;
     }
   </style>
 </head>
 <body>
   <h1>📸 Aufbau des Waldsensor-Nodes</h1>
-  <div class="gallery">
-    <div class="photo">
+  
+    <div class="gallery">
+      <div class="photo">
+    <a href="aufbau/sn50v3.jpg" target="_blank">
       <img src="sn50v3.jpg" alt="Lieferung der Bauteile">
+    </a>
       <div class="caption">Lieferung der Bauteile – alles vollständig?</div>
-    </div>
+    
     <div class="photo">
+      <a href="aufbau/TTN.jpg" target="_blank">
       <img src="TTN.jpg" alt="TTN-Registrierung">
+      </a>
       <div class="caption">Registrierung des Dragino-Node beim TTN</div>
-    </div>
-    <div class="paylaod-decoder">
+    
+        
+    <div class="pfoto">
+      <a href="aufbau/payload_decoder.jpg" target="_blank">
       <img src="payload_decoder.jpg" alt="Payload-Decoder">
+      </a>
       <div class="caption">Payload-Decoder für den sn50v3 Node</div>
-    </div>
+   
+        
     <div class="photo">
-      <img src="foto4.jpg" alt="xxx">
+      <a href="aufbau/payload_decoder.jpg" target="_blank">
+      <img src="payload_decoder.jpg" alt="xxx">
+      </a>
       <div class="caption">coming soon</div>
-    </div>
+    
+        
     <div class="photo">
+       <a href="aufbau/payload_decoder.jpg" target="_blank">
       <img src="foto5.jpg" alt="xxx">
+      </a>
       <div class="caption">coming soon</div>
-    </div>
+    
+        
     <div class="photo">
+       <a href="aufbau/payload_decoder.jpg" target="_blank">
       <img src="foto6.jpg" alt="xxx">
       <div class="caption">coming soon</div>
-    </div>
-  </div>
-</body>
-</html>
+    
+        
+
