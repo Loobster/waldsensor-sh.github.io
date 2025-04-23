@@ -8,58 +8,77 @@
       font-family: sans-serif;
       text-align: center;
     }
+
     .gallery {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
+      gap: 20px;
     }
-    .gallery a {
-      display: inline-block;
+
+    .item {
       width: 300px;
-      height: 200px;
-      overflow: hidden;
-      border: 1px solid #ccc;
     }
-    .gallery img {
+
+    .item img {
       width: 100%;
-      height: 100%;
-      object-fit: cover; /* wichtig: schneidet ggf. etwas ab, aber sorgt für gleichmäßige Größe */
+      height: 200px;
+      object-fit: cover;
+      border: 1px solid #ccc;
       display: block;
+    }
+
+    .caption {
+      margin-top: 8px;
+      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
   <h1>📸 Aufbau des Waldsensor-Nodes</h1>
-    <div class="gallery">
-    <a href="sn50v3.jpg" target="_blank">
-      <img src="sn50v3.jpg" alt="Lieferung der Bauteile">
-    </a>
+
+  <div class="gallery">
+    <div class="item">
+      <a href="sn50v3.jpg" target="_blank">
+        <img src="sn50v3.jpg" alt="Lieferung der Bauteile">
+      </a>
       <div class="caption">Lieferung der Bauteile – alles vollständig?</div>
-  
+    </div>
+
+    <div class="item">
       <a href="TTN.jpg" target="_blank">
-      <img src="TTN.jpg" alt="TTN-Registrierung">
+        <img src="TTN.jpg" alt="TTN-Registrierung">
       </a>
       <div class="caption">Registrierung des Dragino-Node beim TTN</div>
-    
+    </div>
+
+    <div class="item">
       <a href="payload_decoder.jpg" target="_blank">
-      <img src="payload_decoder.jpg" alt="Payload-Decoder">
+        <img src="payload_decoder.jpg" alt="Payload-Decoder">
       </a>
       <div class="caption">Payload-Decoder für den sn50v3 Node</div>
-   
-      <a href="payload_decoder.jpg" target="_blank">
-      <img src="payload_decoder.jpg" alt="xxx">
-      </a>
-      <div class="caption">coming soon</div>
-    
-       <a href="payload_decoder.jpg" target="_blank">
-      <img src="foto5.jpg" alt="xxx">
-      </a>
-      <div class="caption">coming soon</div>
-    
-       <a href="payload_decoder.jpg" target="_blank">
-      <img src="foto6.jpg" alt="xxx">
-      <div class="caption">coming soon</div>
-    
-        
+    </div>
 
+    <div class="item">
+      <a href="foto4.jpg" target="_blank">
+        <img src="foto4.jpg" alt="xxx">
+      </a>
+      <div class="caption">coming soon</div>
+    </div>
+
+    <div class="item">
+      <a href="foto5.jpg" target="_blank">
+        <img src="foto5.jpg" alt="xxx">
+      </a>
+      <div class="caption">coming soon</div>
+    </div>
+
+    <div class="item">
+      <a href="foto6.jpg" target="_blank">
+        <img src="foto6.jpg" alt="xxx">
+      </a>
+      <div class="caption">coming soon</div>
+    </div>
+  </div>
+</body>
+</html>
