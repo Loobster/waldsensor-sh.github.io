@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Waldsensor Aufbau-Dokumentation</title>
+  <title>Bauanleitung </title>
   <style>
     body {
       font-family: sans-serif;
@@ -33,52 +33,53 @@
       font-size: 0.9em;
     }
   </style>
-</head>
-<body>
-  <h1>Aufbau des Waldsensor-Nodes</h1>
+  </head>
+  <body>
+    <h1>Bauanleitung</h1>
+    <p><strong>In dieser Anleitung wird erklärt, wie man einen SHT35-Sensor an einem Dragino 
+        SN50v3 Node anschliesst.</strong></p>
 
-  <div class="gallery">
+    <p>Der Dragino SN50v3 Node wird vorkonfiguriert für verschiedene Sensortypen geliefert. 
+        In dieser Anleitung wird gezeigt, wie der SHT35-Sensor am Dragino angeschlossen wird.</p>
+    
+    <p>Der Sensor kommt mit einer I2C-Schnittstelle. Dafür sind in dieser Konfiguration die Anschlüsse 1,4,5 und 11 vorgesehen.</p>
+
+    <p>Der Sensor hat 4 verschiedenfarbige Anschlusskabel. Diese werden wie hier beschrieben 
+        am Dragino Node angeschlossen:</p>
+    
+    <ul>
+        <li>rot - VDD</li>
+        <li>gelb - SCL</li>
+        <li>grün - SDA</li>
+        <li>schwarz - GND</li>
+    </ul>
+ 
+ <div class="gallery">
+   
     <div class="item">
-      <a href="sn50v3.jpg" target="_blank">
-        <img src="sn50v3.jpg" alt="Lieferung der Bauteile">
+      <a href="Dragino-Anschlussleiste.jpg" target="_blank">
+        <img src="Dragino-Anschlussleiste.jpg" alt="Dragino-Anschlussleiste">
       </a>
-      <div class="caption">Lieferung der Bauteile – alles vollständig?</div>
+      <div class="caption">Anschluss des Sensors am Dragino
     </div>
-
-    <div class="item">
-      <a href="TTN.jpg" target="_blank">
-        <img src="TTN.jpg" alt="TTN-Registrierung">
-      </a>
-      <div class="caption">Registrierung des Dragino-Node beim TTN</div>
-    </div>
-
-    <div class="item">
-      <a href="payload_decoder.jpg" target="_blank">
-        <img src="payload_decoder.jpg" alt="Payload-Decoder">
-      </a>
-      <div class="caption">Payload-Decoder für den sn50v3 (Ausschnitt)</div>
     </div>
 
     <div class="item">
       <a href="sn50v3_sht25.jpg" target="_blank">
         <img src="sn50v3_sht25.jpg" alt="sn50v3_sht25">
       </a>
-      <div class="caption">SNt25_only</div>
-    </div>
-
-    <div class="item">
-      <a href="SN50v3_Payload.jpg" target="_blank">
-        <img src="SN50v3_Payload.jpg" alt="SN50v3_Payload.jpg">
-      </a>
-      <div class="caption">SN50v3_payload</div>
-    </div>
-
-    <div class="item">
-      <a href="foto6.jpg" target="_blank">
-        <img src="foto6.jpg" alt="coming soon">
-      </a>
-      <div class="caption">coming soon</div>
+      <div class="caption">Gesamt</div>
     </div>
   </div>
+    
+    
+    
+    <p>
+     xxxxx
+    </p>
+    
+    <footer>
+        &copy; 2025 WALDSENSOR.SH – Digitaler Wald für alle.
+    </footer>
 </body>
 </html>
