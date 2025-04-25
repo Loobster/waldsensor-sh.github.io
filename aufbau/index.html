@@ -2,11 +2,36 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Bauanleitung </title>
+  <title>Bauanleitung</title>
   <style>
     body {
       font-family: sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      line-height: 1.6;
+      text-align: left; /* Wichtig: Kein zentrierter Text im Fließtext */
+    }
+
+    h1 {
+      color: forestgreen;
+      text-align: center; /* Nur die Überschrift zentrieren */
+    }
+
+    a {
+      color: #0066cc;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #666;
       text-align: center;
+    }
+
+    ul {
+      padding-left: 20px;
+      list-style-type: disc;
     }
 
     .gallery {
@@ -14,6 +39,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
+      margin-top: 40px;
     }
 
     .item {
@@ -31,55 +57,54 @@
     .caption {
       margin-top: 8px;
       font-size: 0.9em;
+      text-align: center;
     }
   </style>
-  </head>
-  <body>
-    <h1>Bauanleitung</h1>
-    <p><strong>In dieser Anleitung wird erklärt, wie man einen SHT35-Sensor an einem Dragino 
-        SN50v3 Node anschliesst.</strong></p>
+</head>
+<body>
 
-    <p>Der Dragino SN50v3 Node wird vorkonfiguriert für verschiedene Sensortypen geliefert. 
-        In dieser Anleitung wird gezeigt, wie der SHT35-Sensor am Dragino angeschlossen wird.</p>
-    
-    <p>Der Sensor kommt mit einer I2C-Schnittstelle. Dafür sind in dieser Konfiguration die Anschlüsse 1,4,5 und 11 vorgesehen.</p>
+  <h2>Montagebeispiel eines SHT35-Sensors</h2>
 
-    <p>Der Sensor hat 4 verschiedenfarbige Anschlusskabel. Diese werden wie hier beschrieben 
-        am Dragino Node angeschlossen:</p>
-    
-    <ul>
-        <li>rot - VDD</li>
-        <li>gelb - SCL</li>
-        <li>grün - SDA</li>
-        <li>schwarz - GND</li>
-    </ul>
- 
- <div class="gallery">
-   
+  <p><strong>In dieser Anleitung wird erklärt, wie man einen SHTxx-Sensor an einem Dragino SN50v3 Node anschliesst.</strong></p>
+
+  <p>Der Dragino SN50v3 Node wird vorkonfiguriert für verschiedene Sensortypen geliefert. 
+    In dieser Anleitung wird gezeigt, wie der SHT35-Sensor am Dragino angeschlossen wird. 
+    Ein anderer SHTxx-Sensor wie SHT30, SHT31 etc. unterscheidet sich in der Art des Anschlusses nicht davon.</p>
+
+  <p>Der Sensor kommt mit einer I2C-Schnittstelle. Dafür sind in dieser Konfiguration die Anschlüsse 1,4,5 und 11 vorgesehen.</p>
+
+  <p>Die 4 verschiedenfarbigen Anschlusskabel werden wie hier beschrieben am Dragino Node angeschlossen:</p>
+
+  <ul>
+  <li><span style="color:red"></span> rot – VDD</li>
+  <li><span style="color:goldenrod"></span> gelb – SCL</li>
+  <li><span style="color:green"></span> grün – SDA</li>
+  <li><span style="color:black"></span> schwarz – GND</li>
+</ul>
+<p>Bitte trennen Sie vor der Montage der Anschlusskabel den gelben Jumper vom Botherboard, um einen Kurzschluss zu vermeiden. 
+  Nach dem Anschluss des Sensors und erneuten Einschalten des Node wird der Sensor sofort erkannt. Das können Sie im TTN unter 
+  "Live Data" in der Application nachschauen. Dort werden jetzt im Payload die Felder "TempC_SHT" und  "Hum_SHT" mit Werten versorgt.</p>
+  
+  
+  <div class="gallery">
     <div class="item">
-      <a href="Dragino-Anschlussleiste.jpg" target="_blank">
+   <a href="Dragino-Anschlussleiste.jpg" target="_blank">
         <img src="Dragino-Anschlussleiste.jpg" alt="Dragino-Anschlussleiste">
       </a>
-      <div class="caption">Anschluss des Sensors am Dragino
-    </div>
+      <div class="caption">Anschlussleiste</div>
     </div>
 
     <div class="item">
       <a href="sn50v3_sht25.jpg" target="_blank">
         <img src="sn50v3_sht25.jpg" alt="sn50v3_sht25">
       </a>
-      <div class="caption">Gesamt</div>
+      <div class="caption">Anschluss des Sensors am Dragino</div>
     </div>
   </div>
-    
-    
-    
-    <p>
-     xxxxx
-    </p>
-    
-    <footer>
-        &copy; 2025 WALDSENSOR.SH – Digitaler Wald für alle.
-    </footer>
+
+  <footer>
+    &copy; 2025 WALDSENSOR.SH – Digitaler Wald für alle.
+  </footer>
+
 </body>
 </html>
