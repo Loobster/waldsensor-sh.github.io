@@ -70,13 +70,13 @@ const popup = `
   ${gatewayList}
 `;
         const marker = L.marker([position.lat, position.lon])
-          .bindPopup(popup)
+          .bindPopup(popup);
           
         oms.addMarker(marker);
         marker.addTo(map);
         
         // Gateways nur kurz anzeigen
-        if ((now - timestamp) < 5 * 60 * 1000) {
+        if ((now - timestamp) < 15 * 60 * 1000) {
           for (const gw of gateways) {
             const g = gwInfo[gw.id];
             if (!g) continue;
