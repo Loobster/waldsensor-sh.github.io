@@ -94,10 +94,10 @@ const popup = `
             `).addTo(map);
 
             activeGatewayMarkers[gw.id] = gwMarker;
-            setTimeout(() => {
-              map.removeLayer(gwMarker);
-              delete activeGatewayMarkers[gw.id];
-            }, 3000);
+            activeGatewayMarkers[gw.id] = {
+  marker: gwMarker,
+  timeout: Date.now() + 5 * 60 * 1000 // Marker bleibt 5 Minuten sichtbar
+};
           }
         }
       }
@@ -109,13 +109,17 @@ const popup = `
     }
 
     init();
-    setInterval(() => {
-      for (const id in activeGatewayMarkers) {
-        map.removeLayer(activeGatewayMarkers[id]);
-        delete activeGatewayMarkers[id];
-      }
-      loadNodes();
-    }, 60_000);
+   setInterval(() => {
+  const now = Date.now();
+  for (const id in activeGatewayMarkers) {
+    const entry = activeGatewayMarkers[id];
+    if (entry.timeout < now) {
+      map.removeLayer(entry.marker);
+      delete activeGatewayMarkers[id];
+    }
+  }
+  loadNodes(); // lädt neue Nodes und ggf. Gateways
+}, 60_000);
   </script>
 </body>
 </html>
