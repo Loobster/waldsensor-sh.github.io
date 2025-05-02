@@ -32,6 +32,7 @@
     const nodeFiles = [
       "data/se01-lb.json",
       "data/s31-lb.json",
+      "data/lsn50-v2.json",
       "data/testsensor-Fahrdorf.json"
     ];
     const gatewayDB = "data/gateways.json";
@@ -72,7 +73,8 @@ const popup = `
           .bindPopup(popup)
           .addTo(map);
         oms.addMarker(marker);
-
+        marker.addTo(map);
+        
         // Gateways nur kurz anzeigen
         if ((now - timestamp) < 5 * 60 * 1000) {
           for (const gw of gateways) {
