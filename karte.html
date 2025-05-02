@@ -58,10 +58,16 @@
         const now = new Date();
 
         // Node immer anzeigen
-        const popup = `
-          <b>Sensor: ${node}</b><br>
-          Zuletzt aktiv: ${timestamp.toLocaleString()}
-        `;
+        const gatewayList = gateways.map((gw, index) =>
+  `${index + 1}. ${gw.id} (RSSI: ${gw.rssi}, SNR: ${gw.snr})`
+).join("<br>");
+
+const popup = `
+  <b>Sensor:</b> ${node}<br>
+  <b>Zuletzt aktiv:</b> ${timestamp.toLocaleString()}<br>
+  <b>Beteiligte Gateways:</b><br>
+  ${gatewayList}
+`;
         const marker = L.marker([position.lat, position.lon])
           .bindPopup(popup)
           .addTo(map);
