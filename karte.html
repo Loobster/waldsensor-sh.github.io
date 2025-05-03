@@ -9,7 +9,7 @@
   <style>
     html, body, #map { height: 100%; margin: 0; }
     .blinking {
-      animation: blinker 1s linear infinite;
+      animation: blinker 2.5s linear infinite;
     }
     @keyframes blinker {
       50% { opacity: 0.3; }
@@ -67,7 +67,7 @@
         if ((now - timestamp) < 15 * 60 * 1000) {
           for (const gw of gateways) {
             const g = gwInfo[gw.id];
-            if (!g) continue;
+            if (!g) continue;  // Nur bekannte Gateways verwenden
 
             const gwMarker = L.circleMarker([g.lat, g.lon], {
               radius: 8,
