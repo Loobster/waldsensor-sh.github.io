@@ -1,3 +1,4 @@
+<!-- Waldsensor Karte mit animierten Verbindungen -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -7,142 +8,96 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     html, body, #map { height: 100%; margin: 0; }
-    .blinking {
-      animation: blinker 1s linear infinite;
-    }
-    @keyframes blinker {
-      50% { opacity: 0.3; }
-    }
-    #filterPanel {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: white;
-      padding: 10px;
-      z-index: 1000;
-      border-radius: 5px;
-    }
   </style>
 </head>
 <body>
-  <div id="filterPanel">
-    <label>Node-ID: <input type="text" id="filterNode" placeholder="z.B. se01"></label><br>
-    <label>Gateway-ID: <input type="text" id="filterGW" placeholder="z.B. gw01"></label><br>
-    <label><input type="checkbox" id="showAllGWs" checked> Alle Gateways anzeigen</label><br>
-    <button onclick="applyFilter()">Filter anwenden</button>
-  </div>
-  <div id="map"></div>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Animation Plugin -->
+<script src="https://unpkg.com/leaflet-ant-path/dist/leaflet-ant-path.min.js"></script>
+<script>
+  const map = L.map("map", { zoomControl: false }).setView([54.6, 9.0], 9);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>'
+  }).addTo(map);
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="scripts/oms.min.js"></script>
-  <script>
-    const map = L.map("map").setView([54.6, 9.0], 9);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>',
-    }).addTo(map);
+  const nodeFiles = [
+    "data/se01-lb.json",
+    "data/s31-lb.json",
+    "data/lsn50-v2.json",
+    "data/testsensor-Fahrdorf.json"
+  ];
+  const gatewaysUrl = "data/gateways.json";
 
-    const oms = new OverlappingMarkerSpiderfier(map);
-    const gwInfo = {};
-    const nodeFiles = [
-      "data/se01-lb.json",
-      "data/s31-lb.json",
-      "data/lsn50-v2.json",
-      "data/testsensor-Fahrdorf.json"
-    ];
-    const gatewayDB = "data/gateways.json";
+  let gatewayData = {};
 
-    const nodeMarkers = [];
-    const gatewayMarkers = {};
+  // Hilfsfunktion zur Entfernungsberechnung (Haversine)
+  function getDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371e3;
+    const toRad = x => x * Math.PI / 180;
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2)**2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c; // Meter
+  }
 
-    async function loadGateways() {
-      const res = await fetch(gatewayDB);
-      const gateways = await res.json();
-      for (const gw of gateways) {
-        gwInfo[gw.id] = gw;
-      }
+  async function loadGateways() {
+    const res = await fetch(gatewaysUrl);
+    const gateways = await res.json();
+    for (const gw of gateways) {
+      gatewayData[gw.id] = gw;
+      L.circleMarker([gw.lat, gw.lon], {
+        radius: 6,
+        color: "#f00",
+        fillOpacity: 0.7
+      }).bindTooltip(`Gateway: ${gw.name || gw.id}`).addTo(map);
     }
+  }
 
-    function drawLine(latlng1, latlng2) {
-      return L.polyline([latlng1, latlng2], {
-        color: 'gray',
-        weight: 1,
-        opacity: 0.6
-      }).addTo(map);
-    }
+  async function loadNodes() {
+    for (const file of nodeFiles) {
+      const res = await fetch(file);
+      const data = await res.json();
+      const { node, position, gateways } = data;
 
-    async function loadNodes() {
-      for (const file of nodeFiles) {
-        const res = await fetch(file);
-        const nodeData = await res.json();
-        const { node, position, time, gateways } = nodeData;
-        const timestamp = new Date(time);
+      const marker = L.circleMarker([position.lat, position.lon], {
+        radius: 4,
+        color: "#00f",
+        fillOpacity: 0.9
+      }).bindTooltip(`Node: ${node}`).addTo(map);
 
-        const nodeMarker = L.circleMarker([position.lat, position.lon], {
-          radius: 5,
-          color: "blue",
-          fillColor: "blue",
-          fillOpacity: 0.8
-        }).bindTooltip(`Node: ${node}`);
+      // --- BEGIN: animierte Linien + Entfernung anzeigen ---
+      for (const gwEntry of gateways) {
+        const gw = gatewayData[gwEntry.id];
+        if (!gw) continue;
 
-        nodeMarker.on('click', () => {
-          const relatedGWs = gateways.map(gw => gw.id).join(", ");
-          alert(`Node ${node} ist verbunden mit Gateways: ${relatedGWs}`);
+        const antPolyline = L.polyline.antPath([
+          [position.lat, position.lon],
+          [gw.lat, gw.lon]
+        ], {
+          delay: 800,
+          dashArray: [10, 20],
+          weight: 2,
+          color: "#00f",
+          pulseColor: "#f00"
+        }).addTo(map);
+
+        const dist = getDistance(position.lat, position.lon, gw.lat, gw.lon) / 1000;
+        antPolyline.bindTooltip(`Entfernung: ${dist.toFixed(2)} km`, {
+          permanent: false,
+          direction: "center"
         });
-
-        nodeMarker.addTo(map);
-        nodeMarkers.push(nodeMarker);
-
-        for (const gw of gateways) {
-          const g = gwInfo[gw.id];
-          if (!g) continue;
-
-          if (!gatewayMarkers[gw.id]) {
-            const gwMarker = L.circleMarker([g.lat, g.lon], {
-              radius: 8,
-              color: "red",
-              fillColor: "red",
-              fillOpacity: 0.7
-            });
-
-            gwMarker.on('click', () => highlightConnectedNodes(gw.id));
-            gwMarker.bindTooltip(`Gateway: ${gw.id}`);
-            gwMarker.addTo(map);
-            gatewayMarkers[gw.id] = { marker: gwMarker, nodes: [] };
-          }
-          gatewayMarkers[gw.id].nodes.push(nodeMarker);
-
-          drawLine([position.lat, position.lon], [g.lat, g.lon]);
-        }
       }
+      // --- ENDE: animierte Linien + Entfernung anzeigen ---
     }
+  }
 
-    function highlightConnectedNodes(gwId) {
-      const gw = gatewayMarkers[gwId];
-      if (!gw) return;
-
-      let list = "<b>Verbundene Nodes mit " + gwId + ":</b><ul>";
-      gw.nodes.forEach((node, index) => {
-        list += `<li onclick="zoomToMarker(${index})">Node ${index + 1}</li>`;
-      });
-      list += "</ul>";
-      alert(list); // Platzhalter für später bessere UI
-    }
-
-    function applyFilter() {
-      const nodeFilter = document.getElementById('filterNode').value.toLowerCase();
-      const gwFilter = document.getElementById('filterGW').value.toLowerCase();
-      const showAllGWs = document.getElementById('showAllGWs').checked;
-
-      // Implementiere Filterlogik
-      alert("Filter angewendet – hier kann Logik ergänzt werden.");
-    }
-
-    async function init() {
-      await loadGateways();
-      await loadNodes();
-    }
-
-    init();
-  </script>
+  async function init() {
+    await loadGateways();
+    await loadNodes();
+  }
+  init();
+</script>
 </body>
 </html>
