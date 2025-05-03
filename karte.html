@@ -1,4 +1,4 @@
-<!-- Waldsensor Karte mit animierten Verbindungen -->
+<!-- Waldsensor Karte mit animierten Verbindungen ohne Hintergrundlinie und gefilterten Gateways -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -30,6 +30,7 @@
   const gatewaysUrl = "data/gateways.json";
 
   let gatewayData = {};
+  const usedGateways = new Set();
 
   // Hilfsfunktion zur Entfernungsberechnung (Haversine)
   function getDistance(lat1, lon1, lat2, lon2) {
@@ -46,12 +47,7 @@
     const res = await fetch(gatewaysUrl);
     const gateways = await res.json();
     for (const gw of gateways) {
-      gatewayData[gw.id] = gw;
-      L.circleMarker([gw.lat, gw.lon], {
-        radius: 6,
-        color: "#f00",
-        fillOpacity: 0.7
-      }).bindTooltip(`Gateway: ${gw.name || gw.id}`).addTo(map);
+      gatewayData[gw.id] = gw; // speichern, aber noch nicht anzeigen
     }
   }
 
@@ -67,7 +63,7 @@
         fillOpacity: 0.9
       }).bindTooltip(`Node: ${node}`).addTo(map);
 
-      // --- BEGIN: animierte Linien + Entfernung anzeigen ---
+      // --- BEGIN: animierte Linien (nur wandernde Striche) + Entfernung ---
       if (!L.polyline.antPath) {
         console.warn("leaflet-ant-path Plugin wurde nicht geladen oder ist nicht verfügbar.");
         continue;
@@ -77,15 +73,17 @@
         const gw = gatewayData[gwEntry.id];
         if (!gw) continue;
 
+        usedGateways.add(gwEntry.id); // nur diese später anzeigen
+
         const antPolyline = L.polyline.antPath([
           [position.lat, position.lon],
           [gw.lat, gw.lon]
         ], {
           delay: 800,
-          dashArray: [10, 20],
+          dashArray: [5, 20],
           weight: 1.5,
-          // color: "#00f",
           pulseColor: "#f00"
+          // kein "color" = keine durchgehende Hintergrundlinie
         }).addTo(map);
 
         const dist = getDistance(position.lat, position.lon, gw.lat, gw.lon) / 1000;
@@ -94,7 +92,18 @@
           direction: "center"
         });
       }
-      // --- ENDE: animierte Linien + Entfernung anzeigen ---
+      // --- ENDE: animierte Linien (nur wandernde Striche) + Entfernung ---
+    }
+
+    // Gateways anzeigen, die verwendet wurden
+    for (const id of usedGateways) {
+      const gw = gatewayData[id];
+      if (!gw) continue;
+      L.circleMarker([gw.lat, gw.lon], {
+        radius: 6,
+        color: "#f00",
+        fillOpacity: 0.7
+      }).bindTooltip(`Gateway: ${gw.name || gw.id}`).addTo(map);
     }
   }
 
