@@ -1,4 +1,4 @@
-<!-- Waldsensor Karte mit GW/Node-Koordinatenprüfung -->
+<!-- Waldsensor Karte mit GW-Autoverbergung und Marker-Reset -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -47,6 +47,16 @@
   }
 
   async function loadNodes(nodeFiles) {
+    // Alte GW-Marker entfernen
+    for (const id in activeGatewayMarkers) {
+      const marker = activeGatewayMarkers[id];
+      if (map.hasLayer(marker)) {
+        map.removeLayer(marker);
+      }
+    }
+    Object.keys(activeGatewayMarkers).forEach(k => delete activeGatewayMarkers[k]);
+    usedGateways.clear();
+
     for (const file of nodeFiles) {
       const res = await fetch("data/" + file);
       const data = await res.json();
