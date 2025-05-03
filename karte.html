@@ -1,4 +1,4 @@
-<!-- Waldsensor Karte mit animierten Verbindungen ohne Hintergrundlinie und gefilterten Gateways -->
+<!-- Waldsensor Karte mit dynamischem Node-Index -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -13,7 +13,6 @@
 <body>
 <div id="map"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<!-- Animations-Plugin via jsDelivr (funktionierender MIME-Typ) -->
 <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.min.js"></script>
 <script>
   const map = L.map("map", { zoomControl: false }).setView([54.6, 9.0], 9);
@@ -21,18 +20,13 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>'
   }).addTo(map);
 
-  const nodeFiles = [
-    "data/se01-lb.json",
-    "data/s31-lb.json",
-    "data/lsn50-v2.json",
-    "data/testsensor-Fahrdorf.json"
-  ];
   const gatewaysUrl = "data/gateways.json";
+  const nodeIndexUrl = "data/nodes.json"; // dynamischer Index
 
   let gatewayData = {};
   const usedGateways = new Set();
+  const gatewayLastSeen = {};
 
-  // Hilfsfunktion zur Entfernungsberechnung (Haversine)
   function getDistance(lat1, lon1, lat2, lon2) {
     const R = 6371e3;
     const toRad = x => x * Math.PI / 180;
@@ -40,22 +34,22 @@
     const dLon = toRad(lon2 - lon1);
     const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2)**2;
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c; // Meter
+    return R * c;
   }
 
   async function loadGateways() {
     const res = await fetch(gatewaysUrl);
     const gateways = await res.json();
     for (const gw of gateways) {
-      gatewayData[gw.id] = gw; // speichern, aber noch nicht anzeigen
+      gatewayData[gw.id] = gw;
     }
   }
 
-  async function loadNodes() {
+  async function loadNodes(nodeFiles) {
     for (const file of nodeFiles) {
-      const res = await fetch(file);
+      const res = await fetch("data/" + file);
       const data = await res.json();
-      const { node, position, gateways } = data;
+      const { node, position, gateways, time } = data;
 
       const marker = L.circleMarker([position.lat, position.lon], {
         radius: 4,
@@ -63,7 +57,6 @@
         fillOpacity: 0.9
       }).bindTooltip(`Node: ${node}`).addTo(map);
 
-      // --- BEGIN: animierte Linien (nur wandernde Striche) + Entfernung ---
       if (!L.polyline.antPath) {
         console.warn("leaflet-ant-path Plugin wurde nicht geladen oder ist nicht verfügbar.");
         continue;
@@ -73,7 +66,12 @@
         const gw = gatewayData[gwEntry.id];
         if (!gw) continue;
 
-        usedGateways.add(gwEntry.id); // nur diese später anzeigen
+        usedGateways.add(gwEntry.id);
+
+        const t = new Date(time);
+        if (!gatewayLastSeen[gwEntry.id] || t > gatewayLastSeen[gwEntry.id]) {
+          gatewayLastSeen[gwEntry.id] = t;
+        }
 
         const antPolyline = L.polyline.antPath([
           [position.lat, position.lon],
@@ -82,9 +80,8 @@
           delay: 800,
           dashArray: [5, 20],
           weight: 1.5,
-          color: 'transparent',     // <- verhindert sichtbare Hintergrundlinie
+          color: 'transparent',
           pulseColor: '#f00'
-          // kein "color" = keine durchgehende Hintergrundlinie
         }).addTo(map);
 
         const dist = getDistance(position.lat, position.lon, gw.lat, gw.lon) / 1000;
@@ -92,26 +89,37 @@
           permanent: false,
           direction: "center"
         });
+
+        setTimeout(() => {
+          map.removeLayer(antPolyline);
+        }, 60_000);
       }
-      // --- ENDE: animierte Linien (nur wandernde Striche) + Entfernung ---
     }
 
-    // Gateways anzeigen, die verwendet wurden
     for (const id of usedGateways) {
       const gw = gatewayData[id];
       if (!gw) continue;
+
+      let popupText = `<b>Gateway:</b> ${gw.name || gw.id}`;
+      if (gatewayLastSeen[id]) {
+        popupText += `<br><b>Letzter Empfang:</b> ${gatewayLastSeen[id].toLocaleString()}`;
+      }
+
       L.circleMarker([gw.lat, gw.lon], {
         radius: 6,
         color: "#f00",
         fillOpacity: 0.7
-      }).bindTooltip(`Gateway: ${gw.name || gw.id}`).addTo(map);
+      }).bindPopup(popupText).addTo(map);
     }
   }
 
   async function init() {
     await loadGateways();
-    await loadNodes();
+    const res = await fetch(nodeIndexUrl);
+    const nodeFiles = await res.json();
+    await loadNodes(nodeFiles);
   }
+
   init();
 </script>
 </body>
