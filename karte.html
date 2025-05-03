@@ -1,5 +1,4 @@
-
-<!-- Waldsensor Karte mit ausführlichem Debug für loadNodes() -->
+<!-- Waldsensor Karte mit Debug + Gateways nach 30s entfernen -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -148,7 +147,7 @@
 
           setTimeout(() => {
             map.removeLayer(antPolyline);
-          }, 60_000);
+          }, 30_000);
         }
       }
     }
@@ -173,12 +172,14 @@
       setTimeout(() => {
         if (map.hasLayer(gwMarker)) {
           map.removeLayer(gwMarker);
+          console.log(`⏳ Gateway ${id} nach 30s entfernt`);
         }
-      }, 60_000);
+      }, 30_000);
     }
   }
 
   async function init() {
+    console.log("🟢 init() wird gestartet");
     await loadGateways();
     const res = await fetch(nodeIndexUrl);
     const nodeFiles = await res.json();
@@ -193,7 +194,10 @@
     }, 60_000);
   }
 
-  init();
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log("📦 DOM vollständig, init wird ausgeführt");
+    init();
+  });
 </script>
 </body>
 </html>
