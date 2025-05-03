@@ -1,4 +1,4 @@
-<!-- Waldsensor Karte mit GW-Autoverbergung und Marker-Reset -->
+<!-- Waldsensor Karte mit automatischer Aktualisierung -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -47,7 +47,6 @@
   }
 
   async function loadNodes(nodeFiles) {
-    // Alte GW-Marker entfernen
     for (const id in activeGatewayMarkers) {
       const marker = activeGatewayMarkers[id];
       if (map.hasLayer(marker)) {
@@ -148,6 +147,12 @@
     const res = await fetch(nodeIndexUrl);
     const nodeFiles = await res.json();
     await loadNodes(nodeFiles);
+
+    setInterval(async () => {
+      const res = await fetch(nodeIndexUrl);
+      const nodeFiles = await res.json();
+      await loadNodes(nodeFiles);
+    }, 60_000);
   }
 
   init();
