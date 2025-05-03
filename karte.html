@@ -1,5 +1,5 @@
 
-<!-- Waldsensor Karte mit Gateway-Logging zur Debug-Analyse -->
+<!-- Waldsensor Karte mit sicherem Animations-Management -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -30,6 +30,7 @@
   const activeGatewayMarkers = {};
   const lastNodeTimestamps = {};
   const nodeHistory = {};
+  const activeAnimations = {};
 
   function getDistance(lat1, lon1, lat2, lon2) {
     const R = 6371e3;
@@ -139,6 +140,13 @@
         }
 
         if (isNew) {
+          if (activeAnimations[node]) {
+            for (const anim of activeAnimations[node]) {
+              if (map.hasLayer(anim)) map.removeLayer(anim);
+            }
+            activeAnimations[node] = [];
+          }
+
           const antPolyline = L.polyline.antPath([
             [position.lat, position.lon],
             [gw.lat, gw.lon]
@@ -156,8 +164,13 @@
             direction: "center"
           });
 
+          if (!activeAnimations[node]) activeAnimations[node] = [];
+          activeAnimations[node].push(antPolyline);
+
           setTimeout(() => {
-            map.removeLayer(antPolyline);
+            if (map.hasLayer(antPolyline)) {
+              map.removeLayer(antPolyline);
+            }
           }, 30_000);
         }
       }
