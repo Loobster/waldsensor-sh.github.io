@@ -66,7 +66,7 @@
         if ((now - timestamp) < 15 * 60 * 1000) {
           for (const gw of gateways) {
             const g = gwInfo[gw.id];
-            if (!g) continue;  // Nur bekannte Gateways verwenden
+            if (!g) continue;
 
             const gwMarker = L.circleMarker([g.lat, g.lon], {
               radius: 8,
@@ -89,11 +89,10 @@
               [position.lat, position.lon],
               [g.lat, g.lon]
             ], {
-              delay: 400,
+              delay: 1000,
               dashArray: [6, 12],
               weight: 2,
-              color: null,
-              pulseColor: "red",
+              pulseColor: "rgba(255, 0, 0, 0.5)",
               paused: false,
               reverse: false,
               hardwareAccelerated: true
