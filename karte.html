@@ -1,3 +1,4 @@
+<!-- Waldsensor Karte mit sicherem Animations-Management -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -7,121 +8,219 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     html, body, #map { height: 100%; margin: 0; }
-    .blinking {
-      animation: blinker 1s linear infinite;
-    }
-    @keyframes blinker {
-      50% { opacity: 0.3; }
-    }
   </style>
 </head>
 <body>
-  <div id="map"></div>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="scripts/oms.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.min.js"></script>
-  <script>
-    const map = L.map("map").setView([54.6, 9.0], 9);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>'
-    }).addTo(map);
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.min.js"></script>
+<script>
+  const map = L.map("map", { zoomControl: false }).setView([54.6, 9.0], 9);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>'
+  }).addTo(map);
 
-    const oms = new OverlappingMarkerSpiderfier(map);
-    const gwInfo = {};
-    const nodeFiles = [
-      "data/se01-lb.json",
-      "data/s31-lb.json",
-      "data/lsn50-v2.json",
-      "data/testsensor-Fahrdorf.json"
-    ];
-    const gatewayDB = "data/gateways.json";
-    const activeGatewayMarkers = {};
-    const animationTimeouts = {};
+  const gatewaysUrl = "data/gateways.json";
+  const nodeIndexUrl = "data/nodes.json";
 
-    async function loadGateways() {
-      const res = await fetch(gatewayDB);
-      const gateways = await res.json();
-      for (const gw of gateways) {
-        gwInfo[gw.id] = gw;
+  let gatewayData = {};
+  const usedGateways = new Set();
+  const gatewayLastSeen = {};
+  const activeGatewayMarkers = {};
+  const lastNodeTimestamps = {};
+  const nodeHistory = {};
+  const activeAnimations = {};
+
+  function getDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371e3;
+    const toRad = x => x * Math.PI / 180;
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2)**2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  }
+
+  async function loadGateways() {
+    const res = await fetch(gatewaysUrl);
+    const gateways = await res.json();
+    for (const gw of gateways) {
+      gatewayData[gw.id] = gw;
+    }
+    console.log("✅ Gateways geladen:", Object.keys(gatewayData));
+  }
+
+  async function loadNodes(nodeFiles) {
+    console.log("🔁 loadNodes() gestartet");
+
+    for (const id in activeGatewayMarkers) {
+      const marker = activeGatewayMarkers[id];
+      if (map.hasLayer(marker)) {
+        map.removeLayer(marker);
       }
     }
+    Object.keys(activeGatewayMarkers).forEach(k => delete activeGatewayMarkers[k]);
+    usedGateways.clear();
 
-    async function loadNodes() {
-      for (const file of nodeFiles) {
-        const res = await fetch(file);
-        const nodeData = await res.json();
-        const { node, position, time, gateways } = nodeData;
-        const timestamp = new Date(time);
-        const now = new Date();
+    for (const file of nodeFiles) {
+      console.log(`📄 Lade Node-Datei: ${file}`);
+      const res = await fetch("data/" + file);
+      const data = await res.json();
+      const { node, position, gateways, time } = data;
 
-        const marker = L.circleMarker([position.lat, position.lon], {
-          radius: 7,
-          fillColor: 'blue',
-          fillOpacity: 1,
-          color: 'black',
-          weight: 1
-        }).bindPopup(`<b>Node:</b> ${node}`);
-        marker.addTo(map);
-        oms.addMarker(marker);
+      if (!position || position.lat === 0 || position.lon === 0) {
+        console.warn(`⚠️ Ungültige Position für Node ${node}`);
+        continue;
+      }
 
-        for (const gw of gateways) {
-          const g = gwInfo[gw.id];
-          if (!g) continue;
+      console.log(`🧭 Position OK für ${node}:`, position);
+      console.log(`📦 Gateways für ${node}:`, gateways);
 
-          const gwMarker = L.circleMarker([g.lat, g.lon], {
-            radius: 8,
-            color: "#f00",
-            weight: 2,
-            fillOpacity: 0.7,
-            className: "blinking"
-          }).bindPopup(
-            `<b>Gateway:</b> ${g.name || gw.id}<br>
-             <b>Empfängt von:</b> ${node}<br>
-             RSSI: ${gw.rssi} / SNR: ${gw.snr}`
-          ).addTo(map);
+      const t = new Date(time);
+      const lastSeen = lastNodeTimestamps[node];
+      const isNew = !lastSeen || new Date(lastSeen).getTime() !== t.getTime();
+      if (isNew) {
+        lastNodeTimestamps[node] = t.toISOString();
+        console.log(`📨 Neue Übertragung erkannt für ${node}`);
+      } else {
+        console.log(`⏳ Keine neue Übertragung für ${node}`);
+      }
 
-          activeGatewayMarkers[gw.id] = {
-            marker: gwMarker,
-            timeout: Date.now() + 30 * 1000
-          };
+      const marker = L.circleMarker([position.lat, position.lon], {
+        radius: 4,
+        color: "#00f",
+        fillOpacity: 0.9
+      }).bindTooltip(`Node: ${node}`).addTo(map);
 
-          const antLine = L.polyline.antPath([
+      if (!nodeHistory[node]) nodeHistory[node] = [];
+
+      let validGateways = gateways.filter(gw => {
+        if (!gw.id || gw.id === "0" || gw.id === "unknown" || !(gw.id in gatewayData)) {
+          console.warn(`🚫 Ungültiger Gateway-Eintrag ignoriert:`, gw);
+          return false;
+        }
+        return true;
+      });
+
+      if (validGateways.length > 2) {
+        console.warn(`⚠️ Mehr als 2 Gateways erkannt für ${node}, überprüfe Quelle!`, validGateways);
+        validGateways = validGateways.slice(0, 2);
+      }
+
+      for (const gwEntry of validGateways) {
+        const gw = gatewayData[gwEntry.id];
+
+        if (!gw.lat || !gw.lon || gw.lat === 0 || gw.lon === 0) {
+          console.warn(`⚠️ Ungültige Koordinaten für Gateway ${gwEntry.id}`);
+          continue;
+        }
+
+        usedGateways.add(gwEntry.id);
+        if (!gatewayLastSeen[gwEntry.id] || t > gatewayLastSeen[gwEntry.id]) {
+          gatewayLastSeen[gwEntry.id] = t;
+        }
+
+        console.log(`📍 Spur-Versuch für Node ${node}, Gateway ${gw.id}`);
+
+        const trail = L.polyline([
+          [position.lat, position.lon],
+          [gw.lat, gw.lon]
+        ], {
+          color: "#ff9900",
+          weight: 2,
+          opacity: 0.8,
+          dashArray: "4,4"
+        }).addTo(map);
+
+        nodeHistory[node].push(trail);
+        if (nodeHistory[node].length > 3) {
+          const old = nodeHistory[node].shift();
+          map.removeLayer(old);
+        }
+
+        if (isNew) {
+          if (activeAnimations[node]) {
+            for (const anim of activeAnimations[node]) {
+              if (map.hasLayer(anim)) map.removeLayer(anim);
+            }
+            activeAnimations[node] = [];
+          }
+
+          const antPolyline = L.polyline.antPath([
             [position.lat, position.lon],
-            [g.lat, g.lon]
+            [gw.lat, gw.lon]
           ], {
-            delay: 300,
-            dashArray: [10, 20],
-            weight: 3,
-            color: "red",
-            pulseColor: "red"
+            delay: 800,
+            dashArray: [5, 20],
+            weight: 1.5,
+            color: 'transparent',
+            pulseColor: '#f00'
           }).addTo(map);
 
-          animationTimeouts[node + gw.id] = setTimeout(() => {
-            map.removeLayer(gwMarker);
-            map.removeLayer(antLine);
-          }, 30000);
+          const dist = getDistance(position.lat, position.lon, gw.lat, gw.lon) / 1000;
+          antPolyline.bindTooltip(`Entfernung: ${dist.toFixed(2)} km`, {
+            permanent: false,
+            direction: "center"
+          });
+
+          if (!activeAnimations[node]) activeAnimations[node] = [];
+          activeAnimations[node].push(antPolyline);
+
+          setTimeout(() => {
+            if (map.hasLayer(antPolyline)) {
+              map.removeLayer(antPolyline);
+            }
+          }, 30_000);
         }
       }
     }
 
-    async function init() {
-      await loadGateways();
-      await loadNodes();
-    }
+    for (const id of usedGateways) {
+      const gw = gatewayData[id];
+      if (!gw || !gw.lat || !gw.lon || gw.lat === 0 || gw.lon === 0) continue;
 
+      let popupText = `<b>Gateway:</b> ${gw.name || gw.id}`;
+      if (gatewayLastSeen[id]) {
+        popupText += `<br><b>Letzter Empfang:</b> ${gatewayLastSeen[id].toLocaleString()}`;
+      }
+
+      const gwMarker = L.circleMarker([gw.lat, gw.lon], {
+        radius: 6,
+        color: "#f00",
+        fillOpacity: 0.7
+      }).bindPopup(popupText).addTo(map);
+
+      activeGatewayMarkers[id] = gwMarker;
+
+      setTimeout(() => {
+        if (map.hasLayer(gwMarker)) {
+          map.removeLayer(gwMarker);
+          console.log(`⏳ Gateway ${id} nach 30s entfernt`);
+        }
+      }, 30_000);
+    }
+  }
+
+  async function init() {
+    console.log("🟢 init() wird gestartet");
+    await loadGateways();
+    const res = await fetch(nodeIndexUrl);
+    const nodeFiles = await res.json();
+    console.log("📂 Nodes.json geladen:", nodeFiles);
+    await loadNodes(nodeFiles);
+
+    setInterval(async () => {
+      const res = await fetch(nodeIndexUrl);
+      const nodeFiles = await res.json();
+      console.log("⏲️ Intervall-Nodes geladen:", nodeFiles);
+      await loadNodes(nodeFiles);
+    }, 60_000);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log("📦 DOM vollständig, init wird ausgeführt");
     init();
-
-    setInterval(() => {
-      const now = Date.now();
-      for (const id in activeGatewayMarkers) {
-        const entry = activeGatewayMarkers[id];
-        if (entry.timeout < now) {
-          map.removeLayer(entry.marker);
-          delete activeGatewayMarkers[id];
-        }
-      }
-      loadNodes();
-    }, 60000);
-  </script>
+  });
+</script>
 </body>
 </html>
