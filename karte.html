@@ -64,7 +64,7 @@
         marker.addTo(map);
         oms.addMarker(marker);
 
-        if ((now - timestamp) < 60 * 1000) {
+        if ((now - timestamp) < 15 * 60 * 1000) {
           for (const gw of gateways) {
             const g = gwInfo[gw.id];
             if (!g) continue;
