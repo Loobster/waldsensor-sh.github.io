@@ -1,4 +1,4 @@
-<!-- Waldsensor Karte mit automatischer Aktualisierung -->
+<!-- Waldsensor Karte mit Node-Zeitprüfung -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -27,6 +27,7 @@
   const usedGateways = new Set();
   const gatewayLastSeen = {};
   const activeGatewayMarkers = {};
+  const lastNodeTimestamps = {}; // Für Übertragungsprüfung
 
   function getDistance(lat1, lon1, lat2, lon2) {
     const R = 6371e3;
@@ -66,6 +67,13 @@
         continue;
       }
 
+      const t = new Date(time);
+      const lastSeen = lastNodeTimestamps[node];
+      if (lastSeen && new Date(lastSeen).getTime() === t.getTime()) {
+        continue; // Keine neue Übertragung
+      }
+      lastNodeTimestamps[node] = t.toISOString();
+
       const marker = L.circleMarker([position.lat, position.lon], {
         radius: 4,
         color: "#00f",
@@ -86,7 +94,6 @@
 
         usedGateways.add(gwEntry.id);
 
-        const t = new Date(time);
         if (!gatewayLastSeen[gwEntry.id] || t > gatewayLastSeen[gwEntry.id]) {
           gatewayLastSeen[gwEntry.id] = t;
         }
