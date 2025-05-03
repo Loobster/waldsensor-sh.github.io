@@ -1,4 +1,4 @@
-<!-- Waldsensor Karte mit Node-Zeitprüfung -->
+<!-- Waldsensor Karte mit Verbindungsspuren -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -27,7 +27,8 @@
   const usedGateways = new Set();
   const gatewayLastSeen = {};
   const activeGatewayMarkers = {};
-  const lastNodeTimestamps = {}; // Für Übertragungsprüfung
+  const lastNodeTimestamps = {};
+  const nodeHistory = {}; // Für Verbindungsspuren
 
   function getDistance(lat1, lon1, lat2, lon2) {
     const R = 6371e3;
@@ -70,7 +71,7 @@
       const t = new Date(time);
       const lastSeen = lastNodeTimestamps[node];
       if (lastSeen && new Date(lastSeen).getTime() === t.getTime()) {
-        continue; // Keine neue Übertragung
+        continue;
       }
       lastNodeTimestamps[node] = t.toISOString();
 
@@ -85,6 +86,9 @@
         continue;
       }
 
+      // Spuren-Array initialisieren
+      if (!nodeHistory[node]) nodeHistory[node] = [];
+
       for (const gwEntry of gateways) {
         const gw = gatewayData[gwEntry.id];
         if (!gw || !gw.lat || !gw.lon || gw.lat === 0 || gw.lon === 0) {
@@ -98,6 +102,25 @@
           gatewayLastSeen[gwEntry.id] = t;
         }
 
+        // Spurenlinie (nicht animiert)
+        const trail = L.polyline([
+          [position.lat, position.lon],
+          [gw.lat, gw.lon]
+        ], {
+          color: "#999",
+          weight: 1,
+          opacity: 0.4,
+          dashArray: "3,6"
+        }).addTo(map);
+
+        // Nur die letzten 3 Spuren behalten
+        nodeHistory[node].push(trail);
+        if (nodeHistory[node].length > 3) {
+          const old = nodeHistory[node].shift();
+          map.removeLayer(old);
+        }
+
+        // Aktuelle Verbindung (animiert)
         const antPolyline = L.polyline.antPath([
           [position.lat, position.lon],
           [gw.lat, gw.lon]
