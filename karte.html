@@ -1,4 +1,3 @@
-
 <!-- Waldsensor Karte mit AwesomeMarkers-Icons für Gateways und Nodes -->
 <!DOCTYPE html>
 <html lang="de">
@@ -7,9 +6,9 @@
   <title>Waldsensor SH (Testkarte)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <!-- Leaflet AwesomeMarkers und Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.js"></script>
+  <!-- Alternativer CDN für Leaflet.AwesomeMarkers und Font Awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.css" />
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     html, body, #map { height: 100%; margin: 0; }
@@ -29,3 +28,5 @@ const nodeAwesomeIcon = L.AwesomeMarkers.icon({
   icon: 'thermometer-half', prefix: 'fa', markerColor: 'blue'
 });
 </script>
+</body>
+</html>
