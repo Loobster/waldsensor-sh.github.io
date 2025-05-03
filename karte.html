@@ -1,4 +1,5 @@
-<!-- Waldsensor Karte mit Gateway-Filter gegen doppelte/fehlerhafte Linien -->
+
+<!-- Waldsensor Karte mit Gateway-Logging zur Debug-Analyse -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -73,6 +74,7 @@
       }
 
       console.log(`🧭 Position OK für ${node}:`, position);
+      console.log(`📦 Gateways für ${node}:`, gateways);
 
       const t = new Date(time);
       const lastSeen = lastNodeTimestamps[node];
