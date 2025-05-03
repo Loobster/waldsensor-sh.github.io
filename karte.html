@@ -1,3 +1,4 @@
+
 <!-- Waldsensor Karte mit AwesomeMarkers-Icons für Gateways und Nodes -->
 <!DOCTYPE html>
 <html lang="de">
@@ -5,18 +6,22 @@
   <meta charset="utf-8" />
   <title>Waldsensor SH (Testkarte)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet zuerst -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <!-- Alternativer CDN für Leaflet.AwesomeMarkers und Font Awesome -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Dann AwesomeMarkers + Font Awesome -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.css" />
   <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     html, body, #map { height: 100%; margin: 0; }
   </style>
 </head>
 <body>
 <div id="map"></div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.min.js"></script>
 <script>
 // ⬇️ Zusätzliche Marker-Icons für Gateways und Nodes
