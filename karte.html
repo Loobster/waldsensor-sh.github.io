@@ -1,4 +1,4 @@
-<!-- Waldsensor Karte mit separater Spurlogik -->
+<!-- Waldsensor Karte mit Spurlog und Debug-Ausgabe -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -91,6 +91,8 @@
         if (!gatewayLastSeen[gwEntry.id] || t > gatewayLastSeen[gwEntry.id]) {
           gatewayLastSeen[gwEntry.id] = t;
         }
+
+        console.log(`📍 Spur-Versuch für Node ${node}, Gateway ${gw.id}`);
 
         const trail = L.polyline([
           [position.lat, position.lon],
