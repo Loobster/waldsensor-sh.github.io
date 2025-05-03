@@ -1,4 +1,4 @@
-<!-- Waldsensor Karte mit dynamischem Node-Index -->
+<!-- Waldsensor Karte mit GW/Node-Koordinatenprüfung -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -21,11 +21,12 @@
   }).addTo(map);
 
   const gatewaysUrl = "data/gateways.json";
-  const nodeIndexUrl = "data/nodes.json"; // dynamischer Index
+  const nodeIndexUrl = "data/nodes.json";
 
   let gatewayData = {};
   const usedGateways = new Set();
   const gatewayLastSeen = {};
+  const activeGatewayMarkers = {};
 
   function getDistance(lat1, lon1, lat2, lon2) {
     const R = 6371e3;
@@ -51,6 +52,11 @@
       const data = await res.json();
       const { node, position, gateways, time } = data;
 
+      if (!position || position.lat === 0 || position.lon === 0) {
+        console.warn(`⚠️ Ungültige Position für Node ${node}, wird übersprungen`);
+        continue;
+      }
+
       const marker = L.circleMarker([position.lat, position.lon], {
         radius: 4,
         color: "#00f",
@@ -64,7 +70,10 @@
 
       for (const gwEntry of gateways) {
         const gw = gatewayData[gwEntry.id];
-        if (!gw) continue;
+        if (!gw || !gw.lat || !gw.lon || gw.lat === 0 || gw.lon === 0) {
+          console.warn(`⚠️ Ungültige Koordinaten für Gateway ${gwEntry.id}, wird übersprungen`);
+          continue;
+        }
 
         usedGateways.add(gwEntry.id);
 
@@ -98,18 +107,29 @@
 
     for (const id of usedGateways) {
       const gw = gatewayData[id];
-      if (!gw) continue;
+      if (!gw || !gw.lat || !gw.lon || gw.lat === 0 || gw.lon === 0) {
+        console.warn(`⚠️ Gateway ${id} hat ungültige Koordinaten, wird nicht angezeigt`);
+        continue;
+      }
 
       let popupText = `<b>Gateway:</b> ${gw.name || gw.id}`;
       if (gatewayLastSeen[id]) {
         popupText += `<br><b>Letzter Empfang:</b> ${gatewayLastSeen[id].toLocaleString()}`;
       }
 
-      L.circleMarker([gw.lat, gw.lon], {
+      const gwMarker = L.circleMarker([gw.lat, gw.lon], {
         radius: 6,
         color: "#f00",
         fillOpacity: 0.7
       }).bindPopup(popupText).addTo(map);
+
+      activeGatewayMarkers[id] = gwMarker;
+
+      setTimeout(() => {
+        if (map.hasLayer(gwMarker)) {
+          map.removeLayer(gwMarker);
+        }
+      }, 60_000);
     }
   }
 
