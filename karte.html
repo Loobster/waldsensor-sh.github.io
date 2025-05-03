@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -36,7 +37,6 @@
     ];
     const gatewayDB = "data/gateways.json";
     const activeGatewayMarkers = {};
-    const activeAntPaths = [];
 
     async function loadGateways() {
       const res = await fetch(gatewayDB);
@@ -99,8 +99,6 @@
               reverse: false,
               hardwareAccelerated: true
             }).addTo(map);
-
-            activeAntPaths.push(antLine);
 
             setTimeout(() => {
               map.removeLayer(gwMarker);
