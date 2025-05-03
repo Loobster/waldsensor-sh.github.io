@@ -1,4 +1,5 @@
-<!-- Waldsensor Karte mit Spurlog und Debug-Ausgabe -->
+
+<!-- Waldsensor Karte mit ausführlichem Debug für loadNodes() -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -46,9 +47,12 @@
     for (const gw of gateways) {
       gatewayData[gw.id] = gw;
     }
+    console.log("✅ Gateways geladen:", Object.keys(gatewayData));
   }
 
   async function loadNodes(nodeFiles) {
+    console.log("🔁 loadNodes() gestartet");
+
     for (const id in activeGatewayMarkers) {
       const marker = activeGatewayMarkers[id];
       if (map.hasLayer(marker)) {
@@ -59,20 +63,26 @@
     usedGateways.clear();
 
     for (const file of nodeFiles) {
+      console.log(`📄 Lade Node-Datei: ${file}`);
       const res = await fetch("data/" + file);
       const data = await res.json();
       const { node, position, gateways, time } = data;
 
       if (!position || position.lat === 0 || position.lon === 0) {
-        console.warn(`⚠️ Ungültige Position für Node ${node}, wird übersprungen`);
+        console.warn(`⚠️ Ungültige Position für Node ${node}`);
         continue;
       }
+
+      console.log(`🧭 Position OK für ${node}:`, position);
 
       const t = new Date(time);
       const lastSeen = lastNodeTimestamps[node];
       const isNew = !lastSeen || new Date(lastSeen).getTime() !== t.getTime();
       if (isNew) {
         lastNodeTimestamps[node] = t.toISOString();
+        console.log(`📨 Neue Übertragung erkannt für ${node}`);
+      } else {
+        console.log(`⏳ Keine neue Übertragung für ${node}`);
       }
 
       const marker = L.circleMarker([position.lat, position.lon], {
@@ -85,7 +95,15 @@
 
       for (const gwEntry of gateways) {
         const gw = gatewayData[gwEntry.id];
-        if (!gw || !gw.lat || !gw.lon || gw.lat === 0 || gw.lon === 0) continue;
+
+        if (!gw) {
+          console.warn(`❌ Gateway ${gwEntry.id} fehlt in gatewayData`);
+          continue;
+        }
+        if (!gw.lat || !gw.lon || gw.lat === 0 || gw.lon === 0) {
+          console.warn(`⚠️ Ungültige Koordinaten für Gateway ${gwEntry.id}`);
+          continue;
+        }
 
         usedGateways.add(gwEntry.id);
         if (!gatewayLastSeen[gwEntry.id] || t > gatewayLastSeen[gwEntry.id]) {
@@ -164,11 +182,13 @@
     await loadGateways();
     const res = await fetch(nodeIndexUrl);
     const nodeFiles = await res.json();
+    console.log("📂 Nodes.json geladen:", nodeFiles);
     await loadNodes(nodeFiles);
 
     setInterval(async () => {
       const res = await fetch(nodeIndexUrl);
       const nodeFiles = await res.json();
+      console.log("⏲️ Intervall-Nodes geladen:", nodeFiles);
       await loadNodes(nodeFiles);
     }, 60_000);
   }
