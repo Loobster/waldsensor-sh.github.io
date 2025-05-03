@@ -13,8 +13,8 @@
 <body>
 <div id="map"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<!-- Animation Plugin -->
-<script src="https://unpkg.com/leaflet-ant-path/dist/leaflet-ant-path.min.js"></script>
+<!-- Animations-Plugin via jsDelivr (funktionierender MIME-Typ) -->
+<script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.min.js"></script>
 <script>
   const map = L.map("map", { zoomControl: false }).setView([54.6, 9.0], 9);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -68,6 +68,11 @@
       }).bindTooltip(`Node: ${node}`).addTo(map);
 
       // --- BEGIN: animierte Linien + Entfernung anzeigen ---
+      if (!L.polyline.antPath) {
+        console.warn("leaflet-ant-path Plugin wurde nicht geladen oder ist nicht verfügbar.");
+        continue;
+      }
+
       for (const gwEntry of gateways) {
         const gw = gatewayData[gwEntry.id];
         if (!gw) continue;
