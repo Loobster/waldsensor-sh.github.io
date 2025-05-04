@@ -109,10 +109,29 @@
                 reverse: false,
                 hardwareAccelerated: true
               }).addTo(map);
+              
+              const tooltipLine = L.polyline([
+  [position.lat, position.lon],
+  [g.lat, g.lon]
+], {
+  color: 'transparent',
+  weight: 10,
+  opacity: 0
+}).addTo(map);
+
+const distance = map.distance([position.lat, position.lon], [g.lat, g.lon]) / 1000;
+tooltipLine.bindTooltip(`${distance.toFixed(1)} km`, {
+  sticky: true,
+  direction: 'top',
+  className: 'distance-tooltip',
+  offset: [0, -5],
+  opacity: 1
+});
 
               setTimeout(() => {
                 map.removeLayer(gwMarker);
                 map.removeLayer(antLine);
+                map.removeLayer(tooltipLine);
               }, 30000);
             }
           }
