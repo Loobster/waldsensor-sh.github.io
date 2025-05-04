@@ -49,59 +49,75 @@
 
     async function loadNodes() {
       for (const file of nodeFiles) {
-        const res = await fetch(file);
-        const nodeData = await res.json();
+        try {
+          const res = await fetch(file);
+          const nodeData = await res.json();
 
-        const { node, position, time, gateways, values } = nodeData;
-        const timestamp = new Date(time);
-        const now = new Date();
+          const { node, position, time, gateways, values } = nodeData;
+          const timestamp = new Date(time);
+          const now = new Date();
 
-        // Werte-Block aus values erzeugen
-        let valuesHtml = "";
-        if (values && typeof values === "object") {
-          for (const [key, value] of Object.entries(values)) {
-            valuesHtml += `<br><b>${key}</b>: ${value}`;
+          if (!position || position.lat === 0.0 || position.lon === 0.0) {
+            console.warn(`⚠️ Ungültige Position für Node: ${node} (${file})`);
+            continue;
           }
-        }
 
-        // Sensor-Popup erzeugen
-        const popup = `
-          <b>Sensor:</b> ${node}<br>
-          <b>Zuletzt aktiv:</b> ${timestamp.toLocaleString()}
-          ${valuesHtml}
-        `;
+          // Werte anzeigen
+          let valuesHtml = "";
+          if (values && typeof values === "object") {
+            for (const [key, value] of Object.entries(values)) {
+              valuesHtml += `<br><b>${key}</b>: ${value}`;
+            }
+          }
 
-        const marker = L.marker([position.lat, position.lon])
-          .bindPopup(popup)
+          // Node-Marker (blauer Kreis)
+          const marker = L.circleMarker([position.lat, position.lon], {
+            radius: 10,
+            color: "#0077ff",
+            fillColor: "#3399ff",
+            fillOpacity: 0.8,
+            weight: 2
+          })
+          .bindPopup(`
+            <b>Sensor:</b> ${node}<br>
+            <b>Zuletzt aktiv:</b> ${timestamp.toLocaleString()}
+            ${valuesHtml}
+          `)
           .addTo(map);
 
-        oms.addMarker(marker);
+          oms.addMarker(marker);
 
-        // Gateways anzeigen (nur wenn aktuelle Übertragung)
-        if ((now - timestamp) < 5 * 60 * 1000) {
-          for (const gw of gateways) {
-            const g = gwInfo[gw.id];
-            if (!g) continue;
+          // Gateways (nur anzeigen, wenn Node frisch ist)
+          if ((now - timestamp) < 5 * 60 * 1000) {
+            for (const gw of gateways) {
+              const g = gwInfo[gw.id];
+              if (!g || !g.lat || !g.lon || g.lat === 0.0 || g.lon === 0.0) {
+                console.warn(`⚠️ Ungültige Gateway-Position: ${gw.id}`);
+                continue;
+              }
 
-            const gwMarker = L.circleMarker([g.lat, g.lon], {
-              radius: 8,
-              color: "#f00",
-              weight: 2,
-              fillOpacity: 0.7,
-              className: "blinking"
-            }).bindPopup(`
-              <b>Gateway:</b> ${g.name || gw.id}<br>
-              <b>Empfängt von:</b> ${node}<br>
-              RSSI: ${gw.rssi} / SNR: ${gw.snr}
-            `).addTo(map);
+              const gwMarker = L.circleMarker([g.lat, g.lon], {
+                radius: 8,
+                color: "#f00",
+                weight: 2,
+                fillOpacity: 0.7,
+                className: "blinking"
+              }).bindPopup(`
+                <b>Gateway:</b> ${g.name || gw.id}<br>
+                <b>Empfängt von:</b> ${node}<br>
+                RSSI: ${gw.rssi} / SNR: ${gw.snr}
+              `).addTo(map);
 
-            activeGatewayMarkers[gw.id] = gwMarker;
+              activeGatewayMarkers[gw.id] = gwMarker;
 
-            setTimeout(() => {
-              map.removeLayer(gwMarker);
-              delete activeGatewayMarkers[gw.id];
-            }, 30000); // 30 Sekunden
+              setTimeout(() => {
+                map.removeLayer(gwMarker);
+                delete activeGatewayMarkers[gw.id];
+              }, 30000); // 30 Sekunden sichtbar
+            }
           }
+        } catch (error) {
+          console.error(`❌ Fehler beim Laden von ${file}:`, error);
         }
       }
     }
@@ -119,7 +135,7 @@
         delete activeGatewayMarkers[id];
       }
       loadNodes();
-    }, 60000); // 1 Minute Reload
+    }, 60000); // 1-Minuten-Update
   </script>
 </body>
 </html>
