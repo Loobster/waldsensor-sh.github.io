@@ -1,0 +1,26 @@
+{
+  "node": "s31lb",
+  "position": {
+    "lat": 0.0,
+    "lon": 0.0
+  },
+  "time": "2025-05-04T09:13:21.419286Z",
+  "gateways": [
+    {
+      "id": "eui-00007076ff031372",
+      "rssi": -101.0,
+      "snr": 10.0
+    },
+    {
+      "id": "eui-00007076ff031358",
+      "rssi": -120.0,
+      "snr": -7.2
+    }
+  ],
+  "values": {
+    "BatV": 3.606,
+    "EXTI_Trigger": "FALSE",
+    "Hum_SHT31": 78.1,
+    "TempC_SHT31": 10.6
+  }
+}

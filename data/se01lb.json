@@ -1,0 +1,28 @@
+{
+  "node": "se01lb",
+  "position": {
+    "lat": 0.0,
+    "lon": 0.0
+  },
+  "time": "2025-05-04T09:23:00.456484Z",
+  "gateways": [
+    {
+      "id": "eui-7076ff0056070bb4",
+      "rssi": -117.0,
+      "snr": 3.0
+    },
+    {
+      "id": "eui-00007076ff031358",
+      "rssi": -117.0,
+      "snr": 3.0
+    }
+  ],
+  "values": {
+    "BatV": 3.326,
+    "Mod": 0.0,
+    "conduct_SOIL": 8.0,
+    "temp_DS18B20": 327.6,
+    "temp_SOIL": 8.66,
+    "water_SOIL": 9.14
+  }
+}
