@@ -1,20 +1,15 @@
 {
-  "node": "tests-fahrdorf",
+  "node": "testsensor-Fahrdorf",
   "position": {
-    "lat": 54.5038,
-    "lon": 9.6027
+    "lat": 54.502,
+    "lon": 9.6
   },
-  "time": "2025-04-22T09:15:00Z",
+  "time": "2025-05-04T10:00:00Z",
   "gateways": [
     {
-      "id": "eui-testgateway123",
+      "id": "lora-gateway-fahrdorf",
       "rssi": -80,
-      "snr": 10.0
+      "snr": 10
     }
-  ],
-  "values": {
-    "BatV": 3.5,
-    "TempC_SHT": 22.1,
-    "Hum_SHT": 55.0
-  }
+  ]
 }
