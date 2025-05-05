@@ -1,20 +1,20 @@
 {
   "node": "sn50v3",
   "position": {
-    "lat": 54.501576317102,
-    "lon": 9.58694958832219
+    "lat": 54.50311486,
+    "lon": 9.58799756
   },
-  "time": "2025-05-05T02:33:39.653384Z",
+  "time": "2025-05-05T02:53:39.414159Z",
   "gateways": [
     {
-      "id": "lora-gateway-fahrdorf",
-      "rssi": -89.0,
-      "snr": 5.8
+      "id": "laird-lorawan-gw",
+      "rssi": -45.0,
+      "snr": 9.5
     }
   ],
   "values": {
     "BatV": 3.588,
-    "Hum_SHT": 50.5,
+    "Hum_SHT": 50.7,
     "TempC_SHT": 22.5
   }
 }
