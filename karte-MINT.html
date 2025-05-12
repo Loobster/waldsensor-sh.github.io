@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+  <meta charset="utf-8" />
+  <title>WALDSENSOR.SH – MINT-Karte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>#map { height: 95vh; }</style>
+</head>
+<body>
+<h3 style="text-align:center;">🌳 WALDSENSOR.SH – MINT-Schulen & Gateways</h3>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+const map = L.map('map').setView([54.2, 9.6], 8);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 18,
+  attribution: '&copy; OpenStreetMap-Mitwirkende'
+}).addTo(map);
+
+const schulen = {
+  "type": "FeatureCollection",
+  "features": [
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[9.075207,54.095491]},"properties":{"name":"Gemeinschaftsschule Meldorf"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[9.126681,53.901892]},"properties":{"name":"Schleusen-Gemeinschaftsschule Brunsbüttel"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[10.078236,54.340631]},"properties":{"name":"Gemeinschaftsschule Kronshagen"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[9.715,53.95714]},"properties":{"name":"Gemeinschaftsschule Kellinghusen"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[10.261047,53.727197]},"properties":{"name":"Anne-Frank-Schule Bargteheide"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[9.526304,54.4976]},"properties":{"name":"Dannewerkschule Schleswig"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[9.658152,54.305018]},"properties":{"name":"Schule Altstadt Rendsburg"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[9.656,53.75099]},"properties":{"name":"Anne-Frank-Gemeinschaftsschule Elmshorn"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[9.896,53.789202]},"properties":{"name":"Schule im Alsterland Nahe"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[10.651,53.856742]},"properties":{"name":"Baltic-Schule Lübeck"}}
+  ]
+};
+
+const gateways = {
+  "type": "FeatureCollection",
+  "features": [] // << hier könntest du optional Gateways aus deiner CSV ergänzen
+};
+
+function addGeoJSON(data, color) {
+  return L.geoJSON(data, {
+    pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+      radius: 7, fillColor: color, color: "#000", weight: 1, opacity: 1, fillOpacity: 0.8
+    }),
+    onEachFeature: (feature, layer) => layer.bindPopup(feature.properties.name)
+  }).addTo(map);
+}
+
+addGeoJSON(schulen, "orange");
+addGeoJSON(gateways, "blue");
+
+function haversine(lat1, lon1, lat2, lon2) {
+  const toRad = x => x * Math.PI / 180;
+  const R = 6371;
+  const dLat = toRad(lat2 - lat1), dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+schulen.features.forEach(s => {
+  const slat = s.geometry.coordinates[1], slon = s.geometry.coordinates[0];
+  let nearest = null, minDist = Infinity;
+
+  gateways.features.forEach(g => {
+    const glat = g.geometry.coordinates[1], glon = g.geometry.coordinates[0];
+    const dist = haversine(slat, slon, glat, glon);
+    if (dist < minDist) { minDist = dist; nearest = g; }
+  });
+
+  if (nearest) {
+    const glat = nearest.geometry.coordinates[1], glon = nearest.geometry.coordinates[0];
+    const line = L.polyline([[slat, slon], [glat, glon]], {
+      color: 'gray', dashArray: '5,5', weight: 1.5
+    }).addTo(map);
+    line.bindPopup("Entfernung: " + minDist.toFixed(1) + " km");
+  }
+});
+</script>
+</body>
+</html>
