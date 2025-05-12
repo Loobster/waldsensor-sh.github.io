@@ -35,7 +35,53 @@ const schulen = {
 
 const gateways = {
   "type": "FeatureCollection",
-  "features": [] // << hier könntest du optional Gateways aus deiner CSV ergänzen
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [9.9720215, 53.5754356] },
+      "properties": { "name": "gateway-001" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.114647, 54.3560728] },
+      "properties": { "name": "gateway-002" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.10900967, 54.29817] },
+      "properties": { "name": "gateway-003" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.1118485, 54.3172807] },
+      "properties": { "name": "gateway-004" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.27315367, 54.23485445] },
+      "properties": { "name": "gateway-005" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.18077217, 54.34101717] },
+      "properties": { "name": "gateway-006" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.19452633, 54.29551567] },
+      "properties": { "name": "gateway-007" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.097035, 54.31112] },
+      "properties": { "name": "gateway-008" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.1817623, 54.2630158] },
+      "properties": { "name": "gateway-009" }
+    }
+  ]
 };
 
 function addGeoJSON(data, color) {
