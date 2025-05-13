@@ -1,33 +1,434 @@
-,name,lat,lon
-,Grund- und Gemeinschaftsschule an der Bek, Halstenbek,53.6320188,9.8381154
-,James-Krüss-Schule Barmstedt,53.6320188,9.8381154
-,Gemeinschaftsschule Lauenburgische Seen in Ratzeburg,53.699054,10.791083
-,Anne-Frank-Schule Bargteheide,53.727197,10.261047
-,Anne-Frank-Gemeinschaftsschule Elmshorn,53.75099,9.656
-,Schule im Alsterland Nahe,53.789202,9.896
-,Schule im Alsterland Nahe,53.7892022,10.1337461
-,Immanuel Kant Schule Reinfeld,53.834285,10.499909
-,Baltic-Schule Lübeck,53.856742,10.651
-,Bugenhagen-Schule Lübeck,53.8608792,10.6725109
-,Paul-Gerhardt-Schule Lübeck,53.8875686,10.6569123
-,Boy Lornsen Schule Brunsbüttel,53.8937502,9.1336446
-,Schleusen-Gemeinschaftsschule Brunsbüttel,53.901892,09.126681
-,Gemeinschaftsschule Kellinghusen,53.95714,9.715
-,Schule Hohe Geest, Hohenwestedt,54.0900643,9.6604385
-,Gemeinschaftsschule Meldorf,54.095491,09.75207
-,Carl-Maria-von-Weber-Schule Eutin,54.1380908,10.6136079
-,Gemeinschaftsschule Nortorf,54.165390,9.8465566
-,Gymnasium Heide Ost Heide,54.199207,09.116389
-,Gymnasium Elmschenhagen Kiel,54.2894401,10.195909
-,Schule Altstadt Rendsburg,54.305018,9.658152
-,Gymnasium Kronwerk Rendsburg,54.3128504,9.6542884
-,Käthe-Kollwitz-Schule Kiel,54.3191444,10.1169983
-,Gymnasium Wellingdorf Kiel,54.3247775,10.1799195
-,Grundschule an den Eichen Kronshagen,54.3382307,10.1005091
-,Gemeinschaftsschule Kronshagen,54.340631,10.78236
-,Hebbelschule Europaschule Kiel,54.349082,10.1375769
-, Ernst-Barlach-Gymnasium Kiel,54.349395,10.106264
-,Gymnasium Altenholz,54.3829458,10.1295074
-,Theodor-Litt-Schule Neumünster,54.3829458,10.1295074
-,Dannewerkschule Schleswig,54.4976,9.526304
-,Domschule Schleswig,54.5138828,9.5573286
+const schulen = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.8381154,
+          53.6320188
+        ]
+      },
+      "properties": {
+        "name": "Grund- und Gemeinschaftsschule an der Bek, Halstenbek"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.8381154,
+          53.6320188
+        ]
+      },
+      "properties": {
+        "name": "James-Kr\u00fcss-Schule Barmstedt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.791083,
+          53.699054
+        ]
+      },
+      "properties": {
+        "name": "Gemeinschaftsschule Lauenburgische Seen in Ratzeburg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.261047,
+          53.727197
+        ]
+      },
+      "properties": {
+        "name": "Anne-Frank-Schule Bargteheide"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.656,
+          53.75099
+        ]
+      },
+      "properties": {
+        "name": "Anne-Frank-Gemeinschaftsschule Elmshorn"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.896,
+          53.789202
+        ]
+      },
+      "properties": {
+        "name": "Schule im Alsterland Nahe"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.1337461,
+          53.7892022
+        ]
+      },
+      "properties": {
+        "name": "Schule im Alsterland Nahe"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.499909,
+          53.834285
+        ]
+      },
+      "properties": {
+        "name": "Immanuel Kant Schule Reinfeld"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.651,
+          53.856742
+        ]
+      },
+      "properties": {
+        "name": "Baltic-Schule L\u00fcbeck"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.6725109,
+          53.8608792
+        ]
+      },
+      "properties": {
+        "name": "Bugenhagen-Schule L\u00fcbeck"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.6569123,
+          53.8875686
+        ]
+      },
+      "properties": {
+        "name": "Paul-Gerhardt-Schule L\u00fcbeck"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.1336446,
+          53.8937502
+        ]
+      },
+      "properties": {
+        "name": "Boy Lornsen Schule Brunsb\u00fcttel"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.126681,
+          53.901892
+        ]
+      },
+      "properties": {
+        "name": "Schleusen-Gemeinschaftsschule Brunsb\u00fcttel"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.715,
+          53.95714
+        ]
+      },
+      "properties": {
+        "name": "Gemeinschaftsschule Kellinghusen"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.6604385,
+          54.0900643
+        ]
+      },
+      "properties": {
+        "name": "Schule Hohe Geest, Hohenwestedt"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.75207,
+          54.095491
+        ]
+      },
+      "properties": {
+        "name": "Gemeinschaftsschule Meldorf"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.6136079,
+          54.1380908
+        ]
+      },
+      "properties": {
+        "name": "Carl-Maria-von-Weber-Schule Eutin"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.8465566,
+          54.16539
+        ]
+      },
+      "properties": {
+        "name": "Gemeinschaftsschule Nortorf"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.116389,
+          54.199207
+        ]
+      },
+      "properties": {
+        "name": "Gymnasium Heide Ost Heide"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.195909,
+          54.2894401
+        ]
+      },
+      "properties": {
+        "name": "Gymnasium Elmschenhagen Kiel"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.658152,
+          54.305018
+        ]
+      },
+      "properties": {
+        "name": "Schule Altstadt Rendsburg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.6542884,
+          54.3128504
+        ]
+      },
+      "properties": {
+        "name": "Gymnasium Kronwerk Rendsburg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.1169983,
+          54.3191444
+        ]
+      },
+      "properties": {
+        "name": "K\u00e4the-Kollwitz-Schule Kiel"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.1799195,
+          54.3247775
+        ]
+      },
+      "properties": {
+        "name": "Gymnasium Wellingdorf Kiel"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.1005091,
+          54.3382307
+        ]
+      },
+      "properties": {
+        "name": "Grundschule an den Eichen Kronshagen"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.78236,
+          54.340631
+        ]
+      },
+      "properties": {
+        "name": "Gemeinschaftsschule Kronshagen"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.1375769,
+          54.349082
+        ]
+      },
+      "properties": {
+        "name": "Hebbelschule Europaschule Kiel"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.106264,
+          54.349395
+        ]
+      },
+      "properties": {
+        "name": "Ernst-Barlach-Gymnasium Kiel"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.1295074,
+          54.3829458
+        ]
+      },
+      "properties": {
+        "name": "Gymnasium Altenholz"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.1295074,
+          54.3829458
+        ]
+      },
+      "properties": {
+        "name": "Theodor-Litt-Schule Neum\u00fcnster"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.526304,
+          54.4976
+        ]
+      },
+      "properties": {
+        "name": "Dannewerkschule Schleswig"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.5573286,
+          54.5138828
+        ]
+      },
+      "properties": {
+        "name": "Domschule Schleswig"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.3087944,
+          54.9066748
+        ]
+      },
+      "properties": {
+        "name": "Schule St. Nicolai Sylt"
+      }
+    }
+  ]
+};
