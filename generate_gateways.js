@@ -11,7 +11,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0001"
+        "name": "gateway-0001",
+        "altitude": 16
       }
     },
     {
@@ -24,7 +25,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0002"
+        "name": "gateway-0002",
+        "altitude": 30
       }
     },
     {
@@ -37,7 +39,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0003"
+        "name": "gateway-0003",
+        "altitude": 15
       }
     },
     {
@@ -50,7 +53,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0004"
+        "name": "gateway-0004",
+        "altitude": 55
       }
     },
     {
@@ -63,7 +67,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0005"
+        "name": "gateway-0005",
+        "altitude": 28
       }
     },
     {
@@ -76,7 +81,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0006"
+        "name": "gateway-0006",
+        "altitude": 63
       }
     },
     {
@@ -89,7 +95,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0007"
+        "name": "gateway-0007",
+        "altitude": 20
       }
     },
     {
@@ -102,7 +109,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0008"
+        "name": "gateway-0008",
+        "altitude": 15
       }
     },
     {
@@ -115,7 +123,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0009"
+        "name": "gateway-0009",
+        "altitude": 40
       }
     },
     {
@@ -128,7 +137,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0010"
+        "name": "gateway-0010",
+        "altitude": 50
       }
     },
     {
@@ -141,7 +151,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0011"
+        "name": "gateway-0011",
+        "altitude": 95
       }
     },
     {
@@ -154,7 +165,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0012"
+        "name": "gateway-0012",
+        "altitude": 50
       }
     },
     {
@@ -167,7 +179,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0013"
+        "name": "gateway-0013",
+        "altitude": 0
       }
     },
     {
@@ -180,7 +193,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0014"
+        "name": "gateway-0014",
+        "altitude": 25
       }
     },
     {
@@ -193,7 +207,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0015"
+        "name": "gateway-0015",
+        "altitude": 30
       }
     },
     {
@@ -206,7 +221,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0016"
+        "name": "gateway-0016",
+        "altitude": 10
       }
     },
     {
@@ -219,7 +235,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0017"
+        "name": "gateway-0017",
+        "altitude": 60
       }
     },
     {
@@ -232,7 +249,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0018"
+        "name": "gateway-0018",
+        "altitude": 16
       }
     },
     {
@@ -245,7 +263,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0019"
+        "name": "gateway-0019",
+        "altitude": 0
       }
     },
     {
@@ -258,7 +277,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0020"
+        "name": "gateway-0020",
+        "altitude": 1
       }
     },
     {
@@ -271,7 +291,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0021"
+        "name": "gateway-0021",
+        "altitude": 10
       }
     },
     {
@@ -284,7 +305,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0022"
+        "name": "gateway-0022",
+        "altitude": 0
       }
     },
     {
@@ -297,7 +319,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0024"
+        "name": "gateway-0024",
+        "altitude": 15
       }
     },
     {
@@ -310,7 +333,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0025"
+        "name": "gateway-0025",
+        "altitude": 0
       }
     },
     {
@@ -323,7 +347,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0026"
+        "name": "gateway-0026",
+        "altitude": 14
       }
     },
     {
@@ -336,7 +361,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0027"
+        "name": "gateway-0027",
+        "altitude": 56
       }
     },
     {
@@ -349,7 +375,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0028"
+        "name": "gateway-0028",
+        "altitude": 32
       }
     },
     {
@@ -362,7 +389,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0029"
+        "name": "gateway-0029",
+        "altitude": 9
       }
     },
     {
@@ -375,7 +403,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0030"
+        "name": "gateway-0030",
+        "altitude": 8
       }
     },
     {
@@ -388,7 +417,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0031"
+        "name": "gateway-0031",
+        "altitude": 3
       }
     },
     {
@@ -401,7 +431,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0032"
+        "name": "gateway-0032",
+        "altitude": 0
       }
     },
     {
@@ -414,7 +445,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0033"
+        "name": "gateway-0033",
+        "altitude": 5
       }
     },
     {
@@ -427,7 +459,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0034"
+        "name": "gateway-0034",
+        "altitude": 48
       }
     },
     {
@@ -440,7 +473,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0035"
+        "name": "gateway-0035",
+        "altitude": 25
       }
     },
     {
@@ -453,7 +487,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0036"
+        "name": "gateway-0036",
+        "altitude": 12
       }
     },
     {
@@ -466,7 +501,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0037"
+        "name": "gateway-0037",
+        "altitude": 45
       }
     },
     {
@@ -479,7 +515,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0038"
+        "name": "gateway-0038",
+        "altitude": 20
       }
     },
     {
@@ -492,7 +529,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0039"
+        "name": "gateway-0039",
+        "altitude": 5
       }
     },
     {
@@ -505,7 +543,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0040"
+        "name": "gateway-0040",
+        "altitude": 0
       }
     },
     {
@@ -518,7 +557,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0041"
+        "name": "gateway-0041",
+        "altitude": 0
       }
     },
     {
@@ -531,7 +571,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0042"
+        "name": "gateway-0042",
+        "altitude": 0
       }
     },
     {
@@ -544,7 +585,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0043"
+        "name": "gateway-0043",
+        "altitude": 26
       }
     },
     {
@@ -557,7 +599,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0044"
+        "name": "gateway-0044",
+        "altitude": 4
       }
     },
     {
@@ -570,7 +613,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0045"
+        "name": "gateway-0045",
+        "altitude": 5
       }
     },
     {
@@ -583,7 +627,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0046"
+        "name": "gateway-0046",
+        "altitude": 41
       }
     },
     {
@@ -596,7 +641,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0048"
+        "name": "gateway-0048",
+        "altitude": 60
       }
     },
     {
@@ -609,7 +655,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0053"
+        "name": "gateway-0053",
+        "altitude": 42
       }
     },
     {
@@ -622,7 +669,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0054"
+        "name": "gateway-0054",
+        "altitude": 8
       }
     },
     {
@@ -635,7 +683,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0055"
+        "name": "gateway-0055",
+        "altitude": 0
       }
     },
     {
@@ -648,7 +697,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0057"
+        "name": "gateway-0057",
+        "altitude": 450
       }
     },
     {
@@ -661,7 +711,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0059"
+        "name": "gateway-0059",
+        "altitude": 5
       }
     },
     {
@@ -674,7 +725,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0060"
+        "name": "gateway-0060",
+        "altitude": 0
       }
     },
     {
@@ -687,7 +739,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0061"
+        "name": "gateway-0061",
+        "altitude": 8
       }
     },
     {
@@ -700,7 +753,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0062"
+        "name": "gateway-0062",
+        "altitude": 10
       }
     },
     {
@@ -713,7 +767,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0063"
+        "name": "gateway-0063",
+        "altitude": 0
       }
     },
     {
@@ -726,7 +781,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0064"
+        "name": "gateway-0064",
+        "altitude": 0
       }
     },
     {
@@ -739,7 +795,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0065"
+        "name": "gateway-0065",
+        "altitude": 10
       }
     },
     {
@@ -752,7 +809,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0066"
+        "name": "gateway-0066",
+        "altitude": 10
       }
     },
     {
@@ -765,7 +823,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0068"
+        "name": "gateway-0068",
+        "altitude": 38
       }
     },
     {
@@ -778,7 +837,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0069"
+        "name": "gateway-0069",
+        "altitude": 30
       }
     },
     {
@@ -791,7 +851,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0070"
+        "name": "gateway-0070",
+        "altitude": 180
       }
     },
     {
@@ -804,7 +865,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0071"
+        "name": "gateway-0071",
+        "altitude": 56
       }
     },
     {
@@ -817,7 +879,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0072"
+        "name": "gateway-0072",
+        "altitude": 112
       }
     },
     {
@@ -830,7 +893,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0073"
+        "name": "gateway-0073",
+        "altitude": 171
       }
     },
     {
@@ -843,7 +907,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0074"
+        "name": "gateway-0074",
+        "altitude": 180
       }
     },
     {
@@ -856,7 +921,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0075"
+        "name": "gateway-0075",
+        "altitude": 80
       }
     },
     {
@@ -869,7 +935,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0076"
+        "name": "gateway-0076",
+        "altitude": 45
       }
     },
     {
@@ -882,7 +949,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0077"
+        "name": "gateway-0077",
+        "altitude": 41
       }
     },
     {
@@ -895,7 +963,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0078"
+        "name": "gateway-0078",
+        "altitude": 145
       }
     },
     {
@@ -908,7 +977,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0079"
+        "name": "gateway-0079",
+        "altitude": 30
       }
     },
     {
@@ -921,7 +991,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0080"
+        "name": "gateway-0080",
+        "altitude": 10
       }
     },
     {
@@ -934,7 +1005,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0081"
+        "name": "gateway-0081",
+        "altitude": 77
       }
     },
     {
@@ -947,7 +1019,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0082"
+        "name": "gateway-0082",
+        "altitude": 0
       }
     },
     {
@@ -960,7 +1033,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0083"
+        "name": "gateway-0083",
+        "altitude": 0
       }
     },
     {
@@ -973,7 +1047,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0084"
+        "name": "gateway-0084",
+        "altitude": 6
       }
     },
     {
@@ -986,7 +1061,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0085"
+        "name": "gateway-0085",
+        "altitude": 15
       }
     },
     {
@@ -999,7 +1075,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0086"
+        "name": "gateway-0086",
+        "altitude": 55
       }
     },
     {
@@ -1012,7 +1089,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0087"
+        "name": "gateway-0087",
+        "altitude": 9
       }
     },
     {
@@ -1025,7 +1103,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0088"
+        "name": "gateway-0088",
+        "altitude": 30
       }
     },
     {
@@ -1038,7 +1117,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0089"
+        "name": "gateway-0089",
+        "altitude": 24
       }
     },
     {
@@ -1051,7 +1131,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0090"
+        "name": "gateway-0090",
+        "altitude": 10
       }
     },
     {
@@ -1064,7 +1145,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0092"
+        "name": "gateway-0092",
+        "altitude": 0
       }
     },
     {
@@ -1077,7 +1159,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0093"
+        "name": "gateway-0093",
+        "altitude": 0
       }
     },
     {
@@ -1090,7 +1173,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0094"
+        "name": "gateway-0094",
+        "altitude": 0
       }
     },
     {
@@ -1103,7 +1187,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0095"
+        "name": "gateway-0095",
+        "altitude": 0
       }
     },
     {
@@ -1116,7 +1201,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0096"
+        "name": "gateway-0096",
+        "altitude": 0
       }
     },
     {
@@ -1129,7 +1215,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0097"
+        "name": "gateway-0097",
+        "altitude": 2
       }
     },
     {
@@ -1142,7 +1229,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0098"
+        "name": "gateway-0098",
+        "altitude": 5
       }
     },
     {
@@ -1155,7 +1243,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0102"
+        "name": "gateway-0102",
+        "altitude": 10
       }
     },
     {
@@ -1168,7 +1257,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0103"
+        "name": "gateway-0103",
+        "altitude": 8
       }
     },
     {
@@ -1181,7 +1271,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0104"
+        "name": "gateway-0104",
+        "altitude": 40
       }
     },
     {
@@ -1194,7 +1285,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0105"
+        "name": "gateway-0105",
+        "altitude": 5
       }
     },
     {
@@ -1207,7 +1299,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0107"
+        "name": "gateway-0107",
+        "altitude": 24
       }
     },
     {
@@ -1220,7 +1313,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0108"
+        "name": "gateway-0108",
+        "altitude": 50
       }
     },
     {
@@ -1233,7 +1327,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0110"
+        "name": "gateway-0110",
+        "altitude": 0
       }
     },
     {
@@ -1246,7 +1341,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0113"
+        "name": "gateway-0113",
+        "altitude": 22
       }
     },
     {
@@ -1259,7 +1355,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0115"
+        "name": "gateway-0115",
+        "altitude": 29
       }
     },
     {
@@ -1272,7 +1369,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0117"
+        "name": "gateway-0117",
+        "altitude": 0
       }
     },
     {
@@ -1285,7 +1383,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0118"
+        "name": "gateway-0118",
+        "altitude": 20
       }
     },
     {
@@ -1298,7 +1397,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0123"
+        "name": "gateway-0123",
+        "altitude": 10
       }
     },
     {
@@ -1311,7 +1411,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0125"
+        "name": "gateway-0125",
+        "altitude": 15
       }
     },
     {
@@ -1324,7 +1425,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0127"
+        "name": "gateway-0127",
+        "altitude": 25
       }
     },
     {
@@ -1337,7 +1439,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0129"
+        "name": "gateway-0129",
+        "altitude": 10
       }
     },
     {
@@ -1350,7 +1453,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0130"
+        "name": "gateway-0130",
+        "altitude": 0
       }
     },
     {
@@ -1363,7 +1467,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0131"
+        "name": "gateway-0131",
+        "altitude": 6
       }
     },
     {
@@ -1376,7 +1481,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0133"
+        "name": "gateway-0133",
+        "altitude": 51
       }
     },
     {
@@ -1389,7 +1495,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0134"
+        "name": "gateway-0134",
+        "altitude": 6
       }
     },
     {
@@ -1402,7 +1509,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0135"
+        "name": "gateway-0135",
+        "altitude": 6
       }
     },
     {
@@ -1415,7 +1523,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0136"
+        "name": "gateway-0136",
+        "altitude": 75
       }
     },
     {
@@ -1428,7 +1537,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0137"
+        "name": "gateway-0137",
+        "altitude": 35
       }
     },
     {
@@ -1441,7 +1551,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0138"
+        "name": "gateway-0138",
+        "altitude": 16
       }
     },
     {
@@ -1454,7 +1565,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0140"
+        "name": "gateway-0140",
+        "altitude": 40
       }
     },
     {
@@ -1467,7 +1579,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0141"
+        "name": "gateway-0141",
+        "altitude": 33
       }
     },
     {
@@ -1480,7 +1593,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0142"
+        "name": "gateway-0142",
+        "altitude": 6
       }
     },
     {
@@ -1493,7 +1607,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0143"
+        "name": "gateway-0143",
+        "altitude": 10
       }
     },
     {
@@ -1506,7 +1621,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0144"
+        "name": "gateway-0144",
+        "altitude": 7
       }
     },
     {
@@ -1519,7 +1635,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0145"
+        "name": "gateway-0145",
+        "altitude": 15
       }
     },
     {
@@ -1532,7 +1649,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0146"
+        "name": "gateway-0146",
+        "altitude": 0
       }
     },
     {
@@ -1545,7 +1663,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0147"
+        "name": "gateway-0147",
+        "altitude": 90
       }
     },
     {
@@ -1558,7 +1677,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0148"
+        "name": "gateway-0148",
+        "altitude": 36
       }
     },
     {
@@ -1571,7 +1691,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0149"
+        "name": "gateway-0149",
+        "altitude": 42
       }
     },
     {
@@ -1584,7 +1705,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0150"
+        "name": "gateway-0150",
+        "altitude": 3
       }
     },
     {
@@ -1597,7 +1719,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0151"
+        "name": "gateway-0151",
+        "altitude": 33
       }
     },
     {
@@ -1610,7 +1733,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0152"
+        "name": "gateway-0152",
+        "altitude": 30
       }
     },
     {
@@ -1623,7 +1747,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0153"
+        "name": "gateway-0153",
+        "altitude": 20
       }
     },
     {
@@ -1636,7 +1761,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0155"
+        "name": "gateway-0155",
+        "altitude": 10
       }
     },
     {
@@ -1649,7 +1775,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0156"
+        "name": "gateway-0156",
+        "altitude": 48
       }
     },
     {
@@ -1662,7 +1789,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0157"
+        "name": "gateway-0157",
+        "altitude": 35
       }
     },
     {
@@ -1675,7 +1803,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0158"
+        "name": "gateway-0158",
+        "altitude": 35
       }
     },
     {
@@ -1688,7 +1817,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0159"
+        "name": "gateway-0159",
+        "altitude": 10
       }
     },
     {
@@ -1701,7 +1831,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0160"
+        "name": "gateway-0160",
+        "altitude": 0
       }
     },
     {
@@ -1714,7 +1845,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0162"
+        "name": "gateway-0162",
+        "altitude": 50
       }
     },
     {
@@ -1727,7 +1859,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0163"
+        "name": "gateway-0163",
+        "altitude": 0
       }
     },
     {
@@ -1740,7 +1873,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0165"
+        "name": "gateway-0165",
+        "altitude": 0
       }
     },
     {
@@ -1753,7 +1887,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0167"
+        "name": "gateway-0167",
+        "altitude": 41
       }
     },
     {
@@ -1766,7 +1901,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0168"
+        "name": "gateway-0168",
+        "altitude": 0
       }
     },
     {
@@ -1779,7 +1915,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0173"
+        "name": "gateway-0173",
+        "altitude": 79
       }
     },
     {
@@ -1792,7 +1929,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0174"
+        "name": "gateway-0174",
+        "altitude": 40
       }
     },
     {
@@ -1805,7 +1943,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0175"
+        "name": "gateway-0175",
+        "altitude": 55
       }
     },
     {
@@ -1818,7 +1957,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0176"
+        "name": "gateway-0176",
+        "altitude": 15
       }
     },
     {
@@ -1831,7 +1971,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0177"
+        "name": "gateway-0177",
+        "altitude": 45
       }
     },
     {
@@ -1844,7 +1985,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0178"
+        "name": "gateway-0178",
+        "altitude": 0
       }
     },
     {
@@ -1857,7 +1999,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0179"
+        "name": "gateway-0179",
+        "altitude": 40
       }
     },
     {
@@ -1870,7 +2013,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0180"
+        "name": "gateway-0180",
+        "altitude": 36
       }
     },
     {
@@ -1883,7 +2027,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0181"
+        "name": "gateway-0181",
+        "altitude": 2
       }
     },
     {
@@ -1896,7 +2041,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0182"
+        "name": "gateway-0182",
+        "altitude": 13
       }
     },
     {
@@ -1909,7 +2055,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0183"
+        "name": "gateway-0183",
+        "altitude": 17
       }
     },
     {
@@ -1922,7 +2069,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0184"
+        "name": "gateway-0184",
+        "altitude": 21
       }
     },
     {
@@ -1935,7 +2083,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0185"
+        "name": "gateway-0185",
+        "altitude": 4
       }
     },
     {
@@ -1948,7 +2097,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0186"
+        "name": "gateway-0186",
+        "altitude": 87
       }
     },
     {
@@ -1961,7 +2111,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0187"
+        "name": "gateway-0187",
+        "altitude": 51
       }
     },
     {
@@ -1974,7 +2125,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0188"
+        "name": "gateway-0188",
+        "altitude": 49
       }
     },
     {
@@ -1987,7 +2139,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0189"
+        "name": "gateway-0189",
+        "altitude": 43
       }
     },
     {
@@ -2000,7 +2153,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0190"
+        "name": "gateway-0190",
+        "altitude": 19
       }
     },
     {
@@ -2013,7 +2167,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0191"
+        "name": "gateway-0191",
+        "altitude": 22
       }
     },
     {
@@ -2026,7 +2181,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0192"
+        "name": "gateway-0192",
+        "altitude": 32
       }
     },
     {
@@ -2039,7 +2195,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0193"
+        "name": "gateway-0193",
+        "altitude": 19
       }
     },
     {
@@ -2052,7 +2209,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0194"
+        "name": "gateway-0194",
+        "altitude": 60
       }
     },
     {
@@ -2065,7 +2223,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0195"
+        "name": "gateway-0195",
+        "altitude": 46
       }
     },
     {
@@ -2078,7 +2237,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0196"
+        "name": "gateway-0196",
+        "altitude": 19
       }
     },
     {
@@ -2091,7 +2251,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0197"
+        "name": "gateway-0197",
+        "altitude": 31
       }
     },
     {
@@ -2104,7 +2265,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0198"
+        "name": "gateway-0198",
+        "altitude": 27
       }
     },
     {
@@ -2117,7 +2279,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0199"
+        "name": "gateway-0199",
+        "altitude": 7
       }
     },
     {
@@ -2130,7 +2293,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0200"
+        "name": "gateway-0200",
+        "altitude": 37
       }
     },
     {
@@ -2143,7 +2307,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0201"
+        "name": "gateway-0201",
+        "altitude": 33
       }
     },
     {
@@ -2156,7 +2321,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0202"
+        "name": "gateway-0202",
+        "altitude": 72
       }
     },
     {
@@ -2169,7 +2335,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0203"
+        "name": "gateway-0203",
+        "altitude": 28
       }
     },
     {
@@ -2182,7 +2349,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0204"
+        "name": "gateway-0204",
+        "altitude": 6
       }
     },
     {
@@ -2195,7 +2363,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0205"
+        "name": "gateway-0205",
+        "altitude": 17
       }
     },
     {
@@ -2208,7 +2377,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0206"
+        "name": "gateway-0206",
+        "altitude": 20
       }
     },
     {
@@ -2221,7 +2391,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0207"
+        "name": "gateway-0207",
+        "altitude": 18
       }
     },
     {
@@ -2234,7 +2405,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0208"
+        "name": "gateway-0208",
+        "altitude": 13
       }
     },
     {
@@ -2247,7 +2419,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0209"
+        "name": "gateway-0209",
+        "altitude": 40
       }
     },
     {
@@ -2260,7 +2433,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0210"
+        "name": "gateway-0210",
+        "altitude": 38
       }
     },
     {
@@ -2273,7 +2447,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0211"
+        "name": "gateway-0211",
+        "altitude": 28
       }
     },
     {
@@ -2286,7 +2461,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0212"
+        "name": "gateway-0212",
+        "altitude": 32
       }
     },
     {
@@ -2299,7 +2475,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0213"
+        "name": "gateway-0213",
+        "altitude": 46
       }
     },
     {
@@ -2312,7 +2489,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0214"
+        "name": "gateway-0214",
+        "altitude": 12
       }
     },
     {
@@ -2325,7 +2503,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0215"
+        "name": "gateway-0215",
+        "altitude": 65
       }
     },
     {
@@ -2338,7 +2517,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0216"
+        "name": "gateway-0216",
+        "altitude": 11
       }
     },
     {
@@ -2351,7 +2531,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0217"
+        "name": "gateway-0217",
+        "altitude": 49
       }
     },
     {
@@ -2364,7 +2545,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0218"
+        "name": "gateway-0218",
+        "altitude": 22
       }
     },
     {
@@ -2377,7 +2559,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0219"
+        "name": "gateway-0219",
+        "altitude": 18
       }
     },
     {
@@ -2390,7 +2573,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0220"
+        "name": "gateway-0220",
+        "altitude": 55
       }
     },
     {
@@ -2403,7 +2587,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0221"
+        "name": "gateway-0221",
+        "altitude": 34
       }
     },
     {
@@ -2416,7 +2601,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0222"
+        "name": "gateway-0222",
+        "altitude": 56
       }
     },
     {
@@ -2429,7 +2615,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0223"
+        "name": "gateway-0223",
+        "altitude": 29
       }
     },
     {
@@ -2442,7 +2629,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0224"
+        "name": "gateway-0224",
+        "altitude": 26
       }
     },
     {
@@ -2455,7 +2643,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0225"
+        "name": "gateway-0225",
+        "altitude": 19
       }
     },
     {
@@ -2468,7 +2657,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0226"
+        "name": "gateway-0226",
+        "altitude": 15
       }
     },
     {
@@ -2481,7 +2671,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0227"
+        "name": "gateway-0227",
+        "altitude": 34
       }
     },
     {
@@ -2494,7 +2685,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0228"
+        "name": "gateway-0228",
+        "altitude": 15
       }
     },
     {
@@ -2507,7 +2699,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0229"
+        "name": "gateway-0229",
+        "altitude": 12
       }
     },
     {
@@ -2520,7 +2713,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0230"
+        "name": "gateway-0230",
+        "altitude": 10
       }
     },
     {
@@ -2533,7 +2727,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0231"
+        "name": "gateway-0231",
+        "altitude": 42
       }
     },
     {
@@ -2546,7 +2741,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0232"
+        "name": "gateway-0232",
+        "altitude": 53
       }
     },
     {
@@ -2559,7 +2755,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0233"
+        "name": "gateway-0233",
+        "altitude": 16
       }
     },
     {
@@ -2572,7 +2769,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0234"
+        "name": "gateway-0234",
+        "altitude": 49
       }
     },
     {
@@ -2585,7 +2783,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0235"
+        "name": "gateway-0235",
+        "altitude": 58
       }
     },
     {
@@ -2598,7 +2797,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0236"
+        "name": "gateway-0236",
+        "altitude": 29
       }
     },
     {
@@ -2611,7 +2811,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0237"
+        "name": "gateway-0237",
+        "altitude": 32
       }
     },
     {
@@ -2624,7 +2825,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0238"
+        "name": "gateway-0238",
+        "altitude": 58
       }
     },
     {
@@ -2637,7 +2839,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0239"
+        "name": "gateway-0239",
+        "altitude": 14
       }
     },
     {
@@ -2650,7 +2853,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0240"
+        "name": "gateway-0240",
+        "altitude": 65
       }
     },
     {
@@ -2663,7 +2867,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0241"
+        "name": "gateway-0241",
+        "altitude": 20
       }
     },
     {
@@ -2676,7 +2881,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0242"
+        "name": "gateway-0242",
+        "altitude": 42
       }
     },
     {
@@ -2689,7 +2895,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0243"
+        "name": "gateway-0243",
+        "altitude": 15
       }
     },
     {
@@ -2702,7 +2909,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0244"
+        "name": "gateway-0244",
+        "altitude": 17
       }
     },
     {
@@ -2715,7 +2923,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0245"
+        "name": "gateway-0245",
+        "altitude": 17
       }
     },
     {
@@ -2728,7 +2937,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0246"
+        "name": "gateway-0246",
+        "altitude": 16
       }
     },
     {
@@ -2741,7 +2951,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0247"
+        "name": "gateway-0247",
+        "altitude": 5
       }
     },
     {
@@ -2754,7 +2965,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0248"
+        "name": "gateway-0248",
+        "altitude": 51
       }
     },
     {
@@ -2767,7 +2979,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0249"
+        "name": "gateway-0249",
+        "altitude": 60
       }
     },
     {
@@ -2780,7 +2993,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0250"
+        "name": "gateway-0250",
+        "altitude": 3
       }
     },
     {
@@ -2793,7 +3007,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0251"
+        "name": "gateway-0251",
+        "altitude": 11
       }
     },
     {
@@ -2806,7 +3021,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0252"
+        "name": "gateway-0252",
+        "altitude": 71
       }
     },
     {
@@ -2819,7 +3035,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0253"
+        "name": "gateway-0253",
+        "altitude": 36
       }
     },
     {
@@ -2832,7 +3049,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0254"
+        "name": "gateway-0254",
+        "altitude": 75
       }
     },
     {
@@ -2845,7 +3063,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0255"
+        "name": "gateway-0255",
+        "altitude": 92
       }
     },
     {
@@ -2858,7 +3077,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0256"
+        "name": "gateway-0256",
+        "altitude": 66
       }
     },
     {
@@ -2871,7 +3091,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0257"
+        "name": "gateway-0257",
+        "altitude": 19
       }
     },
     {
@@ -2884,7 +3105,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0258"
+        "name": "gateway-0258",
+        "altitude": 62
       }
     },
     {
@@ -2897,7 +3119,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0259"
+        "name": "gateway-0259",
+        "altitude": 62
       }
     },
     {
@@ -2910,7 +3133,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0260"
+        "name": "gateway-0260",
+        "altitude": 18
       }
     },
     {
@@ -2923,7 +3147,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0261"
+        "name": "gateway-0261",
+        "altitude": 11
       }
     },
     {
@@ -2936,7 +3161,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0262"
+        "name": "gateway-0262",
+        "altitude": 15
       }
     },
     {
@@ -2949,7 +3175,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0263"
+        "name": "gateway-0263",
+        "altitude": 18
       }
     },
     {
@@ -2962,7 +3189,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0264"
+        "name": "gateway-0264",
+        "altitude": 80
       }
     },
     {
@@ -2975,7 +3203,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0265"
+        "name": "gateway-0265",
+        "altitude": 9
       }
     },
     {
@@ -2988,7 +3217,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0266"
+        "name": "gateway-0266",
+        "altitude": 57
       }
     },
     {
@@ -3001,7 +3231,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0267"
+        "name": "gateway-0267",
+        "altitude": 44
       }
     },
     {
@@ -3014,7 +3245,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0268"
+        "name": "gateway-0268",
+        "altitude": 4
       }
     },
     {
@@ -3027,7 +3259,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0269"
+        "name": "gateway-0269",
+        "altitude": 27
       }
     },
     {
@@ -3040,7 +3273,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0270"
+        "name": "gateway-0270",
+        "altitude": 19
       }
     },
     {
@@ -3053,7 +3287,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0271"
+        "name": "gateway-0271",
+        "altitude": 8
       }
     },
     {
@@ -3066,7 +3301,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0272"
+        "name": "gateway-0272",
+        "altitude": 14
       }
     },
     {
@@ -3079,7 +3315,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0273"
+        "name": "gateway-0273",
+        "altitude": 15
       }
     },
     {
@@ -3092,7 +3329,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0274"
+        "name": "gateway-0274",
+        "altitude": 19
       }
     },
     {
@@ -3105,7 +3343,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0275"
+        "name": "gateway-0275",
+        "altitude": 36
       }
     },
     {
@@ -3118,7 +3357,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0276"
+        "name": "gateway-0276",
+        "altitude": 9
       }
     },
     {
@@ -3131,7 +3371,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0277"
+        "name": "gateway-0277",
+        "altitude": 21
       }
     },
     {
@@ -3144,7 +3385,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0278"
+        "name": "gateway-0278",
+        "altitude": 17
       }
     },
     {
@@ -3157,7 +3399,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0279"
+        "name": "gateway-0279",
+        "altitude": 20
       }
     },
     {
@@ -3170,7 +3413,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0280"
+        "name": "gateway-0280",
+        "altitude": 57
       }
     },
     {
@@ -3183,7 +3427,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0281"
+        "name": "gateway-0281",
+        "altitude": 31
       }
     },
     {
@@ -3196,7 +3441,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0282"
+        "name": "gateway-0282",
+        "altitude": 12
       }
     },
     {
@@ -3209,7 +3455,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0283"
+        "name": "gateway-0283",
+        "altitude": 11
       }
     },
     {
@@ -3222,7 +3469,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0284"
+        "name": "gateway-0284",
+        "altitude": 43
       }
     },
     {
@@ -3235,7 +3483,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0285"
+        "name": "gateway-0285",
+        "altitude": 22
       }
     },
     {
@@ -3248,7 +3497,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0286"
+        "name": "gateway-0286",
+        "altitude": 15
       }
     },
     {
@@ -3261,7 +3511,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0287"
+        "name": "gateway-0287",
+        "altitude": 37
       }
     },
     {
@@ -3274,7 +3525,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0288"
+        "name": "gateway-0288",
+        "altitude": 6
       }
     },
     {
@@ -3287,7 +3539,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0289"
+        "name": "gateway-0289",
+        "altitude": 9
       }
     },
     {
@@ -3300,7 +3553,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0290"
+        "name": "gateway-0290",
+        "altitude": 23
       }
     },
     {
@@ -3313,7 +3567,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0291"
+        "name": "gateway-0291",
+        "altitude": 36
       }
     },
     {
@@ -3326,7 +3581,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0292"
+        "name": "gateway-0292",
+        "altitude": 32
       }
     },
     {
@@ -3339,7 +3595,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0293"
+        "name": "gateway-0293",
+        "altitude": 36
       }
     },
     {
@@ -3352,7 +3609,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0294"
+        "name": "gateway-0294",
+        "altitude": 39
       }
     },
     {
@@ -3365,7 +3623,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0295"
+        "name": "gateway-0295",
+        "altitude": 2
       }
     },
     {
@@ -3378,7 +3637,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0296"
+        "name": "gateway-0296",
+        "altitude": 51
       }
     },
     {
@@ -3391,7 +3651,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0297"
+        "name": "gateway-0297",
+        "altitude": 28
       }
     },
     {
@@ -3404,7 +3665,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0298"
+        "name": "gateway-0298",
+        "altitude": 17
       }
     },
     {
@@ -3417,7 +3679,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0299"
+        "name": "gateway-0299",
+        "altitude": 53
       }
     },
     {
@@ -3430,7 +3693,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0300"
+        "name": "gateway-0300",
+        "altitude": 25
       }
     },
     {
@@ -3443,7 +3707,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0301"
+        "name": "gateway-0301",
+        "altitude": 36
       }
     },
     {
@@ -3456,7 +3721,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0302"
+        "name": "gateway-0302",
+        "altitude": 18
       }
     },
     {
@@ -3469,7 +3735,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0304"
+        "name": "gateway-0304",
+        "altitude": 9
       }
     },
     {
@@ -3482,7 +3749,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0305"
+        "name": "gateway-0305",
+        "altitude": 30
       }
     },
     {
@@ -3495,7 +3763,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0306"
+        "name": "gateway-0306",
+        "altitude": 30
       }
     },
     {
@@ -3508,7 +3777,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0307"
+        "name": "gateway-0307",
+        "altitude": 19
       }
     },
     {
@@ -3521,7 +3791,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0308"
+        "name": "gateway-0308",
+        "altitude": 50
       }
     },
     {
@@ -3534,7 +3805,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0309"
+        "name": "gateway-0309",
+        "altitude": 26
       }
     },
     {
@@ -3547,7 +3819,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0310"
+        "name": "gateway-0310",
+        "altitude": 12
       }
     },
     {
@@ -3560,7 +3833,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0311"
+        "name": "gateway-0311",
+        "altitude": 37
       }
     },
     {
@@ -3573,7 +3847,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0312"
+        "name": "gateway-0312",
+        "altitude": 49
       }
     },
     {
@@ -3586,7 +3861,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0313"
+        "name": "gateway-0313",
+        "altitude": 14
       }
     },
     {
@@ -3599,7 +3875,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0314"
+        "name": "gateway-0314",
+        "altitude": 25
       }
     },
     {
@@ -3612,7 +3889,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0315"
+        "name": "gateway-0315",
+        "altitude": 22
       }
     },
     {
@@ -3625,7 +3903,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0316"
+        "name": "gateway-0316",
+        "altitude": 3
       }
     },
     {
@@ -3638,7 +3917,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0318"
+        "name": "gateway-0318",
+        "altitude": 6
       }
     },
     {
@@ -3651,7 +3931,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0319"
+        "name": "gateway-0319",
+        "altitude": 7
       }
     },
     {
@@ -3664,7 +3945,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0320"
+        "name": "gateway-0320",
+        "altitude": 15
       }
     },
     {
@@ -3677,7 +3959,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0321"
+        "name": "gateway-0321",
+        "altitude": 12
       }
     },
     {
@@ -3690,7 +3973,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0322"
+        "name": "gateway-0322",
+        "altitude": 83
       }
     },
     {
@@ -3703,7 +3987,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0323"
+        "name": "gateway-0323",
+        "altitude": 7
       }
     },
     {
@@ -3716,7 +4001,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0324"
+        "name": "gateway-0324",
+        "altitude": 27
       }
     },
     {
@@ -3729,7 +4015,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0325"
+        "name": "gateway-0325",
+        "altitude": 39
       }
     },
     {
@@ -3742,7 +4029,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0326"
+        "name": "gateway-0326",
+        "altitude": 36
       }
     },
     {
@@ -3755,7 +4043,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0327"
+        "name": "gateway-0327",
+        "altitude": 2
       }
     },
     {
@@ -3768,7 +4057,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0328"
+        "name": "gateway-0328",
+        "altitude": 25
       }
     },
     {
@@ -3781,7 +4071,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0329"
+        "name": "gateway-0329",
+        "altitude": 42
       }
     },
     {
@@ -3794,7 +4085,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0330"
+        "name": "gateway-0330",
+        "altitude": 22
       }
     },
     {
@@ -3807,7 +4099,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0331"
+        "name": "gateway-0331",
+        "altitude": 78
       }
     },
     {
@@ -3820,7 +4113,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0332"
+        "name": "gateway-0332",
+        "altitude": 94
       }
     },
     {
@@ -3833,7 +4127,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0333"
+        "name": "gateway-0333",
+        "altitude": 23
       }
     },
     {
@@ -3846,7 +4141,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0334"
+        "name": "gateway-0334",
+        "altitude": 28
       }
     },
     {
@@ -3859,7 +4155,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0335"
+        "name": "gateway-0335",
+        "altitude": 99
       }
     },
     {
@@ -3872,7 +4169,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0336"
+        "name": "gateway-0336",
+        "altitude": 45
       }
     },
     {
@@ -3885,7 +4183,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0337"
+        "name": "gateway-0337",
+        "altitude": 124
       }
     },
     {
@@ -3898,7 +4197,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0338"
+        "name": "gateway-0338",
+        "altitude": 33
       }
     },
     {
@@ -3911,7 +4211,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0340"
+        "name": "gateway-0340",
+        "altitude": 60
       }
     },
     {
@@ -3924,7 +4225,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0341"
+        "name": "gateway-0341",
+        "altitude": 64
       }
     },
     {
@@ -3937,7 +4239,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0342"
+        "name": "gateway-0342",
+        "altitude": 64
       }
     },
     {
@@ -3950,7 +4253,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0344"
+        "name": "gateway-0344",
+        "altitude": 53
       }
     },
     {
@@ -3963,7 +4267,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0345"
+        "name": "gateway-0345",
+        "altitude": 69
       }
     },
     {
@@ -3976,7 +4281,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0346"
+        "name": "gateway-0346",
+        "altitude": 25
       }
     },
     {
@@ -3989,7 +4295,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0347"
+        "name": "gateway-0347",
+        "altitude": 30
       }
     },
     {
@@ -4002,7 +4309,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0348"
+        "name": "gateway-0348",
+        "altitude": 77
       }
     },
     {
@@ -4015,7 +4323,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0349"
+        "name": "gateway-0349",
+        "altitude": 20
       }
     },
     {
@@ -4028,7 +4337,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0350"
+        "name": "gateway-0350",
+        "altitude": 9
       }
     },
     {
@@ -4041,7 +4351,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0351"
+        "name": "gateway-0351",
+        "altitude": 18
       }
     },
     {
@@ -4054,7 +4365,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0352"
+        "name": "gateway-0352",
+        "altitude": 30
       }
     },
     {
@@ -4067,7 +4379,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0353"
+        "name": "gateway-0353",
+        "altitude": 54
       }
     },
     {
@@ -4080,7 +4393,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0354"
+        "name": "gateway-0354",
+        "altitude": 12
       }
     },
     {
@@ -4093,7 +4407,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0355"
+        "name": "gateway-0355",
+        "altitude": 10
       }
     },
     {
@@ -4106,7 +4421,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0356"
+        "name": "gateway-0356",
+        "altitude": 10
       }
     },
     {
@@ -4119,7 +4435,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0357"
+        "name": "gateway-0357",
+        "altitude": 7
       }
     },
     {
@@ -4132,7 +4449,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0358"
+        "name": "gateway-0358",
+        "altitude": 14
       }
     },
     {
@@ -4145,7 +4463,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0359"
+        "name": "gateway-0359",
+        "altitude": 36
       }
     },
     {
@@ -4158,7 +4477,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0360"
+        "name": "gateway-0360",
+        "altitude": 47
       }
     },
     {
@@ -4171,7 +4491,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0361"
+        "name": "gateway-0361",
+        "altitude": 9
       }
     },
     {
@@ -4184,7 +4505,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0362"
+        "name": "gateway-0362",
+        "altitude": 4
       }
     },
     {
@@ -4197,7 +4519,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0363"
+        "name": "gateway-0363",
+        "altitude": 3
       }
     },
     {
@@ -4210,7 +4533,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0364"
+        "name": "gateway-0364",
+        "altitude": 51
       }
     },
     {
@@ -4223,7 +4547,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0365"
+        "name": "gateway-0365",
+        "altitude": 19
       }
     },
     {
@@ -4236,7 +4561,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0366"
+        "name": "gateway-0366",
+        "altitude": 21
       }
     },
     {
@@ -4249,7 +4575,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0367"
+        "name": "gateway-0367",
+        "altitude": 7
       }
     },
     {
@@ -4262,7 +4589,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0368"
+        "name": "gateway-0368",
+        "altitude": 32
       }
     },
     {
@@ -4275,7 +4603,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0369"
+        "name": "gateway-0369",
+        "altitude": 33
       }
     },
     {
@@ -4288,7 +4617,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0370"
+        "name": "gateway-0370",
+        "altitude": 19
       }
     },
     {
@@ -4301,7 +4631,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0371"
+        "name": "gateway-0371",
+        "altitude": 18
       }
     },
     {
@@ -4314,7 +4645,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0372"
+        "name": "gateway-0372",
+        "altitude": 42
       }
     },
     {
@@ -4327,7 +4659,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0373"
+        "name": "gateway-0373",
+        "altitude": 40
       }
     },
     {
@@ -4340,7 +4673,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0374"
+        "name": "gateway-0374",
+        "altitude": 14
       }
     },
     {
@@ -4353,7 +4687,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0375"
+        "name": "gateway-0375",
+        "altitude": 32
       }
     },
     {
@@ -4366,7 +4701,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0376"
+        "name": "gateway-0376",
+        "altitude": 8
       }
     },
     {
@@ -4379,7 +4715,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0377"
+        "name": "gateway-0377",
+        "altitude": 79
       }
     },
     {
@@ -4392,7 +4729,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0378"
+        "name": "gateway-0378",
+        "altitude": 12
       }
     },
     {
@@ -4405,7 +4743,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0379"
+        "name": "gateway-0379",
+        "altitude": 100
       }
     },
     {
@@ -4418,7 +4757,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0380"
+        "name": "gateway-0380",
+        "altitude": 12
       }
     },
     {
@@ -4431,7 +4771,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0381"
+        "name": "gateway-0381",
+        "altitude": 25
       }
     },
     {
@@ -4444,7 +4785,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0382"
+        "name": "gateway-0382",
+        "altitude": 12
       }
     },
     {
@@ -4457,7 +4799,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0383"
+        "name": "gateway-0383",
+        "altitude": 26
       }
     },
     {
@@ -4470,7 +4813,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0384"
+        "name": "gateway-0384",
+        "altitude": 15
       }
     },
     {
@@ -4483,7 +4827,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0385"
+        "name": "gateway-0385",
+        "altitude": 40
       }
     },
     {
@@ -4496,7 +4841,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0386"
+        "name": "gateway-0386",
+        "altitude": 12
       }
     },
     {
@@ -4509,7 +4855,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0387"
+        "name": "gateway-0387",
+        "altitude": 23
       }
     },
     {
@@ -4522,7 +4869,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0388"
+        "name": "gateway-0388",
+        "altitude": 21
       }
     },
     {
@@ -4535,7 +4883,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0389"
+        "name": "gateway-0389",
+        "altitude": 22
       }
     },
     {
@@ -4548,7 +4897,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0390"
+        "name": "gateway-0390",
+        "altitude": 21
       }
     },
     {
@@ -4561,7 +4911,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0391"
+        "name": "gateway-0391",
+        "altitude": 29
       }
     },
     {
@@ -4574,7 +4925,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0392"
+        "name": "gateway-0392",
+        "altitude": 6
       }
     },
     {
@@ -4587,7 +4939,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0393"
+        "name": "gateway-0393",
+        "altitude": 23
       }
     },
     {
@@ -4600,7 +4953,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0394"
+        "name": "gateway-0394",
+        "altitude": 21
       }
     },
     {
@@ -4613,7 +4967,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0395"
+        "name": "gateway-0395",
+        "altitude": 16
       }
     },
     {
@@ -4626,7 +4981,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0396"
+        "name": "gateway-0396",
+        "altitude": 49
       }
     },
     {
@@ -4639,7 +4995,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0397"
+        "name": "gateway-0397",
+        "altitude": 36
       }
     },
     {
@@ -4652,7 +5009,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0398"
+        "name": "gateway-0398",
+        "altitude": 48
       }
     },
     {
@@ -4665,7 +5023,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0399"
+        "name": "gateway-0399",
+        "altitude": 79
       }
     },
     {
@@ -4678,7 +5037,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0400"
+        "name": "gateway-0400",
+        "altitude": 17
       }
     },
     {
@@ -4691,7 +5051,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0401"
+        "name": "gateway-0401",
+        "altitude": 28
       }
     },
     {
@@ -4704,7 +5065,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0403"
+        "name": "gateway-0403",
+        "altitude": 20
       }
     },
     {
@@ -4717,7 +5079,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0404"
+        "name": "gateway-0404",
+        "altitude": 0
       }
     },
     {
@@ -4730,7 +5093,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0405"
+        "name": "gateway-0405",
+        "altitude": 12
       }
     },
     {
@@ -4743,7 +5107,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0407"
+        "name": "gateway-0407",
+        "altitude": 0
       }
     },
     {
@@ -4756,7 +5121,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0408"
+        "name": "gateway-0408",
+        "altitude": 10
       }
     },
     {
@@ -4769,7 +5135,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0409"
+        "name": "gateway-0409",
+        "altitude": 47
       }
     },
     {
@@ -4782,7 +5149,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0410"
+        "name": "gateway-0410",
+        "altitude": 42
       }
     },
     {
@@ -4795,7 +5163,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0411"
+        "name": "gateway-0411",
+        "altitude": 51
       }
     },
     {
@@ -4808,7 +5177,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0412"
+        "name": "gateway-0412",
+        "altitude": 24
       }
     },
     {
@@ -4821,7 +5191,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0413"
+        "name": "gateway-0413",
+        "altitude": 21
       }
     },
     {
@@ -4834,7 +5205,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0414"
+        "name": "gateway-0414",
+        "altitude": 24
       }
     },
     {
@@ -4847,7 +5219,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0415"
+        "name": "gateway-0415",
+        "altitude": -2
       }
     },
     {
@@ -4860,7 +5233,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0416"
+        "name": "gateway-0416",
+        "altitude": 20
       }
     },
     {
@@ -4873,7 +5247,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0417"
+        "name": "gateway-0417",
+        "altitude": 5
       }
     },
     {
@@ -4886,7 +5261,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0418"
+        "name": "gateway-0418",
+        "altitude": 20
       }
     },
     {
@@ -4899,7 +5275,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0419"
+        "name": "gateway-0419",
+        "altitude": 20
       }
     },
     {
@@ -4912,7 +5289,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0420"
+        "name": "gateway-0420",
+        "altitude": 72
       }
     },
     {
@@ -4925,7 +5303,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0421"
+        "name": "gateway-0421",
+        "altitude": 0
       }
     },
     {
@@ -4938,7 +5317,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0422"
+        "name": "gateway-0422",
+        "altitude": 17
       }
     },
     {
@@ -4951,7 +5331,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0423"
+        "name": "gateway-0423",
+        "altitude": 7
       }
     },
     {
@@ -4964,7 +5345,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0424"
+        "name": "gateway-0424",
+        "altitude": 19
       }
     },
     {
@@ -4977,7 +5359,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0425"
+        "name": "gateway-0425",
+        "altitude": 31
       }
     },
     {
@@ -4990,7 +5373,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0426"
+        "name": "gateway-0426",
+        "altitude": -1
       }
     },
     {
@@ -5003,7 +5387,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0427"
+        "name": "gateway-0427",
+        "altitude": 6
       }
     },
     {
@@ -5016,7 +5401,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0428"
+        "name": "gateway-0428",
+        "altitude": 35
       }
     },
     {
@@ -5029,7 +5415,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0429"
+        "name": "gateway-0429",
+        "altitude": 21
       }
     },
     {
@@ -5042,7 +5429,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0430"
+        "name": "gateway-0430",
+        "altitude": 16
       }
     },
     {
@@ -5055,7 +5443,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0431"
+        "name": "gateway-0431",
+        "altitude": 22
       }
     },
     {
@@ -5068,7 +5457,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0432"
+        "name": "gateway-0432",
+        "altitude": 17
       }
     },
     {
@@ -5081,7 +5471,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0433"
+        "name": "gateway-0433",
+        "altitude": 16
       }
     },
     {
@@ -5094,7 +5485,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0434"
+        "name": "gateway-0434",
+        "altitude": 60
       }
     },
     {
@@ -5107,7 +5499,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0435"
+        "name": "gateway-0435",
+        "altitude": 6
       }
     },
     {
@@ -5120,7 +5513,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0436"
+        "name": "gateway-0436",
+        "altitude": 34
       }
     },
     {
@@ -5133,7 +5527,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0437"
+        "name": "gateway-0437",
+        "altitude": 45
       }
     },
     {
@@ -5146,7 +5541,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0438"
+        "name": "gateway-0438",
+        "altitude": 11
       }
     },
     {
@@ -5159,7 +5555,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0439"
+        "name": "gateway-0439",
+        "altitude": 16
       }
     },
     {
@@ -5172,7 +5569,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0440"
+        "name": "gateway-0440",
+        "altitude": 11
       }
     },
     {
@@ -5185,7 +5583,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0441"
+        "name": "gateway-0441",
+        "altitude": 7
       }
     },
     {
@@ -5198,7 +5597,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0442"
+        "name": "gateway-0442",
+        "altitude": 10
       }
     },
     {
@@ -5211,7 +5611,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0443"
+        "name": "gateway-0443",
+        "altitude": 128
       }
     },
     {
@@ -5224,7 +5625,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0444"
+        "name": "gateway-0444",
+        "altitude": 45
       }
     },
     {
@@ -5237,7 +5639,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0445"
+        "name": "gateway-0445",
+        "altitude": 42
       }
     },
     {
@@ -5250,7 +5653,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0446"
+        "name": "gateway-0446",
+        "altitude": 22
       }
     },
     {
@@ -5263,7 +5667,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0447"
+        "name": "gateway-0447",
+        "altitude": -1
       }
     },
     {
@@ -5276,7 +5681,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0448"
+        "name": "gateway-0448",
+        "altitude": 31
       }
     },
     {
@@ -5289,7 +5695,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0449"
+        "name": "gateway-0449",
+        "altitude": 16
       }
     },
     {
@@ -5302,7 +5709,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0450"
+        "name": "gateway-0450",
+        "altitude": 16
       }
     },
     {
@@ -5315,7 +5723,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0451"
+        "name": "gateway-0451",
+        "altitude": 7
       }
     },
     {
@@ -5328,7 +5737,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0452"
+        "name": "gateway-0452",
+        "altitude": 46
       }
     },
     {
@@ -5341,7 +5751,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0453"
+        "name": "gateway-0453",
+        "altitude": 23
       }
     },
     {
@@ -5354,7 +5765,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0454"
+        "name": "gateway-0454",
+        "altitude": 8
       }
     },
     {
@@ -5367,7 +5779,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0455"
+        "name": "gateway-0455",
+        "altitude": 10
       }
     },
     {
@@ -5380,7 +5793,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0456"
+        "name": "gateway-0456",
+        "altitude": 10
       }
     },
     {
@@ -5393,7 +5807,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0457"
+        "name": "gateway-0457",
+        "altitude": 24
       }
     },
     {
@@ -5406,7 +5821,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0458"
+        "name": "gateway-0458",
+        "altitude": 50
       }
     },
     {
@@ -5419,7 +5835,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0459"
+        "name": "gateway-0459",
+        "altitude": 12
       }
     },
     {
@@ -5432,7 +5849,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0460"
+        "name": "gateway-0460",
+        "altitude": 16
       }
     },
     {
@@ -5445,7 +5863,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0461"
+        "name": "gateway-0461",
+        "altitude": 8
       }
     },
     {
@@ -5458,7 +5877,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0462"
+        "name": "gateway-0462",
+        "altitude": 24
       }
     },
     {
@@ -5471,7 +5891,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0463"
+        "name": "gateway-0463",
+        "altitude": 7
       }
     },
     {
@@ -5484,7 +5905,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0464"
+        "name": "gateway-0464",
+        "altitude": 7
       }
     },
     {
@@ -5497,7 +5919,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0465"
+        "name": "gateway-0465",
+        "altitude": -4
       }
     },
     {
@@ -5510,7 +5933,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0466"
+        "name": "gateway-0466",
+        "altitude": 26
       }
     },
     {
@@ -5523,7 +5947,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0467"
+        "name": "gateway-0467",
+        "altitude": 12
       }
     },
     {
@@ -5536,7 +5961,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0468"
+        "name": "gateway-0468",
+        "altitude": 22
       }
     },
     {
@@ -5549,7 +5975,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0469"
+        "name": "gateway-0469",
+        "altitude": 23
       }
     },
     {
@@ -5562,7 +5989,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0470"
+        "name": "gateway-0470",
+        "altitude": 18
       }
     },
     {
@@ -5575,7 +6003,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0471"
+        "name": "gateway-0471",
+        "altitude": 13
       }
     },
     {
@@ -5588,7 +6017,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0472"
+        "name": "gateway-0472",
+        "altitude": 22
       }
     },
     {
@@ -5601,7 +6031,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0473"
+        "name": "gateway-0473",
+        "altitude": 23
       }
     },
     {
@@ -5614,7 +6045,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0474"
+        "name": "gateway-0474",
+        "altitude": 33
       }
     },
     {
@@ -5627,7 +6059,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0475"
+        "name": "gateway-0475",
+        "altitude": 43
       }
     },
     {
@@ -5640,7 +6073,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0476"
+        "name": "gateway-0476",
+        "altitude": 34
       }
     },
     {
@@ -5653,7 +6087,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0477"
+        "name": "gateway-0477",
+        "altitude": 11
       }
     },
     {
@@ -5666,7 +6101,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0478"
+        "name": "gateway-0478",
+        "altitude": 17
       }
     },
     {
@@ -5679,7 +6115,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0479"
+        "name": "gateway-0479",
+        "altitude": 17
       }
     },
     {
@@ -5692,7 +6129,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0480"
+        "name": "gateway-0480",
+        "altitude": 9
       }
     },
     {
@@ -5705,7 +6143,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0481"
+        "name": "gateway-0481",
+        "altitude": 20
       }
     },
     {
@@ -5718,7 +6157,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0482"
+        "name": "gateway-0482",
+        "altitude": 35
       }
     },
     {
@@ -5731,7 +6171,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0483"
+        "name": "gateway-0483",
+        "altitude": -25
       }
     },
     {
@@ -5744,7 +6185,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0484"
+        "name": "gateway-0484",
+        "altitude": 20
       }
     },
     {
@@ -5757,7 +6199,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0485"
+        "name": "gateway-0485",
+        "altitude": 0
       }
     },
     {
@@ -5770,7 +6213,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0486"
+        "name": "gateway-0486",
+        "altitude": 0
       }
     },
     {
@@ -5783,7 +6227,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0487"
+        "name": "gateway-0487",
+        "altitude": 0
       }
     },
     {
@@ -5796,7 +6241,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0488"
+        "name": "gateway-0488",
+        "altitude": 9
       }
     },
     {
@@ -5809,7 +6255,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0489"
+        "name": "gateway-0489",
+        "altitude": 5
       }
     },
     {
@@ -5822,7 +6269,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0490"
+        "name": "gateway-0490",
+        "altitude": 7
       }
     },
     {
@@ -5835,7 +6283,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0491"
+        "name": "gateway-0491",
+        "altitude": 8
       }
     },
     {
@@ -5848,7 +6297,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0492"
+        "name": "gateway-0492",
+        "altitude": 16
       }
     },
     {
@@ -5861,7 +6311,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0493"
+        "name": "gateway-0493",
+        "altitude": 41
       }
     },
     {
@@ -5874,7 +6325,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0494"
+        "name": "gateway-0494",
+        "altitude": 6
       }
     },
     {
@@ -5887,7 +6339,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0495"
+        "name": "gateway-0495",
+        "altitude": 12
       }
     },
     {
@@ -5900,7 +6353,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0496"
+        "name": "gateway-0496",
+        "altitude": 30
       }
     },
     {
@@ -5913,7 +6367,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0497"
+        "name": "gateway-0497",
+        "altitude": 20
       }
     },
     {
@@ -5926,7 +6381,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0498"
+        "name": "gateway-0498",
+        "altitude": 58
       }
     },
     {
@@ -5939,7 +6395,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0499"
+        "name": "gateway-0499",
+        "altitude": 25
       }
     },
     {
@@ -5952,7 +6409,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0500"
+        "name": "gateway-0500",
+        "altitude": 43
       }
     },
     {
@@ -5965,7 +6423,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0501"
+        "name": "gateway-0501",
+        "altitude": 48
       }
     },
     {
@@ -5978,7 +6437,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0502"
+        "name": "gateway-0502",
+        "altitude": 20
       }
     },
     {
@@ -5991,7 +6451,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0503"
+        "name": "gateway-0503",
+        "altitude": 42
       }
     },
     {
@@ -6004,7 +6465,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0504"
+        "name": "gateway-0504",
+        "altitude": 30
       }
     },
     {
@@ -6017,7 +6479,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0505"
+        "name": "gateway-0505",
+        "altitude": 50
       }
     },
     {
@@ -6030,7 +6493,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0506"
+        "name": "gateway-0506",
+        "altitude": 44
       }
     },
     {
@@ -6043,7 +6507,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0507"
+        "name": "gateway-0507",
+        "altitude": 66
       }
     },
     {
@@ -6056,7 +6521,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0508"
+        "name": "gateway-0508",
+        "altitude": 12
       }
     },
     {
@@ -6069,7 +6535,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0509"
+        "name": "gateway-0509",
+        "altitude": 33
       }
     },
     {
@@ -6082,7 +6549,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0510"
+        "name": "gateway-0510",
+        "altitude": 40
       }
     },
     {
@@ -6095,7 +6563,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0511"
+        "name": "gateway-0511",
+        "altitude": 30
       }
     },
     {
@@ -6108,7 +6577,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0512"
+        "name": "gateway-0512",
+        "altitude": 49
       }
     },
     {
@@ -6121,7 +6591,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0513"
+        "name": "gateway-0513",
+        "altitude": 10
       }
     },
     {
@@ -6134,7 +6605,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0514"
+        "name": "gateway-0514",
+        "altitude": 50
       }
     },
     {
@@ -6147,7 +6619,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0515"
+        "name": "gateway-0515",
+        "altitude": 25
       }
     },
     {
@@ -6160,7 +6633,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0516"
+        "name": "gateway-0516",
+        "altitude": 22
       }
     },
     {
@@ -6173,7 +6647,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0517"
+        "name": "gateway-0517",
+        "altitude": 50
       }
     },
     {
@@ -6186,7 +6661,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0518"
+        "name": "gateway-0518",
+        "altitude": 20
       }
     },
     {
@@ -6199,7 +6675,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0519"
+        "name": "gateway-0519",
+        "altitude": 29
       }
     },
     {
@@ -6212,7 +6689,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0520"
+        "name": "gateway-0520",
+        "altitude": 8
       }
     },
     {
@@ -6225,7 +6703,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0521"
+        "name": "gateway-0521",
+        "altitude": 81
       }
     },
     {
@@ -6238,7 +6717,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0522"
+        "name": "gateway-0522",
+        "altitude": 40
       }
     },
     {
@@ -6251,7 +6731,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0523"
+        "name": "gateway-0523",
+        "altitude": 3
       }
     },
     {
@@ -6264,7 +6745,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0524"
+        "name": "gateway-0524",
+        "altitude": 22
       }
     },
     {
@@ -6277,7 +6759,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0525"
+        "name": "gateway-0525",
+        "altitude": 120
       }
     },
     {
@@ -6290,7 +6773,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0526"
+        "name": "gateway-0526",
+        "altitude": 40
       }
     },
     {
@@ -6303,7 +6787,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0527"
+        "name": "gateway-0527",
+        "altitude": 31
       }
     },
     {
@@ -6316,7 +6801,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0528"
+        "name": "gateway-0528",
+        "altitude": 20
       }
     },
     {
@@ -6329,7 +6815,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0529"
+        "name": "gateway-0529",
+        "altitude": 8
       }
     },
     {
@@ -6342,7 +6829,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0530"
+        "name": "gateway-0530",
+        "altitude": 15
       }
     },
     {
@@ -6355,7 +6843,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0531"
+        "name": "gateway-0531",
+        "altitude": 24
       }
     },
     {
@@ -6368,7 +6857,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0532"
+        "name": "gateway-0532",
+        "altitude": 33
       }
     },
     {
@@ -6381,7 +6871,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0533"
+        "name": "gateway-0533",
+        "altitude": 56
       }
     },
     {
@@ -6394,7 +6885,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0534"
+        "name": "gateway-0534",
+        "altitude": 15
       }
     },
     {
@@ -6407,7 +6899,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0535"
+        "name": "gateway-0535",
+        "altitude": 48
       }
     },
     {
@@ -6420,7 +6913,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0536"
+        "name": "gateway-0536",
+        "altitude": 7
       }
     },
     {
@@ -6433,7 +6927,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0537"
+        "name": "gateway-0537",
+        "altitude": 25
       }
     },
     {
@@ -6446,7 +6941,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0538"
+        "name": "gateway-0538",
+        "altitude": 62
       }
     },
     {
@@ -6459,7 +6955,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0539"
+        "name": "gateway-0539",
+        "altitude": 5
       }
     },
     {
@@ -6472,7 +6969,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0540"
+        "name": "gateway-0540",
+        "altitude": 80
       }
     },
     {
@@ -6485,7 +6983,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0541"
+        "name": "gateway-0541",
+        "altitude": 10
       }
     },
     {
@@ -6498,7 +6997,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0542"
+        "name": "gateway-0542",
+        "altitude": 12
       }
     },
     {
@@ -6511,7 +7011,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0543"
+        "name": "gateway-0543",
+        "altitude": 25
       }
     },
     {
@@ -6524,7 +7025,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0544"
+        "name": "gateway-0544",
+        "altitude": 25
       }
     },
     {
@@ -6537,7 +7039,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0545"
+        "name": "gateway-0545",
+        "altitude": 30
       }
     },
     {
@@ -6550,7 +7053,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0546"
+        "name": "gateway-0546",
+        "altitude": 68
       }
     },
     {
@@ -6563,7 +7067,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0547"
+        "name": "gateway-0547",
+        "altitude": 49
       }
     },
     {
@@ -6576,7 +7081,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0548"
+        "name": "gateway-0548",
+        "altitude": 25
       }
     },
     {
@@ -6589,7 +7095,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0549"
+        "name": "gateway-0549",
+        "altitude": 3
       }
     },
     {
@@ -6602,7 +7109,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0550"
+        "name": "gateway-0550",
+        "altitude": 16
       }
     },
     {
@@ -6615,7 +7123,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0551"
+        "name": "gateway-0551",
+        "altitude": 30
       }
     },
     {
@@ -6628,7 +7137,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0552"
+        "name": "gateway-0552",
+        "altitude": 3
       }
     },
     {
@@ -6641,7 +7151,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0553"
+        "name": "gateway-0553",
+        "altitude": 3
       }
     },
     {
@@ -6654,7 +7165,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0554"
+        "name": "gateway-0554",
+        "altitude": 2
       }
     },
     {
@@ -6667,7 +7179,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0555"
+        "name": "gateway-0555",
+        "altitude": 4
       }
     },
     {
@@ -6680,7 +7193,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0556"
+        "name": "gateway-0556",
+        "altitude": 5
       }
     },
     {
@@ -6693,7 +7207,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0557"
+        "name": "gateway-0557",
+        "altitude": 15
       }
     },
     {
@@ -6706,7 +7221,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0558"
+        "name": "gateway-0558",
+        "altitude": 3
       }
     },
     {
@@ -6719,7 +7235,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0559"
+        "name": "gateway-0559",
+        "altitude": 3
       }
     },
     {
@@ -6732,7 +7249,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0560"
+        "name": "gateway-0560",
+        "altitude": 3
       }
     },
     {
@@ -6745,7 +7263,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0561"
+        "name": "gateway-0561",
+        "altitude": 84
       }
     },
     {
@@ -6758,7 +7277,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0562"
+        "name": "gateway-0562",
+        "altitude": 5
       }
     },
     {
@@ -6771,7 +7291,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0563"
+        "name": "gateway-0563",
+        "altitude": 27
       }
     },
     {
@@ -6784,7 +7305,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0564"
+        "name": "gateway-0564",
+        "altitude": 30
       }
     },
     {
@@ -6797,7 +7319,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0565"
+        "name": "gateway-0565",
+        "altitude": 5
       }
     },
     {
@@ -6810,7 +7333,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0566"
+        "name": "gateway-0566",
+        "altitude": 4
       }
     },
     {
@@ -6823,7 +7347,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0567"
+        "name": "gateway-0567",
+        "altitude": 0
       }
     },
     {
@@ -6836,7 +7361,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0568"
+        "name": "gateway-0568",
+        "altitude": 27
       }
     },
     {
@@ -6849,7 +7375,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0569"
+        "name": "gateway-0569",
+        "altitude": 30
       }
     },
     {
@@ -6862,7 +7389,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0570"
+        "name": "gateway-0570",
+        "altitude": 3
       }
     },
     {
@@ -6875,7 +7403,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0571"
+        "name": "gateway-0571",
+        "altitude": 25
       }
     },
     {
@@ -6888,7 +7417,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0572"
+        "name": "gateway-0572",
+        "altitude": 4
       }
     },
     {
@@ -6901,7 +7431,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0573"
+        "name": "gateway-0573",
+        "altitude": 3
       }
     },
     {
@@ -6914,7 +7445,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0574"
+        "name": "gateway-0574",
+        "altitude": 20
       }
     },
     {
@@ -6927,7 +7459,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0575"
+        "name": "gateway-0575",
+        "altitude": 4
       }
     },
     {
@@ -6940,7 +7473,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0576"
+        "name": "gateway-0576",
+        "altitude": 3
       }
     },
     {
@@ -6953,7 +7487,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0577"
+        "name": "gateway-0577",
+        "altitude": 3
       }
     },
     {
@@ -6966,7 +7501,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0578"
+        "name": "gateway-0578",
+        "altitude": 5
       }
     },
     {
@@ -6979,7 +7515,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0579"
+        "name": "gateway-0579",
+        "altitude": 5
       }
     },
     {
@@ -6992,7 +7529,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0580"
+        "name": "gateway-0580",
+        "altitude": 43
       }
     },
     {
@@ -7005,7 +7543,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0581"
+        "name": "gateway-0581",
+        "altitude": 11
       }
     },
     {
@@ -7018,7 +7557,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0583"
+        "name": "gateway-0583",
+        "altitude": 0
       }
     },
     {
@@ -7031,7 +7571,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0584"
+        "name": "gateway-0584",
+        "altitude": 7
       }
     },
     {
@@ -7044,7 +7585,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0587"
+        "name": "gateway-0587",
+        "altitude": -4
       }
     },
     {
@@ -7057,7 +7599,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0588"
+        "name": "gateway-0588",
+        "altitude": 0
       }
     },
     {
@@ -7070,7 +7613,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0589"
+        "name": "gateway-0589",
+        "altitude": 1
       }
     },
     {
@@ -7083,7 +7627,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0590"
+        "name": "gateway-0590",
+        "altitude": 10
       }
     },
     {
@@ -7096,7 +7641,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0591"
+        "name": "gateway-0591",
+        "altitude": 40
       }
     },
     {
@@ -7109,7 +7655,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0592"
+        "name": "gateway-0592",
+        "altitude": 48
       }
     },
     {
@@ -7122,7 +7669,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0593"
+        "name": "gateway-0593",
+        "altitude": 20
       }
     },
     {
@@ -7135,7 +7683,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0594"
+        "name": "gateway-0594",
+        "altitude": 0
       }
     },
     {
@@ -7148,7 +7697,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0595"
+        "name": "gateway-0595",
+        "altitude": 8
       }
     },
     {
@@ -7161,7 +7711,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0597"
+        "name": "gateway-0597",
+        "altitude": 75
       }
     },
     {
@@ -7174,7 +7725,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0598"
+        "name": "gateway-0598",
+        "altitude": 0
       }
     },
     {
@@ -7187,7 +7739,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0599"
+        "name": "gateway-0599",
+        "altitude": 5
       }
     },
     {
@@ -7200,7 +7753,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0600"
+        "name": "gateway-0600",
+        "altitude": 54
       }
     },
     {
@@ -7213,7 +7767,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0602"
+        "name": "gateway-0602",
+        "altitude": 10
       }
     },
     {
@@ -7226,7 +7781,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0603"
+        "name": "gateway-0603",
+        "altitude": 10
       }
     },
     {
@@ -7239,7 +7795,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0604"
+        "name": "gateway-0604",
+        "altitude": 65
       }
     },
     {
@@ -7252,7 +7809,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0605"
+        "name": "gateway-0605",
+        "altitude": 0
       }
     },
     {
@@ -7265,7 +7823,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0606"
+        "name": "gateway-0606",
+        "altitude": 31
       }
     },
     {
@@ -7278,7 +7837,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0607"
+        "name": "gateway-0607",
+        "altitude": 0
       }
     },
     {
@@ -7291,7 +7851,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0609"
+        "name": "gateway-0609",
+        "altitude": 0
       }
     },
     {
@@ -7304,7 +7865,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0610"
+        "name": "gateway-0610",
+        "altitude": 30
       }
     },
     {
@@ -7317,7 +7879,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0611"
+        "name": "gateway-0611",
+        "altitude": 0
       }
     },
     {
@@ -7330,7 +7893,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0612"
+        "name": "gateway-0612",
+        "altitude": 30
       }
     },
     {
@@ -7343,7 +7907,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0613"
+        "name": "gateway-0613",
+        "altitude": 0
       }
     },
     {
@@ -7356,7 +7921,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0614"
+        "name": "gateway-0614",
+        "altitude": 22
       }
     },
     {
@@ -7369,7 +7935,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0615"
+        "name": "gateway-0615",
+        "altitude": 48
       }
     },
     {
@@ -7382,7 +7949,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0617"
+        "name": "gateway-0617",
+        "altitude": 4
       }
     },
     {
@@ -7395,7 +7963,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0618"
+        "name": "gateway-0618",
+        "altitude": 0
       }
     },
     {
@@ -7408,7 +7977,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0619"
+        "name": "gateway-0619",
+        "altitude": 0
       }
     },
     {
@@ -7421,7 +7991,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0620"
+        "name": "gateway-0620",
+        "altitude": 0
       }
     },
     {
@@ -7434,7 +8005,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0621"
+        "name": "gateway-0621",
+        "altitude": 0
       }
     },
     {
@@ -7447,7 +8019,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0623"
+        "name": "gateway-0623",
+        "altitude": 0
       }
     },
     {
@@ -7460,7 +8033,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0624"
+        "name": "gateway-0624",
+        "altitude": 0
       }
     },
     {
@@ -7473,7 +8047,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0625"
+        "name": "gateway-0625",
+        "altitude": 6
       }
     },
     {
@@ -7486,7 +8061,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0626"
+        "name": "gateway-0626",
+        "altitude": 8
       }
     },
     {
@@ -7499,7 +8075,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0627"
+        "name": "gateway-0627",
+        "altitude": 5
       }
     },
     {
@@ -7512,7 +8089,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0628"
+        "name": "gateway-0628",
+        "altitude": 60
       }
     },
     {
@@ -7525,7 +8103,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0630"
+        "name": "gateway-0630",
+        "altitude": 20
       }
     },
     {
@@ -7538,7 +8117,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0631"
+        "name": "gateway-0631",
+        "altitude": 13
       }
     },
     {
@@ -7551,7 +8131,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0632"
+        "name": "gateway-0632",
+        "altitude": 0
       }
     },
     {
@@ -7564,7 +8145,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0634"
+        "name": "gateway-0634",
+        "altitude": 40
       }
     },
     {
@@ -7577,7 +8159,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0635"
+        "name": "gateway-0635",
+        "altitude": 20
       }
     },
     {
@@ -7590,7 +8173,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0636"
+        "name": "gateway-0636",
+        "altitude": 0
       }
     },
     {
@@ -7603,7 +8187,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0637"
+        "name": "gateway-0637",
+        "altitude": 0
       }
     },
     {
@@ -7616,7 +8201,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0638"
+        "name": "gateway-0638",
+        "altitude": 0
       }
     },
     {
@@ -7629,7 +8215,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0639"
+        "name": "gateway-0639",
+        "altitude": 0
       }
     },
     {
@@ -7642,7 +8229,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0640"
+        "name": "gateway-0640",
+        "altitude": 10
       }
     },
     {
@@ -7655,7 +8243,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0641"
+        "name": "gateway-0641",
+        "altitude": 20
       }
     },
     {
@@ -7668,7 +8257,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0642"
+        "name": "gateway-0642",
+        "altitude": 5
       }
     },
     {
@@ -7681,7 +8271,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0643"
+        "name": "gateway-0643",
+        "altitude": 0
       }
     },
     {
@@ -7694,7 +8285,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0644"
+        "name": "gateway-0644",
+        "altitude": 10
       }
     },
     {
@@ -7707,7 +8299,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0645"
+        "name": "gateway-0645",
+        "altitude": 10
       }
     },
     {
@@ -7720,7 +8313,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0646"
+        "name": "gateway-0646",
+        "altitude": 0
       }
     },
     {
@@ -7733,7 +8327,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0647"
+        "name": "gateway-0647",
+        "altitude": 0
       }
     },
     {
@@ -7746,7 +8341,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0648"
+        "name": "gateway-0648",
+        "altitude": 0
       }
     },
     {
@@ -7759,7 +8355,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0649"
+        "name": "gateway-0649",
+        "altitude": 0
       }
     },
     {
@@ -7772,7 +8369,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0650"
+        "name": "gateway-0650",
+        "altitude": 0
       }
     },
     {
@@ -7785,7 +8383,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0651"
+        "name": "gateway-0651",
+        "altitude": 62
       }
     },
     {
@@ -7798,7 +8397,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0653"
+        "name": "gateway-0653",
+        "altitude": 0
       }
     },
     {
@@ -7811,7 +8411,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0654"
+        "name": "gateway-0654",
+        "altitude": 0
       }
     },
     {
@@ -7824,7 +8425,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0655"
+        "name": "gateway-0655",
+        "altitude": 12
       }
     },
     {
@@ -7837,7 +8439,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0656"
+        "name": "gateway-0656",
+        "altitude": 2
       }
     },
     {
@@ -7850,7 +8453,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0657"
+        "name": "gateway-0657",
+        "altitude": 12
       }
     },
     {
@@ -7863,7 +8467,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0658"
+        "name": "gateway-0658",
+        "altitude": 0
       }
     },
     {
@@ -7876,7 +8481,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0659"
+        "name": "gateway-0659",
+        "altitude": 28
       }
     },
     {
@@ -7889,7 +8495,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0660"
+        "name": "gateway-0660",
+        "altitude": 42
       }
     },
     {
@@ -7902,7 +8509,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0661"
+        "name": "gateway-0661",
+        "altitude": 10
       }
     },
     {
@@ -7915,7 +8523,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0662"
+        "name": "gateway-0662",
+        "altitude": 23
       }
     },
     {
@@ -7928,7 +8537,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0663"
+        "name": "gateway-0663",
+        "altitude": 19
       }
     },
     {
@@ -7941,7 +8551,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0664"
+        "name": "gateway-0664",
+        "altitude": 10
       }
     },
     {
@@ -7954,7 +8565,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0665"
+        "name": "gateway-0665",
+        "altitude": 0
       }
     },
     {
@@ -7967,7 +8579,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0666"
+        "name": "gateway-0666",
+        "altitude": 50
       }
     },
     {
@@ -7980,7 +8593,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0667"
+        "name": "gateway-0667",
+        "altitude": 24
       }
     },
     {
@@ -7993,7 +8607,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0668"
+        "name": "gateway-0668",
+        "altitude": 36
       }
     },
     {
@@ -8006,7 +8621,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0669"
+        "name": "gateway-0669",
+        "altitude": 30
       }
     },
     {
@@ -8019,7 +8635,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0670"
+        "name": "gateway-0670",
+        "altitude": 0
       }
     },
     {
@@ -8032,7 +8649,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0671"
+        "name": "gateway-0671",
+        "altitude": 47
       }
     },
     {
@@ -8045,7 +8663,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0672"
+        "name": "gateway-0672",
+        "altitude": -1
       }
     },
     {
@@ -8058,7 +8677,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0673"
+        "name": "gateway-0673",
+        "altitude": 61
       }
     },
     {
@@ -8071,7 +8691,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0674"
+        "name": "gateway-0674",
+        "altitude": 39
       }
     },
     {
@@ -8084,7 +8705,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0675"
+        "name": "gateway-0675",
+        "altitude": 134
       }
     },
     {
@@ -8097,7 +8719,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0676"
+        "name": "gateway-0676",
+        "altitude": 58
       }
     },
     {
@@ -8110,7 +8733,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0677"
+        "name": "gateway-0677",
+        "altitude": 24
       }
     },
     {
@@ -8123,7 +8747,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0678"
+        "name": "gateway-0678",
+        "altitude": 41
       }
     },
     {
@@ -8136,7 +8761,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0679"
+        "name": "gateway-0679",
+        "altitude": 55
       }
     },
     {
@@ -8149,7 +8775,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0680"
+        "name": "gateway-0680",
+        "altitude": 5
       }
     },
     {
@@ -8162,7 +8789,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0681"
+        "name": "gateway-0681",
+        "altitude": 2
       }
     },
     {
@@ -8175,7 +8803,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0682"
+        "name": "gateway-0682",
+        "altitude": 10
       }
     },
     {
@@ -8188,7 +8817,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0684"
+        "name": "gateway-0684",
+        "altitude": 11
       }
     },
     {
@@ -8201,7 +8831,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0685"
+        "name": "gateway-0685",
+        "altitude": 20
       }
     },
     {
@@ -8214,7 +8845,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0686"
+        "name": "gateway-0686",
+        "altitude": 44
       }
     },
     {
@@ -8227,7 +8859,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0687"
+        "name": "gateway-0687",
+        "altitude": 45
       }
     },
     {
@@ -8240,7 +8873,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0688"
+        "name": "gateway-0688",
+        "altitude": 60
       }
     },
     {
@@ -8253,7 +8887,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0689"
+        "name": "gateway-0689",
+        "altitude": 40
       }
     },
     {
@@ -8266,7 +8901,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0690"
+        "name": "gateway-0690",
+        "altitude": 15
       }
     },
     {
@@ -8279,7 +8915,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0691"
+        "name": "gateway-0691",
+        "altitude": 105
       }
     },
     {
@@ -8292,7 +8929,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0692"
+        "name": "gateway-0692",
+        "altitude": 23
       }
     },
     {
@@ -8305,7 +8943,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0693"
+        "name": "gateway-0693",
+        "altitude": 56
       }
     },
     {
@@ -8318,7 +8957,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0694"
+        "name": "gateway-0694",
+        "altitude": 17
       }
     },
     {
@@ -8331,7 +8971,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0695"
+        "name": "gateway-0695",
+        "altitude": 128
       }
     },
     {
@@ -8344,7 +8985,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0696"
+        "name": "gateway-0696",
+        "altitude": 18
       }
     },
     {
@@ -8357,7 +8999,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0697"
+        "name": "gateway-0697",
+        "altitude": 16
       }
     },
     {
@@ -8370,7 +9013,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0698"
+        "name": "gateway-0698",
+        "altitude": 26
       }
     },
     {
@@ -8383,7 +9027,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0699"
+        "name": "gateway-0699",
+        "altitude": 61
       }
     },
     {
@@ -8396,7 +9041,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0700"
+        "name": "gateway-0700",
+        "altitude": 57
       }
     },
     {
@@ -8409,7 +9055,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0701"
+        "name": "gateway-0701",
+        "altitude": 28
       }
     },
     {
@@ -8422,7 +9069,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0702"
+        "name": "gateway-0702",
+        "altitude": 55
       }
     },
     {
@@ -8435,7 +9083,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0703"
+        "name": "gateway-0703",
+        "altitude": 66
       }
     },
     {
@@ -8448,7 +9097,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0704"
+        "name": "gateway-0704",
+        "altitude": 44
       }
     },
     {
@@ -8461,7 +9111,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0705"
+        "name": "gateway-0705",
+        "altitude": 2
       }
     },
     {
@@ -8474,7 +9125,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0706"
+        "name": "gateway-0706",
+        "altitude": 38
       }
     },
     {
@@ -8487,7 +9139,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0707"
+        "name": "gateway-0707",
+        "altitude": 10
       }
     },
     {
@@ -8500,7 +9153,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0708"
+        "name": "gateway-0708",
+        "altitude": 39
       }
     },
     {
@@ -8513,7 +9167,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0709"
+        "name": "gateway-0709",
+        "altitude": 40
       }
     },
     {
@@ -8526,7 +9181,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0710"
+        "name": "gateway-0710",
+        "altitude": 38
       }
     },
     {
@@ -8539,7 +9195,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0711"
+        "name": "gateway-0711",
+        "altitude": 47
       }
     },
     {
@@ -8552,7 +9209,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0712"
+        "name": "gateway-0712",
+        "altitude": 48
       }
     },
     {
@@ -8565,7 +9223,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0713"
+        "name": "gateway-0713",
+        "altitude": 33
       }
     },
     {
@@ -8578,7 +9237,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0714"
+        "name": "gateway-0714",
+        "altitude": 93
       }
     },
     {
@@ -8591,7 +9251,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0715"
+        "name": "gateway-0715",
+        "altitude": -4
       }
     },
     {
@@ -8604,7 +9265,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0716"
+        "name": "gateway-0716",
+        "altitude": 32
       }
     },
     {
@@ -8617,7 +9279,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0717"
+        "name": "gateway-0717",
+        "altitude": 40
       }
     },
     {
@@ -8630,7 +9293,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0718"
+        "name": "gateway-0718",
+        "altitude": 63
       }
     },
     {
@@ -8643,7 +9307,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0719"
+        "name": "gateway-0719",
+        "altitude": 38
       }
     },
     {
@@ -8656,7 +9321,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0720"
+        "name": "gateway-0720",
+        "altitude": 71
       }
     },
     {
@@ -8669,7 +9335,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0721"
+        "name": "gateway-0721",
+        "altitude": 9
       }
     },
     {
@@ -8682,7 +9349,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0722"
+        "name": "gateway-0722",
+        "altitude": 46
       }
     },
     {
@@ -8695,7 +9363,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0723"
+        "name": "gateway-0723",
+        "altitude": 0
       }
     },
     {
@@ -8708,7 +9377,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0724"
+        "name": "gateway-0724",
+        "altitude": 37
       }
     },
     {
@@ -8721,7 +9391,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0725"
+        "name": "gateway-0725",
+        "altitude": 27
       }
     },
     {
@@ -8734,7 +9405,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0726"
+        "name": "gateway-0726",
+        "altitude": 11
       }
     },
     {
@@ -8747,7 +9419,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0727"
+        "name": "gateway-0727",
+        "altitude": 9
       }
     },
     {
@@ -8760,7 +9433,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0728"
+        "name": "gateway-0728",
+        "altitude": 45
       }
     },
     {
@@ -8773,7 +9447,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0729"
+        "name": "gateway-0729",
+        "altitude": 50
       }
     },
     {
@@ -8786,7 +9461,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0730"
+        "name": "gateway-0730",
+        "altitude": 23
       }
     },
     {
@@ -8799,7 +9475,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0731"
+        "name": "gateway-0731",
+        "altitude": 19
       }
     },
     {
@@ -8812,7 +9489,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0732"
+        "name": "gateway-0732",
+        "altitude": 70
       }
     },
     {
@@ -8825,7 +9503,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0733"
+        "name": "gateway-0733",
+        "altitude": 3
       }
     },
     {
@@ -8838,7 +9517,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0734"
+        "name": "gateway-0734",
+        "altitude": 61
       }
     },
     {
@@ -8851,7 +9531,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0735"
+        "name": "gateway-0735",
+        "altitude": 41
       }
     },
     {
@@ -8864,7 +9545,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0736"
+        "name": "gateway-0736",
+        "altitude": 58
       }
     },
     {
@@ -8877,7 +9559,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0737"
+        "name": "gateway-0737",
+        "altitude": 50
       }
     },
     {
@@ -8890,7 +9573,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0738"
+        "name": "gateway-0738",
+        "altitude": 17
       }
     },
     {
@@ -8903,7 +9587,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0739"
+        "name": "gateway-0739",
+        "altitude": 28
       }
     },
     {
@@ -8916,7 +9601,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0740"
+        "name": "gateway-0740",
+        "altitude": 23
       }
     },
     {
@@ -8929,7 +9615,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0741"
+        "name": "gateway-0741",
+        "altitude": 30
       }
     },
     {
@@ -8942,7 +9629,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0742"
+        "name": "gateway-0742",
+        "altitude": 33
       }
     },
     {
@@ -8955,7 +9643,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0743"
+        "name": "gateway-0743",
+        "altitude": 31
       }
     },
     {
@@ -8968,7 +9657,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0744"
+        "name": "gateway-0744",
+        "altitude": 52
       }
     },
     {
@@ -8981,7 +9671,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0745"
+        "name": "gateway-0745",
+        "altitude": 29
       }
     },
     {
@@ -8994,7 +9685,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0746"
+        "name": "gateway-0746",
+        "altitude": 14
       }
     },
     {
@@ -9007,7 +9699,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0747"
+        "name": "gateway-0747",
+        "altitude": 6
       }
     },
     {
@@ -9020,7 +9713,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0748"
+        "name": "gateway-0748",
+        "altitude": 10
       }
     },
     {
@@ -9033,7 +9727,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0749"
+        "name": "gateway-0749",
+        "altitude": 10
       }
     },
     {
@@ -9046,7 +9741,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0750"
+        "name": "gateway-0750",
+        "altitude": 55
       }
     },
     {
@@ -9059,7 +9755,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0751"
+        "name": "gateway-0751",
+        "altitude": 22
       }
     },
     {
@@ -9072,7 +9769,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0752"
+        "name": "gateway-0752",
+        "altitude": 10
       }
     },
     {
@@ -9085,7 +9783,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0753"
+        "name": "gateway-0753",
+        "altitude": 10
       }
     },
     {
@@ -9098,7 +9797,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0754"
+        "name": "gateway-0754",
+        "altitude": 14
       }
     },
     {
@@ -9111,7 +9811,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0755"
+        "name": "gateway-0755",
+        "altitude": 6
       }
     },
     {
@@ -9124,7 +9825,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0756"
+        "name": "gateway-0756",
+        "altitude": 35
       }
     },
     {
@@ -9137,7 +9839,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0757"
+        "name": "gateway-0757",
+        "altitude": 0
       }
     },
     {
@@ -9150,7 +9853,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0758"
+        "name": "gateway-0758",
+        "altitude": 3
       }
     },
     {
@@ -9163,7 +9867,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0759"
+        "name": "gateway-0759",
+        "altitude": 21
       }
     },
     {
@@ -9176,7 +9881,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0760"
+        "name": "gateway-0760",
+        "altitude": 40
       }
     },
     {
@@ -9189,7 +9895,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0761"
+        "name": "gateway-0761",
+        "altitude": 31
       }
     },
     {
@@ -9202,7 +9909,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0762"
+        "name": "gateway-0762",
+        "altitude": 5
       }
     },
     {
@@ -9215,7 +9923,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0763"
+        "name": "gateway-0763",
+        "altitude": 26
       }
     },
     {
@@ -9228,7 +9937,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0764"
+        "name": "gateway-0764",
+        "altitude": 79
       }
     },
     {
@@ -9241,7 +9951,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0765"
+        "name": "gateway-0765",
+        "altitude": 19
       }
     },
     {
@@ -9254,7 +9965,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0766"
+        "name": "gateway-0766",
+        "altitude": 53
       }
     },
     {
@@ -9267,7 +9979,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0767"
+        "name": "gateway-0767",
+        "altitude": 34
       }
     },
     {
@@ -9280,7 +9993,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0768"
+        "name": "gateway-0768",
+        "altitude": 60
       }
     },
     {
@@ -9293,7 +10007,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0769"
+        "name": "gateway-0769",
+        "altitude": 12
       }
     },
     {
@@ -9306,7 +10021,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0770"
+        "name": "gateway-0770",
+        "altitude": 53
       }
     },
     {
@@ -9319,7 +10035,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0771"
+        "name": "gateway-0771",
+        "altitude": 50
       }
     },
     {
@@ -9332,7 +10049,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0772"
+        "name": "gateway-0772",
+        "altitude": 102
       }
     },
     {
@@ -9345,7 +10063,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0773"
+        "name": "gateway-0773",
+        "altitude": 36
       }
     },
     {
@@ -9358,7 +10077,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0774"
+        "name": "gateway-0774",
+        "altitude": 11
       }
     },
     {
@@ -9371,7 +10091,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0775"
+        "name": "gateway-0775",
+        "altitude": 15
       }
     },
     {
@@ -9384,7 +10105,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0776"
+        "name": "gateway-0776",
+        "altitude": 15
       }
     },
     {
@@ -9397,7 +10119,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0777"
+        "name": "gateway-0777",
+        "altitude": 36
       }
     },
     {
@@ -9410,7 +10133,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0778"
+        "name": "gateway-0778",
+        "altitude": 17
       }
     },
     {
@@ -9423,7 +10147,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0779"
+        "name": "gateway-0779",
+        "altitude": 21
       }
     },
     {
@@ -9436,7 +10161,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0780"
+        "name": "gateway-0780",
+        "altitude": 6
       }
     },
     {
@@ -9449,7 +10175,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0781"
+        "name": "gateway-0781",
+        "altitude": 48
       }
     },
     {
@@ -9462,7 +10189,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0782"
+        "name": "gateway-0782",
+        "altitude": 64
       }
     },
     {
@@ -9475,7 +10203,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0783"
+        "name": "gateway-0783",
+        "altitude": 44
       }
     },
     {
@@ -9488,7 +10217,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0784"
+        "name": "gateway-0784",
+        "altitude": 64
       }
     },
     {
@@ -9501,7 +10231,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0785"
+        "name": "gateway-0785",
+        "altitude": 14
       }
     },
     {
@@ -9514,7 +10245,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0786"
+        "name": "gateway-0786",
+        "altitude": 50
       }
     },
     {
@@ -9527,7 +10259,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0787"
+        "name": "gateway-0787",
+        "altitude": 13
       }
     },
     {
@@ -9540,7 +10273,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0788"
+        "name": "gateway-0788",
+        "altitude": 19
       }
     },
     {
@@ -9553,7 +10287,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0789"
+        "name": "gateway-0789",
+        "altitude": 27
       }
     },
     {
@@ -9566,7 +10301,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0790"
+        "name": "gateway-0790",
+        "altitude": 48
       }
     },
     {
@@ -9579,7 +10315,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0791"
+        "name": "gateway-0791",
+        "altitude": 29
       }
     },
     {
@@ -9592,7 +10329,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0792"
+        "name": "gateway-0792",
+        "altitude": 52
       }
     },
     {
@@ -9605,7 +10343,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0793"
+        "name": "gateway-0793",
+        "altitude": 7
       }
     },
     {
@@ -9618,7 +10357,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0794"
+        "name": "gateway-0794",
+        "altitude": 25
       }
     },
     {
@@ -9631,7 +10371,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0795"
+        "name": "gateway-0795",
+        "altitude": 21
       }
     },
     {
@@ -9644,7 +10385,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0796"
+        "name": "gateway-0796",
+        "altitude": 20
       }
     },
     {
@@ -9657,7 +10399,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0797"
+        "name": "gateway-0797",
+        "altitude": 56
       }
     },
     {
@@ -9670,7 +10413,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0798"
+        "name": "gateway-0798",
+        "altitude": 4
       }
     },
     {
@@ -9683,7 +10427,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0799"
+        "name": "gateway-0799",
+        "altitude": 50
       }
     },
     {
@@ -9696,7 +10441,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0800"
+        "name": "gateway-0800",
+        "altitude": 15
       }
     },
     {
@@ -9709,7 +10455,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0801"
+        "name": "gateway-0801",
+        "altitude": 33
       }
     },
     {
@@ -9722,7 +10469,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0802"
+        "name": "gateway-0802",
+        "altitude": 17
       }
     },
     {
@@ -9735,7 +10483,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0803"
+        "name": "gateway-0803",
+        "altitude": 63
       }
     },
     {
@@ -9748,7 +10497,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0804"
+        "name": "gateway-0804",
+        "altitude": 68
       }
     },
     {
@@ -9761,7 +10511,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0805"
+        "name": "gateway-0805",
+        "altitude": 53
       }
     },
     {
@@ -9774,7 +10525,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0806"
+        "name": "gateway-0806",
+        "altitude": 5
       }
     },
     {
@@ -9787,7 +10539,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0807"
+        "name": "gateway-0807",
+        "altitude": 40
       }
     },
     {
@@ -9800,7 +10553,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0808"
+        "name": "gateway-0808",
+        "altitude": 12
       }
     },
     {
@@ -9813,7 +10567,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0809"
+        "name": "gateway-0809",
+        "altitude": 47
       }
     },
     {
@@ -9826,7 +10581,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0810"
+        "name": "gateway-0810",
+        "altitude": 48
       }
     },
     {
@@ -9839,7 +10595,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0811"
+        "name": "gateway-0811",
+        "altitude": 21
       }
     },
     {
@@ -9852,7 +10609,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0812"
+        "name": "gateway-0812",
+        "altitude": 24
       }
     },
     {
@@ -9865,7 +10623,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0813"
+        "name": "gateway-0813",
+        "altitude": 24
       }
     },
     {
@@ -9878,7 +10637,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0814"
+        "name": "gateway-0814",
+        "altitude": 31
       }
     },
     {
@@ -9891,7 +10651,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0815"
+        "name": "gateway-0815",
+        "altitude": 22
       }
     },
     {
@@ -9904,7 +10665,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0816"
+        "name": "gateway-0816",
+        "altitude": 42
       }
     },
     {
@@ -9917,7 +10679,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0817"
+        "name": "gateway-0817",
+        "altitude": 38
       }
     },
     {
@@ -9930,7 +10693,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0818"
+        "name": "gateway-0818",
+        "altitude": 51
       }
     },
     {
@@ -9943,7 +10707,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0819"
+        "name": "gateway-0819",
+        "altitude": 35
       }
     },
     {
@@ -9956,7 +10721,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0820"
+        "name": "gateway-0820",
+        "altitude": 11
       }
     },
     {
@@ -9969,7 +10735,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0821"
+        "name": "gateway-0821",
+        "altitude": 10
       }
     },
     {
@@ -9982,7 +10749,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0822"
+        "name": "gateway-0822",
+        "altitude": 27
       }
     },
     {
@@ -9995,7 +10763,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0823"
+        "name": "gateway-0823",
+        "altitude": 33
       }
     },
     {
@@ -10008,7 +10777,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0824"
+        "name": "gateway-0824",
+        "altitude": 72
       }
     },
     {
@@ -10021,7 +10791,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0825"
+        "name": "gateway-0825",
+        "altitude": 57
       }
     },
     {
@@ -10034,7 +10805,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0826"
+        "name": "gateway-0826",
+        "altitude": 36
       }
     },
     {
@@ -10047,7 +10819,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0827"
+        "name": "gateway-0827",
+        "altitude": 0
       }
     },
     {
@@ -10060,7 +10833,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0828"
+        "name": "gateway-0828",
+        "altitude": 51
       }
     },
     {
@@ -10073,7 +10847,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0829"
+        "name": "gateway-0829",
+        "altitude": 35
       }
     },
     {
@@ -10086,7 +10861,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0830"
+        "name": "gateway-0830",
+        "altitude": 39
       }
     },
     {
@@ -10099,7 +10875,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0831"
+        "name": "gateway-0831",
+        "altitude": 60
       }
     },
     {
@@ -10112,7 +10889,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0832"
+        "name": "gateway-0832",
+        "altitude": 20
       }
     },
     {
@@ -10125,7 +10903,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0833"
+        "name": "gateway-0833",
+        "altitude": 15
       }
     },
     {
@@ -10138,7 +10917,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0834"
+        "name": "gateway-0834",
+        "altitude": 58
       }
     },
     {
@@ -10151,7 +10931,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0835"
+        "name": "gateway-0835",
+        "altitude": 11
       }
     },
     {
@@ -10164,7 +10945,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0836"
+        "name": "gateway-0836",
+        "altitude": 15
       }
     },
     {
@@ -10177,7 +10959,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0837"
+        "name": "gateway-0837",
+        "altitude": 40
       }
     },
     {
@@ -10190,7 +10973,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0838"
+        "name": "gateway-0838",
+        "altitude": 6
       }
     },
     {
@@ -10203,7 +10987,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0839"
+        "name": "gateway-0839",
+        "altitude": 0
       }
     },
     {
@@ -10216,7 +11001,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0840"
+        "name": "gateway-0840",
+        "altitude": 0
       }
     },
     {
@@ -10229,7 +11015,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0841"
+        "name": "gateway-0841",
+        "altitude": 0
       }
     },
     {
@@ -10242,7 +11029,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0842"
+        "name": "gateway-0842",
+        "altitude": 17
       }
     },
     {
@@ -10255,7 +11043,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0843"
+        "name": "gateway-0843",
+        "altitude": 10
       }
     },
     {
@@ -10268,7 +11057,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0845"
+        "name": "gateway-0845",
+        "altitude": 2
       }
     },
     {
@@ -10281,7 +11071,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0846"
+        "name": "gateway-0846",
+        "altitude": 0
       }
     },
     {
@@ -10294,7 +11085,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0848"
+        "name": "gateway-0848",
+        "altitude": 12
       }
     },
     {
@@ -10307,7 +11099,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0850"
+        "name": "gateway-0850",
+        "altitude": 2
       }
     },
     {
@@ -10320,7 +11113,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0851"
+        "name": "gateway-0851",
+        "altitude": 36
       }
     },
     {
@@ -10333,7 +11127,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0852"
+        "name": "gateway-0852",
+        "altitude": 9
       }
     },
     {
@@ -10346,7 +11141,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0854"
+        "name": "gateway-0854",
+        "altitude": 12
       }
     },
     {
@@ -10359,7 +11155,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0855"
+        "name": "gateway-0855",
+        "altitude": 0
       }
     },
     {
@@ -10372,7 +11169,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0856"
+        "name": "gateway-0856",
+        "altitude": 8
       }
     },
     {
@@ -10385,7 +11183,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0857"
+        "name": "gateway-0857",
+        "altitude": 11
       }
     },
     {
@@ -10398,7 +11197,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0858"
+        "name": "gateway-0858",
+        "altitude": 35
       }
     },
     {
@@ -10411,7 +11211,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0859"
+        "name": "gateway-0859",
+        "altitude": 41
       }
     },
     {
@@ -10424,7 +11225,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0861"
+        "name": "gateway-0861",
+        "altitude": 20
       }
     },
     {
@@ -10437,7 +11239,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0862"
+        "name": "gateway-0862",
+        "altitude": 7
       }
     },
     {
@@ -10450,7 +11253,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0863"
+        "name": "gateway-0863",
+        "altitude": 45
       }
     },
     {
@@ -10463,7 +11267,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0864"
+        "name": "gateway-0864",
+        "altitude": 0
       }
     },
     {
@@ -10476,7 +11281,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0865"
+        "name": "gateway-0865",
+        "altitude": 6
       }
     },
     {
@@ -10489,7 +11295,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0866"
+        "name": "gateway-0866",
+        "altitude": 25
       }
     },
     {
@@ -10502,7 +11309,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0867"
+        "name": "gateway-0867",
+        "altitude": 38
       }
     },
     {
@@ -10515,7 +11323,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0868"
+        "name": "gateway-0868",
+        "altitude": 20
       }
     },
     {
@@ -10528,7 +11337,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0871"
+        "name": "gateway-0871",
+        "altitude": 43
       }
     },
     {
@@ -10541,7 +11351,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0872"
+        "name": "gateway-0872",
+        "altitude": 43
       }
     },
     {
@@ -10554,7 +11365,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0874"
+        "name": "gateway-0874",
+        "altitude": 0
       }
     },
     {
@@ -10567,7 +11379,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0876"
+        "name": "gateway-0876",
+        "altitude": 10
       }
     },
     {
@@ -10580,7 +11393,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0877"
+        "name": "gateway-0877",
+        "altitude": 0
       }
     },
     {
@@ -10593,7 +11407,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0878"
+        "name": "gateway-0878",
+        "altitude": 11
       }
     },
     {
@@ -10606,7 +11421,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0879"
+        "name": "gateway-0879",
+        "altitude": 0
       }
     },
     {
@@ -10619,7 +11435,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0880"
+        "name": "gateway-0880",
+        "altitude": 23
       }
     },
     {
@@ -10632,7 +11449,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0881"
+        "name": "gateway-0881",
+        "altitude": 0
       }
     },
     {
@@ -10645,7 +11463,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0882"
+        "name": "gateway-0882",
+        "altitude": 15
       }
     },
     {
@@ -10658,7 +11477,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0883"
+        "name": "gateway-0883",
+        "altitude": 22
       }
     },
     {
@@ -10671,7 +11491,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0884"
+        "name": "gateway-0884",
+        "altitude": 8
       }
     },
     {
@@ -10684,7 +11505,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0885"
+        "name": "gateway-0885",
+        "altitude": 0
       }
     },
     {
@@ -10697,7 +11519,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0887"
+        "name": "gateway-0887",
+        "altitude": 45
       }
     },
     {
@@ -10710,7 +11533,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0890"
+        "name": "gateway-0890",
+        "altitude": 0
       }
     },
     {
@@ -10723,7 +11547,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0891"
+        "name": "gateway-0891",
+        "altitude": 8
       }
     },
     {
@@ -10736,7 +11561,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0893"
+        "name": "gateway-0893",
+        "altitude": 43
       }
     },
     {
@@ -10749,7 +11575,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0894"
+        "name": "gateway-0894",
+        "altitude": 32
       }
     },
     {
@@ -10762,7 +11589,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0895"
+        "name": "gateway-0895",
+        "altitude": 0
       }
     },
     {
@@ -10775,7 +11603,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0896"
+        "name": "gateway-0896",
+        "altitude": 5
       }
     },
     {
@@ -10788,7 +11617,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0897"
+        "name": "gateway-0897",
+        "altitude": 21
       }
     },
     {
@@ -10801,7 +11631,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0898"
+        "name": "gateway-0898",
+        "altitude": 21
       }
     },
     {
@@ -10814,7 +11645,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0899"
+        "name": "gateway-0899",
+        "altitude": 50
       }
     },
     {
@@ -10827,7 +11659,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0900"
+        "name": "gateway-0900",
+        "altitude": 0
       }
     },
     {
@@ -10840,7 +11673,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0901"
+        "name": "gateway-0901",
+        "altitude": 0
       }
     },
     {
@@ -10853,7 +11687,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0902"
+        "name": "gateway-0902",
+        "altitude": 0
       }
     },
     {
@@ -10866,7 +11701,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0903"
+        "name": "gateway-0903",
+        "altitude": 0
       }
     },
     {
@@ -10879,7 +11715,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0904"
+        "name": "gateway-0904",
+        "altitude": 6
       }
     },
     {
@@ -10892,7 +11729,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0905"
+        "name": "gateway-0905",
+        "altitude": 9
       }
     },
     {
@@ -10905,7 +11743,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0906"
+        "name": "gateway-0906",
+        "altitude": 5
       }
     },
     {
@@ -10918,7 +11757,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0907"
+        "name": "gateway-0907",
+        "altitude": 22
       }
     },
     {
@@ -10931,7 +11771,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0908"
+        "name": "gateway-0908",
+        "altitude": 0
       }
     },
     {
@@ -10944,7 +11785,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0909"
+        "name": "gateway-0909",
+        "altitude": 10
       }
     },
     {
@@ -10957,7 +11799,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0910"
+        "name": "gateway-0910",
+        "altitude": 44
       }
     },
     {
@@ -10970,7 +11813,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0911"
+        "name": "gateway-0911",
+        "altitude": 5
       }
     },
     {
@@ -10983,7 +11827,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0912"
+        "name": "gateway-0912",
+        "altitude": 10
       }
     },
     {
@@ -10996,7 +11841,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0913"
+        "name": "gateway-0913",
+        "altitude": 11
       }
     },
     {
@@ -11009,7 +11855,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0914"
+        "name": "gateway-0914",
+        "altitude": 34
       }
     },
     {
@@ -11022,7 +11869,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0916"
+        "name": "gateway-0916",
+        "altitude": 20
       }
     },
     {
@@ -11035,7 +11883,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0917"
+        "name": "gateway-0917",
+        "altitude": 14
       }
     },
     {
@@ -11048,7 +11897,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0918"
+        "name": "gateway-0918",
+        "altitude": 12
       }
     },
     {
@@ -11061,7 +11911,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0919"
+        "name": "gateway-0919",
+        "altitude": 5
       }
     },
     {
@@ -11074,7 +11925,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0920"
+        "name": "gateway-0920",
+        "altitude": 7
       }
     },
     {
@@ -11087,7 +11939,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0921"
+        "name": "gateway-0921",
+        "altitude": 0
       }
     },
     {
@@ -11100,7 +11953,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0922"
+        "name": "gateway-0922",
+        "altitude": 20
       }
     },
     {
@@ -11113,7 +11967,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0923"
+        "name": "gateway-0923",
+        "altitude": 15
       }
     },
     {
@@ -11126,7 +11981,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0925"
+        "name": "gateway-0925",
+        "altitude": 50
       }
     },
     {
@@ -11139,7 +11995,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0926"
+        "name": "gateway-0926",
+        "altitude": 21
       }
     },
     {
@@ -11152,7 +12009,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0927"
+        "name": "gateway-0927",
+        "altitude": 27
       }
     },
     {
@@ -11165,7 +12023,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0928"
+        "name": "gateway-0928",
+        "altitude": 20
       }
     },
     {
@@ -11178,7 +12037,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0929"
+        "name": "gateway-0929",
+        "altitude": 0
       }
     },
     {
@@ -11191,7 +12051,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0930"
+        "name": "gateway-0930",
+        "altitude": 0
       }
     },
     {
@@ -11204,7 +12065,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0931"
+        "name": "gateway-0931",
+        "altitude": 0
       }
     },
     {
@@ -11217,7 +12079,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0934"
+        "name": "gateway-0934",
+        "altitude": 9
       }
     },
     {
@@ -11230,7 +12093,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0935"
+        "name": "gateway-0935",
+        "altitude": 26
       }
     },
     {
@@ -11243,7 +12107,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0937"
+        "name": "gateway-0937",
+        "altitude": 0
       }
     },
     {
@@ -11256,7 +12121,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0938"
+        "name": "gateway-0938",
+        "altitude": 0
       }
     },
     {
@@ -11269,7 +12135,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0940"
+        "name": "gateway-0940",
+        "altitude": 0
       }
     },
     {
@@ -11282,7 +12149,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0941"
+        "name": "gateway-0941",
+        "altitude": 0
       }
     },
     {
@@ -11295,7 +12163,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0942"
+        "name": "gateway-0942",
+        "altitude": 0
       }
     },
     {
@@ -11308,7 +12177,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0943"
+        "name": "gateway-0943",
+        "altitude": 0
       }
     },
     {
@@ -11321,7 +12191,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0944"
+        "name": "gateway-0944",
+        "altitude": 18
       }
     },
     {
@@ -11334,7 +12205,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0945"
+        "name": "gateway-0945",
+        "altitude": 25
       }
     },
     {
@@ -11347,7 +12219,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0946"
+        "name": "gateway-0946",
+        "altitude": 32
       }
     },
     {
@@ -11360,7 +12233,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0947"
+        "name": "gateway-0947",
+        "altitude": 32
       }
     },
     {
@@ -11373,7 +12247,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0948"
+        "name": "gateway-0948",
+        "altitude": 55
       }
     },
     {
@@ -11386,7 +12261,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0949"
+        "name": "gateway-0949",
+        "altitude": 6
       }
     },
     {
@@ -11399,7 +12275,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0950"
+        "name": "gateway-0950",
+        "altitude": 10
       }
     },
     {
@@ -11412,7 +12289,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0951"
+        "name": "gateway-0951",
+        "altitude": 13
       }
     },
     {
@@ -11425,7 +12303,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0952"
+        "name": "gateway-0952",
+        "altitude": 7
       }
     },
     {
@@ -11438,7 +12317,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0953"
+        "name": "gateway-0953",
+        "altitude": 32
       }
     },
     {
@@ -11451,7 +12331,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0954"
+        "name": "gateway-0954",
+        "altitude": 40
       }
     },
     {
@@ -11464,7 +12345,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0955"
+        "name": "gateway-0955",
+        "altitude": 0
       }
     },
     {
@@ -11477,7 +12359,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0956"
+        "name": "gateway-0956",
+        "altitude": 10
       }
     },
     {
@@ -11490,7 +12373,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0957"
+        "name": "gateway-0957",
+        "altitude": 10
       }
     },
     {
@@ -11503,7 +12387,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0958"
+        "name": "gateway-0958",
+        "altitude": 30
       }
     },
     {
@@ -11516,7 +12401,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0959"
+        "name": "gateway-0959",
+        "altitude": 24
       }
     },
     {
@@ -11529,7 +12415,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0960"
+        "name": "gateway-0960",
+        "altitude": 13
       }
     },
     {
@@ -11542,7 +12429,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0961"
+        "name": "gateway-0961",
+        "altitude": 22
       }
     },
     {
@@ -11555,7 +12443,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0962"
+        "name": "gateway-0962",
+        "altitude": 0
       }
     },
     {
@@ -11568,7 +12457,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0963"
+        "name": "gateway-0963",
+        "altitude": 6
       }
     },
     {
@@ -11581,7 +12471,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0964"
+        "name": "gateway-0964",
+        "altitude": -14
       }
     },
     {
@@ -11594,7 +12485,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0965"
+        "name": "gateway-0965",
+        "altitude": 13
       }
     },
     {
@@ -11607,7 +12499,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0966"
+        "name": "gateway-0966",
+        "altitude": 0
       }
     },
     {
@@ -11620,7 +12513,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0967"
+        "name": "gateway-0967",
+        "altitude": 10
       }
     },
     {
@@ -11633,7 +12527,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0968"
+        "name": "gateway-0968",
+        "altitude": 46
       }
     },
     {
@@ -11646,7 +12541,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0969"
+        "name": "gateway-0969",
+        "altitude": 54
       }
     },
     {
@@ -11659,7 +12555,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0970"
+        "name": "gateway-0970",
+        "altitude": 14
       }
     },
     {
@@ -11672,7 +12569,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0971"
+        "name": "gateway-0971",
+        "altitude": 0
       }
     },
     {
@@ -11685,7 +12583,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0973"
+        "name": "gateway-0973",
+        "altitude": 20
       }
     },
     {
@@ -11698,7 +12597,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0982"
+        "name": "gateway-0982",
+        "altitude": 0
       }
     },
     {
@@ -11711,7 +12611,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0983"
+        "name": "gateway-0983",
+        "altitude": 5
       }
     },
     {
@@ -11724,7 +12625,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0985"
+        "name": "gateway-0985",
+        "altitude": 13
       }
     },
     {
@@ -11737,7 +12639,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0986"
+        "name": "gateway-0986",
+        "altitude": 0
       }
     },
     {
@@ -11750,7 +12653,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0987"
+        "name": "gateway-0987",
+        "altitude": 0
       }
     },
     {
@@ -11763,7 +12667,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0988"
+        "name": "gateway-0988",
+        "altitude": 0
       }
     },
     {
@@ -11776,7 +12681,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0989"
+        "name": "gateway-0989",
+        "altitude": 15
       }
     },
     {
@@ -11789,7 +12695,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0990"
+        "name": "gateway-0990",
+        "altitude": 23
       }
     },
     {
@@ -11802,7 +12709,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0991"
+        "name": "gateway-0991",
+        "altitude": 0
       }
     },
     {
@@ -11815,7 +12723,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0992"
+        "name": "gateway-0992",
+        "altitude": 6
       }
     },
     {
@@ -11828,7 +12737,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0993"
+        "name": "gateway-0993",
+        "altitude": 4
       }
     },
     {
@@ -11841,7 +12751,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0994"
+        "name": "gateway-0994",
+        "altitude": 0
       }
     },
     {
@@ -11854,7 +12765,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0995"
+        "name": "gateway-0995",
+        "altitude": 9
       }
     },
     {
@@ -11867,7 +12779,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0996"
+        "name": "gateway-0996",
+        "altitude": 3
       }
     },
     {
@@ -11880,7 +12793,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0997"
+        "name": "gateway-0997",
+        "altitude": 24
       }
     },
     {
@@ -11893,7 +12807,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0998"
+        "name": "gateway-0998",
+        "altitude": 0
       }
     },
     {
@@ -11906,7 +12821,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0999"
+        "name": "gateway-0999",
+        "altitude": -4
       }
     },
     {
@@ -11919,7 +12835,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1000"
+        "name": "gateway-1000",
+        "altitude": 2
       }
     },
     {
@@ -11932,7 +12849,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1002"
+        "name": "gateway-1002",
+        "altitude": 40
       }
     },
     {
@@ -11945,7 +12863,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1003"
+        "name": "gateway-1003",
+        "altitude": 10
       }
     },
     {
@@ -11958,7 +12877,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1004"
+        "name": "gateway-1004",
+        "altitude": 10
       }
     },
     {
@@ -11971,7 +12891,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1005"
+        "name": "gateway-1005",
+        "altitude": 15
       }
     },
     {
@@ -11984,7 +12905,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1006"
+        "name": "gateway-1006",
+        "altitude": 55
       }
     },
     {
@@ -11997,7 +12919,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1007"
+        "name": "gateway-1007",
+        "altitude": 0
       }
     },
     {
@@ -12010,7 +12933,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1008"
+        "name": "gateway-1008",
+        "altitude": 4
       }
     },
     {
@@ -12023,7 +12947,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1010"
+        "name": "gateway-1010",
+        "altitude": 15
       }
     },
     {
@@ -12036,7 +12961,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1011"
+        "name": "gateway-1011",
+        "altitude": 25
       }
     },
     {
@@ -12049,7 +12975,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1012"
+        "name": "gateway-1012",
+        "altitude": 10
       }
     },
     {
@@ -12062,7 +12989,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1013"
+        "name": "gateway-1013",
+        "altitude": 15
       }
     },
     {
@@ -12075,7 +13003,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1014"
+        "name": "gateway-1014",
+        "altitude": 0
       }
     },
     {
@@ -12088,7 +13017,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1016"
+        "name": "gateway-1016",
+        "altitude": 0
       }
     },
     {
@@ -12101,7 +13031,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1017"
+        "name": "gateway-1017",
+        "altitude": 15
       }
     },
     {
@@ -12114,7 +13045,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1019"
+        "name": "gateway-1019",
+        "altitude": -1
       }
     },
     {
@@ -12127,7 +13059,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1020"
+        "name": "gateway-1020",
+        "altitude": 30
       }
     },
     {
@@ -12140,7 +13073,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1021"
+        "name": "gateway-1021",
+        "altitude": 5
       }
     },
     {
@@ -12153,7 +13087,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1023"
+        "name": "gateway-1023",
+        "altitude": 0
       }
     },
     {
@@ -12166,7 +13101,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1024"
+        "name": "gateway-1024",
+        "altitude": 10
       }
     },
     {
@@ -12179,7 +13115,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1025"
+        "name": "gateway-1025",
+        "altitude": 8
       }
     },
     {
@@ -12192,7 +13129,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1028"
+        "name": "gateway-1028",
+        "altitude": 25
       }
     },
     {
@@ -12205,7 +13143,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1029"
+        "name": "gateway-1029",
+        "altitude": 18
       }
     },
     {
@@ -12218,7 +13157,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1030"
+        "name": "gateway-1030",
+        "altitude": 300
       }
     },
     {
@@ -12231,7 +13171,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1031"
+        "name": "gateway-1031",
+        "altitude": 39
       }
     },
     {
@@ -12244,7 +13185,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1035"
+        "name": "gateway-1035",
+        "altitude": 36
       }
     },
     {
@@ -12257,7 +13199,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1036"
+        "name": "gateway-1036",
+        "altitude": 5
       }
     },
     {
@@ -12270,7 +13213,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1039"
+        "name": "gateway-1039",
+        "altitude": 0
       }
     },
     {
@@ -12283,7 +13227,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1040"
+        "name": "gateway-1040",
+        "altitude": 14
       }
     },
     {
@@ -12296,7 +13241,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1041"
+        "name": "gateway-1041",
+        "altitude": 30
       }
     },
     {
@@ -12309,7 +13255,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1042"
+        "name": "gateway-1042",
+        "altitude": 1
       }
     },
     {
@@ -12322,7 +13269,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1043"
+        "name": "gateway-1043",
+        "altitude": 0
       }
     },
     {
@@ -12335,7 +13283,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1044"
+        "name": "gateway-1044",
+        "altitude": 5
       }
     },
     {
@@ -12348,7 +13297,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1045"
+        "name": "gateway-1045",
+        "altitude": 44
       }
     },
     {
@@ -12361,7 +13311,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1046"
+        "name": "gateway-1046",
+        "altitude": 0
       }
     },
     {
@@ -12374,7 +13325,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1047"
+        "name": "gateway-1047",
+        "altitude": 0
       }
     },
     {
@@ -12387,7 +13339,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1048"
+        "name": "gateway-1048",
+        "altitude": 0
       }
     },
     {
@@ -12400,7 +13353,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1049"
+        "name": "gateway-1049",
+        "altitude": 60
       }
     },
     {
@@ -12413,7 +13367,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1050"
+        "name": "gateway-1050",
+        "altitude": 55
       }
     },
     {
@@ -12426,7 +13381,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1051"
+        "name": "gateway-1051",
+        "altitude": 0
       }
     },
     {
@@ -12439,7 +13395,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1052"
+        "name": "gateway-1052",
+        "altitude": 15
       }
     },
     {
@@ -12452,7 +13409,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1053"
+        "name": "gateway-1053",
+        "altitude": 9
       }
     },
     {
@@ -12465,7 +13423,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1054"
+        "name": "gateway-1054",
+        "altitude": 30
       }
     },
     {
@@ -12478,7 +13437,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1055"
+        "name": "gateway-1055",
+        "altitude": 0
       }
     },
     {
@@ -12491,7 +13451,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1056"
+        "name": "gateway-1056",
+        "altitude": 5
       }
     },
     {
@@ -12504,7 +13465,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1057"
+        "name": "gateway-1057",
+        "altitude": 10
       }
     },
     {
@@ -12517,7 +13479,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1058"
+        "name": "gateway-1058",
+        "altitude": 20
       }
     },
     {
@@ -12530,7 +13493,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1059"
+        "name": "gateway-1059",
+        "altitude": 10
       }
     },
     {
@@ -12543,7 +13507,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1061"
+        "name": "gateway-1061",
+        "altitude": 23
       }
     },
     {
@@ -12556,7 +13521,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1062"
+        "name": "gateway-1062",
+        "altitude": 25
       }
     },
     {
@@ -12569,7 +13535,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1064"
+        "name": "gateway-1064",
+        "altitude": 10
       }
     },
     {
@@ -12582,7 +13549,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1065"
+        "name": "gateway-1065",
+        "altitude": 20
       }
     },
     {
@@ -12595,7 +13563,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1066"
+        "name": "gateway-1066",
+        "altitude": 15
       }
     },
     {
@@ -12608,7 +13577,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1067"
+        "name": "gateway-1067",
+        "altitude": 38
       }
     },
     {
@@ -12621,7 +13591,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1068"
+        "name": "gateway-1068",
+        "altitude": 2
       }
     },
     {
@@ -12634,7 +13605,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1069"
+        "name": "gateway-1069",
+        "altitude": 2
       }
     },
     {
@@ -12647,7 +13619,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1070"
+        "name": "gateway-1070",
+        "altitude": 15
       }
     },
     {
@@ -12660,7 +13633,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1071"
+        "name": "gateway-1071",
+        "altitude": 8
       }
     },
     {
@@ -12673,7 +13647,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1072"
+        "name": "gateway-1072",
+        "altitude": 42
       }
     },
     {
@@ -12686,7 +13661,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1073"
+        "name": "gateway-1073",
+        "altitude": 21
       }
     },
     {
@@ -12699,7 +13675,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1075"
+        "name": "gateway-1075",
+        "altitude": 25
       }
     },
     {
@@ -12712,7 +13689,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1076"
+        "name": "gateway-1076",
+        "altitude": 7
       }
     },
     {
@@ -12725,7 +13703,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1077"
+        "name": "gateway-1077",
+        "altitude": 5
       }
     },
     {
@@ -12738,7 +13717,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1078"
+        "name": "gateway-1078",
+        "altitude": 40
       }
     },
     {
@@ -12751,7 +13731,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1080"
+        "name": "gateway-1080",
+        "altitude": 0
       }
     },
     {
@@ -12764,7 +13745,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1081"
+        "name": "gateway-1081",
+        "altitude": 12
       }
     },
     {
@@ -12777,7 +13759,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1082"
+        "name": "gateway-1082",
+        "altitude": 4
       }
     },
     {
@@ -12790,7 +13773,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1083"
+        "name": "gateway-1083",
+        "altitude": 8
       }
     },
     {
@@ -12803,7 +13787,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1084"
+        "name": "gateway-1084",
+        "altitude": 0
       }
     },
     {
@@ -12816,7 +13801,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1085"
+        "name": "gateway-1085",
+        "altitude": 45
       }
     },
     {
@@ -12829,7 +13815,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1086"
+        "name": "gateway-1086",
+        "altitude": 24
       }
     },
     {
@@ -12842,7 +13829,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1088"
+        "name": "gateway-1088",
+        "altitude": 12
       }
     },
     {
@@ -12855,7 +13843,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1089"
+        "name": "gateway-1089",
+        "altitude": 10
       }
     },
     {
@@ -12868,7 +13857,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1090"
+        "name": "gateway-1090",
+        "altitude": 0
       }
     },
     {
@@ -12881,7 +13871,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1094"
+        "name": "gateway-1094",
+        "altitude": 0
       }
     },
     {
@@ -12894,7 +13885,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1095"
+        "name": "gateway-1095",
+        "altitude": 80
       }
     },
     {
@@ -12907,7 +13899,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1096"
+        "name": "gateway-1096",
+        "altitude": 10
       }
     },
     {
@@ -12920,7 +13913,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1097"
+        "name": "gateway-1097",
+        "altitude": 10
       }
     },
     {
@@ -12933,7 +13927,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1098"
+        "name": "gateway-1098",
+        "altitude": 0
       }
     },
     {
@@ -12946,7 +13941,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1099"
+        "name": "gateway-1099",
+        "altitude": 8
       }
     },
     {
@@ -12959,7 +13955,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1101"
+        "name": "gateway-1101",
+        "altitude": 2
       }
     },
     {
@@ -12972,7 +13969,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1102"
+        "name": "gateway-1102",
+        "altitude": 6
       }
     },
     {
@@ -12985,7 +13983,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1103"
+        "name": "gateway-1103",
+        "altitude": 0
       }
     },
     {
@@ -12998,7 +13997,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1104"
+        "name": "gateway-1104",
+        "altitude": 5
       }
     },
     {
@@ -13011,7 +14011,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1105"
+        "name": "gateway-1105",
+        "altitude": 25
       }
     },
     {
@@ -13024,7 +14025,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1106"
+        "name": "gateway-1106",
+        "altitude": 40
       }
     },
     {
@@ -13037,7 +14039,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1107"
+        "name": "gateway-1107",
+        "altitude": 6
       }
     },
     {
@@ -13050,7 +14053,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1108"
+        "name": "gateway-1108",
+        "altitude": 4
       }
     },
     {
@@ -13063,7 +14067,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1109"
+        "name": "gateway-1109",
+        "altitude": 33
       }
     },
     {
@@ -13076,7 +14081,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1111"
+        "name": "gateway-1111",
+        "altitude": 0
       }
     },
     {
@@ -13089,7 +14095,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1112"
+        "name": "gateway-1112",
+        "altitude": 0
       }
     },
     {
@@ -13102,7 +14109,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1114"
+        "name": "gateway-1114",
+        "altitude": 0
       }
     },
     {
@@ -13115,7 +14123,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1115"
+        "name": "gateway-1115",
+        "altitude": 0
       }
     },
     {
@@ -13128,7 +14137,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1116"
+        "name": "gateway-1116",
+        "altitude": 16
       }
     },
     {
@@ -13141,7 +14151,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1117"
+        "name": "gateway-1117",
+        "altitude": 15
       }
     },
     {
@@ -13154,7 +14165,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1118"
+        "name": "gateway-1118",
+        "altitude": 46
       }
     },
     {
@@ -13167,7 +14179,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1121"
+        "name": "gateway-1121",
+        "altitude": 0
       }
     },
     {
@@ -13180,7 +14193,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1122"
+        "name": "gateway-1122",
+        "altitude": 5
       }
     },
     {
@@ -13193,7 +14207,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1123"
+        "name": "gateway-1123",
+        "altitude": 0
       }
     },
     {
@@ -13206,7 +14221,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1124"
+        "name": "gateway-1124",
+        "altitude": 21
       }
     },
     {
@@ -13219,7 +14235,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1125"
+        "name": "gateway-1125",
+        "altitude": 40
       }
     },
     {
@@ -13232,7 +14249,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1126"
+        "name": "gateway-1126",
+        "altitude": 10
       }
     },
     {
@@ -13245,7 +14263,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1127"
+        "name": "gateway-1127",
+        "altitude": 6
       }
     },
     {
@@ -13258,7 +14277,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1128"
+        "name": "gateway-1128",
+        "altitude": 25
       }
     },
     {
@@ -13271,7 +14291,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1129"
+        "name": "gateway-1129",
+        "altitude": 0
       }
     },
     {
@@ -13284,7 +14305,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1130"
+        "name": "gateway-1130",
+        "altitude": 20
       }
     },
     {
@@ -13297,7 +14319,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1131"
+        "name": "gateway-1131",
+        "altitude": 25
       }
     },
     {
@@ -13310,7 +14333,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1132"
+        "name": "gateway-1132",
+        "altitude": 25
       }
     },
     {
@@ -13323,7 +14347,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1133"
+        "name": "gateway-1133",
+        "altitude": 40
       }
     },
     {
@@ -13336,7 +14361,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1134"
+        "name": "gateway-1134",
+        "altitude": 6
       }
     },
     {
@@ -13349,7 +14375,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1135"
+        "name": "gateway-1135",
+        "altitude": 26
       }
     },
     {
@@ -13362,7 +14389,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1136"
+        "name": "gateway-1136",
+        "altitude": 15
       }
     },
     {
@@ -13375,7 +14403,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1137"
+        "name": "gateway-1137",
+        "altitude": 0
       }
     },
     {
@@ -13388,7 +14417,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1138"
+        "name": "gateway-1138",
+        "altitude": 3
       }
     },
     {
@@ -13401,7 +14431,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1139"
+        "name": "gateway-1139",
+        "altitude": 0
       }
     },
     {
@@ -13414,7 +14445,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1141"
+        "name": "gateway-1141",
+        "altitude": 9
       }
     },
     {
@@ -13427,7 +14459,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1142"
+        "name": "gateway-1142",
+        "altitude": 36
       }
     },
     {
@@ -13440,7 +14473,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1143"
+        "name": "gateway-1143",
+        "altitude": 54
       }
     },
     {
@@ -13453,7 +14487,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1144"
+        "name": "gateway-1144",
+        "altitude": 25
       }
     },
     {
@@ -13466,7 +14501,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1146"
+        "name": "gateway-1146",
+        "altitude": 17
       }
     },
     {
@@ -13479,7 +14515,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1149"
+        "name": "gateway-1149",
+        "altitude": 45
       }
     },
     {
@@ -13492,7 +14529,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1151"
+        "name": "gateway-1151",
+        "altitude": 24
       }
     },
     {
@@ -13505,7 +14543,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1152"
+        "name": "gateway-1152",
+        "altitude": 0
       }
     },
     {
@@ -13518,7 +14557,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1153"
+        "name": "gateway-1153",
+        "altitude": 17
       }
     },
     {
@@ -13531,7 +14571,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1154"
+        "name": "gateway-1154",
+        "altitude": 22
       }
     },
     {
@@ -13544,7 +14585,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1155"
+        "name": "gateway-1155",
+        "altitude": 20
       }
     },
     {
@@ -13557,7 +14599,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1156"
+        "name": "gateway-1156",
+        "altitude": 25
       }
     },
     {
@@ -13570,7 +14613,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1157"
+        "name": "gateway-1157",
+        "altitude": 25
       }
     },
     {
@@ -13583,7 +14627,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1158"
+        "name": "gateway-1158",
+        "altitude": 30
       }
     },
     {
@@ -13596,7 +14641,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1159"
+        "name": "gateway-1159",
+        "altitude": 31
       }
     },
     {
@@ -13609,7 +14655,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1160"
+        "name": "gateway-1160",
+        "altitude": 18
       }
     },
     {
@@ -13622,7 +14669,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1161"
+        "name": "gateway-1161",
+        "altitude": 38
       }
     },
     {
@@ -13635,7 +14683,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1162"
+        "name": "gateway-1162",
+        "altitude": 22
       }
     },
     {
@@ -13648,7 +14697,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1163"
+        "name": "gateway-1163",
+        "altitude": 3
       }
     },
     {
@@ -13661,7 +14711,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1164"
+        "name": "gateway-1164",
+        "altitude": 0
       }
     },
     {
@@ -13674,7 +14725,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1165"
+        "name": "gateway-1165",
+        "altitude": 47
       }
     },
     {
@@ -13687,7 +14739,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1166"
+        "name": "gateway-1166",
+        "altitude": 0
       }
     },
     {
@@ -13700,7 +14753,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1167"
+        "name": "gateway-1167",
+        "altitude": 9
       }
     },
     {
@@ -13713,7 +14767,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1168"
+        "name": "gateway-1168",
+        "altitude": 0
       }
     },
     {
@@ -13726,7 +14781,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1169"
+        "name": "gateway-1169",
+        "altitude": 0
       }
     },
     {
@@ -13739,7 +14795,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1170"
+        "name": "gateway-1170",
+        "altitude": 0
       }
     },
     {
@@ -13752,7 +14809,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1171"
+        "name": "gateway-1171",
+        "altitude": 0
       }
     },
     {
@@ -13765,7 +14823,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1172"
+        "name": "gateway-1172",
+        "altitude": 0
       }
     },
     {
@@ -13778,7 +14837,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1173"
+        "name": "gateway-1173",
+        "altitude": 69
       }
     },
     {
@@ -13791,7 +14851,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1174"
+        "name": "gateway-1174",
+        "altitude": 70
       }
     },
     {
@@ -13804,7 +14865,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1176"
+        "name": "gateway-1176",
+        "altitude": 20
       }
     },
     {
@@ -13817,7 +14879,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1177"
+        "name": "gateway-1177",
+        "altitude": 0
       }
     },
     {
@@ -13830,7 +14893,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1178"
+        "name": "gateway-1178",
+        "altitude": 10
       }
     },
     {
@@ -13843,7 +14907,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1179"
+        "name": "gateway-1179",
+        "altitude": 15
       }
     },
     {
@@ -13856,7 +14921,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1180"
+        "name": "gateway-1180",
+        "altitude": 0
       }
     },
     {
@@ -13869,7 +14935,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1181"
+        "name": "gateway-1181",
+        "altitude": 0
       }
     },
     {
@@ -13882,7 +14949,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1183"
+        "name": "gateway-1183",
+        "altitude": 20
       }
     },
     {
@@ -13895,7 +14963,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1184"
+        "name": "gateway-1184",
+        "altitude": 3
       }
     },
     {
@@ -13908,7 +14977,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1185"
+        "name": "gateway-1185",
+        "altitude": 0
       }
     },
     {
@@ -13921,7 +14991,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1187"
+        "name": "gateway-1187",
+        "altitude": 7
       }
     },
     {
@@ -13934,7 +15005,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1188"
+        "name": "gateway-1188",
+        "altitude": 20
       }
     },
     {
@@ -13947,7 +15019,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1189"
+        "name": "gateway-1189",
+        "altitude": 40
       }
     },
     {
@@ -13960,7 +15033,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1190"
+        "name": "gateway-1190",
+        "altitude": 35
       }
     },
     {
@@ -13973,7 +15047,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1191"
+        "name": "gateway-1191",
+        "altitude": 26
       }
     },
     {
@@ -13986,7 +15061,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1192"
+        "name": "gateway-1192",
+        "altitude": 10
       }
     },
     {
@@ -13999,7 +15075,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1193"
+        "name": "gateway-1193",
+        "altitude": 0
       }
     },
     {
@@ -14012,7 +15089,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1194"
+        "name": "gateway-1194",
+        "altitude": 10
       }
     },
     {
@@ -14025,7 +15103,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1195"
+        "name": "gateway-1195",
+        "altitude": 29
       }
     },
     {
@@ -14038,7 +15117,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1197"
+        "name": "gateway-1197",
+        "altitude": 5
       }
     },
     {
@@ -14051,7 +15131,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1198"
+        "name": "gateway-1198",
+        "altitude": 28
       }
     },
     {
@@ -14064,7 +15145,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1199"
+        "name": "gateway-1199",
+        "altitude": 42
       }
     },
     {
@@ -14077,7 +15159,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1200"
+        "name": "gateway-1200",
+        "altitude": 10
       }
     },
     {
@@ -14090,7 +15173,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1201"
+        "name": "gateway-1201",
+        "altitude": 33
       }
     },
     {
@@ -14103,7 +15187,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1202"
+        "name": "gateway-1202",
+        "altitude": 40
       }
     },
     {
@@ -14116,7 +15201,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1203"
+        "name": "gateway-1203",
+        "altitude": 5
       }
     },
     {
@@ -14129,7 +15215,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1204"
+        "name": "gateway-1204",
+        "altitude": 11
       }
     },
     {
@@ -14142,7 +15229,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1207"
+        "name": "gateway-1207",
+        "altitude": 10
       }
     },
     {
@@ -14155,7 +15243,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1208"
+        "name": "gateway-1208",
+        "altitude": 53
       }
     },
     {
@@ -14168,7 +15257,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1209"
+        "name": "gateway-1209",
+        "altitude": 0
       }
     },
     {
@@ -14181,7 +15271,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1210"
+        "name": "gateway-1210",
+        "altitude": 30
       }
     },
     {
@@ -14194,7 +15285,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1211"
+        "name": "gateway-1211",
+        "altitude": 19
       }
     },
     {
@@ -14207,7 +15299,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1213"
+        "name": "gateway-1213",
+        "altitude": 10
       }
     },
     {
@@ -14220,7 +15313,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1214"
+        "name": "gateway-1214",
+        "altitude": 20
       }
     },
     {
@@ -14233,7 +15327,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1215"
+        "name": "gateway-1215",
+        "altitude": 42
       }
     },
     {
@@ -14246,7 +15341,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1216"
+        "name": "gateway-1216",
+        "altitude": 0
       }
     },
     {
@@ -14259,7 +15355,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1217"
+        "name": "gateway-1217",
+        "altitude": 25
       }
     },
     {
@@ -14272,7 +15369,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1218"
+        "name": "gateway-1218",
+        "altitude": 16
       }
     },
     {
@@ -14285,7 +15383,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1219"
+        "name": "gateway-1219",
+        "altitude": 35
       }
     },
     {
@@ -14298,7 +15397,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1220"
+        "name": "gateway-1220",
+        "altitude": 10
       }
     },
     {
@@ -14311,7 +15411,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1221"
+        "name": "gateway-1221",
+        "altitude": 6
       }
     },
     {
@@ -14324,7 +15425,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1222"
+        "name": "gateway-1222",
+        "altitude": 0
       }
     },
     {
@@ -14337,7 +15439,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1223"
+        "name": "gateway-1223",
+        "altitude": 0
       }
     },
     {
@@ -14350,7 +15453,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1224"
+        "name": "gateway-1224",
+        "altitude": 0
       }
     },
     {
@@ -14363,7 +15467,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1225"
+        "name": "gateway-1225",
+        "altitude": 35
       }
     },
     {
@@ -14376,7 +15481,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1226"
+        "name": "gateway-1226",
+        "altitude": 42
       }
     },
     {
@@ -14389,7 +15495,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1227"
+        "name": "gateway-1227",
+        "altitude": 12
       }
     },
     {
@@ -14402,7 +15509,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1228"
+        "name": "gateway-1228",
+        "altitude": 0
       }
     },
     {
@@ -14415,7 +15523,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1229"
+        "name": "gateway-1229",
+        "altitude": 0
       }
     },
     {
@@ -14428,7 +15537,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1230"
+        "name": "gateway-1230",
+        "altitude": 8
       }
     },
     {
@@ -14441,7 +15551,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1231"
+        "name": "gateway-1231",
+        "altitude": 0
       }
     },
     {
@@ -14454,7 +15565,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1232"
+        "name": "gateway-1232",
+        "altitude": 5
       }
     },
     {
@@ -14467,7 +15579,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1233"
+        "name": "gateway-1233",
+        "altitude": 0
       }
     },
     {
@@ -14480,7 +15593,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1234"
+        "name": "gateway-1234",
+        "altitude": 20
       }
     },
     {
@@ -14493,7 +15607,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1235"
+        "name": "gateway-1235",
+        "altitude": 0
       }
     },
     {
@@ -14506,7 +15621,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1236"
+        "name": "gateway-1236",
+        "altitude": 53
       }
     },
     {
@@ -14519,7 +15635,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1237"
+        "name": "gateway-1237",
+        "altitude": 30
       }
     },
     {
@@ -14532,7 +15649,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1238"
+        "name": "gateway-1238",
+        "altitude": 10
       }
     },
     {
@@ -14545,7 +15663,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1239"
+        "name": "gateway-1239",
+        "altitude": 0
       }
     },
     {
@@ -14558,7 +15677,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1240"
+        "name": "gateway-1240",
+        "altitude": 0
       }
     },
     {
@@ -14571,7 +15691,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1241"
+        "name": "gateway-1241",
+        "altitude": 0
       }
     },
     {
@@ -14584,7 +15705,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1242"
+        "name": "gateway-1242",
+        "altitude": 28
       }
     },
     {
@@ -14597,7 +15719,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1243"
+        "name": "gateway-1243",
+        "altitude": 0
       }
     },
     {
@@ -14610,7 +15733,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1244"
+        "name": "gateway-1244",
+        "altitude": 0
       }
     },
     {
@@ -14623,7 +15747,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1245"
+        "name": "gateway-1245",
+        "altitude": 0
       }
     },
     {
@@ -14636,7 +15761,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1246"
+        "name": "gateway-1246",
+        "altitude": 18
       }
     },
     {
@@ -14649,7 +15775,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1247"
+        "name": "gateway-1247",
+        "altitude": 0
       }
     },
     {
@@ -14662,7 +15789,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1249"
+        "name": "gateway-1249",
+        "altitude": 0
       }
     },
     {
@@ -14675,7 +15803,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1250"
+        "name": "gateway-1250",
+        "altitude": 0
       }
     },
     {
@@ -14688,7 +15817,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1251"
+        "name": "gateway-1251",
+        "altitude": 6
       }
     },
     {
@@ -14701,7 +15831,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1252"
+        "name": "gateway-1252",
+        "altitude": 5
       }
     },
     {
@@ -14714,7 +15845,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1254"
+        "name": "gateway-1254",
+        "altitude": 0
       }
     },
     {
@@ -14727,7 +15859,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1255"
+        "name": "gateway-1255",
+        "altitude": 31
       }
     },
     {
@@ -14740,7 +15873,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1256"
+        "name": "gateway-1256",
+        "altitude": 75
       }
     },
     {
@@ -14753,7 +15887,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1257"
+        "name": "gateway-1257",
+        "altitude": 25
       }
     },
     {
@@ -14766,7 +15901,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1258"
+        "name": "gateway-1258",
+        "altitude": 35
       }
     },
     {
@@ -14779,7 +15915,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1259"
+        "name": "gateway-1259",
+        "altitude": 15
       }
     },
     {
@@ -14792,7 +15929,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1260"
+        "name": "gateway-1260",
+        "altitude": 0
       }
     },
     {
@@ -14805,7 +15943,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1261"
+        "name": "gateway-1261",
+        "altitude": 6
       }
     },
     {
@@ -14818,7 +15957,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1262"
+        "name": "gateway-1262",
+        "altitude": 10
       }
     },
     {
@@ -14831,7 +15971,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1263"
+        "name": "gateway-1263",
+        "altitude": 5
       }
     },
     {
@@ -14844,7 +15985,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1264"
+        "name": "gateway-1264",
+        "altitude": 50
       }
     },
     {
@@ -14857,7 +15999,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1266"
+        "name": "gateway-1266",
+        "altitude": 3
       }
     },
     {
@@ -14870,7 +16013,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1267"
+        "name": "gateway-1267",
+        "altitude": 0
       }
     },
     {
@@ -14883,7 +16027,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1268"
+        "name": "gateway-1268",
+        "altitude": 0
       }
     },
     {
@@ -14896,7 +16041,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1269"
+        "name": "gateway-1269",
+        "altitude": 18
       }
     },
     {
@@ -14909,7 +16055,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1270"
+        "name": "gateway-1270",
+        "altitude": 123
       }
     },
     {
@@ -14922,7 +16069,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1271"
+        "name": "gateway-1271",
+        "altitude": 42
       }
     },
     {
@@ -14935,7 +16083,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1273"
+        "name": "gateway-1273",
+        "altitude": 0
       }
     },
     {
@@ -14948,7 +16097,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1274"
+        "name": "gateway-1274",
+        "altitude": 0
       }
     },
     {
@@ -14961,7 +16111,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1275"
+        "name": "gateway-1275",
+        "altitude": 85
       }
     },
     {
@@ -14974,7 +16125,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1276"
+        "name": "gateway-1276",
+        "altitude": 56
       }
     },
     {
@@ -14987,7 +16139,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1277"
+        "name": "gateway-1277",
+        "altitude": 12
       }
     },
     {
@@ -15000,7 +16153,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1278"
+        "name": "gateway-1278",
+        "altitude": 9
       }
     },
     {
@@ -15013,7 +16167,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1279"
+        "name": "gateway-1279",
+        "altitude": 0
       }
     },
     {
@@ -15026,7 +16181,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1280"
+        "name": "gateway-1280",
+        "altitude": 5
       }
     },
     {
@@ -15039,7 +16195,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1282"
+        "name": "gateway-1282",
+        "altitude": 8
       }
     },
     {
@@ -15052,7 +16209,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1283"
+        "name": "gateway-1283",
+        "altitude": 15
       }
     },
     {
@@ -15065,7 +16223,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1284"
+        "name": "gateway-1284",
+        "altitude": 10
       }
     },
     {
@@ -15078,7 +16237,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1285"
+        "name": "gateway-1285",
+        "altitude": 0
       }
     },
     {
@@ -15091,7 +16251,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1286"
+        "name": "gateway-1286",
+        "altitude": 123
       }
     },
     {
@@ -15104,7 +16265,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1287"
+        "name": "gateway-1287",
+        "altitude": 0
       }
     },
     {
@@ -15117,7 +16279,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1289"
+        "name": "gateway-1289",
+        "altitude": 4
       }
     },
     {
@@ -15130,7 +16293,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1291"
+        "name": "gateway-1291",
+        "altitude": 450
       }
     },
     {
@@ -15143,7 +16307,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1292"
+        "name": "gateway-1292",
+        "altitude": 256
       }
     },
     {
@@ -15156,7 +16321,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1293"
+        "name": "gateway-1293",
+        "altitude": 20
       }
     },
     {
@@ -15169,7 +16335,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1294"
+        "name": "gateway-1294",
+        "altitude": 0
       }
     },
     {
@@ -15182,7 +16349,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1295"
+        "name": "gateway-1295",
+        "altitude": 40
       }
     },
     {
@@ -15195,7 +16363,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1296"
+        "name": "gateway-1296",
+        "altitude": 25
       }
     },
     {
@@ -15208,7 +16377,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1297"
+        "name": "gateway-1297",
+        "altitude": 42
       }
     },
     {
@@ -15221,7 +16391,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1298"
+        "name": "gateway-1298",
+        "altitude": 15
       }
     },
     {
@@ -15234,7 +16405,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1299"
+        "name": "gateway-1299",
+        "altitude": 55
       }
     },
     {
@@ -15247,7 +16419,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1300"
+        "name": "gateway-1300",
+        "altitude": 28
       }
     },
     {
@@ -15260,7 +16433,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1301"
+        "name": "gateway-1301",
+        "altitude": 63
       }
     },
     {
@@ -15273,7 +16447,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1302"
+        "name": "gateway-1302",
+        "altitude": 20
       }
     },
     {
@@ -15286,7 +16461,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1303"
+        "name": "gateway-1303",
+        "altitude": 15
       }
     },
     {
@@ -15299,7 +16475,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1304"
+        "name": "gateway-1304",
+        "altitude": 40
       }
     },
     {
@@ -15312,7 +16489,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1305"
+        "name": "gateway-1305",
+        "altitude": 50
       }
     },
     {
@@ -15325,7 +16503,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1306"
+        "name": "gateway-1306",
+        "altitude": 0
       }
     },
     {
@@ -15338,7 +16517,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1307"
+        "name": "gateway-1307",
+        "altitude": 95
       }
     },
     {
@@ -15351,7 +16531,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1308"
+        "name": "gateway-1308",
+        "altitude": 50
       }
     },
     {
@@ -15364,7 +16545,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1309"
+        "name": "gateway-1309",
+        "altitude": 50
       }
     },
     {
@@ -15377,7 +16559,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1310"
+        "name": "gateway-1310",
+        "altitude": 0
       }
     },
     {
@@ -15390,7 +16573,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1311"
+        "name": "gateway-1311",
+        "altitude": 25
       }
     },
     {
@@ -15403,7 +16587,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1312"
+        "name": "gateway-1312",
+        "altitude": 0
       }
     },
     {
@@ -15416,7 +16601,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1313"
+        "name": "gateway-1313",
+        "altitude": 25
       }
     },
     {
@@ -15429,7 +16615,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1314"
+        "name": "gateway-1314",
+        "altitude": 114
       }
     },
     {
@@ -15442,7 +16629,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1315"
+        "name": "gateway-1315",
+        "altitude": -41
       }
     },
     {
@@ -15455,7 +16643,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1316"
+        "name": "gateway-1316",
+        "altitude": 23
       }
     },
     {
@@ -15468,7 +16657,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1317"
+        "name": "gateway-1317",
+        "altitude": 0
       }
     },
     {
@@ -15481,7 +16671,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1318"
+        "name": "gateway-1318",
+        "altitude": -22
       }
     },
     {
@@ -15494,7 +16685,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1319"
+        "name": "gateway-1319",
+        "altitude": 23
       }
     },
     {
@@ -15507,7 +16699,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1320"
+        "name": "gateway-1320",
+        "altitude": 0
       }
     },
     {
@@ -15520,7 +16713,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1321"
+        "name": "gateway-1321",
+        "altitude": 8
       }
     },
     {
@@ -15533,7 +16727,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1322"
+        "name": "gateway-1322",
+        "altitude": 0
       }
     },
     {
@@ -15546,7 +16741,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1323"
+        "name": "gateway-1323",
+        "altitude": 0
       }
     },
     {
@@ -15559,7 +16755,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1325"
+        "name": "gateway-1325",
+        "altitude": 27
       }
     },
     {
@@ -15572,7 +16769,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1326"
+        "name": "gateway-1326",
+        "altitude": 21
       }
     },
     {
@@ -15585,7 +16783,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1327"
+        "name": "gateway-1327",
+        "altitude": 21
       }
     },
     {
@@ -15598,7 +16797,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1328"
+        "name": "gateway-1328",
+        "altitude": 0
       }
     },
     {
@@ -15611,7 +16811,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1330"
+        "name": "gateway-1330",
+        "altitude": 55
       }
     },
     {
@@ -15624,7 +16825,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1332"
+        "name": "gateway-1332",
+        "altitude": 0
       }
     },
     {
@@ -15637,7 +16839,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1333"
+        "name": "gateway-1333",
+        "altitude": 0
       }
     },
     {
@@ -15650,7 +16853,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1336"
+        "name": "gateway-1336",
+        "altitude": 10
       }
     },
     {
@@ -15663,7 +16867,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1337"
+        "name": "gateway-1337",
+        "altitude": 12
       }
     },
     {
@@ -15676,7 +16881,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1338"
+        "name": "gateway-1338",
+        "altitude": 30
       }
     },
     {
@@ -15689,7 +16895,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1339"
+        "name": "gateway-1339",
+        "altitude": 60
       }
     },
     {
@@ -15702,7 +16909,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1340"
+        "name": "gateway-1340",
+        "altitude": 56
       }
     },
     {
@@ -15715,7 +16923,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1341"
+        "name": "gateway-1341",
+        "altitude": 0
       }
     },
     {
@@ -15728,7 +16937,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1342"
+        "name": "gateway-1342",
+        "altitude": 0
       }
     },
     {
@@ -15741,7 +16951,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1343"
+        "name": "gateway-1343",
+        "altitude": 0
       }
     },
     {
@@ -15754,7 +16965,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1344"
+        "name": "gateway-1344",
+        "altitude": 90
       }
     },
     {
@@ -15767,7 +16979,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1345"
+        "name": "gateway-1345",
+        "altitude": 32
       }
     },
     {
@@ -15780,7 +16993,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1348"
+        "name": "gateway-1348",
+        "altitude": 10
       }
     },
     {
@@ -15793,7 +17007,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1349"
+        "name": "gateway-1349",
+        "altitude": 50
       }
     },
     {
@@ -15806,7 +17021,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1350"
+        "name": "gateway-1350",
+        "altitude": 3
       }
     },
     {
@@ -15819,7 +17035,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1351"
+        "name": "gateway-1351",
+        "altitude": 0
       }
     },
     {
@@ -15832,7 +17049,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1353"
+        "name": "gateway-1353",
+        "altitude": 0
       }
     },
     {
@@ -15845,7 +17063,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1354"
+        "name": "gateway-1354",
+        "altitude": 0
       }
     },
     {
@@ -15858,7 +17077,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1355"
+        "name": "gateway-1355",
+        "altitude": 0
       }
     },
     {
@@ -15871,7 +17091,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1356"
+        "name": "gateway-1356",
+        "altitude": 28
       }
     },
     {
@@ -15884,7 +17105,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1357"
+        "name": "gateway-1357",
+        "altitude": 0
       }
     },
     {
@@ -15897,7 +17119,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1358"
+        "name": "gateway-1358",
+        "altitude": 5
       }
     },
     {
@@ -15910,7 +17133,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1359"
+        "name": "gateway-1359",
+        "altitude": 52
       }
     },
     {
@@ -15923,7 +17147,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1360"
+        "name": "gateway-1360",
+        "altitude": 12
       }
     },
     {
@@ -15936,7 +17161,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1362"
+        "name": "gateway-1362",
+        "altitude": 0
       }
     },
     {
@@ -15949,7 +17175,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1363"
+        "name": "gateway-1363",
+        "altitude": 0
       }
     },
     {
@@ -15962,7 +17189,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1364"
+        "name": "gateway-1364",
+        "altitude": 0
       }
     },
     {
@@ -15975,7 +17203,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1366"
+        "name": "gateway-1366",
+        "altitude": 62
       }
     },
     {
@@ -15988,7 +17217,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1367"
+        "name": "gateway-1367",
+        "altitude": 0
       }
     },
     {
@@ -16001,7 +17231,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1368"
+        "name": "gateway-1368",
+        "altitude": 0
       }
     },
     {
@@ -16014,7 +17245,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1370"
+        "name": "gateway-1370",
+        "altitude": 25
       }
     },
     {
@@ -16027,7 +17259,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1371"
+        "name": "gateway-1371",
+        "altitude": 20
       }
     },
     {
@@ -16040,7 +17273,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1372"
+        "name": "gateway-1372",
+        "altitude": 13
       }
     },
     {
@@ -16053,7 +17287,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1373"
+        "name": "gateway-1373",
+        "altitude": 0
       }
     },
     {
@@ -16066,7 +17301,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1374"
+        "name": "gateway-1374",
+        "altitude": 6
       }
     },
     {
@@ -16079,7 +17315,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1375"
+        "name": "gateway-1375",
+        "altitude": 10
       }
     },
     {
@@ -16092,7 +17329,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1377"
+        "name": "gateway-1377",
+        "altitude": 10
       }
     },
     {
@@ -16105,7 +17343,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1379"
+        "name": "gateway-1379",
+        "altitude": 2
       }
     },
     {
@@ -16118,7 +17357,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1380"
+        "name": "gateway-1380",
+        "altitude": 20
       }
     },
     {
@@ -16131,7 +17371,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1381"
+        "name": "gateway-1381",
+        "altitude": 0
       }
     },
     {
@@ -16144,7 +17385,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1382"
+        "name": "gateway-1382",
+        "altitude": 9
       }
     },
     {
@@ -16157,7 +17399,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1383"
+        "name": "gateway-1383",
+        "altitude": 6
       }
     },
     {
@@ -16170,7 +17413,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1385"
+        "name": "gateway-1385",
+        "altitude": 20
       }
     },
     {
@@ -16183,7 +17427,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1386"
+        "name": "gateway-1386",
+        "altitude": 42
       }
     },
     {
@@ -16196,7 +17441,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1387"
+        "name": "gateway-1387",
+        "altitude": 0
       }
     },
     {
@@ -16209,7 +17455,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1388"
+        "name": "gateway-1388",
+        "altitude": 6
       }
     },
     {
@@ -16222,7 +17469,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1389"
+        "name": "gateway-1389",
+        "altitude": 0
       }
     },
     {
@@ -16235,7 +17483,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1390"
+        "name": "gateway-1390",
+        "altitude": 25
       }
     },
     {
@@ -16248,7 +17497,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1391"
+        "name": "gateway-1391",
+        "altitude": 0
       }
     },
     {
@@ -16261,7 +17511,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1392"
+        "name": "gateway-1392",
+        "altitude": 0
       }
     },
     {
@@ -16274,7 +17525,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1393"
+        "name": "gateway-1393",
+        "altitude": 30
       }
     },
     {
@@ -16287,7 +17539,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1394"
+        "name": "gateway-1394",
+        "altitude": 6
       }
     },
     {
@@ -16300,7 +17553,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1395"
+        "name": "gateway-1395",
+        "altitude": 6
       }
     },
     {
@@ -16313,7 +17567,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1396"
+        "name": "gateway-1396",
+        "altitude": 0
       }
     },
     {
@@ -16326,7 +17581,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1397"
+        "name": "gateway-1397",
+        "altitude": 0
       }
     },
     {
@@ -16339,7 +17595,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1398"
+        "name": "gateway-1398",
+        "altitude": 4
       }
     },
     {
@@ -16352,7 +17609,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1399"
+        "name": "gateway-1399",
+        "altitude": 0
       }
     },
     {
@@ -16365,7 +17623,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1400"
+        "name": "gateway-1400",
+        "altitude": 0
       }
     },
     {
@@ -16378,7 +17637,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1401"
+        "name": "gateway-1401",
+        "altitude": 0
       }
     },
     {
@@ -16391,7 +17651,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1402"
+        "name": "gateway-1402",
+        "altitude": 30
       }
     },
     {
@@ -16404,7 +17665,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1403"
+        "name": "gateway-1403",
+        "altitude": 0
       }
     },
     {
@@ -16417,7 +17679,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1404"
+        "name": "gateway-1404",
+        "altitude": 5
       }
     },
     {
@@ -16430,7 +17693,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1405"
+        "name": "gateway-1405",
+        "altitude": 0
       }
     },
     {
@@ -16443,7 +17707,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1406"
+        "name": "gateway-1406",
+        "altitude": 7
       }
     },
     {
@@ -16456,7 +17721,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1407"
+        "name": "gateway-1407",
+        "altitude": 10
       }
     },
     {
@@ -16469,7 +17735,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1408"
+        "name": "gateway-1408",
+        "altitude": 20
       }
     },
     {
@@ -16482,7 +17749,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1409"
+        "name": "gateway-1409",
+        "altitude": 30
       }
     },
     {
@@ -16495,7 +17763,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1410"
+        "name": "gateway-1410",
+        "altitude": 40
       }
     },
     {
@@ -16508,7 +17777,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1411"
+        "name": "gateway-1411",
+        "altitude": 0
       }
     },
     {
@@ -16521,7 +17791,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1412"
+        "name": "gateway-1412",
+        "altitude": 0
       }
     },
     {
@@ -16534,7 +17805,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1413"
+        "name": "gateway-1413",
+        "altitude": 0
       }
     },
     {
@@ -16547,7 +17819,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1414"
+        "name": "gateway-1414",
+        "altitude": 0
       }
     },
     {
@@ -16560,7 +17833,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1415"
+        "name": "gateway-1415",
+        "altitude": 5
       }
     },
     {
@@ -16573,7 +17847,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1417"
+        "name": "gateway-1417",
+        "altitude": 0
       }
     },
     {
@@ -16586,7 +17861,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1419"
+        "name": "gateway-1419",
+        "altitude": 0
       }
     },
     {
@@ -16599,7 +17875,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1420"
+        "name": "gateway-1420",
+        "altitude": 0
       }
     },
     {
@@ -16612,7 +17889,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1421"
+        "name": "gateway-1421",
+        "altitude": 0
       }
     },
     {
@@ -16625,7 +17903,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1423"
+        "name": "gateway-1423",
+        "altitude": 0
       }
     },
     {
@@ -16638,7 +17917,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1424"
+        "name": "gateway-1424",
+        "altitude": 14
       }
     },
     {
@@ -16651,7 +17931,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1425"
+        "name": "gateway-1425",
+        "altitude": 0
       }
     },
     {
@@ -16664,7 +17945,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1426"
+        "name": "gateway-1426",
+        "altitude": 0
       }
     },
     {
@@ -16677,7 +17959,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1427"
+        "name": "gateway-1427",
+        "altitude": 0
       }
     },
     {
@@ -16690,7 +17973,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1428"
+        "name": "gateway-1428",
+        "altitude": 5
       }
     },
     {
@@ -16703,7 +17987,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1430"
+        "name": "gateway-1430",
+        "altitude": 33
       }
     },
     {
@@ -16716,7 +18001,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1431"
+        "name": "gateway-1431",
+        "altitude": 47
       }
     },
     {
@@ -16729,7 +18015,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1432"
+        "name": "gateway-1432",
+        "altitude": 145
       }
     },
     {
@@ -16742,7 +18029,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1433"
+        "name": "gateway-1433",
+        "altitude": 230
       }
     },
     {
@@ -16755,7 +18043,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1434"
+        "name": "gateway-1434",
+        "altitude": 180
       }
     },
     {
@@ -16768,7 +18057,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1435"
+        "name": "gateway-1435",
+        "altitude": 137
       }
     },
     {
@@ -16781,7 +18071,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1436"
+        "name": "gateway-1436",
+        "altitude": 30
       }
     },
     {
@@ -16794,7 +18085,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1437"
+        "name": "gateway-1437",
+        "altitude": 180
       }
     },
     {
@@ -16807,7 +18099,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1438"
+        "name": "gateway-1438",
+        "altitude": 112
       }
     },
     {
@@ -16820,7 +18113,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1439"
+        "name": "gateway-1439",
+        "altitude": 0
       }
     },
     {
@@ -16833,7 +18127,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1440"
+        "name": "gateway-1440",
+        "altitude": 0
       }
     },
     {
@@ -16846,7 +18141,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1441"
+        "name": "gateway-1441",
+        "altitude": 7
       }
     },
     {
@@ -16859,7 +18155,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1442"
+        "name": "gateway-1442",
+        "altitude": 6
       }
     },
     {
@@ -16872,7 +18169,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1443"
+        "name": "gateway-1443",
+        "altitude": 0
       }
     },
     {
@@ -16885,7 +18183,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1444"
+        "name": "gateway-1444",
+        "altitude": 70
       }
     },
     {
@@ -16898,7 +18197,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1445"
+        "name": "gateway-1445",
+        "altitude": 0
       }
     },
     {
@@ -16911,7 +18211,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1446"
+        "name": "gateway-1446",
+        "altitude": 18
       }
     },
     {
@@ -16924,7 +18225,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1447"
+        "name": "gateway-1447",
+        "altitude": 0
       }
     },
     {
@@ -16937,7 +18239,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1448"
+        "name": "gateway-1448",
+        "altitude": 0
       }
     },
     {
@@ -16950,7 +18253,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1450"
+        "name": "gateway-1450",
+        "altitude": 0
       }
     },
     {
@@ -16963,7 +18267,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1451"
+        "name": "gateway-1451",
+        "altitude": 0
       }
     },
     {
@@ -16976,7 +18281,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1452"
+        "name": "gateway-1452",
+        "altitude": 0
       }
     },
     {
@@ -16989,7 +18295,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1453"
+        "name": "gateway-1453",
+        "altitude": 0
       }
     },
     {
@@ -17002,7 +18309,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1454"
+        "name": "gateway-1454",
+        "altitude": 7
       }
     },
     {
@@ -17015,7 +18323,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1455"
+        "name": "gateway-1455",
+        "altitude": 0
       }
     },
     {
@@ -17028,7 +18337,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1456"
+        "name": "gateway-1456",
+        "altitude": 0
       }
     },
     {
@@ -17041,7 +18351,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1457"
+        "name": "gateway-1457",
+        "altitude": 0
       }
     },
     {
@@ -17054,7 +18365,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1458"
+        "name": "gateway-1458",
+        "altitude": 0
       }
     },
     {
@@ -17067,7 +18379,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1459"
+        "name": "gateway-1459",
+        "altitude": 0
       }
     },
     {
@@ -17080,7 +18393,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1460"
+        "name": "gateway-1460",
+        "altitude": 0
       }
     },
     {
@@ -17093,7 +18407,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1461"
+        "name": "gateway-1461",
+        "altitude": 6
       }
     },
     {
@@ -17106,7 +18421,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1462"
+        "name": "gateway-1462",
+        "altitude": 0
       }
     },
     {
@@ -17119,7 +18435,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1463"
+        "name": "gateway-1463",
+        "altitude": 17
       }
     },
     {
@@ -17132,7 +18449,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1464"
+        "name": "gateway-1464",
+        "altitude": 0
       }
     },
     {
@@ -17145,7 +18463,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1465"
+        "name": "gateway-1465",
+        "altitude": 0
       }
     },
     {
@@ -17158,7 +18477,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1466"
+        "name": "gateway-1466",
+        "altitude": 0
       }
     },
     {
@@ -17171,7 +18491,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1467"
+        "name": "gateway-1467",
+        "altitude": 0
       }
     },
     {
@@ -17184,7 +18505,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1468"
+        "name": "gateway-1468",
+        "altitude": 0
       }
     },
     {
@@ -17197,7 +18519,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1469"
+        "name": "gateway-1469",
+        "altitude": 0
       }
     },
     {
@@ -17210,7 +18533,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1470"
+        "name": "gateway-1470",
+        "altitude": 22
       }
     },
     {
@@ -17223,7 +18547,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1472"
+        "name": "gateway-1472",
+        "altitude": 10
       }
     },
     {
@@ -17236,7 +18561,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1473"
+        "name": "gateway-1473",
+        "altitude": 0
       }
     },
     {
@@ -17249,7 +18575,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1474"
+        "name": "gateway-1474",
+        "altitude": 10
       }
     },
     {
@@ -17262,7 +18589,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1477"
+        "name": "gateway-1477",
+        "altitude": 20
       }
     },
     {
@@ -17275,7 +18603,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1478"
+        "name": "gateway-1478",
+        "altitude": 40
       }
     },
     {
@@ -17288,7 +18617,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1479"
+        "name": "gateway-1479",
+        "altitude": 0
       }
     },
     {
@@ -17301,7 +18631,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1480"
+        "name": "gateway-1480",
+        "altitude": 4
       }
     },
     {
@@ -17314,7 +18645,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1482"
+        "name": "gateway-1482",
+        "altitude": 0
       }
     },
     {
@@ -17327,7 +18659,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1485"
+        "name": "gateway-1485",
+        "altitude": 0
       }
     },
     {
@@ -17340,7 +18673,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1487"
+        "name": "gateway-1487",
+        "altitude": 24
       }
     },
     {
@@ -17353,7 +18687,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1488"
+        "name": "gateway-1488",
+        "altitude": 0
       }
     },
     {
@@ -17366,7 +18701,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1489"
+        "name": "gateway-1489",
+        "altitude": 0
       }
     },
     {
@@ -17379,7 +18715,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1490"
+        "name": "gateway-1490",
+        "altitude": 10
       }
     },
     {
@@ -17392,7 +18729,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1491"
+        "name": "gateway-1491",
+        "altitude": 5
       }
     },
     {
@@ -17405,7 +18743,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1492"
+        "name": "gateway-1492",
+        "altitude": 0
       }
     },
     {
@@ -17418,7 +18757,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1493"
+        "name": "gateway-1493",
+        "altitude": 3
       }
     },
     {
@@ -17431,7 +18771,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1494"
+        "name": "gateway-1494",
+        "altitude": 0
       }
     },
     {
@@ -17444,7 +18785,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1495"
+        "name": "gateway-1495",
+        "altitude": 42
       }
     },
     {
@@ -17457,7 +18799,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1496"
+        "name": "gateway-1496",
+        "altitude": 6
       }
     },
     {
@@ -17470,7 +18813,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1497"
+        "name": "gateway-1497",
+        "altitude": 10
       }
     },
     {
@@ -17483,7 +18827,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1499"
+        "name": "gateway-1499",
+        "altitude": 5
       }
     },
     {
@@ -17496,7 +18841,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1500"
+        "name": "gateway-1500",
+        "altitude": 35
       }
     },
     {
@@ -17509,7 +18855,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1502"
+        "name": "gateway-1502",
+        "altitude": 0
       }
     },
     {
@@ -17522,7 +18869,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1504"
+        "name": "gateway-1504",
+        "altitude": 5
       }
     },
     {
@@ -17535,7 +18883,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1505"
+        "name": "gateway-1505",
+        "altitude": 10
       }
     },
     {
@@ -17548,7 +18897,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1506"
+        "name": "gateway-1506",
+        "altitude": 0
       }
     },
     {
@@ -17561,7 +18911,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1507"
+        "name": "gateway-1507",
+        "altitude": -2
       }
     },
     {
@@ -17574,7 +18925,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1508"
+        "name": "gateway-1508",
+        "altitude": 0
       }
     },
     {
@@ -17587,7 +18939,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1509"
+        "name": "gateway-1509",
+        "altitude": 0
       }
     },
     {
@@ -17600,7 +18953,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1510"
+        "name": "gateway-1510",
+        "altitude": 24
       }
     },
     {
@@ -17613,7 +18967,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1511"
+        "name": "gateway-1511",
+        "altitude": 0
       }
     },
     {
@@ -17626,7 +18981,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1512"
+        "name": "gateway-1512",
+        "altitude": 0
       }
     },
     {
@@ -17639,7 +18995,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1513"
+        "name": "gateway-1513",
+        "altitude": 8
       }
     },
     {
@@ -17652,7 +19009,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1515"
+        "name": "gateway-1515",
+        "altitude": 0
       }
     },
     {
@@ -17665,7 +19023,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1516"
+        "name": "gateway-1516",
+        "altitude": 0
       }
     },
     {
@@ -17678,7 +19037,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1517"
+        "name": "gateway-1517",
+        "altitude": 79
       }
     },
     {
@@ -17691,7 +19051,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1518"
+        "name": "gateway-1518",
+        "altitude": 3
       }
     },
     {
@@ -17704,7 +19065,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1519"
+        "name": "gateway-1519",
+        "altitude": 20
       }
     },
     {
@@ -17717,7 +19079,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1522"
+        "name": "gateway-1522",
+        "altitude": 0
       }
     },
     {
@@ -17730,7 +19093,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1523"
+        "name": "gateway-1523",
+        "altitude": 34
       }
     },
     {
@@ -17743,7 +19107,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1524"
+        "name": "gateway-1524",
+        "altitude": 3
       }
     },
     {
@@ -17756,7 +19121,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1525"
+        "name": "gateway-1525",
+        "altitude": 4
       }
     },
     {
@@ -17769,7 +19135,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1526"
+        "name": "gateway-1526",
+        "altitude": 6
       }
     },
     {
@@ -17782,7 +19149,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1527"
+        "name": "gateway-1527",
+        "altitude": 0
       }
     },
     {
@@ -17795,7 +19163,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1528"
+        "name": "gateway-1528",
+        "altitude": 2
       }
     },
     {
@@ -17808,7 +19177,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1529"
+        "name": "gateway-1529",
+        "altitude": 3
       }
     },
     {
@@ -17821,7 +19191,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1530"
+        "name": "gateway-1530",
+        "altitude": 15
       }
     },
     {
@@ -17834,7 +19205,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1532"
+        "name": "gateway-1532",
+        "altitude": 0
       }
     },
     {
@@ -17847,7 +19219,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1533"
+        "name": "gateway-1533",
+        "altitude": 48
       }
     },
     {
@@ -17860,7 +19233,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1534"
+        "name": "gateway-1534",
+        "altitude": 55
       }
     },
     {
@@ -17873,7 +19247,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1535"
+        "name": "gateway-1535",
+        "altitude": 17
       }
     },
     {
@@ -17886,7 +19261,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1536"
+        "name": "gateway-1536",
+        "altitude": 4
       }
     },
     {
@@ -17899,7 +19275,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1537"
+        "name": "gateway-1537",
+        "altitude": 5
       }
     },
     {
@@ -17912,7 +19289,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1538"
+        "name": "gateway-1538",
+        "altitude": 40
       }
     },
     {
@@ -17925,7 +19303,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1539"
+        "name": "gateway-1539",
+        "altitude": 15
       }
     },
     {
@@ -17938,7 +19317,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1540"
+        "name": "gateway-1540",
+        "altitude": 10
       }
     },
     {
@@ -17951,7 +19331,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1541"
+        "name": "gateway-1541",
+        "altitude": 43
       }
     },
     {
@@ -17964,7 +19345,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1542"
+        "name": "gateway-1542",
+        "altitude": 3
       }
     },
     {
@@ -17977,7 +19359,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1543"
+        "name": "gateway-1543",
+        "altitude": 38
       }
     },
     {
@@ -17990,7 +19373,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1544"
+        "name": "gateway-1544",
+        "altitude": 85
       }
     },
     {
@@ -18003,7 +19387,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1545"
+        "name": "gateway-1545",
+        "altitude": 5
       }
     },
     {
@@ -18016,7 +19401,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1547"
+        "name": "gateway-1547",
+        "altitude": 0
       }
     },
     {
@@ -18029,7 +19415,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1548"
+        "name": "gateway-1548",
+        "altitude": 40
       }
     },
     {
@@ -18042,7 +19429,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1549"
+        "name": "gateway-1549",
+        "altitude": 0
       }
     },
     {
@@ -18055,7 +19443,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1550"
+        "name": "gateway-1550",
+        "altitude": 0
       }
     },
     {
@@ -18068,7 +19457,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1551"
+        "name": "gateway-1551",
+        "altitude": 0
       }
     },
     {
@@ -18081,7 +19471,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1552"
+        "name": "gateway-1552",
+        "altitude": 32
       }
     },
     {
@@ -18094,7 +19485,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1553"
+        "name": "gateway-1553",
+        "altitude": 4
       }
     },
     {
@@ -18107,7 +19499,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1554"
+        "name": "gateway-1554",
+        "altitude": 0
       }
     },
     {
@@ -18120,7 +19513,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1555"
+        "name": "gateway-1555",
+        "altitude": 12
       }
     },
     {
@@ -18133,7 +19527,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1557"
+        "name": "gateway-1557",
+        "altitude": 6
       }
     },
     {
@@ -18146,7 +19541,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1558"
+        "name": "gateway-1558",
+        "altitude": 0
       }
     },
     {
@@ -18159,7 +19555,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1559"
+        "name": "gateway-1559",
+        "altitude": 6
       }
     },
     {
@@ -18172,7 +19569,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1560"
+        "name": "gateway-1560",
+        "altitude": 8
       }
     },
     {
@@ -18185,7 +19583,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1561"
+        "name": "gateway-1561",
+        "altitude": 60
       }
     },
     {
@@ -18198,7 +19597,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1562"
+        "name": "gateway-1562",
+        "altitude": 15
       }
     },
     {
@@ -18211,7 +19611,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1563"
+        "name": "gateway-1563",
+        "altitude": 0
       }
     },
     {
@@ -18224,7 +19625,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1564"
+        "name": "gateway-1564",
+        "altitude": 0
       }
     },
     {
@@ -18237,7 +19639,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1565"
+        "name": "gateway-1565",
+        "altitude": 7
       }
     },
     {
@@ -18250,7 +19653,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1567"
+        "name": "gateway-1567",
+        "altitude": 10
       }
     },
     {
@@ -18263,7 +19667,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1568"
+        "name": "gateway-1568",
+        "altitude": 0
       }
     },
     {
@@ -18276,7 +19681,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1569"
+        "name": "gateway-1569",
+        "altitude": 48
       }
     },
     {
@@ -18289,7 +19695,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1570"
+        "name": "gateway-1570",
+        "altitude": 0
       }
     },
     {
@@ -18302,7 +19709,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1571"
+        "name": "gateway-1571",
+        "altitude": 0
       }
     },
     {
@@ -18315,7 +19723,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1572"
+        "name": "gateway-1572",
+        "altitude": 0
       }
     },
     {
@@ -18328,7 +19737,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1573"
+        "name": "gateway-1573",
+        "altitude": 35
       }
     },
     {
@@ -18341,7 +19751,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1574"
+        "name": "gateway-1574",
+        "altitude": 0
       }
     },
     {
@@ -18354,7 +19765,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1575"
+        "name": "gateway-1575",
+        "altitude": 0
       }
     },
     {
@@ -18367,7 +19779,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1577"
+        "name": "gateway-1577",
+        "altitude": 0
       }
     },
     {
@@ -18380,7 +19793,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1578"
+        "name": "gateway-1578",
+        "altitude": 0
       }
     },
     {
@@ -18393,7 +19807,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1579"
+        "name": "gateway-1579",
+        "altitude": 0
       }
     },
     {
@@ -18406,7 +19821,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1580"
+        "name": "gateway-1580",
+        "altitude": 10
       }
     },
     {
@@ -18419,7 +19835,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1582"
+        "name": "gateway-1582",
+        "altitude": 0
       }
     },
     {
@@ -18432,7 +19849,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1583"
+        "name": "gateway-1583",
+        "altitude": 0
       }
     },
     {
@@ -18445,7 +19863,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1584"
+        "name": "gateway-1584",
+        "altitude": 20
       }
     },
     {
@@ -18458,7 +19877,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1585"
+        "name": "gateway-1585",
+        "altitude": 3
       }
     },
     {
@@ -18471,7 +19891,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1586"
+        "name": "gateway-1586",
+        "altitude": 43
       }
     },
     {
@@ -18484,7 +19905,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1587"
+        "name": "gateway-1587",
+        "altitude": 0
       }
     },
     {
@@ -18497,7 +19919,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1588"
+        "name": "gateway-1588",
+        "altitude": 3
       }
     },
     {
@@ -18510,7 +19933,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1589"
+        "name": "gateway-1589",
+        "altitude": 25
       }
     },
     {
@@ -18523,7 +19947,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1591"
+        "name": "gateway-1591",
+        "altitude": 24
       }
     },
     {
@@ -18536,7 +19961,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1592"
+        "name": "gateway-1592",
+        "altitude": 20
       }
     },
     {
@@ -18549,7 +19975,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1593"
+        "name": "gateway-1593",
+        "altitude": 0
       }
     },
     {
@@ -18562,7 +19989,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1594"
+        "name": "gateway-1594",
+        "altitude": 0
       }
     },
     {
@@ -18575,7 +20003,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1597"
+        "name": "gateway-1597",
+        "altitude": 1
       }
     },
     {
@@ -18588,7 +20017,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1598"
+        "name": "gateway-1598",
+        "altitude": 42
       }
     },
     {
@@ -18601,7 +20031,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1600"
+        "name": "gateway-1600",
+        "altitude": 15
       }
     },
     {
@@ -18614,7 +20045,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1601"
+        "name": "gateway-1601",
+        "altitude": 41
       }
     },
     {
@@ -18627,7 +20059,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1602"
+        "name": "gateway-1602",
+        "altitude": 0
       }
     },
     {
@@ -18640,7 +20073,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1603"
+        "name": "gateway-1603",
+        "altitude": 10
       }
     },
     {
@@ -18653,7 +20087,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1605"
+        "name": "gateway-1605",
+        "altitude": 0
       }
     },
     {
@@ -18666,7 +20101,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1606"
+        "name": "gateway-1606",
+        "altitude": 38
       }
     },
     {
@@ -18679,7 +20115,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1607"
+        "name": "gateway-1607",
+        "altitude": 0
       }
     },
     {
@@ -18692,7 +20129,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1608"
+        "name": "gateway-1608",
+        "altitude": 5
       }
     },
     {
@@ -18705,7 +20143,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1609"
+        "name": "gateway-1609",
+        "altitude": 216
       }
     },
     {
@@ -18718,7 +20157,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1610"
+        "name": "gateway-1610",
+        "altitude": 0
       }
     },
     {
@@ -18731,7 +20171,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1611"
+        "name": "gateway-1611",
+        "altitude": 20
       }
     },
     {
@@ -18744,7 +20185,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1612"
+        "name": "gateway-1612",
+        "altitude": 10
       }
     },
     {
@@ -18757,7 +20199,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1613"
+        "name": "gateway-1613",
+        "altitude": 0
       }
     },
     {
@@ -18770,7 +20213,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1614"
+        "name": "gateway-1614",
+        "altitude": 191
       }
     },
     {
@@ -18783,7 +20227,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1615"
+        "name": "gateway-1615",
+        "altitude": 51
       }
     },
     {
@@ -18796,7 +20241,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1616"
+        "name": "gateway-1616",
+        "altitude": 3
       }
     },
     {
@@ -18809,7 +20255,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1617"
+        "name": "gateway-1617",
+        "altitude": 5
       }
     },
     {
@@ -18822,7 +20269,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1620"
+        "name": "gateway-1620",
+        "altitude": 0
       }
     },
     {
@@ -18835,7 +20283,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1621"
+        "name": "gateway-1621",
+        "altitude": 15
       }
     },
     {
@@ -18848,7 +20297,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1622"
+        "name": "gateway-1622",
+        "altitude": 40
       }
     },
     {
@@ -18861,7 +20311,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1623"
+        "name": "gateway-1623",
+        "altitude": 5
       }
     },
     {
@@ -18874,7 +20325,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1624"
+        "name": "gateway-1624",
+        "altitude": 2
       }
     },
     {
@@ -18887,7 +20339,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1625"
+        "name": "gateway-1625",
+        "altitude": 35
       }
     },
     {
@@ -18900,7 +20353,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1626"
+        "name": "gateway-1626",
+        "altitude": 53
       }
     },
     {
@@ -18913,7 +20367,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1627"
+        "name": "gateway-1627",
+        "altitude": 0
       }
     },
     {
@@ -18926,7 +20381,8 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1628"
+        "name": "gateway-1628",
+        "altitude": 0
       }
     }
   ]
