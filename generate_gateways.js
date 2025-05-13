@@ -1701,21 +1701,6 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.569083750247955,
-          54.91283348870167
-        ]
-      },
-      "properties": {
-        "name": "gateway-0151",
-        "alt": 33,
-        "updated": "2025-05-12T08:48:27.564598Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           9.94678161107004,
           53.5499260526474
         ]
@@ -8361,21 +8346,6 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.82895,
-          54.92144
-        ]
-      },
-      "properties": {
-        "name": "gateway-0631",
-        "alt": 13,
-        "updated": "2023-03-12T10:34:44.129029Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           9.377611577510836,
           54.76115852901306
         ]
@@ -12096,21 +12066,6 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.328889,
-          54.823338
-        ]
-      },
-      "properties": {
-        "name": "gateway-0900",
-        "alt": 0,
-        "updated": "2022-11-07T08:55:36.813974Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           9.954471251922548,
           53.5529127254378
         ]
@@ -12254,21 +12209,6 @@ const gateways = {
         "name": "gateway-0912",
         "alt": 10,
         "updated": "2024-01-19T09:07:19.346773Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.36518,
-          54.82494
-        ]
-      },
-      "properties": {
-        "name": "gateway-0914",
-        "alt": 34,
-        "updated": "2022-01-15T14:09:11.035676Z"
       }
     },
     {
@@ -12464,21 +12404,6 @@ const gateways = {
         "name": "gateway-0929",
         "alt": 0,
         "updated": "2025-05-12T08:53:51.652568Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.80882829841456,
-          54.9011316160899
-        ]
-      },
-      "properties": {
-        "name": "gateway-0930",
-        "alt": 0,
-        "updated": "2024-05-06T03:01:44.256859Z"
       }
     },
     {
