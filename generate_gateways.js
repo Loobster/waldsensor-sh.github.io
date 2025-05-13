@@ -11,7 +11,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0001"
+        "name": "gateway-0001",
+        "alt": 16,
+        "updated": "2024-10-05T17:19:06.15175Z"
       }
     },
     {
@@ -24,7 +26,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0002"
+        "name": "gateway-0002",
+        "alt": 30,
+        "updated": "2025-04-16T11:07:31.086057Z"
       }
     },
     {
@@ -37,7 +41,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0003"
+        "name": "gateway-0003",
+        "alt": 15,
+        "updated": "2023-08-16T06:13:26.123579Z"
       }
     },
     {
@@ -50,7 +56,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0004"
+        "name": "gateway-0004",
+        "alt": 55,
+        "updated": "2022-08-18T00:46:26.290007Z"
       }
     },
     {
@@ -63,7 +71,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0005"
+        "name": "gateway-0005",
+        "alt": 28,
+        "updated": "2025-05-12T08:50:33.706824Z"
       }
     },
     {
@@ -76,7 +86,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0006"
+        "name": "gateway-0006",
+        "alt": 63,
+        "updated": "2025-05-12T08:49:35.598476Z"
       }
     },
     {
@@ -89,7 +101,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0007"
+        "name": "gateway-0007",
+        "alt": 20,
+        "updated": "2025-05-12T08:46:39.662557Z"
       }
     },
     {
@@ -102,7 +116,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0008"
+        "name": "gateway-0008",
+        "alt": 15,
+        "updated": "2025-05-12T08:54:37.685597Z"
       }
     },
     {
@@ -115,7 +131,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0009"
+        "name": "gateway-0009",
+        "alt": 40,
+        "updated": "2024-01-18T14:52:35.342449Z"
       }
     },
     {
@@ -128,7 +146,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0010"
+        "name": "gateway-0010",
+        "alt": 50,
+        "updated": "2024-01-18T15:01:24.94698Z"
       }
     },
     {
@@ -141,7 +161,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0011"
+        "name": "gateway-0011",
+        "alt": 95,
+        "updated": "2024-01-18T14:59:00.936811Z"
       }
     },
     {
@@ -154,7 +176,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0012"
+        "name": "gateway-0012",
+        "alt": 50,
+        "updated": "2024-01-18T15:01:16.948186Z"
       }
     },
     {
@@ -167,7 +191,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0013"
+        "name": "gateway-0013",
+        "alt": 0,
+        "updated": "2024-01-18T14:58:28.959259Z"
       }
     },
     {
@@ -180,7 +206,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0014"
+        "name": "gateway-0014",
+        "alt": 25,
+        "updated": "2024-01-18T14:47:10.908232Z"
       }
     },
     {
@@ -193,7 +221,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0015"
+        "name": "gateway-0015",
+        "alt": 30,
+        "updated": "2025-05-12T08:55:07.723196Z"
       }
     },
     {
@@ -206,7 +236,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0016"
+        "name": "gateway-0016",
+        "alt": 10,
+        "updated": "2022-02-20T18:17:44.379782Z"
       }
     },
     {
@@ -219,7 +251,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0017"
+        "name": "gateway-0017",
+        "alt": 60,
+        "updated": "2025-05-12T08:53:35.526075Z"
       }
     },
     {
@@ -232,7 +266,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0018"
+        "name": "gateway-0018",
+        "alt": 16,
+        "updated": "2025-05-12T08:53:29.502581Z"
       }
     },
     {
@@ -245,7 +281,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0019"
+        "name": "gateway-0019",
+        "alt": 0,
+        "updated": "2025-05-12T08:48:03.683356Z"
       }
     },
     {
@@ -258,7 +296,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0020"
+        "name": "gateway-0020",
+        "alt": 1,
+        "updated": "2025-05-12T08:53:45.503151Z"
       }
     },
     {
@@ -271,7 +311,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0021"
+        "name": "gateway-0021",
+        "alt": 10,
+        "updated": "2022-12-28T07:57:15.3397Z"
       }
     },
     {
@@ -284,7 +326,24 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0022"
+        "name": "gateway-0022",
+        "alt": 0,
+        "updated": "2025-05-12T08:53:27.641317Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.354261405394704,
+          54.65391684100761
+        ]
+      },
+      "properties": {
+        "name": "gateway-0023",
+        "alt": 10,
+        "updated": "2023-05-03T15:31:46.100323Z"
       }
     },
     {
@@ -297,7 +356,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0024"
+        "name": "gateway-0024",
+        "alt": 15,
+        "updated": "2022-07-19T09:18:47.883318Z"
       }
     },
     {
@@ -310,7 +371,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0026"
+        "name": "gateway-0026",
+        "alt": 14,
+        "updated": "2022-10-31T20:54:42.826015Z"
       }
     },
     {
@@ -323,7 +386,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0027"
+        "name": "gateway-0027",
+        "alt": 56,
+        "updated": "2025-05-12T08:49:57.619626Z"
       }
     },
     {
@@ -336,7 +401,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0028"
+        "name": "gateway-0028",
+        "alt": 32,
+        "updated": "2021-09-20T05:12:20.126542Z"
       }
     },
     {
@@ -349,7 +416,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0029"
+        "name": "gateway-0029",
+        "alt": 9,
+        "updated": "2025-05-12T08:53:13.908925Z"
       }
     },
     {
@@ -362,7 +431,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0030"
+        "name": "gateway-0030",
+        "alt": 8,
+        "updated": "2023-09-20T12:52:05.936308Z"
       }
     },
     {
@@ -375,7 +446,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0031"
+        "name": "gateway-0031",
+        "alt": 3,
+        "updated": "2022-06-03T19:03:17.104606Z"
       }
     },
     {
@@ -388,7 +461,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0032"
+        "name": "gateway-0032",
+        "alt": 0,
+        "updated": "2021-10-16T16:34:21.34352Z"
       }
     },
     {
@@ -401,7 +476,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0033"
+        "name": "gateway-0033",
+        "alt": 5,
+        "updated": "2021-12-27T21:42:29.360362Z"
       }
     },
     {
@@ -414,7 +491,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0034"
+        "name": "gateway-0034",
+        "alt": 48,
+        "updated": "2025-05-12T08:53:13.896865Z"
       }
     },
     {
@@ -427,7 +506,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0035"
+        "name": "gateway-0035",
+        "alt": 25,
+        "updated": "2024-10-31T10:41:14.323998Z"
       }
     },
     {
@@ -440,7 +521,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0036"
+        "name": "gateway-0036",
+        "alt": 12,
+        "updated": "2024-07-09T16:46:32.398989Z"
       }
     },
     {
@@ -453,7 +536,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0037"
+        "name": "gateway-0037",
+        "alt": 45,
+        "updated": "2025-05-12T08:53:25.679768Z"
       }
     },
     {
@@ -466,7 +551,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0038"
+        "name": "gateway-0038",
+        "alt": 20,
+        "updated": "2025-05-12T08:50:01.612142Z"
       }
     },
     {
@@ -479,7 +566,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0039"
+        "name": "gateway-0039",
+        "alt": 5,
+        "updated": "2022-10-26T05:53:09.154464Z"
       }
     },
     {
@@ -492,7 +581,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0040"
+        "name": "gateway-0040",
+        "alt": 0,
+        "updated": "2022-04-29T15:33:25.768326Z"
       }
     },
     {
@@ -505,7 +596,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0041"
+        "name": "gateway-0041",
+        "alt": 0,
+        "updated": "2021-11-22T19:20:32.912891Z"
       }
     },
     {
@@ -518,7 +611,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0042"
+        "name": "gateway-0042",
+        "alt": 0,
+        "updated": "2025-05-12T08:51:25.640564Z"
       }
     },
     {
@@ -531,7 +626,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0043"
+        "name": "gateway-0043",
+        "alt": 26,
+        "updated": "2025-04-21T19:01:35.169687Z"
       }
     },
     {
@@ -544,7 +641,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0044"
+        "name": "gateway-0044",
+        "alt": 4,
+        "updated": "2025-05-12T08:52:35.821247Z"
       }
     },
     {
@@ -557,7 +656,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0045"
+        "name": "gateway-0045",
+        "alt": 5,
+        "updated": "2021-10-18T05:22:43.351888Z"
       }
     },
     {
@@ -570,7 +671,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0046"
+        "name": "gateway-0046",
+        "alt": 41,
+        "updated": "2021-08-31T13:08:07.086341Z"
       }
     },
     {
@@ -583,7 +686,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0048"
+        "name": "gateway-0048",
+        "alt": 60,
+        "updated": "2024-08-30T20:24:48.187987Z"
       }
     },
     {
@@ -596,7 +701,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0053"
+        "name": "gateway-0053",
+        "alt": 42,
+        "updated": "2023-09-09T12:59:08.667386Z"
       }
     },
     {
@@ -609,7 +716,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0054"
+        "name": "gateway-0054",
+        "alt": 8,
+        "updated": "2021-07-14T12:41:13.372459Z"
       }
     },
     {
@@ -622,7 +731,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0055"
+        "name": "gateway-0055",
+        "alt": 0,
+        "updated": "2024-04-08T14:55:18.218957Z"
       }
     },
     {
@@ -635,7 +746,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0057"
+        "name": "gateway-0057",
+        "alt": 450,
+        "updated": "2022-01-29T20:10:19.579831Z"
       }
     },
     {
@@ -648,7 +761,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0060"
+        "name": "gateway-0060",
+        "alt": 0,
+        "updated": "2022-01-21T13:33:48.164916Z"
       }
     },
     {
@@ -661,7 +776,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0061"
+        "name": "gateway-0061",
+        "alt": 8,
+        "updated": "2024-12-19T09:01:00.909095Z"
       }
     },
     {
@@ -674,7 +791,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0062"
+        "name": "gateway-0062",
+        "alt": 10,
+        "updated": "2025-05-12T08:50:19.75806Z"
       }
     },
     {
@@ -687,7 +806,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0063"
+        "name": "gateway-0063",
+        "alt": 0,
+        "updated": "2021-12-20T22:45:41.288912Z"
       }
     },
     {
@@ -700,7 +821,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0064"
+        "name": "gateway-0064",
+        "alt": 0,
+        "updated": "2022-01-20T18:07:19.072693Z"
       }
     },
     {
@@ -713,7 +836,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0065"
+        "name": "gateway-0065",
+        "alt": 10,
+        "updated": "2025-02-15T16:17:19.026282Z"
       }
     },
     {
@@ -726,7 +851,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0066"
+        "name": "gateway-0066",
+        "alt": 10,
+        "updated": "2025-05-12T08:51:53.7898Z"
       }
     },
     {
@@ -739,7 +866,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0068"
+        "name": "gateway-0068",
+        "alt": 38,
+        "updated": "2024-01-22T17:10:57.337477Z"
       }
     },
     {
@@ -752,7 +881,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0069"
+        "name": "gateway-0069",
+        "alt": 30,
+        "updated": "2023-07-19T15:13:44.165684Z"
       }
     },
     {
@@ -765,7 +896,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0070"
+        "name": "gateway-0070",
+        "alt": 180,
+        "updated": "2024-01-22T16:57:15.352597Z"
       }
     },
     {
@@ -778,7 +911,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0071"
+        "name": "gateway-0071",
+        "alt": 56,
+        "updated": "2024-01-17T20:25:44.940947Z"
       }
     },
     {
@@ -791,7 +926,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0072"
+        "name": "gateway-0072",
+        "alt": 112,
+        "updated": "2025-05-12T08:46:16.995374Z"
       }
     },
     {
@@ -804,7 +941,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0073"
+        "name": "gateway-0073",
+        "alt": 171,
+        "updated": "2024-01-17T20:20:13.355303Z"
       }
     },
     {
@@ -817,7 +956,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0074"
+        "name": "gateway-0074",
+        "alt": 180,
+        "updated": "2022-06-30T20:36:29.045344Z"
       }
     },
     {
@@ -830,7 +971,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0075"
+        "name": "gateway-0075",
+        "alt": 80,
+        "updated": "2024-01-22T17:02:31.357861Z"
       }
     },
     {
@@ -843,7 +986,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0076"
+        "name": "gateway-0076",
+        "alt": 45,
+        "updated": "2023-06-20T08:51:54.098777Z"
       }
     },
     {
@@ -856,7 +1001,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0077"
+        "name": "gateway-0077",
+        "alt": 41,
+        "updated": "2022-01-25T13:57:15.564904Z"
       }
     },
     {
@@ -869,7 +1016,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0078"
+        "name": "gateway-0078",
+        "alt": 145,
+        "updated": "2023-02-17T17:19:43.376228Z"
       }
     },
     {
@@ -882,7 +1031,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0079"
+        "name": "gateway-0079",
+        "alt": 30,
+        "updated": "2022-01-10T09:59:08.848975Z"
       }
     },
     {
@@ -895,7 +1046,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0080"
+        "name": "gateway-0080",
+        "alt": 10,
+        "updated": "2025-05-12T08:53:45.482246Z"
       }
     },
     {
@@ -908,7 +1061,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0081"
+        "name": "gateway-0081",
+        "alt": 77,
+        "updated": "2025-04-16T08:28:20.796925Z"
       }
     },
     {
@@ -921,7 +1076,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0082"
+        "name": "gateway-0082",
+        "alt": 0,
+        "updated": "2025-05-12T08:47:47.501153Z"
       }
     },
     {
@@ -934,7 +1091,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0083"
+        "name": "gateway-0083",
+        "alt": 0,
+        "updated": "2025-05-12T08:54:03.757976Z"
       }
     },
     {
@@ -947,7 +1106,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0084"
+        "name": "gateway-0084",
+        "alt": 6,
+        "updated": "2025-05-12T08:53:23.651226Z"
       }
     },
     {
@@ -960,7 +1121,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0085"
+        "name": "gateway-0085",
+        "alt": 15,
+        "updated": "2025-05-12T08:52:15.590612Z"
       }
     },
     {
@@ -973,7 +1136,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0086"
+        "name": "gateway-0086",
+        "alt": 55,
+        "updated": "2025-05-12T08:50:31.639426Z"
       }
     },
     {
@@ -986,7 +1151,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0087"
+        "name": "gateway-0087",
+        "alt": 9,
+        "updated": "2025-05-12T08:51:03.450009Z"
       }
     },
     {
@@ -999,7 +1166,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0089"
+        "name": "gateway-0089",
+        "alt": 24,
+        "updated": "2023-02-25T12:03:09.536003Z"
       }
     },
     {
@@ -1012,7 +1181,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0090"
+        "name": "gateway-0090",
+        "alt": 10,
+        "updated": "2025-05-12T08:50:39.598193Z"
       }
     },
     {
@@ -1025,7 +1196,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0092"
+        "name": "gateway-0092",
+        "alt": 0,
+        "updated": "2025-05-12T08:53:01.802365Z"
       }
     },
     {
@@ -1038,7 +1211,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0093"
+        "name": "gateway-0093",
+        "alt": 0,
+        "updated": "2025-05-12T08:51:31.413323Z"
       }
     },
     {
@@ -1051,7 +1226,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0094"
+        "name": "gateway-0094",
+        "alt": 0,
+        "updated": "2025-03-22T10:09:30.970881Z"
       }
     },
     {
@@ -1064,7 +1241,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0095"
+        "name": "gateway-0095",
+        "alt": 0,
+        "updated": "2025-03-24T06:56:43.330486Z"
       }
     },
     {
@@ -1077,7 +1256,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0096"
+        "name": "gateway-0096",
+        "alt": 0,
+        "updated": "2025-03-24T05:30:32.840696Z"
       }
     },
     {
@@ -1090,7 +1271,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0097"
+        "name": "gateway-0097",
+        "alt": 2,
+        "updated": "2021-12-16T15:55:45.302974Z"
       }
     },
     {
@@ -1103,7 +1286,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0098"
+        "name": "gateway-0098",
+        "alt": 5,
+        "updated": "2023-02-05T15:56:29.335745Z"
       }
     },
     {
@@ -1116,7 +1301,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0102"
+        "name": "gateway-0102",
+        "alt": 10,
+        "updated": "2021-09-14T10:46:41.134049Z"
       }
     },
     {
@@ -1129,7 +1316,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0103"
+        "name": "gateway-0103",
+        "alt": 8,
+        "updated": "2024-02-24T18:31:58.904914Z"
       }
     },
     {
@@ -1142,7 +1331,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0104"
+        "name": "gateway-0104",
+        "alt": 40,
+        "updated": "2023-07-15T06:55:12.292206Z"
       }
     },
     {
@@ -1155,7 +1346,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0105"
+        "name": "gateway-0105",
+        "alt": 5,
+        "updated": "2025-05-12T08:47:45.950879Z"
       }
     },
     {
@@ -1168,7 +1361,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0107"
+        "name": "gateway-0107",
+        "alt": 24,
+        "updated": "2025-05-12T08:53:07.511611Z"
       }
     },
     {
@@ -1181,7 +1376,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0113"
+        "name": "gateway-0113",
+        "alt": 22,
+        "updated": "2022-11-06T16:50:42.856375Z"
       }
     },
     {
@@ -1194,7 +1391,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0117"
+        "name": "gateway-0117",
+        "alt": 0,
+        "updated": "2024-12-18T00:11:31.026113Z"
       }
     },
     {
@@ -1207,7 +1406,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0118"
+        "name": "gateway-0118",
+        "alt": 20,
+        "updated": "2025-05-12T08:39:13.891238Z"
       }
     },
     {
@@ -1220,7 +1421,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0125"
+        "name": "gateway-0125",
+        "alt": 15,
+        "updated": "2022-01-29T20:08:17.971667Z"
       }
     },
     {
@@ -1233,7 +1436,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0127"
+        "name": "gateway-0127",
+        "alt": 25,
+        "updated": "2025-05-12T08:53:09.542285Z"
       }
     },
     {
@@ -1246,7 +1451,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0130"
+        "name": "gateway-0130",
+        "alt": 0,
+        "updated": "2025-05-12T08:53:13.905674Z"
       }
     },
     {
@@ -1259,7 +1466,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0131"
+        "name": "gateway-0131",
+        "alt": 6,
+        "updated": "2022-01-09T17:38:08.862407Z"
       }
     },
     {
@@ -1272,7 +1481,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0133"
+        "name": "gateway-0133",
+        "alt": 51,
+        "updated": "2025-05-12T08:49:07.801654Z"
       }
     },
     {
@@ -1285,7 +1496,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0134"
+        "name": "gateway-0134",
+        "alt": 6,
+        "updated": "2021-10-13T16:28:59.36578Z"
       }
     },
     {
@@ -1298,7 +1511,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0135"
+        "name": "gateway-0135",
+        "alt": 6,
+        "updated": "2025-05-12T08:49:35.565161Z"
       }
     },
     {
@@ -1311,7 +1526,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0136"
+        "name": "gateway-0136",
+        "alt": 75,
+        "updated": "2025-05-12T08:48:13.626106Z"
       }
     },
     {
@@ -1324,7 +1541,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0137"
+        "name": "gateway-0137",
+        "alt": 35,
+        "updated": "2022-02-04T12:19:20.829858Z"
       }
     },
     {
@@ -1337,7 +1556,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0138"
+        "name": "gateway-0138",
+        "alt": 16,
+        "updated": "2023-06-09T16:28:35.988432Z"
       }
     },
     {
@@ -1350,7 +1571,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0141"
+        "name": "gateway-0141",
+        "alt": 33,
+        "updated": "2022-05-20T15:03:51.53794Z"
       }
     },
     {
@@ -1363,7 +1586,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0142"
+        "name": "gateway-0142",
+        "alt": 6,
+        "updated": "2022-04-19T06:33:17.4348Z"
       }
     },
     {
@@ -1376,7 +1601,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0143"
+        "name": "gateway-0143",
+        "alt": 10,
+        "updated": "2025-03-15T02:33:31.160844Z"
       }
     },
     {
@@ -1389,7 +1616,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0144"
+        "name": "gateway-0144",
+        "alt": 7,
+        "updated": "2025-05-12T08:51:30.412717Z"
       }
     },
     {
@@ -1402,7 +1631,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0145"
+        "name": "gateway-0145",
+        "alt": 15,
+        "updated": "2025-05-12T08:48:25.623242Z"
       }
     },
     {
@@ -1415,7 +1646,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0146"
+        "name": "gateway-0146",
+        "alt": 0,
+        "updated": "2022-04-20T17:07:49.524593Z"
       }
     },
     {
@@ -1428,7 +1661,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0148"
+        "name": "gateway-0148",
+        "alt": 36,
+        "updated": "2025-05-01T14:22:34.840624Z"
       }
     },
     {
@@ -1441,7 +1676,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0149"
+        "name": "gateway-0149",
+        "alt": 42,
+        "updated": "2025-05-12T08:53:29.458189Z"
       }
     },
     {
@@ -1454,7 +1691,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0150"
+        "name": "gateway-0150",
+        "alt": 3,
+        "updated": "2025-01-13T09:38:05.020846Z"
       }
     },
     {
@@ -1467,7 +1706,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0151"
+        "name": "gateway-0151",
+        "alt": 33,
+        "updated": "2025-05-12T08:48:27.564598Z"
       }
     },
     {
@@ -1480,7 +1721,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0153"
+        "name": "gateway-0153",
+        "alt": 20,
+        "updated": "2023-06-12T19:31:35.946218Z"
       }
     },
     {
@@ -1493,7 +1736,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0155"
+        "name": "gateway-0155",
+        "alt": 10,
+        "updated": "2022-06-18T04:35:29.041329Z"
       }
     },
     {
@@ -1506,7 +1751,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0156"
+        "name": "gateway-0156",
+        "alt": 48,
+        "updated": "2021-10-01T09:35:19.17903Z"
       }
     },
     {
@@ -1519,7 +1766,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0157"
+        "name": "gateway-0157",
+        "alt": 35,
+        "updated": "2024-04-22T13:34:18.197944Z"
       }
     },
     {
@@ -1532,7 +1781,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0158"
+        "name": "gateway-0158",
+        "alt": 35,
+        "updated": "2025-05-12T08:55:17.687901Z"
       }
     },
     {
@@ -1545,7 +1796,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0159"
+        "name": "gateway-0159",
+        "alt": 10,
+        "updated": "2024-09-02T05:20:00.176891Z"
       }
     },
     {
@@ -1558,7 +1811,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0160"
+        "name": "gateway-0160",
+        "alt": 0,
+        "updated": "2023-11-26T09:35:43.35466Z"
       }
     },
     {
@@ -1571,7 +1826,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0162"
+        "name": "gateway-0162",
+        "alt": 50,
+        "updated": "2025-05-12T08:48:43.728036Z"
       }
     },
     {
@@ -1584,7 +1841,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0165"
+        "name": "gateway-0165",
+        "alt": 0,
+        "updated": "2025-04-02T09:29:36.970037Z"
       }
     },
     {
@@ -1597,7 +1856,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0167"
+        "name": "gateway-0167",
+        "alt": 41,
+        "updated": "2023-03-05T12:32:45.391027Z"
       }
     },
     {
@@ -1610,7 +1871,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0168"
+        "name": "gateway-0168",
+        "alt": 0,
+        "updated": "2025-05-12T08:49:07.852496Z"
       }
     },
     {
@@ -1623,7 +1886,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0173"
+        "name": "gateway-0173",
+        "alt": 79,
+        "updated": "2025-05-12T08:51:27.927996Z"
       }
     },
     {
@@ -1636,7 +1901,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0174"
+        "name": "gateway-0174",
+        "alt": 40,
+        "updated": "2024-04-25T08:42:30.198351Z"
       }
     },
     {
@@ -1649,7 +1916,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0175"
+        "name": "gateway-0175",
+        "alt": 55,
+        "updated": "2021-09-18T10:57:59.254505Z"
       }
     },
     {
@@ -1662,7 +1931,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0176"
+        "name": "gateway-0176",
+        "alt": 15,
+        "updated": "2024-01-18T15:01:27.357948Z"
       }
     },
     {
@@ -1675,7 +1946,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0177"
+        "name": "gateway-0177",
+        "alt": 45,
+        "updated": "2025-05-12T08:46:53.98082Z"
       }
     },
     {
@@ -1688,7 +1961,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0178"
+        "name": "gateway-0178",
+        "alt": 0,
+        "updated": "2025-05-12T08:47:21.711694Z"
       }
     },
     {
@@ -1701,7 +1976,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0179"
+        "name": "gateway-0179",
+        "alt": 40,
+        "updated": "2025-05-12T08:49:11.606272Z"
       }
     },
     {
@@ -1714,7 +1991,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0180"
+        "name": "gateway-0180",
+        "alt": 36,
+        "updated": "2025-05-12T08:44:33.794244Z"
       }
     },
     {
@@ -1727,7 +2006,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0181"
+        "name": "gateway-0181",
+        "alt": 2,
+        "updated": "2025-05-12T08:47:23.664139Z"
       }
     },
     {
@@ -1740,7 +2021,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0182"
+        "name": "gateway-0182",
+        "alt": 13,
+        "updated": "2025-05-12T08:53:39.650191Z"
       }
     },
     {
@@ -1753,7 +2036,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0183"
+        "name": "gateway-0183",
+        "alt": 17,
+        "updated": "2025-05-12T08:49:35.587959Z"
       }
     },
     {
@@ -1766,7 +2051,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0184"
+        "name": "gateway-0184",
+        "alt": 21,
+        "updated": "2025-05-12T08:46:34.081692Z"
       }
     },
     {
@@ -1779,7 +2066,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0185"
+        "name": "gateway-0185",
+        "alt": 4,
+        "updated": "2025-05-12T08:52:29.898145Z"
       }
     },
     {
@@ -1792,7 +2081,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0186"
+        "name": "gateway-0186",
+        "alt": 87,
+        "updated": "2025-05-12T08:47:55.889719Z"
       }
     },
     {
@@ -1805,7 +2096,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0187"
+        "name": "gateway-0187",
+        "alt": 51,
+        "updated": "2025-05-12T08:48:27.546891Z"
       }
     },
     {
@@ -1818,7 +2111,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0188"
+        "name": "gateway-0188",
+        "alt": 49,
+        "updated": "2025-04-13T16:53:12.950228Z"
       }
     },
     {
@@ -1831,7 +2126,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0189"
+        "name": "gateway-0189",
+        "alt": 43,
+        "updated": "2025-05-12T08:51:07.979689Z"
       }
     },
     {
@@ -1844,7 +2141,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0190"
+        "name": "gateway-0190",
+        "alt": 19,
+        "updated": "2025-05-12T08:49:39.882693Z"
       }
     },
     {
@@ -1857,7 +2156,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0191"
+        "name": "gateway-0191",
+        "alt": 22,
+        "updated": "2025-05-12T08:47:25.663215Z"
       }
     },
     {
@@ -1870,7 +2171,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0192"
+        "name": "gateway-0192",
+        "alt": 32,
+        "updated": "2025-05-12T08:53:11.634106Z"
       }
     },
     {
@@ -1883,7 +2186,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0193"
+        "name": "gateway-0193",
+        "alt": 19,
+        "updated": "2025-05-12T08:44:25.717106Z"
       }
     },
     {
@@ -1896,7 +2201,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0194"
+        "name": "gateway-0194",
+        "alt": 60,
+        "updated": "2025-05-12T08:45:55.734514Z"
       }
     },
     {
@@ -1909,7 +2216,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0195"
+        "name": "gateway-0195",
+        "alt": 46,
+        "updated": "2025-05-12T08:53:57.883441Z"
       }
     },
     {
@@ -1922,7 +2231,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0196"
+        "name": "gateway-0196",
+        "alt": 19,
+        "updated": "2025-05-12T08:50:47.974574Z"
       }
     },
     {
@@ -1935,7 +2246,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0197"
+        "name": "gateway-0197",
+        "alt": 31,
+        "updated": "2025-05-12T08:48:23.750905Z"
       }
     },
     {
@@ -1948,7 +2261,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0198"
+        "name": "gateway-0198",
+        "alt": 27,
+        "updated": "2025-05-12T08:45:59.702451Z"
       }
     },
     {
@@ -1961,7 +2276,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0199"
+        "name": "gateway-0199",
+        "alt": 7,
+        "updated": "2025-05-12T08:49:27.574442Z"
       }
     },
     {
@@ -1974,7 +2291,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0200"
+        "name": "gateway-0200",
+        "alt": 37,
+        "updated": "2025-05-12T08:51:59.894599Z"
       }
     },
     {
@@ -1987,7 +2306,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0201"
+        "name": "gateway-0201",
+        "alt": 33,
+        "updated": "2025-05-12T08:52:57.699919Z"
       }
     },
     {
@@ -2000,7 +2321,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0202"
+        "name": "gateway-0202",
+        "alt": 72,
+        "updated": "2025-05-12T08:47:41.729956Z"
       }
     },
     {
@@ -2013,7 +2336,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0203"
+        "name": "gateway-0203",
+        "alt": 28,
+        "updated": "2025-05-12T08:51:28.367497Z"
       }
     },
     {
@@ -2026,7 +2351,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0204"
+        "name": "gateway-0204",
+        "alt": 6,
+        "updated": "2025-05-12T08:52:11.57775Z"
       }
     },
     {
@@ -2039,7 +2366,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0205"
+        "name": "gateway-0205",
+        "alt": 17,
+        "updated": "2025-05-12T08:50:25.805144Z"
       }
     },
     {
@@ -2052,7 +2381,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0206"
+        "name": "gateway-0206",
+        "alt": 20,
+        "updated": "2025-05-12T08:46:35.576134Z"
       }
     },
     {
@@ -2065,7 +2396,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0207"
+        "name": "gateway-0207",
+        "alt": 18,
+        "updated": "2025-05-12T08:53:57.810551Z"
       }
     },
     {
@@ -2078,7 +2411,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0208"
+        "name": "gateway-0208",
+        "alt": 13,
+        "updated": "2025-05-12T08:49:51.533763Z"
       }
     },
     {
@@ -2091,7 +2426,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0209"
+        "name": "gateway-0209",
+        "alt": 40,
+        "updated": "2025-05-12T08:52:07.462934Z"
       }
     },
     {
@@ -2104,7 +2441,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0210"
+        "name": "gateway-0210",
+        "alt": 38,
+        "updated": "2025-05-12T08:49:09.717727Z"
       }
     },
     {
@@ -2117,7 +2456,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0211"
+        "name": "gateway-0211",
+        "alt": 28,
+        "updated": "2025-05-12T08:53:33.418932Z"
       }
     },
     {
@@ -2130,7 +2471,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0212"
+        "name": "gateway-0212",
+        "alt": 32,
+        "updated": "2025-05-12T08:49:17.681999Z"
       }
     },
     {
@@ -2143,7 +2486,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0213"
+        "name": "gateway-0213",
+        "alt": 46,
+        "updated": "2025-05-12T08:54:49.541078Z"
       }
     },
     {
@@ -2156,7 +2501,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0214"
+        "name": "gateway-0214",
+        "alt": 12,
+        "updated": "2025-05-12T08:48:27.565596Z"
       }
     },
     {
@@ -2169,7 +2516,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0215"
+        "name": "gateway-0215",
+        "alt": 65,
+        "updated": "2025-05-12T08:50:42.209103Z"
       }
     },
     {
@@ -2182,7 +2531,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0216"
+        "name": "gateway-0216",
+        "alt": 11,
+        "updated": "2025-05-12T08:53:41.637316Z"
       }
     },
     {
@@ -2195,7 +2546,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0217"
+        "name": "gateway-0217",
+        "alt": 49,
+        "updated": "2025-05-12T08:54:23.598877Z"
       }
     },
     {
@@ -2208,7 +2561,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0218"
+        "name": "gateway-0218",
+        "alt": 22,
+        "updated": "2025-05-12T08:54:53.730047Z"
       }
     },
     {
@@ -2221,7 +2576,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0219"
+        "name": "gateway-0219",
+        "alt": 18,
+        "updated": "2025-05-12T08:53:27.543193Z"
       }
     },
     {
@@ -2234,7 +2591,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0220"
+        "name": "gateway-0220",
+        "alt": 55,
+        "updated": "2025-05-12T08:53:59.833136Z"
       }
     },
     {
@@ -2247,7 +2606,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0221"
+        "name": "gateway-0221",
+        "alt": 34,
+        "updated": "2025-05-12T08:48:55.795863Z"
       }
     },
     {
@@ -2260,7 +2621,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0222"
+        "name": "gateway-0222",
+        "alt": 56,
+        "updated": "2025-05-12T08:52:09.841045Z"
       }
     },
     {
@@ -2273,7 +2636,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0223"
+        "name": "gateway-0223",
+        "alt": 29,
+        "updated": "2025-05-12T08:53:17.602232Z"
       }
     },
     {
@@ -2286,7 +2651,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0224"
+        "name": "gateway-0224",
+        "alt": 26,
+        "updated": "2025-05-12T08:45:02.175135Z"
       }
     },
     {
@@ -2299,7 +2666,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0225"
+        "name": "gateway-0225",
+        "alt": 19,
+        "updated": "2025-05-12T08:50:31.887898Z"
       }
     },
     {
@@ -2312,7 +2681,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0226"
+        "name": "gateway-0226",
+        "alt": 15,
+        "updated": "2025-05-12T08:53:31.762924Z"
       }
     },
     {
@@ -2325,7 +2696,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0227"
+        "name": "gateway-0227",
+        "alt": 34,
+        "updated": "2025-05-12T08:50:15.68286Z"
       }
     },
     {
@@ -2338,7 +2711,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0228"
+        "name": "gateway-0228",
+        "alt": 15,
+        "updated": "2025-05-12T08:50:11.793521Z"
       }
     },
     {
@@ -2351,7 +2726,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0229"
+        "name": "gateway-0229",
+        "alt": 12,
+        "updated": "2025-05-12T08:53:03.776079Z"
       }
     },
     {
@@ -2364,7 +2741,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0230"
+        "name": "gateway-0230",
+        "alt": 10,
+        "updated": "2025-05-12T08:48:11.540216Z"
       }
     },
     {
@@ -2377,7 +2756,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0232"
+        "name": "gateway-0232",
+        "alt": 53,
+        "updated": "2025-05-12T08:51:07.608602Z"
       }
     },
     {
@@ -2390,7 +2771,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0233"
+        "name": "gateway-0233",
+        "alt": 16,
+        "updated": "2025-05-12T08:49:45.681793Z"
       }
     },
     {
@@ -2403,7 +2786,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0234"
+        "name": "gateway-0234",
+        "alt": 49,
+        "updated": "2025-05-12T08:47:01.694856Z"
       }
     },
     {
@@ -2416,7 +2801,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0235"
+        "name": "gateway-0235",
+        "alt": 58,
+        "updated": "2025-05-12T08:45:11.68014Z"
       }
     },
     {
@@ -2429,7 +2816,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0236"
+        "name": "gateway-0236",
+        "alt": 29,
+        "updated": "2025-05-12T08:53:03.790675Z"
       }
     },
     {
@@ -2442,7 +2831,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0237"
+        "name": "gateway-0237",
+        "alt": 32,
+        "updated": "2025-05-12T08:48:25.890472Z"
       }
     },
     {
@@ -2455,7 +2846,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0238"
+        "name": "gateway-0238",
+        "alt": 58,
+        "updated": "2025-05-12T08:54:51.678664Z"
       }
     },
     {
@@ -2468,7 +2861,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0239"
+        "name": "gateway-0239",
+        "alt": 14,
+        "updated": "2025-05-12T08:45:45.751758Z"
       }
     },
     {
@@ -2481,7 +2876,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0240"
+        "name": "gateway-0240",
+        "alt": 65,
+        "updated": "2025-05-12T08:49:15.713628Z"
       }
     },
     {
@@ -2494,7 +2891,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0241"
+        "name": "gateway-0241",
+        "alt": 20,
+        "updated": "2025-05-12T08:55:15.686525Z"
       }
     },
     {
@@ -2507,7 +2906,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0242"
+        "name": "gateway-0242",
+        "alt": 42,
+        "updated": "2025-05-12T08:47:53.698199Z"
       }
     },
     {
@@ -2520,7 +2921,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0243"
+        "name": "gateway-0243",
+        "alt": 15,
+        "updated": "2025-05-12T08:52:31.549297Z"
       }
     },
     {
@@ -2533,7 +2936,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0244"
+        "name": "gateway-0244",
+        "alt": 17,
+        "updated": "2025-05-12T08:50:25.684161Z"
       }
     },
     {
@@ -2546,7 +2951,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0245"
+        "name": "gateway-0245",
+        "alt": 17,
+        "updated": "2025-05-12T08:54:57.542685Z"
       }
     },
     {
@@ -2559,7 +2966,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0246"
+        "name": "gateway-0246",
+        "alt": 16,
+        "updated": "2025-05-12T08:49:21.898847Z"
       }
     },
     {
@@ -2572,7 +2981,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0247"
+        "name": "gateway-0247",
+        "alt": 5,
+        "updated": "2025-05-12T08:52:23.690762Z"
       }
     },
     {
@@ -2585,7 +2996,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0248"
+        "name": "gateway-0248",
+        "alt": 51,
+        "updated": "2025-05-12T08:53:09.579907Z"
       }
     },
     {
@@ -2598,7 +3011,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0249"
+        "name": "gateway-0249",
+        "alt": 60,
+        "updated": "2025-05-12T08:47:55.802738Z"
       }
     },
     {
@@ -2611,7 +3026,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0250"
+        "name": "gateway-0250",
+        "alt": 3,
+        "updated": "2025-05-12T08:55:13.600086Z"
       }
     },
     {
@@ -2624,7 +3041,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0251"
+        "name": "gateway-0251",
+        "alt": 11,
+        "updated": "2025-05-12T08:47:11.880947Z"
       }
     },
     {
@@ -2637,7 +3056,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0252"
+        "name": "gateway-0252",
+        "alt": 71,
+        "updated": "2025-05-12T08:49:19.743148Z"
       }
     },
     {
@@ -2650,7 +3071,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0253"
+        "name": "gateway-0253",
+        "alt": 36,
+        "updated": "2025-05-12T08:53:41.687422Z"
       }
     },
     {
@@ -2663,7 +3086,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0254"
+        "name": "gateway-0254",
+        "alt": 75,
+        "updated": "2025-05-12T08:54:43.542859Z"
       }
     },
     {
@@ -2676,7 +3101,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0255"
+        "name": "gateway-0255",
+        "alt": 92,
+        "updated": "2025-05-12T08:43:43.881407Z"
       }
     },
     {
@@ -2689,7 +3116,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0256"
+        "name": "gateway-0256",
+        "alt": 66,
+        "updated": "2025-05-12T08:53:49.695574Z"
       }
     },
     {
@@ -2702,7 +3131,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0257"
+        "name": "gateway-0257",
+        "alt": 19,
+        "updated": "2025-05-12T08:54:21.746405Z"
       }
     },
     {
@@ -2715,7 +3146,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0258"
+        "name": "gateway-0258",
+        "alt": 62,
+        "updated": "2025-05-12T08:55:27.474129Z"
       }
     },
     {
@@ -2728,7 +3161,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0259"
+        "name": "gateway-0259",
+        "alt": 62,
+        "updated": "2025-05-12T08:49:57.639047Z"
       }
     },
     {
@@ -2741,7 +3176,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0260"
+        "name": "gateway-0260",
+        "alt": 18,
+        "updated": "2025-05-12T08:50:59.947512Z"
       }
     },
     {
@@ -2754,7 +3191,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0261"
+        "name": "gateway-0261",
+        "alt": 11,
+        "updated": "2025-05-12T08:54:45.764949Z"
       }
     },
     {
@@ -2767,7 +3206,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0262"
+        "name": "gateway-0262",
+        "alt": 15,
+        "updated": "2025-05-12T08:51:04.170412Z"
       }
     },
     {
@@ -2780,7 +3221,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0263"
+        "name": "gateway-0263",
+        "alt": 18,
+        "updated": "2025-05-12T08:51:17.894608Z"
       }
     },
     {
@@ -2793,7 +3236,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0264"
+        "name": "gateway-0264",
+        "alt": 80,
+        "updated": "2025-05-12T08:52:33.630296Z"
       }
     },
     {
@@ -2806,7 +3251,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0265"
+        "name": "gateway-0265",
+        "alt": 9,
+        "updated": "2025-05-12T08:51:19.826017Z"
       }
     },
     {
@@ -2819,7 +3266,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0266"
+        "name": "gateway-0266",
+        "alt": 57,
+        "updated": "2025-05-12T08:52:37.614362Z"
       }
     },
     {
@@ -2832,7 +3281,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0267"
+        "name": "gateway-0267",
+        "alt": 44,
+        "updated": "2025-05-12T08:49:29.531222Z"
       }
     },
     {
@@ -2845,7 +3296,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0268"
+        "name": "gateway-0268",
+        "alt": 4,
+        "updated": "2025-05-12T08:49:37.576298Z"
       }
     },
     {
@@ -2858,7 +3311,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0269"
+        "name": "gateway-0269",
+        "alt": 27,
+        "updated": "2025-05-12T08:48:09.757773Z"
       }
     },
     {
@@ -2871,7 +3326,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0270"
+        "name": "gateway-0270",
+        "alt": 19,
+        "updated": "2025-05-12T08:51:02.081241Z"
       }
     },
     {
@@ -2884,7 +3341,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0271"
+        "name": "gateway-0271",
+        "alt": 8,
+        "updated": "2025-05-12T08:48:31.652234Z"
       }
     },
     {
@@ -2897,7 +3356,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0272"
+        "name": "gateway-0272",
+        "alt": 14,
+        "updated": "2025-05-12T08:54:17.546969Z"
       }
     },
     {
@@ -2910,7 +3371,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0273"
+        "name": "gateway-0273",
+        "alt": 15,
+        "updated": "2025-05-12T08:47:39.490258Z"
       }
     },
     {
@@ -2923,7 +3386,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0274"
+        "name": "gateway-0274",
+        "alt": 19,
+        "updated": "2025-05-12T08:52:23.761552Z"
       }
     },
     {
@@ -2936,7 +3401,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0275"
+        "name": "gateway-0275",
+        "alt": 36,
+        "updated": "2025-05-12T08:54:33.645163Z"
       }
     },
     {
@@ -2949,7 +3416,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0276"
+        "name": "gateway-0276",
+        "alt": 9,
+        "updated": "2025-05-12T08:45:55.751215Z"
       }
     },
     {
@@ -2962,7 +3431,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0277"
+        "name": "gateway-0277",
+        "alt": 21,
+        "updated": "2025-05-12T08:47:53.674507Z"
       }
     },
     {
@@ -2975,7 +3446,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0278"
+        "name": "gateway-0278",
+        "alt": 17,
+        "updated": "2025-05-12T08:44:51.914772Z"
       }
     },
     {
@@ -2988,7 +3461,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0279"
+        "name": "gateway-0279",
+        "alt": 20,
+        "updated": "2025-05-12T08:52:25.877063Z"
       }
     },
     {
@@ -3001,7 +3476,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0280"
+        "name": "gateway-0280",
+        "alt": 57,
+        "updated": "2025-05-12T08:54:01.518043Z"
       }
     },
     {
@@ -3014,7 +3491,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0281"
+        "name": "gateway-0281",
+        "alt": 31,
+        "updated": "2025-05-12T08:54:07.658892Z"
       }
     },
     {
@@ -3027,7 +3506,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0282"
+        "name": "gateway-0282",
+        "alt": 12,
+        "updated": "2025-05-12T08:51:33.87033Z"
       }
     },
     {
@@ -3040,7 +3521,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0283"
+        "name": "gateway-0283",
+        "alt": 11,
+        "updated": "2025-05-12T08:48:35.86018Z"
       }
     },
     {
@@ -3053,7 +3536,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0284"
+        "name": "gateway-0284",
+        "alt": 43,
+        "updated": "2025-05-12T08:48:03.609148Z"
       }
     },
     {
@@ -3066,7 +3551,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0285"
+        "name": "gateway-0285",
+        "alt": 22,
+        "updated": "2025-05-12T08:44:51.865163Z"
       }
     },
     {
@@ -3079,7 +3566,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0286"
+        "name": "gateway-0286",
+        "alt": 15,
+        "updated": "2025-05-12T08:50:05.877657Z"
       }
     },
     {
@@ -3092,7 +3581,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0287"
+        "name": "gateway-0287",
+        "alt": 37,
+        "updated": "2025-05-12T08:44:43.779496Z"
       }
     },
     {
@@ -3105,7 +3596,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0288"
+        "name": "gateway-0288",
+        "alt": 6,
+        "updated": "2025-05-12T08:46:45.597975Z"
       }
     },
     {
@@ -3118,7 +3611,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0289"
+        "name": "gateway-0289",
+        "alt": 9,
+        "updated": "2025-05-12T08:50:55.76922Z"
       }
     },
     {
@@ -3131,7 +3626,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0290"
+        "name": "gateway-0290",
+        "alt": 23,
+        "updated": "2025-05-12T08:50:03.896716Z"
       }
     },
     {
@@ -3144,7 +3641,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0291"
+        "name": "gateway-0291",
+        "alt": 36,
+        "updated": "2025-05-12T08:46:15.811473Z"
       }
     },
     {
@@ -3157,7 +3656,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0292"
+        "name": "gateway-0292",
+        "alt": 32,
+        "updated": "2025-05-12T08:53:07.500401Z"
       }
     },
     {
@@ -3170,7 +3671,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0293"
+        "name": "gateway-0293",
+        "alt": 36,
+        "updated": "2025-05-12T08:54:53.756074Z"
       }
     },
     {
@@ -3183,7 +3686,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0294"
+        "name": "gateway-0294",
+        "alt": 39,
+        "updated": "2025-05-12T08:46:53.801723Z"
       }
     },
     {
@@ -3196,7 +3701,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0295"
+        "name": "gateway-0295",
+        "alt": 2,
+        "updated": "2025-05-12T08:54:57.531358Z"
       }
     },
     {
@@ -3209,7 +3716,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0296"
+        "name": "gateway-0296",
+        "alt": 51,
+        "updated": "2025-05-12T08:53:59.852273Z"
       }
     },
     {
@@ -3222,7 +3731,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0297"
+        "name": "gateway-0297",
+        "alt": 28,
+        "updated": "2025-05-12T08:49:05.809431Z"
       }
     },
     {
@@ -3235,7 +3746,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0298"
+        "name": "gateway-0298",
+        "alt": 17,
+        "updated": "2025-05-12T08:46:39.733961Z"
       }
     },
     {
@@ -3248,7 +3761,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0299"
+        "name": "gateway-0299",
+        "alt": 53,
+        "updated": "2025-05-12T08:54:29.621772Z"
       }
     },
     {
@@ -3261,7 +3776,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0300"
+        "name": "gateway-0300",
+        "alt": 25,
+        "updated": "2025-05-12T08:50:31.625001Z"
       }
     },
     {
@@ -3274,7 +3791,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0301"
+        "name": "gateway-0301",
+        "alt": 36,
+        "updated": "2025-05-12T08:48:03.877445Z"
       }
     },
     {
@@ -3287,7 +3806,24 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0302"
+        "name": "gateway-0302",
+        "alt": 18,
+        "updated": "2025-05-12T08:51:33.751286Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.406182289123535,
+          54.71206283569336
+        ]
+      },
+      "properties": {
+        "name": "gateway-0303",
+        "alt": 5,
+        "updated": "2025-05-12T08:47:43.628096Z"
       }
     },
     {
@@ -3300,7 +3836,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0304"
+        "name": "gateway-0304",
+        "alt": 9,
+        "updated": "2025-05-12T08:48:31.880977Z"
       }
     },
     {
@@ -3313,7 +3851,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0305"
+        "name": "gateway-0305",
+        "alt": 30,
+        "updated": "2025-05-12T08:47:23.669685Z"
       }
     },
     {
@@ -3326,7 +3866,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0306"
+        "name": "gateway-0306",
+        "alt": 30,
+        "updated": "2025-05-12T08:51:54.01596Z"
       }
     },
     {
@@ -3339,7 +3881,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0307"
+        "name": "gateway-0307",
+        "alt": 19,
+        "updated": "2025-05-12T08:51:05.690327Z"
       }
     },
     {
@@ -3352,7 +3896,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0308"
+        "name": "gateway-0308",
+        "alt": 50,
+        "updated": "2025-05-12T08:52:45.883692Z"
       }
     },
     {
@@ -3365,7 +3911,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0309"
+        "name": "gateway-0309",
+        "alt": 26,
+        "updated": "2025-05-12T08:46:29.754341Z"
       }
     },
     {
@@ -3378,7 +3926,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0310"
+        "name": "gateway-0310",
+        "alt": 12,
+        "updated": "2025-05-12T08:46:07.764874Z"
       }
     },
     {
@@ -3391,7 +3941,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0311"
+        "name": "gateway-0311",
+        "alt": 37,
+        "updated": "2025-05-12T08:45:51.646589Z"
       }
     },
     {
@@ -3404,7 +3956,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0312"
+        "name": "gateway-0312",
+        "alt": 49,
+        "updated": "2025-05-12T08:46:35.455167Z"
       }
     },
     {
@@ -3417,7 +3971,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0313"
+        "name": "gateway-0313",
+        "alt": 14,
+        "updated": "2025-05-12T08:46:17.681173Z"
       }
     },
     {
@@ -3430,7 +3986,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0314"
+        "name": "gateway-0314",
+        "alt": 25,
+        "updated": "2025-05-12T08:55:29.672586Z"
       }
     },
     {
@@ -3443,7 +4001,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0315"
+        "name": "gateway-0315",
+        "alt": 22,
+        "updated": "2025-05-12T08:47:28.043562Z"
       }
     },
     {
@@ -3456,7 +4016,24 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0316"
+        "name": "gateway-0316",
+        "alt": 3,
+        "updated": "2025-05-12T08:55:07.399553Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.363527297973633,
+          54.890655517578125
+        ]
+      },
+      "properties": {
+        "name": "gateway-0317",
+        "alt": 5,
+        "updated": "2025-05-12T08:53:27.545162Z"
       }
     },
     {
@@ -3469,7 +4046,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0318"
+        "name": "gateway-0318",
+        "alt": 6,
+        "updated": "2025-05-12T08:47:15.796141Z"
       }
     },
     {
@@ -3482,7 +4061,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0319"
+        "name": "gateway-0319",
+        "alt": 7,
+        "updated": "2025-05-12T08:50:59.980807Z"
       }
     },
     {
@@ -3495,7 +4076,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0320"
+        "name": "gateway-0320",
+        "alt": 15,
+        "updated": "2025-05-12T08:51:38.097375Z"
       }
     },
     {
@@ -3508,7 +4091,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0321"
+        "name": "gateway-0321",
+        "alt": 12,
+        "updated": "2025-05-12T08:53:17.662909Z"
       }
     },
     {
@@ -3521,7 +4106,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0322"
+        "name": "gateway-0322",
+        "alt": 83,
+        "updated": "2025-05-12T08:47:01.723582Z"
       }
     },
     {
@@ -3534,7 +4121,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0323"
+        "name": "gateway-0323",
+        "alt": 7,
+        "updated": "2025-05-12T08:47:11.643583Z"
       }
     },
     {
@@ -3547,7 +4136,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0324"
+        "name": "gateway-0324",
+        "alt": 27,
+        "updated": "2025-05-12T08:47:33.853713Z"
       }
     },
     {
@@ -3560,7 +4151,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0325"
+        "name": "gateway-0325",
+        "alt": 39,
+        "updated": "2025-05-12T08:47:17.769737Z"
       }
     },
     {
@@ -3573,7 +4166,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0326"
+        "name": "gateway-0326",
+        "alt": 36,
+        "updated": "2025-05-12T08:50:27.880183Z"
       }
     },
     {
@@ -3586,7 +4181,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0327"
+        "name": "gateway-0327",
+        "alt": 2,
+        "updated": "2025-05-12T08:55:05.608362Z"
       }
     },
     {
@@ -3599,7 +4196,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0328"
+        "name": "gateway-0328",
+        "alt": 25,
+        "updated": "2025-05-12T08:49:13.679374Z"
       }
     },
     {
@@ -3612,7 +4211,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0329"
+        "name": "gateway-0329",
+        "alt": 42,
+        "updated": "2025-05-12T08:46:14.405875Z"
       }
     },
     {
@@ -3625,7 +4226,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0330"
+        "name": "gateway-0330",
+        "alt": 22,
+        "updated": "2025-05-12T08:50:19.751306Z"
       }
     },
     {
@@ -3638,7 +4241,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0331"
+        "name": "gateway-0331",
+        "alt": 78,
+        "updated": "2025-05-12T08:50:03.545574Z"
       }
     },
     {
@@ -3651,7 +4256,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0332"
+        "name": "gateway-0332",
+        "alt": 94,
+        "updated": "2025-05-12T08:46:45.584925Z"
       }
     },
     {
@@ -3664,7 +4271,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0333"
+        "name": "gateway-0333",
+        "alt": 23,
+        "updated": "2025-05-12T08:48:41.465815Z"
       }
     },
     {
@@ -3677,7 +4286,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0334"
+        "name": "gateway-0334",
+        "alt": 28,
+        "updated": "2025-05-12T08:44:25.840381Z"
       }
     },
     {
@@ -3690,7 +4301,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0335"
+        "name": "gateway-0335",
+        "alt": 99,
+        "updated": "2025-05-12T08:54:29.646989Z"
       }
     },
     {
@@ -3703,7 +4316,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0336"
+        "name": "gateway-0336",
+        "alt": 45,
+        "updated": "2025-05-12T08:49:33.642523Z"
       }
     },
     {
@@ -3716,7 +4331,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0337"
+        "name": "gateway-0337",
+        "alt": 124,
+        "updated": "2025-05-12T08:49:27.900141Z"
       }
     },
     {
@@ -3729,7 +4346,24 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0338"
+        "name": "gateway-0338",
+        "alt": 33,
+        "updated": "2025-05-12T08:51:29.979782Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.300016403198242,
+          54.856204986572266
+        ]
+      },
+      "properties": {
+        "name": "gateway-0339",
+        "alt": 5,
+        "updated": "2025-05-12T08:45:25.587992Z"
       }
     },
     {
@@ -3742,7 +4376,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0340"
+        "name": "gateway-0340",
+        "alt": 60,
+        "updated": "2025-05-12T08:53:05.411437Z"
       }
     },
     {
@@ -3755,7 +4391,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0341"
+        "name": "gateway-0341",
+        "alt": 64,
+        "updated": "2025-05-12T08:50:15.665659Z"
       }
     },
     {
@@ -3768,7 +4406,24 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0342"
+        "name": "gateway-0342",
+        "alt": 64,
+        "updated": "2025-05-12T08:49:59.574484Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.312814712524414,
+          54.913841247558594
+        ]
+      },
+      "properties": {
+        "name": "gateway-0343",
+        "alt": 12,
+        "updated": "2025-05-12T08:50:45.540337Z"
       }
     },
     {
@@ -3781,7 +4436,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0344"
+        "name": "gateway-0344",
+        "alt": 53,
+        "updated": "2025-05-12T08:54:08.034259Z"
       }
     },
     {
@@ -3794,7 +4451,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0345"
+        "name": "gateway-0345",
+        "alt": 69,
+        "updated": "2025-05-12T08:55:05.718652Z"
       }
     },
     {
@@ -3807,7 +4466,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0346"
+        "name": "gateway-0346",
+        "alt": 25,
+        "updated": "2025-05-12T08:44:49.460811Z"
       }
     },
     {
@@ -3820,7 +4481,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0347"
+        "name": "gateway-0347",
+        "alt": 30,
+        "updated": "2025-05-12T08:50:23.65923Z"
       }
     },
     {
@@ -3833,7 +4496,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0348"
+        "name": "gateway-0348",
+        "alt": 77,
+        "updated": "2025-05-12T08:54:41.945686Z"
       }
     },
     {
@@ -3846,7 +4511,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0349"
+        "name": "gateway-0349",
+        "alt": 20,
+        "updated": "2025-05-12T08:50:41.841976Z"
       }
     },
     {
@@ -3859,7 +4526,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0350"
+        "name": "gateway-0350",
+        "alt": 9,
+        "updated": "2025-05-12T08:54:35.770214Z"
       }
     },
     {
@@ -3872,7 +4541,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0351"
+        "name": "gateway-0351",
+        "alt": 18,
+        "updated": "2025-05-12T08:49:53.823124Z"
       }
     },
     {
@@ -3885,7 +4556,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0352"
+        "name": "gateway-0352",
+        "alt": 30,
+        "updated": "2025-05-12T08:46:59.443084Z"
       }
     },
     {
@@ -3898,7 +4571,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0353"
+        "name": "gateway-0353",
+        "alt": 54,
+        "updated": "2025-05-12T08:53:41.623895Z"
       }
     },
     {
@@ -3911,7 +4586,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0354"
+        "name": "gateway-0354",
+        "alt": 12,
+        "updated": "2025-05-12T08:51:21.494208Z"
       }
     },
     {
@@ -3924,7 +4601,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0355"
+        "name": "gateway-0355",
+        "alt": 10,
+        "updated": "2025-05-12T08:51:43.775961Z"
       }
     },
     {
@@ -3937,7 +4616,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0356"
+        "name": "gateway-0356",
+        "alt": 10,
+        "updated": "2025-05-12T08:52:17.744338Z"
       }
     },
     {
@@ -3950,7 +4631,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0357"
+        "name": "gateway-0357",
+        "alt": 7,
+        "updated": "2025-05-12T08:49:11.714457Z"
       }
     },
     {
@@ -3963,7 +4646,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0358"
+        "name": "gateway-0358",
+        "alt": 14,
+        "updated": "2025-05-12T08:48:35.881614Z"
       }
     },
     {
@@ -3976,7 +4661,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0359"
+        "name": "gateway-0359",
+        "alt": 36,
+        "updated": "2025-05-12T08:48:43.676149Z"
       }
     },
     {
@@ -3989,7 +4676,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0360"
+        "name": "gateway-0360",
+        "alt": 47,
+        "updated": "2025-05-12T08:47:09.767821Z"
       }
     },
     {
@@ -4002,7 +4691,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0361"
+        "name": "gateway-0361",
+        "alt": 9,
+        "updated": "2025-05-12T08:50:47.776529Z"
       }
     },
     {
@@ -4015,7 +4706,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0362"
+        "name": "gateway-0362",
+        "alt": 4,
+        "updated": "2025-05-12T08:54:29.617727Z"
       }
     },
     {
@@ -4028,7 +4721,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0363"
+        "name": "gateway-0363",
+        "alt": 3,
+        "updated": "2025-05-12T08:52:53.78911Z"
       }
     },
     {
@@ -4041,7 +4736,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0364"
+        "name": "gateway-0364",
+        "alt": 51,
+        "updated": "2025-05-12T08:46:16.893853Z"
       }
     },
     {
@@ -4054,7 +4751,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0365"
+        "name": "gateway-0365",
+        "alt": 19,
+        "updated": "2025-05-12T08:54:27.844629Z"
       }
     },
     {
@@ -4067,7 +4766,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0366"
+        "name": "gateway-0366",
+        "alt": 21,
+        "updated": "2025-05-12T08:54:59.887073Z"
       }
     },
     {
@@ -4080,7 +4781,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0367"
+        "name": "gateway-0367",
+        "alt": 7,
+        "updated": "2025-05-12T08:46:59.455922Z"
       }
     },
     {
@@ -4093,7 +4796,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0368"
+        "name": "gateway-0368",
+        "alt": 32,
+        "updated": "2025-05-12T08:52:01.77498Z"
       }
     },
     {
@@ -4106,7 +4811,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0369"
+        "name": "gateway-0369",
+        "alt": 33,
+        "updated": "2025-05-12T08:53:39.645349Z"
       }
     },
     {
@@ -4119,7 +4826,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0370"
+        "name": "gateway-0370",
+        "alt": 19,
+        "updated": "2025-05-12T08:47:05.523856Z"
       }
     },
     {
@@ -4132,7 +4841,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0371"
+        "name": "gateway-0371",
+        "alt": 18,
+        "updated": "2025-05-12T08:54:41.905033Z"
       }
     },
     {
@@ -4145,7 +4856,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0372"
+        "name": "gateway-0372",
+        "alt": 42,
+        "updated": "2025-05-12T08:49:31.524494Z"
       }
     },
     {
@@ -4158,7 +4871,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0373"
+        "name": "gateway-0373",
+        "alt": 40,
+        "updated": "2025-05-12T08:48:49.966775Z"
       }
     },
     {
@@ -4171,7 +4886,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0374"
+        "name": "gateway-0374",
+        "alt": 14,
+        "updated": "2025-05-12T08:52:05.414357Z"
       }
     },
     {
@@ -4184,7 +4901,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0375"
+        "name": "gateway-0375",
+        "alt": 32,
+        "updated": "2025-05-12T08:50:43.724165Z"
       }
     },
     {
@@ -4197,7 +4916,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0376"
+        "name": "gateway-0376",
+        "alt": 8,
+        "updated": "2025-05-12T08:55:11.672994Z"
       }
     },
     {
@@ -4210,7 +4931,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0377"
+        "name": "gateway-0377",
+        "alt": 79,
+        "updated": "2025-05-12T08:52:16.018925Z"
       }
     },
     {
@@ -4223,7 +4946,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0378"
+        "name": "gateway-0378",
+        "alt": 12,
+        "updated": "2025-05-12T08:52:11.950101Z"
       }
     },
     {
@@ -4236,7 +4961,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0379"
+        "name": "gateway-0379",
+        "alt": 100,
+        "updated": "2025-05-12T08:54:23.607333Z"
       }
     },
     {
@@ -4249,7 +4976,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0380"
+        "name": "gateway-0380",
+        "alt": 12,
+        "updated": "2025-05-12T08:47:41.638439Z"
       }
     },
     {
@@ -4262,7 +4991,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0381"
+        "name": "gateway-0381",
+        "alt": 25,
+        "updated": "2025-05-12T08:48:49.859947Z"
       }
     },
     {
@@ -4275,7 +5006,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0382"
+        "name": "gateway-0382",
+        "alt": 12,
+        "updated": "2025-05-12T08:44:57.735147Z"
       }
     },
     {
@@ -4288,7 +5021,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0383"
+        "name": "gateway-0383",
+        "alt": 26,
+        "updated": "2025-05-12T08:54:15.59964Z"
       }
     },
     {
@@ -4301,7 +5036,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0384"
+        "name": "gateway-0384",
+        "alt": 15,
+        "updated": "2025-05-12T08:54:17.56596Z"
       }
     },
     {
@@ -4314,7 +5051,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0385"
+        "name": "gateway-0385",
+        "alt": 40,
+        "updated": "2025-05-12T08:46:53.968718Z"
       }
     },
     {
@@ -4327,7 +5066,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0386"
+        "name": "gateway-0386",
+        "alt": 12,
+        "updated": "2025-05-12T08:54:45.795113Z"
       }
     },
     {
@@ -4340,7 +5081,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0387"
+        "name": "gateway-0387",
+        "alt": 23,
+        "updated": "2025-05-12T08:49:23.888584Z"
       }
     },
     {
@@ -4353,7 +5096,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0388"
+        "name": "gateway-0388",
+        "alt": 21,
+        "updated": "2025-05-12T08:54:23.583008Z"
       }
     },
     {
@@ -4366,7 +5111,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0389"
+        "name": "gateway-0389",
+        "alt": 22,
+        "updated": "2025-05-12T08:45:09.671902Z"
       }
     },
     {
@@ -4379,7 +5126,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0390"
+        "name": "gateway-0390",
+        "alt": 21,
+        "updated": "2025-05-12T08:48:49.876187Z"
       }
     },
     {
@@ -4392,7 +5141,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0391"
+        "name": "gateway-0391",
+        "alt": 29,
+        "updated": "2025-05-12T08:52:17.724605Z"
       }
     },
     {
@@ -4405,7 +5156,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0392"
+        "name": "gateway-0392",
+        "alt": 6,
+        "updated": "2025-05-12T08:54:47.59381Z"
       }
     },
     {
@@ -4418,7 +5171,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0393"
+        "name": "gateway-0393",
+        "alt": 23,
+        "updated": "2025-05-12T08:45:53.603186Z"
       }
     },
     {
@@ -4431,7 +5186,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0394"
+        "name": "gateway-0394",
+        "alt": 21,
+        "updated": "2025-05-12T08:46:31.839324Z"
       }
     },
     {
@@ -4444,7 +5201,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0395"
+        "name": "gateway-0395",
+        "alt": 16,
+        "updated": "2025-05-12T08:49:13.772107Z"
       }
     },
     {
@@ -4457,7 +5216,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0396"
+        "name": "gateway-0396",
+        "alt": 49,
+        "updated": "2025-05-12T08:50:07.656398Z"
       }
     },
     {
@@ -4470,7 +5231,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0397"
+        "name": "gateway-0397",
+        "alt": 36,
+        "updated": "2025-05-12T08:51:59.900115Z"
       }
     },
     {
@@ -4483,7 +5246,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0398"
+        "name": "gateway-0398",
+        "alt": 48,
+        "updated": "2025-05-12T08:52:37.661229Z"
       }
     },
     {
@@ -4496,7 +5261,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0399"
+        "name": "gateway-0399",
+        "alt": 79,
+        "updated": "2025-05-12T08:54:49.516531Z"
       }
     },
     {
@@ -4509,7 +5276,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0400"
+        "name": "gateway-0400",
+        "alt": 17,
+        "updated": "2025-05-12T08:46:53.984006Z"
       }
     },
     {
@@ -4522,7 +5291,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0401"
+        "name": "gateway-0401",
+        "alt": 28,
+        "updated": "2025-05-12T08:54:17.523443Z"
       }
     },
     {
@@ -4535,7 +5306,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0403"
+        "name": "gateway-0403",
+        "alt": 20,
+        "updated": "2023-08-21T09:40:27.33884Z"
       }
     },
     {
@@ -4548,7 +5321,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0404"
+        "name": "gateway-0404",
+        "alt": 0,
+        "updated": "2024-05-27T11:43:04.22178Z"
       }
     },
     {
@@ -4561,7 +5336,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0405"
+        "name": "gateway-0405",
+        "alt": 12,
+        "updated": "2024-11-16T00:01:44.85369Z"
       }
     },
     {
@@ -4574,7 +5351,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0407"
+        "name": "gateway-0407",
+        "alt": 0,
+        "updated": "2023-12-05T09:55:23.355083Z"
       }
     },
     {
@@ -4587,7 +5366,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0408"
+        "name": "gateway-0408",
+        "alt": 10,
+        "updated": "2024-05-17T12:51:10.361173Z"
       }
     },
     {
@@ -4600,7 +5381,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0409"
+        "name": "gateway-0409",
+        "alt": 47,
+        "updated": "2025-05-12T08:52:23.676256Z"
       }
     },
     {
@@ -4613,7 +5396,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0410"
+        "name": "gateway-0410",
+        "alt": 42,
+        "updated": "2025-05-12T08:55:01.637391Z"
       }
     },
     {
@@ -4626,7 +5411,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0411"
+        "name": "gateway-0411",
+        "alt": 51,
+        "updated": "2025-05-12T08:50:35.47887Z"
       }
     },
     {
@@ -4639,7 +5426,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0412"
+        "name": "gateway-0412",
+        "alt": 24,
+        "updated": "2025-04-09T11:37:05.057077Z"
       }
     },
     {
@@ -4652,7 +5441,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0413"
+        "name": "gateway-0413",
+        "alt": 21,
+        "updated": "2025-05-12T08:50:05.892921Z"
       }
     },
     {
@@ -4665,7 +5456,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0414"
+        "name": "gateway-0414",
+        "alt": 24,
+        "updated": "2025-05-12T08:47:45.897512Z"
       }
     },
     {
@@ -4678,7 +5471,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0415"
+        "name": "gateway-0415",
+        "alt": -2,
+        "updated": "2025-05-12T08:52:17.876961Z"
       }
     },
     {
@@ -4691,7 +5486,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0416"
+        "name": "gateway-0416",
+        "alt": 20,
+        "updated": "2025-05-12T08:54:11.679661Z"
       }
     },
     {
@@ -4704,7 +5501,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0417"
+        "name": "gateway-0417",
+        "alt": 5,
+        "updated": "2025-05-12T08:53:11.582159Z"
       }
     },
     {
@@ -4717,7 +5516,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0418"
+        "name": "gateway-0418",
+        "alt": 20,
+        "updated": "2025-05-12T08:51:30.427728Z"
       }
     },
     {
@@ -4730,7 +5531,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0419"
+        "name": "gateway-0419",
+        "alt": 20,
+        "updated": "2025-05-12T08:48:39.884973Z"
       }
     },
     {
@@ -4743,7 +5546,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0420"
+        "name": "gateway-0420",
+        "alt": 72,
+        "updated": "2025-05-12T08:47:09.731493Z"
       }
     },
     {
@@ -4756,7 +5561,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0421"
+        "name": "gateway-0421",
+        "alt": 0,
+        "updated": "2022-12-15T15:01:57.353421Z"
       }
     },
     {
@@ -4769,7 +5576,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0422"
+        "name": "gateway-0422",
+        "alt": 17,
+        "updated": "2025-05-12T08:50:13.875009Z"
       }
     },
     {
@@ -4782,7 +5591,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0423"
+        "name": "gateway-0423",
+        "alt": 7,
+        "updated": "2025-05-12T08:47:29.563133Z"
       }
     },
     {
@@ -4795,7 +5606,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0424"
+        "name": "gateway-0424",
+        "alt": 19,
+        "updated": "2025-05-12T08:55:11.70565Z"
       }
     },
     {
@@ -4808,7 +5621,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0425"
+        "name": "gateway-0425",
+        "alt": 31,
+        "updated": "2025-05-12T08:47:09.732544Z"
       }
     },
     {
@@ -4821,7 +5636,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0426"
+        "name": "gateway-0426",
+        "alt": -1,
+        "updated": "2025-05-12T08:51:13.689697Z"
       }
     },
     {
@@ -4834,7 +5651,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0427"
+        "name": "gateway-0427",
+        "alt": 6,
+        "updated": "2024-08-07T12:07:42.213012Z"
       }
     },
     {
@@ -4847,7 +5666,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0428"
+        "name": "gateway-0428",
+        "alt": 35,
+        "updated": "2024-11-25T09:11:50.989254Z"
       }
     },
     {
@@ -4860,7 +5681,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0429"
+        "name": "gateway-0429",
+        "alt": 21,
+        "updated": "2025-05-12T08:50:43.810252Z"
       }
     },
     {
@@ -4873,7 +5696,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0430"
+        "name": "gateway-0430",
+        "alt": 16,
+        "updated": "2025-05-12T08:49:31.492049Z"
       }
     },
     {
@@ -4886,7 +5711,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0431"
+        "name": "gateway-0431",
+        "alt": 22,
+        "updated": "2025-05-12T08:48:47.573254Z"
       }
     },
     {
@@ -4899,7 +5726,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0432"
+        "name": "gateway-0432",
+        "alt": 17,
+        "updated": "2025-05-12T08:53:07.438095Z"
       }
     },
     {
@@ -4912,7 +5741,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0433"
+        "name": "gateway-0433",
+        "alt": 16,
+        "updated": "2025-05-12T08:51:51.758302Z"
       }
     },
     {
@@ -4925,7 +5756,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0434"
+        "name": "gateway-0434",
+        "alt": 60,
+        "updated": "2024-10-16T21:00:44.051728Z"
       }
     },
     {
@@ -4938,7 +5771,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0435"
+        "name": "gateway-0435",
+        "alt": 6,
+        "updated": "2025-05-12T08:47:37.942568Z"
       }
     },
     {
@@ -4951,7 +5786,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0436"
+        "name": "gateway-0436",
+        "alt": 34,
+        "updated": "2025-05-12T08:52:47.950594Z"
       }
     },
     {
@@ -4964,7 +5801,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0437"
+        "name": "gateway-0437",
+        "alt": 45,
+        "updated": "2025-05-12T08:55:17.914519Z"
       }
     },
     {
@@ -4977,7 +5816,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0438"
+        "name": "gateway-0438",
+        "alt": 11,
+        "updated": "2025-05-12T08:51:31.397878Z"
       }
     },
     {
@@ -4990,7 +5831,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0439"
+        "name": "gateway-0439",
+        "alt": 16,
+        "updated": "2025-05-12T08:51:41.617628Z"
       }
     },
     {
@@ -5003,7 +5846,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0440"
+        "name": "gateway-0440",
+        "alt": 11,
+        "updated": "2025-05-12T08:51:37.348151Z"
       }
     },
     {
@@ -5016,7 +5861,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0441"
+        "name": "gateway-0441",
+        "alt": 7,
+        "updated": "2025-05-12T08:55:19.817124Z"
       }
     },
     {
@@ -5029,7 +5876,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0442"
+        "name": "gateway-0442",
+        "alt": 10,
+        "updated": "2025-05-12T08:48:33.559164Z"
       }
     },
     {
@@ -5042,7 +5891,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0443"
+        "name": "gateway-0443",
+        "alt": 128,
+        "updated": "2025-05-12T08:48:17.883943Z"
       }
     },
     {
@@ -5055,7 +5906,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0444"
+        "name": "gateway-0444",
+        "alt": 45,
+        "updated": "2025-05-12T08:55:21.750213Z"
       }
     },
     {
@@ -5068,7 +5921,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0445"
+        "name": "gateway-0445",
+        "alt": 42,
+        "updated": "2025-05-12T08:52:24.028201Z"
       }
     },
     {
@@ -5081,7 +5936,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0446"
+        "name": "gateway-0446",
+        "alt": 22,
+        "updated": "2025-05-12T08:45:57.890754Z"
       }
     },
     {
@@ -5094,7 +5951,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0447"
+        "name": "gateway-0447",
+        "alt": -1,
+        "updated": "2025-05-12T08:51:49.76843Z"
       }
     },
     {
@@ -5107,7 +5966,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0448"
+        "name": "gateway-0448",
+        "alt": 31,
+        "updated": "2025-05-12T08:53:29.976425Z"
       }
     },
     {
@@ -5120,7 +5981,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0449"
+        "name": "gateway-0449",
+        "alt": 16,
+        "updated": "2025-05-12T08:52:47.886824Z"
       }
     },
     {
@@ -5133,7 +5996,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0450"
+        "name": "gateway-0450",
+        "alt": 16,
+        "updated": "2025-05-12T08:51:48.060728Z"
       }
     },
     {
@@ -5146,7 +6011,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0451"
+        "name": "gateway-0451",
+        "alt": 7,
+        "updated": "2025-05-12T08:54:11.692896Z"
       }
     },
     {
@@ -5159,7 +6026,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0452"
+        "name": "gateway-0452",
+        "alt": 46,
+        "updated": "2025-05-12T08:48:05.763463Z"
       }
     },
     {
@@ -5172,7 +6041,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0453"
+        "name": "gateway-0453",
+        "alt": 23,
+        "updated": "2025-05-12T08:47:49.628185Z"
       }
     },
     {
@@ -5185,7 +6056,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0454"
+        "name": "gateway-0454",
+        "alt": 8,
+        "updated": "2025-05-12T08:50:39.749584Z"
       }
     },
     {
@@ -5198,7 +6071,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0455"
+        "name": "gateway-0455",
+        "alt": 10,
+        "updated": "2025-05-12T08:47:19.878458Z"
       }
     },
     {
@@ -5211,7 +6086,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0456"
+        "name": "gateway-0456",
+        "alt": 10,
+        "updated": "2025-05-12T08:51:31.415094Z"
       }
     },
     {
@@ -5224,7 +6101,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0457"
+        "name": "gateway-0457",
+        "alt": 24,
+        "updated": "2025-05-12T08:54:31.556443Z"
       }
     },
     {
@@ -5237,7 +6116,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0458"
+        "name": "gateway-0458",
+        "alt": 50,
+        "updated": "2025-05-12T08:46:07.821161Z"
       }
     },
     {
@@ -5250,7 +6131,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0459"
+        "name": "gateway-0459",
+        "alt": 12,
+        "updated": "2025-05-12T08:46:59.462283Z"
       }
     },
     {
@@ -5263,7 +6146,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0460"
+        "name": "gateway-0460",
+        "alt": 16,
+        "updated": "2025-05-12T08:52:47.887018Z"
       }
     },
     {
@@ -5276,7 +6161,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0461"
+        "name": "gateway-0461",
+        "alt": 8,
+        "updated": "2025-05-12T08:51:19.786323Z"
       }
     },
     {
@@ -5289,7 +6176,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0462"
+        "name": "gateway-0462",
+        "alt": 24,
+        "updated": "2025-05-12T08:46:29.717288Z"
       }
     },
     {
@@ -5302,7 +6191,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0463"
+        "name": "gateway-0463",
+        "alt": 7,
+        "updated": "2025-05-12T08:53:17.586231Z"
       }
     },
     {
@@ -5315,7 +6206,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0464"
+        "name": "gateway-0464",
+        "alt": 7,
+        "updated": "2025-05-12T08:48:29.647322Z"
       }
     },
     {
@@ -5328,7 +6221,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0465"
+        "name": "gateway-0465",
+        "alt": -4,
+        "updated": "2025-05-12T08:47:37.518239Z"
       }
     },
     {
@@ -5341,7 +6236,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0466"
+        "name": "gateway-0466",
+        "alt": 26,
+        "updated": "2025-05-12T08:47:59.679398Z"
       }
     },
     {
@@ -5354,7 +6251,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0467"
+        "name": "gateway-0467",
+        "alt": 12,
+        "updated": "2025-05-06T13:39:27.938354Z"
       }
     },
     {
@@ -5367,7 +6266,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0468"
+        "name": "gateway-0468",
+        "alt": 22,
+        "updated": "2025-05-12T08:48:03.88375Z"
       }
     },
     {
@@ -5380,7 +6281,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0469"
+        "name": "gateway-0469",
+        "alt": 23,
+        "updated": "2025-05-12T08:52:53.789Z"
       }
     },
     {
@@ -5393,7 +6296,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0470"
+        "name": "gateway-0470",
+        "alt": 18,
+        "updated": "2025-05-12T08:49:35.885816Z"
       }
     },
     {
@@ -5406,7 +6311,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0471"
+        "name": "gateway-0471",
+        "alt": 13,
+        "updated": "2025-05-12T08:51:02.512926Z"
       }
     },
     {
@@ -5419,7 +6326,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0472"
+        "name": "gateway-0472",
+        "alt": 22,
+        "updated": "2025-05-12T08:46:29.597595Z"
       }
     },
     {
@@ -5432,7 +6341,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0473"
+        "name": "gateway-0473",
+        "alt": 23,
+        "updated": "2025-05-12T08:45:53.889551Z"
       }
     },
     {
@@ -5445,7 +6356,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0474"
+        "name": "gateway-0474",
+        "alt": 33,
+        "updated": "2025-05-12T08:47:28.033517Z"
       }
     },
     {
@@ -5458,7 +6371,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0475"
+        "name": "gateway-0475",
+        "alt": 43,
+        "updated": "2025-05-12T08:49:25.584682Z"
       }
     },
     {
@@ -5471,7 +6386,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0476"
+        "name": "gateway-0476",
+        "alt": 34,
+        "updated": "2025-05-12T08:51:53.79037Z"
       }
     },
     {
@@ -5484,7 +6401,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0477"
+        "name": "gateway-0477",
+        "alt": 11,
+        "updated": "2025-05-12T08:53:37.731255Z"
       }
     },
     {
@@ -5497,7 +6416,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0478"
+        "name": "gateway-0478",
+        "alt": 17,
+        "updated": "2025-05-12T08:55:01.629236Z"
       }
     },
     {
@@ -5510,7 +6431,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0479"
+        "name": "gateway-0479",
+        "alt": 17,
+        "updated": "2025-05-12T08:47:05.552573Z"
       }
     },
     {
@@ -5523,7 +6446,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0480"
+        "name": "gateway-0480",
+        "alt": 9,
+        "updated": "2025-05-12T08:48:59.77927Z"
       }
     },
     {
@@ -5536,7 +6461,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0481"
+        "name": "gateway-0481",
+        "alt": 20,
+        "updated": "2025-05-12T08:46:57.670069Z"
       }
     },
     {
@@ -5549,7 +6476,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0482"
+        "name": "gateway-0482",
+        "alt": 35,
+        "updated": "2025-05-12T08:47:55.77412Z"
       }
     },
     {
@@ -5562,7 +6491,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0483"
+        "name": "gateway-0483",
+        "alt": -25,
+        "updated": "2025-05-09T18:37:53.580113Z"
       }
     },
     {
@@ -5575,7 +6506,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0484"
+        "name": "gateway-0484",
+        "alt": 20,
+        "updated": "2025-05-12T08:53:19.785102Z"
       }
     },
     {
@@ -5588,7 +6521,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0487"
+        "name": "gateway-0487",
+        "alt": 0,
+        "updated": "2024-12-10T09:11:39.258292Z"
       }
     },
     {
@@ -5601,7 +6536,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0488"
+        "name": "gateway-0488",
+        "alt": 9,
+        "updated": "2025-05-12T08:47:47.457691Z"
       }
     },
     {
@@ -5614,7 +6551,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0489"
+        "name": "gateway-0489",
+        "alt": 5,
+        "updated": "2025-02-03T09:44:53.006837Z"
       }
     },
     {
@@ -5627,7 +6566,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0490"
+        "name": "gateway-0490",
+        "alt": 7,
+        "updated": "2024-01-16T21:22:43.339435Z"
       }
     },
     {
@@ -5640,7 +6581,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0491"
+        "name": "gateway-0491",
+        "alt": 8,
+        "updated": "2024-01-17T07:02:50.912256Z"
       }
     },
     {
@@ -5653,7 +6596,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0492"
+        "name": "gateway-0492",
+        "alt": 16,
+        "updated": "2024-01-17T07:06:40.885511Z"
       }
     },
     {
@@ -5666,7 +6611,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0493"
+        "name": "gateway-0493",
+        "alt": 41,
+        "updated": "2024-01-17T07:03:42.877786Z"
       }
     },
     {
@@ -5679,7 +6626,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0494"
+        "name": "gateway-0494",
+        "alt": 6,
+        "updated": "2023-11-29T14:12:40.916582Z"
       }
     },
     {
@@ -5692,7 +6641,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0495"
+        "name": "gateway-0495",
+        "alt": 12,
+        "updated": "2023-11-29T14:17:06.915966Z"
       }
     },
     {
@@ -5705,7 +6656,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0496"
+        "name": "gateway-0496",
+        "alt": 30,
+        "updated": "2024-01-17T07:03:37.339635Z"
       }
     },
     {
@@ -5718,7 +6671,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0497"
+        "name": "gateway-0497",
+        "alt": 20,
+        "updated": "2024-01-16T21:16:30.891595Z"
       }
     },
     {
@@ -5731,7 +6686,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0498"
+        "name": "gateway-0498",
+        "alt": 58,
+        "updated": "2024-01-17T07:02:41.356767Z"
       }
     },
     {
@@ -5744,7 +6701,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0499"
+        "name": "gateway-0499",
+        "alt": 25,
+        "updated": "2023-03-15T05:33:59.381458Z"
       }
     },
     {
@@ -5757,7 +6716,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0500"
+        "name": "gateway-0500",
+        "alt": 43,
+        "updated": "2023-12-11T15:19:45.347617Z"
       }
     },
     {
@@ -5770,7 +6731,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0501"
+        "name": "gateway-0501",
+        "alt": 48,
+        "updated": "2024-01-17T07:06:27.360328Z"
       }
     },
     {
@@ -5783,7 +6746,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0502"
+        "name": "gateway-0502",
+        "alt": 20,
+        "updated": "2024-01-17T06:46:11.334899Z"
       }
     },
     {
@@ -5796,7 +6761,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0503"
+        "name": "gateway-0503",
+        "alt": 42,
+        "updated": "2024-01-17T06:57:13.352643Z"
       }
     },
     {
@@ -5809,7 +6776,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0504"
+        "name": "gateway-0504",
+        "alt": 30,
+        "updated": "2024-01-16T21:26:53.339712Z"
       }
     },
     {
@@ -5822,7 +6791,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0505"
+        "name": "gateway-0505",
+        "alt": 50,
+        "updated": "2023-12-21T09:56:01.340078Z"
       }
     },
     {
@@ -5835,7 +6806,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0506"
+        "name": "gateway-0506",
+        "alt": 44,
+        "updated": "2024-01-17T06:54:16.912266Z"
       }
     },
     {
@@ -5848,7 +6821,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0507"
+        "name": "gateway-0507",
+        "alt": 66,
+        "updated": "2024-01-17T07:08:06.891346Z"
       }
     },
     {
@@ -5861,7 +6836,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0508"
+        "name": "gateway-0508",
+        "alt": 12,
+        "updated": "2023-12-15T07:44:03.353561Z"
       }
     },
     {
@@ -5874,7 +6851,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0509"
+        "name": "gateway-0509",
+        "alt": 33,
+        "updated": "2025-05-12T08:54:07.640005Z"
       }
     },
     {
@@ -5887,7 +6866,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0510"
+        "name": "gateway-0510",
+        "alt": 40,
+        "updated": "2024-01-17T07:10:13.33914Z"
       }
     },
     {
@@ -5900,7 +6881,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0511"
+        "name": "gateway-0511",
+        "alt": 30,
+        "updated": "2024-01-17T07:00:18.883775Z"
       }
     },
     {
@@ -5913,7 +6896,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0512"
+        "name": "gateway-0512",
+        "alt": 49,
+        "updated": "2024-01-17T07:00:07.351154Z"
       }
     },
     {
@@ -5926,7 +6911,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0513"
+        "name": "gateway-0513",
+        "alt": 10,
+        "updated": "2023-11-29T14:14:56.905348Z"
       }
     },
     {
@@ -5939,7 +6926,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0514"
+        "name": "gateway-0514",
+        "alt": 50,
+        "updated": "2024-01-17T07:10:08.955087Z"
       }
     },
     {
@@ -5952,7 +6941,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0515"
+        "name": "gateway-0515",
+        "alt": 25,
+        "updated": "2024-01-17T06:48:54.888992Z"
       }
     },
     {
@@ -5965,7 +6956,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0516"
+        "name": "gateway-0516",
+        "alt": 22,
+        "updated": "2024-01-17T07:12:54.926281Z"
       }
     },
     {
@@ -5978,7 +6971,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0517"
+        "name": "gateway-0517",
+        "alt": 50,
+        "updated": "2024-01-17T07:02:46.874387Z"
       }
     },
     {
@@ -5991,7 +6986,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0518"
+        "name": "gateway-0518",
+        "alt": 20,
+        "updated": "2023-12-15T08:00:16.922691Z"
       }
     },
     {
@@ -6004,7 +7001,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0519"
+        "name": "gateway-0519",
+        "alt": 29,
+        "updated": "2024-01-17T06:53:23.358037Z"
       }
     },
     {
@@ -6017,7 +7016,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0520"
+        "name": "gateway-0520",
+        "alt": 8,
+        "updated": "2024-01-16T21:26:18.9386Z"
       }
     },
     {
@@ -6030,7 +7031,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0521"
+        "name": "gateway-0521",
+        "alt": 81,
+        "updated": "2024-01-17T07:09:33.349948Z"
       }
     },
     {
@@ -6043,7 +7046,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0522"
+        "name": "gateway-0522",
+        "alt": 40,
+        "updated": "2024-01-17T07:05:39.334173Z"
       }
     },
     {
@@ -6056,7 +7061,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0523"
+        "name": "gateway-0523",
+        "alt": 3,
+        "updated": "2024-01-16T21:10:05.33943Z"
       }
     },
     {
@@ -6069,7 +7076,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0524"
+        "name": "gateway-0524",
+        "alt": 22,
+        "updated": "2024-01-17T06:57:34.918007Z"
       }
     },
     {
@@ -6082,7 +7091,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0525"
+        "name": "gateway-0525",
+        "alt": 120,
+        "updated": "2023-11-29T14:18:53.353833Z"
       }
     },
     {
@@ -6095,7 +7106,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0526"
+        "name": "gateway-0526",
+        "alt": 40,
+        "updated": "2024-01-17T06:50:03.344009Z"
       }
     },
     {
@@ -6108,7 +7121,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0527"
+        "name": "gateway-0527",
+        "alt": 31,
+        "updated": "2024-01-16T21:22:03.351414Z"
       }
     },
     {
@@ -6121,7 +7136,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0528"
+        "name": "gateway-0528",
+        "alt": 20,
+        "updated": "2024-01-16T20:25:26.878438Z"
       }
     },
     {
@@ -6134,7 +7151,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0529"
+        "name": "gateway-0529",
+        "alt": 8,
+        "updated": "2024-01-16T21:22:17.347842Z"
       }
     },
     {
@@ -6147,7 +7166,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0530"
+        "name": "gateway-0530",
+        "alt": 15,
+        "updated": "2024-01-17T07:02:43.340851Z"
       }
     },
     {
@@ -6160,7 +7181,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0531"
+        "name": "gateway-0531",
+        "alt": 24,
+        "updated": "2023-08-08T14:05:08.157103Z"
       }
     },
     {
@@ -6173,7 +7196,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0532"
+        "name": "gateway-0532",
+        "alt": 33,
+        "updated": "2024-01-07T00:17:12.918576Z"
       }
     },
     {
@@ -6186,7 +7211,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0533"
+        "name": "gateway-0533",
+        "alt": 56,
+        "updated": "2024-01-17T06:58:27.335925Z"
       }
     },
     {
@@ -6199,7 +7226,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0534"
+        "name": "gateway-0534",
+        "alt": 15,
+        "updated": "2024-01-17T06:54:40.878914Z"
       }
     },
     {
@@ -6212,7 +7241,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0535"
+        "name": "gateway-0535",
+        "alt": 48,
+        "updated": "2024-01-17T06:56:08.879982Z"
       }
     },
     {
@@ -6225,7 +7256,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0536"
+        "name": "gateway-0536",
+        "alt": 7,
+        "updated": "2024-01-16T21:18:01.359346Z"
       }
     },
     {
@@ -6238,7 +7271,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0537"
+        "name": "gateway-0537",
+        "alt": 25,
+        "updated": "2024-01-04T06:48:03.348509Z"
       }
     },
     {
@@ -6251,7 +7286,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0538"
+        "name": "gateway-0538",
+        "alt": 62,
+        "updated": "2024-01-16T21:16:09.350634Z"
       }
     },
     {
@@ -6264,7 +7301,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0539"
+        "name": "gateway-0539",
+        "alt": 5,
+        "updated": "2024-01-16T20:22:06.926163Z"
       }
     },
     {
@@ -6277,7 +7316,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0540"
+        "name": "gateway-0540",
+        "alt": 80,
+        "updated": "2024-01-16T21:26:59.333448Z"
       }
     },
     {
@@ -6290,7 +7331,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0541"
+        "name": "gateway-0541",
+        "alt": 10,
+        "updated": "2024-01-16T21:19:14.906702Z"
       }
     },
     {
@@ -6303,7 +7346,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0542"
+        "name": "gateway-0542",
+        "alt": 12,
+        "updated": "2024-01-16T20:26:36.915199Z"
       }
     },
     {
@@ -6316,7 +7361,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0543"
+        "name": "gateway-0543",
+        "alt": 25,
+        "updated": "2024-01-16T21:16:23.353238Z"
       }
     },
     {
@@ -6329,7 +7376,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0544"
+        "name": "gateway-0544",
+        "alt": 25,
+        "updated": "2024-01-17T06:51:35.348884Z"
       }
     },
     {
@@ -6342,7 +7391,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0545"
+        "name": "gateway-0545",
+        "alt": 30,
+        "updated": "2024-01-17T07:08:29.33935Z"
       }
     },
     {
@@ -6355,7 +7406,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0546"
+        "name": "gateway-0546",
+        "alt": 68,
+        "updated": "2025-05-12T08:51:51.848245Z"
       }
     },
     {
@@ -6368,7 +7421,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0547"
+        "name": "gateway-0547",
+        "alt": 49,
+        "updated": "2023-11-29T14:16:26.91605Z"
       }
     },
     {
@@ -6381,7 +7436,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0548"
+        "name": "gateway-0548",
+        "alt": 25,
+        "updated": "2024-01-16T20:54:52.879235Z"
       }
     },
     {
@@ -6394,7 +7451,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0549"
+        "name": "gateway-0549",
+        "alt": 3,
+        "updated": "2024-01-16T20:54:15.33863Z"
       }
     },
     {
@@ -6407,7 +7466,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0550"
+        "name": "gateway-0550",
+        "alt": 16,
+        "updated": "2024-01-16T20:32:35.349373Z"
       }
     },
     {
@@ -6420,7 +7481,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0551"
+        "name": "gateway-0551",
+        "alt": 30,
+        "updated": "2025-05-12T08:47:25.796593Z"
       }
     },
     {
@@ -6433,7 +7496,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0552"
+        "name": "gateway-0552",
+        "alt": 3,
+        "updated": "2024-01-16T20:23:43.341872Z"
       }
     },
     {
@@ -6446,7 +7511,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0553"
+        "name": "gateway-0553",
+        "alt": 3,
+        "updated": "2023-10-16T06:01:12.68751Z"
       }
     },
     {
@@ -6459,7 +7526,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0554"
+        "name": "gateway-0554",
+        "alt": 2,
+        "updated": "2024-01-16T21:00:04.935625Z"
       }
     },
     {
@@ -6472,7 +7541,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0555"
+        "name": "gateway-0555",
+        "alt": 4,
+        "updated": "2023-12-11T15:13:27.341406Z"
       }
     },
     {
@@ -6485,7 +7556,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0556"
+        "name": "gateway-0556",
+        "alt": 5,
+        "updated": "2024-01-16T21:09:15.080647Z"
       }
     },
     {
@@ -6498,7 +7571,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0557"
+        "name": "gateway-0557",
+        "alt": 15,
+        "updated": "2025-05-12T08:51:25.533868Z"
       }
     },
     {
@@ -6511,7 +7586,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0558"
+        "name": "gateway-0558",
+        "alt": 3,
+        "updated": "2024-01-16T20:32:29.358318Z"
       }
     },
     {
@@ -6524,7 +7601,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0559"
+        "name": "gateway-0559",
+        "alt": 3,
+        "updated": "2024-01-16T20:57:51.336243Z"
       }
     },
     {
@@ -6537,7 +7616,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0560"
+        "name": "gateway-0560",
+        "alt": 3,
+        "updated": "2024-01-16T21:05:29.346495Z"
       }
     },
     {
@@ -6550,7 +7631,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0561"
+        "name": "gateway-0561",
+        "alt": 84,
+        "updated": "2024-01-16T20:43:27.343161Z"
       }
     },
     {
@@ -6563,7 +7646,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0562"
+        "name": "gateway-0562",
+        "alt": 5,
+        "updated": "2024-01-16T21:10:49.336903Z"
       }
     },
     {
@@ -6576,7 +7661,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0563"
+        "name": "gateway-0563",
+        "alt": 27,
+        "updated": "2024-01-16T20:42:43.342361Z"
       }
     },
     {
@@ -6589,7 +7676,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0564"
+        "name": "gateway-0564",
+        "alt": 30,
+        "updated": "2025-05-12T08:50:07.629763Z"
       }
     },
     {
@@ -6602,7 +7691,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0565"
+        "name": "gateway-0565",
+        "alt": 5,
+        "updated": "2023-11-29T14:14:43.336434Z"
       }
     },
     {
@@ -6615,7 +7706,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0566"
+        "name": "gateway-0566",
+        "alt": 4,
+        "updated": "2024-01-16T21:11:32.898377Z"
       }
     },
     {
@@ -6628,7 +7721,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0567"
+        "name": "gateway-0567",
+        "alt": 0,
+        "updated": "2024-01-16T20:52:35.350329Z"
       }
     },
     {
@@ -6641,7 +7736,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0568"
+        "name": "gateway-0568",
+        "alt": 27,
+        "updated": "2025-05-12T08:48:39.86078Z"
       }
     },
     {
@@ -6654,7 +7751,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0569"
+        "name": "gateway-0569",
+        "alt": 30,
+        "updated": "2024-08-27T05:11:02.289704Z"
       }
     },
     {
@@ -6667,7 +7766,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0570"
+        "name": "gateway-0570",
+        "alt": 3,
+        "updated": "2024-01-16T21:04:53.335261Z"
       }
     },
     {
@@ -6680,7 +7781,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0571"
+        "name": "gateway-0571",
+        "alt": 25,
+        "updated": "2025-05-12T08:47:05.528146Z"
       }
     },
     {
@@ -6693,7 +7796,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0572"
+        "name": "gateway-0572",
+        "alt": 4,
+        "updated": "2023-11-29T14:16:42.894839Z"
       }
     },
     {
@@ -6706,7 +7811,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0573"
+        "name": "gateway-0573",
+        "alt": 3,
+        "updated": "2024-01-16T20:57:56.932184Z"
       }
     },
     {
@@ -6719,7 +7826,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0574"
+        "name": "gateway-0574",
+        "alt": 20,
+        "updated": "2024-01-16T20:27:38.897739Z"
       }
     },
     {
@@ -6732,7 +7841,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0575"
+        "name": "gateway-0575",
+        "alt": 4,
+        "updated": "2024-01-16T21:07:20.919897Z"
       }
     },
     {
@@ -6745,7 +7856,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0576"
+        "name": "gateway-0576",
+        "alt": 3,
+        "updated": "2024-01-16T21:08:40.905659Z"
       }
     },
     {
@@ -6758,7 +7871,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0577"
+        "name": "gateway-0577",
+        "alt": 3,
+        "updated": "2023-11-29T14:20:23.34926Z"
       }
     },
     {
@@ -6771,7 +7886,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0578"
+        "name": "gateway-0578",
+        "alt": 5,
+        "updated": "2024-01-16T21:08:19.349419Z"
       }
     },
     {
@@ -6784,7 +7901,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0579"
+        "name": "gateway-0579",
+        "alt": 5,
+        "updated": "2024-01-16T20:41:30.915766Z"
       }
     },
     {
@@ -6797,7 +7916,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0580"
+        "name": "gateway-0580",
+        "alt": 43,
+        "updated": "2025-05-12T08:50:53.717296Z"
       }
     },
     {
@@ -6810,7 +7931,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0581"
+        "name": "gateway-0581",
+        "alt": 11,
+        "updated": "2025-05-12T08:53:03.819819Z"
       }
     },
     {
@@ -6823,7 +7946,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0583"
+        "name": "gateway-0583",
+        "alt": 0,
+        "updated": "2025-05-12T08:48:07.924986Z"
       }
     },
     {
@@ -6836,7 +7961,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0584"
+        "name": "gateway-0584",
+        "alt": 7,
+        "updated": "2024-11-18T19:42:41.343522Z"
       }
     },
     {
@@ -6849,7 +7976,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0587"
+        "name": "gateway-0587",
+        "alt": -4,
+        "updated": "2022-10-13T07:46:15.838804Z"
       }
     },
     {
@@ -6862,7 +7991,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0588"
+        "name": "gateway-0588",
+        "alt": 0,
+        "updated": "2023-11-14T09:20:48.87888Z"
       }
     },
     {
@@ -6875,7 +8006,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0590"
+        "name": "gateway-0590",
+        "alt": 10,
+        "updated": "2024-01-13T15:02:44.993883Z"
       }
     },
     {
@@ -6888,7 +8021,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0591"
+        "name": "gateway-0591",
+        "alt": 40,
+        "updated": "2023-11-26T10:31:40.926964Z"
       }
     },
     {
@@ -6901,7 +8036,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0592"
+        "name": "gateway-0592",
+        "alt": 48,
+        "updated": "2025-05-12T08:49:03.50129Z"
       }
     },
     {
@@ -6914,7 +8051,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0593"
+        "name": "gateway-0593",
+        "alt": 20,
+        "updated": "2022-11-22T08:27:55.35749Z"
       }
     },
     {
@@ -6927,7 +8066,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0594"
+        "name": "gateway-0594",
+        "alt": 0,
+        "updated": "2024-01-07T18:19:20.892153Z"
       }
     },
     {
@@ -6940,7 +8081,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0598"
+        "name": "gateway-0598",
+        "alt": 0,
+        "updated": "2024-11-01T10:02:00.194592Z"
       }
     },
     {
@@ -6953,7 +8096,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0599"
+        "name": "gateway-0599",
+        "alt": 5,
+        "updated": "2024-07-10T16:22:16.216343Z"
       }
     },
     {
@@ -6966,7 +8111,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0602"
+        "name": "gateway-0602",
+        "alt": 10,
+        "updated": "2025-05-12T08:46:37.907309Z"
       }
     },
     {
@@ -6979,7 +8126,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0603"
+        "name": "gateway-0603",
+        "alt": 10,
+        "updated": "2025-05-12T08:45:41.667194Z"
       }
     },
     {
@@ -6992,7 +8141,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0606"
+        "name": "gateway-0606",
+        "alt": 31,
+        "updated": "2025-05-12T08:53:01.785691Z"
       }
     },
     {
@@ -7005,7 +8156,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0607"
+        "name": "gateway-0607",
+        "alt": 0,
+        "updated": "2025-05-12T08:48:21.939597Z"
       }
     },
     {
@@ -7018,7 +8171,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0609"
+        "name": "gateway-0609",
+        "alt": 0,
+        "updated": "2025-05-12T08:48:59.710103Z"
       }
     },
     {
@@ -7031,7 +8186,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0610"
+        "name": "gateway-0610",
+        "alt": 30,
+        "updated": "2023-06-27T10:39:43.328807Z"
       }
     },
     {
@@ -7044,7 +8201,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0612"
+        "name": "gateway-0612",
+        "alt": 30,
+        "updated": "2024-05-27T12:39:28.25247Z"
       }
     },
     {
@@ -7057,7 +8216,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0613"
+        "name": "gateway-0613",
+        "alt": 0,
+        "updated": "2024-06-27T19:37:52.173771Z"
       }
     },
     {
@@ -7070,7 +8231,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0614"
+        "name": "gateway-0614",
+        "alt": 22,
+        "updated": "2025-05-12T08:49:21.627811Z"
       }
     },
     {
@@ -7083,7 +8246,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0615"
+        "name": "gateway-0615",
+        "alt": 48,
+        "updated": "2025-05-12T08:54:33.714646Z"
       }
     },
     {
@@ -7096,7 +8261,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0617"
+        "name": "gateway-0617",
+        "alt": 4,
+        "updated": "2025-05-12T08:53:53.87833Z"
       }
     },
     {
@@ -7109,7 +8276,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0618"
+        "name": "gateway-0618",
+        "alt": 0,
+        "updated": "2025-05-12T08:46:09.442787Z"
       }
     },
     {
@@ -7122,7 +8291,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0619"
+        "name": "gateway-0619",
+        "alt": 0,
+        "updated": "2025-05-12T08:52:43.876426Z"
       }
     },
     {
@@ -7135,7 +8306,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0620"
+        "name": "gateway-0620",
+        "alt": 0,
+        "updated": "2024-07-09T16:06:04.299786Z"
       }
     },
     {
@@ -7148,7 +8321,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0623"
+        "name": "gateway-0623",
+        "alt": 0,
+        "updated": "2023-05-25T21:51:07.348545Z"
       }
     },
     {
@@ -7161,7 +8336,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0624"
+        "name": "gateway-0624",
+        "alt": 0,
+        "updated": "2023-01-20T12:12:55.33682Z"
       }
     },
     {
@@ -7174,7 +8351,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0626"
+        "name": "gateway-0626",
+        "alt": 8,
+        "updated": "2024-01-12T12:14:06.928116Z"
       }
     },
     {
@@ -7187,7 +8366,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0627"
+        "name": "gateway-0627",
+        "alt": 5,
+        "updated": "2025-05-12T08:47:13.843373Z"
       }
     },
     {
@@ -7200,7 +8381,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0628"
+        "name": "gateway-0628",
+        "alt": 60,
+        "updated": "2025-05-12T08:51:27.919846Z"
       }
     },
     {
@@ -7213,7 +8396,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0630"
+        "name": "gateway-0630",
+        "alt": 20,
+        "updated": "2024-06-18T09:11:08.07029Z"
       }
     },
     {
@@ -7226,7 +8411,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0631"
+        "name": "gateway-0631",
+        "alt": 13,
+        "updated": "2023-03-12T10:34:44.129029Z"
       }
     },
     {
@@ -7239,7 +8426,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0632"
+        "name": "gateway-0632",
+        "alt": 0,
+        "updated": "2025-05-12T08:47:51.789471Z"
       }
     },
     {
@@ -7252,7 +8441,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0634"
+        "name": "gateway-0634",
+        "alt": 40,
+        "updated": "2025-05-12T08:46:55.521234Z"
       }
     },
     {
@@ -7265,7 +8456,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0635"
+        "name": "gateway-0635",
+        "alt": 20,
+        "updated": "2024-02-06T00:38:33.360696Z"
       }
     },
     {
@@ -7278,7 +8471,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0636"
+        "name": "gateway-0636",
+        "alt": 0,
+        "updated": "2021-12-09T10:21:49.315931Z"
       }
     },
     {
@@ -7291,7 +8486,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0637"
+        "name": "gateway-0637",
+        "alt": 0,
+        "updated": "2022-01-30T11:42:18.157244Z"
       }
     },
     {
@@ -7304,7 +8501,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0638"
+        "name": "gateway-0638",
+        "alt": 0,
+        "updated": "2023-04-24T09:51:55.392158Z"
       }
     },
     {
@@ -7317,7 +8516,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0639"
+        "name": "gateway-0639",
+        "alt": 0,
+        "updated": "2025-01-02T23:06:37.137403Z"
       }
     },
     {
@@ -7330,7 +8531,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0640"
+        "name": "gateway-0640",
+        "alt": 10,
+        "updated": "2025-05-12T08:50:55.73749Z"
       }
     },
     {
@@ -7343,7 +8546,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0641"
+        "name": "gateway-0641",
+        "alt": 20,
+        "updated": "2025-05-12T08:51:03.292465Z"
       }
     },
     {
@@ -7356,7 +8561,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0642"
+        "name": "gateway-0642",
+        "alt": 5,
+        "updated": "2025-05-12T08:48:15.846908Z"
       }
     },
     {
@@ -7369,7 +8576,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0643"
+        "name": "gateway-0643",
+        "alt": 0,
+        "updated": "2025-05-12T08:46:49.881473Z"
       }
     },
     {
@@ -7382,7 +8591,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0644"
+        "name": "gateway-0644",
+        "alt": 10,
+        "updated": "2025-05-12T08:54:11.760267Z"
       }
     },
     {
@@ -7395,7 +8606,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0645"
+        "name": "gateway-0645",
+        "alt": 10,
+        "updated": "2025-05-12T08:47:11.660856Z"
       }
     },
     {
@@ -7408,7 +8621,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0646"
+        "name": "gateway-0646",
+        "alt": 0,
+        "updated": "2023-08-06T10:22:35.315068Z"
       }
     },
     {
@@ -7421,7 +8636,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0647"
+        "name": "gateway-0647",
+        "alt": 0,
+        "updated": "2025-05-12T08:50:25.678386Z"
       }
     },
     {
@@ -7434,7 +8651,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0648"
+        "name": "gateway-0648",
+        "alt": 0,
+        "updated": "2025-05-12T08:54:03.68236Z"
       }
     },
     {
@@ -7447,7 +8666,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0650"
+        "name": "gateway-0650",
+        "alt": 0,
+        "updated": "2024-10-29T10:24:06.074189Z"
       }
     },
     {
@@ -7460,7 +8681,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0651"
+        "name": "gateway-0651",
+        "alt": 62,
+        "updated": "2023-06-23T15:41:02.110824Z"
       }
     },
     {
@@ -7473,7 +8696,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0653"
+        "name": "gateway-0653",
+        "alt": 0,
+        "updated": "2024-03-15T23:19:02.181077Z"
       }
     },
     {
@@ -7486,7 +8711,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0654"
+        "name": "gateway-0654",
+        "alt": 0,
+        "updated": "2022-11-19T13:35:39.351151Z"
       }
     },
     {
@@ -7499,7 +8726,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0655"
+        "name": "gateway-0655",
+        "alt": 12,
+        "updated": "2025-05-12T08:50:07.626391Z"
       }
     },
     {
@@ -7512,7 +8741,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0656"
+        "name": "gateway-0656",
+        "alt": 2,
+        "updated": "2024-12-11T18:15:55.281895Z"
       }
     },
     {
@@ -7525,7 +8756,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0657"
+        "name": "gateway-0657",
+        "alt": 12,
+        "updated": "2022-11-28T16:26:03.340281Z"
       }
     },
     {
@@ -7538,7 +8771,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0658"
+        "name": "gateway-0658",
+        "alt": 0,
+        "updated": "2024-09-17T08:26:06.05668Z"
       }
     },
     {
@@ -7551,7 +8786,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0659"
+        "name": "gateway-0659",
+        "alt": 28,
+        "updated": "2025-05-12T08:45:57.691178Z"
       }
     },
     {
@@ -7564,7 +8801,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0660"
+        "name": "gateway-0660",
+        "alt": 42,
+        "updated": "2023-04-17T06:56:17.369323Z"
       }
     },
     {
@@ -7577,7 +8816,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0661"
+        "name": "gateway-0661",
+        "alt": 10,
+        "updated": "2025-05-12T08:50:07.701324Z"
       }
     },
     {
@@ -7590,7 +8831,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0662"
+        "name": "gateway-0662",
+        "alt": 23,
+        "updated": "2025-05-12T08:47:51.75538Z"
       }
     },
     {
@@ -7603,7 +8846,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0663"
+        "name": "gateway-0663",
+        "alt": 19,
+        "updated": "2025-05-12T08:47:31.813829Z"
       }
     },
     {
@@ -7616,7 +8861,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0664"
+        "name": "gateway-0664",
+        "alt": 10,
+        "updated": "2025-05-12T08:50:45.525621Z"
       }
     },
     {
@@ -7629,7 +8876,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0666"
+        "name": "gateway-0666",
+        "alt": 50,
+        "updated": "2025-05-12T08:50:57.604132Z"
       }
     },
     {
@@ -7642,7 +8891,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0667"
+        "name": "gateway-0667",
+        "alt": 24,
+        "updated": "2024-06-13T14:30:18.40453Z"
       }
     },
     {
@@ -7655,7 +8906,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0668"
+        "name": "gateway-0668",
+        "alt": 36,
+        "updated": "2023-12-07T09:35:00.895844Z"
       }
     },
     {
@@ -7668,7 +8921,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0669"
+        "name": "gateway-0669",
+        "alt": 30,
+        "updated": "2025-05-12T08:53:21.847091Z"
       }
     },
     {
@@ -7681,7 +8936,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0670"
+        "name": "gateway-0670",
+        "alt": 0,
+        "updated": "2021-09-14T10:16:35.094748Z"
       }
     },
     {
@@ -7694,7 +8951,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0671"
+        "name": "gateway-0671",
+        "alt": 47,
+        "updated": "2024-04-15T06:01:24.193639Z"
       }
     },
     {
@@ -7707,7 +8966,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0672"
+        "name": "gateway-0672",
+        "alt": -1,
+        "updated": "2024-01-16T11:12:37.34049Z"
       }
     },
     {
@@ -7720,7 +8981,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0673"
+        "name": "gateway-0673",
+        "alt": 61,
+        "updated": "2024-01-31T07:52:24.911347Z"
       }
     },
     {
@@ -7733,7 +8996,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0674"
+        "name": "gateway-0674",
+        "alt": 39,
+        "updated": "2024-01-11T12:49:04.914635Z"
       }
     },
     {
@@ -7746,7 +9011,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0675"
+        "name": "gateway-0675",
+        "alt": 134,
+        "updated": "2024-02-26T08:22:01.338915Z"
       }
     },
     {
@@ -7759,7 +9026,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0676"
+        "name": "gateway-0676",
+        "alt": 58,
+        "updated": "2024-06-19T07:56:46.230266Z"
       }
     },
     {
@@ -7772,7 +9041,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0677"
+        "name": "gateway-0677",
+        "alt": 24,
+        "updated": "2024-04-02T16:05:04.972799Z"
       }
     },
     {
@@ -7785,7 +9056,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0678"
+        "name": "gateway-0678",
+        "alt": 41,
+        "updated": "2025-05-12T08:50:57.571772Z"
       }
     },
     {
@@ -7798,7 +9071,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0679"
+        "name": "gateway-0679",
+        "alt": 55,
+        "updated": "2024-01-16T09:54:17.352133Z"
       }
     },
     {
@@ -7811,7 +9086,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0680"
+        "name": "gateway-0680",
+        "alt": 5,
+        "updated": "2024-04-16T11:16:16.298279Z"
       }
     },
     {
@@ -7824,7 +9101,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0681"
+        "name": "gateway-0681",
+        "alt": 2,
+        "updated": "2024-04-16T09:12:52.19821Z"
       }
     },
     {
@@ -7837,7 +9116,24 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0682"
+        "name": "gateway-0682",
+        "alt": 10,
+        "updated": "2024-04-02T16:01:10.900037Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.35112,
+          54.97027
+        ]
+      },
+      "properties": {
+        "name": "gateway-0683",
+        "alt": 5,
+        "updated": "2025-05-12T08:51:49.519723Z"
       }
     },
     {
@@ -7850,7 +9146,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0684"
+        "name": "gateway-0684",
+        "alt": 11,
+        "updated": "2024-04-04T09:15:40.149885Z"
       }
     },
     {
@@ -7863,7 +9161,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0685"
+        "name": "gateway-0685",
+        "alt": 20,
+        "updated": "2025-05-12T08:54:41.905821Z"
       }
     },
     {
@@ -7876,7 +9176,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0686"
+        "name": "gateway-0686",
+        "alt": 44,
+        "updated": "2022-12-23T07:13:59.354699Z"
       }
     },
     {
@@ -7889,7 +9191,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0687"
+        "name": "gateway-0687",
+        "alt": 45,
+        "updated": "2025-05-12T08:46:07.758643Z"
       }
     },
     {
@@ -7902,7 +9206,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0688"
+        "name": "gateway-0688",
+        "alt": 60,
+        "updated": "2025-05-12T08:55:09.595921Z"
       }
     },
     {
@@ -7915,7 +9221,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0689"
+        "name": "gateway-0689",
+        "alt": 40,
+        "updated": "2025-05-12T08:51:05.714962Z"
       }
     },
     {
@@ -7928,7 +9236,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0690"
+        "name": "gateway-0690",
+        "alt": 15,
+        "updated": "2023-08-01T07:19:34.115516Z"
       }
     },
     {
@@ -7941,7 +9251,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0691"
+        "name": "gateway-0691",
+        "alt": 105,
+        "updated": "2025-05-12T08:48:17.586762Z"
       }
     },
     {
@@ -7954,7 +9266,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0692"
+        "name": "gateway-0692",
+        "alt": 23,
+        "updated": "2025-05-12T08:54:39.700514Z"
       }
     },
     {
@@ -7967,7 +9281,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0693"
+        "name": "gateway-0693",
+        "alt": 56,
+        "updated": "2025-05-12T08:45:15.90241Z"
       }
     },
     {
@@ -7980,7 +9296,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0694"
+        "name": "gateway-0694",
+        "alt": 17,
+        "updated": "2025-05-07T06:14:43.464305Z"
       }
     },
     {
@@ -7993,7 +9311,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0695"
+        "name": "gateway-0695",
+        "alt": 128,
+        "updated": "2025-05-12T08:54:45.888446Z"
       }
     },
     {
@@ -8006,7 +9326,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0696"
+        "name": "gateway-0696",
+        "alt": 18,
+        "updated": "2025-05-12T08:55:11.878887Z"
       }
     },
     {
@@ -8019,7 +9341,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0697"
+        "name": "gateway-0697",
+        "alt": 16,
+        "updated": "2025-05-12T08:51:11.860735Z"
       }
     },
     {
@@ -8032,7 +9356,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0698"
+        "name": "gateway-0698",
+        "alt": 26,
+        "updated": "2025-05-12T08:50:31.567248Z"
       }
     },
     {
@@ -8045,7 +9371,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0699"
+        "name": "gateway-0699",
+        "alt": 61,
+        "updated": "2025-05-12T08:50:43.718264Z"
       }
     },
     {
@@ -8058,7 +9386,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0700"
+        "name": "gateway-0700",
+        "alt": 57,
+        "updated": "2025-05-12T08:51:13.655937Z"
       }
     },
     {
@@ -8071,7 +9401,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0701"
+        "name": "gateway-0701",
+        "alt": 28,
+        "updated": "2025-05-12T08:53:53.644048Z"
       }
     },
     {
@@ -8084,7 +9416,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0702"
+        "name": "gateway-0702",
+        "alt": 55,
+        "updated": "2025-05-12T08:50:01.627349Z"
       }
     },
     {
@@ -8097,7 +9431,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0703"
+        "name": "gateway-0703",
+        "alt": 66,
+        "updated": "2025-05-12T08:50:05.778691Z"
       }
     },
     {
@@ -8110,7 +9446,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0704"
+        "name": "gateway-0704",
+        "alt": 44,
+        "updated": "2025-05-12T08:49:17.787402Z"
       }
     },
     {
@@ -8123,7 +9461,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0705"
+        "name": "gateway-0705",
+        "alt": 2,
+        "updated": "2025-05-12T08:51:23.495966Z"
       }
     },
     {
@@ -8136,7 +9476,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0706"
+        "name": "gateway-0706",
+        "alt": 38,
+        "updated": "2025-05-12T08:49:11.573744Z"
       }
     },
     {
@@ -8149,7 +9491,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0707"
+        "name": "gateway-0707",
+        "alt": 10,
+        "updated": "2025-05-12T08:53:39.643904Z"
       }
     },
     {
@@ -8162,7 +9506,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0708"
+        "name": "gateway-0708",
+        "alt": 39,
+        "updated": "2025-05-12T08:45:25.607782Z"
       }
     },
     {
@@ -8175,7 +9521,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0709"
+        "name": "gateway-0709",
+        "alt": 40,
+        "updated": "2025-05-12T08:49:57.625498Z"
       }
     },
     {
@@ -8188,7 +9536,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0710"
+        "name": "gateway-0710",
+        "alt": 38,
+        "updated": "2025-05-12T08:53:11.575579Z"
       }
     },
     {
@@ -8201,7 +9551,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0711"
+        "name": "gateway-0711",
+        "alt": 47,
+        "updated": "2025-05-12T08:48:49.867017Z"
       }
     },
     {
@@ -8214,7 +9566,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0712"
+        "name": "gateway-0712",
+        "alt": 48,
+        "updated": "2025-05-12T08:48:31.593788Z"
       }
     },
     {
@@ -8227,7 +9581,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0713"
+        "name": "gateway-0713",
+        "alt": 33,
+        "updated": "2025-05-12T08:49:51.604186Z"
       }
     },
     {
@@ -8240,7 +9596,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0714"
+        "name": "gateway-0714",
+        "alt": 93,
+        "updated": "2025-05-12T08:51:03.839065Z"
       }
     },
     {
@@ -8253,7 +9611,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0715"
+        "name": "gateway-0715",
+        "alt": -4,
+        "updated": "2025-05-12T08:46:35.474216Z"
       }
     },
     {
@@ -8266,7 +9626,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0716"
+        "name": "gateway-0716",
+        "alt": 32,
+        "updated": "2025-05-12T08:55:10.042044Z"
       }
     },
     {
@@ -8279,7 +9641,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0717"
+        "name": "gateway-0717",
+        "alt": 40,
+        "updated": "2025-05-12T08:51:35.641572Z"
       }
     },
     {
@@ -8292,7 +9656,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0718"
+        "name": "gateway-0718",
+        "alt": 63,
+        "updated": "2025-05-12T08:48:55.612794Z"
       }
     },
     {
@@ -8305,7 +9671,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0719"
+        "name": "gateway-0719",
+        "alt": 38,
+        "updated": "2025-05-12T08:52:15.573171Z"
       }
     },
     {
@@ -8318,7 +9686,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0720"
+        "name": "gateway-0720",
+        "alt": 71,
+        "updated": "2025-05-12T08:45:01.981244Z"
       }
     },
     {
@@ -8331,7 +9701,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0721"
+        "name": "gateway-0721",
+        "alt": 9,
+        "updated": "2025-05-12T08:49:29.882476Z"
       }
     },
     {
@@ -8344,7 +9716,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0722"
+        "name": "gateway-0722",
+        "alt": 46,
+        "updated": "2025-05-12T08:52:49.668314Z"
       }
     },
     {
@@ -8357,7 +9731,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0723"
+        "name": "gateway-0723",
+        "alt": 0,
+        "updated": "2023-09-01T11:33:33.933671Z"
       }
     },
     {
@@ -8370,7 +9746,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0724"
+        "name": "gateway-0724",
+        "alt": 37,
+        "updated": "2025-05-12T08:54:11.678401Z"
       }
     },
     {
@@ -8383,7 +9761,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0725"
+        "name": "gateway-0725",
+        "alt": 27,
+        "updated": "2025-05-12T08:49:03.460432Z"
       }
     },
     {
@@ -8396,7 +9776,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0726"
+        "name": "gateway-0726",
+        "alt": 11,
+        "updated": "2025-05-12T08:47:39.882951Z"
       }
     },
     {
@@ -8409,7 +9791,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0727"
+        "name": "gateway-0727",
+        "alt": 9,
+        "updated": "2025-05-12T08:54:55.883072Z"
       }
     },
     {
@@ -8422,7 +9806,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0728"
+        "name": "gateway-0728",
+        "alt": 45,
+        "updated": "2025-05-12T08:48:29.672552Z"
       }
     },
     {
@@ -8435,7 +9821,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0729"
+        "name": "gateway-0729",
+        "alt": 50,
+        "updated": "2025-05-12T08:47:37.926695Z"
       }
     },
     {
@@ -8448,7 +9836,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0730"
+        "name": "gateway-0730",
+        "alt": 23,
+        "updated": "2025-05-12T08:50:19.758603Z"
       }
     },
     {
@@ -8461,7 +9851,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0731"
+        "name": "gateway-0731",
+        "alt": 19,
+        "updated": "2025-05-12T08:51:53.787575Z"
       }
     },
     {
@@ -8474,7 +9866,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0732"
+        "name": "gateway-0732",
+        "alt": 70,
+        "updated": "2025-05-12T08:46:35.459209Z"
       }
     },
     {
@@ -8487,7 +9881,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0733"
+        "name": "gateway-0733",
+        "alt": 3,
+        "updated": "2025-05-12T08:52:33.561658Z"
       }
     },
     {
@@ -8500,7 +9896,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0734"
+        "name": "gateway-0734",
+        "alt": 61,
+        "updated": "2025-05-12T08:45:31.955593Z"
       }
     },
     {
@@ -8513,7 +9911,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0735"
+        "name": "gateway-0735",
+        "alt": 41,
+        "updated": "2025-05-12T08:48:51.337424Z"
       }
     },
     {
@@ -8526,7 +9926,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0736"
+        "name": "gateway-0736",
+        "alt": 58,
+        "updated": "2025-05-12T08:47:41.723468Z"
       }
     },
     {
@@ -8539,7 +9941,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0737"
+        "name": "gateway-0737",
+        "alt": 50,
+        "updated": "2025-05-12T08:48:05.844999Z"
       }
     },
     {
@@ -8552,7 +9956,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0738"
+        "name": "gateway-0738",
+        "alt": 17,
+        "updated": "2025-05-12T08:53:35.486217Z"
       }
     },
     {
@@ -8565,7 +9971,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0739"
+        "name": "gateway-0739",
+        "alt": 28,
+        "updated": "2025-05-12T08:51:07.748808Z"
       }
     },
     {
@@ -8578,7 +9986,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0740"
+        "name": "gateway-0740",
+        "alt": 23,
+        "updated": "2025-05-12T08:53:11.604164Z"
       }
     },
     {
@@ -8591,7 +10001,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0741"
+        "name": "gateway-0741",
+        "alt": 30,
+        "updated": "2025-05-12T08:50:17.994753Z"
       }
     },
     {
@@ -8604,7 +10016,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0742"
+        "name": "gateway-0742",
+        "alt": 33,
+        "updated": "2025-05-12T08:55:01.657473Z"
       }
     },
     {
@@ -8617,7 +10031,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0743"
+        "name": "gateway-0743",
+        "alt": 31,
+        "updated": "2025-05-12T08:50:57.583502Z"
       }
     },
     {
@@ -8630,7 +10046,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0744"
+        "name": "gateway-0744",
+        "alt": 52,
+        "updated": "2025-05-12T08:53:27.54449Z"
       }
     },
     {
@@ -8643,7 +10061,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0745"
+        "name": "gateway-0745",
+        "alt": 29,
+        "updated": "2025-05-12T08:52:05.536166Z"
       }
     },
     {
@@ -8656,7 +10076,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0746"
+        "name": "gateway-0746",
+        "alt": 14,
+        "updated": "2025-05-12T08:52:27.876295Z"
       }
     },
     {
@@ -8669,7 +10091,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0747"
+        "name": "gateway-0747",
+        "alt": 6,
+        "updated": "2025-05-12T08:55:11.779963Z"
       }
     },
     {
@@ -8682,7 +10106,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0748"
+        "name": "gateway-0748",
+        "alt": 10,
+        "updated": "2025-05-12T08:44:53.75571Z"
       }
     },
     {
@@ -8695,7 +10121,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0749"
+        "name": "gateway-0749",
+        "alt": 10,
+        "updated": "2025-05-12T08:47:49.642936Z"
       }
     },
     {
@@ -8708,7 +10136,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0750"
+        "name": "gateway-0750",
+        "alt": 55,
+        "updated": "2025-05-12T08:49:51.534851Z"
       }
     },
     {
@@ -8721,7 +10151,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0751"
+        "name": "gateway-0751",
+        "alt": 22,
+        "updated": "2025-05-12T08:49:15.728684Z"
       }
     },
     {
@@ -8734,7 +10166,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0752"
+        "name": "gateway-0752",
+        "alt": 10,
+        "updated": "2025-05-12T08:43:35.675042Z"
       }
     },
     {
@@ -8747,7 +10181,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0753"
+        "name": "gateway-0753",
+        "alt": 10,
+        "updated": "2025-05-12T08:50:07.65207Z"
       }
     },
     {
@@ -8760,7 +10196,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0754"
+        "name": "gateway-0754",
+        "alt": 14,
+        "updated": "2025-05-12T08:51:25.639609Z"
       }
     },
     {
@@ -8773,7 +10211,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0755"
+        "name": "gateway-0755",
+        "alt": 6,
+        "updated": "2025-05-12T08:47:25.639609Z"
       }
     },
     {
@@ -8786,7 +10226,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0756"
+        "name": "gateway-0756",
+        "alt": 35,
+        "updated": "2025-05-12T08:55:25.88139Z"
       }
     },
     {
@@ -8799,7 +10241,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0757"
+        "name": "gateway-0757",
+        "alt": 0,
+        "updated": "2025-05-12T08:52:19.882639Z"
       }
     },
     {
@@ -8812,7 +10256,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0758"
+        "name": "gateway-0758",
+        "alt": 3,
+        "updated": "2025-05-12T08:55:15.622656Z"
       }
     },
     {
@@ -8825,7 +10271,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0759"
+        "name": "gateway-0759",
+        "alt": 21,
+        "updated": "2025-05-12T08:53:13.913594Z"
       }
     },
     {
@@ -8838,7 +10286,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0760"
+        "name": "gateway-0760",
+        "alt": 40,
+        "updated": "2025-05-12T08:50:57.602754Z"
       }
     },
     {
@@ -8851,7 +10301,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0761"
+        "name": "gateway-0761",
+        "alt": 31,
+        "updated": "2025-05-12T08:45:55.750287Z"
       }
     },
     {
@@ -8864,7 +10316,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0762"
+        "name": "gateway-0762",
+        "alt": 5,
+        "updated": "2025-05-06T08:48:35.144703Z"
       }
     },
     {
@@ -8877,7 +10331,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0763"
+        "name": "gateway-0763",
+        "alt": 26,
+        "updated": "2025-05-12T08:54:17.594773Z"
       }
     },
     {
@@ -8890,7 +10346,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0764"
+        "name": "gateway-0764",
+        "alt": 79,
+        "updated": "2025-05-12T08:49:29.882408Z"
       }
     },
     {
@@ -8903,7 +10361,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0765"
+        "name": "gateway-0765",
+        "alt": 19,
+        "updated": "2025-05-12T08:52:27.961978Z"
       }
     },
     {
@@ -8916,7 +10376,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0766"
+        "name": "gateway-0766",
+        "alt": 53,
+        "updated": "2025-05-12T08:51:17.645004Z"
       }
     },
     {
@@ -8929,7 +10391,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0767"
+        "name": "gateway-0767",
+        "alt": 34,
+        "updated": "2025-05-12T08:46:02.073852Z"
       }
     },
     {
@@ -8942,7 +10406,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0768"
+        "name": "gateway-0768",
+        "alt": 60,
+        "updated": "2025-05-12T08:52:31.553781Z"
       }
     },
     {
@@ -8955,7 +10421,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0769"
+        "name": "gateway-0769",
+        "alt": 12,
+        "updated": "2025-05-12T08:49:21.648282Z"
       }
     },
     {
@@ -8968,7 +10436,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0770"
+        "name": "gateway-0770",
+        "alt": 53,
+        "updated": "2025-05-12T08:55:25.596813Z"
       }
     },
     {
@@ -8981,7 +10451,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0771"
+        "name": "gateway-0771",
+        "alt": 50,
+        "updated": "2025-05-12T08:51:49.765659Z"
       }
     },
     {
@@ -8994,7 +10466,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0772"
+        "name": "gateway-0772",
+        "alt": 102,
+        "updated": "2025-05-12T08:46:05.77504Z"
       }
     },
     {
@@ -9007,7 +10481,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0773"
+        "name": "gateway-0773",
+        "alt": 36,
+        "updated": "2025-05-12T08:46:53.793525Z"
       }
     },
     {
@@ -9020,7 +10496,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0774"
+        "name": "gateway-0774",
+        "alt": 11,
+        "updated": "2025-05-12T08:50:55.733159Z"
       }
     },
     {
@@ -9033,7 +10511,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0775"
+        "name": "gateway-0775",
+        "alt": 15,
+        "updated": "2025-05-12T08:46:23.696394Z"
       }
     },
     {
@@ -9046,7 +10526,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0776"
+        "name": "gateway-0776",
+        "alt": 15,
+        "updated": "2025-05-12T08:48:41.535381Z"
       }
     },
     {
@@ -9059,7 +10541,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0777"
+        "name": "gateway-0777",
+        "alt": 36,
+        "updated": "2025-05-12T08:50:57.579088Z"
       }
     },
     {
@@ -9072,7 +10556,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0778"
+        "name": "gateway-0778",
+        "alt": 17,
+        "updated": "2025-05-12T08:52:19.499951Z"
       }
     },
     {
@@ -9085,7 +10571,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0779"
+        "name": "gateway-0779",
+        "alt": 21,
+        "updated": "2025-05-12T08:49:27.503356Z"
       }
     },
     {
@@ -9098,7 +10586,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0780"
+        "name": "gateway-0780",
+        "alt": 6,
+        "updated": "2025-05-12T08:54:03.642794Z"
       }
     },
     {
@@ -9111,7 +10601,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0781"
+        "name": "gateway-0781",
+        "alt": 48,
+        "updated": "2025-05-12T08:52:25.95448Z"
       }
     },
     {
@@ -9124,7 +10616,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0782"
+        "name": "gateway-0782",
+        "alt": 64,
+        "updated": "2025-05-12T08:53:09.609798Z"
       }
     },
     {
@@ -9137,7 +10631,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0783"
+        "name": "gateway-0783",
+        "alt": 44,
+        "updated": "2025-05-12T08:54:11.679351Z"
       }
     },
     {
@@ -9150,7 +10646,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0784"
+        "name": "gateway-0784",
+        "alt": 64,
+        "updated": "2025-05-12T08:50:11.647283Z"
       }
     },
     {
@@ -9163,7 +10661,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0785"
+        "name": "gateway-0785",
+        "alt": 14,
+        "updated": "2025-05-12T08:47:23.697006Z"
       }
     },
     {
@@ -9176,7 +10676,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0786"
+        "name": "gateway-0786",
+        "alt": 50,
+        "updated": "2025-05-12T08:43:55.60664Z"
       }
     },
     {
@@ -9189,7 +10691,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0787"
+        "name": "gateway-0787",
+        "alt": 13,
+        "updated": "2025-05-12T08:50:39.754922Z"
       }
     },
     {
@@ -9202,7 +10706,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0788"
+        "name": "gateway-0788",
+        "alt": 19,
+        "updated": "2025-05-12T08:55:13.719807Z"
       }
     },
     {
@@ -9215,7 +10721,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0789"
+        "name": "gateway-0789",
+        "alt": 27,
+        "updated": "2025-05-12T08:45:41.817903Z"
       }
     },
     {
@@ -9228,7 +10736,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0790"
+        "name": "gateway-0790",
+        "alt": 48,
+        "updated": "2025-05-12T08:49:53.822663Z"
       }
     },
     {
@@ -9241,7 +10751,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0791"
+        "name": "gateway-0791",
+        "alt": 29,
+        "updated": "2025-05-12T08:53:31.750509Z"
       }
     },
     {
@@ -9254,7 +10766,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0792"
+        "name": "gateway-0792",
+        "alt": 52,
+        "updated": "2025-05-12T08:53:55.685999Z"
       }
     },
     {
@@ -9267,7 +10781,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0793"
+        "name": "gateway-0793",
+        "alt": 7,
+        "updated": "2025-05-12T08:47:35.794775Z"
       }
     },
     {
@@ -9280,7 +10796,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0794"
+        "name": "gateway-0794",
+        "alt": 25,
+        "updated": "2025-05-12T08:45:37.59428Z"
       }
     },
     {
@@ -9293,7 +10811,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0795"
+        "name": "gateway-0795",
+        "alt": 21,
+        "updated": "2025-05-12T08:51:07.788895Z"
       }
     },
     {
@@ -9306,7 +10826,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0796"
+        "name": "gateway-0796",
+        "alt": 20,
+        "updated": "2025-05-12T08:47:45.462959Z"
       }
     },
     {
@@ -9319,7 +10841,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0797"
+        "name": "gateway-0797",
+        "alt": 56,
+        "updated": "2025-05-12T08:49:17.795454Z"
       }
     },
     {
@@ -9332,7 +10856,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0798"
+        "name": "gateway-0798",
+        "alt": 4,
+        "updated": "2025-05-12T08:50:27.689105Z"
       }
     },
     {
@@ -9345,7 +10871,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0799"
+        "name": "gateway-0799",
+        "alt": 50,
+        "updated": "2025-05-12T08:51:09.874221Z"
       }
     },
     {
@@ -9358,7 +10886,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0800"
+        "name": "gateway-0800",
+        "alt": 15,
+        "updated": "2025-05-12T08:52:14.071493Z"
       }
     },
     {
@@ -9371,7 +10901,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0801"
+        "name": "gateway-0801",
+        "alt": 33,
+        "updated": "2025-05-12T08:55:11.784492Z"
       }
     },
     {
@@ -9384,7 +10916,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0802"
+        "name": "gateway-0802",
+        "alt": 17,
+        "updated": "2025-05-12T08:47:53.880498Z"
       }
     },
     {
@@ -9397,7 +10931,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0803"
+        "name": "gateway-0803",
+        "alt": 63,
+        "updated": "2025-05-12T08:50:21.643394Z"
       }
     },
     {
@@ -9410,7 +10946,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0804"
+        "name": "gateway-0804",
+        "alt": 68,
+        "updated": "2025-05-12T08:47:31.717265Z"
       }
     },
     {
@@ -9423,7 +10961,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0805"
+        "name": "gateway-0805",
+        "alt": 53,
+        "updated": "2025-05-12T08:50:25.847281Z"
       }
     },
     {
@@ -9436,7 +10976,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0806"
+        "name": "gateway-0806",
+        "alt": 5,
+        "updated": "2025-05-12T08:50:57.588176Z"
       }
     },
     {
@@ -9449,7 +10991,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0807"
+        "name": "gateway-0807",
+        "alt": 40,
+        "updated": "2025-05-12T08:45:03.72549Z"
       }
     },
     {
@@ -9462,7 +11006,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0808"
+        "name": "gateway-0808",
+        "alt": 12,
+        "updated": "2025-05-12T08:55:21.747804Z"
       }
     },
     {
@@ -9475,7 +11021,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0809"
+        "name": "gateway-0809",
+        "alt": 47,
+        "updated": "2025-05-12T08:50:59.956749Z"
       }
     },
     {
@@ -9488,7 +11036,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0810"
+        "name": "gateway-0810",
+        "alt": 48,
+        "updated": "2025-05-12T08:48:39.858327Z"
       }
     },
     {
@@ -9501,7 +11051,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0811"
+        "name": "gateway-0811",
+        "alt": 21,
+        "updated": "2025-05-12T08:50:09.768742Z"
       }
     },
     {
@@ -9514,7 +11066,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0812"
+        "name": "gateway-0812",
+        "alt": 24,
+        "updated": "2025-05-12T08:55:01.622402Z"
       }
     },
     {
@@ -9527,7 +11081,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0813"
+        "name": "gateway-0813",
+        "alt": 24,
+        "updated": "2025-05-12T08:53:45.496865Z"
       }
     },
     {
@@ -9540,7 +11096,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0814"
+        "name": "gateway-0814",
+        "alt": 31,
+        "updated": "2025-05-12T08:49:03.453909Z"
       }
     },
     {
@@ -9553,7 +11111,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0815"
+        "name": "gateway-0815",
+        "alt": 22,
+        "updated": "2025-05-12T08:50:23.741063Z"
       }
     },
     {
@@ -9566,7 +11126,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0816"
+        "name": "gateway-0816",
+        "alt": 42,
+        "updated": "2025-05-12T08:54:41.885953Z"
       }
     },
     {
@@ -9579,7 +11141,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0817"
+        "name": "gateway-0817",
+        "alt": 38,
+        "updated": "2025-05-12T08:44:51.87404Z"
       }
     },
     {
@@ -9592,7 +11156,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0818"
+        "name": "gateway-0818",
+        "alt": 51,
+        "updated": "2025-05-12T08:46:23.988927Z"
       }
     },
     {
@@ -9605,7 +11171,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0819"
+        "name": "gateway-0819",
+        "alt": 35,
+        "updated": "2025-05-12T08:46:19.616507Z"
       }
     },
     {
@@ -9618,7 +11186,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0820"
+        "name": "gateway-0820",
+        "alt": 11,
+        "updated": "2025-05-12T08:49:29.543207Z"
       }
     },
     {
@@ -9631,7 +11201,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0821"
+        "name": "gateway-0821",
+        "alt": 10,
+        "updated": "2025-05-12T08:48:51.3743Z"
       }
     },
     {
@@ -9644,7 +11216,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0822"
+        "name": "gateway-0822",
+        "alt": 27,
+        "updated": "2025-05-12T08:53:21.687385Z"
       }
     },
     {
@@ -9657,7 +11231,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0823"
+        "name": "gateway-0823",
+        "alt": 33,
+        "updated": "2025-05-12T08:48:31.594573Z"
       }
     },
     {
@@ -9670,7 +11246,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0824"
+        "name": "gateway-0824",
+        "alt": 72,
+        "updated": "2025-05-12T08:49:29.883551Z"
       }
     },
     {
@@ -9683,7 +11261,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0825"
+        "name": "gateway-0825",
+        "alt": 57,
+        "updated": "2025-05-12T08:49:39.558295Z"
       }
     },
     {
@@ -9696,7 +11276,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0826"
+        "name": "gateway-0826",
+        "alt": 36,
+        "updated": "2025-05-12T08:54:25.887225Z"
       }
     },
     {
@@ -9709,7 +11291,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0827"
+        "name": "gateway-0827",
+        "alt": 0,
+        "updated": "2024-04-02T08:29:02.205293Z"
       }
     },
     {
@@ -9722,7 +11306,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0828"
+        "name": "gateway-0828",
+        "alt": 51,
+        "updated": "2025-05-12T08:46:14.399519Z"
       }
     },
     {
@@ -9735,7 +11321,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0829"
+        "name": "gateway-0829",
+        "alt": 35,
+        "updated": "2025-05-12T08:52:31.556347Z"
       }
     },
     {
@@ -9748,7 +11336,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0830"
+        "name": "gateway-0830",
+        "alt": 39,
+        "updated": "2025-05-12T08:48:59.793495Z"
       }
     },
     {
@@ -9761,7 +11351,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0831"
+        "name": "gateway-0831",
+        "alt": 60,
+        "updated": "2024-08-29T04:00:33.938285Z"
       }
     },
     {
@@ -9774,7 +11366,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0832"
+        "name": "gateway-0832",
+        "alt": 20,
+        "updated": "2025-05-12T08:48:37.502304Z"
       }
     },
     {
@@ -9787,7 +11381,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0833"
+        "name": "gateway-0833",
+        "alt": 15,
+        "updated": "2025-05-12T08:46:27.879323Z"
       }
     },
     {
@@ -9800,7 +11396,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0834"
+        "name": "gateway-0834",
+        "alt": 58,
+        "updated": "2025-05-12T08:50:13.962937Z"
       }
     },
     {
@@ -9813,7 +11411,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0835"
+        "name": "gateway-0835",
+        "alt": 11,
+        "updated": "2025-05-12T08:50:57.627001Z"
       }
     },
     {
@@ -9826,7 +11426,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0836"
+        "name": "gateway-0836",
+        "alt": 15,
+        "updated": "2025-05-12T08:51:09.506064Z"
       }
     },
     {
@@ -9839,7 +11441,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0837"
+        "name": "gateway-0837",
+        "alt": 40,
+        "updated": "2025-05-12T08:49:09.66699Z"
       }
     },
     {
@@ -9852,7 +11456,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0838"
+        "name": "gateway-0838",
+        "alt": 6,
+        "updated": "2021-10-13T17:36:55.433759Z"
       }
     },
     {
@@ -9865,7 +11471,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0839"
+        "name": "gateway-0839",
+        "alt": 0,
+        "updated": "2024-08-01T15:16:26.203778Z"
       }
     },
     {
@@ -9878,7 +11486,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0840"
+        "name": "gateway-0840",
+        "alt": 0,
+        "updated": "2025-05-12T08:46:14.176855Z"
       }
     },
     {
@@ -9891,7 +11501,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0841"
+        "name": "gateway-0841",
+        "alt": 0,
+        "updated": "2023-10-05T11:45:05.894965Z"
       }
     },
     {
@@ -9904,7 +11516,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0842"
+        "name": "gateway-0842",
+        "alt": 17,
+        "updated": "2022-09-16T12:02:05.846529Z"
       }
     },
     {
@@ -9917,7 +11531,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0843"
+        "name": "gateway-0843",
+        "alt": 10,
+        "updated": "2024-08-14T16:06:56.51374Z"
       }
     },
     {
@@ -9930,7 +11546,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0845"
+        "name": "gateway-0845",
+        "alt": 2,
+        "updated": "2022-12-12T16:31:31.348857Z"
       }
     },
     {
@@ -9943,7 +11561,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0846"
+        "name": "gateway-0846",
+        "alt": 0,
+        "updated": "2025-05-12T08:54:25.905291Z"
       }
     },
     {
@@ -9956,7 +11576,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0848"
+        "name": "gateway-0848",
+        "alt": 12,
+        "updated": "2025-05-12T08:51:05.71459Z"
       }
     },
     {
@@ -9969,7 +11591,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0850"
+        "name": "gateway-0850",
+        "alt": 2,
+        "updated": "2023-03-08T18:22:53.374696Z"
       }
     },
     {
@@ -9982,7 +11606,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0851"
+        "name": "gateway-0851",
+        "alt": 36,
+        "updated": "2023-03-29T11:01:41.360493Z"
       }
     },
     {
@@ -9995,7 +11621,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0852"
+        "name": "gateway-0852",
+        "alt": 9,
+        "updated": "2025-04-30T05:58:35.072782Z"
       }
     },
     {
@@ -10008,7 +11636,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0854"
+        "name": "gateway-0854",
+        "alt": 12,
+        "updated": "2023-02-25T18:30:09.551357Z"
       }
     },
     {
@@ -10021,7 +11651,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0855"
+        "name": "gateway-0855",
+        "alt": 0,
+        "updated": "2022-10-26T17:02:23.732825Z"
       }
     },
     {
@@ -10034,7 +11666,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0856"
+        "name": "gateway-0856",
+        "alt": 8,
+        "updated": "2024-02-28T20:35:39.35285Z"
       }
     },
     {
@@ -10047,7 +11681,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0857"
+        "name": "gateway-0857",
+        "alt": 11,
+        "updated": "2025-05-12T08:50:37.657528Z"
       }
     },
     {
@@ -10060,7 +11696,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0858"
+        "name": "gateway-0858",
+        "alt": 35,
+        "updated": "2025-05-12T08:50:03.58103Z"
       }
     },
     {
@@ -10073,7 +11711,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0859"
+        "name": "gateway-0859",
+        "alt": 41,
+        "updated": "2024-03-30T21:25:26.215585Z"
       }
     },
     {
@@ -10086,7 +11726,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0861"
+        "name": "gateway-0861",
+        "alt": 20,
+        "updated": "2025-05-12T08:53:41.668898Z"
       }
     },
     {
@@ -10099,7 +11741,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0862"
+        "name": "gateway-0862",
+        "alt": 7,
+        "updated": "2025-05-12T08:50:29.900038Z"
       }
     },
     {
@@ -10112,7 +11756,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0864"
+        "name": "gateway-0864",
+        "alt": 0,
+        "updated": "2024-06-19T18:43:36.337404Z"
       }
     },
     {
@@ -10125,7 +11771,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0865"
+        "name": "gateway-0865",
+        "alt": 6,
+        "updated": "2023-05-11T19:09:02.236867Z"
       }
     },
     {
@@ -10138,7 +11786,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0866"
+        "name": "gateway-0866",
+        "alt": 25,
+        "updated": "2025-05-12T08:51:23.877481Z"
       }
     },
     {
@@ -10151,7 +11801,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0867"
+        "name": "gateway-0867",
+        "alt": 38,
+        "updated": "2025-05-12T08:49:51.534119Z"
       }
     },
     {
@@ -10164,7 +11816,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0868"
+        "name": "gateway-0868",
+        "alt": 20,
+        "updated": "2025-05-12T08:47:21.768723Z"
       }
     },
     {
@@ -10177,7 +11831,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0871"
+        "name": "gateway-0871",
+        "alt": 43,
+        "updated": "2024-02-20T14:35:38.876309Z"
       }
     },
     {
@@ -10190,7 +11846,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0872"
+        "name": "gateway-0872",
+        "alt": 43,
+        "updated": "2024-02-26T17:23:51.357258Z"
       }
     },
     {
@@ -10203,7 +11861,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0874"
+        "name": "gateway-0874",
+        "alt": 0,
+        "updated": "2025-05-12T08:47:07.755345Z"
       }
     },
     {
@@ -10216,7 +11876,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0876"
+        "name": "gateway-0876",
+        "alt": 10,
+        "updated": "2025-05-12T08:46:29.891873Z"
       }
     },
     {
@@ -10229,7 +11891,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0877"
+        "name": "gateway-0877",
+        "alt": 0,
+        "updated": "2025-05-12T08:53:31.75916Z"
       }
     },
     {
@@ -10242,7 +11906,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0878"
+        "name": "gateway-0878",
+        "alt": 11,
+        "updated": "2025-05-12T08:48:51.277336Z"
       }
     },
     {
@@ -10255,7 +11921,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0879"
+        "name": "gateway-0879",
+        "alt": 0,
+        "updated": "2023-09-03T13:36:05.901135Z"
       }
     },
     {
@@ -10268,7 +11936,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0880"
+        "name": "gateway-0880",
+        "alt": 23,
+        "updated": "2025-05-12T08:53:19.757919Z"
       }
     },
     {
@@ -10281,7 +11951,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0881"
+        "name": "gateway-0881",
+        "alt": 0,
+        "updated": "2024-08-04T13:51:48.149927Z"
       }
     },
     {
@@ -10294,7 +11966,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0882"
+        "name": "gateway-0882",
+        "alt": 15,
+        "updated": "2023-12-10T05:23:04.882521Z"
       }
     },
     {
@@ -10307,7 +11981,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0883"
+        "name": "gateway-0883",
+        "alt": 22,
+        "updated": "2025-05-12T08:52:17.5165Z"
       }
     },
     {
@@ -10320,7 +11996,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0884"
+        "name": "gateway-0884",
+        "alt": 8,
+        "updated": "2025-05-12T08:52:37.630218Z"
       }
     },
     {
@@ -10333,7 +12011,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0885"
+        "name": "gateway-0885",
+        "alt": 0,
+        "updated": "2023-10-02T16:45:52.658216Z"
       }
     },
     {
@@ -10346,7 +12026,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0887"
+        "name": "gateway-0887",
+        "alt": 45,
+        "updated": "2025-05-12T08:53:07.475701Z"
       }
     },
     {
@@ -10359,7 +12041,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0890"
+        "name": "gateway-0890",
+        "alt": 0,
+        "updated": "2025-05-12T08:47:39.501337Z"
       }
     },
     {
@@ -10372,7 +12056,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0891"
+        "name": "gateway-0891",
+        "alt": 8,
+        "updated": "2024-06-17T06:13:28.188319Z"
       }
     },
     {
@@ -10385,7 +12071,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0893"
+        "name": "gateway-0893",
+        "alt": 43,
+        "updated": "2024-06-04T18:18:34.235863Z"
       }
     },
     {
@@ -10398,7 +12086,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0895"
+        "name": "gateway-0895",
+        "alt": 0,
+        "updated": "2024-05-28T12:15:48.370605Z"
       }
     },
     {
@@ -10411,7 +12101,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0896"
+        "name": "gateway-0896",
+        "alt": 5,
+        "updated": "2024-07-12T17:44:46.213839Z"
       }
     },
     {
@@ -10424,7 +12116,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0897"
+        "name": "gateway-0897",
+        "alt": 21,
+        "updated": "2025-03-11T14:32:39.301543Z"
       }
     },
     {
@@ -10437,7 +12131,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0898"
+        "name": "gateway-0898",
+        "alt": 21,
+        "updated": "2023-06-08T12:13:43.979218Z"
       }
     },
     {
@@ -10450,7 +12146,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0899"
+        "name": "gateway-0899",
+        "alt": 50,
+        "updated": "2025-05-12T08:46:43.890262Z"
       }
     },
     {
@@ -10463,7 +12161,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0900"
+        "name": "gateway-0900",
+        "alt": 0,
+        "updated": "2022-11-07T08:55:36.813974Z"
       }
     },
     {
@@ -10476,7 +12176,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0901"
+        "name": "gateway-0901",
+        "alt": 0,
+        "updated": "2021-07-10T10:52:16.409976Z"
       }
     },
     {
@@ -10489,7 +12191,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0902"
+        "name": "gateway-0902",
+        "alt": 0,
+        "updated": "2025-01-31T12:05:23.228003Z"
       }
     },
     {
@@ -10502,7 +12206,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0904"
+        "name": "gateway-0904",
+        "alt": 6,
+        "updated": "2022-10-10T05:33:37.737105Z"
       }
     },
     {
@@ -10515,7 +12221,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0905"
+        "name": "gateway-0905",
+        "alt": 9,
+        "updated": "2025-05-12T08:47:55.749563Z"
       }
     },
     {
@@ -10528,7 +12236,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0906"
+        "name": "gateway-0906",
+        "alt": 5,
+        "updated": "2025-05-12T08:55:04.068319Z"
       }
     },
     {
@@ -10541,7 +12251,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0907"
+        "name": "gateway-0907",
+        "alt": 22,
+        "updated": "2024-10-21T05:33:44.320725Z"
       }
     },
     {
@@ -10554,7 +12266,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0908"
+        "name": "gateway-0908",
+        "alt": 0,
+        "updated": "2024-06-24T13:58:40.219479Z"
       }
     },
     {
@@ -10567,7 +12281,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0909"
+        "name": "gateway-0909",
+        "alt": 10,
+        "updated": "2025-05-12T08:53:41.655201Z"
       }
     },
     {
@@ -10580,7 +12296,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0910"
+        "name": "gateway-0910",
+        "alt": 44,
+        "updated": "2022-09-10T01:36:09.144176Z"
       }
     },
     {
@@ -10593,7 +12311,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0911"
+        "name": "gateway-0911",
+        "alt": 5,
+        "updated": "2024-03-24T17:48:05.046157Z"
       }
     },
     {
@@ -10606,7 +12326,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0912"
+        "name": "gateway-0912",
+        "alt": 10,
+        "updated": "2024-01-19T09:07:19.346773Z"
       }
     },
     {
@@ -10619,7 +12341,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0914"
+        "name": "gateway-0914",
+        "alt": 34,
+        "updated": "2022-01-15T14:09:11.035676Z"
       }
     },
     {
@@ -10632,7 +12356,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0916"
+        "name": "gateway-0916",
+        "alt": 20,
+        "updated": "2025-05-12T08:48:21.84712Z"
       }
     },
     {
@@ -10645,7 +12371,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0917"
+        "name": "gateway-0917",
+        "alt": 14,
+        "updated": "2024-03-11T11:20:33.067271Z"
       }
     },
     {
@@ -10658,7 +12386,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0918"
+        "name": "gateway-0918",
+        "alt": 12,
+        "updated": "2023-02-16T13:12:39.367847Z"
       }
     },
     {
@@ -10671,7 +12401,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0919"
+        "name": "gateway-0919",
+        "alt": 5,
+        "updated": "2022-10-13T07:47:37.728215Z"
       }
     },
     {
@@ -10684,7 +12416,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0920"
+        "name": "gateway-0920",
+        "alt": 7,
+        "updated": "2025-05-12T08:49:41.678735Z"
       }
     },
     {
@@ -10697,7 +12431,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0921"
+        "name": "gateway-0921",
+        "alt": 0,
+        "updated": "2025-01-02T17:15:44.94277Z"
       }
     },
     {
@@ -10710,7 +12446,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0922"
+        "name": "gateway-0922",
+        "alt": 20,
+        "updated": "2025-05-12T08:53:01.852767Z"
       }
     },
     {
@@ -10723,7 +12461,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0923"
+        "name": "gateway-0923",
+        "alt": 15,
+        "updated": "2024-08-30T08:47:20.191512Z"
       }
     },
     {
@@ -10736,7 +12476,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0925"
+        "name": "gateway-0925",
+        "alt": 50,
+        "updated": "2023-01-14T13:51:05.360093Z"
       }
     },
     {
@@ -10749,7 +12491,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0926"
+        "name": "gateway-0926",
+        "alt": 21,
+        "updated": "2023-10-15T16:38:12.663424Z"
       }
     },
     {
@@ -10762,7 +12506,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0927"
+        "name": "gateway-0927",
+        "alt": 27,
+        "updated": "2025-05-12T08:52:49.58794Z"
       }
     },
     {
@@ -10775,7 +12521,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0928"
+        "name": "gateway-0928",
+        "alt": 20,
+        "updated": "2022-11-01T11:17:21.070361Z"
       }
     },
     {
@@ -10788,7 +12536,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0929"
+        "name": "gateway-0929",
+        "alt": 0,
+        "updated": "2025-05-12T08:53:51.652568Z"
       }
     },
     {
@@ -10801,7 +12551,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0930"
+        "name": "gateway-0930",
+        "alt": 0,
+        "updated": "2024-05-06T03:01:44.256859Z"
       }
     },
     {
@@ -10814,7 +12566,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0931"
+        "name": "gateway-0931",
+        "alt": 0,
+        "updated": "2024-06-13T20:44:10.262955Z"
       }
     },
     {
@@ -10827,7 +12581,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0934"
+        "name": "gateway-0934",
+        "alt": 9,
+        "updated": "2024-04-29T13:36:18.216388Z"
       }
     },
     {
@@ -10840,7 +12596,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0935"
+        "name": "gateway-0935",
+        "alt": 26,
+        "updated": "2023-11-19T08:56:15.338895Z"
       }
     },
     {
@@ -10853,7 +12611,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0937"
+        "name": "gateway-0937",
+        "alt": 0,
+        "updated": "2025-05-05T14:45:45.021748Z"
       }
     },
     {
@@ -10866,7 +12626,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0938"
+        "name": "gateway-0938",
+        "alt": 0,
+        "updated": "2025-01-29T17:45:05.416231Z"
       }
     },
     {
@@ -10879,7 +12641,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0940"
+        "name": "gateway-0940",
+        "alt": 0,
+        "updated": "2022-11-13T20:05:51.357432Z"
       }
     },
     {
@@ -10892,7 +12656,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0941"
+        "name": "gateway-0941",
+        "alt": 0,
+        "updated": "2022-05-08T19:38:39.726786Z"
       }
     },
     {
@@ -10905,7 +12671,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0942"
+        "name": "gateway-0942",
+        "alt": 0,
+        "updated": "2025-05-12T08:51:17.619102Z"
       }
     },
     {
@@ -10918,7 +12686,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0943"
+        "name": "gateway-0943",
+        "alt": 0,
+        "updated": "2022-05-21T16:04:37.440974Z"
       }
     },
     {
@@ -10931,7 +12701,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0944"
+        "name": "gateway-0944",
+        "alt": 18,
+        "updated": "2024-06-19T08:08:00.205831Z"
       }
     },
     {
@@ -10944,7 +12716,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0945"
+        "name": "gateway-0945",
+        "alt": 25,
+        "updated": "2025-05-12T08:47:29.55518Z"
       }
     },
     {
@@ -10957,7 +12731,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0946"
+        "name": "gateway-0946",
+        "alt": 32,
+        "updated": "2025-05-12T08:55:01.660556Z"
       }
     },
     {
@@ -10970,7 +12746,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0947"
+        "name": "gateway-0947",
+        "alt": 32,
+        "updated": "2021-09-20T09:07:19.282638Z"
       }
     },
     {
@@ -10983,7 +12761,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0948"
+        "name": "gateway-0948",
+        "alt": 55,
+        "updated": "2022-01-28T09:15:50.171824Z"
       }
     },
     {
@@ -10996,7 +12776,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0949"
+        "name": "gateway-0949",
+        "alt": 6,
+        "updated": "2022-02-01T09:23:27.568274Z"
       }
     },
     {
@@ -11009,7 +12791,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0950"
+        "name": "gateway-0950",
+        "alt": 10,
+        "updated": "2025-05-12T08:51:23.468425Z"
       }
     },
     {
@@ -11022,7 +12806,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0951"
+        "name": "gateway-0951",
+        "alt": 13,
+        "updated": "2025-05-12T08:50:47.786079Z"
       }
     },
     {
@@ -11035,7 +12821,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0952"
+        "name": "gateway-0952",
+        "alt": 7,
+        "updated": "2025-05-12T08:51:19.680845Z"
       }
     },
     {
@@ -11048,7 +12836,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0953"
+        "name": "gateway-0953",
+        "alt": 32,
+        "updated": "2025-01-25T07:25:35.157332Z"
       }
     },
     {
@@ -11061,7 +12851,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0954"
+        "name": "gateway-0954",
+        "alt": 40,
+        "updated": "2023-01-01T20:03:51.353374Z"
       }
     },
     {
@@ -11074,7 +12866,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0955"
+        "name": "gateway-0955",
+        "alt": 0,
+        "updated": "2023-07-04T16:12:20.161878Z"
       }
     },
     {
@@ -11087,7 +12881,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0956"
+        "name": "gateway-0956",
+        "alt": 10,
+        "updated": "2025-05-12T08:54:45.765393Z"
       }
     },
     {
@@ -11100,7 +12896,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0957"
+        "name": "gateway-0957",
+        "alt": 10,
+        "updated": "2022-10-16T23:51:41.733373Z"
       }
     },
     {
@@ -11113,7 +12911,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0958"
+        "name": "gateway-0958",
+        "alt": 30,
+        "updated": "2025-05-12T08:47:13.859246Z"
       }
     },
     {
@@ -11126,7 +12926,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0959"
+        "name": "gateway-0959",
+        "alt": 24,
+        "updated": "2025-05-12T08:48:23.70936Z"
       }
     },
     {
@@ -11139,7 +12941,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0960"
+        "name": "gateway-0960",
+        "alt": 13,
+        "updated": "2025-05-12T08:54:53.772085Z"
       }
     },
     {
@@ -11152,7 +12956,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0961"
+        "name": "gateway-0961",
+        "alt": 22,
+        "updated": "2025-05-12T08:54:03.659071Z"
       }
     },
     {
@@ -11165,7 +12971,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0962"
+        "name": "gateway-0962",
+        "alt": 0,
+        "updated": "2022-06-22T19:00:39.836381Z"
       }
     },
     {
@@ -11178,7 +12986,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0964"
+        "name": "gateway-0964",
+        "alt": -14,
+        "updated": "2021-12-26T08:05:29.327841Z"
       }
     },
     {
@@ -11191,7 +13001,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0965"
+        "name": "gateway-0965",
+        "alt": 13,
+        "updated": "2025-05-12T08:46:49.644682Z"
       }
     },
     {
@@ -11204,7 +13016,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0966"
+        "name": "gateway-0966",
+        "alt": 0,
+        "updated": "2021-08-13T15:27:41.093217Z"
       }
     },
     {
@@ -11217,7 +13031,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0967"
+        "name": "gateway-0967",
+        "alt": 10,
+        "updated": "2023-09-11T07:12:58.667642Z"
       }
     },
     {
@@ -11230,7 +13046,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0968"
+        "name": "gateway-0968",
+        "alt": 46,
+        "updated": "2024-07-30T08:37:20.274398Z"
       }
     },
     {
@@ -11243,7 +13061,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0970"
+        "name": "gateway-0970",
+        "alt": 14,
+        "updated": "2025-05-08T08:49:07.897322Z"
       }
     },
     {
@@ -11256,7 +13076,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0971"
+        "name": "gateway-0971",
+        "alt": 0,
+        "updated": "2022-03-12T18:50:31.53129Z"
       }
     },
     {
@@ -11269,7 +13091,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0973"
+        "name": "gateway-0973",
+        "alt": 20,
+        "updated": "2022-03-03T15:42:07.442651Z"
       }
     },
     {
@@ -11282,7 +13106,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0982"
+        "name": "gateway-0982",
+        "alt": 0,
+        "updated": "2024-05-06T15:45:54.307336Z"
       }
     },
     {
@@ -11295,7 +13121,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0983"
+        "name": "gateway-0983",
+        "alt": 5,
+        "updated": "2024-09-25T13:03:52.212866Z"
       }
     },
     {
@@ -11308,7 +13136,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0985"
+        "name": "gateway-0985",
+        "alt": 13,
+        "updated": "2024-08-05T02:28:58.241057Z"
       }
     },
     {
@@ -11321,7 +13151,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0986"
+        "name": "gateway-0986",
+        "alt": 0,
+        "updated": "2025-03-23T13:41:53.404864Z"
       }
     },
     {
@@ -11334,7 +13166,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0987"
+        "name": "gateway-0987",
+        "alt": 0,
+        "updated": "2024-07-26T09:24:54.20817Z"
       }
     },
     {
@@ -11347,7 +13181,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0988"
+        "name": "gateway-0988",
+        "alt": 0,
+        "updated": "2025-05-02T13:52:42.845882Z"
       }
     },
     {
@@ -11360,7 +13196,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0989"
+        "name": "gateway-0989",
+        "alt": 15,
+        "updated": "2025-05-12T08:50:35.481935Z"
       }
     },
     {
@@ -11373,7 +13211,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0990"
+        "name": "gateway-0990",
+        "alt": 23,
+        "updated": "2025-05-12T08:47:43.603845Z"
       }
     },
     {
@@ -11386,7 +13226,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0991"
+        "name": "gateway-0991",
+        "alt": 0,
+        "updated": "2025-05-12T08:50:31.61738Z"
       }
     },
     {
@@ -11399,7 +13241,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0992"
+        "name": "gateway-0992",
+        "alt": 6,
+        "updated": "2025-05-12T08:50:53.707213Z"
       }
     },
     {
@@ -11412,7 +13256,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0993"
+        "name": "gateway-0993",
+        "alt": 4,
+        "updated": "2022-06-03T19:03:17.30689Z"
       }
     },
     {
@@ -11425,7 +13271,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0994"
+        "name": "gateway-0994",
+        "alt": 0,
+        "updated": "2025-05-12T08:51:35.699749Z"
       }
     },
     {
@@ -11438,7 +13286,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0995"
+        "name": "gateway-0995",
+        "alt": 9,
+        "updated": "2025-05-12T08:51:49.763634Z"
       }
     },
     {
@@ -11451,7 +13301,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0996"
+        "name": "gateway-0996",
+        "alt": 3,
+        "updated": "2025-05-12T08:46:16.816947Z"
       }
     },
     {
@@ -11464,7 +13316,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0997"
+        "name": "gateway-0997",
+        "alt": 24,
+        "updated": "2025-05-12T08:53:41.668408Z"
       }
     },
     {
@@ -11477,7 +13331,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0998"
+        "name": "gateway-0998",
+        "alt": 0,
+        "updated": "2025-05-12T08:50:14.193271Z"
       }
     },
     {
@@ -11490,7 +13346,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-0999"
+        "name": "gateway-0999",
+        "alt": -4,
+        "updated": "2024-11-21T07:50:27.13483Z"
       }
     },
     {
@@ -11503,7 +13361,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1000"
+        "name": "gateway-1000",
+        "alt": 2,
+        "updated": "2021-10-30T18:06:01.005568Z"
       }
     },
     {
@@ -11516,7 +13376,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1003"
+        "name": "gateway-1003",
+        "alt": 10,
+        "updated": "2022-10-17T20:08:55.828136Z"
       }
     },
     {
@@ -11529,7 +13391,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1004"
+        "name": "gateway-1004",
+        "alt": 10,
+        "updated": "2025-05-12T08:48:37.884228Z"
       }
     },
     {
@@ -11542,7 +13406,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1005"
+        "name": "gateway-1005",
+        "alt": 15,
+        "updated": "2022-09-11T13:58:05.048306Z"
       }
     },
     {
@@ -11555,7 +13421,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1006"
+        "name": "gateway-1006",
+        "alt": 55,
+        "updated": "2021-12-18T07:26:57.707524Z"
       }
     },
     {
@@ -11568,7 +13436,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1007"
+        "name": "gateway-1007",
+        "alt": 0,
+        "updated": "2021-10-10T13:45:19.359836Z"
       }
     },
     {
@@ -11581,7 +13451,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1008"
+        "name": "gateway-1008",
+        "alt": 4,
+        "updated": "2025-05-12T08:46:41.588546Z"
       }
     },
     {
@@ -11594,7 +13466,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1010"
+        "name": "gateway-1010",
+        "alt": 15,
+        "updated": "2024-01-23T20:46:35.356506Z"
       }
     },
     {
@@ -11607,7 +13481,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1011"
+        "name": "gateway-1011",
+        "alt": 25,
+        "updated": "2025-05-12T08:54:01.882996Z"
       }
     },
     {
@@ -11620,7 +13496,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1012"
+        "name": "gateway-1012",
+        "alt": 10,
+        "updated": "2023-07-27T13:04:07.328759Z"
       }
     },
     {
@@ -11633,7 +13511,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1013"
+        "name": "gateway-1013",
+        "alt": 15,
+        "updated": "2023-07-04T18:19:39.329822Z"
       }
     },
     {
@@ -11646,7 +13526,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1014"
+        "name": "gateway-1014",
+        "alt": 0,
+        "updated": "2023-03-25T10:52:42.192719Z"
       }
     },
     {
@@ -11659,7 +13541,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1016"
+        "name": "gateway-1016",
+        "alt": 0,
+        "updated": "2025-05-12T08:48:11.618645Z"
       }
     },
     {
@@ -11672,7 +13556,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1017"
+        "name": "gateway-1017",
+        "alt": 15,
+        "updated": "2024-09-11T21:45:04.209133Z"
       }
     },
     {
@@ -11685,7 +13571,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1019"
+        "name": "gateway-1019",
+        "alt": -1,
+        "updated": "2025-05-12T08:48:53.759566Z"
       }
     },
     {
@@ -11698,7 +13586,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1020"
+        "name": "gateway-1020",
+        "alt": 30,
+        "updated": "2025-05-12T08:54:19.829223Z"
       }
     },
     {
@@ -11711,7 +13601,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1021"
+        "name": "gateway-1021",
+        "alt": 5,
+        "updated": "2024-12-25T17:08:13.178351Z"
       }
     },
     {
@@ -11724,7 +13616,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1023"
+        "name": "gateway-1023",
+        "alt": 0,
+        "updated": "2021-11-23T18:46:07.791139Z"
       }
     },
     {
@@ -11737,7 +13631,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1024"
+        "name": "gateway-1024",
+        "alt": 10,
+        "updated": "2024-03-06T11:04:02.898115Z"
       }
     },
     {
@@ -11750,7 +13646,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1025"
+        "name": "gateway-1025",
+        "alt": 8,
+        "updated": "2025-05-12T08:47:33.685695Z"
       }
     },
     {
@@ -11763,7 +13661,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1028"
+        "name": "gateway-1028",
+        "alt": 25,
+        "updated": "2025-05-12T08:46:59.50086Z"
       }
     },
     {
@@ -11776,7 +13676,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1029"
+        "name": "gateway-1029",
+        "alt": 18,
+        "updated": "2025-01-31T09:22:38.892137Z"
       }
     },
     {
@@ -11789,7 +13691,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1030"
+        "name": "gateway-1030",
+        "alt": 300,
+        "updated": "2024-04-27T21:47:44.197892Z"
       }
     },
     {
@@ -11802,7 +13706,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1031"
+        "name": "gateway-1031",
+        "alt": 39,
+        "updated": "2021-09-19T13:16:27.308992Z"
       }
     },
     {
@@ -11815,7 +13721,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1035"
+        "name": "gateway-1035",
+        "alt": 36,
+        "updated": "2024-06-05T06:45:14.203257Z"
       }
     },
     {
@@ -11828,7 +13736,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1036"
+        "name": "gateway-1036",
+        "alt": 5,
+        "updated": "2022-05-09T08:43:45.542535Z"
       }
     },
     {
@@ -11841,7 +13751,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1039"
+        "name": "gateway-1039",
+        "alt": 0,
+        "updated": "2024-08-02T19:30:34.241925Z"
       }
     },
     {
@@ -11854,7 +13766,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1040"
+        "name": "gateway-1040",
+        "alt": 14,
+        "updated": "2024-08-10T12:23:34.20077Z"
       }
     },
     {
@@ -11867,7 +13781,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1041"
+        "name": "gateway-1041",
+        "alt": 30,
+        "updated": "2025-05-12T08:47:45.457746Z"
       }
     },
     {
@@ -11880,7 +13796,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1042"
+        "name": "gateway-1042",
+        "alt": 1,
+        "updated": "2025-04-27T06:53:06.964461Z"
       }
     },
     {
@@ -11893,7 +13811,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1043"
+        "name": "gateway-1043",
+        "alt": 0,
+        "updated": "2025-05-12T08:45:45.579152Z"
       }
     },
     {
@@ -11906,7 +13826,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1044"
+        "name": "gateway-1044",
+        "alt": 5,
+        "updated": "2023-10-24T17:15:03.882691Z"
       }
     },
     {
@@ -11919,7 +13841,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1045"
+        "name": "gateway-1045",
+        "alt": 44,
+        "updated": "2025-05-12T08:47:28.275285Z"
       }
     },
     {
@@ -11932,7 +13856,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1046"
+        "name": "gateway-1046",
+        "alt": 0,
+        "updated": "2025-04-11T15:45:13.14438Z"
       }
     },
     {
@@ -11945,7 +13871,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1047"
+        "name": "gateway-1047",
+        "alt": 0,
+        "updated": "2022-07-21T15:33:17.1426Z"
       }
     },
     {
@@ -11958,7 +13886,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1048"
+        "name": "gateway-1048",
+        "alt": 0,
+        "updated": "2025-05-12T08:31:04.019147Z"
       }
     },
     {
@@ -11971,7 +13901,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1049"
+        "name": "gateway-1049",
+        "alt": 60,
+        "updated": "2025-05-12T08:53:15.306805Z"
       }
     },
     {
@@ -11984,7 +13916,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1050"
+        "name": "gateway-1050",
+        "alt": 55,
+        "updated": "2021-09-12T06:32:42.269037Z"
       }
     },
     {
@@ -11997,7 +13931,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1051"
+        "name": "gateway-1051",
+        "alt": 0,
+        "updated": "2022-07-01T16:48:15.748867Z"
       }
     },
     {
@@ -12010,7 +13946,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1052"
+        "name": "gateway-1052",
+        "alt": 15,
+        "updated": "2025-05-12T08:52:31.885853Z"
       }
     },
     {
@@ -12023,7 +13961,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1053"
+        "name": "gateway-1053",
+        "alt": 9,
+        "updated": "2024-01-25T22:21:07.340939Z"
       }
     },
     {
@@ -12036,7 +13976,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1054"
+        "name": "gateway-1054",
+        "alt": 30,
+        "updated": "2025-05-12T08:53:45.565021Z"
       }
     },
     {
@@ -12049,7 +13991,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1055"
+        "name": "gateway-1055",
+        "alt": 0,
+        "updated": "2025-05-12T08:48:51.28171Z"
       }
     },
     {
@@ -12062,7 +14006,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1056"
+        "name": "gateway-1056",
+        "alt": 5,
+        "updated": "2025-05-12T08:54:45.750836Z"
       }
     },
     {
@@ -12075,7 +14021,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1057"
+        "name": "gateway-1057",
+        "alt": 10,
+        "updated": "2023-10-27T23:28:35.864Z"
       }
     },
     {
@@ -12088,7 +14036,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1059"
+        "name": "gateway-1059",
+        "alt": 10,
+        "updated": "2025-05-12T08:53:59.827558Z"
       }
     },
     {
@@ -12101,7 +14051,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1061"
+        "name": "gateway-1061",
+        "alt": 23,
+        "updated": "2023-03-02T14:34:11.400183Z"
       }
     },
     {
@@ -12114,7 +14066,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1062"
+        "name": "gateway-1062",
+        "alt": 25,
+        "updated": "2023-04-02T12:55:59.373481Z"
       }
     },
     {
@@ -12127,7 +14081,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1064"
+        "name": "gateway-1064",
+        "alt": 10,
+        "updated": "2025-05-12T08:48:47.570287Z"
       }
     },
     {
@@ -12140,7 +14096,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1065"
+        "name": "gateway-1065",
+        "alt": 20,
+        "updated": "2022-12-13T14:33:39.337896Z"
       }
     },
     {
@@ -12153,7 +14111,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1066"
+        "name": "gateway-1066",
+        "alt": 15,
+        "updated": "2025-05-12T08:48:57.783485Z"
       }
     },
     {
@@ -12166,7 +14126,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1067"
+        "name": "gateway-1067",
+        "alt": 38,
+        "updated": "2021-09-13T15:44:40.213508Z"
       }
     },
     {
@@ -12179,7 +14141,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1068"
+        "name": "gateway-1068",
+        "alt": 2,
+        "updated": "2023-11-25T14:36:13.354008Z"
       }
     },
     {
@@ -12192,7 +14156,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1069"
+        "name": "gateway-1069",
+        "alt": 2,
+        "updated": "2025-05-12T08:52:49.583433Z"
       }
     },
     {
@@ -12205,7 +14171,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1070"
+        "name": "gateway-1070",
+        "alt": 15,
+        "updated": "2022-02-17T18:32:17.438034Z"
       }
     },
     {
@@ -12218,7 +14186,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1071"
+        "name": "gateway-1071",
+        "alt": 8,
+        "updated": "2025-05-12T08:53:13.899225Z"
       }
     },
     {
@@ -12231,7 +14201,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1072"
+        "name": "gateway-1072",
+        "alt": 42,
+        "updated": "2021-11-18T12:58:49.655904Z"
       }
     },
     {
@@ -12244,7 +14216,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1073"
+        "name": "gateway-1073",
+        "alt": 21,
+        "updated": "2025-04-21T14:00:01.31275Z"
       }
     },
     {
@@ -12257,7 +14231,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1075"
+        "name": "gateway-1075",
+        "alt": 25,
+        "updated": "2025-05-12T08:47:25.880672Z"
       }
     },
     {
@@ -12270,7 +14246,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1076"
+        "name": "gateway-1076",
+        "alt": 7,
+        "updated": "2025-01-13T17:43:04.849118Z"
       }
     },
     {
@@ -12283,7 +14261,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1077"
+        "name": "gateway-1077",
+        "alt": 5,
+        "updated": "2022-01-20T15:48:54.455542Z"
       }
     },
     {
@@ -12296,7 +14276,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1078"
+        "name": "gateway-1078",
+        "alt": 40,
+        "updated": "2025-05-12T08:47:03.668985Z"
       }
     },
     {
@@ -12309,7 +14291,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1080"
+        "name": "gateway-1080",
+        "alt": 0,
+        "updated": "2022-03-29T10:45:55.432487Z"
       }
     },
     {
@@ -12322,7 +14306,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1081"
+        "name": "gateway-1081",
+        "alt": 12,
+        "updated": "2025-03-27T20:03:43.138526Z"
       }
     },
     {
@@ -12335,7 +14321,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1082"
+        "name": "gateway-1082",
+        "alt": 4,
+        "updated": "2022-03-10T08:23:16.395486Z"
       }
     },
     {
@@ -12348,7 +14336,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1083"
+        "name": "gateway-1083",
+        "alt": 8,
+        "updated": "2023-10-25T14:17:15.914813Z"
       }
     },
     {
@@ -12361,7 +14351,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1084"
+        "name": "gateway-1084",
+        "alt": 0,
+        "updated": "2022-01-05T15:50:58.152091Z"
       }
     },
     {
@@ -12374,7 +14366,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1085"
+        "name": "gateway-1085",
+        "alt": 45,
+        "updated": "2025-05-12T08:52:37.637823Z"
       }
     },
     {
@@ -12387,7 +14381,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1086"
+        "name": "gateway-1086",
+        "alt": 24,
+        "updated": "2023-01-06T11:47:27.349285Z"
       }
     },
     {
@@ -12400,7 +14396,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1088"
+        "name": "gateway-1088",
+        "alt": 12,
+        "updated": "2025-01-06T09:45:59.079587Z"
       }
     },
     {
@@ -12413,7 +14411,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1089"
+        "name": "gateway-1089",
+        "alt": 10,
+        "updated": "2025-05-12T08:51:25.35193Z"
       }
     },
     {
@@ -12426,7 +14426,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1090"
+        "name": "gateway-1090",
+        "alt": 0,
+        "updated": "2023-12-30T11:59:57.355741Z"
       }
     },
     {
@@ -12439,7 +14441,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1094"
+        "name": "gateway-1094",
+        "alt": 0,
+        "updated": "2021-12-06T18:21:05.993731Z"
       }
     },
     {
@@ -12452,7 +14456,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1095"
+        "name": "gateway-1095",
+        "alt": 80,
+        "updated": "2025-05-12T08:52:57.660441Z"
       }
     },
     {
@@ -12465,7 +14471,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1096"
+        "name": "gateway-1096",
+        "alt": 10,
+        "updated": "2022-05-21T15:35:55.432773Z"
       }
     },
     {
@@ -12478,7 +14486,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1097"
+        "name": "gateway-1097",
+        "alt": 10,
+        "updated": "2025-04-15T16:34:54.925626Z"
       }
     },
     {
@@ -12491,7 +14501,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1098"
+        "name": "gateway-1098",
+        "alt": 0,
+        "updated": "2023-11-06T08:28:09.882581Z"
       }
     },
     {
@@ -12504,7 +14516,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1099"
+        "name": "gateway-1099",
+        "alt": 8,
+        "updated": "2025-05-12T08:48:13.607885Z"
       }
     },
     {
@@ -12517,7 +14531,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1101"
+        "name": "gateway-1101",
+        "alt": 2,
+        "updated": "2023-03-06T22:01:06.111735Z"
       }
     },
     {
@@ -12530,7 +14546,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1102"
+        "name": "gateway-1102",
+        "alt": 6,
+        "updated": "2023-04-07T15:20:05.367917Z"
       }
     },
     {
@@ -12543,7 +14561,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1103"
+        "name": "gateway-1103",
+        "alt": 0,
+        "updated": "2025-05-12T08:53:03.788485Z"
       }
     },
     {
@@ -12556,7 +14576,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1104"
+        "name": "gateway-1104",
+        "alt": 5,
+        "updated": "2025-05-12T08:52:08.034446Z"
       }
     },
     {
@@ -12569,7 +14591,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1105"
+        "name": "gateway-1105",
+        "alt": 25,
+        "updated": "2022-08-19T10:49:32.308022Z"
       }
     },
     {
@@ -12582,7 +14606,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1106"
+        "name": "gateway-1106",
+        "alt": 40,
+        "updated": "2025-05-12T08:51:04.217463Z"
       }
     },
     {
@@ -12595,7 +14621,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1107"
+        "name": "gateway-1107",
+        "alt": 6,
+        "updated": "2025-05-06T05:36:20.880048Z"
       }
     },
     {
@@ -12608,7 +14636,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1108"
+        "name": "gateway-1108",
+        "alt": 4,
+        "updated": "2025-05-12T08:50:47.790053Z"
       }
     },
     {
@@ -12621,7 +14651,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1109"
+        "name": "gateway-1109",
+        "alt": 33,
+        "updated": "2022-06-27T18:26:21.166056Z"
       }
     },
     {
@@ -12634,7 +14666,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1112"
+        "name": "gateway-1112",
+        "alt": 0,
+        "updated": "2025-05-12T08:54:37.721276Z"
       }
     },
     {
@@ -12647,7 +14681,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1114"
+        "name": "gateway-1114",
+        "alt": 0,
+        "updated": "2021-11-20T23:03:58.741126Z"
       }
     },
     {
@@ -12660,7 +14696,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1115"
+        "name": "gateway-1115",
+        "alt": 0,
+        "updated": "2025-03-10T23:04:53.363076Z"
       }
     },
     {
@@ -12673,7 +14711,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1116"
+        "name": "gateway-1116",
+        "alt": 16,
+        "updated": "2025-05-12T08:52:33.598745Z"
       }
     },
     {
@@ -12686,7 +14726,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1117"
+        "name": "gateway-1117",
+        "alt": 15,
+        "updated": "2022-11-26T17:00:05.420833Z"
       }
     },
     {
@@ -12699,7 +14741,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1118"
+        "name": "gateway-1118",
+        "alt": 46,
+        "updated": "2025-03-03T09:43:47.147818Z"
       }
     },
     {
@@ -12712,7 +14756,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1121"
+        "name": "gateway-1121",
+        "alt": 0,
+        "updated": "2021-09-17T21:00:26.097583Z"
       }
     },
     {
@@ -12725,7 +14771,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1124"
+        "name": "gateway-1124",
+        "alt": 21,
+        "updated": "2023-01-18T19:49:55.390535Z"
       }
     },
     {
@@ -12738,7 +14786,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1125"
+        "name": "gateway-1125",
+        "alt": 40,
+        "updated": "2025-05-12T08:49:27.524753Z"
       }
     },
     {
@@ -12751,7 +14801,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1126"
+        "name": "gateway-1126",
+        "alt": 10,
+        "updated": "2024-09-08T10:20:22.157004Z"
       }
     },
     {
@@ -12764,7 +14816,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1127"
+        "name": "gateway-1127",
+        "alt": 6,
+        "updated": "2025-01-01T12:44:41.35857Z"
       }
     },
     {
@@ -12777,7 +14831,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1128"
+        "name": "gateway-1128",
+        "alt": 25,
+        "updated": "2025-05-12T08:52:23.866499Z"
       }
     },
     {
@@ -12790,7 +14846,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1130"
+        "name": "gateway-1130",
+        "alt": 20,
+        "updated": "2025-05-12T08:51:26.037066Z"
       }
     },
     {
@@ -12803,7 +14861,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1131"
+        "name": "gateway-1131",
+        "alt": 25,
+        "updated": "2023-01-01T15:56:51.400617Z"
       }
     },
     {
@@ -12816,7 +14876,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1132"
+        "name": "gateway-1132",
+        "alt": 25,
+        "updated": "2025-03-21T18:42:07.303175Z"
       }
     },
     {
@@ -12829,7 +14891,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1133"
+        "name": "gateway-1133",
+        "alt": 40,
+        "updated": "2025-05-12T08:54:17.576509Z"
       }
     },
     {
@@ -12842,7 +14906,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1134"
+        "name": "gateway-1134",
+        "alt": 6,
+        "updated": "2024-01-31T08:41:47.337908Z"
       }
     },
     {
@@ -12855,7 +14921,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1135"
+        "name": "gateway-1135",
+        "alt": 26,
+        "updated": "2022-05-23T12:08:51.441677Z"
       }
     },
     {
@@ -12868,7 +14936,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1137"
+        "name": "gateway-1137",
+        "alt": 0,
+        "updated": "2025-05-12T08:48:53.747803Z"
       }
     },
     {
@@ -12881,7 +14951,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1138"
+        "name": "gateway-1138",
+        "alt": 3,
+        "updated": "2025-02-22T14:05:48.945132Z"
       }
     },
     {
@@ -12894,7 +14966,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1139"
+        "name": "gateway-1139",
+        "alt": 0,
+        "updated": "2025-05-12T08:48:53.665343Z"
       }
     },
     {
@@ -12907,7 +14981,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1141"
+        "name": "gateway-1141",
+        "alt": 9,
+        "updated": "2023-10-25T15:39:09.780659Z"
       }
     },
     {
@@ -12920,7 +14996,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1142"
+        "name": "gateway-1142",
+        "alt": 36,
+        "updated": "2024-05-27T18:59:14.276574Z"
       }
     },
     {
@@ -12933,7 +15011,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1144"
+        "name": "gateway-1144",
+        "alt": 25,
+        "updated": "2022-09-17T11:34:59.05281Z"
       }
     },
     {
@@ -12946,7 +15026,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1146"
+        "name": "gateway-1146",
+        "alt": 17,
+        "updated": "2025-05-12T08:48:19.879868Z"
       }
     },
     {
@@ -12959,7 +15041,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1151"
+        "name": "gateway-1151",
+        "alt": 24,
+        "updated": "2025-05-12T08:50:39.580846Z"
       }
     },
     {
@@ -12972,7 +15056,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1152"
+        "name": "gateway-1152",
+        "alt": 0,
+        "updated": "2025-01-12T17:26:33.462636Z"
       }
     },
     {
@@ -12985,7 +15071,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1153"
+        "name": "gateway-1153",
+        "alt": 17,
+        "updated": "2022-06-11T09:22:59.04703Z"
       }
     },
     {
@@ -12998,7 +15086,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1154"
+        "name": "gateway-1154",
+        "alt": 22,
+        "updated": "2024-10-02T12:16:47.979579Z"
       }
     },
     {
@@ -13011,7 +15101,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1155"
+        "name": "gateway-1155",
+        "alt": 20,
+        "updated": "2022-06-04T10:31:27.752612Z"
       }
     },
     {
@@ -13024,7 +15116,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1156"
+        "name": "gateway-1156",
+        "alt": 25,
+        "updated": "2025-05-12T08:50:21.536379Z"
       }
     },
     {
@@ -13037,7 +15131,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1157"
+        "name": "gateway-1157",
+        "alt": 25,
+        "updated": "2025-05-12T08:52:08.012034Z"
       }
     },
     {
@@ -13050,7 +15146,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1158"
+        "name": "gateway-1158",
+        "alt": 30,
+        "updated": "2025-05-12T08:46:34.114504Z"
       }
     },
     {
@@ -13063,7 +15161,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1159"
+        "name": "gateway-1159",
+        "alt": 31,
+        "updated": "2021-09-27T17:36:24.103662Z"
       }
     },
     {
@@ -13076,7 +15176,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1160"
+        "name": "gateway-1160",
+        "alt": 18,
+        "updated": "2022-04-12T11:22:27.433844Z"
       }
     },
     {
@@ -13089,7 +15191,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1161"
+        "name": "gateway-1161",
+        "alt": 38,
+        "updated": "2025-05-12T08:55:15.59179Z"
       }
     },
     {
@@ -13102,7 +15206,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1162"
+        "name": "gateway-1162",
+        "alt": 22,
+        "updated": "2025-05-12T08:46:21.742774Z"
       }
     },
     {
@@ -13115,7 +15221,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1163"
+        "name": "gateway-1163",
+        "alt": 3,
+        "updated": "2025-05-12T08:51:35.756184Z"
       }
     },
     {
@@ -13128,7 +15236,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1164"
+        "name": "gateway-1164",
+        "alt": 0,
+        "updated": "2025-03-31T04:48:21.344812Z"
       }
     },
     {
@@ -13141,7 +15251,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1165"
+        "name": "gateway-1165",
+        "alt": 47,
+        "updated": "2022-09-30T17:02:11.732142Z"
       }
     },
     {
@@ -13154,7 +15266,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1166"
+        "name": "gateway-1166",
+        "alt": 0,
+        "updated": "2021-09-08T13:43:15.086237Z"
       }
     },
     {
@@ -13167,7 +15281,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1167"
+        "name": "gateway-1167",
+        "alt": 9,
+        "updated": "2024-02-05T23:11:50.878739Z"
       }
     },
     {
@@ -13180,7 +15296,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1168"
+        "name": "gateway-1168",
+        "alt": 0,
+        "updated": "2025-05-12T08:51:59.970748Z"
       }
     },
     {
@@ -13193,7 +15311,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1169"
+        "name": "gateway-1169",
+        "alt": 0,
+        "updated": "2025-05-12T08:54:07.663393Z"
       }
     },
     {
@@ -13206,7 +15326,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1170"
+        "name": "gateway-1170",
+        "alt": 0,
+        "updated": "2025-05-12T08:49:31.492965Z"
       }
     },
     {
@@ -13219,7 +15341,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1171"
+        "name": "gateway-1171",
+        "alt": 0,
+        "updated": "2025-05-12T08:49:23.88775Z"
       }
     },
     {
@@ -13232,7 +15356,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1172"
+        "name": "gateway-1172",
+        "alt": 0,
+        "updated": "2024-08-05T16:23:23.687714Z"
       }
     },
     {
@@ -13245,7 +15371,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1173"
+        "name": "gateway-1173",
+        "alt": 69,
+        "updated": "2025-01-28T08:24:44.974828Z"
       }
     },
     {
@@ -13258,7 +15386,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1174"
+        "name": "gateway-1174",
+        "alt": 70,
+        "updated": "2025-05-12T08:49:03.491832Z"
       }
     },
     {
@@ -13271,7 +15401,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1177"
+        "name": "gateway-1177",
+        "alt": 0,
+        "updated": "2025-05-12T08:52:02.042954Z"
       }
     },
     {
@@ -13284,7 +15416,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1178"
+        "name": "gateway-1178",
+        "alt": 10,
+        "updated": "2022-05-15T01:59:15.779498Z"
       }
     },
     {
@@ -13297,7 +15431,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1179"
+        "name": "gateway-1179",
+        "alt": 15,
+        "updated": "2025-05-12T08:52:47.91622Z"
       }
     },
     {
@@ -13310,7 +15446,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1180"
+        "name": "gateway-1180",
+        "alt": 0,
+        "updated": "2025-01-20T19:00:11.406742Z"
       }
     },
     {
@@ -13323,7 +15461,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1181"
+        "name": "gateway-1181",
+        "alt": 0,
+        "updated": "2025-05-12T08:50:17.654406Z"
       }
     },
     {
@@ -13336,7 +15476,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1183"
+        "name": "gateway-1183",
+        "alt": 20,
+        "updated": "2023-07-27T20:54:06.1379Z"
       }
     },
     {
@@ -13349,7 +15491,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1184"
+        "name": "gateway-1184",
+        "alt": 3,
+        "updated": "2024-10-18T11:13:23.927583Z"
       }
     },
     {
@@ -13362,7 +15506,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1185"
+        "name": "gateway-1185",
+        "alt": 0,
+        "updated": "2022-10-30T10:25:25.7387Z"
       }
     },
     {
@@ -13375,7 +15521,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1187"
+        "name": "gateway-1187",
+        "alt": 7,
+        "updated": "2023-08-09T09:09:45.315274Z"
       }
     },
     {
@@ -13388,7 +15536,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1188"
+        "name": "gateway-1188",
+        "alt": 20,
+        "updated": "2021-11-15T16:57:34.238813Z"
       }
     },
     {
@@ -13401,7 +15551,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1189"
+        "name": "gateway-1189",
+        "alt": 40,
+        "updated": "2022-04-17T14:09:45.522708Z"
       }
     },
     {
@@ -13414,7 +15566,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1190"
+        "name": "gateway-1190",
+        "alt": 35,
+        "updated": "2023-01-25T13:24:53.356421Z"
       }
     },
     {
@@ -13427,7 +15581,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1191"
+        "name": "gateway-1191",
+        "alt": 26,
+        "updated": "2023-02-18T11:27:15.351682Z"
       }
     },
     {
@@ -13440,7 +15596,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1192"
+        "name": "gateway-1192",
+        "alt": 10,
+        "updated": "2023-12-27T23:25:16.900543Z"
       }
     },
     {
@@ -13453,7 +15611,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1193"
+        "name": "gateway-1193",
+        "alt": 0,
+        "updated": "2025-05-12T08:46:39.659922Z"
       }
     },
     {
@@ -13466,7 +15626,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1194"
+        "name": "gateway-1194",
+        "alt": 10,
+        "updated": "2023-11-16T16:26:11.35705Z"
       }
     },
     {
@@ -13479,7 +15641,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1197"
+        "name": "gateway-1197",
+        "alt": 5,
+        "updated": "2022-12-10T13:12:01.35601Z"
       }
     },
     {
@@ -13492,7 +15656,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1198"
+        "name": "gateway-1198",
+        "alt": 28,
+        "updated": "2025-05-12T08:53:51.678846Z"
       }
     },
     {
@@ -13505,7 +15671,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1199"
+        "name": "gateway-1199",
+        "alt": 42,
+        "updated": "2023-02-14T20:08:35.352763Z"
       }
     },
     {
@@ -13518,7 +15686,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1200"
+        "name": "gateway-1200",
+        "alt": 10,
+        "updated": "2025-05-12T08:50:59.9449Z"
       }
     },
     {
@@ -13531,7 +15701,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1201"
+        "name": "gateway-1201",
+        "alt": 33,
+        "updated": "2025-05-12T08:50:51.631946Z"
       }
     },
     {
@@ -13544,7 +15716,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1202"
+        "name": "gateway-1202",
+        "alt": 40,
+        "updated": "2024-11-23T10:09:57.387423Z"
       }
     },
     {
@@ -13557,7 +15731,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1204"
+        "name": "gateway-1204",
+        "alt": 11,
+        "updated": "2022-10-30T15:32:53.167699Z"
       }
     },
     {
@@ -13570,7 +15746,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1207"
+        "name": "gateway-1207",
+        "alt": 10,
+        "updated": "2025-05-09T20:08:51.707314Z"
       }
     },
     {
@@ -13583,7 +15761,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1209"
+        "name": "gateway-1209",
+        "alt": 0,
+        "updated": "2025-05-12T08:52:39.614616Z"
       }
     },
     {
@@ -13596,7 +15776,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1210"
+        "name": "gateway-1210",
+        "alt": 30,
+        "updated": "2025-05-12T08:52:55.718579Z"
       }
     },
     {
@@ -13609,7 +15791,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1211"
+        "name": "gateway-1211",
+        "alt": 19,
+        "updated": "2025-05-12T08:52:27.889853Z"
       }
     },
     {
@@ -13622,7 +15806,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1213"
+        "name": "gateway-1213",
+        "alt": 10,
+        "updated": "2025-05-04T13:27:50.76188Z"
       }
     },
     {
@@ -13635,7 +15821,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1214"
+        "name": "gateway-1214",
+        "alt": 20,
+        "updated": "2024-10-21T03:00:04.195844Z"
       }
     },
     {
@@ -13648,7 +15836,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1215"
+        "name": "gateway-1215",
+        "alt": 42,
+        "updated": "2025-02-28T06:14:46.891134Z"
       }
     },
     {
@@ -13661,7 +15851,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1216"
+        "name": "gateway-1216",
+        "alt": 0,
+        "updated": "2022-03-24T22:04:37.73543Z"
       }
     },
     {
@@ -13674,7 +15866,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1217"
+        "name": "gateway-1217",
+        "alt": 25,
+        "updated": "2025-05-12T08:50:19.784228Z"
       }
     },
     {
@@ -13687,7 +15881,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1218"
+        "name": "gateway-1218",
+        "alt": 16,
+        "updated": "2025-05-12T08:53:31.762315Z"
       }
     },
     {
@@ -13700,7 +15896,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1219"
+        "name": "gateway-1219",
+        "alt": 35,
+        "updated": "2025-05-12T08:53:23.630585Z"
       }
     },
     {
@@ -13713,7 +15911,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1220"
+        "name": "gateway-1220",
+        "alt": 10,
+        "updated": "2025-05-12T08:46:28.081931Z"
       }
     },
     {
@@ -13726,7 +15926,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1221"
+        "name": "gateway-1221",
+        "alt": 6,
+        "updated": "2022-07-16T20:27:21.148453Z"
       }
     },
     {
@@ -13739,7 +15941,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1222"
+        "name": "gateway-1222",
+        "alt": 0,
+        "updated": "2025-05-12T08:52:29.577382Z"
       }
     },
     {
@@ -13752,7 +15956,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1223"
+        "name": "gateway-1223",
+        "alt": 0,
+        "updated": "2025-05-12T08:54:15.53557Z"
       }
     },
     {
@@ -13765,7 +15971,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1224"
+        "name": "gateway-1224",
+        "alt": 0,
+        "updated": "2022-02-05T09:44:23.565579Z"
       }
     },
     {
@@ -13778,7 +15986,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1225"
+        "name": "gateway-1225",
+        "alt": 35,
+        "updated": "2025-03-29T17:24:35.128116Z"
       }
     },
     {
@@ -13791,7 +16001,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1226"
+        "name": "gateway-1226",
+        "alt": 42,
+        "updated": "2025-05-12T08:51:43.797926Z"
       }
     },
     {
@@ -13804,7 +16016,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1227"
+        "name": "gateway-1227",
+        "alt": 12,
+        "updated": "2022-07-04T06:18:41.741033Z"
       }
     },
     {
@@ -13817,7 +16031,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1228"
+        "name": "gateway-1228",
+        "alt": 0,
+        "updated": "2025-05-12T08:53:49.722497Z"
       }
     },
     {
@@ -13830,7 +16046,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1229"
+        "name": "gateway-1229",
+        "alt": 0,
+        "updated": "2025-02-14T12:09:42.921446Z"
       }
     },
     {
@@ -13843,7 +16061,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1237"
+        "name": "gateway-1237",
+        "alt": 30,
+        "updated": "2025-05-12T08:48:15.835742Z"
       }
     },
     {
@@ -13856,7 +16076,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1238"
+        "name": "gateway-1238",
+        "alt": 10,
+        "updated": "2022-11-15T14:10:11.380328Z"
       }
     },
     {
@@ -13869,7 +16091,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1239"
+        "name": "gateway-1239",
+        "alt": 0,
+        "updated": "2025-05-12T08:54:05.960182Z"
       }
     },
     {
@@ -13882,7 +16106,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1240"
+        "name": "gateway-1240",
+        "alt": 0,
+        "updated": "2025-05-12T08:52:55.619654Z"
       }
     },
     {
@@ -13895,7 +16121,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1241"
+        "name": "gateway-1241",
+        "alt": 0,
+        "updated": "2023-01-03T11:28:19.383707Z"
       }
     },
     {
@@ -13908,7 +16136,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1242"
+        "name": "gateway-1242",
+        "alt": 28,
+        "updated": "2025-05-12T08:53:29.479361Z"
       }
     },
     {
@@ -13921,7 +16151,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1243"
+        "name": "gateway-1243",
+        "alt": 0,
+        "updated": "2024-06-27T18:58:50.219515Z"
       }
     },
     {
@@ -13934,7 +16166,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1244"
+        "name": "gateway-1244",
+        "alt": 0,
+        "updated": "2025-05-12T08:51:17.882732Z"
       }
     },
     {
@@ -13947,7 +16181,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1245"
+        "name": "gateway-1245",
+        "alt": 0,
+        "updated": "2022-11-15T13:50:49.367897Z"
       }
     },
     {
@@ -13960,7 +16196,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1246"
+        "name": "gateway-1246",
+        "alt": 18,
+        "updated": "2024-12-05T18:28:45.192416Z"
       }
     },
     {
@@ -13973,7 +16211,24 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1247"
+        "name": "gateway-1247",
+        "alt": 0,
+        "updated": "2025-05-12T08:48:57.840684Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.3791,
+          53.5612
+        ]
+      },
+      "properties": {
+        "name": "gateway-1248",
+        "alt": 0,
+        "updated": "2024-12-18T13:50:48.89209Z"
       }
     },
     {
@@ -13986,7 +16241,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1249"
+        "name": "gateway-1249",
+        "alt": 0,
+        "updated": "2025-05-12T08:51:55.566112Z"
       }
     },
     {
@@ -13999,7 +16256,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1250"
+        "name": "gateway-1250",
+        "alt": 0,
+        "updated": "2025-05-12T08:50:29.68517Z"
       }
     },
     {
@@ -14012,7 +16271,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1251"
+        "name": "gateway-1251",
+        "alt": 6,
+        "updated": "2022-01-23T14:26:03.69135Z"
       }
     },
     {
@@ -14025,7 +16286,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1252"
+        "name": "gateway-1252",
+        "alt": 5,
+        "updated": "2025-05-12T08:49:19.748186Z"
       }
     },
     {
@@ -14038,7 +16301,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1254"
+        "name": "gateway-1254",
+        "alt": 0,
+        "updated": "2025-05-12T08:54:49.517244Z"
       }
     },
     {
@@ -14051,7 +16316,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1255"
+        "name": "gateway-1255",
+        "alt": 31,
+        "updated": "2024-09-12T16:23:16.155618Z"
       }
     },
     {
@@ -14064,7 +16331,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1258"
+        "name": "gateway-1258",
+        "alt": 35,
+        "updated": "2025-05-12T08:52:31.530929Z"
       }
     },
     {
@@ -14077,7 +16346,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1259"
+        "name": "gateway-1259",
+        "alt": 15,
+        "updated": "2023-04-14T22:01:56.121971Z"
       }
     },
     {
@@ -14090,7 +16361,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1260"
+        "name": "gateway-1260",
+        "alt": 0,
+        "updated": "2023-11-03T15:17:12.68155Z"
       }
     },
     {
@@ -14103,7 +16376,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1262"
+        "name": "gateway-1262",
+        "alt": 10,
+        "updated": "2022-04-26T13:32:47.743698Z"
       }
     },
     {
@@ -14116,7 +16391,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1263"
+        "name": "gateway-1263",
+        "alt": 5,
+        "updated": "2023-09-27T10:17:44.667517Z"
       }
     },
     {
@@ -14129,7 +16406,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1264"
+        "name": "gateway-1264",
+        "alt": 50,
+        "updated": "2025-05-12T08:54:05.986837Z"
       }
     },
     {
@@ -14142,7 +16421,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1266"
+        "name": "gateway-1266",
+        "alt": 3,
+        "updated": "2025-05-12T08:46:18.031876Z"
       }
     },
     {
@@ -14155,7 +16436,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1269"
+        "name": "gateway-1269",
+        "alt": 18,
+        "updated": "2025-05-12T08:48:06.050295Z"
       }
     },
     {
@@ -14168,7 +16451,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1270"
+        "name": "gateway-1270",
+        "alt": 123,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14181,7 +16466,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1271"
+        "name": "gateway-1271",
+        "alt": 42,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14194,7 +16481,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1273"
+        "name": "gateway-1273",
+        "alt": 0,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14207,7 +16496,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1274"
+        "name": "gateway-1274",
+        "alt": 0,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14220,7 +16511,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1275"
+        "name": "gateway-1275",
+        "alt": 85,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14233,7 +16526,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1276"
+        "name": "gateway-1276",
+        "alt": 56,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14246,7 +16541,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1277"
+        "name": "gateway-1277",
+        "alt": 12,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14259,7 +16556,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1278"
+        "name": "gateway-1278",
+        "alt": 9,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14272,7 +16571,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1279"
+        "name": "gateway-1279",
+        "alt": 0,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14285,7 +16586,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1280"
+        "name": "gateway-1280",
+        "alt": 5,
+        "updated": "2023-02-13T08:57:13.414314Z"
       }
     },
     {
@@ -14298,7 +16601,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1282"
+        "name": "gateway-1282",
+        "alt": 8,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14311,7 +16616,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1283"
+        "name": "gateway-1283",
+        "alt": 15,
+        "updated": "2021-10-05T10:45:24.083995Z"
       }
     },
     {
@@ -14324,7 +16631,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1284"
+        "name": "gateway-1284",
+        "alt": 10,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14337,7 +16646,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1285"
+        "name": "gateway-1285",
+        "alt": 0,
+        "updated": "2022-02-04T10:42:01.568717Z"
       }
     },
     {
@@ -14350,7 +16661,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1286"
+        "name": "gateway-1286",
+        "alt": 123,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14363,7 +16676,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1287"
+        "name": "gateway-1287",
+        "alt": 0,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14376,7 +16691,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1289"
+        "name": "gateway-1289",
+        "alt": 4,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14389,7 +16706,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1291"
+        "name": "gateway-1291",
+        "alt": 450,
+        "updated": "2021-11-22T09:39:02.669607Z"
       }
     },
     {
@@ -14402,7 +16721,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1292"
+        "name": "gateway-1292",
+        "alt": 256,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14415,7 +16736,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1293"
+        "name": "gateway-1293",
+        "alt": 20,
+        "updated": "2023-04-19T09:18:35.393406Z"
       }
     },
     {
@@ -14428,7 +16751,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1294"
+        "name": "gateway-1294",
+        "alt": 0,
+        "updated": "2022-08-04T12:12:51.14258Z"
       }
     },
     {
@@ -14441,7 +16766,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1295"
+        "name": "gateway-1295",
+        "alt": 40,
+        "updated": "2024-02-26T08:49:26.904974Z"
       }
     },
     {
@@ -14454,7 +16781,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1296"
+        "name": "gateway-1296",
+        "alt": 25,
+        "updated": "2024-02-26T08:49:47.350546Z"
       }
     },
     {
@@ -14467,7 +16796,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1297"
+        "name": "gateway-1297",
+        "alt": 42,
+        "updated": "2024-02-26T08:48:30.916636Z"
       }
     },
     {
@@ -14480,7 +16811,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1298"
+        "name": "gateway-1298",
+        "alt": 15,
+        "updated": "2024-02-26T08:48:17.337585Z"
       }
     },
     {
@@ -14493,7 +16826,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1299"
+        "name": "gateway-1299",
+        "alt": 55,
+        "updated": "2024-01-03T13:29:59.353474Z"
       }
     },
     {
@@ -14506,7 +16841,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1300"
+        "name": "gateway-1300",
+        "alt": 28,
+        "updated": "2024-02-26T08:49:00.876298Z"
       }
     },
     {
@@ -14519,7 +16856,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1301"
+        "name": "gateway-1301",
+        "alt": 63,
+        "updated": "2024-02-26T08:46:56.907732Z"
       }
     },
     {
@@ -14532,7 +16871,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1302"
+        "name": "gateway-1302",
+        "alt": 20,
+        "updated": "2024-02-26T08:52:10.920693Z"
       }
     },
     {
@@ -14545,7 +16886,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1303"
+        "name": "gateway-1303",
+        "alt": 15,
+        "updated": "2024-02-26T08:53:37.347038Z"
       }
     },
     {
@@ -14558,7 +16901,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1304"
+        "name": "gateway-1304",
+        "alt": 40,
+        "updated": "2024-02-26T08:53:43.351887Z"
       }
     },
     {
@@ -14571,7 +16916,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1305"
+        "name": "gateway-1305",
+        "alt": 50,
+        "updated": "2024-02-26T08:49:13.349625Z"
       }
     },
     {
@@ -14584,7 +16931,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1306"
+        "name": "gateway-1306",
+        "alt": 0,
+        "updated": "2024-02-26T08:47:05.355645Z"
       }
     },
     {
@@ -14597,7 +16946,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1307"
+        "name": "gateway-1307",
+        "alt": 95,
+        "updated": "2024-02-02T12:24:09.359562Z"
       }
     },
     {
@@ -14610,7 +16961,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1308"
+        "name": "gateway-1308",
+        "alt": 50,
+        "updated": "2024-01-03T13:28:31.341552Z"
       }
     },
     {
@@ -14623,7 +16976,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1309"
+        "name": "gateway-1309",
+        "alt": 50,
+        "updated": "2024-02-26T08:51:38.949602Z"
       }
     },
     {
@@ -14636,7 +16991,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1310"
+        "name": "gateway-1310",
+        "alt": 0,
+        "updated": "2024-02-26T08:56:19.357432Z"
       }
     },
     {
@@ -14649,7 +17006,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1311"
+        "name": "gateway-1311",
+        "alt": 25,
+        "updated": "2024-02-26T08:48:00.887345Z"
       }
     },
     {
@@ -14662,7 +17021,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1312"
+        "name": "gateway-1312",
+        "alt": 0,
+        "updated": "2024-02-26T08:52:03.349295Z"
       }
     },
     {
@@ -14675,7 +17036,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1313"
+        "name": "gateway-1313",
+        "alt": 25,
+        "updated": "2023-12-26T11:38:39.337743Z"
       }
     },
     {
@@ -14688,7 +17051,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1314"
+        "name": "gateway-1314",
+        "alt": 114,
+        "updated": "2022-01-13T08:41:18.120013Z"
       }
     },
     {
@@ -14701,7 +17066,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1315"
+        "name": "gateway-1315",
+        "alt": -41,
+        "updated": "2021-09-30T08:42:17.090963Z"
       }
     },
     {
@@ -14714,7 +17081,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1316"
+        "name": "gateway-1316",
+        "alt": 23,
+        "updated": "2022-04-18T00:59:05.681668Z"
       }
     },
     {
@@ -14727,7 +17096,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1317"
+        "name": "gateway-1317",
+        "alt": 0,
+        "updated": "2025-01-30T23:57:25.310542Z"
       }
     },
     {
@@ -14740,7 +17111,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1318"
+        "name": "gateway-1318",
+        "alt": -22,
+        "updated": "2021-10-25T09:37:21.054324Z"
       }
     },
     {
@@ -14753,7 +17126,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1319"
+        "name": "gateway-1319",
+        "alt": 23,
+        "updated": "2022-02-24T17:21:53.524606Z"
       }
     },
     {
@@ -14766,7 +17141,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1320"
+        "name": "gateway-1320",
+        "alt": 0,
+        "updated": "2021-08-04T20:11:20.9792Z"
       }
     },
     {
@@ -14779,7 +17156,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1321"
+        "name": "gateway-1321",
+        "alt": 8,
+        "updated": "2025-01-30T23:53:05.338752Z"
       }
     },
     {
@@ -14792,7 +17171,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1322"
+        "name": "gateway-1322",
+        "alt": 0,
+        "updated": "2022-01-28T19:03:08.168955Z"
       }
     },
     {
@@ -14805,7 +17186,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1323"
+        "name": "gateway-1323",
+        "alt": 0,
+        "updated": "2022-10-13T09:44:53.828757Z"
       }
     },
     {
@@ -14818,7 +17201,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1325"
+        "name": "gateway-1325",
+        "alt": 27,
+        "updated": "2021-11-23T13:22:38.242127Z"
       }
     },
     {
@@ -14831,7 +17216,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1326"
+        "name": "gateway-1326",
+        "alt": 21,
+        "updated": "2021-11-23T13:26:23.746657Z"
       }
     },
     {
@@ -14844,7 +17231,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1327"
+        "name": "gateway-1327",
+        "alt": 21,
+        "updated": "2021-11-23T13:27:08.256425Z"
       }
     },
     {
@@ -14857,7 +17246,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1330"
+        "name": "gateway-1330",
+        "alt": 55,
+        "updated": "2021-11-17T19:40:38.552074Z"
       }
     },
     {
@@ -14870,7 +17261,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1332"
+        "name": "gateway-1332",
+        "alt": 0,
+        "updated": "2024-11-26T04:37:35.153091Z"
       }
     },
     {
@@ -14883,7 +17276,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1333"
+        "name": "gateway-1333",
+        "alt": 0,
+        "updated": "2021-10-29T19:14:56.702056Z"
       }
     },
     {
@@ -14896,7 +17291,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1336"
+        "name": "gateway-1336",
+        "alt": 10,
+        "updated": "2021-07-21T13:09:57.100798Z"
       }
     },
     {
@@ -14909,7 +17306,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1337"
+        "name": "gateway-1337",
+        "alt": 12,
+        "updated": "2024-05-25T18:04:18.259182Z"
       }
     },
     {
@@ -14922,7 +17321,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1338"
+        "name": "gateway-1338",
+        "alt": 30,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -14935,7 +17336,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1339"
+        "name": "gateway-1339",
+        "alt": 60,
+        "updated": "2021-09-11T10:30:40.155137Z"
       }
     },
     {
@@ -14948,7 +17351,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1340"
+        "name": "gateway-1340",
+        "alt": 56,
+        "updated": "2021-10-04T21:52:20.20642Z"
       }
     },
     {
@@ -14961,7 +17366,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1341"
+        "name": "gateway-1341",
+        "alt": 0,
+        "updated": "2021-07-19T22:32:26.494379Z"
       }
     },
     {
@@ -14974,7 +17381,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1342"
+        "name": "gateway-1342",
+        "alt": 0,
+        "updated": "2023-11-16T13:55:49.359889Z"
       }
     },
     {
@@ -14987,7 +17396,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1343"
+        "name": "gateway-1343",
+        "alt": 0,
+        "updated": "2023-10-14T11:17:15.932012Z"
       }
     },
     {
@@ -15000,7 +17411,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1345"
+        "name": "gateway-1345",
+        "alt": 32,
+        "updated": "2021-09-19T12:09:07.16851Z"
       }
     },
     {
@@ -15013,7 +17426,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1348"
+        "name": "gateway-1348",
+        "alt": 10,
+        "updated": "2021-08-14T08:59:45.661664Z"
       }
     },
     {
@@ -15026,7 +17441,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1349"
+        "name": "gateway-1349",
+        "alt": 50,
+        "updated": "2025-01-30T23:52:58.966544Z"
       }
     },
     {
@@ -15039,7 +17456,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1350"
+        "name": "gateway-1350",
+        "alt": 3,
+        "updated": "2022-01-19T10:23:36.523227Z"
       }
     },
     {
@@ -15052,7 +17471,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1351"
+        "name": "gateway-1351",
+        "alt": 0,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -15065,7 +17486,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1353"
+        "name": "gateway-1353",
+        "alt": 0,
+        "updated": "2021-11-28T18:15:57.335Z"
       }
     },
     {
@@ -15078,7 +17501,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1354"
+        "name": "gateway-1354",
+        "alt": 0,
+        "updated": "2022-06-16T09:21:35.074992Z"
       }
     },
     {
@@ -15091,7 +17516,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1355"
+        "name": "gateway-1355",
+        "alt": 0,
+        "updated": "2022-06-30T00:58:57.052097Z"
       }
     },
     {
@@ -15104,7 +17531,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1356"
+        "name": "gateway-1356",
+        "alt": 28,
+        "updated": "2022-01-06T09:00:40.137149Z"
       }
     },
     {
@@ -15117,7 +17546,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1357"
+        "name": "gateway-1357",
+        "alt": 0,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -15130,7 +17561,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1358"
+        "name": "gateway-1358",
+        "alt": 5,
+        "updated": "2022-03-04T08:22:32.383252Z"
       }
     },
     {
@@ -15143,7 +17576,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1360"
+        "name": "gateway-1360",
+        "alt": 12,
+        "updated": "2025-01-30T23:50:32.824959Z"
       }
     },
     {
@@ -15156,7 +17591,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1362"
+        "name": "gateway-1362",
+        "alt": 0,
+        "updated": "2021-09-27T09:54:30.12609Z"
       }
     },
     {
@@ -15169,7 +17606,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1363"
+        "name": "gateway-1363",
+        "alt": 0,
+        "updated": "2022-03-09T01:02:30.389627Z"
       }
     },
     {
@@ -15182,7 +17621,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1364"
+        "name": "gateway-1364",
+        "alt": 0,
+        "updated": "2022-09-30T02:12:21.078059Z"
       }
     },
     {
@@ -15195,7 +17636,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1366"
+        "name": "gateway-1366",
+        "alt": 62,
+        "updated": "2022-04-13T05:03:36.386118Z"
       }
     },
     {
@@ -15208,7 +17651,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1367"
+        "name": "gateway-1367",
+        "alt": 0,
+        "updated": "2022-05-27T13:18:07.752762Z"
       }
     },
     {
@@ -15221,7 +17666,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1368"
+        "name": "gateway-1368",
+        "alt": 0,
+        "updated": "2022-02-28T14:04:31.732312Z"
       }
     },
     {
@@ -15234,7 +17681,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1370"
+        "name": "gateway-1370",
+        "alt": 25,
+        "updated": "2022-03-20T02:59:27.557519Z"
       }
     },
     {
@@ -15247,7 +17696,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1371"
+        "name": "gateway-1371",
+        "alt": 20,
+        "updated": "2021-12-07T02:53:42.015017Z"
       }
     },
     {
@@ -15260,7 +17711,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1372"
+        "name": "gateway-1372",
+        "alt": 13,
+        "updated": "2021-12-06T14:52:24.050388Z"
       }
     },
     {
@@ -15273,7 +17726,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1373"
+        "name": "gateway-1373",
+        "alt": 0,
+        "updated": "2022-01-17T18:04:21.140352Z"
       }
     },
     {
@@ -15286,7 +17741,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1374"
+        "name": "gateway-1374",
+        "alt": 6,
+        "updated": "2021-07-16T11:53:56.210072Z"
       }
     },
     {
@@ -15299,7 +17756,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1375"
+        "name": "gateway-1375",
+        "alt": 10,
+        "updated": "2021-08-03T14:06:43.064612Z"
       }
     },
     {
@@ -15312,7 +17771,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1377"
+        "name": "gateway-1377",
+        "alt": 10,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -15325,7 +17786,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1379"
+        "name": "gateway-1379",
+        "alt": 2,
+        "updated": "2021-11-29T15:51:48.947436Z"
       }
     },
     {
@@ -15338,7 +17801,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1380"
+        "name": "gateway-1380",
+        "alt": 20,
+        "updated": "2021-07-12T19:09:24.147529Z"
       }
     },
     {
@@ -15351,7 +17816,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1381"
+        "name": "gateway-1381",
+        "alt": 0,
+        "updated": "2021-09-01T00:47:55.114365Z"
       }
     },
     {
@@ -15364,7 +17831,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1382"
+        "name": "gateway-1382",
+        "alt": 9,
+        "updated": "2022-03-03T00:03:31.521773Z"
       }
     },
     {
@@ -15377,7 +17846,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1383"
+        "name": "gateway-1383",
+        "alt": 6,
+        "updated": "2021-11-30T13:02:46.985977Z"
       }
     },
     {
@@ -15390,7 +17861,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1385"
+        "name": "gateway-1385",
+        "alt": 20,
+        "updated": "2022-01-12T04:53:22.159359Z"
       }
     },
     {
@@ -15403,7 +17876,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1386"
+        "name": "gateway-1386",
+        "alt": 42,
+        "updated": "2021-11-15T15:15:53.883815Z"
       }
     },
     {
@@ -15416,7 +17891,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1387"
+        "name": "gateway-1387",
+        "alt": 0,
+        "updated": "2021-12-06T20:17:00.006008Z"
       }
     },
     {
@@ -15429,7 +17906,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1388"
+        "name": "gateway-1388",
+        "alt": 6,
+        "updated": "2021-10-08T14:44:51.904667Z"
       }
     },
     {
@@ -15442,7 +17921,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1389"
+        "name": "gateway-1389",
+        "alt": 0,
+        "updated": "2021-11-30T17:21:39.336227Z"
       }
     },
     {
@@ -15455,7 +17936,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1390"
+        "name": "gateway-1390",
+        "alt": 25,
+        "updated": "2021-10-26T22:05:08.741146Z"
       }
     },
     {
@@ -15468,7 +17951,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1391"
+        "name": "gateway-1391",
+        "alt": 0,
+        "updated": "2021-12-03T12:31:58.052391Z"
       }
     },
     {
@@ -15481,7 +17966,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1392"
+        "name": "gateway-1392",
+        "alt": 0,
+        "updated": "2021-12-07T12:19:41.566342Z"
       }
     },
     {
@@ -15494,7 +17981,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1393"
+        "name": "gateway-1393",
+        "alt": 30,
+        "updated": "2021-12-08T12:23:07.302552Z"
       }
     },
     {
@@ -15507,7 +17996,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1394"
+        "name": "gateway-1394",
+        "alt": 6,
+        "updated": "2022-03-29T09:10:49.520465Z"
       }
     },
     {
@@ -15520,7 +18011,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1395"
+        "name": "gateway-1395",
+        "alt": 6,
+        "updated": "2022-06-08T11:12:49.732492Z"
       }
     },
     {
@@ -15533,7 +18026,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1396"
+        "name": "gateway-1396",
+        "alt": 0,
+        "updated": "2022-06-17T02:47:45.830774Z"
       }
     },
     {
@@ -15546,7 +18041,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1397"
+        "name": "gateway-1397",
+        "alt": 0,
+        "updated": "2022-06-01T10:57:39.534019Z"
       }
     },
     {
@@ -15559,7 +18056,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1398"
+        "name": "gateway-1398",
+        "alt": 4,
+        "updated": "2021-08-31T21:07:21.169058Z"
       }
     },
     {
@@ -15572,7 +18071,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1399"
+        "name": "gateway-1399",
+        "alt": 0,
+        "updated": "2021-12-06T16:50:36.097172Z"
       }
     },
     {
@@ -15585,7 +18086,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1401"
+        "name": "gateway-1401",
+        "alt": 0,
+        "updated": "2021-09-13T08:34:52.129917Z"
       }
     },
     {
@@ -15598,7 +18101,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1402"
+        "name": "gateway-1402",
+        "alt": 30,
+        "updated": "2022-06-17T02:47:57.736267Z"
       }
     },
     {
@@ -15611,7 +18116,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1403"
+        "name": "gateway-1403",
+        "alt": 0,
+        "updated": "2021-12-06T15:24:50.064987Z"
       }
     },
     {
@@ -15624,7 +18131,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1404"
+        "name": "gateway-1404",
+        "alt": 5,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -15637,7 +18146,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1406"
+        "name": "gateway-1406",
+        "alt": 7,
+        "updated": "2021-11-05T19:27:39.041021Z"
       }
     },
     {
@@ -15650,7 +18161,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1407"
+        "name": "gateway-1407",
+        "alt": 10,
+        "updated": "2022-01-21T02:07:01.561174Z"
       }
     },
     {
@@ -15663,7 +18176,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1408"
+        "name": "gateway-1408",
+        "alt": 20,
+        "updated": "2022-04-17T16:13:07.730734Z"
       }
     },
     {
@@ -15676,7 +18191,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1409"
+        "name": "gateway-1409",
+        "alt": 30,
+        "updated": "2022-06-17T02:47:49.149315Z"
       }
     },
     {
@@ -15689,7 +18206,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1410"
+        "name": "gateway-1410",
+        "alt": 40,
+        "updated": "2022-04-12T20:44:47.737814Z"
       }
     },
     {
@@ -15702,7 +18221,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1411"
+        "name": "gateway-1411",
+        "alt": 0,
+        "updated": "2022-03-23T15:47:12.371933Z"
       }
     },
     {
@@ -15715,7 +18236,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1412"
+        "name": "gateway-1412",
+        "alt": 0,
+        "updated": "2022-04-18T16:23:11.538341Z"
       }
     },
     {
@@ -15728,7 +18251,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1413"
+        "name": "gateway-1413",
+        "alt": 0,
+        "updated": "2021-10-22T07:37:25.274968Z"
       }
     },
     {
@@ -15741,7 +18266,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1414"
+        "name": "gateway-1414",
+        "alt": 0,
+        "updated": "2021-08-02T18:02:39.812061Z"
       }
     },
     {
@@ -15754,7 +18281,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1415"
+        "name": "gateway-1415",
+        "alt": 5,
+        "updated": "2021-12-06T18:49:42.064718Z"
       }
     },
     {
@@ -15767,7 +18296,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1417"
+        "name": "gateway-1417",
+        "alt": 0,
+        "updated": "2021-07-28T08:04:41.975266Z"
       }
     },
     {
@@ -15780,7 +18311,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1419"
+        "name": "gateway-1419",
+        "alt": 0,
+        "updated": "2022-01-05T13:22:42.378566Z"
       }
     },
     {
@@ -15793,7 +18326,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1420"
+        "name": "gateway-1420",
+        "alt": 0,
+        "updated": "2021-11-30T20:01:21.3496Z"
       }
     },
     {
@@ -15806,7 +18341,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1421"
+        "name": "gateway-1421",
+        "alt": 0,
+        "updated": "2021-09-12T14:03:16.183675Z"
       }
     },
     {
@@ -15819,7 +18356,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1423"
+        "name": "gateway-1423",
+        "alt": 0,
+        "updated": "2021-07-19T13:21:18.679112Z"
       }
     },
     {
@@ -15832,7 +18371,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1424"
+        "name": "gateway-1424",
+        "alt": 14,
+        "updated": "2021-07-19T15:09:16.152115Z"
       }
     },
     {
@@ -15845,7 +18386,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1425"
+        "name": "gateway-1425",
+        "alt": 0,
+        "updated": "2022-04-16T15:04:10.387412Z"
       }
     },
     {
@@ -15858,7 +18401,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1426"
+        "name": "gateway-1426",
+        "alt": 0,
+        "updated": "2021-08-11T15:17:01.678633Z"
       }
     },
     {
@@ -15871,7 +18416,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1427"
+        "name": "gateway-1427",
+        "alt": 0,
+        "updated": "2021-11-28T11:09:15.007287Z"
       }
     },
     {
@@ -15884,7 +18431,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1428"
+        "name": "gateway-1428",
+        "alt": 5,
+        "updated": "2022-02-15T18:01:19.75758Z"
       }
     },
     {
@@ -15897,7 +18446,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1430"
+        "name": "gateway-1430",
+        "alt": 33,
+        "updated": "2021-09-24T15:50:53.140241Z"
       }
     },
     {
@@ -15910,7 +18461,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1431"
+        "name": "gateway-1431",
+        "alt": 47,
+        "updated": "2022-01-22T13:14:14.334994Z"
       }
     },
     {
@@ -15923,7 +18476,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1432"
+        "name": "gateway-1432",
+        "alt": 145,
+        "updated": "2021-09-30T12:47:53.126405Z"
       }
     },
     {
@@ -15936,7 +18491,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1433"
+        "name": "gateway-1433",
+        "alt": 230,
+        "updated": "2021-10-06T08:05:07.076683Z"
       }
     },
     {
@@ -15949,7 +18506,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1434"
+        "name": "gateway-1434",
+        "alt": 180,
+        "updated": "2021-09-30T12:52:31.087664Z"
       }
     },
     {
@@ -15962,7 +18521,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1435"
+        "name": "gateway-1435",
+        "alt": 137,
+        "updated": "2021-09-30T12:51:25.172974Z"
       }
     },
     {
@@ -15975,7 +18536,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1436"
+        "name": "gateway-1436",
+        "alt": 30,
+        "updated": "2021-09-30T12:48:49.252862Z"
       }
     },
     {
@@ -15988,7 +18551,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1437"
+        "name": "gateway-1437",
+        "alt": 180,
+        "updated": "2021-09-30T12:54:07.165189Z"
       }
     },
     {
@@ -16001,7 +18566,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1438"
+        "name": "gateway-1438",
+        "alt": 112,
+        "updated": "2021-09-30T12:41:48.225773Z"
       }
     },
     {
@@ -16014,7 +18581,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1439"
+        "name": "gateway-1439",
+        "alt": 0,
+        "updated": "2021-09-13T13:06:07.129675Z"
       }
     },
     {
@@ -16027,7 +18596,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1440"
+        "name": "gateway-1440",
+        "alt": 0,
+        "updated": "2023-07-05T16:48:44.096692Z"
       }
     },
     {
@@ -16040,7 +18611,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1441"
+        "name": "gateway-1441",
+        "alt": 7,
+        "updated": "2022-12-30T11:38:21.347377Z"
       }
     },
     {
@@ -16053,7 +18626,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1442"
+        "name": "gateway-1442",
+        "alt": 6,
+        "updated": "2021-10-22T03:55:33.268557Z"
       }
     },
     {
@@ -16066,7 +18641,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1443"
+        "name": "gateway-1443",
+        "alt": 0,
+        "updated": "2021-09-30T12:55:57.090428Z"
       }
     },
     {
@@ -16079,7 +18656,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1444"
+        "name": "gateway-1444",
+        "alt": 70,
+        "updated": "2021-09-30T12:41:15.193887Z"
       }
     },
     {
@@ -16092,7 +18671,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1445"
+        "name": "gateway-1445",
+        "alt": 0,
+        "updated": "2021-11-30T09:16:29.325801Z"
       }
     },
     {
@@ -16105,7 +18686,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1446"
+        "name": "gateway-1446",
+        "alt": 18,
+        "updated": "2024-03-22T17:35:36.176981Z"
       }
     },
     {
@@ -16118,7 +18701,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1447"
+        "name": "gateway-1447",
+        "alt": 0,
+        "updated": "2021-09-09T07:50:36.204596Z"
       }
     },
     {
@@ -16131,7 +18716,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1448"
+        "name": "gateway-1448",
+        "alt": 0,
+        "updated": "2022-09-30T02:09:29.844138Z"
       }
     },
     {
@@ -16144,7 +18731,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1450"
+        "name": "gateway-1450",
+        "alt": 0,
+        "updated": "2021-09-08T13:04:41.082572Z"
       }
     },
     {
@@ -16157,7 +18746,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1451"
+        "name": "gateway-1451",
+        "alt": 0,
+        "updated": "2023-01-11T13:13:13.334149Z"
       }
     },
     {
@@ -16170,7 +18761,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1452"
+        "name": "gateway-1452",
+        "alt": 0,
+        "updated": "2021-10-13T12:26:05.912656Z"
       }
     },
     {
@@ -16183,7 +18776,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1453"
+        "name": "gateway-1453",
+        "alt": 0,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -16196,7 +18791,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1454"
+        "name": "gateway-1454",
+        "alt": 7,
+        "updated": "2021-07-26T14:15:56.931128Z"
       }
     },
     {
@@ -16209,7 +18806,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1455"
+        "name": "gateway-1455",
+        "alt": 0,
+        "updated": "2022-04-28T01:52:53.691611Z"
       }
     },
     {
@@ -16222,7 +18821,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1456"
+        "name": "gateway-1456",
+        "alt": 0,
+        "updated": "2022-04-28T01:53:19.524676Z"
       }
     },
     {
@@ -16235,7 +18836,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1457"
+        "name": "gateway-1457",
+        "alt": 0,
+        "updated": "2022-04-28T01:42:43.548086Z"
       }
     },
     {
@@ -16248,7 +18851,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1458"
+        "name": "gateway-1458",
+        "alt": 0,
+        "updated": "2022-11-29T12:18:43.354155Z"
       }
     },
     {
@@ -16261,7 +18866,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1459"
+        "name": "gateway-1459",
+        "alt": 0,
+        "updated": "2021-09-10T09:46:16.144341Z"
       }
     },
     {
@@ -16274,7 +18881,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1460"
+        "name": "gateway-1460",
+        "alt": 0,
+        "updated": "2021-12-16T08:04:55.563905Z"
       }
     },
     {
@@ -16287,7 +18896,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1461"
+        "name": "gateway-1461",
+        "alt": 6,
+        "updated": "2021-10-13T10:49:37.932747Z"
       }
     },
     {
@@ -16300,7 +18911,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1462"
+        "name": "gateway-1462",
+        "alt": 0,
+        "updated": "2022-06-08T11:39:47.053116Z"
       }
     },
     {
@@ -16313,7 +18926,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1463"
+        "name": "gateway-1463",
+        "alt": 17,
+        "updated": "2021-11-23T13:22:30.219226Z"
       }
     },
     {
@@ -16326,7 +18941,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1464"
+        "name": "gateway-1464",
+        "alt": 0,
+        "updated": "2022-07-16T01:00:45.050352Z"
       }
     },
     {
@@ -16339,7 +18956,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1465"
+        "name": "gateway-1465",
+        "alt": 0,
+        "updated": "2023-01-05T09:01:29.339581Z"
       }
     },
     {
@@ -16352,7 +18971,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1466"
+        "name": "gateway-1466",
+        "alt": 0,
+        "updated": "2023-01-06T11:41:17.336109Z"
       }
     },
     {
@@ -16365,7 +18986,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1467"
+        "name": "gateway-1467",
+        "alt": 0,
+        "updated": "2023-01-06T11:31:37.35532Z"
       }
     },
     {
@@ -16378,7 +19001,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1468"
+        "name": "gateway-1468",
+        "alt": 0,
+        "updated": "2023-09-15T13:31:24.658803Z"
       }
     },
     {
@@ -16391,7 +19016,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1469"
+        "name": "gateway-1469",
+        "alt": 0,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -16404,7 +19031,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1470"
+        "name": "gateway-1470",
+        "alt": 22,
+        "updated": "2021-11-08T14:20:36.622989Z"
       }
     },
     {
@@ -16417,7 +19046,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1472"
+        "name": "gateway-1472",
+        "alt": 10,
+        "updated": "2021-12-29T16:53:25.5315Z"
       }
     },
     {
@@ -16430,7 +19061,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1473"
+        "name": "gateway-1473",
+        "alt": 0,
+        "updated": "2025-01-30T23:52:23.475204Z"
       }
     },
     {
@@ -16443,7 +19076,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1474"
+        "name": "gateway-1474",
+        "alt": 10,
+        "updated": "2021-08-27T12:27:51.316737Z"
       }
     },
     {
@@ -16456,7 +19091,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1477"
+        "name": "gateway-1477",
+        "alt": 20,
+        "updated": "2022-03-28T05:31:03.55068Z"
       }
     },
     {
@@ -16469,7 +19106,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1478"
+        "name": "gateway-1478",
+        "alt": 40,
+        "updated": "2023-11-18T13:54:27.334981Z"
       }
     },
     {
@@ -16482,7 +19121,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1479"
+        "name": "gateway-1479",
+        "alt": 0,
+        "updated": "2024-10-01T11:45:58.197062Z"
       }
     },
     {
@@ -16495,7 +19136,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1480"
+        "name": "gateway-1480",
+        "alt": 4,
+        "updated": "2022-09-30T02:12:12.28371Z"
       }
     },
     {
@@ -16508,7 +19151,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1482"
+        "name": "gateway-1482",
+        "alt": 0,
+        "updated": "2021-09-29T17:44:00.18355Z"
       }
     },
     {
@@ -16521,7 +19166,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1485"
+        "name": "gateway-1485",
+        "alt": 0,
+        "updated": "2022-07-16T01:02:23.182741Z"
       }
     },
     {
@@ -16534,7 +19181,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1487"
+        "name": "gateway-1487",
+        "alt": 24,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -16547,7 +19196,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1488"
+        "name": "gateway-1488",
+        "alt": 0,
+        "updated": "2021-07-12T12:58:42.124261Z"
       }
     },
     {
@@ -16560,7 +19211,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1489"
+        "name": "gateway-1489",
+        "alt": 0,
+        "updated": "2021-08-01T14:27:56.929203Z"
       }
     },
     {
@@ -16573,7 +19226,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1490"
+        "name": "gateway-1490",
+        "alt": 10,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -16586,7 +19241,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1491"
+        "name": "gateway-1491",
+        "alt": 5,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -16599,7 +19256,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1492"
+        "name": "gateway-1492",
+        "alt": 0,
+        "updated": "2024-12-21T09:04:16.938653Z"
       }
     },
     {
@@ -16612,7 +19271,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1493"
+        "name": "gateway-1493",
+        "alt": 3,
+        "updated": "2021-10-30T08:21:28.656753Z"
       }
     },
     {
@@ -16625,7 +19286,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1494"
+        "name": "gateway-1494",
+        "alt": 0,
+        "updated": "2021-12-02T10:29:50.950391Z"
       }
     },
     {
@@ -16638,7 +19301,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1495"
+        "name": "gateway-1495",
+        "alt": 42,
+        "updated": "2021-08-16T18:37:37.659721Z"
       }
     },
     {
@@ -16651,7 +19316,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1496"
+        "name": "gateway-1496",
+        "alt": 6,
+        "updated": "2021-07-24T13:16:50.189109Z"
       }
     },
     {
@@ -16664,7 +19331,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1497"
+        "name": "gateway-1497",
+        "alt": 10,
+        "updated": "2022-03-09T00:58:41.437948Z"
       }
     },
     {
@@ -16677,7 +19346,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1499"
+        "name": "gateway-1499",
+        "alt": 5,
+        "updated": "2021-08-12T16:55:05.088528Z"
       }
     },
     {
@@ -16690,7 +19361,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1502"
+        "name": "gateway-1502",
+        "alt": 0,
+        "updated": "2023-05-04T10:33:19.370814Z"
       }
     },
     {
@@ -16703,7 +19376,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1504"
+        "name": "gateway-1504",
+        "alt": 5,
+        "updated": "2022-06-30T01:05:11.735335Z"
       }
     },
     {
@@ -16716,7 +19391,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1505"
+        "name": "gateway-1505",
+        "alt": 10,
+        "updated": "2022-06-30T01:01:55.037861Z"
       }
     },
     {
@@ -16729,7 +19406,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1506"
+        "name": "gateway-1506",
+        "alt": 0,
+        "updated": "2021-11-19T13:35:16.90864Z"
       }
     },
     {
@@ -16742,7 +19421,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1507"
+        "name": "gateway-1507",
+        "alt": -2,
+        "updated": "2021-12-26T11:13:09.643105Z"
       }
     },
     {
@@ -16755,7 +19436,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1508"
+        "name": "gateway-1508",
+        "alt": 0,
+        "updated": "2023-04-20T16:32:34.200231Z"
       }
     },
     {
@@ -16768,7 +19451,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1509"
+        "name": "gateway-1509",
+        "alt": 0,
+        "updated": "2021-08-31T11:57:54.096149Z"
       }
     },
     {
@@ -16781,7 +19466,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1511"
+        "name": "gateway-1511",
+        "alt": 0,
+        "updated": "2022-11-17T14:46:41.35366Z"
       }
     },
     {
@@ -16794,7 +19481,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1512"
+        "name": "gateway-1512",
+        "alt": 0,
+        "updated": "2021-12-09T17:15:33.32719Z"
       }
     },
     {
@@ -16807,7 +19496,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1513"
+        "name": "gateway-1513",
+        "alt": 8,
+        "updated": "2021-09-08T12:36:09.130948Z"
       }
     },
     {
@@ -16820,7 +19511,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1515"
+        "name": "gateway-1515",
+        "alt": 0,
+        "updated": "2021-10-26T08:44:56.61911Z"
       }
     },
     {
@@ -16833,7 +19526,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1516"
+        "name": "gateway-1516",
+        "alt": 0,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -16846,7 +19541,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1517"
+        "name": "gateway-1517",
+        "alt": 79,
+        "updated": "2021-08-26T16:49:14.334686Z"
       }
     },
     {
@@ -16859,7 +19556,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1518"
+        "name": "gateway-1518",
+        "alt": 3,
+        "updated": "2022-10-28T17:24:45.146574Z"
       }
     },
     {
@@ -16872,7 +19571,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1519"
+        "name": "gateway-1519",
+        "alt": 20,
+        "updated": "2022-12-29T14:58:49.354773Z"
       }
     },
     {
@@ -16885,7 +19586,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1522"
+        "name": "gateway-1522",
+        "alt": 0,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -16898,7 +19601,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1523"
+        "name": "gateway-1523",
+        "alt": 34,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -16911,7 +19616,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1524"
+        "name": "gateway-1524",
+        "alt": 3,
+        "updated": "2022-03-09T00:38:49.545722Z"
       }
     },
     {
@@ -16924,7 +19631,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1525"
+        "name": "gateway-1525",
+        "alt": 4,
+        "updated": "2022-09-30T02:11:07.036187Z"
       }
     },
     {
@@ -16937,7 +19646,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1526"
+        "name": "gateway-1526",
+        "alt": 6,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -16950,7 +19661,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1527"
+        "name": "gateway-1527",
+        "alt": 0,
+        "updated": "2022-01-28T09:46:45.853039Z"
       }
     },
     {
@@ -16963,7 +19676,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1528"
+        "name": "gateway-1528",
+        "alt": 2,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -16976,7 +19691,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1529"
+        "name": "gateway-1529",
+        "alt": 3,
+        "updated": "2023-05-01T09:48:10.181179Z"
       }
     },
     {
@@ -16989,7 +19706,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1530"
+        "name": "gateway-1530",
+        "alt": 15,
+        "updated": "2022-01-09T15:01:22.859838Z"
       }
     },
     {
@@ -17002,7 +19721,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1532"
+        "name": "gateway-1532",
+        "alt": 0,
+        "updated": "2023-10-01T04:46:15.916593Z"
       }
     },
     {
@@ -17015,7 +19736,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1533"
+        "name": "gateway-1533",
+        "alt": 48,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -17028,7 +19751,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1534"
+        "name": "gateway-1534",
+        "alt": 55,
+        "updated": "2022-04-11T00:57:37.684915Z"
       }
     },
     {
@@ -17041,7 +19766,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1535"
+        "name": "gateway-1535",
+        "alt": 17,
+        "updated": "2021-11-18T07:43:00.527557Z"
       }
     },
     {
@@ -17054,7 +19781,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1537"
+        "name": "gateway-1537",
+        "alt": 5,
+        "updated": "2021-09-19T17:57:45.131941Z"
       }
     },
     {
@@ -17067,7 +19796,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1538"
+        "name": "gateway-1538",
+        "alt": 40,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -17080,7 +19811,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1539"
+        "name": "gateway-1539",
+        "alt": 15,
+        "updated": "2021-11-06T15:47:49.047692Z"
       }
     },
     {
@@ -17093,7 +19826,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1540"
+        "name": "gateway-1540",
+        "alt": 10,
+        "updated": "2021-10-04T13:21:00.152223Z"
       }
     },
     {
@@ -17106,7 +19841,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1541"
+        "name": "gateway-1541",
+        "alt": 43,
+        "updated": "2021-11-15T18:33:38.544268Z"
       }
     },
     {
@@ -17119,7 +19856,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1542"
+        "name": "gateway-1542",
+        "alt": 3,
+        "updated": "2021-11-21T11:09:54.699495Z"
       }
     },
     {
@@ -17132,7 +19871,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1543"
+        "name": "gateway-1543",
+        "alt": 38,
+        "updated": "2021-11-19T15:17:51.0285Z"
       }
     },
     {
@@ -17145,7 +19886,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1544"
+        "name": "gateway-1544",
+        "alt": 85,
+        "updated": "2025-01-30T23:52:15.410788Z"
       }
     },
     {
@@ -17158,7 +19901,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1545"
+        "name": "gateway-1545",
+        "alt": 5,
+        "updated": "2023-05-14T20:35:53.381708Z"
       }
     },
     {
@@ -17171,7 +19916,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1547"
+        "name": "gateway-1547",
+        "alt": 0,
+        "updated": "2021-08-05T13:38:30.318129Z"
       }
     },
     {
@@ -17184,7 +19931,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1549"
+        "name": "gateway-1549",
+        "alt": 0,
+        "updated": "2022-04-28T01:56:02.37178Z"
       }
     },
     {
@@ -17197,7 +19946,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1550"
+        "name": "gateway-1550",
+        "alt": 0,
+        "updated": "2022-12-27T19:00:55.367174Z"
       }
     },
     {
@@ -17210,7 +19961,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1551"
+        "name": "gateway-1551",
+        "alt": 0,
+        "updated": "2021-07-23T07:34:09.643479Z"
       }
     },
     {
@@ -17223,7 +19976,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1552"
+        "name": "gateway-1552",
+        "alt": 32,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -17236,7 +19991,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1553"
+        "name": "gateway-1553",
+        "alt": 4,
+        "updated": "2021-11-29T15:10:37.332362Z"
       }
     },
     {
@@ -17249,7 +20006,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1554"
+        "name": "gateway-1554",
+        "alt": 0,
+        "updated": "2021-10-27T19:26:38.663585Z"
       }
     },
     {
@@ -17262,7 +20021,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1555"
+        "name": "gateway-1555",
+        "alt": 12,
+        "updated": "2022-03-09T00:56:53.753118Z"
       }
     },
     {
@@ -17275,7 +20036,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1557"
+        "name": "gateway-1557",
+        "alt": 6,
+        "updated": "2024-12-08T15:23:11.042346Z"
       }
     },
     {
@@ -17288,7 +20051,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1558"
+        "name": "gateway-1558",
+        "alt": 0,
+        "updated": "2023-11-19T12:45:31.35856Z"
       }
     },
     {
@@ -17301,7 +20066,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1560"
+        "name": "gateway-1560",
+        "alt": 8,
+        "updated": "2021-07-19T13:52:21.183529Z"
       }
     },
     {
@@ -17314,7 +20081,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1562"
+        "name": "gateway-1562",
+        "alt": 15,
+        "updated": "2021-08-24T17:24:16.146558Z"
       }
     },
     {
@@ -17327,7 +20096,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1563"
+        "name": "gateway-1563",
+        "alt": 0,
+        "updated": "2021-08-19T15:49:35.050717Z"
       }
     },
     {
@@ -17340,7 +20111,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1564"
+        "name": "gateway-1564",
+        "alt": 0,
+        "updated": "2021-10-20T16:59:58.019031Z"
       }
     },
     {
@@ -17353,7 +20126,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1565"
+        "name": "gateway-1565",
+        "alt": 7,
+        "updated": "2022-07-16T01:00:26.304584Z"
       }
     },
     {
@@ -17366,7 +20141,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1567"
+        "name": "gateway-1567",
+        "alt": 10,
+        "updated": "2021-07-11T22:19:05.990069Z"
       }
     },
     {
@@ -17379,7 +20156,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1569"
+        "name": "gateway-1569",
+        "alt": 48,
+        "updated": "2021-12-15T13:45:57.331343Z"
       }
     },
     {
@@ -17392,7 +20171,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1570"
+        "name": "gateway-1570",
+        "alt": 0,
+        "updated": "2021-08-05T08:25:23.775908Z"
       }
     },
     {
@@ -17405,7 +20186,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1571"
+        "name": "gateway-1571",
+        "alt": 0,
+        "updated": "2021-07-28T15:05:58.583795Z"
       }
     },
     {
@@ -17418,7 +20201,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1572"
+        "name": "gateway-1572",
+        "alt": 0,
+        "updated": "2022-02-14T19:44:45.439689Z"
       }
     },
     {
@@ -17431,7 +20216,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1573"
+        "name": "gateway-1573",
+        "alt": 35,
+        "updated": "2021-08-08T12:25:15.077633Z"
       }
     },
     {
@@ -17444,7 +20231,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1574"
+        "name": "gateway-1574",
+        "alt": 0,
+        "updated": "2021-08-04T11:49:13.213689Z"
       }
     },
     {
@@ -17457,7 +20246,24 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1575"
+        "name": "gateway-1575",
+        "alt": 0,
+        "updated": "2023-11-22T13:57:43.341673Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.31482869,
+          53.57724153
+        ]
+      },
+      "properties": {
+        "name": "gateway-1576",
+        "alt": 0,
+        "updated": "2021-12-17T20:10:09.495613Z"
       }
     },
     {
@@ -17470,7 +20276,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1577"
+        "name": "gateway-1577",
+        "alt": 0,
+        "updated": "2021-08-12T10:52:07.653944Z"
       }
     },
     {
@@ -17483,7 +20291,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1578"
+        "name": "gateway-1578",
+        "alt": 0,
+        "updated": "2022-07-28T21:14:13.833361Z"
       }
     },
     {
@@ -17496,7 +20306,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1579"
+        "name": "gateway-1579",
+        "alt": 0,
+        "updated": "2023-09-01T09:10:12.703223Z"
       }
     },
     {
@@ -17509,7 +20321,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1582"
+        "name": "gateway-1582",
+        "alt": 0,
+        "updated": "2021-11-20T08:35:04.710226Z"
       }
     },
     {
@@ -17522,7 +20336,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1583"
+        "name": "gateway-1583",
+        "alt": 0,
+        "updated": "2022-01-06T13:58:12.849282Z"
       }
     },
     {
@@ -17535,7 +20351,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1584"
+        "name": "gateway-1584",
+        "alt": 20,
+        "updated": "2021-10-07T12:21:41.301949Z"
       }
     },
     {
@@ -17548,7 +20366,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1585"
+        "name": "gateway-1585",
+        "alt": 3,
+        "updated": "2022-11-01T14:53:42.841587Z"
       }
     },
     {
@@ -17561,7 +20381,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1586"
+        "name": "gateway-1586",
+        "alt": 43,
+        "updated": "2021-10-14T07:44:07.392654Z"
       }
     },
     {
@@ -17574,7 +20396,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1587"
+        "name": "gateway-1587",
+        "alt": 0,
+        "updated": "2024-04-12T06:38:50.192891Z"
       }
     },
     {
@@ -17587,7 +20411,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1588"
+        "name": "gateway-1588",
+        "alt": 3,
+        "updated": "2021-12-21T17:02:01.31159Z"
       }
     },
     {
@@ -17600,7 +20426,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1589"
+        "name": "gateway-1589",
+        "alt": 25,
+        "updated": "2021-11-08T12:14:26.68311Z"
       }
     },
     {
@@ -17613,7 +20441,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1591"
+        "name": "gateway-1591",
+        "alt": 24,
+        "updated": "2021-09-29T06:30:37.308361Z"
       }
     },
     {
@@ -17626,7 +20456,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1592"
+        "name": "gateway-1592",
+        "alt": 20,
+        "updated": "2022-12-13T14:31:29.379383Z"
       }
     },
     {
@@ -17639,7 +20471,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1593"
+        "name": "gateway-1593",
+        "alt": 0,
+        "updated": "2022-06-30T01:05:30.288096Z"
       }
     },
     {
@@ -17652,7 +20486,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1594"
+        "name": "gateway-1594",
+        "alt": 0,
+        "updated": "2021-11-11T09:13:23.067759Z"
       }
     },
     {
@@ -17665,7 +20501,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1597"
+        "name": "gateway-1597",
+        "alt": 1,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -17678,7 +20516,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1598"
+        "name": "gateway-1598",
+        "alt": 42,
+        "updated": "2021-11-23T13:23:30.200086Z"
       }
     },
     {
@@ -17691,7 +20531,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1600"
+        "name": "gateway-1600",
+        "alt": 15,
+        "updated": "2022-04-11T01:01:21.434241Z"
       }
     },
     {
@@ -17704,7 +20546,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1601"
+        "name": "gateway-1601",
+        "alt": 41,
+        "updated": "2022-12-14T08:29:27.358018Z"
       }
     },
     {
@@ -17717,7 +20561,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1602"
+        "name": "gateway-1602",
+        "alt": 0,
+        "updated": "2021-07-25T00:24:05.018677Z"
       }
     },
     {
@@ -17730,7 +20576,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1603"
+        "name": "gateway-1603",
+        "alt": 10,
+        "updated": "2025-01-30T23:54:07.417102Z"
       }
     },
     {
@@ -17743,7 +20591,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1605"
+        "name": "gateway-1605",
+        "alt": 0,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -17756,7 +20606,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1606"
+        "name": "gateway-1606",
+        "alt": 38,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -17769,7 +20621,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1607"
+        "name": "gateway-1607",
+        "alt": 0,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -17782,7 +20636,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1608"
+        "name": "gateway-1608",
+        "alt": 5,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -17795,7 +20651,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1609"
+        "name": "gateway-1609",
+        "alt": 216,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -17808,7 +20666,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1610"
+        "name": "gateway-1610",
+        "alt": 0,
+        "updated": "2022-01-22T11:10:44.691415Z"
       }
     },
     {
@@ -17821,7 +20681,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1611"
+        "name": "gateway-1611",
+        "alt": 20,
+        "updated": "2021-12-01T08:25:41.334095Z"
       }
     },
     {
@@ -17834,7 +20696,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1612"
+        "name": "gateway-1612",
+        "alt": 10,
+        "updated": "2021-11-06T16:13:34.647071Z"
       }
     },
     {
@@ -17847,7 +20711,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1613"
+        "name": "gateway-1613",
+        "alt": 0,
+        "updated": "2021-10-26T15:07:00.999398Z"
       }
     },
     {
@@ -17860,7 +20726,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1614"
+        "name": "gateway-1614",
+        "alt": 191,
+        "updated": "2021-10-26T14:42:03.004202Z"
       }
     },
     {
@@ -17873,7 +20741,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1615"
+        "name": "gateway-1615",
+        "alt": 51,
+        "updated": "2021-10-27T12:53:02.629569Z"
       }
     },
     {
@@ -17886,7 +20756,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1616"
+        "name": "gateway-1616",
+        "alt": 3,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -17899,7 +20771,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1617"
+        "name": "gateway-1617",
+        "alt": 5,
+        "updated": "2021-12-02T03:05:04.944666Z"
       }
     },
     {
@@ -17912,7 +20786,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1620"
+        "name": "gateway-1620",
+        "alt": 0,
+        "updated": "2021-10-04T09:21:06.118592Z"
       }
     },
     {
@@ -17925,7 +20801,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1621"
+        "name": "gateway-1621",
+        "alt": 15,
+        "updated": "2022-02-12T16:32:37.689472Z"
       }
     },
     {
@@ -17938,7 +20816,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1622"
+        "name": "gateway-1622",
+        "alt": 40,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -17951,7 +20831,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1623"
+        "name": "gateway-1623",
+        "alt": 5,
+        "updated": "2022-02-20T18:27:49.549239Z"
       }
     },
     {
@@ -17964,7 +20846,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1624"
+        "name": "gateway-1624",
+        "alt": 2,
+        "updated": "2021-07-09T09:37:31.083794Z"
       }
     },
     {
@@ -17977,7 +20861,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1625"
+        "name": "gateway-1625",
+        "alt": 35,
+        "updated": "2020-07-01T12:55:05Z"
       }
     },
     {
@@ -17990,7 +20876,9 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1627"
+        "name": "gateway-1627",
+        "alt": 0,
+        "updated": "2025-05-01T03:48:58.974523Z"
       }
     },
     {
@@ -18003,8 +20891,10 @@ const gateways = {
         ]
       },
       "properties": {
-        "name": "gateway-1628"
+        "name": "gateway-1628",
+        "alt": 0,
+        "updated": "2025-05-12T08:53:45.475621Z"
       }
     }
   ]
-}
+};
