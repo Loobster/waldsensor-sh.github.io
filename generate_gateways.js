@@ -1281,21 +1281,6 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.793375432491304,
-          54.92632648974987
-        ]
-      },
-      "properties": {
-        "name": "gateway-0107",
-        "alt": 24,
-        "updated": "2025-05-12T08:53:07.511611Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           10.638495926460363,
           53.73467397577076
         ]
@@ -1304,21 +1289,6 @@ const gateways = {
         "name": "gateway-0113",
         "alt": 22,
         "updated": "2022-11-06T16:50:42.856375Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.219675064086916,
-          53.638723491239936
-        ]
-      },
-      "properties": {
-        "name": "gateway-0117",
-        "alt": 0,
-        "updated": "2024-12-18T00:11:31.026113Z"
       }
     },
     {
@@ -7986,21 +7956,6 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.57610217506416,
-          53.557134373011
-        ]
-      },
-      "properties": {
-        "name": "gateway-0599",
-        "alt": 5,
-        "updated": "2024-07-10T16:22:16.216343Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           9.88669506265957,
           53.7464335692606
         ]
@@ -8444,36 +8399,6 @@ const gateways = {
         "name": "gateway-0647",
         "alt": 0,
         "updated": "2025-05-12T08:50:25.678386Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.46226477622986,
-          53.58429578767753
-        ]
-      },
-      "properties": {
-        "name": "gateway-0648",
-        "alt": 0,
-        "updated": "2025-05-12T08:54:03.68236Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.516445576099567,
-          53.46007634660416
-        ]
-      },
-      "properties": {
-        "name": "gateway-0650",
-        "alt": 0,
-        "updated": "2024-10-29T10:24:06.074189Z"
       }
     },
     {
@@ -11601,21 +11526,6 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.60888323143759,
-          53.5339122435813
-        ]
-      },
-      "properties": {
-        "name": "gateway-0871",
-        "alt": 43,
-        "updated": "2024-02-20T14:35:38.876309Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           10.180293170874004,
           54.33344098418183
         ]
@@ -11744,21 +11654,6 @@ const gateways = {
         "name": "gateway-0883",
         "alt": 22,
         "updated": "2025-05-12T08:52:17.5165Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.0681875192579,
-          53.5982866095177
-        ]
-      },
-      "properties": {
-        "name": "gateway-0885",
-        "alt": 0,
-        "updated": "2023-10-02T16:45:52.658216Z"
       }
     },
     {
@@ -11946,21 +11841,6 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.50719361160113,
-          53.5749673188986
-        ]
-      },
-      "properties": {
-        "name": "gateway-0906",
-        "alt": 5,
-        "updated": "2025-05-12T08:55:04.068319Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           10.133166794229,
           54.4020415544712
         ]
@@ -12014,21 +11894,6 @@ const gateways = {
         "name": "gateway-0910",
         "alt": 44,
         "updated": "2022-09-10T01:36:09.144176Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.67642,
-          53.67061
-        ]
-      },
-      "properties": {
-        "name": "gateway-0911",
-        "alt": 5,
-        "updated": "2024-03-24T17:48:05.046157Z"
       }
     },
     {
@@ -12584,21 +12449,6 @@ const gateways = {
         "name": "gateway-0958",
         "alt": 30,
         "updated": "2025-05-12T08:47:13.859246Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.76984,
-          53.7941
-        ]
-      },
-      "properties": {
-        "name": "gateway-0959",
-        "alt": 24,
-        "updated": "2025-05-12T08:48:23.70936Z"
       }
     },
     {
@@ -13401,21 +13251,6 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.520747661590578,
-          53.56150166934052
-        ]
-      },
-      "properties": {
-        "name": "gateway-1041",
-        "alt": 30,
-        "updated": "2025-05-12T08:47:45.457746Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           9.49069475286966,
           53.8391732508176
         ]
@@ -13424,21 +13259,6 @@ const gateways = {
         "name": "gateway-1042",
         "alt": 1,
         "updated": "2025-04-27T06:53:06.964461Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.562437295913698,
-          53.759786214611445
-        ]
-      },
-      "properties": {
-        "name": "gateway-1043",
-        "alt": 0,
-        "updated": "2025-05-12T08:45:45.579152Z"
       }
     },
     {
@@ -16026,21 +15846,6 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.50366497039795,
-          53.45024108886719
-        ]
-      },
-      "properties": {
-        "name": "gateway-1271",
-        "alt": 42,
-        "updated": "2020-07-01T12:55:05Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           10.048062324523926,
           53.60198974609375
         ]
@@ -16619,81 +16424,6 @@ const gateways = {
         "name": "gateway-1315",
         "alt": -41,
         "updated": "2021-09-30T08:42:17.090963Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.61562376,
-          53.44270101
-        ]
-      },
-      "properties": {
-        "name": "gateway-1316",
-        "alt": 23,
-        "updated": "2022-04-18T00:59:05.681668Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.532843669885334,
-          53.45653668516637
-        ]
-      },
-      "properties": {
-        "name": "gateway-1317",
-        "alt": 0,
-        "updated": "2025-01-30T23:57:25.310542Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.469868659973145,
-          53.5985107421875
-        ]
-      },
-      "properties": {
-        "name": "gateway-1318",
-        "alt": -22,
-        "updated": "2021-10-25T09:37:21.054324Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.39419403,
-          53.51710187
-        ]
-      },
-      "properties": {
-        "name": "gateway-1319",
-        "alt": 23,
-        "updated": "2022-02-24T17:21:53.524606Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.44429035,
-          53.40191074
-        ]
-      },
-      "properties": {
-        "name": "gateway-1320",
-        "alt": 0,
-        "updated": "2021-08-04T20:11:20.9792Z"
       }
     },
     {
