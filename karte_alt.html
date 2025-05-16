@@ -7,8 +7,12 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     html, body, #map { height: 100%; margin: 0; }
-    .blinking { animation: blinker 3.5s linear infinite; }
-    @keyframes blinker { 50% { opacity: 0.3; } }
+    .blinking {
+      animation: blinker 3.5s linear infinite;
+    }
+    @keyframes blinker {
+      50% { opacity: 0.3; }
+    }
   </style>
 </head>
 <body>
@@ -33,12 +37,6 @@
     ];
     const gatewayDB = "data/gateways.json";
     const activeGatewayMarkers = {};
-
-    function bewertungVerbindung(rssi, snr) {
-      if (rssi > -90 && snr > 7) return "🟢 sehr gut";
-      if (rssi > -105 && snr > 0) return "🟡 ausreichend";
-      return "🔴 schwach";
-    }
 
     async function loadGateways() {
       const res = await fetch(gatewayDB);
@@ -91,8 +89,7 @@
               }).bindPopup(
                 `<b>Gateway:</b> ${g.name || gw.id}<br>
                  <b>Empfängt von:</b> ${node}<br>
-                 RSSI: ${gw.rssi} / SNR: ${gw.snr}<br>
-                 <b>Verbindung:</b> ${bewertungVerbindung(gw.rssi, gw.snr)}`
+                 RSSI: ${gw.rssi} / SNR: ${gw.snr}`
               ).addTo(map);
 
               activeGatewayMarkers[gw.id] = {
@@ -113,24 +110,24 @@
                 reverse: false,
                 hardwareAccelerated: true
               }).addTo(map);
-
+              
               const tooltipLine = L.polyline([
-                [position.lat, position.lon],
-                [g.lat, g.lon]
-              ], {
-                color: 'transparent',
-                weight: 10,
-                opacity: 0
-              }).addTo(map);
+  [position.lat, position.lon],
+  [g.lat, g.lon]
+], {
+  color: 'transparent',
+  weight: 10,
+  opacity: 0
+}).addTo(map);
 
-              const distance = map.distance([position.lat, position.lon], [g.lat, g.lon]) / 1000;
-              tooltipLine.bindTooltip(`${distance.toFixed(1)} km`, {
-                sticky: true,
-                direction: 'top',
-                className: 'distance-tooltip',
-                offset: [0, -5],
-                opacity: 1
-              });
+const distance = map.distance([position.lat, position.lon], [g.lat, g.lon]) / 1000;
+tooltipLine.bindTooltip(`${distance.toFixed(1)} km`, {
+  sticky: true,
+  direction: 'top',
+  className: 'distance-tooltip',
+  offset: [0, -5],
+  opacity: 1
+});
 
               setTimeout(() => {
                 map.removeLayer(gwMarker);
