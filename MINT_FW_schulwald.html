@@ -59,18 +59,30 @@
   };
 
   function createClusterLayer(data, farbe, labelProperty = 'name') {
-    const cluster = L.markerClusterGroup();
-    const geo = L.geoJSON(data, {
-      pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
-        radius: 6,
-        color: farbe,
-        fillColor: farbe,
-        fillOpacity: 0.7
-      }).bindPopup(`<b>${feature.properties[labelProperty]}</b>`)
-    });
-    cluster.addLayer(geo);
-    return cluster;
-  }
+  const cluster = L.markerClusterGroup();
+  const geo = L.geoJSON(data, {
+    pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+      radius: 6,
+      color: farbe,
+      fillColor: farbe,
+      fillOpacity: 0.7
+    }).bindPopup(() => {
+      const name = feature.properties.name || "unbekannt";
+      const alt = feature.properties.alt !== null ? `${feature.properties.alt} m` : "–";
+      const updated = feature.properties.updated || "–";
+      const [lon, lat] = feature.geometry.coordinates;
+
+      return `
+        <b>📡 Gateway:</b> ${name}<br>
+        <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
+        <b>🗻 Höhe:</b> ${alt}<br>
+        <b>🕒 Letztes Update:</b> ${updated}
+      `;
+    })
+  });
+  cluster.addLayer(geo);
+  return cluster;
+}
 
   // Initialisieren nur wenn Daten vorhanden
   if (typeof mint_schulen !== 'undefined') {
