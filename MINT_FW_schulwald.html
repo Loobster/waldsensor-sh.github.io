@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>MINT-FW Schulwaldkarte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
+    .layer-control {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      font-family: sans-serif;
+      z-index: 1000;
+    }
+  </style>
+  <script src="data/mint_schulen.js"></script>
+  <script src="data/gateways.js"></script>
+  <script src="data/schulwaelder.js"></script>
+  <script src="data/feuerwehren.js"></script>
+</head>
+<body>
+<div id="map"></div>
+<div class="layer-control">
+  <label><input type="checkbox" id="toggleMint" checked> MINT-Schulen</label><br>
+  <label><input type="checkbox" id="toggleGateways" checked> Gateways</label><br>
+  <label><input type="checkbox" id="toggleWald"> Schulwälder</label><br>
+  <label><input type="checkbox" id="toggleFW"> Feuerwehren</label>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+<script>
+  const map = L.map('map').setView([54.3, 10.1], 8);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap-Mitwirkende'
+  }).addTo(map);
+
+  const layers = {};
+  const checkboxes = {
+    mint: 'toggleMint',
+    gateways: 'toggleGateways',
+    schulwald: 'toggleWald',
+    feuerwehr: 'toggleFW'
+  };
+  const icons = {
+    mint: 'blue',
+    gateways: 'red',
+    schulwald: 'green',
+    feuerwehr: 'orange'
+  };
+
+  function createClusterLayer(data, farbe, labelProperty = 'name') {
+    const cluster = L.markerClusterGroup();
+    const geo = L.geoJSON(data, {
+      pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+        radius: 6,
+        color: farbe,
+        fillColor: farbe,
+        fillOpacity: 0.7
+      }).bindPopup(`<b>${feature.properties[labelProperty]}</b>`)
+    });
+    cluster.addLayer(geo);
+    return cluster;
+  }
+
+  // Initialisieren nur wenn Daten vorhanden
+  if (typeof mint_schulen !== 'undefined') {
+    layers.mint = createClusterLayer(mint_schulen, 'blue');
+    map.addLayer(layers.mint);
+  } else {
+    document.getElementById(checkboxes.mint).disabled = true;
+  }
+
+  if (typeof gateways !== 'undefined') {
+    layers.gateways = createClusterLayer(gateways, 'red');
+    map.addLayer(layers.gateways);
+  } else {
+    document.getElementById(checkboxes.gateways).disabled = true;
+  }
+
+  if (typeof schulwaelder !== 'undefined') {
+    layers.schulwald = createClusterLayer(schulwaelder, 'green');
+  } else {
+    document.getElementById(checkboxes.schulwald).disabled = true;
+  }
+
+  if (typeof feuerwehren !== 'undefined') {
+    layers.feuerwehr = createClusterLayer(feuerwehren, 'orange');
+  } else {
+    document.getElementById(checkboxes.feuerwehr).disabled = true;
+  }
+
+  // Event-Handler für ein/aus
+  for (const [key, checkboxId] of Object.entries(checkboxes)) {
+    const cb = document.getElementById(checkboxId);
+    if (!cb) continue;
+    cb.addEventListener('change', (e) => {
+      if (!layers[key]) return;
+      if (e.target.checked) {
+        map.addLayer(layers[key]);
+      } else {
+        map.removeLayer(layers[key]);
+      }
+    });
+  }
+</script>
+</body>
+</html>
