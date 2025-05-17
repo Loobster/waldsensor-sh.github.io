@@ -73,14 +73,14 @@
 
   // Initialisieren nur wenn Daten vorhanden
   if (typeof mint_schulen !== 'undefined') {
-    layers.mint = createClusterLayer(mint_schulen, 'blue');
+    layers.mint = createClusterLayer(mint_schulen, 'orange');
     map.addLayer(layers.mint);
   } else {
     document.getElementById(checkboxes.mint).disabled = true;
   }
 
   if (typeof gateways !== 'undefined') {
-    layers.gateways = createClusterLayer(gateways, 'red');
+    layers.gateways = createClusterLayer(gateways, 'blue');
     map.addLayer(layers.gateways);
   } else {
     document.getElementById(checkboxes.gateways).disabled = true;
@@ -93,7 +93,7 @@
   }
 
   if (typeof feuerwehren !== 'undefined') {
-    layers.feuerwehr = createClusterLayer(feuerwehren, 'orange');
+    layers.feuerwehr = createClusterLayer(feuerwehren, 'red');
   } else {
     document.getElementById(checkboxes.feuerwehr).disabled = true;
   }
