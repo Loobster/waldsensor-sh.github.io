@@ -14,7 +14,7 @@ const gateways_addix = {
         "id": "eui-24e124fffef36abf-v2",
         "name": "adx-sh-021",
         "alt": 68,
-        "updated": "2025-05-18T09:49:23.44221Z"
+        "updated": "2025-05-18T09:39:39.695672Z"
       }
     },
     {
@@ -46,7 +46,7 @@ const gateways_addix = {
         "id": "eui-24e124fffef38749",
         "name": "adx-sh-128",
         "alt": 15,
-        "updated": "2025-05-18T09:47:31.511935Z"
+        "updated": "2025-05-18T09:39:27.731676Z"
       }
     },
     {
@@ -62,7 +62,7 @@ const gateways_addix = {
         "id": "eui-24e124fffef38f11-2",
         "name": "adx-sh-093",
         "alt": 30,
-        "updated": "2025-05-18T09:50:27.818421Z"
+        "updated": "2025-05-18T09:40:37.796743Z"
       }
     },
     {
