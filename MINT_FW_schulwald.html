@@ -43,103 +43,139 @@
     attribution: '&copy; OpenStreetMap-Mitwirkende'
   }).addTo(map);
 
-  const layers = {};
   const checkboxes = {
     mint: 'toggleMint',
     gateways: 'toggleGateways',
     schulwald: 'toggleWald',
     feuerwehr: 'toggleFW'
   };
-  const icons = {
-    mint: 'blue',
-    gateways: 'red',
+
+  const farben = {
+    mint: 'orange',
+    gateways: 'blue',
     schulwald: 'green',
-    feuerwehr: 'orange'
+    feuerwehr: 'red'
   };
 
-  function getDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371;
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a =
-      Math.sin(dLat / 2) ** 2 +
-      Math.cos(lat1 * Math.PI / 180) *
-      Math.cos(lat2 * Math.PI / 180) *
-      Math.sin(dLon / 2) ** 2;
-    return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+  const layers = {};
+  const linien = {
+    mint: [],
+    feuerwehr: []
+  };
+
+  function entfernung(p1, p2) {
+    const R = 6371e3;
+    const rad = deg => deg * Math.PI / 180;
+    const φ1 = rad(p1.lat), φ2 = rad(p2.lat);
+    const Δφ = rad(p2.lat - p1.lat), Δλ = rad(p2.lng - p1.lng);
+    const a = Math.sin(Δφ / 2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
 
-  function findNearestGateway(lat, lon, gateways) {
+  function findeNaechstesGateway(lat, lng) {
+    if (!gateways?.features?.length) return null;
     let minDist = Infinity;
     let nearest = null;
-    gateways.features.forEach(gw => {
-      const [gwLon, gwLat] = gw.geometry.coordinates;
-      const d = getDistance(lat, lon, gwLat, gwLon);
-      if (d < minDist) {
-        minDist = d;
-        nearest = gw;
+    for (const gw of gateways.features) {
+      const [lon, latGw] = gw.geometry.coordinates;
+      const dist = entfernung({lat, lng}, {lat: latGw, lng: lon});
+      if (dist < minDist) {
+        minDist = dist;
+        nearest = { dist, gw };
       }
-    });
-    return { nearest, distance: minDist };
+    }
+    return nearest;
   }
 
-  function createClusterLayer(data, farbe, labelProperty = 'name', isMint = false) {
+  function createClusterLayer(data, typ) {
     const cluster = L.markerClusterGroup();
     const geo = L.geoJSON(data, {
-      pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
-        radius: 6,
-        color: farbe,
-        fillColor: farbe,
-        fillOpacity: 0.7
-      }).bindPopup(() => {
-        const name = feature.properties.name || "unbekannt";
-        const alt = feature.properties.alt !== null ? `${feature.properties.alt} m` : "–";
-        const updated = feature.properties.updated || "–";
-        const [lon, lat] = feature.geometry.coordinates;
+      pointToLayer: (feature, latlng) => {
+        const marker = L.circleMarker(latlng, {
+          radius: 6,
+          color: farben[typ],
+          fillColor: farben[typ],
+          fillOpacity: 0.7
+        });
 
-        let nearestInfo = "";
-        if (isMint && typeof gateways !== 'undefined') {
-          const nearest = findNearestGateway(lat, lon, gateways);
-          if (nearest.nearest) {
-            nearestInfo = `<br><b>📡 Nächstes Gateway:</b> ${nearest.nearest.properties.name} (${nearest.distance.toFixed(1)} km)`;
+        marker.bindPopup(() => {
+          const name = feature.properties.name || "unbekannt";
+          const [lon, lat] = feature.geometry.coordinates;
+
+          if (typ === "gateways") {
+            const alt = feature.properties.alt ?? "–";
+            const updated = feature.properties.updated ?? "–";
+            return `<b>📡 Gateway:</b> ${name}<br>
+                    <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
+                    <b>🗻 Höhe:</b> ${alt} m<br>
+                    <b>🕒 Letztes Update:</b> ${updated}`;
+          }
+
+          if (typ === "mint" || typ === "feuerwehr") {
+            const result = findeNaechstesGateway(lat, lon);
+            if (result) {
+              const distKm = (result.dist / 1000).toFixed(2);
+              return `<b>🏫 ${typ === "mint" ? "MINT-Schule" : "Feuerwehr"}:</b> ${name}<br>
+                      <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
+                      <b>➡️ Nächstes Gateway:</b> ${result.gw.properties.name} (${distKm} km)`;
+            }
+            return `<b>${typ}:</b> ${name}<br><i>Kein Gateway gefunden</i>`;
+          }
+
+          if (typ === "schulwald") {
+            return `<b>🌳 Schulwald:</b> ${name}`;
+          }
+
+          return `<b>${typ}:</b> ${name}`;
+        });
+
+        if (typ === "mint" || typ === "feuerwehr") {
+          const result = findeNaechstesGateway(latlng.lat, latlng.lng);
+          if (result) {
+            const [lon2, lat2] = result.gw.geometry.coordinates;
+            const line = L.polyline([[latlng.lat, latlng.lng], [lat2, lon2]], {
+              color: farben[typ],
+              weight: 1.5,
+              opacity: 0.7
+            });
+            linien[typ].push(line);
+            line.addTo(map);
           }
         }
 
-        return `
-          <b>${isMint ? "🏫 Schule" : "📍 Ort"}:</b> ${name}<br>
-          <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
-          ${isMint ? nearestInfo : ""}
-        `;
-      })
+        return marker;
+      }
     });
     cluster.addLayer(geo);
     return cluster;
   }
 
-  if (typeof mint_schulen !== 'undefined') {
-    layers.mint = createClusterLayer(mint_schulen, 'orange', 'name', true);
-    map.addLayer(layers.mint);
-  } else {
-    document.getElementById(checkboxes.mint).disabled = true;
-  }
-
   if (typeof gateways !== 'undefined') {
-    layers.gateways = createClusterLayer(gateways, 'blue');
+    layers.gateways = createClusterLayer(gateways, 'gateways');
     map.addLayer(layers.gateways);
   } else {
     document.getElementById(checkboxes.gateways).disabled = true;
   }
 
-  if (typeof schulwaelder !== 'undefined') {
-    layers.schulwald = createClusterLayer(schulwaelder, 'green');
+  if (typeof mint_schulen !== 'undefined') {
+    layers.mint = createClusterLayer(mint_schulen, 'mint');
+    map.addLayer(layers.mint);
   } else {
-    document.getElementById(checkboxes.schulwald).disabled = true;
+    document.getElementById(checkboxes.mint).disabled = true;
   }
 
   if (typeof feuerwehren !== 'undefined') {
-    layers.feuerwehr = createClusterLayer(feuerwehren, 'red');
+    layers.feuerwehr = createClusterLayer(feuerwehren, 'feuerwehr');
+    map.addLayer(layers.feuerwehr);
   } else {
     document.getElementById(checkboxes.feuerwehr).disabled = true;
+  }
+
+  if (typeof schulwaelder !== 'undefined') {
+    layers.schulwald = createClusterLayer(schulwaelder, 'schulwald');
+    map.addLayer(layers.schulwald);
+  } else {
+    document.getElementById(checkboxes.schulwald).disabled = true;
   }
 
   for (const [key, checkboxId] of Object.entries(checkboxes)) {
@@ -149,8 +185,10 @@
       if (!layers[key]) return;
       if (e.target.checked) {
         map.addLayer(layers[key]);
+        if (linien[key]) linien[key].forEach(l => l.addTo(map));
       } else {
         map.removeLayer(layers[key]);
+        if (linien[key]) linien[key].forEach(l => map.removeLayer(l));
       }
     });
   }
