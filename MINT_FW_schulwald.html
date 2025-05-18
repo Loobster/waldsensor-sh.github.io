@@ -50,67 +50,84 @@
     schulwald: 'toggleWald',
     feuerwehr: 'toggleFW'
   };
-  const icons = {
-    mint: 'blue',
-    gateways: 'red',
-    schulwald: 'green',
-    feuerwehr: 'orange'
-  };
 
-  function createClusterLayer(data, farbe, labelProperty = 'name') {
-  const cluster = L.markerClusterGroup();
-  const geo = L.geoJSON(data, {
-    pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
-      radius: 6,
-      color: farbe,
-      fillColor: farbe,
-      fillOpacity: 0.7
-    }).bindPopup(() => {
-      const name = feature.properties.name || "unbekannt";
-      const alt = feature.properties.alt !== null ? `${feature.properties.alt} m` : "–";
-      const updated = feature.properties.updated || "–";
-      const [lon, lat] = feature.geometry.coordinates;
+  function createClusterLayer(data, farbe, typ = 'generic') {
+    const cluster = L.markerClusterGroup();
+    const geo = L.geoJSON(data, {
+      pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+        radius: 6,
+        color: farbe,
+        fillColor: farbe,
+        fillOpacity: 0.7
+      }).bindPopup(() => {
+        const name = feature.properties.name || "unbekannt";
+        const [lon, lat] = feature.geometry.coordinates;
 
-      return `
-        <b>📡 Gateway:</b> ${name}<br>
-        <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
-        <b>🗻 Höhe:</b> ${alt}<br>
-        <b>🕒 Letztes Update:</b> ${updated}
-      `;
-    })
-  });
-  cluster.addLayer(geo);
-  return cluster;
-}
+        if (typ === 'gateway') {
+          const alt = feature.properties.alt !== null ? `${feature.properties.alt} m` : "–";
+          const updated = feature.properties.updated || "–";
+          return `
+            <b>🛰 Gateway:</b> ${name}<br>
+            <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
+            <b>🗻 Höhe:</b> ${alt}<br>
+            <b>🕒 Letztes Update:</b> ${updated}
+          `;
+        }
 
-  // Initialisieren nur wenn Daten vorhanden
+        if (typ === 'mint') {
+          return `
+            <b>🏫 MINT-Schule:</b> ${name}<br>
+            <b>📍 Lage:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}
+          `;
+        }
+
+        if (typ === 'feuerwehr') {
+          return `
+            <b>🚒 Feuerwehr:</b> ${name}<br>
+            <b>📍 Lage:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}
+          `;
+        }
+
+        if (typ === 'schulwald') {
+          return `
+            <b>🌳 Schulwald:</b> ${name}<br>
+            <b>📍 Lage:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}
+          `;
+        }
+
+        return `<b>${name}</b>`;
+      })
+    });
+    cluster.addLayer(geo);
+    return cluster;
+  }
+
   if (typeof mint_schulen !== 'undefined') {
-    layers.mint = createClusterLayer(mint_schulen, 'orange');
+    layers.mint = createClusterLayer(mint_schulen, 'orange', 'mint');
     map.addLayer(layers.mint);
   } else {
     document.getElementById(checkboxes.mint).disabled = true;
   }
 
   if (typeof gateways !== 'undefined') {
-    layers.gateways = createClusterLayer(gateways, 'blue');
+    layers.gateways = createClusterLayer(gateways, 'blue', 'gateway');
     map.addLayer(layers.gateways);
   } else {
     document.getElementById(checkboxes.gateways).disabled = true;
   }
 
   if (typeof schulwaelder !== 'undefined') {
-    layers.schulwald = createClusterLayer(schulwaelder, 'green');
+    layers.schulwald = createClusterLayer(schulwaelder, 'green', 'schulwald');
   } else {
     document.getElementById(checkboxes.schulwald).disabled = true;
   }
 
   if (typeof feuerwehren !== 'undefined') {
-    layers.feuerwehr = createClusterLayer(feuerwehren, 'red');
+    layers.feuerwehr = createClusterLayer(feuerwehren, 'red', 'feuerwehr');
   } else {
     document.getElementById(checkboxes.feuerwehr).disabled = true;
   }
 
-  // Event-Handler für ein/aus
   for (const [key, checkboxId] of Object.entries(checkboxes)) {
     const cb = document.getElementById(checkboxId);
     if (!cb) continue;
