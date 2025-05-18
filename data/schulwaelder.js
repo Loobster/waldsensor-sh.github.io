@@ -48,8 +48,8 @@ const schulwaelder = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.51667,
-          54.31667
+          10.074021555475401,
+          54.472394538292846
         ]
       },
       "properties": {
