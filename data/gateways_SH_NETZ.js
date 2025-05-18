@@ -6,14 +6,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.696608543395996,
-          53.68948745727539
+          9.696575164794922,
+          53.68947982788086
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030230",
         "name": "SH-NETZ_7_1223",
-        "alt": 41,
-        "updated": "2025-05-17T09:33:47.537429Z"
+        "alt": 38,
+        "updated": "2025-05-18T09:47:59.934638Z"
       }
     },
     {
@@ -21,14 +22,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.648290634155273,
-          53.69029235839844
+          9.648263931274414,
+          53.69029998779297
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030232",
         "name": "SH-NETZ_7_1257",
         "alt": 7,
-        "updated": "2025-05-17T09:28:55.596698Z"
+        "updated": "2025-05-18T09:48:07.766308Z"
       }
     },
     {
@@ -36,14 +38,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.661503791809082,
-          53.61663055419922
+          9.661479949951172,
+          53.61662673950195
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030234",
         "name": "SH-NETZ_7_1255",
-        "alt": 14,
-        "updated": "2025-05-17T09:25:13.800666Z"
+        "alt": 8,
+        "updated": "2025-05-18T09:43:37.659623Z"
       }
     },
     {
@@ -51,14 +54,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.706913948059082,
+          9.706940650939941,
           53.58283996582031
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030249",
         "name": "SH-NETZ_7_1254",
-        "alt": 17,
-        "updated": "2025-05-17T09:29:59.681467Z"
+        "alt": 19,
+        "updated": "2025-05-18T09:43:59.378465Z"
       }
     },
     {
@@ -66,14 +70,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.865872383117676,
-          53.6294059753418
+          9.865884780883789,
+          53.62935256958008
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030267",
         "name": "SH-NETZ_7_1253",
-        "alt": 36,
-        "updated": "2025-05-17T09:23:15.889505Z"
+        "alt": 25,
+        "updated": "2025-05-18T09:50:39.745181Z"
       }
     },
     {
@@ -81,14 +86,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.639477729797363,
-          53.756378173828125
+          9.63945198059082,
+          53.75635528564453
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030277",
         "name": "SH-NETZ_7_1259",
-        "alt": 12,
-        "updated": "2025-05-17T09:32:01.871053Z"
+        "alt": 11,
+        "updated": "2025-05-18T09:43:53.697856Z"
       }
     },
     {
@@ -96,14 +102,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.020621299743652,
-          53.79347610473633
+          10.020591735839844,
+          53.793460845947266
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030281",
         "name": "SH-NETZ_7_1226",
-        "alt": 87,
-        "updated": "2025-05-17T09:24:39.61212Z"
+        "alt": 86,
+        "updated": "2025-05-18T09:50:23.398429Z"
       }
     },
     {
@@ -111,14 +118,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.69119644165039,
-          53.74258804321289
+          9.691162109375,
+          53.742591857910156
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03029d",
         "name": "SH-NETZ_7_1224",
-        "alt": 44,
-        "updated": "2025-05-17T09:28:13.454686Z"
+        "alt": 48,
+        "updated": "2025-05-18T09:45:51.466658Z"
       }
     },
     {
@@ -126,14 +134,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.98577880859375,
-          53.72773742675781
+          9.9857177734375,
+          53.727760314941406
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0302c1",
         "name": "SH-NETZ_7_1273",
-        "alt": 41,
-        "updated": "2025-05-17T09:32:15.826747Z"
+        "alt": 42,
+        "updated": "2025-05-18T09:44:31.534322Z"
       }
     },
     {
@@ -141,14 +150,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.769891738891602,
-          53.77048110961914
+          9.769904136657715,
+          53.77048873901367
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0302d4",
         "name": "SH-NETZ_7_1256",
-        "alt": 18,
-        "updated": "2025-05-17T09:29:55.668666Z"
+        "alt": 22,
+        "updated": "2025-05-18T09:45:51.620414Z"
       }
     },
     {
@@ -156,14 +166,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.985719680786133,
-          53.87630844116211
+          9.985689163208008,
+          53.87628173828125
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030437",
         "name": "SH-NETZ_7_1374",
-        "alt": 30,
-        "updated": "2025-05-17T09:31:39.888294Z"
+        "alt": 31,
+        "updated": "2025-05-18T09:43:51.680642Z"
       }
     },
     {
@@ -171,14 +182,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.907208442687988,
-          53.73284149169922
+          9.907190322875977,
+          53.73286819458008
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030445",
         "name": "SH-NETZ_5_1092",
         "alt": 34,
-        "updated": "2025-05-17T09:30:53.639407Z"
+        "updated": "2025-05-18T09:47:45.48877Z"
       }
     },
     {
@@ -186,14 +198,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.363279342651367,
-          54.079490661621094
+          9.363292694091797,
+          54.079463958740234
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0308c7",
         "name": "SH-NETZ_6_1193",
-        "alt": 17,
-        "updated": "2025-05-17T09:31:55.521054Z"
+        "alt": 16,
+        "updated": "2025-05-18T09:42:47.895473Z"
       }
     },
     {
@@ -201,14 +214,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.258040428161621,
-          53.683921813964844
+          10.258052825927734,
+          53.68394470214844
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0308e6",
         "name": "SH-NETZ_8_1344",
-        "alt": 57,
-        "updated": "2025-05-17T09:29:59.964064Z"
+        "alt": 60,
+        "updated": "2025-05-18T09:50:21.634667Z"
       }
     },
     {
@@ -216,14 +230,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.983647346496582,
-          54.07471466064453
+          9.983613967895508,
+          54.074703216552734
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d1b",
         "name": "SH-NETZ_4_1003",
         "alt": 40,
-        "updated": "2025-05-17T09:28:19.880459Z"
+        "updated": "2025-05-18T09:43:49.300087Z"
       }
     },
     {
@@ -231,14 +246,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.62508773803711,
+          10.625083923339844,
           53.48080062866211
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d1c",
         "name": "SH-NETZ_8_1345",
-        "alt": 25,
-        "updated": "2025-05-17T09:33:17.90044Z"
+        "alt": 29,
+        "updated": "2025-05-18T09:45:37.926068Z"
       }
     },
     {
@@ -246,14 +262,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.526774406433105,
+          9.526768684387207,
           54.41695022583008
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d23",
         "name": "SH-NETZ_5_1139",
-        "alt": 31,
-        "updated": "2025-05-17T09:26:43.527852Z"
+        "alt": 30,
+        "updated": "2025-05-18T09:49:35.898015Z"
       }
     },
     {
@@ -262,13 +279,14 @@ const gateways = {
         "type": "Point",
         "coordinates": [
           9.578145980834961,
-          53.976776123046875
+          53.97677993774414
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d25",
         "name": "SH-NETZ_7_1365",
-        "alt": 19,
-        "updated": "2025-05-17T09:31:01.848934Z"
+        "alt": 24,
+        "updated": "2025-05-18T09:50:11.593091Z"
       }
     },
     {
@@ -276,14 +294,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.608650207519531,
+          8.608596801757812,
           54.88581466674805
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d28",
         "name": "SH-NETZ_5_1026",
-        "alt": 7,
-        "updated": "2025-05-17T09:32:27.522076Z"
+        "alt": 14,
+        "updated": "2025-05-18T09:46:57.609732Z"
       }
     },
     {
@@ -291,14 +310,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.718615531921387,
-          53.96184158325195
+          9.718598365783691,
+          53.96183776855469
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d2a",
         "name": "SH-NETZ_7_1269",
-        "alt": 39,
-        "updated": "2025-05-17T09:32:13.632036Z"
+        "alt": 37,
+        "updated": "2025-05-18T09:46:38.353213Z"
       }
     },
     {
@@ -306,14 +326,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.757923126220703,
-          54.635009765625
+          9.757838249206543,
+          54.634979248046875
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d2e",
         "name": "SH-NETZ_5_1138",
-        "alt": 39,
-        "updated": "2025-05-17T09:30:57.75816Z"
+        "alt": 38,
+        "updated": "2025-05-18T09:49:09.543706Z"
       }
     },
     {
@@ -321,14 +342,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.482264518737793,
-          53.51003646850586
+          10.482216835021973,
+          53.51002883911133
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d33",
         "name": "SH-NETZ_8_1312",
-        "alt": 66,
-        "updated": "2025-05-17T09:30:43.615947Z"
+        "alt": 67,
+        "updated": "2025-05-18T09:49:13.455055Z"
       }
     },
     {
@@ -336,14 +358,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.476166725158691,
-          54.5177116394043
+          9.476116180419922,
+          54.51771926879883
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d34",
         "name": "SH-NETZ_5_1135",
-        "alt": 33,
-        "updated": "2025-05-17T09:28:31.61607Z"
+        "alt": 31,
+        "updated": "2025-05-18T09:44:19.615399Z"
       }
     },
     {
@@ -351,14 +374,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.748428344726562,
+          8.74843978881836,
           54.32793426513672
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d36",
         "name": "SH-NETZ_5_1130",
-        "alt": 10,
-        "updated": "2025-05-17T09:23:35.326373Z"
+        "alt": 11,
+        "updated": "2025-05-18T09:42:59.890728Z"
       }
     },
     {
@@ -366,14 +390,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.585774421691895,
-          54.311668395996094
+          9.58579158782959,
+          54.31167221069336
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d37",
         "name": "SH-NETZ_6_1190",
-        "alt": 20,
-        "updated": "2025-05-17T09:25:53.968989Z"
+        "alt": 22,
+        "updated": "2025-05-18T09:45:37.78442Z"
       }
     },
     {
@@ -381,14 +406,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.161482810974121,
-          54.712547302246094
+          9.161459922790527,
+          54.71255111694336
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d3e",
         "name": "SH-NETZ_5_1095",
-        "alt": 20,
-        "updated": "2025-05-17T09:33:23.462239Z"
+        "alt": 23,
+        "updated": "2025-05-18T09:41:01.876867Z"
       }
     },
     {
@@ -396,14 +422,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.66802978515625,
-          54.499752044677734
+          9.668009757995605,
+          54.4997444152832
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d3f",
         "name": "SH-NETZ_5_1355",
-        "alt": 17,
-        "updated": "2025-05-17T09:28:29.728214Z"
+        "alt": 19,
+        "updated": "2025-05-18T09:42:41.727401Z"
       }
     },
     {
@@ -411,119 +438,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.46500301361084,
-          54.27846908569336
+          9.464981079101562,
+          54.27847671508789
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d40",
         "name": "SH-NETZ_6_1181",
-        "alt": 14,
-        "updated": "2025-05-17T09:23:47.499071Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.835494995117188,
-          54.7252311706543
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1097",
-        "alt": 40,
-        "updated": "2025-05-17T09:28:03.616892Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.192276000976562,
-          53.566978454589844
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_8_1338",
-        "alt": 40,
-        "updated": "2025-05-17T09:25:17.654043Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.910433769226074,
-          54.5855712890625
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_6_1186",
-        "alt": 27,
-        "updated": "2025-05-17T09:27:01.593528Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.4091157913208,
-          54.66996765136719
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1100",
-        "alt": 34,
-        "updated": "2025-05-17T09:30:01.734985Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.234285354614258,
-          53.52829360961914
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_8_1340",
-        "alt": 50,
-        "updated": "2025-05-17T09:26:59.891827Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.488424301147461,
-          53.51027297973633
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_8_1348",
-        "alt": 60,
-        "updated": "2025-05-17T09:32:39.57483Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.654823303222656,
-          54.809242248535156
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1105",
         "alt": 13,
-        "updated": "2025-05-17T09:29:17.682712Z"
+        "updated": "2025-05-18T09:45:31.585906Z"
       }
     },
     {
@@ -531,14 +454,127 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.596506118774414,
-          54.809757232666016
+          9.835533142089844,
+          54.725215911865234
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d46",
+        "name": "SH-NETZ_5_1097",
+        "alt": 35,
+        "updated": "2025-05-18T09:48:45.694909Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.192215919494629,
+          53.56698226928711
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff030d47",
+        "name": "SH-NETZ_8_1338",
+        "alt": 45,
+        "updated": "2025-05-18T09:42:49.765576Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.910408020019531,
+          54.585601806640625
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff030d49",
+        "name": "SH-NETZ_6_1186",
+        "alt": 28,
+        "updated": "2025-05-18T09:43:41.640114Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.40911865234375,
+          54.66996383666992
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff030d4b",
+        "name": "SH-NETZ_5_1100",
+        "alt": 33,
+        "updated": "2025-05-18T09:42:35.563148Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.23431396484375,
+          53.528289794921875
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff030d52",
+        "name": "SH-NETZ_8_1340",
+        "alt": 51,
+        "updated": "2025-05-18T09:42:37.639007Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.48837661743164,
+          53.510257720947266
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff030d59",
+        "name": "SH-NETZ_8_1348",
+        "alt": 57,
+        "updated": "2025-05-18T09:43:45.62125Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.654869079589844,
+          54.80926513671875
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff030d5a",
+        "name": "SH-NETZ_5_1105",
+        "alt": 16,
+        "updated": "2025-05-18T09:43:55.532444Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.596487045288086,
+          54.80974197387695
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff030d5b",
         "name": "SH-NETZ_5_1096",
-        "alt": 50,
-        "updated": "2025-05-17T09:30:37.885046Z"
+        "alt": 48,
+        "updated": "2025-05-18T09:43:49.304722Z"
       }
     },
     {
@@ -546,14 +582,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.428797721862793,
-          54.5462646484375
+          9.428772926330566,
+          54.54624938964844
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d5c",
         "name": "SH-NETZ_5_1141",
-        "alt": 27,
-        "updated": "2025-05-17T09:33:15.778646Z"
+        "alt": 28,
+        "updated": "2025-05-18T09:46:09.94023Z"
       }
     },
     {
@@ -561,14 +598,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.350123405456543,
-          54.13248825073242
+          9.35008716583252,
+          54.13246154785156
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d5e",
         "name": "SH-NETZ_6_1192",
-        "alt": 18,
-        "updated": "2025-05-17T09:23:37.76783Z"
+        "alt": 13,
+        "updated": "2025-05-18T09:47:03.662646Z"
       }
     },
     {
@@ -576,14 +614,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.674737930297852,
-          54.75555419921875
+          9.67478084564209,
+          54.755550384521484
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d5f",
         "name": "SH-NETZ_5_1098",
-        "alt": 55,
-        "updated": "2025-05-17T09:30:39.486946Z"
+        "alt": 58,
+        "updated": "2025-05-18T09:46:35.575335Z"
       }
     },
     {
@@ -591,14 +630,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.937121391296387,
+          9.93713092803955,
           54.18004608154297
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d60",
         "name": "SH-NETZ_6_1194",
         "alt": 38,
-        "updated": "2025-05-17T09:23:17.696991Z"
+        "updated": "2025-05-18T09:43:15.528206Z"
       }
     },
     {
@@ -606,14 +646,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.74493408203125,
-          54.71200942993164
+          9.744916915893555,
+          54.71199417114258
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d62",
         "name": "SH-NETZ_5_1099",
-        "alt": 65,
-        "updated": "2025-05-17T09:23:21.883423Z"
+        "alt": 63,
+        "updated": "2025-05-18T09:44:41.883468Z"
       }
     },
     {
@@ -621,74 +662,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.579577445983887,
-          54.539703369140625
+          9.579536437988281,
+          54.53969955444336
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030d68",
         "name": "SH-NETZ_5_1140",
-        "alt": 34,
-        "updated": "2025-05-17T09:29:13.694366Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.438263893127441,
-          54.52173614501953
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1137",
-        "alt": 23,
-        "updated": "2025-05-17T09:28:47.709364Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.116186141967773,
-          54.84434127807617
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1093",
-        "alt": 27,
-        "updated": "2025-05-17T09:29:53.642881Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.860370635986328,
-          54.79254913330078
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1106",
-        "alt": 8,
-        "updated": "2025-05-17T09:24:39.607781Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.8876371383667,
-          54.21406555175781
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_6_1172",
         "alt": 32,
-        "updated": "2025-05-17T09:32:37.882592Z"
+        "updated": "2025-05-18T09:48:17.882792Z"
       }
     },
     {
@@ -696,14 +678,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.682290077209473,
-          53.86457061767578
+          9.43826961517334,
+          54.52176284790039
         ]
       },
       "properties": {
-        "name": "SH-NETZ_7_1251",
-        "alt": 14,
-        "updated": "2025-05-17T09:29:13.660965Z"
+        "id": "eui-00007076ff030d75",
+        "name": "SH-NETZ_5_1137",
+        "alt": 28,
+        "updated": "2025-05-18T09:49:09.560113Z"
       }
     },
     {
@@ -711,14 +694,79 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.901773452758789,
+          9.116196632385254,
+          54.8443489074707
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff030d76",
+        "name": "SH-NETZ_5_1093",
+        "alt": 26,
+        "updated": "2025-05-18T09:47:37.468717Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.860361099243164,
+          54.79255676269531
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff030d77",
+        "name": "SH-NETZ_5_1106",
+        "alt": 11,
+        "updated": "2025-05-18T09:43:37.891382Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.887591361999512,
+          54.21406173706055
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff030d8e",
+        "name": "SH-NETZ_6_1172",
+        "alt": 36,
+        "updated": "2025-05-18T09:42:19.896343Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.682286262512207,
+          53.86458206176758
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff030d9f",
+        "name": "SH-NETZ_7_1251",
+        "alt": 17,
+        "updated": "2025-05-18T09:43:59.509416Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.90176010131836,
           54.867794036865234
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030ec5",
         "name": "SH-NETZ_5_1113",
-        "alt": 19,
-        "updated": "2025-05-17T09:29:39.635803Z"
+        "alt": 16,
+        "updated": "2025-05-18T09:48:31.495782Z"
       }
     },
     {
@@ -726,14 +774,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.983044624328613,
-          54.769187927246094
+          8.98304271697998,
+          54.7691764831543
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030eea",
         "name": "SH-NETZ_5_1104",
-        "alt": 11,
-        "updated": "2025-05-17T09:27:39.700937Z"
+        "alt": 12,
+        "updated": "2025-05-18T09:50:03.642713Z"
       }
     },
     {
@@ -741,14 +790,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.538640022277832,
-          53.38627624511719
+          10.538603782653809,
+          53.386260986328125
         ]
       },
       "properties": {
+        "id": "eui-00007076ff030f64",
         "name": "SH-NETZ_8_1347",
-        "alt": 44,
-        "updated": "2025-05-17T09:25:25.539217Z"
+        "alt": 39,
+        "updated": "2025-05-18T09:48:19.874089Z"
       }
     },
     {
@@ -756,14 +806,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.3923978805542,
-          53.62273406982422
+          10.392339706420898,
+          53.62272644042969
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0310d0",
         "name": "SH-NETZ_8_1337",
-        "alt": 56,
-        "updated": "2025-05-17T09:30:29.688492Z"
+        "alt": 54,
+        "updated": "2025-05-18T09:41:45.712214Z"
       }
     },
     {
@@ -771,14 +822,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          11.043792724609375,
+          11.04376220703125,
           54.3614616394043
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0310d6",
         "name": "SH-NETZ_8_1326",
-        "alt": 17,
-        "updated": "2025-05-17T09:27:15.889758Z"
+        "alt": 15,
+        "updated": "2025-05-18T09:49:33.342675Z"
       }
     },
     {
@@ -786,14 +838,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.0700101852417,
+          10.069976806640625,
           53.742401123046875
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0310d8",
         "name": "SH-NETZ_8_1341",
-        "alt": 43,
-        "updated": "2025-05-17T09:28:53.562584Z"
+        "alt": 44,
+        "updated": "2025-05-18T09:41:10.418803Z"
       }
     },
     {
@@ -801,14 +854,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.233026504516602,
-          54.06353759765625
+          10.233057022094727,
+          54.063560485839844
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0310e9",
         "name": "SH-NETZ_7_1276",
-        "alt": 53,
-        "updated": "2025-05-17T09:33:57.467979Z"
+        "alt": 56,
+        "updated": "2025-05-18T09:48:57.589001Z"
       }
     },
     {
@@ -816,14 +870,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.875112533569336,
-          54.5230827331543
+          9.875068664550781,
+          54.5230712890625
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0310ed",
         "name": "SH-NETZ_6_1183",
-        "alt": 31,
-        "updated": "2025-05-17T09:28:17.495737Z"
+        "alt": 29,
+        "updated": "2025-05-18T09:47:41.614798Z"
       }
     },
     {
@@ -831,14 +886,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.972216606140137,
-          53.687644958496094
+          9.972203254699707,
+          53.6876335144043
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0312fb",
         "name": "SH-NETZ_7_1280",
         "alt": 28,
-        "updated": "2025-05-17T09:31:03.810848Z"
+        "updated": "2025-05-18T09:47:17.637129Z"
       }
     },
     {
@@ -846,14 +902,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.266942024230957,
-          53.74102783203125
+          10.266984939575195,
+          53.741050720214844
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0312fe",
         "name": "SH-NETZ_8_1336",
-        "alt": 60,
-        "updated": "2025-05-17T09:29:47.647147Z"
+        "alt": 62,
+        "updated": "2025-05-18T09:40:19.768144Z"
       }
     },
     {
@@ -861,14 +918,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.763577461242676,
-          54.53337097167969
+          9.763574600219727,
+          54.53337478637695
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031329",
         "name": "SH-NETZ_6_1182",
-        "alt": 14,
-        "updated": "2025-05-17T09:27:09.567598Z"
+        "alt": 11,
+        "updated": "2025-05-18T09:43:41.676006Z"
       }
     },
     {
@@ -876,14 +934,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.358036041259766,
-          54.194576263427734
+          10.358054161071777,
+          54.19459915161133
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03132e",
         "name": "SH-NETZ_6_1210",
-        "alt": 55,
-        "updated": "2025-05-17T09:22:55.816593Z"
+        "alt": 59,
+        "updated": "2025-05-18T09:47:41.620463Z"
       }
     },
     {
@@ -891,14 +950,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.993017196655273,
-          54.59895324707031
+          8.993002891540527,
+          54.5989875793457
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03134e",
         "name": "SH-NETZ_5_1101",
-        "alt": 27,
-        "updated": "2025-05-17T09:32:29.330561Z"
+        "alt": 25,
+        "updated": "2025-05-18T09:49:59.971326Z"
       }
     },
     {
@@ -906,14 +966,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.164705276489258,
-          54.45293045043945
+          9.164658546447754,
+          54.45296859741211
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031355",
         "name": "SH-NETZ_5_1133",
-        "alt": 39,
-        "updated": "2025-05-17T09:30:39.615484Z"
+        "alt": 42,
+        "updated": "2025-05-18T09:48:25.649064Z"
       }
     },
     {
@@ -921,14 +982,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.048542022705078,
+          9.048553466796875,
           54.70661544799805
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031358",
         "name": "SH-NETZ_5_1103",
         "alt": 15,
-        "updated": "2025-05-17T09:27:25.728927Z"
+        "updated": "2025-05-18T09:42:19.53038Z"
       }
     },
     {
@@ -936,14 +998,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.77814769744873,
-          54.10988235473633
+          10.77821159362793,
+          54.10993957519531
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03136f",
         "name": "SH-NETZ_8_1331",
-        "alt": 18,
-        "updated": "2025-05-17T09:30:39.621425Z"
+        "alt": 22,
+        "updated": "2025-05-18T09:48:55.670596Z"
       }
     },
     {
@@ -951,14 +1014,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.892273902893066,
-          54.27672576904297
+          9.892300605773926,
+          54.27675247192383
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031371",
         "name": "SH-NETZ_6_1177",
-        "alt": 17,
-        "updated": "2025-05-17T09:32:15.894299Z"
+        "alt": 22,
+        "updated": "2025-05-18T09:46:35.534105Z"
       }
     },
     {
@@ -966,14 +1030,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.961113929748535,
-          54.676971435546875
+          8.961129188537598,
+          54.67698287963867
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031372",
         "name": "SH-NETZ_5_1102",
-        "alt": 15,
-        "updated": "2025-05-17T09:26:55.852859Z"
+        "alt": 14,
+        "updated": "2025-05-18T09:50:27.832617Z"
       }
     },
     {
@@ -981,14 +1046,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.611026763916016,
-          54.1976318359375
+          9.61098575592041,
+          54.1976432800293
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031373",
         "name": "SH-NETZ_6_1203",
-        "alt": 6,
-        "updated": "2025-05-17T09:29:55.633541Z"
+        "alt": 10,
+        "updated": "2025-05-18T09:45:05.699077Z"
       }
     },
     {
@@ -996,14 +1062,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.281452178955078,
-          53.510982513427734
+          10.281381607055664,
+          53.510986328125
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031377",
         "name": "SH-NETZ_8_1343",
-        "alt": 49,
-        "updated": "2025-05-17T09:31:44.020537Z"
+        "alt": 47,
+        "updated": "2025-05-18T09:50:53.704474Z"
       }
     },
     {
@@ -1011,14 +1078,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.221052169799805,
+          10.221041679382324,
           53.66460037231445
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031378",
         "name": "SH-NETZ_8_1339",
-        "alt": 54,
-        "updated": "2025-05-17T09:27:57.458316Z"
+        "alt": 53,
+        "updated": "2025-05-18T09:50:35.908866Z"
       }
     },
     {
@@ -1026,14 +1094,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.556713104248047,
-          53.7347526550293
+          9.556700706481934,
+          53.734745025634766
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031387",
         "name": "SH-NETZ_7_1248",
-        "alt": 5,
-        "updated": "2025-05-17T09:30:59.597651Z"
+        "alt": 2,
+        "updated": "2025-05-18T09:49:07.680378Z"
       }
     },
     {
@@ -1041,14 +1110,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.745573997497559,
-          54.813533782958984
+          8.74553394317627,
+          54.81352996826172
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03139d",
         "name": "SH-NETZ_5_1112",
         "alt": 10,
-        "updated": "2025-05-17T09:31:06.437315Z"
+        "updated": "2025-05-18T09:41:59.546933Z"
       }
     },
     {
@@ -1056,14 +1126,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.333556175231934,
-          53.64651870727539
+          10.333547592163086,
+          53.646514892578125
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0313c7",
         "name": "SH-NETZ_8_1342",
-        "alt": 72,
-        "updated": "2025-05-17T09:25:39.419164Z"
+        "alt": 73,
+        "updated": "2025-05-18T09:50:23.518073Z"
       }
     },
     {
@@ -1071,14 +1142,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.184226989746094,
-          54.5243034362793
+          9.184260368347168,
+          54.524322509765625
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031416",
         "name": "SH-NETZ_5_1134",
-        "alt": 34,
-        "updated": "2025-05-17T09:26:31.881719Z"
+        "alt": 36,
+        "updated": "2025-05-18T09:49:13.615469Z"
       }
     },
     {
@@ -1086,14 +1158,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.37292766571045,
+          10.372871398925781,
           54.3675537109375
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03141e",
         "name": "SH-NETZ_6_1147",
-        "alt": 76,
-        "updated": "2025-05-17T09:25:55.682473Z"
+        "alt": 75,
+        "updated": "2025-05-18T09:42:13.886879Z"
       }
     },
     {
@@ -1101,14 +1174,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.420344352722168,
-          54.74050521850586
+          9.420321464538574,
+          54.74048614501953
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03141f",
         "name": "SH-NETZ_5_1021",
-        "alt": 93,
-        "updated": "2025-05-17T09:32:53.525404Z"
+        "alt": 92,
+        "updated": "2025-05-18T09:49:57.765483Z"
       }
     },
     {
@@ -1116,14 +1190,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.20918083190918,
-          54.1329345703125
+          10.209190368652344,
+          54.13296890258789
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03143c",
         "name": "SH-NETZ_6_1213",
-        "alt": 67,
-        "updated": "2025-05-17T09:27:07.634817Z"
+        "alt": 66,
+        "updated": "2025-05-18T09:44:25.728557Z"
       }
     },
     {
@@ -1136,9 +1211,10 @@ const gateways = {
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03143f",
         "name": "SH-NETZ_6_1176",
-        "alt": 13,
-        "updated": "2025-05-17T09:22:17.437142Z"
+        "alt": 19,
+        "updated": "2025-05-18T09:43:55.885649Z"
       }
     },
     {
@@ -1146,14 +1222,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.209665298461914,
-          53.94306564331055
+          10.209656715393066,
+          53.94307327270508
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031442",
         "name": "SH-NETZ_7_1281",
-        "alt": 50,
-        "updated": "2025-05-17T09:23:29.64656Z"
+        "alt": 55,
+        "updated": "2025-05-18T09:47:58.095506Z"
       }
     },
     {
@@ -1161,14 +1238,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.317235946655273,
-          54.06175994873047
+          10.317218780517578,
+          54.0617790222168
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031447",
         "name": "SH-NETZ_7_1277",
-        "alt": 65,
-        "updated": "2025-05-17T09:33:17.428761Z"
+        "alt": 66,
+        "updated": "2025-05-18T09:44:23.43328Z"
       }
     },
     {
@@ -1176,14 +1254,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.739646911621094,
-          54.03114318847656
+          10.739635467529297,
+          54.03115463256836
         ]
       },
       "properties": {
+        "id": "eui-00007076ff031458",
         "name": "SH-NETZ_8_1334",
-        "alt": 12,
-        "updated": "2025-05-17T09:27:11.473584Z"
+        "alt": 20,
+        "updated": "2025-05-18T09:46:38.358108Z"
       }
     },
     {
@@ -1191,14 +1270,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.754105567932129,
+          9.754136085510254,
           54.505760192871094
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0314ba",
         "name": "SH-NETZ_6_1187",
-        "alt": 16,
-        "updated": "2025-05-17T09:31:35.859552Z"
+        "alt": 14,
+        "updated": "2025-05-18T09:46:01.985204Z"
       }
     },
     {
@@ -1206,14 +1286,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.35998821258545,
-          53.43299102783203
+          10.360000610351562,
+          53.433006286621094
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0314bc",
         "name": "SH-NETZ_8_1346",
-        "alt": 19,
-        "updated": "2025-05-17T09:23:09.784277Z"
+        "alt": 21,
+        "updated": "2025-05-18T09:46:25.570161Z"
       }
     },
     {
@@ -1221,14 +1302,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.788540840148926,
-          54.25531005859375
+          9.788505554199219,
+          54.25532531738281
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0314bd",
         "name": "SH-NETZ_6_1180",
-        "alt": 22,
-        "updated": "2025-05-17T09:33:21.587132Z"
+        "alt": 21,
+        "updated": "2025-05-18T09:48:23.879098Z"
       }
     },
     {
@@ -1236,14 +1318,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.649068832397461,
-          53.61478042602539
+          10.649062156677246,
+          53.614768981933594
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0314bf",
         "name": "SH-NETZ_8_1285",
-        "alt": 81,
-        "updated": "2025-05-17T09:31:35.907618Z"
+        "alt": 80,
+        "updated": "2025-05-18T09:50:59.769929Z"
       }
     },
     {
@@ -1251,14 +1334,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.108963012695312,
-          54.37308120727539
+          9.108962059020996,
+          54.37308883666992
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0314eb",
         "name": "SH-NETZ_5_1131",
-        "alt": 11,
-        "updated": "2025-05-17T09:33:01.487111Z"
+        "alt": 10,
+        "updated": "2025-05-18T09:47:59.831091Z"
       }
     },
     {
@@ -1266,14 +1350,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.961885452270508,
-          54.666011810302734
+          9.96190357208252,
+          54.666072845458984
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0326ef",
         "name": "SH-NETZ_5_1017",
-        "alt": 55,
-        "updated": "2025-05-17T09:33:59.891155Z"
+        "alt": 65,
+        "updated": "2025-05-18T09:48:23.621467Z"
       }
     },
     {
@@ -1281,14 +1366,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.097119331359863,
-          54.47267532348633
+          9.097076416015625,
+          54.47267150878906
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0326f0",
         "name": "SH-NETZ_5_1020",
-        "alt": 46,
-        "updated": "2025-05-17T09:27:21.652714Z"
+        "alt": 45,
+        "updated": "2025-05-18T09:45:51.599357Z"
       }
     },
     {
@@ -1296,14 +1382,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.703609466552734,
-          54.523780822753906
+          9.703572273254395,
+          54.523799896240234
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0326fc",
         "name": "SH-NETZ_5_1354",
-        "alt": 15,
-        "updated": "2025-05-17T09:25:01.759491Z"
+        "alt": 14,
+        "updated": "2025-05-18T09:50:53.548755Z"
       }
     },
     {
@@ -1311,14 +1398,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.89731502532959,
-          54.548187255859375
+          9.897284507751465,
+          54.54818344116211
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0326fd",
         "name": "SH-NETZ_6_1189",
-        "alt": 36,
-        "updated": "2025-05-17T09:23:35.301522Z"
+        "alt": 31,
+        "updated": "2025-05-18T09:44:05.902814Z"
       }
     },
     {
@@ -1326,14 +1414,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.998847007751465,
-          54.359840393066406
+          9.998868942260742,
+          54.359825134277344
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032730",
         "name": "SH-NETZ_6_1174",
-        "alt": 22,
-        "updated": "2025-05-17T09:27:45.477125Z"
+        "alt": 25,
+        "updated": "2025-05-18T09:49:05.887858Z"
       }
     },
     {
@@ -1341,14 +1430,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.521413803100586,
-          53.76051712036133
+          9.52138900756836,
+          53.76054000854492
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032731",
         "name": "SH-NETZ_7_1371",
-        "alt": 0,
-        "updated": "2025-05-17T09:24:39.608359Z"
+        "alt": 9,
+        "updated": "2025-05-18T09:48:55.674097Z"
       }
     },
     {
@@ -1356,14 +1446,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.715850830078125,
-          53.777347564697266
+          9.715824127197266,
+          53.77737045288086
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032736",
         "name": "SH-NETZ_7_1373",
-        "alt": 11,
-        "updated": "2025-05-17T09:24:51.824166Z"
+        "alt": 14,
+        "updated": "2025-05-18T09:46:51.620024Z"
       }
     },
     {
@@ -1371,14 +1462,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.920799255371094,
-          54.61481857299805
+          9.920757293701172,
+          54.614803314208984
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032737",
         "name": "SH-NETZ_6_1185",
         "alt": 16,
-        "updated": "2025-05-17T09:30:21.952231Z"
+        "updated": "2025-05-18T09:42:09.825217Z"
       }
     },
     {
@@ -1386,14 +1478,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.915873527526855,
-          54.044952392578125
+          9.915846824645996,
+          54.044921875
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032739",
         "name": "SH-NETZ_4_1007",
-        "alt": 20,
-        "updated": "2025-05-17T09:32:25.727475Z"
+        "alt": 18,
+        "updated": "2025-05-18T09:48:53.574956Z"
       }
     },
     {
@@ -1401,14 +1494,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.47584056854248,
-          54.04348373413086
+          10.475811004638672,
+          54.043487548828125
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032748",
         "name": "SH-NETZ_7_1222",
-        "alt": 36,
-        "updated": "2025-05-17T09:26:19.995889Z"
+        "alt": 38,
+        "updated": "2025-05-18T09:48:11.842739Z"
       }
     },
     {
@@ -1416,104 +1510,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.553912162780762,
-          54.69252014160156
+          8.553866386413574,
+          54.69248580932617
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0327ec",
         "name": "SH-NETZ_5_1033",
-        "alt": 24,
-        "updated": "2025-05-17T09:29:37.731097Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.21816635131836,
-          54.01317596435547
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1117",
-        "alt": 16,
-        "updated": "2025-05-17T09:30:07.717146Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.659965515136719,
-          54.170814514160156
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_6_1178",
-        "alt": 17,
-        "updated": "2025-05-17T09:32:09.701474Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.016201972961426,
-          54.42777633666992
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_6_1150",
-        "alt": 23,
-        "updated": "2025-05-17T09:30:21.943835Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.104287147521973,
-          54.22542953491211
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_6_1205",
-        "alt": 62,
-        "updated": "2025-05-17T09:29:47.671556Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.904870986938477,
-          54.21590805053711
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_8_1330",
-        "alt": 26,
-        "updated": "2025-05-17T09:24:59.850735Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.740304946899414,
-          53.85909652709961
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_7_1250",
         "alt": 11,
-        "updated": "2025-05-17T09:30:39.880114Z"
+        "updated": "2025-05-18T09:40:57.438178Z"
       }
     },
     {
@@ -1521,14 +1526,95 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.654623985290527,
-          54.317047119140625
+          9.218072891235352,
+          54.01314926147461
         ]
       },
       "properties": {
-        "name": "SH-NETZ_6_1215",
+        "id": "eui-00007076ff0327f5",
+        "name": "SH-NETZ_5_1117",
+        "alt": 21,
+        "updated": "2025-05-18T09:48:53.894043Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.659912109375,
+          54.17083740234375
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff0327fc",
+        "name": "SH-NETZ_6_1178",
+        "alt": 20,
+        "updated": "2025-05-18T09:48:33.603388Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.016122817993164,
+          54.42780685424805
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff0327fe",
+        "name": "SH-NETZ_6_1150",
+        "alt": 25,
+        "updated": "2025-05-18T09:45:31.565759Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.10425853729248,
+          54.2254524230957
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff0327ff",
+        "name": "SH-NETZ_6_1205",
+        "alt": 57,
+        "updated": "2025-05-18T09:48:03.763026Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.904879570007324,
+          54.215919494628906
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff03280c",
+        "name": "SH-NETZ_8_1330",
+        "alt": 32,
+        "updated": "2025-05-18T09:45:19.597709Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.740274429321289,
+          53.85912322998047
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff03280d",
+        "name": "SH-NETZ_7_1250",
         "alt": 14,
-        "updated": "2025-05-17T09:29:47.652146Z"
+        "updated": "2025-05-18T09:46:35.646024Z"
       }
     },
     {
@@ -1536,14 +1622,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.583416938781738,
-          54.68924331665039
+          9.654646873474121,
+          54.31703567504883
         ]
       },
       "properties": {
-        "name": "SH-NETZ_5_1072",
-        "alt": 42,
-        "updated": "2025-05-17T09:30:39.600077Z"
+        "id": "eui-00007076ff032810",
+        "name": "SH-NETZ_6_1215",
+        "alt": 17,
+        "updated": "2025-05-18T09:40:09.883893Z"
       }
     },
     {
@@ -1551,14 +1638,31 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.832616806030273,
+          9.583401679992676,
+          54.68925094604492
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032828",
+        "name": "SH-NETZ_5_1072",
+        "alt": 44,
+        "updated": "2025-05-18T09:49:49.883366Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.832599639892578,
           53.656246185302734
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03282f",
         "name": "SH-NETZ_7_1247",
-        "alt": 21,
-        "updated": "2025-05-17T09:27:59.763472Z"
+        "alt": 18,
+        "updated": "2025-05-18T09:43:33.682432Z"
       }
     },
     {
@@ -1566,119 +1670,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.16672420501709,
+          9.166731834411621,
           54.39958572387695
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032832",
         "name": "SH-NETZ_5_1089",
-        "alt": 19,
-        "updated": "2025-05-17T09:30:11.532984Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.078287124633789,
-          54.51237487792969
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1124",
-        "alt": 31,
-        "updated": "2025-05-17T09:30:47.49243Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.160150527954102,
-          54.062255859375
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1065",
-        "alt": 8,
-        "updated": "2025-05-17T09:28:21.581322Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.933808326721191,
-          53.975135803222656
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1127",
-        "alt": 8,
-        "updated": "2025-05-17T09:33:17.525393Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.811458587646484,
-          54.13284683227539
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_4_1006",
-        "alt": 23,
-        "updated": "2025-05-17T09:30:13.555037Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.00633716583252,
-          54.08461380004883
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_4_1010",
-        "alt": 35,
-        "updated": "2025-05-17T09:32:39.612852Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          7.904607772827148,
-          54.18548583984375
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_7_1350",
-        "alt": 2,
-        "updated": "2025-05-17T09:23:19.685134Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.774513244628906,
-          54.29664993286133
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_8_1327",
         "alt": 17,
-        "updated": "2025-05-17T09:32:45.519582Z"
+        "updated": "2025-05-18T09:50:57.863868Z"
       }
     },
     {
@@ -1686,14 +1686,127 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.705856323242188,
-          54.67154312133789
+          9.07827091217041,
+          54.512367248535156
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032833",
+        "name": "SH-NETZ_5_1124",
+        "alt": 33,
+        "updated": "2025-05-18T09:46:10.678624Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.160173416137695,
+          54.06224822998047
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032835",
+        "name": "SH-NETZ_5_1065",
+        "alt": 6,
+        "updated": "2025-05-18T09:40:23.728339Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.933816909790039,
+          53.97515869140625
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff03283f",
+        "name": "SH-NETZ_5_1127",
+        "alt": 9,
+        "updated": "2025-05-18T09:41:45.685913Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.811442375183105,
+          54.13285827636719
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032841",
+        "name": "SH-NETZ_4_1006",
+        "alt": 27,
+        "updated": "2025-05-18T09:40:39.47997Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.006287574768066,
+          54.08462905883789
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032842",
+        "name": "SH-NETZ_4_1010",
+        "alt": 37,
+        "updated": "2025-05-18T09:45:07.75198Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.904543876647949,
+          54.185489654541016
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032845",
+        "name": "SH-NETZ_7_1350",
+        "alt": 1,
+        "updated": "2025-05-18T09:44:31.654842Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.77455997467041,
+          54.296630859375
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032846",
+        "name": "SH-NETZ_8_1327",
+        "alt": 22,
+        "updated": "2025-05-18T09:50:11.649599Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.705818176269531,
+          54.67155075073242
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032847",
         "name": "SH-NETZ_5_1069",
-        "alt": 35,
-        "updated": "2025-05-17T09:29:15.498472Z"
+        "alt": 40,
+        "updated": "2025-05-18T09:42:57.885442Z"
       }
     },
     {
@@ -1701,14 +1814,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.575075149536133,
-          54.76433563232422
+          9.575031280517578,
+          54.76431655883789
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03284a",
         "name": "SH-NETZ_5_1083",
-        "alt": 46,
-        "updated": "2025-05-17T09:28:09.366505Z"
+        "alt": 44,
+        "updated": "2025-05-18T09:47:05.451747Z"
       }
     },
     {
@@ -1721,9 +1835,10 @@ const gateways = {
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03284c",
         "name": "SH-NETZ_4_1013",
         "alt": 2,
-        "updated": "2025-05-17T09:26:04.552249Z"
+        "updated": "2025-05-18T09:44:01.65408Z"
       }
     },
     {
@@ -1731,14 +1846,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.18581771850586,
-          53.82413864135742
+          10.185842514038086,
+          53.824134826660156
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03288b",
         "name": "SH-NETZ_7_1283",
-        "alt": 48,
-        "updated": "2025-05-17T09:31:06.598074Z"
+        "alt": 47,
+        "updated": "2025-05-18T09:45:29.513858Z"
       }
     },
     {
@@ -1746,14 +1862,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          11.057842254638672,
-          54.47792434692383
+          11.05781364440918,
+          54.47792053222656
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0328b0",
         "name": "SH-NETZ_8_1292",
-        "alt": 26,
-        "updated": "2025-05-17T09:28:31.700186Z"
+        "alt": 31,
+        "updated": "2025-05-18T09:42:37.645913Z"
       }
     },
     {
@@ -1766,9 +1883,10 @@ const gateways = {
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032a1c",
         "name": "SH-NETZ_4_1004",
         "alt": 17,
-        "updated": "2025-05-17T09:30:05.556752Z"
+        "updated": "2025-05-18T09:46:59.885431Z"
       }
     },
     {
@@ -1776,14 +1894,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.977519035339355,
-          54.361907958984375
+          10.977520942687988,
+          54.361900329589844
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032adc",
         "name": "SH-NETZ_8_1290",
-        "alt": 56,
-        "updated": "2025-05-17T09:30:23.74588Z"
+        "alt": 57,
+        "updated": "2025-05-18T09:40:37.789255Z"
       }
     },
     {
@@ -1791,14 +1910,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.50093936920166,
-          54.409088134765625
+          9.500898361206055,
+          54.40911102294922
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032add",
         "name": "SH-NETZ_5_1023",
-        "alt": 25,
-        "updated": "2025-05-17T09:31:49.966624Z"
+        "alt": 30,
+        "updated": "2025-05-18T09:50:17.549408Z"
       }
     },
     {
@@ -1806,14 +1926,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.886354446411133,
+          8.886340141296387,
           54.797733306884766
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032ae0",
         "name": "SH-NETZ_5_1022",
-        "alt": 40,
-        "updated": "2025-05-17T09:29:47.690109Z"
+        "alt": 41,
+        "updated": "2025-05-18T09:42:23.618431Z"
       }
     },
     {
@@ -1821,14 +1942,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.7028226852417,
-          54.32086181640625
+          8.702807426452637,
+          54.32085418701172
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032ae4",
         "name": "SH-NETZ_5_1030",
-        "alt": 15,
-        "updated": "2025-05-17T09:33:57.569576Z"
+        "alt": 16,
+        "updated": "2025-05-18T09:46:51.975245Z"
       }
     },
     {
@@ -1836,14 +1958,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.40615177154541,
-          54.712066650390625
+          8.40617561340332,
+          54.71206283569336
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032ae8",
         "name": "SH-NETZ_5_1109",
-        "alt": 10,
-        "updated": "2025-05-17T09:28:35.816701Z"
+        "alt": 7,
+        "updated": "2025-05-18T09:48:37.649295Z"
       }
     },
     {
@@ -1851,14 +1974,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.48351001739502,
-          53.785587310791016
+          9.483480453491211,
+          53.78557586669922
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032aea",
         "name": "SH-NETZ_7_1370",
         "alt": 5,
-        "updated": "2025-05-17T09:32:47.750629Z"
+        "updated": "2025-05-18T09:41:08.382251Z"
       }
     },
     {
@@ -1866,14 +1990,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.41942024230957,
-          54.161563873291016
+          10.419408798217773,
+          54.16157531738281
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032aeb",
         "name": "SH-NETZ_6_1211",
-        "alt": 31,
-        "updated": "2025-05-17T09:31:14.299562Z"
+        "alt": 34,
+        "updated": "2025-05-18T09:41:37.886873Z"
       }
     },
     {
@@ -1881,14 +2006,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.968006134033203,
-          54.366546630859375
+          9.968001365661621,
+          54.36652374267578
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032aec",
         "name": "SH-NETZ_6_1202",
-        "alt": 22,
-        "updated": "2025-05-17T09:24:47.629755Z"
+        "alt": 25,
+        "updated": "2025-05-18T09:49:01.64101Z"
       }
     },
     {
@@ -1896,14 +2022,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          11.238935470581055,
-          54.467811584472656
+          11.238936424255371,
+          54.46783447265625
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032aed",
         "name": "SH-NETZ_8_1329",
-        "alt": 23,
-        "updated": "2025-05-17T09:30:37.721512Z"
+        "alt": 24,
+        "updated": "2025-05-18T09:44:55.579585Z"
       }
     },
     {
@@ -1911,14 +2038,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.271676063537598,
-          54.3029670715332
+          10.27167797088623,
+          54.30300521850586
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032aef",
         "name": "SH-NETZ_6_1212",
-        "alt": 56,
-        "updated": "2025-05-17T09:30:13.891227Z"
+        "alt": 49,
+        "updated": "2025-05-18T09:42:15.889922Z"
       }
     },
     {
@@ -1926,14 +2054,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.02210521697998,
-          53.99046325683594
+          9.022087097167969,
+          53.990440368652344
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032af1",
         "name": "SH-NETZ_5_1032",
-        "alt": 31,
-        "updated": "2025-05-17T09:25:41.622052Z"
+        "alt": 27,
+        "updated": "2025-05-18T09:46:31.884115Z"
       }
     },
     {
@@ -1941,14 +2070,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.740391731262207,
-          54.371578216552734
+          9.740385055541992,
+          54.37159729003906
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032af3",
         "name": "SH-NETZ_6_1175",
-        "alt": 16,
-        "updated": "2025-05-17T09:28:25.508131Z"
+        "alt": 17,
+        "updated": "2025-05-18T09:46:25.609375Z"
       }
     },
     {
@@ -1956,14 +2086,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.47088623046875,
-          53.87961196899414
+          9.47085189819336,
+          53.87959671020508
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032af4",
         "name": "SH-NETZ_7_1227",
-        "alt": 39,
-        "updated": "2025-05-17T09:30:47.639253Z"
+        "alt": 37,
+        "updated": "2025-05-18T09:43:07.829785Z"
       }
     },
     {
@@ -1971,14 +2102,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.93851089477539,
-          54.28466796875
+          10.938502311706543,
+          54.28467559814453
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032af5",
         "name": "SH-NETZ_8_1288",
         "alt": 52,
-        "updated": "2025-05-17T09:27:01.585305Z"
+        "updated": "2025-05-18T09:43:05.756872Z"
       }
     },
     {
@@ -1986,14 +2118,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.017338752746582,
-          54.32981872558594
+          9.017324447631836,
+          54.32982635498047
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032afc",
         "name": "SH-NETZ_5_1025",
-        "alt": 16,
-        "updated": "2025-05-17T09:28:35.845174Z"
+        "alt": 20,
+        "updated": "2025-05-18T09:41:49.631646Z"
       }
     },
     {
@@ -2001,14 +2134,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          11.192346572875977,
-          54.43698501586914
+          11.192312240600586,
+          54.43701171875
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032afd",
         "name": "SH-NETZ_8_1286",
-        "alt": 30,
-        "updated": "2025-05-17T09:33:01.46029Z"
+        "alt": 35,
+        "updated": "2025-05-18T09:44:15.600341Z"
       }
     },
     {
@@ -2016,14 +2150,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.181790351867676,
-          54.25592803955078
+          9.181742668151855,
+          54.25594711303711
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032aff",
         "name": "SH-NETZ_5_1024",
-        "alt": 22,
-        "updated": "2025-05-17T09:26:42.062608Z"
+        "alt": 25,
+        "updated": "2025-05-18T09:48:39.453919Z"
       }
     },
     {
@@ -2031,14 +2166,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.798408508300781,
-          54.58062744140625
+          9.798399925231934,
+          54.58063507080078
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b00",
         "name": "SH-NETZ_5_1073",
-        "alt": -1,
-        "updated": "2025-05-17T09:33:05.452989Z"
+        "alt": 4,
+        "updated": "2025-05-18T09:43:01.866193Z"
       }
     },
     {
@@ -2046,14 +2182,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.36361026763916,
-          54.89067459106445
+          8.363560676574707,
+          54.89065933227539
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b04",
         "name": "SH-NETZ_5_1107",
-        "alt": 12,
-        "updated": "2025-05-17T09:32:37.495089Z"
+        "alt": 8,
+        "updated": "2025-05-18T09:39:29.880857Z"
       }
     },
     {
@@ -2061,14 +2198,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.521164894104004,
-          54.2074089050293
+          9.521154403686523,
+          54.207427978515625
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b05",
         "name": "SH-NETZ_6_1198",
         "alt": 9,
-        "updated": "2025-05-17T09:29:09.8917Z"
+        "updated": "2025-05-18T09:48:05.862967Z"
       }
     },
     {
@@ -2081,9 +2219,10 @@ const gateways = {
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b06",
         "name": "SH-NETZ_5_1076",
         "alt": 7,
-        "updated": "2025-05-17T09:30:19.743006Z"
+        "updated": "2025-05-18T09:49:19.583952Z"
       }
     },
     {
@@ -2091,179 +2230,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.74523639678955,
-          54.531822204589844
+          9.745214462280273,
+          54.5318489074707
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b07",
         "name": "SH-NETZ_5_1356",
-        "alt": 11,
-        "updated": "2025-05-17T09:28:39.941652Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.187432289123535,
-          54.114349365234375
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1086",
-        "alt": 12,
-        "updated": "2025-05-17T09:27:33.495352Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.285383224487305,
-          53.94034194946289
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_7_1221",
-        "alt": 83,
-        "updated": "2025-05-17T09:23:23.599224Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.570732116699219,
-          54.74824523925781
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1110",
-        "alt": 5,
-        "updated": "2025-05-17T09:27:47.751998Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.784205436706543,
-          53.94424057006836
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_7_1228",
-        "alt": 27,
-        "updated": "2025-05-17T09:28:39.949305Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.980140686035156,
-          54.53303527832031
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_6_1184",
-        "alt": 40,
-        "updated": "2025-05-17T09:25:47.709355Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          7.890049934387207,
-          54.177330017089844
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_7_1349",
-        "alt": 20,
-        "updated": "2025-05-17T09:27:55.589441Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.174040794372559,
-          53.69364929199219
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_8_1335",
-        "alt": 34,
-        "updated": "2025-05-17T09:26:45.777424Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.764558792114258,
-          54.38268280029297
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1075",
-        "alt": 6,
-        "updated": "2025-05-17T09:26:59.517553Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.067171096801758,
-          54.409969329833984
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_6_1199",
-        "alt": 29,
-        "updated": "2025-05-17T09:30:47.652444Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.941075325012207,
-          54.32356262207031
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1031",
-        "alt": 41,
-        "updated": "2025-05-17T09:29:03.882743Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.589947700500488,
-          54.398014068603516
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_6_1208",
         "alt": 16,
-        "updated": "2025-05-17T09:32:51.419724Z"
+        "updated": "2025-05-18T09:49:31.633997Z"
       }
     },
     {
@@ -2271,14 +2246,191 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.680502891540527,
-          54.044921875
+          9.187416076660156,
+          54.114341735839844
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b09",
+        "name": "SH-NETZ_5_1086",
+        "alt": 13,
+        "updated": "2025-05-18T09:45:59.825346Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.285347938537598,
+          53.94033432006836
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b0b",
+        "name": "SH-NETZ_7_1221",
+        "alt": 85,
+        "updated": "2025-05-18T09:48:39.678532Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.570747375488281,
+          54.74825668334961
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b0c",
+        "name": "SH-NETZ_5_1110",
+        "alt": 11,
+        "updated": "2025-05-18T09:46:12.633217Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.784185409545898,
+          53.9442253112793
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b0f",
+        "name": "SH-NETZ_7_1228",
+        "alt": 29,
+        "updated": "2025-05-18T09:50:29.585912Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.980109214782715,
+          54.53303909301758
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b10",
+        "name": "SH-NETZ_6_1184",
+        "alt": 42,
+        "updated": "2025-05-18T09:42:09.52543Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.890065670013428,
+          54.17728805541992
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b11",
+        "name": "SH-NETZ_7_1349",
+        "alt": 17,
+        "updated": "2025-05-18T09:42:51.588687Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.174065589904785,
+          53.693660736083984
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b14",
+        "name": "SH-NETZ_8_1335",
+        "alt": 39,
+        "updated": "2025-05-18T09:44:05.896507Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.764570236206055,
+          54.382686614990234
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b16",
+        "name": "SH-NETZ_5_1075",
+        "alt": 5,
+        "updated": "2025-05-18T09:47:11.886836Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.067157745361328,
+          54.409976959228516
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b17",
+        "name": "SH-NETZ_6_1199",
+        "alt": 31,
+        "updated": "2025-05-18T09:47:55.876097Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.941025733947754,
+          54.323551177978516
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b38",
+        "name": "SH-NETZ_5_1031",
+        "alt": 35,
+        "updated": "2025-05-18T09:43:57.483992Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.589905738830566,
+          54.39799499511719
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b39",
+        "name": "SH-NETZ_6_1208",
+        "alt": 20,
+        "updated": "2025-05-18T09:40:51.665423Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.680481910705566,
+          54.044925689697266
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b3a",
         "name": "SH-NETZ_8_1293",
         "alt": 80,
-        "updated": "2025-05-17T09:25:47.727492Z"
+        "updated": "2025-05-18T09:49:41.692211Z"
       }
     },
     {
@@ -2286,14 +2438,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.349809646606445,
-          53.4604377746582
+          10.349802017211914,
+          53.46043014526367
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b3b",
         "name": "SH-NETZ_8_1287",
-        "alt": 96,
-        "updated": "2025-05-17T09:33:47.535925Z"
+        "alt": 97,
+        "updated": "2025-05-18T09:48:39.448729Z"
       }
     },
     {
@@ -2301,14 +2454,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.295999526977539,
+          9.296034812927246,
           54.083717346191406
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b3e",
         "name": "SH-NETZ_5_1085",
-        "alt": 13,
-        "updated": "2025-05-17T09:28:23.560414Z"
+        "alt": 20,
+        "updated": "2025-05-18T09:48:37.506648Z"
       }
     },
     {
@@ -2316,14 +2470,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.711681365966797,
-          54.73008728027344
+          8.711676597595215,
+          54.7300910949707
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b3f",
         "name": "SH-NETZ_5_1015",
-        "alt": 27,
-        "updated": "2025-05-17T09:33:35.504516Z"
+        "alt": 29,
+        "updated": "2025-05-18T09:50:31.577627Z"
       }
     },
     {
@@ -2331,14 +2486,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.333274841308594,
-          53.61479187011719
+          10.333234786987305,
+          53.614784240722656
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b43",
         "name": "SH-NETZ_8_1289",
-        "alt": 100,
-        "updated": "2025-05-17T09:32:33.758527Z"
+        "alt": 102,
+        "updated": "2025-05-18T09:48:39.891398Z"
       }
     },
     {
@@ -2346,14 +2502,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.217572212219238,
-          53.9158821105957
+          10.217598915100098,
+          53.91594696044922
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b46",
         "name": "SH-NETZ_7_1279",
-        "alt": 44,
-        "updated": "2025-05-17T09:27:37.717137Z"
+        "alt": 39,
+        "updated": "2025-05-18T09:50:29.40299Z"
       }
     },
     {
@@ -2361,14 +2518,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.317301750183105,
-          54.7158088684082
+          9.317288398742676,
+          54.715797424316406
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b49",
         "name": "SH-NETZ_5_1018",
         "alt": 125,
-        "updated": "2025-05-17T09:23:51.432192Z"
+        "updated": "2025-05-18T09:48:09.343221Z"
       }
     },
     {
@@ -2376,14 +2534,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.02073860168457,
-          54.08631896972656
+          10.020739555358887,
+          54.08628845214844
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b4a",
         "name": "SH-NETZ_4_1012",
-        "alt": 31,
-        "updated": "2025-05-17T09:33:55.552022Z"
+        "alt": 34,
+        "updated": "2025-05-18T09:46:40.056071Z"
       }
     },
     {
@@ -2391,14 +2550,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.300003051757812,
-          54.85625076293945
+          8.299959182739258,
+          54.856239318847656
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b4e",
         "name": "SH-NETZ_5_1111",
-        "alt": 12,
-        "updated": "2025-05-17T09:31:13.94235Z"
+        "alt": 8,
+        "updated": "2025-05-18T09:46:41.685143Z"
       }
     },
     {
@@ -2406,14 +2566,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.1485595703125,
-          53.97730255126953
+          9.148538589477539,
+          53.977291107177734
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b50",
         "name": "SH-NETZ_5_1019",
-        "alt": 59,
-        "updated": "2025-05-17T09:26:56.12163Z"
+        "alt": 55,
+        "updated": "2025-05-18T09:48:03.737674Z"
       }
     },
     {
@@ -2421,14 +2582,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.010669708251953,
-          54.189422607421875
+          10.010649681091309,
+          54.18943405151367
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b52",
         "name": "SH-NETZ_6_1146",
-        "alt": 68,
-        "updated": "2025-05-17T09:23:55.786176Z"
+        "alt": 67,
+        "updated": "2025-05-18T09:48:55.707179Z"
       }
     },
     {
@@ -2436,44 +2598,47 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.586639404296875,
-          54.00320053100586
+          10.586629867553711,
+          54.003177642822266
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b53",
         "name": "SH-NETZ_8_1332",
-        "alt": 59,
-        "updated": "2025-05-17T09:27:57.46068Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.312803268432617,
-          54.91387939453125
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1108",
-        "alt": 12,
-        "updated": "2025-05-17T09:33:03.800919Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.27280330657959,
-          54.15061569213867
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1014",
         "alt": 56,
-        "updated": "2025-05-17T09:27:39.68577Z"
+        "updated": "2025-05-18T09:50:25.866454Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.312777519226074,
+          54.913883209228516
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b54",
+        "name": "SH-NETZ_5_1108",
+        "alt": 15,
+        "updated": "2025-05-18T09:41:23.6544Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.272818565368652,
+          54.1506233215332
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff032b56",
+        "name": "SH-NETZ_5_1014",
+        "alt": 53,
+        "updated": "2025-05-18T09:48:43.936579Z"
       }
     },
     {
@@ -2482,13 +2647,14 @@ const gateways = {
         "type": "Point",
         "coordinates": [
           9.020552635192871,
-          54.59883117675781
+          54.598819732666016
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b58",
         "name": "SH-NETZ_5_1016",
-        "alt": 66,
-        "updated": "2025-05-17T09:26:31.736263Z"
+        "alt": 68,
+        "updated": "2025-05-18T09:48:29.70436Z"
       }
     },
     {
@@ -2496,14 +2662,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.157769203186035,
-          54.85521697998047
+          9.157752990722656,
+          54.855220794677734
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b6a",
         "name": "SH-NETZ_5_1087",
-        "alt": 24,
-        "updated": "2025-05-17T09:25:11.955268Z"
+        "alt": 28,
+        "updated": "2025-05-18T09:46:08.000153Z"
       }
     },
     {
@@ -2511,14 +2678,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.569676399230957,
-          54.451290130615234
+          9.569669723510742,
+          54.4512825012207
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b6d",
         "name": "SH-NETZ_5_1067",
-        "alt": 30,
-        "updated": "2025-05-17T09:25:59.555959Z"
+        "alt": 32,
+        "updated": "2025-05-18T09:43:19.721212Z"
       }
     },
     {
@@ -2526,14 +2694,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.232934951782227,
-          54.468509674072266
+          9.232908248901367,
+          54.468502044677734
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032b6e",
         "name": "SH-NETZ_5_1027",
         "alt": 77,
-        "updated": "2025-05-17T09:29:33.429196Z"
+        "updated": "2025-05-18T09:45:11.72692Z"
       }
     },
     {
@@ -2541,14 +2710,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.672009468078613,
-          54.592769622802734
+          9.671924591064453,
+          54.592796325683594
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032bf8",
         "name": "SH-NETZ_5_1070",
-        "alt": 26,
-        "updated": "2025-05-17T09:24:41.778971Z"
+        "alt": 24,
+        "updated": "2025-05-18T09:45:23.883946Z"
       }
     },
     {
@@ -2556,14 +2726,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.903626441955566,
-          54.18965530395508
+          8.903606414794922,
+          54.189666748046875
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032dd6",
         "name": "SH-NETZ_5_1129",
-        "alt": 6,
-        "updated": "2025-05-17T09:30:23.947274Z"
+        "alt": 11,
+        "updated": "2025-05-18T09:43:43.46537Z"
       }
     },
     {
@@ -2571,14 +2742,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.737592697143555,
+          9.73758316040039,
           54.39256286621094
         ]
       },
       "properties": {
+        "id": "eui-00007076ff032dfe",
         "name": "SH-NETZ_6_1170",
         "alt": 19,
-        "updated": "2025-05-17T09:25:09.486263Z"
+        "updated": "2025-05-18T09:47:47.898204Z"
       }
     },
     {
@@ -2586,14 +2758,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.881254196166992,
-          53.88104248046875
+          9.88125991821289,
+          53.88103103637695
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03314b",
         "name": "SH-NETZ_7_1249",
-        "alt": 30,
-        "updated": "2025-05-17T09:25:49.914999Z"
+        "alt": 31,
+        "updated": "2025-05-18T09:50:23.884088Z"
       }
     },
     {
@@ -2602,13 +2775,14 @@ const gateways = {
         "type": "Point",
         "coordinates": [
           10.129840850830078,
-          54.11021423339844
+          54.11020278930664
         ]
       },
       "properties": {
+        "id": "eui-00007076ff033261",
         "name": "SH-NETZ_6_1204",
-        "alt": 55,
-        "updated": "2025-05-17T09:25:55.841147Z"
+        "alt": 53,
+        "updated": "2025-05-18T09:46:17.445333Z"
       }
     },
     {
@@ -2616,14 +2790,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.580163955688477,
-          53.8447151184082
+          9.580122947692871,
+          53.84473419189453
         ]
       },
       "properties": {
+        "id": "eui-00007076ff036dfb",
         "name": "SH-NETZ_7_1265",
-        "alt": 12,
-        "updated": "2025-05-17T09:27:33.442669Z"
+        "alt": 15,
+        "updated": "2025-05-18T09:45:27.721688Z"
       }
     },
     {
@@ -2631,14 +2806,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.487579345703125,
-          53.931514739990234
+          9.487592697143555,
+          53.93152618408203
         ]
       },
       "properties": {
+        "id": "eui-00007076ff036e67",
         "name": "SH-NETZ_7_1263",
-        "alt": 10,
-        "updated": "2025-05-17T09:33:09.350134Z"
+        "alt": 13,
+        "updated": "2025-05-18T09:48:17.417411Z"
       }
     },
     {
@@ -2646,14 +2822,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.038233757019043,
-          54.1798210144043
+          9.038215637207031,
+          54.179840087890625
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0372e0",
         "name": "SH-NETZ_5_1132",
         "alt": 14,
-        "updated": "2025-05-17T09:26:29.701288Z"
+        "updated": "2025-05-18T09:47:35.449145Z"
       }
     },
     {
@@ -2661,14 +2838,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.33211612701416,
-          54.287044525146484
+          9.332107543945312,
+          54.28706359863281
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0380b0",
         "name": "SH-NETZ_5_1091",
-        "alt": 11,
-        "updated": "2025-05-17T09:29:45.591441Z"
+        "alt": 15,
+        "updated": "2025-05-18T09:42:07.505574Z"
       }
     },
     {
@@ -2676,14 +2854,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.544207572937012,
-          54.13040542602539
+          9.544166564941406,
+          54.13039779663086
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0380c2",
         "name": "SH-NETZ_6_1209",
-        "alt": 19,
-        "updated": "2025-05-17T09:29:17.581148Z"
+        "alt": 12,
+        "updated": "2025-05-18T09:50:45.999676Z"
       }
     },
     {
@@ -2691,14 +2870,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.961356163024902,
-          53.97715759277344
+          9.961350440979004,
+          53.9771614074707
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0380ca",
         "name": "SH-NETZ_4_1009",
         "alt": 36,
-        "updated": "2025-05-17T09:28:35.583162Z"
+        "updated": "2025-05-18T09:44:03.835254Z"
       }
     },
     {
@@ -2706,14 +2886,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.34505558013916,
-          54.153106689453125
+          10.345039367675781,
+          54.15312194824219
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0380d0",
         "name": "SH-NETZ_6_1375",
-        "alt": 52,
-        "updated": "2025-05-17T09:32:05.529828Z"
+        "alt": 55,
+        "updated": "2025-05-18T09:45:21.749071Z"
       }
     },
     {
@@ -2721,14 +2902,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.573308944702148,
-          54.107704162597656
+          9.573311805725098,
+          54.10774230957031
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0380fb",
         "name": "SH-NETZ_6_1169",
-        "alt": 18,
-        "updated": "2025-05-17T09:28:07.845663Z"
+        "alt": 21,
+        "updated": "2025-05-18T09:50:53.656915Z"
       }
     },
     {
@@ -2736,14 +2918,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.861656188964844,
-          54.63153839111328
+          8.861602783203125,
+          54.631534576416016
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038105",
         "name": "SH-NETZ_5_1063",
-        "alt": 5,
-        "updated": "2025-05-17T09:31:37.621416Z"
+        "alt": 4,
+        "updated": "2025-05-18T09:46:55.641613Z"
       }
     },
     {
@@ -2751,14 +2934,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.31009578704834,
-          53.94547653198242
+          9.310111045837402,
+          53.94546127319336
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03811f",
         "name": "SH-NETZ_7_1362",
-        "alt": 1,
-        "updated": "2025-05-17T09:25:49.212717Z"
+        "alt": 2,
+        "updated": "2025-05-18T09:49:05.503698Z"
       }
     },
     {
@@ -2766,14 +2950,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.562965393066406,
-          54.18647384643555
+          10.562931060791016,
+          54.18647003173828
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038127",
         "name": "SH-NETZ_8_1333",
-        "alt": 48,
-        "updated": "2025-05-17T09:31:21.803554Z"
+        "alt": 50,
+        "updated": "2025-05-18T09:43:17.670642Z"
       }
     },
     {
@@ -2781,14 +2966,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.67425537109375,
-          53.53293228149414
+          10.674246788024902,
+          53.53292465209961
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038131",
         "name": "SH-NETZ_8_1324",
-        "alt": 22,
-        "updated": "2025-05-17T09:31:25.737627Z"
+        "alt": 24,
+        "updated": "2025-05-18T09:49:35.524347Z"
       }
     },
     {
@@ -2796,14 +2982,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.776406288146973,
-          53.68997573852539
+          9.776360511779785,
+          53.68996810913086
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038135",
         "name": "SH-NETZ_7_1262",
-        "alt": 19,
-        "updated": "2025-05-17T09:28:55.895503Z"
+        "alt": 16,
+        "updated": "2025-05-18T09:42:03.756809Z"
       }
     },
     {
@@ -2811,14 +2998,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.034502983093262,
+          9.034499168395996,
           54.5681266784668
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038138",
         "name": "SH-NETZ_5_1035",
-        "alt": 1,
-        "updated": "2025-05-17T09:32:51.427851Z"
+        "alt": 3,
+        "updated": "2025-05-18T09:49:58.10502Z"
       }
     },
     {
@@ -2826,14 +3014,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.740673065185547,
-          53.49988555908203
+          10.740646362304688,
+          53.49986267089844
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03813c",
         "name": "SH-NETZ_8_1323",
-        "alt": 35,
-        "updated": "2025-05-17T09:26:08.558507Z"
+        "alt": 31,
+        "updated": "2025-05-18T09:45:49.662934Z"
       }
     },
     {
@@ -2841,14 +3030,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.761155128479004,
-          54.61994934082031
+          9.761133193969727,
+          54.61995315551758
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03813e",
         "name": "SH-NETZ_5_1060",
         "alt": 32,
-        "updated": "2025-05-17T09:33:51.561222Z"
+        "updated": "2025-05-18T09:43:29.514772Z"
       }
     },
     {
@@ -2856,14 +3046,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.899541854858398,
-          53.66310119628906
+          9.899518966674805,
+          53.66310501098633
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038144",
         "name": "SH-NETZ_7_1261",
         "alt": 22,
-        "updated": "2025-05-17T09:26:20.324806Z"
+        "updated": "2025-05-18T09:47:21.901859Z"
       }
     },
     {
@@ -2871,14 +3062,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.752399444580078,
-          54.56744384765625
+          9.752401351928711,
+          54.567447662353516
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038146",
         "name": "SH-NETZ_5_1066",
-        "alt": 12,
-        "updated": "2025-05-17T09:22:49.621572Z"
+        "alt": 14,
+        "updated": "2025-05-18T09:41:45.689558Z"
       }
     },
     {
@@ -2886,14 +3078,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.768957138061523,
-          54.67456817626953
+          9.768937110900879,
+          54.674564361572266
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03814e",
         "name": "SH-NETZ_5_1082",
-        "alt": 44,
-        "updated": "2025-05-17T09:25:41.615258Z"
+        "alt": 46,
+        "updated": "2025-05-18T09:42:57.675885Z"
       }
     },
     {
@@ -2901,14 +3094,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.560771942138672,
-          53.47364044189453
+          10.560720443725586,
+          53.473609924316406
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038150",
         "name": "SH-NETZ_8_1378",
-        "alt": 36,
-        "updated": "2025-05-17T09:28:55.882422Z"
+        "alt": 38,
+        "updated": "2025-05-18T09:40:57.587083Z"
       }
     },
     {
@@ -2916,14 +3110,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.013338088989258,
+          9.013389587402344,
           54.27505874633789
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038152",
         "name": "SH-NETZ_5_1123",
         "alt": 11,
-        "updated": "2025-05-17T09:33:57.880269Z"
+        "updated": "2025-05-18T09:44:57.741474Z"
       }
     },
     {
@@ -2931,14 +3126,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.025826454162598,
-          53.68994140625
+          10.025801658630371,
+          53.68996810913086
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0382f7",
         "name": "SH-NETZ_7_1278",
-        "alt": 39,
-        "updated": "2025-05-17T09:31:17.515674Z"
+        "alt": 42,
+        "updated": "2025-05-18T09:49:29.883992Z"
       }
     },
     {
@@ -2946,14 +3142,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.485101699829102,
-          54.333251953125
+          9.485037803649902,
+          54.33327102661133
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0382fc",
         "name": "SH-NETZ_6_1173",
-        "alt": 13,
-        "updated": "2025-05-17T09:27:33.888797Z"
+        "alt": 7,
+        "updated": "2025-05-18T09:47:45.881243Z"
       }
     },
     {
@@ -2961,14 +3158,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.532669067382812,
+          10.532673835754395,
           54.10515213012695
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0382fe",
         "name": "SH-NETZ_5_1062",
-        "alt": 76,
-        "updated": "2025-05-17T09:25:41.60303Z"
+        "alt": 81,
+        "updated": "2025-05-18T09:46:49.679194Z"
       }
     },
     {
@@ -2976,14 +3174,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.500358581542969,
-          53.91080856323242
+          9.500382423400879,
+          53.91078186035156
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0382ff",
         "name": "SH-NETZ_7_1266",
-        "alt": 15,
-        "updated": "2025-05-17T09:30:59.601282Z"
+        "alt": 11,
+        "updated": "2025-05-18T09:50:43.638197Z"
       }
     },
     {
@@ -2991,14 +3190,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.74770450592041,
-          54.181427001953125
+          10.747708320617676,
+          54.18143081665039
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038304",
         "name": "SH-NETZ_8_1383",
-        "alt": 100,
-        "updated": "2025-05-17T09:29:11.891203Z"
+        "alt": 104,
+        "updated": "2025-05-18T09:49:25.611292Z"
       }
     },
     {
@@ -3006,14 +3206,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.289170265197754,
-          53.91371154785156
+          9.289155006408691,
+          53.9137077331543
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03830a",
         "name": "SH-NETZ_7_1271",
         "alt": 11,
-        "updated": "2025-05-17T09:32:35.87859Z"
+        "updated": "2025-05-18T09:50:01.513601Z"
       }
     },
     {
@@ -3021,14 +3222,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.983988761901855,
-          54.562538146972656
+          9.983965873718262,
+          54.562522888183594
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03830d",
         "name": "SH-NETZ_6_1220",
-        "alt": 27,
-        "updated": "2025-05-17T09:29:58.091164Z"
+        "alt": 28,
+        "updated": "2025-05-18T09:41:14.74563Z"
       }
     },
     {
@@ -3036,14 +3238,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.248371124267578,
-          54.39323425292969
+          9.248336791992188,
+          54.393218994140625
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038311",
         "name": "SH-NETZ_5_1088",
-        "alt": 13,
-        "updated": "2025-05-17T09:29:51.669565Z"
+        "alt": 11,
+        "updated": "2025-05-18T09:48:05.888208Z"
       }
     },
     {
@@ -3051,14 +3254,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.521242141723633,
-          54.052947998046875
+          9.521218299865723,
+          54.05291748046875
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038315",
         "name": "SH-NETZ_7_1270",
-        "alt": 29,
-        "updated": "2025-05-17T09:32:15.816009Z"
+        "alt": 27,
+        "updated": "2025-05-18T09:47:41.612148Z"
       }
     },
     {
@@ -3066,14 +3270,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.107095718383789,
-          54.186561584472656
+          9.107081413269043,
+          54.18659973144531
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03831c",
         "name": "SH-NETZ_5_1118",
-        "alt": 10,
-        "updated": "2025-05-17T09:33:15.801584Z"
+        "alt": 16,
+        "updated": "2025-05-18T09:44:51.643102Z"
       }
     },
     {
@@ -3081,14 +3286,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.0192289352417,
-          53.71142578125
+          10.019210815429688,
+          53.71140670776367
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038321",
         "name": "SH-NETZ_7_1274",
-        "alt": 44,
-        "updated": "2025-05-17T09:26:43.52313Z"
+        "alt": 43,
+        "updated": "2025-05-18T09:41:17.5771Z"
       }
     },
     {
@@ -3096,14 +3302,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.107895851135254,
+          9.107868194580078,
           53.97132110595703
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038322",
         "name": "SH-NETZ_5_1119",
         "alt": 9,
-        "updated": "2025-05-17T09:30:27.537472Z"
+        "updated": "2025-05-18T09:39:55.644527Z"
       }
     },
     {
@@ -3111,14 +3318,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.490670204162598,
-          54.140560150146484
+          9.490621566772461,
+          54.14054489135742
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038326",
         "name": "SH-NETZ_6_1179",
-        "alt": 15,
-        "updated": "2025-05-17T09:31:45.970898Z"
+        "alt": 10,
+        "updated": "2025-05-18T09:43:35.600883Z"
       }
     },
     {
@@ -3126,14 +3334,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.227913856506348,
+          9.227931022644043,
           54.557621002197266
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038329",
         "name": "SH-NETZ_5_1078",
-        "alt": 23,
-        "updated": "2025-05-17T09:25:41.633819Z"
+        "alt": 28,
+        "updated": "2025-05-18T09:44:41.527301Z"
       }
     },
     {
@@ -3141,14 +3350,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.60798168182373,
-          53.95365524291992
+          9.607924461364746,
+          53.95364761352539
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03832b",
         "name": "SH-NETZ_7_1264",
-        "alt": 18,
-        "updated": "2025-05-17T09:32:32.022934Z"
+        "alt": 20,
+        "updated": "2025-05-18T09:42:11.905401Z"
       }
     },
     {
@@ -3156,14 +3366,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.605302810668945,
-          54.00236511230469
+          9.605273246765137,
+          54.00233459472656
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03832d",
         "name": "SH-NETZ_7_1366",
-        "alt": 25,
-        "updated": "2025-05-17T09:23:39.493812Z"
+        "alt": 23,
+        "updated": "2025-05-18T09:45:07.699162Z"
       }
     },
     {
@@ -3171,14 +3382,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.488895416259766,
-          53.9605827331543
+          9.488896369934082,
+          53.9605712890625
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038331",
         "name": "SH-NETZ_7_1267",
-        "alt": 27,
-        "updated": "2025-05-17T09:30:19.888918Z"
+        "alt": 24,
+        "updated": "2025-05-18T09:46:19.526019Z"
       }
     },
     {
@@ -3186,14 +3398,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.063626289367676,
-          54.08382034301758
+          9.063558578491211,
+          54.083778381347656
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038340",
         "name": "SH-NETZ_5_1120",
-        "alt": 18,
-        "updated": "2025-05-17T09:24:57.544698Z"
+        "alt": 10,
+        "updated": "2025-05-18T09:44:33.824213Z"
       }
     },
     {
@@ -3201,14 +3414,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.94137191772461,
-          54.00774002075195
+          9.94137954711914,
+          54.007686614990234
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03837d",
         "name": "SH-NETZ_4_1008",
-        "alt": 37,
-        "updated": "2025-05-17T09:30:43.896979Z"
+        "alt": 25,
+        "updated": "2025-05-18T09:50:04.292206Z"
       }
     },
     {
@@ -3216,14 +3430,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.612129211425781,
-          54.08480453491211
+          9.612105369567871,
+          54.08477783203125
         ]
       },
       "properties": {
+        "id": "eui-00007076ff0383f7",
         "name": "SH-NETZ_6_1188",
-        "alt": 27,
-        "updated": "2025-05-17T09:25:13.728599Z"
+        "alt": 30,
+        "updated": "2025-05-18T09:46:05.903543Z"
       }
     },
     {
@@ -3231,14 +3446,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.939666748046875,
-          54.259151458740234
+          8.939627647399902,
+          54.25916290283203
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038402",
         "name": "SH-NETZ_5_1126",
         "alt": 14,
-        "updated": "2025-05-17T09:28:05.701791Z"
+        "updated": "2025-05-18T09:43:55.537534Z"
       }
     },
     {
@@ -3246,14 +3462,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.672815322875977,
-          54.173954010009766
+          10.672857284545898,
+          54.1739616394043
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03841c",
         "name": "SH-NETZ_8_1381",
         "alt": 48,
-        "updated": "2025-05-17T09:27:37.714669Z"
+        "updated": "2025-05-18T09:48:37.890252Z"
       }
     },
     {
@@ -3261,29 +3478,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.176051139831543,
-          53.566322326660156
+          10.176006317138672,
+          53.566314697265625
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038427",
         "name": "SH-NETZ_8_1305",
-        "alt": 42,
-        "updated": "2025-05-17T09:26:01.79696Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.727025032043457,
-          54.16636657714844
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_8_1382",
         "alt": 46,
-        "updated": "2025-05-17T09:29:25.785877Z"
+        "updated": "2025-05-18T09:46:03.735808Z"
       }
     },
     {
@@ -3291,14 +3494,31 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.693355560302734,
-          54.416412353515625
+          10.726947784423828,
+          54.16635513305664
         ]
       },
       "properties": {
+        "id": "eui-00007076ff03842e",
+        "name": "SH-NETZ_8_1382",
+        "alt": 44,
+        "updated": "2025-05-18T09:44:57.705503Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.693312644958496,
+          54.41643524169922
+        ]
+      },
+      "properties": {
+        "id": "eui-00007076ff038432",
         "name": "SH-NETZ_6_1380",
-        "alt": 77,
-        "updated": "2025-05-17T09:33:09.357966Z"
+        "alt": 79,
+        "updated": "2025-05-18T09:44:31.547752Z"
       }
     },
     {
@@ -3306,14 +3526,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.994976997375488,
-          53.96014404296875
+          8.994935989379883,
+          53.96009063720703
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038593",
         "name": "SH-NETZ_5_1122",
-        "alt": 23,
-        "updated": "2025-05-17T09:25:23.632149Z"
+        "alt": 8,
+        "updated": "2025-05-18T09:48:19.917614Z"
       }
     },
     {
@@ -3321,14 +3542,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.8768892288208,
-          54.214500427246094
+          10.876787185668945,
+          54.21450424194336
         ]
       },
       "properties": {
+        "id": "eui-00007076ff038596",
         "name": "SH-NETZ_8_1379",
         "alt": 28,
-        "updated": "2025-05-17T09:31:49.84682Z"
+        "updated": "2025-05-18T09:40:59.549247Z"
       }
     },
     {
@@ -3336,14 +3558,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.24629,
-          54.15068
+          9.24623,
+          54.15063
         ]
       },
       "properties": {
+        "id": "eui-647fdafffe00a317",
         "name": "SH-NETZ_5_1116",
-        "alt": 46,
-        "updated": "2025-05-17T09:31:29.811997Z"
+        "alt": 43,
+        "updated": "2025-05-18T09:49:37.455104Z"
       }
     },
     {
@@ -3351,14 +3574,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.35114,
-          54.97028
+          8.3511,
+          54.97026
         ]
       },
       "properties": {
+        "id": "eui-647fdafffe00c6c3",
         "name": "SH-NETZ_5_1114",
-        "alt": 14,
-        "updated": "2025-05-17T09:28:47.805684Z"
+        "alt": 7,
+        "updated": "2025-05-18T09:47:41.627272Z"
       }
     },
     {
@@ -3366,14 +3590,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.729269027709961,
-          54.29349899291992
+          9.729275703430176,
+          54.29349136352539
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607042d",
         "name": "SH-NETZ_6_1148",
-        "alt": 107,
-        "updated": "2025-05-17T09:31:11.786323Z"
+        "alt": 104,
+        "updated": "2025-05-18T09:50:37.636272Z"
       }
     },
     {
@@ -3381,14 +3606,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.424386024475098,
+          9.424365997314453,
           54.60340118408203
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560704de",
         "name": "SH-NETZ_5_1036",
-        "alt": 22,
-        "updated": "2025-05-17T09:27:29.555586Z"
+        "alt": 20,
+        "updated": "2025-05-18T09:45:42.118356Z"
       }
     },
     {
@@ -3396,14 +3622,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.64770793914795,
-          54.08450698852539
+          9.64765739440918,
+          54.08451843261719
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560704e1",
         "name": "SH-NETZ_6_1216",
-        "alt": 51,
-        "updated": "2025-05-17T09:31:07.892074Z"
+        "alt": 54,
+        "updated": "2025-05-18T09:50:09.918241Z"
       }
     },
     {
@@ -3416,6 +3643,7 @@ const gateways = {
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560704ee",
         "name": "SH-NETZ_5_1061",
         "alt": 17,
         "updated": "2025-05-07T06:14:43.464305Z"
@@ -3426,14 +3654,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.9876127243042,
+          9.987595558166504,
           53.766441345214844
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560704fa",
         "name": "SH-NETZ_7_1225",
-        "alt": 126,
-        "updated": "2025-05-17T09:27:25.846693Z"
+        "alt": 128,
+        "updated": "2025-05-18T09:48:27.654073Z"
       }
     },
     {
@@ -3441,14 +3670,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.13409423828125,
-          54.42825698852539
+          10.134074211120605,
+          54.42827224731445
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560704fc",
         "name": "SH-NETZ_6_1142",
         "alt": 18,
-        "updated": "2025-05-17T09:30:29.886751Z"
+        "updated": "2025-05-18T09:44:12.172997Z"
       }
     },
     {
@@ -3456,14 +3686,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.625288009643555,
-          53.80626678466797
+          9.625200271606445,
+          53.806297302246094
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070502",
         "name": "SH-NETZ_7_1233",
-        "alt": 24,
-        "updated": "2025-05-17T09:24:23.708309Z"
+        "alt": 13,
+        "updated": "2025-05-18T09:50:31.582331Z"
       }
     },
     {
@@ -3471,14 +3702,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.960712432861328,
-          54.14509582519531
+          10.96073055267334,
+          54.14508819580078
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070506",
         "name": "SH-NETZ_8_1317",
-        "alt": 25,
-        "updated": "2025-05-17T09:31:46.179027Z"
+        "alt": 29,
+        "updated": "2025-05-18T09:48:47.928237Z"
       }
     },
     {
@@ -3486,14 +3718,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.683060646057129,
-          54.71866226196289
+          9.683094024658203,
+          54.71860122680664
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070509",
         "name": "SH-NETZ_5_1053",
-        "alt": 67,
-        "updated": "2025-05-17T09:32:17.679885Z"
+        "alt": 53,
+        "updated": "2025-05-18T09:47:17.609056Z"
       }
     },
     {
@@ -3501,14 +3734,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.075267791748047,
-          54.24422073364258
+          10.075258255004883,
+          54.244239807128906
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607050a",
         "name": "SH-NETZ_6_1155",
-        "alt": 56,
-        "updated": "2025-05-17T09:30:11.738612Z"
+        "alt": 57,
+        "updated": "2025-05-18T09:42:57.580534Z"
       }
     },
     {
@@ -3516,14 +3750,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.768149375915527,
-          53.55528259277344
+          10.768178939819336,
+          53.55527877807617
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607050e",
         "name": "SH-NETZ_8_1325",
-        "alt": 32,
-        "updated": "2025-05-17T09:27:07.87726Z"
+        "alt": 31,
+        "updated": "2025-05-18T09:48:05.864083Z"
       }
     },
     {
@@ -3531,14 +3766,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.711078643798828,
-          54.051639556884766
+          9.7110013961792,
+          54.05162811279297
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070511",
         "name": "SH-NETZ_6_1165",
-        "alt": 55,
-        "updated": "2025-05-17T09:28:27.784142Z"
+        "alt": 53,
+        "updated": "2025-05-18T09:47:31.519886Z"
       }
     },
     {
@@ -3546,14 +3782,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.428840637207031,
-          54.18531799316406
+          10.428825378417969,
+          54.185340881347656
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070515",
         "name": "SH-NETZ_6_1191",
-        "alt": 71,
-        "updated": "2025-05-17T09:31:33.503407Z"
+        "alt": 73,
+        "updated": "2025-05-18T09:41:57.716702Z"
       }
     },
     {
@@ -3561,14 +3798,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.293341636657715,
-          53.94954299926758
+          10.293305397033691,
+          53.949520111083984
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070516",
         "name": "SH-NETZ_7_1244",
-        "alt": 47,
-        "updated": "2025-05-17T09:27:45.879197Z"
+        "alt": 48,
+        "updated": "2025-05-18T09:45:35.472333Z"
       }
     },
     {
@@ -3581,6 +3819,7 @@ const gateways = {
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070519",
         "name": "SH-NETZ_5_1040",
         "alt": 11,
         "updated": "2025-05-16T23:07:08.040284Z"
@@ -3591,14 +3830,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.07284164428711,
-          54.468780517578125
+          10.072820663452148,
+          54.46879959106445
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607051a",
         "name": "SH-NETZ_6_1156",
-        "alt": 39,
-        "updated": "2025-05-17T09:23:19.649263Z"
+        "alt": 38,
+        "updated": "2025-05-18T09:46:25.878384Z"
       }
     },
     {
@@ -3606,14 +3846,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.584244728088379,
-          54.47789764404297
+          9.584259986877441,
+          54.477867126464844
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607051c",
         "name": "SH-NETZ_5_1068",
         "alt": 15,
-        "updated": "2025-05-17T09:28:09.427203Z"
+        "updated": "2025-05-18T09:44:53.590322Z"
       }
     },
     {
@@ -3621,14 +3862,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.342413902282715,
-          54.11494827270508
+          10.342394828796387,
+          54.114906311035156
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607051d",
         "name": "SH-NETZ_6_1153",
-        "alt": 39,
-        "updated": "2025-05-17T09:24:29.880103Z"
+        "alt": 34,
+        "updated": "2025-05-18T04:34:19.646616Z"
       }
     },
     {
@@ -3636,14 +3878,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.93409252166748,
-          53.823883056640625
+          9.934065818786621,
+          53.8238410949707
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070520",
         "name": "SH-NETZ_7_1242",
-        "alt": 44,
-        "updated": "2025-05-17T09:27:37.739999Z"
+        "alt": 37,
+        "updated": "2025-05-18T09:49:57.947741Z"
       }
     },
     {
@@ -3651,14 +3894,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.173646926879883,
+          10.173604965209961,
           53.69266891479492
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070521",
         "name": "SH-NETZ_8_1302",
-        "alt": 39,
-        "updated": "2025-05-17T09:27:05.903586Z"
+        "alt": 40,
+        "updated": "2025-05-18T09:49:57.770737Z"
       }
     },
     {
@@ -3666,14 +3910,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.573151588439941,
-          53.509525299072266
+          10.573124885559082,
+          53.50954818725586
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070522",
         "name": "SH-NETZ_8_1377",
-        "alt": 48,
-        "updated": "2025-05-17T09:24:39.595685Z"
+        "alt": 52,
+        "updated": "2025-05-18T09:50:33.68556Z"
       }
     },
     {
@@ -3681,14 +3926,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.251502990722656,
-          53.722965240478516
+          10.251441955566406,
+          53.72296905517578
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070524",
         "name": "SH-NETZ_8_1300",
         "alt": 49,
-        "updated": "2025-05-17T09:27:35.288882Z"
+        "updated": "2025-05-18T09:43:13.489983Z"
       }
     },
     {
@@ -3696,14 +3942,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.749600410461426,
-          54.594451904296875
+          9.74958324432373,
+          54.59445571899414
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070525",
         "name": "SH-NETZ_5_1071",
         "alt": 30,
-        "updated": "2025-05-17T09:32:13.626923Z"
+        "updated": "2025-05-18T09:44:13.914438Z"
       }
     },
     {
@@ -3711,14 +3958,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.54677963256836,
-          54.596046447753906
+          9.54670524597168,
+          54.59600067138672
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607052b",
         "name": "SH-NETZ_5_1029",
-        "alt": 93,
-        "updated": "2025-05-17T09:23:35.316804Z"
+        "alt": 95,
+        "updated": "2025-05-18T09:49:59.772832Z"
       }
     },
     {
@@ -3726,14 +3974,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.535429000854492,
-          53.8056526184082
+          9.535385131835938,
+          53.80564498901367
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070531",
         "name": "SH-NETZ_7_1368",
-        "alt": 0,
-        "updated": "2025-05-17T09:32:19.885371Z"
+        "alt": -4,
+        "updated": "2025-05-18T09:49:01.649899Z"
       }
     },
     {
@@ -3741,14 +3990,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.35146713256836,
-          54.1744384765625
+          10.351446151733398,
+          54.17447280883789
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070532",
         "name": "SH-NETZ_6_1152",
-        "alt": 28,
-        "updated": "2025-05-17T09:25:49.896797Z"
+        "alt": 30,
+        "updated": "2025-05-18T09:47:15.715653Z"
       }
     },
     {
@@ -3756,14 +4006,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.16174030303955,
-          53.81064224243164
+          10.161767959594727,
+          53.81068801879883
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070537",
         "name": "SH-NETZ_7_1234",
-        "alt": 38,
-        "updated": "2025-05-17T09:25:11.925038Z"
+        "alt": 44,
+        "updated": "2025-05-18T09:45:27.710382Z"
       }
     },
     {
@@ -3771,14 +4022,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.588504791259766,
-          54.28758239746094
+          10.588494300842285,
+          54.287574768066406
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070538",
         "name": "SH-NETZ_6_1214",
-        "alt": 62,
-        "updated": "2025-05-17T09:26:37.832782Z"
+        "alt": 63,
+        "updated": "2025-05-18T09:49:23.468149Z"
       }
     },
     {
@@ -3786,14 +4038,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.390929222106934,
-          54.668392181396484
+          9.390922546386719,
+          54.66839599609375
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607053a",
         "name": "SH-NETZ_5_1047",
-        "alt": 40,
-        "updated": "2025-05-17T09:30:43.627859Z"
+        "alt": 41,
+        "updated": "2025-05-18T09:43:01.872273Z"
       }
     },
     {
@@ -3801,14 +4054,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.360336303710938,
-          53.49085998535156
+          10.36032485961914,
+          53.49086380004883
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560705b1",
         "name": "SH-NETZ_8_1311",
-        "alt": 70,
-        "updated": "2025-05-17T09:30:41.879159Z"
+        "alt": 77,
+        "updated": "2025-05-18T09:50:01.701961Z"
       }
     },
     {
@@ -3816,14 +4070,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.86168098449707,
-          54.141082763671875
+          8.861635208129883,
+          54.14110565185547
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070635",
         "name": "SH-NETZ_5_1057",
-        "alt": 9,
-        "updated": "2025-05-17T09:30:09.782316Z"
+        "alt": 15,
+        "updated": "2025-05-18T09:49:25.756598Z"
       }
     },
     {
@@ -3831,14 +4086,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.462347030639648,
+          10.462335586547852,
           54.1506462097168
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070636",
         "name": "SH-NETZ_6_1164",
-        "alt": 45,
-        "updated": "2025-05-17T09:32:13.894807Z"
+        "alt": 43,
+        "updated": "2025-05-18T09:47:03.64289Z"
       }
     },
     {
@@ -3846,14 +4102,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.667093276977539,
-          54.281219482421875
+          10.667112350463867,
+          54.281192779541016
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607063d",
         "name": "SH-NETZ_6_1201",
-        "alt": 45,
-        "updated": "2025-05-17T09:28:39.808704Z"
+        "alt": 48,
+        "updated": "2025-05-18T09:43:29.464086Z"
       }
     },
     {
@@ -3861,14 +4118,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.263917922973633,
-          53.99546432495117
+          9.263899803161621,
+          53.995460510253906
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070645",
         "name": "SH-NETZ_5_1084",
         "alt": 25,
-        "updated": "2025-05-17T09:26:01.994636Z"
+        "updated": "2025-05-18T09:42:33.789414Z"
       }
     },
     {
@@ -3876,14 +4134,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.881271362304688,
-          54.28962326049805
+          10.881287574768066,
+          54.28961944580078
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607066d",
         "name": "SH-NETZ_8_1322",
-        "alt": 15,
-        "updated": "2025-05-17T09:31:12.700337Z"
+        "alt": 18,
+        "updated": "2025-05-18T09:44:23.443962Z"
       }
     },
     {
@@ -3891,14 +4150,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.258854866027832,
-          54.30469512939453
+          9.25887680053711,
+          54.304710388183594
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070674",
         "name": "SH-NETZ_5_1038",
-        "alt": 6,
-        "updated": "2025-05-17T09:25:31.593172Z"
+        "alt": 5,
+        "updated": "2025-05-18T09:44:07.525741Z"
       }
     },
     {
@@ -3906,14 +4166,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.53203010559082,
-          54.54982376098633
+          9.532039642333984,
+          54.5497932434082
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070678",
         "name": "SH-NETZ_5_1049",
-        "alt": 52,
-        "updated": "2025-05-17T09:25:41.717946Z"
+        "alt": 47,
+        "updated": "2025-05-18T09:43:17.880259Z"
       }
     },
     {
@@ -3921,14 +4182,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.48583698272705,
-          54.32749557495117
+          10.485814094543457,
+          54.327510833740234
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070679",
         "name": "SH-NETZ_6_1197",
-        "alt": 54,
-        "updated": "2025-05-17T09:24:01.630569Z"
+        "alt": 50,
+        "updated": "2025-05-18T09:50:41.639616Z"
       }
     },
     {
@@ -3936,14 +4198,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.936113357543945,
-          54.303794860839844
+          9.9360933303833,
+          54.303775787353516
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607067e",
         "name": "SH-NETZ_6_1160",
-        "alt": 24,
-        "updated": "2025-05-17T09:33:27.653524Z"
+        "alt": 25,
+        "updated": "2025-05-18T09:45:45.893417Z"
       }
     },
     {
@@ -3951,14 +4214,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.101988792419434,
-          54.37522506713867
+          9.10196590423584,
+          54.375205993652344
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070681",
         "name": "SH-NETZ_5_1041",
         "alt": 12,
-        "updated": "2025-05-17T09:29:17.589822Z"
+        "updated": "2025-05-18T09:43:47.881859Z"
       }
     },
     {
@@ -3966,14 +4230,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.223235130310059,
-          53.61782455444336
+          10.223227500915527,
+          53.61781692504883
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070688",
         "name": "SH-NETZ_8_1295",
-        "alt": 71,
-        "updated": "2025-05-17T09:28:41.743733Z"
+        "alt": 73,
+        "updated": "2025-05-18T09:41:31.730811Z"
       }
     },
     {
@@ -3981,14 +4246,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.275251388549805,
-          54.02701950073242
+          9.275184631347656,
+          54.02701187133789
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607068d",
         "name": "SH-NETZ_5_1077",
-        "alt": 5,
-        "updated": "2025-05-17T09:28:27.893516Z"
+        "alt": 7,
+        "updated": "2025-05-18T09:49:07.675682Z"
       }
     },
     {
@@ -3997,13 +4263,14 @@ const gateways = {
         "type": "Point",
         "coordinates": [
           9.823430061340332,
-          54.430999755859375
+          54.43101119995117
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070691",
         "name": "SH-NETZ_6_1144",
         "alt": 58,
-        "updated": "2025-05-17T09:25:03.896056Z"
+        "updated": "2025-05-18T09:50:43.409752Z"
       }
     },
     {
@@ -4011,14 +4278,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.155867576599121,
-          53.75551986694336
+          10.155864715576172,
+          53.75551223754883
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070694",
         "name": "SH-NETZ_8_1309",
-        "alt": 44,
-        "updated": "2025-05-17T09:26:39.77504Z"
+        "alt": 46,
+        "updated": "2025-05-18T09:49:51.661792Z"
       }
     },
     {
@@ -4027,13 +4295,14 @@ const gateways = {
         "type": "Point",
         "coordinates": [
           10.501594543457031,
-          53.513038635253906
+          53.51303482055664
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070697",
         "name": "SH-NETZ_8_1313",
-        "alt": 56,
-        "updated": "2025-05-17T09:28:57.682334Z"
+        "alt": 58,
+        "updated": "2025-05-18T09:49:03.718132Z"
       }
     },
     {
@@ -4041,14 +4310,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.488505363464355,
-          54.19816589355469
+          10.488510131835938,
+          54.19819641113281
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607069c",
         "name": "SH-NETZ_6_1166",
-        "alt": 38,
-        "updated": "2025-05-17T09:28:19.610334Z"
+        "alt": 48,
+        "updated": "2025-05-18T09:45:23.882605Z"
       }
     },
     {
@@ -4056,14 +4326,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.816338539123535,
-          53.99837875366211
+          9.816283226013184,
+          53.99836730957031
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607069d",
         "name": "SH-NETZ_4_1011",
-        "alt": 18,
-        "updated": "2025-05-17T09:29:33.485181Z"
+        "alt": 17,
+        "updated": "2025-05-18T09:50:51.878896Z"
       }
     },
     {
@@ -4071,14 +4342,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.502132415771484,
-          53.83744430541992
+          10.50220775604248,
+          53.837459564208984
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607069f",
         "name": "SH-NETZ_8_1308",
-        "alt": 36,
-        "updated": "2025-05-17T09:25:41.882204Z"
+        "alt": 41,
+        "updated": "2025-05-18T09:46:35.642182Z"
       }
     },
     {
@@ -4086,14 +4358,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.231748580932617,
-          54.683475494384766
+          9.231722831726074,
+          54.683467864990234
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706a1",
         "name": "SH-NETZ_5_1094",
         "alt": 27,
-        "updated": "2025-05-17T09:29:58.096765Z"
+        "updated": "2025-05-18T09:49:03.702519Z"
       }
     },
     {
@@ -4101,14 +4374,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.729947090148926,
+          9.72993278503418,
           54.31382751464844
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706a2",
         "name": "SH-NETZ_6_1159",
-        "alt": 25,
-        "updated": "2025-05-17T09:27:25.584639Z"
+        "alt": 27,
+        "updated": "2025-05-18T09:41:01.663278Z"
       }
     },
     {
@@ -4116,14 +4390,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.431697845458984,
-          54.10513687133789
+          10.431671142578125,
+          54.105140686035156
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706a5",
         "name": "SH-NETZ_6_1151",
-        "alt": 31,
-        "updated": "2025-05-17T09:24:05.515056Z"
+        "alt": 35,
+        "updated": "2025-05-18T09:41:25.710715Z"
       }
     },
     {
@@ -4131,14 +4406,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.378854751586914,
-          54.02558898925781
+          9.378811836242676,
+          54.02558135986328
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706a6",
         "name": "SH-NETZ_7_1239",
-        "alt": 37,
-        "updated": "2025-05-17T09:30:35.776913Z"
+        "alt": 28,
+        "updated": "2025-05-18T09:45:03.545423Z"
       }
     },
     {
@@ -4146,14 +4422,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.614013671875,
-          53.563350677490234
+          10.613980293273926,
+          53.56332015991211
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706a8",
         "name": "SH-NETZ_8_1294",
-        "alt": 48,
-        "updated": "2025-05-17T09:30:35.857638Z"
+        "alt": 41,
+        "updated": "2025-05-18T09:50:29.404809Z"
       }
     },
     {
@@ -4161,14 +4438,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.179177284240723,
-          54.56996536254883
+          9.179144859313965,
+          54.569950103759766
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706ad",
         "name": "SH-NETZ_5_1042",
-        "alt": 29,
-        "updated": "2025-05-17T09:30:01.848275Z"
+        "alt": 28,
+        "updated": "2025-05-18T09:47:29.436593Z"
       }
     },
     {
@@ -4176,14 +4454,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.32568073272705,
-          54.313865661621094
+          9.32564926147461,
+          54.31386184692383
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706b0",
         "name": "SH-NETZ_5_1074",
-        "alt": 18,
-        "updated": "2025-05-17T09:31:23.725056Z"
+        "alt": 16,
+        "updated": "2025-05-18T09:48:21.879973Z"
       }
     },
     {
@@ -4191,14 +4470,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.824300765991211,
-          54.90178298950195
+          8.824278831481934,
+          54.90179443359375
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706b2",
         "name": "SH-NETZ_5_1080",
         "alt": 5,
-        "updated": "2025-05-17T09:31:39.800895Z"
+        "updated": "2025-05-18T09:48:37.735081Z"
       }
     },
     {
@@ -4206,29 +4486,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.709460258483887,
-          54.4813232421875
+          9.709436416625977,
+          54.481292724609375
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706b3",
         "name": "SH-NETZ_6_1200",
-        "alt": 9,
-        "updated": "2025-05-17T09:27:17.886635Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.371759414672852,
-          54.420650482177734
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1090",
         "alt": 8,
-        "updated": "2025-05-17T09:27:07.825957Z"
+        "updated": "2025-05-18T09:50:31.783114Z"
       }
     },
     {
@@ -4236,14 +4502,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.129729270935059,
-          54.17048645019531
+          9.371724128723145,
+          54.42064666748047
         ]
       },
       "properties": {
-        "name": "SH-NETZ_6_1195",
-        "alt": 59,
-        "updated": "2025-05-17T09:32:17.785092Z"
+        "id": "eui-7076ff00560706b6",
+        "name": "SH-NETZ_5_1090",
+        "alt": 11,
+        "updated": "2025-05-18T09:41:03.678132Z"
       }
     },
     {
@@ -4251,14 +4518,31 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.9736909866333,
+          10.129694938659668,
+          54.17049026489258
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff00560706b7",
+        "name": "SH-NETZ_6_1195",
+        "alt": 55,
+        "updated": "2025-05-18T09:43:05.697118Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.973669052124023,
           54.61262130737305
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706b9",
         "name": "SH-NETZ_5_1059",
         "alt": 22,
-        "updated": "2025-05-17T09:24:53.885029Z"
+        "updated": "2025-05-18T09:50:55.506393Z"
       }
     },
     {
@@ -4266,14 +4550,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.429383277893066,
-          53.778499603271484
+          9.429427146911621,
+          53.77851486206055
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706c2",
         "name": "SH-NETZ_7_1268",
-        "alt": 7,
-        "updated": "2025-05-17T09:22:37.530172Z"
+        "alt": 10,
+        "updated": "2025-05-18T09:44:41.881001Z"
       }
     },
     {
@@ -4281,14 +4566,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          11.080791473388672,
-          54.35549545288086
+          11.080758094787598,
+          54.35548400878906
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706c4",
         "name": "SH-NETZ_8_1319",
-        "alt": 16,
-        "updated": "2025-05-17T09:33:21.879868Z"
+        "alt": 15,
+        "updated": "2025-05-18T09:46:33.875714Z"
       }
     },
     {
@@ -4301,9 +4587,10 @@ const gateways = {
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706cb",
         "name": "SH-NETZ_4_1005",
         "alt": 14,
-        "updated": "2025-05-17T09:31:09.767923Z"
+        "updated": "2025-05-18T09:46:03.877444Z"
       }
     },
     {
@@ -4311,14 +4598,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.656847953796387,
-          53.663570404052734
+          9.656825065612793,
+          53.66357421875
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706cd",
         "name": "SH-NETZ_7_1258",
-        "alt": 15,
-        "updated": "2025-05-17T09:26:23.906002Z"
+        "alt": 12,
+        "updated": "2025-05-18T09:44:31.581266Z"
       }
     },
     {
@@ -4326,14 +4614,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.468450546264648,
+          9.468419075012207,
           54.51612854003906
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706ce",
         "name": "SH-NETZ_5_1050",
-        "alt": 37,
-        "updated": "2025-05-17T09:25:41.6129Z"
+        "alt": 36,
+        "updated": "2025-05-18T09:44:23.480228Z"
       }
     },
     {
@@ -4341,14 +4630,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.253866195678711,
+          9.253885269165039,
           53.90399169921875
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706d2",
         "name": "SH-NETZ_7_1361",
-        "alt": 7,
-        "updated": "2025-05-17T09:26:21.776853Z"
+        "alt": 6,
+        "updated": "2025-05-18T09:41:49.558829Z"
       }
     },
     {
@@ -4356,14 +4646,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.59086799621582,
-          53.867130279541016
+          9.590863227844238,
+          53.86711120605469
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706d3",
         "name": "SH-NETZ_7_1240",
-        "alt": -4,
-        "updated": "2025-05-17T09:29:05.637394Z"
+        "alt": 0,
+        "updated": "2025-05-18T09:46:17.534747Z"
       }
     },
     {
@@ -4371,14 +4662,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          11.209114074707031,
-          54.41226577758789
+          11.20910358428955,
+          54.41228485107422
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706d6",
         "name": "SH-NETZ_8_1318",
-        "alt": 23,
-        "updated": "2025-05-17T09:30:27.850659Z"
+        "alt": 25,
+        "updated": "2025-05-18T09:45:05.718647Z"
       }
     },
     {
@@ -4386,14 +4678,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.169295310974121,
-          53.57435607910156
+          10.169307708740234,
+          53.574344635009766
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706d7",
         "name": "SH-NETZ_8_1304",
-        "alt": 41,
-        "updated": "2025-05-17T09:33:05.477472Z"
+        "alt": 42,
+        "updated": "2025-05-18T09:47:29.600325Z"
       }
     },
     {
@@ -4401,14 +4694,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.6060152053833,
-          53.49006271362305
+          10.605968475341797,
+          53.490089416503906
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706de",
         "name": "SH-NETZ_8_1297",
-        "alt": 34,
-        "updated": "2025-05-17T09:32:29.879986Z"
+        "alt": 39,
+        "updated": "2025-05-18T09:49:23.556809Z"
       }
     },
     {
@@ -4421,6 +4715,7 @@ const gateways = {
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706ea",
         "name": "SH-NETZ_7_1231",
         "alt": 5,
         "updated": "2025-05-06T08:48:35.144703Z"
@@ -4431,14 +4726,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.170696258544922,
-          54.62493133544922
+          9.170701026916504,
+          54.62495040893555
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560706ff",
         "name": "SH-NETZ_5_1079",
-        "alt": 23,
-        "updated": "2025-05-17T09:25:13.721526Z"
+        "alt": 29,
+        "updated": "2025-05-18T09:42:29.939103Z"
       }
     },
     {
@@ -4446,14 +4742,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.989235877990723,
-          54.08290100097656
+          9.989202499389648,
+          54.08289337158203
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070700",
         "name": "SH-NETZ_4_1002",
-        "alt": 79,
-        "updated": "2025-05-17T09:30:55.623401Z"
+        "alt": 77,
+        "updated": "2025-05-18T09:44:23.558775Z"
       }
     },
     {
@@ -4466,9 +4763,10 @@ const gateways = {
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070715",
         "name": "SH-NETZ_5_1121",
         "alt": 19,
-        "updated": "2025-05-17T09:25:37.883706Z"
+        "updated": "2025-05-18T09:49:33.353021Z"
       }
     },
     {
@@ -4476,14 +4774,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.43610954284668,
-          54.32502746582031
+          10.43605899810791,
+          54.325016021728516
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070724",
         "name": "SH-NETZ_6_1206",
-        "alt": 56,
-        "updated": "2025-05-17T09:27:31.827248Z"
+        "alt": 55,
+        "updated": "2025-05-18T09:42:47.32344Z"
       }
     },
     {
@@ -4491,14 +4790,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.686468124389648,
-          54.009666442871094
+          9.68643569946289,
+          54.00965881347656
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070728",
         "name": "SH-NETZ_7_1367",
-        "alt": 37,
-        "updated": "2025-05-17T09:26:27.943578Z"
+        "alt": 32,
+        "updated": "2025-05-18T09:48:51.779268Z"
       }
     },
     {
@@ -4506,14 +4806,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.312200546264648,
-          53.47201156616211
+          10.312149047851562,
+          53.47199630737305
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070729",
         "name": "SH-NETZ_8_1296",
-        "alt": 66,
-        "updated": "2025-05-17T09:25:07.936805Z"
+        "alt": 67,
+        "updated": "2025-05-18T09:49:27.68838Z"
       }
     },
     {
@@ -4521,14 +4822,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.843806266784668,
+          8.843791961669922,
           54.794029235839844
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070732",
         "name": "SH-NETZ_5_1043",
-        "alt": 15,
-        "updated": "2025-05-17T09:27:47.762985Z"
+        "alt": 14,
+        "updated": "2025-05-18T09:50:03.862705Z"
       }
     },
     {
@@ -4536,14 +4838,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.39857292175293,
-          53.61765670776367
+          10.398585319519043,
+          53.61764907836914
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070735",
         "name": "SH-NETZ_8_1301",
-        "alt": 52,
-        "updated": "2025-05-17T09:33:43.897517Z"
+        "alt": 54,
+        "updated": "2025-05-18T09:42:17.744452Z"
       }
     },
     {
@@ -4551,14 +4854,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.64376163482666,
-          54.62968444824219
+          9.643741607666016,
+          54.62971496582031
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070737",
         "name": "SH-NETZ_5_1136",
-        "alt": 40,
-        "updated": "2025-05-17T09:24:51.763886Z"
+        "alt": 45,
+        "updated": "2025-05-18T09:45:57.677233Z"
       }
     },
     {
@@ -4566,14 +4870,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.197186470031738,
-          53.947715759277344
+          10.19716739654541,
+          53.94771957397461
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607073b",
         "name": "SH-NETZ_7_1246",
         "alt": 104,
-        "updated": "2025-05-17T09:24:49.869966Z"
+        "updated": "2025-05-18T09:43:59.891488Z"
       }
     },
     {
@@ -4581,14 +4886,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.815285682678223,
-          54.653953552246094
+          9.815255165100098,
+          54.653934478759766
         ]
       },
       "properties": {
+        "id": "eui-7076ff005607073e",
         "name": "SH-NETZ_5_1039",
-        "alt": 32,
-        "updated": "2025-05-17T09:27:41.598638Z"
+        "alt": 34,
+        "updated": "2025-05-18T09:48:29.705536Z"
       }
     },
     {
@@ -4596,14 +4902,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.518855094909668,
-          54.0197639465332
+          9.518834114074707,
+          54.01976776123047
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070741",
         "name": "SH-NETZ_7_1364",
-        "alt": 19,
-        "updated": "2025-05-17T09:25:35.725505Z"
+        "alt": 16,
+        "updated": "2025-05-18T09:44:49.623302Z"
       }
     },
     {
@@ -4611,14 +4918,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.952055931091309,
-          54.81418228149414
+          8.952062606811523,
+          54.814205169677734
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070743",
         "name": "SH-NETZ_5_1081",
-        "alt": 14,
-        "updated": "2025-05-17T09:26:33.536922Z"
+        "alt": 16,
+        "updated": "2025-05-18T09:46:32.23889Z"
       }
     },
     {
@@ -4626,14 +4934,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.195483207702637,
-          54.17322540283203
+          10.195454597473145,
+          54.17321014404297
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070908",
         "name": "SH-NETZ_6_1168",
-        "alt": 40,
-        "updated": "2025-05-17T09:28:25.425396Z"
+        "alt": 35,
+        "updated": "2025-05-18T09:40:11.764315Z"
       }
     },
     {
@@ -4641,29 +4950,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.823405265808105,
-          54.394954681396484
+          9.823394775390625,
+          54.39494323730469
         ]
       },
       "properties": {
+        "id": "eui-7076ff00560709d8",
         "name": "SH-NETZ_6_1171",
-        "alt": 20,
-        "updated": "2025-05-17T09:30:43.819442Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.890341758728027,
-          54.74616622924805
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1055",
         "alt": 23,
-        "updated": "2025-05-17T09:24:47.540807Z"
+        "updated": "2025-05-18T09:49:19.601639Z"
       }
     },
     {
@@ -4671,14 +4966,31 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.378058433532715,
-          53.98555374145508
+          9.890347480773926,
+          54.74616241455078
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b10",
+        "name": "SH-NETZ_5_1055",
+        "alt": 22,
+        "updated": "2025-05-18T09:49:25.713213Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.378052711486816,
+          53.98556900024414
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff0056070b19",
         "name": "SH-NETZ_7_1230",
-        "alt": 6,
-        "updated": "2025-05-17T09:25:47.601318Z"
+        "alt": 8,
+        "updated": "2025-05-18T09:48:55.666466Z"
       }
     },
     {
@@ -4686,14 +4998,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.513469696044922,
-          54.80772399902344
+          9.513442039489746,
+          54.807708740234375
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b76",
         "name": "SH-NETZ_5_1034",
         "alt": 49,
-        "updated": "2025-05-17T09:27:51.800357Z"
+        "updated": "2025-05-18T09:50:15.619345Z"
       }
     },
     {
@@ -4701,14 +5014,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.579623222351074,
-          54.29970932006836
+          10.579611778259277,
+          54.29970169067383
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b78",
         "name": "SH-NETZ_6_1163",
-        "alt": 58,
-        "updated": "2025-05-17T09:29:35.69938Z"
+        "alt": 64,
+        "updated": "2025-05-18T09:50:35.624943Z"
       }
     },
     {
@@ -4716,14 +5030,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.23086929321289,
-          53.53391647338867
+          10.230852127075195,
+          53.53392028808594
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b79",
         "name": "SH-NETZ_8_1306",
-        "alt": 42,
-        "updated": "2025-05-17T09:25:47.597374Z"
+        "alt": 45,
+        "updated": "2025-05-18T09:43:15.503876Z"
       }
     },
     {
@@ -4731,14 +5046,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.246603965759277,
+          9.246581077575684,
           54.197242736816406
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b7a",
         "name": "SH-NETZ_5_1037",
-        "alt": 63,
-        "updated": "2025-05-17T09:32:17.658166Z"
+        "alt": 65,
+        "updated": "2025-05-18T09:43:59.354944Z"
       }
     },
     {
@@ -4746,14 +5062,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.04233169555664,
+          9.0423002243042,
           54.6473503112793
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b7d",
         "name": "SH-NETZ_5_1064",
-        "alt": 11,
-        "updated": "2025-05-17T09:33:25.877862Z"
+        "alt": 13,
+        "updated": "2025-05-18T09:48:57.621221Z"
       }
     },
     {
@@ -4761,14 +5078,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.989994049072266,
-          53.794776916503906
+          9.989981651306152,
+          53.79478454589844
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b7e",
         "name": "SH-NETZ_5_1056",
-        "alt": 47,
-        "updated": "2025-05-17T09:32:51.420176Z"
+        "alt": 50,
+        "updated": "2025-05-18T09:45:35.529186Z"
       }
     },
     {
@@ -4776,14 +5094,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.5413236618042,
-          54.378700256347656
+          10.541314125061035,
+          54.37870788574219
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b7f",
         "name": "SH-NETZ_6_1196",
-        "alt": 14,
-        "updated": "2025-05-17T09:26:02.010614Z"
+        "alt": 13,
+        "updated": "2025-05-18T09:48:57.623796Z"
       }
     },
     {
@@ -4791,14 +5110,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.697209358215332,
-          53.69865798950195
+          9.697144508361816,
+          53.69868087768555
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b80",
         "name": "SH-NETZ_7_1236",
-        "alt": 15,
-        "updated": "2025-05-17T09:32:51.90098Z"
+        "alt": 21,
+        "updated": "2025-05-18T09:48:03.724126Z"
       }
     },
     {
@@ -4806,14 +5126,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.619927406311035,
-          53.96797180175781
+          9.619917869567871,
+          53.967960357666016
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b82",
         "name": "SH-NETZ_7_1237",
         "alt": 27,
-        "updated": "2025-05-17T09:33:17.408298Z"
+        "updated": "2025-05-18T09:48:33.884813Z"
       }
     },
     {
@@ -4821,14 +5142,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.9576416015625,
-          53.832515716552734
+          9.95762825012207,
+          53.83247756958008
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b83",
         "name": "SH-NETZ_7_1241",
-        "alt": 52,
-        "updated": "2025-05-17T09:32:03.402833Z"
+        "alt": 46,
+        "updated": "2025-05-18T09:44:13.698189Z"
       }
     },
     {
@@ -4836,14 +5158,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.782109260559082,
-          53.665916442871094
+          9.78209114074707,
+          53.66592025756836
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b86",
         "name": "SH-NETZ_7_1252",
-        "alt": 23,
-        "updated": "2025-05-17T09:28:17.890315Z"
+        "alt": 28,
+        "updated": "2025-05-18T09:47:25.841575Z"
       }
     },
     {
@@ -4851,14 +5174,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.223699569702148,
-          53.540706634521484
+          10.223687171936035,
+          53.54069137573242
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b87",
         "name": "SH-NETZ_8_1307",
-        "alt": 49,
-        "updated": "2025-05-17T09:25:47.735872Z"
+        "alt": 52,
+        "updated": "2025-05-18T09:48:05.908466Z"
       }
     },
     {
@@ -4866,14 +5190,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.843934059143066,
-          54.7540397644043
+          8.843923568725586,
+          54.75404739379883
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b89",
         "name": "SH-NETZ_5_1044",
-        "alt": 8,
-        "updated": "2025-05-17T09:31:44.081237Z"
+        "alt": 9,
+        "updated": "2025-05-18T09:42:07.52715Z"
       }
     },
     {
@@ -4881,14 +5206,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.181882858276367,
-          54.75458908081055
+          9.181843757629395,
+          54.75460433959961
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b8a",
         "name": "SH-NETZ_5_1052",
-        "alt": 29,
-        "updated": "2025-05-17T09:26:49.753891Z"
+        "alt": 30,
+        "updated": "2025-05-18T09:47:15.670366Z"
       }
     },
     {
@@ -4896,14 +5222,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.363774299621582,
-          54.51906967163086
+          9.363747596740723,
+          54.51905059814453
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b8b",
         "name": "SH-NETZ_5_1051",
         "alt": 17,
-        "updated": "2025-05-17T09:23:27.478583Z"
+        "updated": "2025-05-18T09:45:59.799076Z"
       }
     },
     {
@@ -4911,14 +5238,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.692891120910645,
+          9.69286823272705,
           54.28290557861328
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b8d",
         "name": "SH-NETZ_6_1157",
         "alt": 17,
-        "updated": "2025-05-17T09:33:47.517553Z"
+        "updated": "2025-05-18T09:45:57.644982Z"
       }
     },
     {
@@ -4926,14 +5254,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.513639450073242,
-          53.53255081176758
+          10.513615608215332,
+          53.53256607055664
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b8f",
         "name": "SH-NETZ_8_1315",
-        "alt": 62,
-        "updated": "2025-05-17T09:30:05.878345Z"
+        "alt": 63,
+        "updated": "2025-05-18T09:49:41.683265Z"
       }
     },
     {
@@ -4941,134 +5270,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.676003456115723,
-          54.865631103515625
+          8.67592716217041,
+          54.865604400634766
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b90",
         "name": "SH-NETZ_5_1045",
-        "alt": 7,
-        "updated": "2025-05-17T09:25:11.92725Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.149280548095703,
-          53.67729187011719
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_8_1299",
-        "alt": 47,
-        "updated": "2025-05-17T09:27:21.359032Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.472128868103027,
-          53.99036407470703
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_7_1363",
-        "alt": 18,
-        "updated": "2025-05-17T09:33:57.486101Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.389927864074707,
-          54.120445251464844
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_6_1376",
-        "alt": 30,
-        "updated": "2025-05-17T09:28:49.900695Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.741272926330566,
-          54.05177688598633
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_8_1321",
-        "alt": 18,
-        "updated": "2025-05-17T09:26:37.836167Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.295510292053223,
-          53.928340911865234
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_7_1245",
-        "alt": 67,
-        "updated": "2025-05-17T09:32:37.51076Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.483325958251953,
-          53.68598175048828
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_8_1314",
-        "alt": 70,
-        "updated": "2025-05-17T09:27:09.5264Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.24803638458252,
-          53.70065689086914
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_8_1310",
-        "alt": 54,
-        "updated": "2025-05-17T09:32:15.795485Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.407637596130371,
-          53.84587097167969
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_7_1238",
         "alt": 3,
-        "updated": "2025-05-17T09:25:27.571166Z"
+        "updated": "2025-05-18T09:47:51.770657Z"
       }
     },
     {
@@ -5076,14 +5286,143 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.784191131591797,
-          54.63295364379883
+          10.14901065826416,
+          53.67717742919922
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b91",
+        "name": "SH-NETZ_8_1299",
+        "alt": 48,
+        "updated": "2025-05-18T09:47:29.559731Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.472122192382812,
+          53.990360260009766
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff0056070b93",
+        "name": "SH-NETZ_7_1363",
+        "alt": 20,
+        "updated": "2025-05-18T09:48:47.763461Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.389892578125,
+          54.12041473388672
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff0056070b94",
+        "name": "SH-NETZ_6_1376",
+        "alt": 32,
+        "updated": "2025-05-18T09:42:02.086336Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.741238594055176,
+          54.051780700683594
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff0056070b95",
+        "name": "SH-NETZ_8_1321",
+        "alt": 20,
+        "updated": "2025-05-18T09:42:02.140259Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.29539680480957,
+          53.92831802368164
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff0056070b96",
+        "name": "SH-NETZ_7_1245",
+        "alt": 59,
+        "updated": "2025-05-18T09:47:37.56241Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.483346939086914,
+          53.68598556518555
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff0056070b97",
+        "name": "SH-NETZ_8_1314",
+        "alt": 68,
+        "updated": "2025-05-18T09:49:53.654844Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.248046875,
+          53.7006721496582
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff0056070b9a",
+        "name": "SH-NETZ_8_1310",
+        "alt": 55,
+        "updated": "2025-05-18T09:40:25.68456Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.407585144042969,
+          53.84586715698242
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff0056070b9b",
+        "name": "SH-NETZ_7_1238",
+        "alt": 6,
+        "updated": "2025-05-18T09:44:45.619965Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.784157752990723,
+          54.63294219970703
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff0056070b9c",
         "name": "SH-NETZ_5_1054",
-        "alt": 41,
-        "updated": "2025-05-17T09:29:11.428783Z"
+        "alt": 39,
+        "updated": "2025-05-18T09:43:51.649733Z"
       }
     },
     {
@@ -5091,14 +5430,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.64501667022705,
-          53.8173942565918
+          9.645018577575684,
+          53.817386627197266
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b9d",
         "name": "SH-NETZ_7_1372",
-        "alt": 17,
-        "updated": "2025-05-17T09:24:27.41755Z"
+        "alt": 20,
+        "updated": "2025-05-18T09:50:13.718818Z"
       }
     },
     {
@@ -5106,14 +5446,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.994486808776855,
-          53.76650619506836
+          9.994433403015137,
+          53.76649475097656
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b9e",
         "name": "SH-NETZ_7_1235",
-        "alt": 46,
-        "updated": "2025-05-17T09:27:39.897992Z"
+        "alt": 41,
+        "updated": "2025-05-18T09:41:03.677187Z"
       }
     },
     {
@@ -5121,14 +5462,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.253941535949707,
-          53.7327766418457
+          10.253928184509277,
+          53.73274230957031
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070b9f",
         "name": "SH-NETZ_8_1298",
-        "alt": 54,
-        "updated": "2025-05-17T09:25:27.71421Z"
+        "alt": 51,
+        "updated": "2025-05-18T09:50:21.550415Z"
       }
     },
     {
@@ -5136,14 +5478,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.96639633178711,
-          54.18860626220703
+          10.966363906860352,
+          54.18861389160156
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070ba0",
         "name": "SH-NETZ_8_1328",
-        "alt": 22,
-        "updated": "2025-05-17T09:33:47.722916Z"
+        "alt": 23,
+        "updated": "2025-05-18T09:49:45.947925Z"
       }
     },
     {
@@ -5151,14 +5494,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.670845031738281,
-          54.52410125732422
+          8.670851707458496,
+          54.52409362792969
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070ba1",
         "name": "SH-NETZ_5_1028",
-        "alt": 29,
-        "updated": "2025-05-17T09:32:37.650632Z"
+        "alt": 36,
+        "updated": "2025-05-18T09:49:43.792892Z"
       }
     },
     {
@@ -5166,14 +5510,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.893559455871582,
-          54.2918815612793
+          10.893511772155762,
+          54.2918701171875
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070ba3",
         "name": "SH-NETZ_8_1316",
-        "alt": 27,
-        "updated": "2025-05-17T09:27:17.477165Z"
+        "alt": 28,
+        "updated": "2025-05-18T09:47:03.467998Z"
       }
     },
     {
@@ -5181,14 +5526,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.833880424499512,
-          54.49787139892578
+          9.833903312683105,
+          54.49795913696289
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070ba6",
         "name": "SH-NETZ_6_1218",
-        "alt": 31,
-        "updated": "2025-05-17T09:28:17.499306Z"
+        "alt": 39,
+        "updated": "2025-05-18T09:46:51.649373Z"
       }
     },
     {
@@ -5196,14 +5542,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.950591087341309,
+          9.950547218322754,
           54.32292556762695
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070ba7",
         "name": "SH-NETZ_6_1217",
-        "alt": 22,
-        "updated": "2025-05-17T09:26:08.986271Z"
+        "alt": 15,
+        "updated": "2025-05-18T09:48:05.914828Z"
       }
     },
     {
@@ -5211,14 +5558,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.98735237121582,
-          54.40809631347656
+          9.987357139587402,
+          54.408084869384766
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070ba9",
         "name": "SH-NETZ_6_1158",
-        "alt": 43,
-        "updated": "2025-05-17T09:29:09.695425Z"
+        "alt": 41,
+        "updated": "2025-05-18T09:45:17.955237Z"
       }
     },
     {
@@ -5226,14 +5574,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.751588821411133,
-          54.02153778076172
+          10.75158405303955,
+          54.0216064453125
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070bad",
         "name": "SH-NETZ_8_1320",
-        "alt": 35,
-        "updated": "2025-05-17T09:33:05.479482Z"
+        "alt": 37,
+        "updated": "2025-05-18T09:49:25.881855Z"
       }
     },
     {
@@ -5241,14 +5590,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.4078950881958,
-          53.60847473144531
+          10.407902717590332,
+          53.608482360839844
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070bb1",
         "name": "SH-NETZ_8_1303",
         "alt": 50,
-        "updated": "2025-05-17T09:24:43.559836Z"
+        "updated": "2025-05-18T09:43:47.435263Z"
       }
     },
     {
@@ -5256,14 +5606,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.514152526855469,
+          10.514113426208496,
           54.238067626953125
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070bb3",
         "name": "SH-NETZ_6_1167",
-        "alt": 34,
-        "updated": "2025-05-17T09:33:13.53847Z"
+        "alt": 35,
+        "updated": "2025-05-18T09:45:11.719886Z"
       }
     },
     {
@@ -5271,14 +5622,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8.93516731262207,
-          54.67985153198242
+          8.9351224899292,
+          54.67985534667969
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070bb4",
         "name": "SH-NETZ_5_1046",
-        "alt": 15,
-        "updated": "2025-05-17T09:24:55.551525Z"
+        "alt": 14,
+        "updated": "2025-05-18T09:41:14.305442Z"
       }
     },
     {
@@ -5286,14 +5638,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.404655456542969,
-          54.416015625
+          10.404542922973633,
+          54.41598892211914
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070bb7",
         "name": "SH-NETZ_6_1161",
-        "alt": 6,
-        "updated": "2025-05-17T09:25:41.609159Z"
+        "alt": 9,
+        "updated": "2025-05-18T09:43:41.626507Z"
       }
     },
     {
@@ -5301,14 +5654,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.313258171081543,
-          54.2170524597168
+          10.313237190246582,
+          54.217071533203125
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070bb9",
         "name": "SH-NETZ_6_1154",
         "alt": 29,
-        "updated": "2025-05-17T09:23:15.583651Z"
+        "updated": "2025-05-18T09:47:07.60019Z"
       }
     },
     {
@@ -5316,14 +5670,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.233565330505371,
-          54.40376663208008
+          10.233532905578613,
+          54.403785705566406
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070bba",
         "name": "SH-NETZ_6_1162",
-        "alt": 33,
-        "updated": "2025-05-17T09:28:11.771557Z"
+        "alt": 36,
+        "updated": "2025-05-18T09:47:59.930283Z"
       }
     },
     {
@@ -5331,14 +5686,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.3096923828125,
-          53.92748260498047
+          10.309677124023438,
+          53.927494049072266
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070bbe",
         "name": "SH-NETZ_7_1243",
         "alt": 66,
-        "updated": "2025-05-17T09:24:43.593212Z"
+        "updated": "2025-05-18T09:45:35.879605Z"
       }
     },
     {
@@ -5346,74 +5702,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.776625633239746,
-          53.7048225402832
+          9.776578903198242,
+          53.70484161376953
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070bbf",
         "name": "SH-NETZ_7_1229",
-        "alt": 63,
-        "updated": "2025-05-17T09:26:39.660979Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.600801467895508,
-          54.500553131103516
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_5_1048",
-        "alt": 42,
-        "updated": "2025-05-17T09:33:07.741613Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.96419620513916,
-          53.83958053588867
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_7_1275",
-        "alt": 32,
-        "updated": "2025-05-17T09:30:09.878633Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.977119445800781,
-          53.81597137451172
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_7_1282",
-        "alt": 42,
-        "updated": "2025-05-17T09:30:43.900207Z"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.541742324829102,
-          54.182315826416016
-        ]
-      },
-      "properties": {
-        "name": "SH-NETZ_8_1291",
         "alt": 60,
-        "updated": "2025-05-17T09:28:21.57212Z"
+        "updated": "2025-05-18T09:47:15.713864Z"
       }
     },
     {
@@ -5421,14 +5718,79 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.459789276123047,
-          53.808345794677734
+          9.60078239440918,
+          54.50053024291992
         ]
       },
       "properties": {
+        "id": "eui-7076ff0056070bc0",
+        "name": "SH-NETZ_5_1048",
+        "alt": 39,
+        "updated": "2025-05-18T09:48:19.929246Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.96418571472168,
+          53.839569091796875
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff00560901bf",
+        "name": "SH-NETZ_7_1275",
+        "alt": 33,
+        "updated": "2025-05-18T09:41:51.526763Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.977145195007324,
+          53.815948486328125
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff0056090204",
+        "name": "SH-NETZ_7_1282",
+        "alt": 46,
+        "updated": "2025-05-18T09:43:03.597015Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.54170036315918,
+          54.18232345581055
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff00560903c0",
+        "name": "SH-NETZ_8_1291",
+        "alt": 64,
+        "updated": "2025-05-18T09:43:47.388834Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.4598388671875,
+          53.808380126953125
+        ]
+      },
+      "properties": {
+        "id": "eui-7076ff00560903c2",
         "name": "SH-NETZ_7_1369",
-        "alt": 4,
-        "updated": "2025-05-17T09:26:15.728996Z"
+        "alt": 9,
+        "updated": "2025-05-18T09:43:41.613173Z"
       }
     },
     {
@@ -5436,14 +5798,15 @@ const gateways = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9.072896957397461,
-          54.377803802490234
+          9.072900772094727,
+          54.3777961730957
         ]
       },
       "properties": {
+        "id": "id-00007076ff0327cb",
         "name": "SH-NETZ_6_1384",
-        "alt": 9,
-        "updated": "2025-05-17T09:31:12.70187Z"
+        "alt": 8,
+        "updated": "2025-05-18T09:49:05.490319Z"
       }
     }
   ]
