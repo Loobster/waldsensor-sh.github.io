@@ -105,22 +105,16 @@
           if (typ === "gateways") {
             const alt = feature.properties.alt ?? "–";
             const updated = feature.properties.updated ?? "–";
-            return `<b>📡 Gateway:</b> ${name}<br>
-                    <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
-                    <b>🗻 Höhe:</b> ${alt} m<br>
-                    <b>🕒 Letztes Update:</b> ${updated}`;
+            return `<b>📡 Gateway:</b> ${name}<br><b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br><b>🖼 Höhe:</b> ${alt} m<br><b>🕒 Letztes Update:</b> ${updated}`;
           }
 
           if (typ === "mint" || typ === "feuerwehr") {
             const result = findeNaechstesGateway(lat, lon);
-            if (result && document.getElementById(checkboxes.gateways).checked) {
+            if (result) {
               const distKm = (result.dist / 1000).toFixed(2);
-              return `<b>${typ === "mint" ? "🏫 MINT-Schule" : "🚒 Feuerwehr"}:</b> ${name}<br>
-                      <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
-                      <b>➡️ Nächstes Gateway:</b> ${result.gw.properties.name} (${distKm} km)`;
+              return `<b>${typ === "mint" ? '📍 MINT-Schule' : '🚒 Feuerwehr'}:</b> ${name}<br><b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br><b>➡️ Nächstes Gateway:</b> ${result.gw.properties.name} (${distKm} km)`;
             }
-            return `<b>${typ === "mint" ? "🏫 MINT-Schule" : "🚒 Feuerwehr"}:</b> ${name}<br>
-                    <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}`;
+            return `<b>${typ}:</b> ${name}<br><i>Kein Gateway gefunden</i>`;
           }
 
           if (typ === "schulwald") {
@@ -130,8 +124,9 @@
           return `<b>${typ}:</b> ${name}`;
         });
 
-        // Verbindungslinie nur wenn Gateways aktiv
-        if ((typ === "mint" || typ === "feuerwehr") && document.getElementById(checkboxes.gateways).checked) {
+        // Verbindungslinie nur erzeugen, wenn Checkbox aktiv
+        const cb = document.getElementById(checkboxes[typ]);
+        if ((typ === "mint" || typ === "feuerwehr") && cb.checked) {
           const result = findeNaechstesGateway(latlng.lat, latlng.lng);
           if (result) {
             const [lon2, lat2] = result.gw.geometry.coordinates;
@@ -141,7 +136,9 @@
               opacity: 0.7
             });
             linien[typ].push(line);
-            line.addTo(map);
+            if (document.getElementById(checkboxes.gateways).checked) {
+              line.addTo(map);
+            }
           }
         }
 
@@ -152,80 +149,33 @@
     return cluster;
   }
 
-  // Gateways
-  if (typeof gateways !== 'undefined') {
-    layers.gateways = createClusterLayer(gateways, 'gateways');
-    const cb = document.getElementById(checkboxes.gateways);
-    if (cb && cb.checked) map.addLayer(layers.gateways);
-    cb.addEventListener('change', (e) => {
-      if (!layers.gateways) return;
-      if (e.target.checked) {
-        map.addLayer(layers.gateways);
-        ['mint', 'feuerwehr'].forEach(key => linien[key].forEach(l => l.addTo(map)));
-      } else {
-        map.removeLayer(layers.gateways);
-        ['mint', 'feuerwehr'].forEach(key => linien[key].forEach(l => map.removeLayer(l)));
-      }
-    });
-  } else {
-    document.getElementById(checkboxes.gateways).disabled = true;
+  // Initialisieren der Layer
+  for (const key of Object.keys(checkboxes)) {
+    const dataVar = (key === 'mint') ? mint_schulen : (key === 'gateways') ? gateways : (key === 'schulwald') ? schulwaelder : feuerwehren;
+    if (typeof dataVar !== 'undefined') {
+      layers[key] = createClusterLayer(dataVar, key);
+      const cb = document.getElementById(checkboxes[key]);
+      if (cb && cb.checked) map.addLayer(layers[key]);
+    } else {
+      document.getElementById(checkboxes[key]).disabled = true;
+    }
   }
 
-  // MINT-Schulen
-  if (typeof mint_schulen !== 'undefined') {
-    layers.mint = createClusterLayer(mint_schulen, 'mint');
-    const cb = document.getElementById(checkboxes.mint);
-    if (cb && cb.checked) map.addLayer(layers.mint);
-    cb.addEventListener('change', (e) => {
-      if (!layers.mint) return;
+  // Event-Handling
+  for (const [key, checkboxId] of Object.entries(checkboxes)) {
+    const cb = document.getElementById(checkboxId);
+    cb?.addEventListener('change', (e) => {
+      if (!layers[key]) return;
       if (e.target.checked) {
-        map.addLayer(layers.mint);
-        if (document.getElementById(checkboxes.gateways).checked)
-          linien.mint.forEach(l => l.addTo(map));
+        map.addLayer(layers[key]);
+        if (linien[key] && (key === 'mint' || key === 'feuerwehr') && document.getElementById(checkboxes.gateways).checked) {
+          linien[key].forEach(l => l.addTo(map));
+        }
       } else {
-        map.removeLayer(layers.mint);
-        linien.mint.forEach(l => map.removeLayer(l));
+        map.removeLayer(layers[key]);
+        if (linien[key]) linien[key].forEach(l => map.removeLayer(l));
       }
     });
-  } else {
-    document.getElementById(checkboxes.mint).disabled = true;
-  }
-
-  // Feuerwehren
-  if (typeof feuerwehren !== 'undefined') {
-    layers.feuerwehr = createClusterLayer(feuerwehren, 'feuerwehr');
-    const cb = document.getElementById(checkboxes.feuerwehr);
-    if (cb && cb.checked) map.addLayer(layers.feuerwehr);
-    cb.addEventListener('change', (e) => {
-      if (!layers.feuerwehr) return;
-      if (e.target.checked) {
-        map.addLayer(layers.feuerwehr);
-        if (document.getElementById(checkboxes.gateways).checked)
-          linien.feuerwehr.forEach(l => l.addTo(map));
-      } else {
-        map.removeLayer(layers.feuerwehr);
-        linien.feuerwehr.forEach(l => map.removeLayer(l));
-      }
-    });
-  } else {
-    document.getElementById(checkboxes.feuerwehr).disabled = true;
-  }
-
-  // Schulwälder
-  if (typeof schulwaelder !== 'undefined') {
-    layers.schulwald = createClusterLayer(schulwaelder, 'schulwald');
-    const cb = document.getElementById(checkboxes.schulwald);
-    if (cb && cb.checked) map.addLayer(layers.schulwald);
-    cb.addEventListener('change', (e) => {
-      if (!layers.schulwald) return;
-      if (e.target.checked) {
-        map.addLayer(layers.schulwald);
-      } else {
-        map.removeLayer(layers.schulwald);
-      }
-    });
-  } else {
-    document.getElementById(checkboxes.schulwald).disabled = true;
   }
 </script>
 </body>
