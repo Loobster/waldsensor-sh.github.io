@@ -105,19 +105,14 @@
           if (typ === "gateways") {
             const alt = feature.properties.alt ?? "–";
             const updated = feature.properties.updated ?? "–";
-            return `<b>📡 Gateway:</b> ${name}<br>
-                    <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
-                    <b>🗻 Höhe:</b> ${alt} m<br>
-                    <b>🕒 Letztes Update:</b> ${updated}`;
+            return `<b>📡 Gateway:</b> ${name}<br><b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br><b>🗻 Höhe:</b> ${alt} m<br><b>🕒 Letztes Update:</b> ${updated}`;
           }
 
           if (typ === "mint" || typ === "feuerwehr") {
             const result = findeNaechstesGateway(lat, lon);
             if (result) {
               const distKm = (result.dist / 1000).toFixed(2);
-              return `<b>🏫 ${typ === "mint" ? "MINT-Schule" : "Feuerwehr"}:</b> ${name}<br>
-                      <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
-                      <b>➡️ Nächstes Gateway:</b> ${result.gw.properties.name} (${distKm} km)`;
+              return `<b>🏫 ${typ === "mint" ? "MINT-Schule" : "Feuerwehr"}:</b> ${name}<br><b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br><b>➡️ Nächstes Gateway:</b> ${result.gw.properties.name} (${distKm} km)`;
             }
             return `<b>${typ}:</b> ${name}<br><i>Kein Gateway gefunden</i>`;
           }
@@ -152,28 +147,28 @@
 
   if (typeof gateways !== 'undefined') {
     layers.gateways = createClusterLayer(gateways, 'gateways');
-    map.addLayer(layers.gateways);
+    if (document.getElementById(checkboxes.gateways).checked) map.addLayer(layers.gateways);
   } else {
     document.getElementById(checkboxes.gateways).disabled = true;
   }
 
   if (typeof mint_schulen !== 'undefined') {
     layers.mint = createClusterLayer(mint_schulen, 'mint');
-    map.addLayer(layers.mint);
+    if (document.getElementById(checkboxes.mint).checked) map.addLayer(layers.mint);
   } else {
     document.getElementById(checkboxes.mint).disabled = true;
   }
 
   if (typeof feuerwehren !== 'undefined') {
     layers.feuerwehr = createClusterLayer(feuerwehren, 'feuerwehr');
-    map.addLayer(layers.feuerwehr);
+    if (document.getElementById(checkboxes.feuerwehr).checked) map.addLayer(layers.feuerwehr);
   } else {
     document.getElementById(checkboxes.feuerwehr).disabled = true;
   }
 
   if (typeof schulwaelder !== 'undefined') {
     layers.schulwald = createClusterLayer(schulwaelder, 'schulwald');
-    map.addLayer(layers.schulwald);
+    if (document.getElementById(checkboxes.schulwald).checked) map.addLayer(layers.schulwald);
   } else {
     document.getElementById(checkboxes.schulwald).disabled = true;
   }
@@ -181,16 +176,34 @@
   for (const [key, checkboxId] of Object.entries(checkboxes)) {
     const cb = document.getElementById(checkboxId);
     if (!cb) continue;
-    cb.addEventListener('change', (e) => {
-      if (!layers[key]) return;
-      if (e.target.checked) {
-        map.addLayer(layers[key]);
-        if (linien[key]) linien[key].forEach(l => l.addTo(map));
-      } else {
-        map.removeLayer(layers[key]);
-        if (linien[key]) linien[key].forEach(l => map.removeLayer(l));
-      }
-    });
+
+    if (key === 'gateways') {
+      cb.addEventListener('change', (e) => {
+        if (!layers[key]) return;
+        if (e.target.checked) {
+          map.addLayer(layers[key]);
+          ['mint', 'feuerwehr'].forEach(k => {
+            if (linien[k]) linien[k].forEach(l => l.addTo(map));
+          });
+        } else {
+          map.removeLayer(layers[key]);
+          ['mint', 'feuerwehr'].forEach(k => {
+            if (linien[k]) linien[k].forEach(l => map.removeLayer(l));
+          });
+        }
+      });
+    } else {
+      cb.addEventListener('change', (e) => {
+        if (!layers[key]) return;
+        if (e.target.checked) {
+          map.addLayer(layers[key]);
+          if (linien[key]) linien[key].forEach(l => l.addTo(map));
+        } else {
+          map.removeLayer(layers[key]);
+          if (linien[key]) linien[key].forEach(l => map.removeLayer(l));
+        }
+      });
+    }
   }
 </script>
 </body>
