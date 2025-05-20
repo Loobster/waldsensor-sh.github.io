@@ -331,8 +331,8 @@ const mint_schulen = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.78236,
-          54.340631
+          10.08410,
+          54.33315
         ]
       },
       "properties": {
