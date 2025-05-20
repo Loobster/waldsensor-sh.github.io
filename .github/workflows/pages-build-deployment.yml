@@ -13,11 +13,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v3
-      - uses: actions/upload-pages-artifact@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload static site to Pages
+        uses: actions/upload-pages-artifact@v2
         with:
-          path: . # Verzeichnis mit deiner Website (ggf. anpassen)
+          path: .  # Hier liegen deine HTML-Dateien wie index.html
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
