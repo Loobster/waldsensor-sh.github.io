@@ -60,7 +60,7 @@ const schulwaelder = {
       },
       "properties": {
         "name": "🟢 Schulwald",
-        "beschreibung": "Schulname noch ergänzen",
+        "beschreibung": "Schulwald Tetenhusen e.V.",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.35230, 9.50997<br><i>Schulname noch ergänzen</i>"
       }
@@ -75,8 +75,8 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
-        "beschreibung": "Schulname noch ergänzen",
+        "name": "🟢 Schulwald ",
+        "beschreibung": "Grundschule Blekendorf",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.28309, 10.65660<br><i>Schulname noch ergänzen</i>"
       }
@@ -124,7 +124,7 @@ const schulwaelder = {
       },
       "properties": {
         "name": "🟢 Schulwald",
-        "beschreibung": "Schulname noch ergänzen",
+        "beschreibung": "Grund- und Gemeinschaftsschule Schacht-Audorf",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.30676, 9.71724<br><i>Schulname noch ergänzen</i>"
       }
@@ -236,7 +236,7 @@ const schulwaelder = {
       },
       "properties": {
         "name": "🟢 Schulwald",
-        "beschreibung": "Schulname noch ergänzen",
+        "beschreibung": "Grünes Klassenzimmer Jevenstedt",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.22960, 9.66253<br><i>Schulname noch ergänzen</i>"
       }
@@ -268,7 +268,7 @@ const schulwaelder = {
       },
       "properties": {
         "name": "🟢 Schulwald",
-        "beschreibung": "Schulname noch ergänzen",
+        "beschreibung": "Isarnwohld-Schule Gettorf",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.39733, 9.96347<br><i>Schulname noch ergänzen</i>"
       }
