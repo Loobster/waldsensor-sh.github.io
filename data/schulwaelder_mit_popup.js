@@ -267,7 +267,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Schulwald Isarnwohld-Schule Gettorf",
         "beschreibung": "Isarnwohld-Schule Gettorf",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.39733, 9.96347<br><i>Schulname noch ergänzen</i>"
