@@ -304,6 +304,22 @@ const schulwaelder = {
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.96497, 10.20706<br><i>Schulname noch ergänzen</i>"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.528391378236968,
+          54.41017807761605
+        ]
+      },
+      "properties": {
+        "name": "🟢 Geestlandschule Kropp",
+        "beschreibung": "Geestlandschule Kropp",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.410178, 9.528391<br><i>Schulname noch ergänzen</i>"
+      }
     }
   ]
 };
