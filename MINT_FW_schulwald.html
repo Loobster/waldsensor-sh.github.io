@@ -29,12 +29,10 @@
 <body>
 <div id="map"></div>
 <div class="layer-control">
-  
   <label><input type="checkbox" id="toggleGateways" checked> Gateways</label><br>
   <label><input type="checkbox" id="toggleFW"> Feuerwehren</label><br>
   <label><input type="checkbox" id="toggleMint" checked> MINT-Schulen</label><br>
   <label><input type="checkbox" id="toggleWald"> Schulwälder</label><br>
-  
 </div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -59,21 +57,32 @@
     feuerwehr: 'orange'
   };
 
+  // ✅ Geändert: präzise Haversine-Berechnung der Entfernung in km
   function findNearestGateway(lat, lon) {
     if (!gateways?.features?.length) return null;
+
+    const R = 6371; // Erdradius in Kilometern
+    const toRad = deg => deg * Math.PI / 180;
     let nearest = null;
     let minDist = Infinity;
+
     for (const gw of gateways.features) {
       const [gx, gy] = gw.geometry.coordinates;
-      const d = Math.sqrt(Math.pow(gx - lon, 2) + Math.pow(gy - lat, 2));
-      if (d < minDist) {
-        minDist = d;
+      const dLat = toRad(gy - lat);
+      const dLon = toRad(gx - lon);
+      const a = Math.sin(dLat / 2) ** 2 +
+                Math.cos(toRad(lat)) * Math.cos(toRad(gy)) * Math.sin(dLon / 2) ** 2;
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const dist = R * c;
+
+      if (dist < minDist) {
+        minDist = dist;
         nearest = gw;
       }
     }
+
     if (nearest) {
-      const distKm = (Math.sqrt(minDist) * 111).toFixed(1);
-      return { name: nearest.properties.name, distKm };
+      return { name: nearest.properties.name, distKm: minDist.toFixed(1) };
     }
     return null;
   }
