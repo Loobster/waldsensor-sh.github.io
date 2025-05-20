@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>MINT-FW Schulwaldkarte</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -23,7 +23,7 @@
   </style>
   <script src="data/gateways_SH_NETZ.js"></script>
   <script src="data/mint_schulen.js"></script>
-  <script src="data/schulwaelder.js"></script>
+  <script src="data/schulwaelder_mit_popup.js"></script>
   <script src="data/feuerwehren.js"></script>
 </head>
 <body>
@@ -105,14 +105,19 @@
           if (typ === "gateways") {
             const alt = feature.properties.alt ?? "–";
             const updated = feature.properties.updated ?? "–";
-            return `<b>📡 Gateway:</b> ${name}<br><b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br><b>🖼 Höhe:</b> ${alt} m<br><b>🕒 Letztes Update:</b> ${updated}`;
+            return `<b>📱 Gateway:</b> ${name}<br>
+                    <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
+                    <b>🏛 Höhe:</b> ${alt} m<br>
+                    <b>🕒 Letztes Update:</b> ${updated}`;
           }
 
           if (typ === "mint" || typ === "feuerwehr") {
             const result = findeNaechstesGateway(lat, lon);
             if (result) {
               const distKm = (result.dist / 1000).toFixed(2);
-              return `<b>${typ === "mint" ? '📍 MINT-Schule' : '🚒 Feuerwehr'}:</b> ${name}<br><b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br><b>➡️ Nächstes Gateway:</b> ${result.gw.properties.name} (${distKm} km)`;
+              return `<b>${typ === "mint" ? "🏫 MINT-Schule" : "🚒 Feuerwehr"}:</b> ${name}<br>
+                      <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
+                      <b>➡️ Nächstes Gateway:</b> ${result.gw.properties.name} (${distKm} km)`;
             }
             return `<b>${typ}:</b> ${name}<br><i>Kein Gateway gefunden</i>`;
           }
@@ -124,9 +129,7 @@
           return `<b>${typ}:</b> ${name}`;
         });
 
-        // Verbindungslinie nur erzeugen, wenn Checkbox aktiv
-        const cb = document.getElementById(checkboxes[typ]);
-        if ((typ === "mint" || typ === "feuerwehr") && cb.checked) {
+        if ((typ === "mint" || typ === "feuerwehr") && gateways) {
           const result = findeNaechstesGateway(latlng.lat, latlng.lng);
           if (result) {
             const [lon2, lat2] = result.gw.geometry.coordinates;
@@ -136,9 +139,7 @@
               opacity: 0.7
             });
             linien[typ].push(line);
-            if (document.getElementById(checkboxes.gateways).checked) {
-              line.addTo(map);
-            }
+            line.addTo(map);
           }
         }
 
@@ -149,28 +150,40 @@
     return cluster;
   }
 
-  // Initialisieren der Layer
-  for (const key of Object.keys(checkboxes)) {
-    const dataVar = (key === 'mint') ? mint_schulen : (key === 'gateways') ? gateways : (key === 'schulwald') ? schulwaelder : feuerwehren;
-    if (typeof dataVar !== 'undefined') {
-      layers[key] = createClusterLayer(dataVar, key);
-      const cb = document.getElementById(checkboxes[key]);
-      if (cb && cb.checked) map.addLayer(layers[key]);
-    } else {
-      document.getElementById(checkboxes[key]).disabled = true;
-    }
+  if (typeof gateways !== 'undefined') {
+    layers.gateways = createClusterLayer(gateways, 'gateways');
+    map.addLayer(layers.gateways);
+  } else {
+    document.getElementById(checkboxes.gateways).disabled = true;
   }
 
-  // Event-Handling
+  if (typeof mint_schulen !== 'undefined') {
+    layers.mint = createClusterLayer(mint_schulen, 'mint');
+    map.addLayer(layers.mint);
+  } else {
+    document.getElementById(checkboxes.mint).disabled = true;
+  }
+
+  if (typeof feuerwehren !== 'undefined') {
+    layers.feuerwehr = createClusterLayer(feuerwehren, 'feuerwehr');
+  } else {
+    document.getElementById(checkboxes.feuerwehr).disabled = true;
+  }
+
+  if (typeof schulwaelder !== 'undefined') {
+    layers.schulwald = createClusterLayer(schulwaelder, 'schulwald');
+  } else {
+    document.getElementById(checkboxes.schulwald).disabled = true;
+  }
+
   for (const [key, checkboxId] of Object.entries(checkboxes)) {
     const cb = document.getElementById(checkboxId);
-    cb?.addEventListener('change', (e) => {
+    if (!cb) continue;
+    cb.addEventListener('change', (e) => {
       if (!layers[key]) return;
       if (e.target.checked) {
         map.addLayer(layers[key]);
-        if (linien[key] && (key === 'mint' || key === 'feuerwehr') && document.getElementById(checkboxes.gateways).checked) {
-          linien[key].forEach(l => l.addTo(map));
-        }
+        if (linien[key]) linien[key].forEach(l => l.addTo(map));
       } else {
         map.removeLayer(layers[key]);
         if (linien[key]) linien[key].forEach(l => map.removeLayer(l));
