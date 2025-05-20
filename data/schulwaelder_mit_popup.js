@@ -11,8 +11,8 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
-        "beschreibung": "Schulname noch ergänzen",
+        "name": "🟢 Gemeinschaftsschule Nortorf",
+        "beschreibung": "Gemeinschaftsschule Nortorf",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.16532, 9.83846<br><i>Schulname noch ergänzen</i>"
       }
@@ -27,7 +27,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Schulzentrum Reinfeld",
         "beschreibung": "Schulname noch ergänzen",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.83780, 10.49793<br><i>Schulname noch ergänzen</i>"
@@ -43,7 +43,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Erich Kästner Gemeinschaftsschule Elmshorn",
         "beschreibung": "Schulname noch ergänzen",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.74104, 9.67441<br><i>Schulname noch ergänzen</i>"
@@ -59,8 +59,8 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
-        "beschreibung": "Schulwald Tetenhusen e.V.",
+        "name": "🟢 Tetenhusen e.V.",
+        "beschreibung": "Tetenhusen e.V.",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.35230, 9.50997<br><i>Schulname noch ergänzen</i>"
       }
@@ -75,7 +75,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald ",
+        "name": "🟢 Grundschule Blekendorf ",
         "beschreibung": "Grundschule Blekendorf",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.28309, 10.65660<br><i>Schulname noch ergänzen</i>"
@@ -91,7 +91,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Fördegymnasium Flensburg",
         "beschreibung": "Schulname noch ergänzen",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.80173, 9.46735<br><i>Schulname noch ergänzen</i>"
@@ -107,7 +107,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Grundschule Schmalfeld",
         "beschreibung": "Schulname noch ergänzen",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.87602, 9.97701<br><i>Schulname noch ergänzen</i>"
@@ -123,7 +123,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Grund- und Gemeinschaftsschule Schacht-Audorf",
         "beschreibung": "Grund- und Gemeinschaftsschule Schacht-Audorf",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.30676, 9.71724<br><i>Schulname noch ergänzen</i>"
@@ -139,7 +139,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Kringelkrug/Ostrohe",
         "beschreibung": "Schulname noch ergänzen",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.22090, 9.12133<br><i>Schulname noch ergänzen</i>"
@@ -155,7 +155,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Grundschule Lutau",
         "beschreibung": "Schulname noch ergänzen",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.43752, 10.55676<br><i>Schulname noch ergänzen</i>"
@@ -171,7 +171,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Wittenwurth",
         "beschreibung": "Schulname noch ergänzen",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.27234, 9.04914<br><i>Schulname noch ergänzen</i>"
@@ -187,8 +187,8 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
-        "beschreibung": "Schulname noch ergänzen",
+        "name": "🟢 Schulwald Husum",
+        "beschreibung": "Schulwald Husum",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.49291, 9.06459<br><i>Schulname noch ergänzen</i>"
       }
@@ -203,7 +203,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Sierksdorf",
         "beschreibung": "Schulname noch ergänzen",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.06834, 10.77139<br><i>Schulname noch ergänzen</i>"
@@ -219,8 +219,8 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
-        "beschreibung": "Schulname noch ergänzen",
+        "name": "🟢 Otto-Thiesen-Schule",
+        "beschreibung": "Otto-Thiesen-Schule",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.46008, 9.24031<br><i>Schulname noch ergänzen</i>"
       }
@@ -235,7 +235,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Grünes Klassenzimmer Jevenstedt",
         "beschreibung": "Grünes Klassenzimmer Jevenstedt",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.22960, 9.66253<br><i>Schulname noch ergänzen</i>"
@@ -251,7 +251,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Gemeinde Barsbüttel",
         "beschreibung": "Schulname noch ergänzen",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.58322, 10.22252<br><i>Schulname noch ergänzen</i>"
@@ -267,7 +267,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald Isarnwohld-Schule Gettorf",
+        "name": "🟢 Isarnwohld-Schule Gettorf",
         "beschreibung": "Isarnwohld-Schule Gettorf",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.39733, 9.96347<br><i>Schulname noch ergänzen</i>"
@@ -283,7 +283,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Schule im Alsterland, Nahe",
         "beschreibung": "Schulname noch ergänzen",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.78629, 10.14215<br><i>Schulname noch ergänzen</i>"
@@ -299,7 +299,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Schulwald",
+        "name": "🟢 Wahlstedt",
         "beschreibung": "Schulname noch ergänzen",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.96497, 10.20706<br><i>Schulname noch ergänzen</i>"
