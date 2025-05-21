@@ -350,22 +350,6 @@ const schulwaelder = {
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.876049, 9.97711<br><i>Schulname noch ergänzen</i>"
       }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          10.766560,
-          54.070206
-        ]
-      },
-      "properties": {
-        "name": "🟢 Ostseebad Sierksdorf",
-        "beschreibung": "Historischer Schulwald",
-        "typ": "Polygonfläche",
-        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.070206, 10.766560<br><i>Schulname noch ergänzen</i>"
-      }
     }
   ]
 };
