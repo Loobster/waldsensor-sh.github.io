@@ -350,15 +350,6 @@ const schulwaelder = {
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.876049, 9.97711<br><i>Schulname noch ergänzen</i>"
       }
-    },{
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          9.837718,
-          54.164980
-        ]
-      }
     }
   ]
 };
