@@ -366,6 +366,38 @@ const schulwaelder = {
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.499405, 10.246336<br><i>Schulname noch ergänzen</i>"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.668114846575184
+          53.76268954095341
+        ]
+      },
+      "properties": {
+        "name": "🟢 Grundschule Kaltenweide ",
+        "beschreibung": "Grundschule Kaltenweide ",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.76268954095341, 9.668114846575184<br><i>Schulname noch ergänzen</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.866189079345405
+          53.61934004216676
+        ]
+      },
+      "properties": {
+        "name": "🟢 Grundschule Bickbargen ",
+        "beschreibung": "Grundschule Bickbargen ",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.61934004216676, 9.866189079345405<br><i>Schulname noch ergänzen</i>"
+      }
     }
   ]
 };
