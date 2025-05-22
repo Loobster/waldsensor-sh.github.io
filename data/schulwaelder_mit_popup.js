@@ -436,7 +436,7 @@ const schulwaelder = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10.18440225946617,
+          9.744621027395581,
           54.730168856072126
         ]
       },
@@ -444,7 +444,7 @@ const schulwaelder = {
         "name": "🟢 Heinrich Andresen Schule, Sterup ",
         "beschreibung": "Heinrich Andresen Schule Sterup ",
         "typ": "Polygonfläche",
-        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.730168856072126, 10.18440225946617<br><i>Schulname noch ergänzen</i>"
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.730168856072126, 9.744621027395581<br><i>Schulname noch ergänzen</i>"
       }
     }
   ]
