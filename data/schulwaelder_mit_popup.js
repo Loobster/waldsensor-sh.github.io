@@ -445,6 +445,21 @@ const schulwaelder = {
         "beschreibung": "Heinrich Andresen Schule Sterup ",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.73017, 9.74461<br><i>Schulname noch ergänzen</i>"
+      },
+      {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.240369770101102,
+          54.46003079663988
+        ]
+      },
+      "properties": {
+        "name": "🟢 Otto-Thiesen-Schule, Ostenfeld ",
+        "beschreibung": "Otto-Thiesen-Schule Ostenfeld ",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.46003079663988, 9.240369770101102<br><i>Schulname noch ergänzen</i>"
       }
     }
   ]
