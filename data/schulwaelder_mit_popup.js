@@ -398,6 +398,22 @@ const schulwaelder = {
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.61934004216676, 9.866189079345405<br><i>Schulname noch ergänzen</i>"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.577287203018654,
+          54.293211449032576
+        ]
+      },
+      "properties": {
+        "name": "🟢 Schulzentrum Lütjenburg ",
+        "beschreibung": "Schulzentrum Lütjenburg ",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.293211449032576, 10.577287203018654<br><i>Schulname noch ergänzen</i>"
+      }
     }
   ]
 };
