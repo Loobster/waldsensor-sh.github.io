@@ -44,10 +44,10 @@ fetch('data/latest.json')
   .then(res => res.json())
   .then(data => {
     document.getElementById('sensoranzeige').innerHTML = `
-      <p>🔋 <strong>Batterie:</strong> ${data.batv.value} ${data.batv.unit}</p>
-      <p>🌡️ <strong>Temperatur:</strong> ${data.temperature.value} ${data.temperature.unit}</p>
-      <p>💧 <strong>Luftfeuchtigkeit:</strong> ${data.humidity.value} ${data.humidity.unit}</p>
-      <p>🕒 <small>Stand: ${new Date(data.temperature.time).toLocaleString()}</small></p>
+      <p>&#128267;<strong>Batterie:</strong> ${data.batv.value} ${data.batv.unit}</p>
+      <p>&#127777;<strong>Temperatur:</strong> ${data.temperature.value} ${data.temperature.unit}</p>
+      <p>&#128167;<strong>Luftfeuchtigkeit:</strong> ${data.humidity.value} ${data.humidity.unit}</p>
+      <p>&#128338;<small>Stand: ${new Date(data.temperature.time).toLocaleString()}</small></p>
     `;
   });
 </script>
