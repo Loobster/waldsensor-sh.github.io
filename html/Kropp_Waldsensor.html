@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>WALDSENSOR.SH – Live-Daten Schulwald Langenhorn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7f8;
+      padding: 2em;
+      color: #333;
+      line-height: 1.6;
+    }
+    .card {
+      background: white;
+      max-width: 500px;
+      margin: auto;
+      padding: 1.5em;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 1.4em;
+      margin-bottom: 0.5em;
+    }
+    .value {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .timestamp {
+      color: #666;
+      font-size: 0.9em;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sensoranzeige"></div>
+<script>
+fetch('data/latest.json')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('Sensoranzeige Schulwald Kropp').innerHTML = `
+      <p><strong>Batterie:</strong> ${data.batv.value} ${data.batv.unit}</p>
+      <p><strong>Temperatur:</strong> ${data.temperature.value} ${data.temperature.unit}</p>
+      <p><strong>Luftfeuchtigkeit:</strong> ${data.humidity.value} ${data.humidity.unit}</p>
+      <p><small>Stand: ${new Date(data.temperature.time).toLocaleString()}</small></p>
+    `;
+  });
+</script>
+
+</body>
+</html>
