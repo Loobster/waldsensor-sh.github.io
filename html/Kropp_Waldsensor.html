@@ -2,55 +2,62 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>WALDSENSOR.SH – Live-Daten Schulwald Kropp</title>
+  <title>WALDSENSOR.SH – Schulwald Kropp</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f5f7f8;
-      padding: 2em;
+      margin: 0;
+      padding: 3em 1em;
       color: #333;
-      line-height: 1.6;
+      text-align: center;
     }
-    .card {
-      background: white;
-      max-width: 500px;
-      margin: auto;
-      padding: 1.5em;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+
     h1 {
-      font-size: 1.4em;
-      margin-bottom: 0.5em;
-    }
-    .value {
-      font-size: 1.2em;
+      font-size: 2em;
       font-weight: bold;
+      margin-bottom: 1.5em;
     }
+
+    .sensoranzeige p {
+      font-size: 1.3em;
+      margin: 0.5em 0;
+    }
+
     .timestamp {
       color: #666;
-      font-size: 0.9em;
-      margin-top: 1em;
+      font-size: 1em;
+      margin-top: 1.5em;
     }
   </style>
 </head>
 <body>
 
-<div id="sensoranzeige"></div>
+  <h1>🌳 Schulwald Kropp – Live-Daten</h1>
 
-<script>
-fetch('/data/latest.json')  // <-- jetzt absolut!
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('sensoranzeige').innerHTML = `
-      <p>🔋 <strong>Batterie:</strong> ${data.batv.value} ${data.batv.unit}</p>
-      <p>🌡️ <strong>Temperatur:</strong> ${data.temperature.value} ${data.temperature.unit}</p>
-      <p>💧 <strong>Luftfeuchtigkeit:</strong> ${data.humidity.value} ${data.humidity.unit}</p>
-      <p>🕒 <small>Stand: ${new Date(data.temperature.time).toLocaleString()}</small></p>
-    `;
-  });
-</script>
+  <div id="sensoranzeige" class="sensoranzeige">
+    <p>Lade Daten...</p>
+  </div>
+
+  <script>
+    fetch('/data/latest.json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('sensoranzeige').innerHTML = `
+          <p>🔋 <strong>Batterie:</strong> ${data.batv.value} ${data.batv.unit}</p>
+          <p>🌡️ <strong>Temperatur:</strong> ${data.temperature.value} ${data.temperature.unit}</p>
+          <p>💧 <strong>Luftfeuchtigkeit:</strong> ${data.humidity.value} ${data.humidity.unit}</p>
+          <p class="timestamp">🕒 Stand: ${new Date(data.temperature.time).toLocaleString()}</p>
+        `;
+      })
+      .catch(err => {
+        document.getElementById('sensoranzeige').innerHTML = `
+          <p style="color:red">⚠️ Fehler beim Laden der Sensordaten.</p>
+        `;
+        console.error(err);
+      });
+  </script>
 
 </body>
 </html>
