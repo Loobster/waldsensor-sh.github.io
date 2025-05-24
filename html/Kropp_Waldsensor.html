@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>WALDSENSOR.SH – Live-Daten Schulwald Langenhorn</title>
+  <title>WALDSENSOR.SH – Live-Daten Schulwald Kropp</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
@@ -39,7 +39,7 @@
 
   <div id="sensoranzeige"></div>
 <script>
-fetch('data/latest.json')
+fetch('../data/latest.json')
   .then(res => res.json())
   .then(data => {
     document.getElementById('sensoranzeige').innerHTML = `
