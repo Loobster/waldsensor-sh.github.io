@@ -30,7 +30,24 @@
       font-size: 1em;
       margin-top: 1.5em;
     }
+
+    .chart-container {
+      max-width: 700px;
+      margin: 3em auto 0;
+      background: #fff;
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    canvas {
+      width: 100%;
+      height: 300px;
+    }
   </style>
+
+  <!-- Chart.js einbinden -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -40,7 +57,13 @@
     <p>Lade Daten...</p>
   </div>
 
+  <div class="chart-container">
+    <h2 style="margin-bottom: 1em;">📊 Verlauf der letzten Stunden</h2>
+    <canvas id="verlaufChart"></canvas>
+  </div>
+
   <script>
+    // Live-Werte laden
     fetch('/data/latest.json')
       .then(res => res.json())
       .then(data => {
@@ -56,6 +79,46 @@
           <p style="color:red">⚠️ Fehler beim Laden der Sensordaten.</p>
         `;
         console.error(err);
+      });
+
+    // Verlauf laden & zeichnen
+    fetch('/data/history_kropp.json')
+      .then(res => res.json())
+      .then(history => {
+        const labels = history.map(d => new Date(d.time).toLocaleTimeString());
+        const tempData = history.map(d => d.temperature);
+        const humData = history.map(d => d.humidity);
+
+        const ctx = document.getElementById('verlaufChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: '🌡️ Temperatur (°C)',
+                data: tempData,
+                borderColor: 'orange',
+                backgroundColor: 'rgba(255,165,0,0.1)',
+                tension: 0.2
+              },
+              {
+                label: '💧 Luftfeuchtigkeit (%)',
+                data: humData,
+                borderColor: 'blue',
+                backgroundColor: 'rgba(0,0,255,0.05)',
+                tension: 0.2
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: { title: { display: true, text: 'Zeit' } },
+              y: { title: { display: true, text: 'Messwert' } }
+            }
+          }
+        });
       });
   </script>
 
