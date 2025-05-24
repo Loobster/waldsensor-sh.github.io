@@ -40,7 +40,7 @@
 <div id="sensoranzeige"></div>
 
 <script>
-fetch('data/latest.json')
+fetch('..data/latest.json')
   .then(res => res.json())
   .then(data => {
     document.getElementById('sensoranzeige').innerHTML = `
