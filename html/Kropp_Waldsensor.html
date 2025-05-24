@@ -37,16 +37,17 @@
 </head>
 <body>
 
-  <div id="sensoranzeige"></div>
+<div id="sensoranzeige"></div>
+
 <script>
-fetch('../data/latest.json')
+fetch('data/latest.json')
   .then(res => res.json())
   .then(data => {
     document.getElementById('sensoranzeige').innerHTML = `
-      <p><strong>Batterie:</strong> ${data.batv.value} ${data.batv.unit}</p>
-      <p><strong>Temperatur:</strong> ${data.temperature.value} ${data.temperature.unit}</p>
-      <p><strong>Luftfeuchtigkeit:</strong> ${data.humidity.value} ${data.humidity.unit}</p>
-      <p><small>Stand: ${new Date(data.temperature.time).toLocaleString()}</small></p>
+      <p>🔋 <strong>Batterie:</strong> ${data.batv.value} ${data.batv.unit}</p>
+      <p>🌡️ <strong>Temperatur:</strong> ${data.temperature.value} ${data.temperature.unit}</p>
+      <p>💧 <strong>Luftfeuchtigkeit:</strong> ${data.humidity.value} ${data.humidity.unit}</p>
+      <p>🕒 <small>Stand: ${new Date(data.temperature.time).toLocaleString()}</small></p>
     `;
   });
 </script>
