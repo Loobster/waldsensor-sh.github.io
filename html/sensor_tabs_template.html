@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>🌳 Schulwaldsensoren Langenhorn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7f8;
+      padding: 2em;
+      color: #333;
+    }
+    .tabs {
+      display: flex;
+      margin-bottom: 1em;
+    }
+    .tab {
+      padding: 0.6em 1.2em;
+      margin-right: 0.5em;
+      background: #e0e0e0;
+      cursor: pointer;
+      border-radius: 8px 8px 0 0;
+    }
+    .tab.active {
+      background: white;
+      border-bottom: 2px solid white;
+    }
+    .tab-content {
+      display: none;
+      background: white;
+      padding: 1em;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .value {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .timestamp {
+      margin-top: 1em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🌳 Schulwaldsensoren Langenhorn</h1>
+
+<div class="tabs">
+  <div class="tab active" data-target="luft">Luft</div>
+  <div class="tab" data-target="boden">Boden</div>
+</div>
+
+<div id="luft" class="tab-content active">
+  <div id="luftwerte">Lade Luftdaten...</div>
+</div>
+
+<div id="boden" class="tab-content">
+  <div id="bodenwerte">Lade Bodendaten...</div>
+</div>
+
+<script>
+// Tabs umschalten
+const tabs = document.querySelectorAll('.tab');
+const contents = document.querySelectorAll('.tab-content');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    contents.forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.target).classList.add('active');
+  });
+});
+
+// Luftdaten laden
+fetch('../data/latest_langenhorn_temp.json')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('luftwerte').innerHTML = `
+      <p>🔋 <strong>Batterie:</strong> ${data.batv.value} ${data.batv.unit}</p>
+      <p>🌡️ <strong>Temperatur:</strong> ${data.temperature.value} ${data.temperature.unit}</p>
+      <p>💧 <strong>Luftfeuchtigkeit:</strong> ${data.humidity.value} ${data.humidity.unit}</p>
+      <p class="timestamp">⏰ Stand: ${new Date(data.temperature.time).toLocaleString()}</p>
+    `;
+  });
+
+// Bodendaten laden
+fetch('../data/latest_langenhorn_soil.json')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('bodenwerte').innerHTML = `
+      <p>🔋 <strong>Batterie:</strong> ${data.batv.value} ${data.batv.unit}</p>
+      <p>🌿 <strong>Bodentemperatur:</strong> ${data.temperature.value} ${data.temperature.unit}</p>
+      <p>🚧 <strong>Bodenfeuchte:</strong> ${data.humidity.value} ${data.humidity.unit}</p>
+      <p class="timestamp">⏰ Stand: ${new Date(data.temperature.time).toLocaleString()}</p>
+    `;
+  });
+</script>
+
+</body>
+</html>
