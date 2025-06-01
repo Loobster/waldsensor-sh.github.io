@@ -14,7 +14,7 @@ const gateways_addix = {
         "id": "eui-24e124fffef36abf-v2",
         "name": "adx-sh-021",
         "alt": 68,
-        "updated": "2025-05-31T04:24:09.535527Z"
+        "updated": "2025-06-01T04:22:47.621968Z"
       }
     },
     {
@@ -30,7 +30,7 @@ const gateways_addix = {
         "id": "eui-24e124fffef37fe12",
         "name": "adx-sh-098",
         "alt": 30,
-        "updated": "2025-05-31T04:21:07.881268Z"
+        "updated": "2025-06-01T04:26:41.824721Z"
       }
     },
     {
@@ -46,7 +46,7 @@ const gateways_addix = {
         "id": "eui-24e124fffef38749",
         "name": "adx-sh-128",
         "alt": 15,
-        "updated": "2025-05-31T04:21:13.903577Z"
+        "updated": "2025-06-01T04:23:11.384223Z"
       }
     },
     {
@@ -62,7 +62,7 @@ const gateways_addix = {
         "id": "eui-24e124fffef38f11-2",
         "name": "adx-sh-093",
         "alt": 30,
-        "updated": "2025-05-31T04:25:37.46828Z"
+        "updated": "2025-06-01T04:22:14.138315Z"
       }
     },
     {
@@ -78,7 +78,7 @@ const gateways_addix = {
         "id": "eui-24e124fffef39289",
         "name": "adx-sh-103",
         "alt": 27,
-        "updated": "2025-05-31T04:27:05.396063Z"
+        "updated": "2025-06-01T04:29:39.378322Z"
       }
     },
     {
@@ -94,7 +94,7 @@ const gateways_addix = {
         "id": "eui-24e124fffef39695",
         "name": "adx-sh-019",
         "alt": 25,
-        "updated": "2025-05-31T04:24:45.54026Z"
+        "updated": "2025-06-01T04:26:23.966717Z"
       }
     }
   ]
