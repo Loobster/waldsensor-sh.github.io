@@ -74,12 +74,35 @@
 
   <p>Die 4 verschiedenfarbigen Anschlusskabel werden wie hier beschrieben am Dragino Node angeschlossen:</p>
 
-  <ul>
-  <li><span style="color:red"></span> rot – VDD</li>
-  <li><span style="color:goldenrod"></span> gelb – SCL</li>
-  <li><span style="color:green"></span> grün – SDA</li>
-  <li><span style="color:black"></span> schwarz – GND</li>
-</ul>
+ 
+  <table style="border-collapse: collapse;">
+  <tr>
+    <th style="text-align:left;">Farbe</th>
+    <th style="text-align:left;">Anschluss</th>
+    <th style="text-align:left;">Nr.</th>
+  </tr>
+  <tr>
+    <td><span style="color:red;">●</span></td>
+    <td>VDD</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td><span style="color:goldenrod;">●</span></td>
+    <td>SCL</td>
+    <td>4</td>
+  </tr>
+  <tr>
+    <td><span style="color:green;">●</span></td>
+    <td>SDA</td>
+    <td>5</td>
+  </tr>
+  <tr>
+    <td><span style="color:black;">●</span></td>
+    <td>GND</td>
+    <td>11</td>
+  </tr>
+</table>
+
 <p>Bitte trennen Sie vor der Montage der Anschlusskabel den gelben Jumper vom Motherboard, um einen Kurzschluss zu vermeiden. 
   Nach dem Anschluss des Sensors und erneuten Einschalten des Node wird der Sensor sofort erkannt. Das können Sie im TTN unter 
   "Live Data" in der Application nachschauen. Dort werden jetzt im Payload die Felder "TempC_SHT" und  "Hum_SHT" mit Werten versorgt.</p>
