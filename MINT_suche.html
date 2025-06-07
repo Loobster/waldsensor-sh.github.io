@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>MINT-FW Schulwaldkarte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
+    .layer-control, .search-control {
+      position: absolute;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      font-family: sans-serif;
+      z-index: 1000;
+    }
+    .layer-control {
+      top: 10px;
+      right: 10px;
+    }
+    .search-control {
+      bottom: 10px;
+      right: 10px;
+    }
+  </style>
+  <script src="data/gateways_SH_NETZ.js"></script>
+  <script src="data/mint_schulen.js"></script>
+  <script src="data/schulwaelder_mit_popup.js"></script>
+  <script src="data/feuerwehren.js"></script>
+</head>
+<body>
+<div id="map"></div>
+<div class="layer-control">
+  <label><input type="checkbox" id="toggleGateways" checked> Gateways</label><br>
+  <label><input type="checkbox" id="toggleFW"> Feuerwehren</label><br>
+  <label><input type="checkbox" id="toggleMint" checked> MINT-Schulen</label><br>
+  <label><input type="checkbox" id="toggleWald"> Schulwälder</label><br>
+</div>
+<div class="search-control">
+  <label for="koord-eingabe">Koordinaten (lat, lon):</label><br>
+  <input type="text" id="koord-eingabe" placeholder="z. B. 54.12345, 10.12345" style="width: 160px;">
+  <button onclick="zeigeKoordinaten()">Suchen</button>
+</div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+<script>
+  const map = L.map('map').setView([54.3, 10.1], 8);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap-Mitwirkende'
+  }).addTo(map);
+
+  const layers = {};
+  const checkboxes = {
+    mint: 'toggleMint',
+    gateways: 'toggleGateways',
+    schulwald: 'toggleWald',
+    feuerwehr: 'toggleFW'
+  };
+
+  let verbindungslinie = null;
+
+  function findNearestGateway(lat, lon) {
+    if (!gateways?.features?.length) return null;
+    const R = 6371;
+    const toRad = deg => deg * Math.PI / 180;
+    let nearest = null;
+    let minDist = Infinity;
+
+    for (const gw of gateways.features) {
+      const [gx, gy] = gw.geometry.coordinates;
+      const dLat = toRad(gy - lat);
+      const dLon = toRad(gx - lon);
+      const a = Math.sin(dLat / 2) ** 2 +
+                Math.cos(toRad(lat)) * Math.cos(toRad(gy)) * Math.sin(dLon / 2) ** 2;
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const dist = R * c;
+
+      if (dist < minDist) {
+        minDist = dist;
+        nearest = gw;
+      }
+    }
+    if (nearest) {
+      return { name: nearest.properties.name, distKm: minDist.toFixed(1) };
+    }
+    return null;
+  }
+
+  function createClusterLayer(data, farbe, labelProperty = 'name', type = '') {
+    const cluster = L.markerClusterGroup();
+    const geo = L.geoJSON(data, {
+      pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+        radius: 6,
+        color: farbe,
+        fillColor: farbe,
+        fillOpacity: 0.7
+      }).bindPopup(function(layer) {
+        const name = feature.properties.name || "unbekannt";
+        const alt = feature.properties.alt !== null ? `${feature.properties.alt} m` : "–";
+        const updated = feature.properties.updated || "–";
+        const [lon, lat] = feature.geometry.coordinates;
+        let nearestText = '';
+        let lineToDraw = null;
+
+        if (type !== 'gateways') {
+          const nearest = findNearestGateway(lat, lon);
+          if (nearest) {
+            nearestText = `<br>📡 Nächstes Gateway: ${nearest.name} (${nearest.distKm} km)`;
+            for (const gw of gateways.features) {
+              if (gw.properties.name === nearest.name) {
+                lineToDraw = [
+                  [lat, lon],
+                  [gw.geometry.coordinates[1], gw.geometry.coordinates[0]]
+                ];
+                break;
+              }
+            }
+          }
+        }
+
+        if (verbindungslinie) {
+          map.removeLayer(verbindungslinie);
+        }
+        if (lineToDraw) {
+          verbindungslinie = L.polyline(lineToDraw, { color: 'gray', dashArray: '4 6' }).addTo(map);
+        }
+
+        return `
+          <b>${type === 'mint' ? '🏫 Schule:' : type === 'feuerwehr' ? '🚒 Feuerwehr:' : type === 'schulwald' ? '🌳 Schulwald:' : '📡 Gateway:'}</b> ${name}<br>
+          <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
+          ${type === 'gateways' ? `<b>🗻 Höhe:</b> ${alt}<br><b>🕒 Letztes Update:</b> ${updated}` : nearestText}
+        `;
+      })
+    });
+    cluster.addLayer(geo);
+    return cluster;
+  }
+
+  if (typeof mint_schulen !== 'undefined') {
+    layers.mint = createClusterLayer(mint_schulen, 'orange', 'name', 'mint');
+    map.addLayer(layers.mint);
+  } else {
+    document.getElementById(checkboxes.mint).disabled = true;
+  }
+
+  if (typeof gateways !== 'undefined') {
+    layers.gateways = createClusterLayer(gateways, 'blue', 'name', 'gateways');
+    map.addLayer(layers.gateways);
+  } else {
+    document.getElementById(checkboxes.gateways).disabled = true;
+  }
+
+  if (typeof schulwaelder !== 'undefined') {
+    layers.schulwald = createClusterLayer(schulwaelder, 'green', 'name', 'schulwald');
+  } else {
+    document.getElementById(checkboxes.schulwald).disabled = true;
+  }
+
+  if (typeof feuerwehren !== 'undefined') {
+    layers.feuerwehr = createClusterLayer(feuerwehren, 'red', 'name', 'feuerwehr');
+  } else {
+    document.getElementById(checkboxes.feuerwehr).disabled = true;
+  }
+
+  for (const [key, checkboxId] of Object.entries(checkboxes)) {
+    const cb = document.getElementById(checkboxId);
+    if (!cb) continue;
+    cb.addEventListener('change', (e) => {
+      if (!layers[key]) return;
+      if (e.target.checked) {
+        map.addLayer(layers[key]);
+      } else {
+        map.removeLayer(layers[key]);
+      }
+    });
+  }
+
+  let suchmarker = null;
+  function zeigeKoordinaten() {
+    const eingabe = document.getElementById("koord-eingabe").value;
+    const teile = eingabe.split(",");
+    if (teile.length !== 2) {
+      alert("Bitte gültige Koordinaten im Format lat, lon eingeben.");
+      return;
+    }
+
+    const lat = parseFloat(teile[0].trim());
+    const lon = parseFloat(teile[1].trim());
+    if (isNaN(lat) || isNaN(lon)) {
+      alert("Ungültige Zahlenwerte.");
+      return;
+    }
+
+    const nearest = findNearestGateway(lat, lon);
+    let nearestText = '';
+
+    if (nearest) {
+      nearestText = `<br>📡 Nächstes Gateway: ${nearest.name} (${nearest.distKm} km)`;
+
+      if (verbindungslinie) {
+        map.removeLayer(verbindungslinie);
+      }
+
+      for (const gw of gateways.features) {
+        if (gw.properties.name === nearest.name) {
+          verbindungslinie = L.polyline([
+            [lat, lon],
+            [gw.geometry.coordinates[1], gw.geometry.coordinates[0]]
+          ], { color: 'gray', dashArray: '4 6' }).addTo(map);
+          break;
+        }
+      }
+    }
+
+    if (suchmarker) {
+      map.removeLayer(suchmarker);
+    }
+
+    suchmarker = L.marker([lat, lon]).addTo(map);
+    suchmarker.bindPopup(`📍 Gesuchter Punkt<br>Koordinaten: ${lat.toFixed(5)}, ${lon.toFixed(5)}${nearestText}`).openPopup();
+    map.setView([lat, lon], 14);
+  }
+</script>
+</body>
+</html>
