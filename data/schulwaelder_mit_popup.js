@@ -508,7 +508,7 @@ const schulwaelder = {
         "name": "\ud83d\udfe2 Grundschule Trent",
         "beschreibung": "Grundschule Trent",
         "typ": "Polygonfl\u00e4che",
-        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.52038, 13.25363<br><i>Grundschule Trent</i>"
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.198132, 10.351216<br><i>Grundschule Trent</i>"
       }
     },
     {
