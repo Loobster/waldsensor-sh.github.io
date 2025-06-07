@@ -445,6 +445,262 @@ const schulwaelder = {
         "beschreibung": "Heinrich Andresen Schule Sterup ",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.73017, 9.74461<br><i>Schulname noch ergänzen</i>"
+        }
+      },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.049567,
+          54.069733
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Grundschule B\u00f6neb\u00fcttel",
+        "beschreibung": "Grundschule B\u00f6neb\u00fcttel",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.06973, 10.04957<br><i>Grundschule B\u00f6neb\u00fcttel</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.655467,
+          54.283261
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Grundschule Blekendorf",
+        "beschreibung": "Grundschule Blekendorf",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.28326, 10.65547<br><i>Grundschule Blekendorf</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.299926,
+          54.227336
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Grundschule Schellhorn",
+        "beschreibung": "Grundschule Schellhorn",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.22734, 10.29993<br><i>Grundschule Schellhorn</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.253634,
+          54.520382
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Grundschule Trent",
+        "beschreibung": "Grundschule Trent",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.52038, 13.25363<br><i>Grundschule Trent</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.150415,
+          54.214101
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Grundschule Barkauer Land",
+        "beschreibung": "Grundschule Barkauer Land",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.21410, 10.15042<br><i>Grundschule Barkauer Land</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.217168,
+          54.303871
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Astrid-Lindgren-Schule Schwentinental",
+        "beschreibung": "Astrid-Lindgren-Schule Schwentinental",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.30387, 10.21717<br><i>Astrid-Lindgren-Schule Schwentinental</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.480207,
+          54.360745
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Grundschule Schwartbuck",
+        "beschreibung": "Grundschule Schwartbuck",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.36075, 10.48021<br><i>Grundschule Schwartbuck</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.372679,
+          54.397864
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Grund- und Hauptschule Sch\u00f6neberg",
+        "beschreibung": "Grund- und Hauptschule Sch\u00f6neberg",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.39786, 10.37268<br><i>Grund- und Hauptschule Sch\u00f6neberg</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.27006,
+          54.24194
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Hermann-Ehlers-Schule Preetz",
+        "beschreibung": "Hermann-Ehlers-Schule Preetz",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.24194, 10.27006<br><i>Hermann-Ehlers-Schule Preetz</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.291867,
+          54.359694
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Grund- und  D\u00f6rfergemeinschaftsschule Probsteierhagen",
+        "beschreibung": "Grund- und  D\u00f6rfergemeinschaftsschule Probsteierhagen",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.35969, 10.29187<br><i>Grund- und  D\u00f6rfergemeinschaftsschule Probsteierhagen</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.210412,
+          54.370981
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Gr. u.Gem.sch. Schule Heikendorf",
+        "beschreibung": "Gr. u.Gem.sch. Schule Heikendorf",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.37098, 10.21041<br><i>Gr. u.Gem.sch. Schule Heikendorf</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.278289,
+          54.234881
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Th.-Heuss-Gem.Schule",
+        "beschreibung": "Th.-Heuss-Gem.Schule",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.23488, 10.27829<br><i>Th.-Heuss-Gem.Schule</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.209962,
+          54.369458
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Heinrich-Heine-Gymnasium",
+        "beschreibung": "Heinrich-Heine-Gymnasium",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.36946, 10.20996<br><i>Heinrich-Heine-Gymnasium</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.577063,
+          54.292952
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Gymnasium L\u00fctjenburg",
+        "beschreibung": "Gymnasium L\u00fctjenburg",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.29295, 10.57706<br><i>Gymnasium L\u00fctjenburg</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.577063,
+          54.292952
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Gemeinschaftsschule L\u00fctjenburg",
+        "beschreibung": "Gemeinschaftsschule L\u00fctjenburg",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.29295, 10.57706<br><i>Gemeinschaftsschule L\u00fctjenburg</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.51658,
+          54.296061
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Grundschule Seekrug",
+        "beschreibung": "Grundschule Seekrug",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.29606, 10.51658<br><i>Grundschule Seekrug</i>"
       }
     }
   ]
