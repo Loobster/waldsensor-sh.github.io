@@ -429,6 +429,71 @@ const mint_schulen = {
       "properties": {
         "name": "Schule St. Nicolai Sylt"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.396118,
+          53.618328
+        ]
+      },
+      "properties": {
+        "name": "Gymnasium Trittau"
+        }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.078797,
+          54.341146
+        ]
+      },
+      "properties": {
+        "name": "Gymnasium Kronshagen"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.060103,
+          54.473267
+        ]
+      },
+      "properties": {
+        "name": "Hermann-Tast-Schule"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.261164,
+          53.726135
+        ]
+      },
+      "properties": {
+        "name": "Kopernikus Gymnasium Bargteheide"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.9828,
+          54.0725
+        ]
+      },
+      "properties": {
+        "name": "Klaus-Groth-Schule"
+      }
     }
   ]
 };
