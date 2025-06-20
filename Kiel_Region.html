@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Karte: Kreise, Gateways, MINT-Schulen & Schulwälder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    html, body, #map { height:100%; margin:0; }
+    .controls {
+      position:absolute; top:10px; left:10px; z-index:1000;
+      background:white; padding:10px; border-radius:5px;
+      display: flex; /* Für bessere Anordnung der Buttons */
+      flex-direction: column; /* Buttons untereinander */
+      gap: 5px; /* Abstand zwischen den Buttons */
+    }
+    .leaflet-control-layers {
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div class="controls">
+    <label>Max. Abstand (km):
+      <select id="maxAbstand">
+        <option value="2">2 km</option>
+        <option value="5">5 km</option>
+        <option value="8">8 km</option>
+        <option value="12">12 km</option>
+      </select>
+    </label>
+    <hr style="margin: 5px 0;"> <button id="csvMintBtn">MINT-Schulen CSV</button>
+    <button id="csvForestBtn">Schulwälder CSV</button>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+  <script src="data/mint_schulen.js"></script>
+  <script src="data/gateways_SH_NETZ.js"></script>
+  <script src="data/schulwaelder_mit_popup.js"></script> 
+
+  <script>
+    const map = L.map('map').setView([54.3, 10.1], 9);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19, attribution: '© OpenStreetMap-Mitwirkende'
+    }).addTo(map);
+
+    let kreisLayer;
+    let kreisPolygons = [];
+    let layerControl;
+
+    const gatewayLayerGroup = L.layerGroup();
+    const schoolLayerGroup = L.layerGroup();
+    const schoolForestLayerGroup = L.layerGroup();
+
+    const gatewayColor = 'blue';
+    const schoolColor = 'orange';
+    const schoolForestColor = 'green';
+
+    // Globale Variablen für die gesammelten Daten
+    let mintSchoolResults = []; 
+    let schoolForestResults = [];
+
+    function loadKreise() {
+      if (kreisLayer) map.removeLayer(kreisLayer);
+      kreisPolygons = [];
+
+      const query = `[out:json];(relation(27017);relation(27026);relation(27021););out geom;`;
+      fetch('https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(query))
+        .then(r => r.json())
+        .then(data => {
+          const geoForLeaflet = { "type":"FeatureCollection", "features":[] };
+          const linesForTurf = { "type": "FeatureCollection", "features": [] };
+
+          data.elements.forEach(rel => {
+            if (rel.type === 'relation') {
+              const coordsForLeaflet = [];
+              rel.members.forEach(m => {
+                if (m.type === 'way' && m.geometry) {
+                  const ring = m.geometry.map(p => [p.lon, p.lat]);
+                  coordsForLeaflet.push(ring);
+                  linesForTurf.features.push(turf.lineString(ring, { name: rel.tags.name }));
+                }
+              });
+
+              geoForLeaflet.features.push({
+                type: 'Feature',
+                properties: { name: rel.tags.name },
+                geometry: { type: 'MultiLineString', coordinates: coordsForLeaflet }
+              });
+            }
+          });
+
+          kreisLayer = L.geoJSON(geoForLeaflet, { color:'black', weight:3 }).addTo(map);
+
+          const polygonized = turf.polygonize(linesForTurf);
+          if (polygonized && polygonized.features) {
+            kreisPolygons = polygonized.features;
+          } else {
+            console.warn("Turf.polygonize konnte keine Polygone erstellen. Punkt-in-Polygon-Filterung wird möglicherweise nicht korrekt funktionieren.");
+            kreisPolygons = [];
+          }
+
+          initializeLayerControl();
+          processPoints();
+        })
+        .catch(err => console.error('Overpass-Fehler beim Laden der Kreise:', err));
+    }
+
+    function isInsideKreis(geoJsonFeature) {
+        let testPoint;
+        if (geoJsonFeature.type === 'Point' && Array.isArray(geoJsonFeature.coordinates)) {
+            testPoint = geoJsonFeature;
+        }
+        else if (geoJsonFeature.geometry) {
+            if (geoJsonFeature.geometry.type === 'Point' || geoJsonFeature.geometry.type === 'MultiPoint') {
+                testPoint = turf.point(geoJsonFeature.geometry.coordinates); 
+            } else if (geoJsonFeature.geometry.type === 'LineString' || geoJsonFeature.geometry.type === 'MultiLineString' || geoJsonFeature.geometry.type === 'Polygon' || geoJsonFeature.geometry.type === 'MultiPolygon') {
+                try {
+                    testPoint = turf.center(geoJsonFeature); 
+                } catch (e) {
+                    console.warn(`isInsideKreis: Konnte Schwerpunkt für Feature ${geoJsonFeature.properties?.name || 'Unbenannt'} nicht berechnen.`, e);
+                    return false;
+                }
+            } else {
+                console.warn("isInsideKreis: Unerwarteter Geometrietyp des Features", geoJsonFeature.geometry.type);
+                return false;
+            }
+        } else {
+            console.warn("isInsideKreis: Ungültiges Eingabeformat. Erwartet Turf.Point oder GeoJSON Feature.", geoJsonFeature);
+            return false;
+        }
+        
+        if (!testPoint) return false;
+
+        for (const kreisPoly of kreisPolygons) {
+            if (kreisPoly.geometry && (kreisPoly.geometry.type === 'Polygon' || kreisPoly.geometry.type === 'MultiPolygon')) {
+                if (turf.booleanPointInPolygon(testPoint, kreisPoly)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function initializeLayerControl() {
+        if (layerControl) {
+            map.removeControl(layerControl);
+        }
+
+        gatewayLayerGroup.addTo(map);
+        schoolLayerGroup.addTo(map);
+        schoolForestLayerGroup.addTo(map);
+
+        const overlayMaps = {
+            "LoRaWAN Gateways (Blau)": gatewayLayerGroup,
+            "MINT-Schulen (Orange)": schoolLayerGroup,
+            "Schulwälder (Grün)": schoolForestLayerGroup
+        };
+
+        layerControl = L.control.layers(null, overlayMaps, { collapsed: false }).addTo(map);
+    }
+
+    function processPoints() {
+      gatewayLayerGroup.clearLayers();
+      schoolLayerGroup.clearLayers();
+      schoolForestLayerGroup.clearLayers();
+
+      // Ergebnisse bei jedem Lauf zurücksetzen
+      mintSchoolResults = []; 
+      schoolForestResults = [];
+
+      const maxAbstand = +document.getElementById('maxAbstand').value;
+
+      const relevantGateways = [];
+      if (typeof gateways === 'undefined' || !gateways.features) {
+        console.warn("Gateways-Daten nicht geladen oder im falschen Format.");
+      } else {
+        gateways.features.forEach(gw => {
+          if (isInsideKreis(gw)) {
+            const marker = L.circleMarker([gw.geometry.coordinates[1], gw.geometry.coordinates[0]], {
+              radius: 4,
+              fillColor: gatewayColor,
+              color: gatewayColor,
+              weight: 1,
+              opacity: 1,
+              fillOpacity: 1
+            });
+            const gwName = gw.properties.name || gw.properties.id || 'Unbenanntes Gateway';
+            marker.bindPopup(`<b>Gateway:</b> ${gwName}`);
+            gatewayLayerGroup.addLayer(marker);
+            relevantGateways.push(gw);
+          }
+        });
+      }
+
+      if (typeof mint_schulen === 'undefined' || !mint_schulen.features) {
+        console.warn("MINT-Schulen-Daten nicht geladen oder im falschen Format.");
+      } else {
+        mint_schulen.features.forEach(school => {
+          if (!isInsideKreis(school)) {
+              return;
+          }
+
+          let minDistance = Infinity;
+          let nearestGatewayName = '';
+
+          if (relevantGateways.length > 0) {
+              const schoolPoint = turf.point(school.geometry.coordinates);
+              relevantGateways.forEach(gw => {
+                  const gwPoint = turf.point(gw.geometry.coordinates);
+                  const distance = turf.distance(schoolPoint, gwPoint, { units: 'kilometers' });
+
+                  if (distance < minDistance) {
+                      minDistance = distance;
+                      nearestGatewayName = gw.properties.name || gw.properties.id;
+                  }
+              });
+          } else {
+              return; 
+          }
+
+          if (minDistance <= maxAbstand) {
+            const schoolName = school.properties.name || school.properties.id || 'Unbenannte Schule';
+            const marker = L.circleMarker([school.geometry.coordinates[1], school.geometry.coordinates[0]], {
+              radius: 4,
+              fillColor: schoolColor,
+              color: schoolColor,
+              weight: 1,
+              opacity: 1,
+              fillOpacity: 1
+            });
+            marker.bindPopup(`<b>Schule:</b> ${schoolName}<br><b>Entfernung zu ${nearestGatewayName}:</b> ${minDistance.toFixed(2)} km`);
+            schoolLayerGroup.addLayer(marker);
+
+            // MINT-Schulen zu mintSchoolResults hinzufügen
+            mintSchoolResults.push({
+              name: schoolName,
+              lat: school.geometry.coordinates[1],
+              lon: school.geometry.coordinates[0],
+              dist_km: minDistance.toFixed(2),
+              gateway: nearestGatewayName
+            });
+          }
+        });
+      }
+
+      if (typeof schulwaelder === 'undefined' || !schulwaelder.features) {
+        console.warn("Schulwälder-Daten nicht geladen oder im falschen Format.");
+      } else {
+        schulwaelder.features.forEach(forest => { 
+            if (!isInsideKreis(forest)) {
+                return;
+            }
+
+            let minDistanceForestToGw = Infinity;
+            let nearestGatewayToForestName = '';
+
+            if (relevantGateways.length > 0) {
+                const forestPointForDistance = turf.point(forest.geometry.coordinates); 
+                
+                relevantGateways.forEach(gw => {
+                    const gwPoint = turf.point(gw.geometry.coordinates);
+                    const distance = turf.distance(forestPointForDistance, gwPoint, { units: 'kilometers' });
+
+                    if (distance < minDistanceForestToGw) {
+                        minDistanceForestToGw = distance;
+                        nearestGatewayToForestName = gw.properties.name || gw.properties.id;
+                    }
+                });
+            } else {
+                return;
+            }
+
+            if (minDistanceForestToGw <= maxAbstand) {
+                const marker = L.circleMarker([forest.geometry.coordinates[1], forest.geometry.coordinates[0]], {
+                  radius: 4,
+                  fillColor: schoolForestColor,
+                  color: schoolForestColor,
+                  weight: 1,
+                  opacity: 1,
+                  fillOpacity: 1
+                });
+                
+                const forestName = forest.properties.name || forest.properties.id || 'Unbenannter Schulwald';
+                let popupContent = `<b>Schulwald:</b> ${forestName}`;
+                if (forest.properties && forest.properties.popupContent) {
+                    popupContent = forest.properties.popupContent; 
+                }
+                popupContent += `<br><b>Entfernung zu ${nearestGatewayToForestName}:</b> ${minDistanceForestToGw.toFixed(2)} km`;
+                marker.bindPopup(popupContent); 
+
+                schoolForestLayerGroup.addLayer(marker); 
+                
+                // Schulwälder zu schoolForestResults hinzufügen
+                schoolForestResults.push({
+                    name: forestName,
+                    lat: forest.geometry.coordinates[1],
+                    lon: forest.geometry.coordinates[0],
+                    dist_km: minDistanceForestToGw.toFixed(2),
+                    gateway: nearestGatewayToForestName
+                });
+            }
+        });
+      }
+    }
+
+    document.getElementById('maxAbstand').addEventListener('change', processPoints);
+
+    // Event Listener für MINT-Schulen CSV-Download
+    document.getElementById('csvMintBtn').addEventListener('click', () => {
+      const csv = ['Name;Lat;Lon;Dist_km;GW'].concat(mintSchoolResults.map(r =>
+        `${r.name};${r.lat};${r.lon};${r.dist_km};${r.gateway}`
+      )).join('\n');
+      const fn = `mint_schulen_im_umkreis_${document.getElementById('maxAbstand').value}km.csv`;
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8'});
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = fn;
+      link.click();
+    });
+
+    // Event Listener für Schulwälder CSV-Download
+    document.getElementById('csvForestBtn').addEventListener('click', () => {
+      const csv = ['Name;Lat;Lon;Dist_km;GW'].concat(schoolForestResults.map(r =>
+        `${r.name};${r.lat};${r.lon};${r.dist_km};${r.gateway}`
+      )).join('\n');
+      const fn = `schulwaelder_im_umkreis_${document.getElementById('maxAbstand').value}km.csv`;
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8'});
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = fn;
+      link.click();
+    });
+
+    loadKreise();
+  </script>
+</body>
+</html>
