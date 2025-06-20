@@ -31,7 +31,8 @@
         <option value="12">12 km</option>
       </select>
     </label>
-    <hr style="margin: 5px 0;"> <button id="csvMintBtn">MINT-Schulen CSV</button>
+    <hr style="margin: 5px 0;">
+    <button id="csvMintBtn">MINT-Schulen CSV</button>
     <button id="csvForestBtn">Schulwälder CSV</button>
   </div>
 
@@ -59,7 +60,6 @@
     const schoolColor = 'orange';
     const schoolForestColor = 'green';
 
-    // Globale Variablen für die gesammelten Daten
     let mintSchoolResults = []; 
     let schoolForestResults = [];
 
@@ -168,7 +168,6 @@
       schoolLayerGroup.clearLayers();
       schoolForestLayerGroup.clearLayers();
 
-      // Ergebnisse bei jedem Lauf zurücksetzen
       mintSchoolResults = []; 
       schoolForestResults = [];
 
@@ -235,12 +234,11 @@
             marker.bindPopup(`<b>Schule:</b> ${schoolName}<br><b>Entfernung zu ${nearestGatewayName}:</b> ${minDistance.toFixed(2)} km`);
             schoolLayerGroup.addLayer(marker);
 
-            // MINT-Schulen zu mintSchoolResults hinzufügen
             mintSchoolResults.push({
               name: schoolName,
               lat: school.geometry.coordinates[1],
               lon: school.geometry.coordinates[0],
-              dist_km: minDistance.toFixed(2),
+              dist_km: parseFloat(minDistance.toFixed(2)), // Als Zahl speichern für Sortierung
               gateway: nearestGatewayName
             });
           }
@@ -294,12 +292,11 @@
 
                 schoolForestLayerGroup.addLayer(marker); 
                 
-                // Schulwälder zu schoolForestResults hinzufügen
                 schoolForestResults.push({
                     name: forestName,
                     lat: forest.geometry.coordinates[1],
                     lon: forest.geometry.coordinates[0],
-                    dist_km: minDistanceForestToGw.toFixed(2),
+                    dist_km: parseFloat(minDistanceForestToGw.toFixed(2)), // Als Zahl speichern für Sortierung
                     gateway: nearestGatewayToForestName
                 });
             }
@@ -309,10 +306,12 @@
 
     document.getElementById('maxAbstand').addEventListener('change', processPoints);
 
-    // Event Listener für MINT-Schulen CSV-Download
     document.getElementById('csvMintBtn').addEventListener('click', () => {
-      const csv = ['Name;Lat;Lon;Dist_km;GW'].concat(mintSchoolResults.map(r =>
-        `${r.name};${r.lat};${r.lon};${r.dist_km};${r.gateway}`
+      // Sortierung der MINT-Schulen-Ergebnisse
+      const sortedResults = [...mintSchoolResults].sort((a, b) => a.dist_km - b.dist_km);
+
+      const csv = ['Name;Lat;Lon;Dist_km;GW'].concat(sortedResults.map(r =>
+        `${r.name};${r.lat};${r.lon};${r.dist_km.toFixed(2)};${r.gateway}`
       )).join('\n');
       const fn = `mint_schulen_im_umkreis_${document.getElementById('maxAbstand').value}km.csv`;
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8'});
@@ -322,10 +321,12 @@
       link.click();
     });
 
-    // Event Listener für Schulwälder CSV-Download
     document.getElementById('csvForestBtn').addEventListener('click', () => {
-      const csv = ['Name;Lat;Lon;Dist_km;GW'].concat(schoolForestResults.map(r =>
-        `${r.name};${r.lat};${r.lon};${r.dist_km};${r.gateway}`
+      // Sortierung der Schulwälder-Ergebnisse
+      const sortedResults = [...schoolForestResults].sort((a, b) => a.dist_km - b.dist_km);
+
+      const csv = ['Name;Lat;Lon;Dist_km;GW'].concat(sortedResults.map(r =>
+        `${r.name};${r.lat};${r.lon};${r.dist_km.toFixed(2)};${r.gateway}`
       )).join('\n');
       const fn = `schulwaelder_im_umkreis_${document.getElementById('maxAbstand').value}km.csv`;
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8'});
