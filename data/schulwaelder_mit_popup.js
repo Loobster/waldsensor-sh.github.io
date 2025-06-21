@@ -500,15 +500,15 @@ const schulwaelder = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          13.253634,
-          54.520382
+          10.3650699,
+          54.2021927
         ]
       },
       "properties": {
         "name": "\ud83d\udfe2 Grundschule Trent",
         "beschreibung": "Grundschule Trent",
         "typ": "Polygonfl\u00e4che",
-        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.198132, 10.351216<br><i>Grundschule Trent</i>"
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.2021927, 10.3650699<br><i>Grundschule Trent</i>"
       }
     },
     {
@@ -701,6 +701,22 @@ const schulwaelder = {
         "beschreibung": "Grundschule Seekrug",
         "typ": "Polygonfl\u00e4che",
         "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 54.29606, 10.51658<br><i>Grundschule Seekrug</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.816821,
+          53.923344
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Grundschule Roter Hahn",
+        "beschreibung": "Grundschule Roter Hahn",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 53.923344, 10.816821<br><i>Grundschule Roter Hahn</i>"
       }
     }
   ]
