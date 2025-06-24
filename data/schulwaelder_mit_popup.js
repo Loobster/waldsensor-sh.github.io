@@ -155,7 +155,7 @@ const schulwaelder = {
         ]
       },
       "properties": {
-        "name": "🟢 Grundschule Lutau",
+        "name": "🟢 Grundschule Lütau",
         "beschreibung": "Schulname noch ergänzen",
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.43752, 10.55676<br><i>Schulname noch ergänzen</i>"
@@ -718,6 +718,38 @@ const schulwaelder = {
         "typ": "Polygonfl\u00e4che",
         "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 53.923344, 10.816821<br><i>Grundschule Roter Hahn</i>"
       }
-    }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.749498,
+          53.6974003
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Grund- und Gemeinschaftsschule Ratzeburg",
+        "beschreibung": "Grund- und Gemeinschaftsschule Ratzeburg",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 53.6974003, 10.749498<br><i>Grund- und Gemeinschaftsschule Ratzeburg</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.568107,
+          53.380508
+        ]
+      },
+      "properties": {
+        "name": "\ud83d\udfe2 Albinus-Gemeinschaftsschule ",
+        "beschreibung": "Albinus-Gemeinschaftsschule ",
+        "typ": "Polygonfl\u00e4che",
+        "popup": "<b>\ud83d\udfe2 Schulwald</b><br>Typ: Polygonfl\u00e4che<br>Koordinaten: 53.380508, 10.568107<br><i>Albinus-Gemeinschaftsschule</i>"
+      }
+    },
   ]
 };
