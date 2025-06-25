@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>SH_statistik – Statistik pro Kreis und Gesamtliste</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+  <script src="https://tyrasd.github.io/osmtogeojson/osmtogeojson.js"></script>
+
+  <style>
+    html, body { height: 100%; margin: 0; font-family: sans-serif; }
+    #map { height: 100%; }
+    .controls {
+      position: absolute; top: 10px; left: 50px; z-index: 1000;
+      background: white; padding: 10px; border-radius: 5px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    #status-message { margin-top: 10px; font-style: italic; font-size: 0.9em; }
+    button { margin-top: 8px; padding: 6px 10px; width: 100%; cursor: pointer; }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<div class="controls">
+  <label for="area-select"><b>Gebiet auswählen:</b></label>
+  <select id="area-select" disabled>
+    <option value="">-- Lade Gebietsdaten --</option>
+  </select>
+  <div id="status-message"></div>
+  <hr style="margin: 15px 0 10px 0;">
+  <button id="stats-selected-btn" disabled>Statistik für Auswahl</button>
+  <button id="stats-all-btn" disabled>Gesamtstatistik (alle Kreise)</button>
+</div>
+
+<script src="data/gateways_SH_NETZ.js"></script>
+<script src="data/mint_schulen.js"></script>
+<script src="data/schulwaelder_mit_popup.js"></script>
+<script src="data/feuerwehren.js"></script>
+
+<script>
+  const schulwaelder_mit_popup = schulwaelder;
+const map = L.map('map').setView([54.2, 9.8], 8);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+const areas = {};
+let currentAreaLayer = null;
+const selectElement = document.getElementById('area-select');
+const statusElement = document.getElementById('status-message');
+
+const dataSources = [
+  { name: "Gateways", variableName: "gateways", layer: L.layerGroup(), color: 'magenta' },
+  { name: "MINT-Schulen", variableName: "mint_schulen", layer: L.layerGroup(), color: '#07aff2' },
+  { name: "Schulwälder", variableName: "schulwaelder_mit_popup", layer: L.layerGroup(), color: '#07f226' },
+  { name: "Feuerwehren", variableName: "feuerwehren", layer: L.layerGroup(), color: '#f20b07' }
+];
+
+const overlayMaps = {};
+dataSources.forEach(source => {
+  try {
+    const data = eval(source.variableName);
+    if (data && data.features) {
+      overlayMaps[source.name] = source.layer;
+      source.data = data;
+    }
+  } catch (e) {}
+});
+L.control.layers(null, overlayMaps, { collapsed: false }).addTo(map);
+
+const query = `[out:json][timeout:60];(relation(27021);relation(27020);relation(62528);relation(27027);relation(27028);relation(62703);relation(27019);relation(27025);relation(62408);relation(27026);relation(27017);relation(27014);relation(62733);relation(27016);relation(62546););out body;>;out skel qt;`;
+const url = 'https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(query);
+
+fetch(url)
+  .then(response => response.json())
+  .then(overpassJson => {
+    const geojsonData = osmtogeojson(overpassJson);
+    geojsonData.features.forEach(f => {
+      if (f.properties && f.properties.name && f.geometry) {
+        areas[f.properties.name] = { geojson: f };
+      }
+    });
+    if (Object.keys(areas).length >= 15) {
+      statusElement.textContent = 'Bereit.';
+      populateSelect();
+      selectElement.disabled = false;
+      document.getElementById('stats-selected-btn').disabled = false;
+      document.getElementById('stats-all-btn').disabled = false;
+    } else {
+      statusElement.textContent = 'Fehler beim Laden der Gebiete';
+    }
+  });
+
+function populateSelect() {
+  selectElement.querySelector('option').textContent = '-- Bitte Gebiet wählen --';
+  Object.keys(areas).sort().forEach(name => {
+    const option = document.createElement('option');
+    option.value = name;
+    option.textContent = name;
+    selectElement.appendChild(option);
+  });
+}
+
+selectElement.addEventListener('change', function() {
+  if (currentAreaLayer) map.removeLayer(currentAreaLayer);
+  dataSources.forEach(source => source.layer.clearLayers());
+  const selectedName = this.value;
+  if (!selectedName) {
+    map.setView([54.2, 9.8], 8);
+    return;
+  }
+  const areaData = areas[selectedName];
+  if (areaData && areaData.geojson) {
+    currentAreaLayer = L.geoJSON(areaData.geojson, {
+      style: { color: "#3388ff", weight: 2, fillOpacity: 0 }
+    }).addTo(map);
+    map.fitBounds(currentAreaLayer.getBounds());
+    displayPointsForArea(areaData.geojson);
+    Object.values(overlayMaps).forEach(layer => layer.addTo(map));
+  }
+});
+
+function displayPointsForArea(selectedGeoJSON) {
+  dataSources.forEach(source => {
+    source.layer.clearLayers();
+    if (source.data) {
+      source.data.features.forEach(p => {
+        if (p.geometry?.type === 'Point') {
+          const pt = turf.point(p.geometry.coordinates);
+          if (turf.booleanPointInPolygon(pt, selectedGeoJSON)) {
+            L.circleMarker([pt.geometry.coordinates[1], pt.geometry.coordinates[0]], {
+              radius: 5, fillColor: source.color,
+              color: "#000", weight: 1, opacity: 1, fillOpacity: 0.8
+            }).bindPopup(`<b>${p.properties?.name || 'Unbenannt'}</b>`).addTo(source.layer);
+          }
+        }
+      });
+    }
+  });
+}
+
+function downloadCsvFile(filename, content) {
+  const BOM = '\uFEFF';
+  const blob = new Blob([BOM + content], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  }, 100);
+}
+
+function exportStatsForSelectedArea() {
+  const selectedName = selectElement.value;
+  if (!selectedName || !areas[selectedName]) return;
+  const selectedGeoJSON = areas[selectedName].geojson;
+  const pointSources = dataSources.filter(s => s.data);
+  const headers = ['Gebiet'].concat(pointSources.map(s => s.name));
+  const row = [selectedName];
+  pointSources.forEach(source => {
+    let count = 0;
+    source.data.features.forEach(p => {
+      if (p.geometry?.type === 'Point') {
+        const pt = turf.point(p.geometry.coordinates);
+        if (turf.booleanPointInPolygon(pt, selectedGeoJSON)) count++;
+      }
+    });
+    row.push(count);
+  });
+  const csv = headers.join(';') + '\n' + row.join(';') + '\n';
+  downloadCsvFile(`statistik_${selectedName.replace(/\s+/g, '_')}.csv`, csv);
+  statusElement.textContent = 'Datei wurde heruntergeladen.';
+}
+
+function exportStatsForAllAreas() {
+  const pointSources = dataSources.filter(s => s.data);
+  const areaNames = Object.keys(areas).sort();
+  const stats = {};
+  areaNames.forEach(name => {
+    stats[name] = {};
+    pointSources.forEach(source => stats[name][source.name] = 0);
+  });
+  pointSources.forEach(source => {
+    source.data.features.forEach(p => {
+      if (p.geometry?.type === 'Point') {
+        const pt = turf.point(p.geometry.coordinates);
+        for (const areaName of areaNames) {
+          if (turf.booleanPointInPolygon(pt, areas[areaName].geojson)) {
+            stats[areaName][source.name]++;
+            break;
+          }
+        }
+      }
+    });
+  });
+  const headers = ['Gebiet'].concat(pointSources.map(s => s.name));
+  let csv = headers.join(';') + '\n';
+  areaNames.forEach(areaName => {
+    const row = [areaName];
+    pointSources.forEach(source => row.push(stats[areaName][source.name]));
+    csv += row.join(';') + '\n';
+  });
+  downloadCsvFile('gesamtstatistik_SH.csv', csv);
+  statusElement.textContent = 'Gesamtliste wurde heruntergeladen.';
+}
+
+document.getElementById('stats-selected-btn').addEventListener('click', exportStatsForSelectedArea);
+document.getElementById('stats-all-btn').addEventListener('click', exportStatsForAllAreas);
+</script>
+</body>
+</html>
