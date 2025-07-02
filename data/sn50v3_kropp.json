@@ -4,12 +4,12 @@
     "lat": 54.64988,
     "lon": 8.957
   },
-  "time": "2025-07-02T11:22:48.890930Z",
+  "time": "2025-07-02T11:42:48.691046Z",
   "gateways": [
     {
-      "id": "eui-00007076ff032add",
-      "rssi": -119.0,
-      "snr": -2.8
+      "id": "eui-00007076ff030d23",
+      "rssi": -99.0,
+      "snr": 8.8
     }
   ],
   "values": {
@@ -18,24 +18,24 @@
     "Digital_IStatus": "L",
     "Door_status": "OPEN",
     "EXTI_Trigger": "FALSE",
-    "Hum_SHT": 51.5,
+    "Hum_SHT": 46.7,
     "TempC1": 0.0,
-    "TempC_SHT": 32.3,
+    "TempC_SHT": 31.7,
     "Work_mode": "IIC",
     "alt1": 0.0,
     "alt2": 0.0,
-    "chan1": 7.0,
-    "f_cnt": 121.0,
+    "chan1": 0.0,
+    "f_cnt": 122.0,
     "freq1": 0.0,
-    "gw1": "eui-00007076ff032add",
-    "gw2": "eui-00007076ff030d23",
+    "gw1": "eui-00007076ff030d23",
+    "gw2": "unknown",
     "lat1": 0.0,
     "lat2": 0.0,
     "lon1": 0.0,
     "lon2": 0.0,
-    "rssi1": -119.0,
-    "rx_time1": "2025-07-02T11:22:48.593Z",
+    "rssi1": -99.0,
+    "rx_time1": "2025-07-02T11:42:48.371Z",
     "sf": 7.0,
-    "snr1": -2.8
+    "snr1": 8.8
   }
 }
