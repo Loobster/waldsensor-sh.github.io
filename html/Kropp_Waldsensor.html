@@ -66,15 +66,16 @@
     // Live-Werte laden
     fetch('/data/sn50v3_kropp.json')
       .then(res => res.json())
-      .then(data => {
-        document.getElementById('sensoranzeige').innerHTML = `
-          <p>🔋 <strong>Batterie:</strong> ${data.batv.value} ${data.batv.unit}</p>
-          <p>🌡️ <strong>Temperatur:</strong> ${data.temperature.value} ${data.temperature.unit}</p>
-          <p>💧 <strong>Luftfeuchtigkeit:</strong> ${data.humidity.value} ${data.humidity.unit}</p>
-          <p class="timestamp">🕒 Stand: ${new Date(data.temperature.time).toLocaleString()}</p>
-        `;
-      })
-      .catch(err => {
+ .then(data => {
+   const v = data.values;
+   document.getElementById('sensoranzeige').innerHTML = `
+     <p>🔋 <strong>Batterie:</strong> ${v.BatV.toFixed(2)} V</p>
+     <p>🌡️ <strong>Temperatur:</strong> ${v.TempC_SHT.toFixed(1)} °C</p>
+     <p>💧 <strong>Luftfeuchtigkeit:</strong> ${v.Hum_SHT.toFixed(1)} %</p>
+     <p class="timestamp">🕒 Stand: ${new Date(data.time).toLocaleString()}</p>
+   `;
+ })      
+.catch(err => {
         document.getElementById('sensoranzeige').innerHTML = `
           <p style="color:red">⚠️ Fehler beim Laden der Sensordaten.</p>
         `;
