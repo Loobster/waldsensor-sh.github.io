@@ -483,6 +483,46 @@ const schulwaelder = {
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.00098, 9.25176<br><i>Gemeinschaftsschule am Hamberg</i>"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 9.62192, 53.81620 ] },
+      "properties": {
+        "name": "🟢 Jacob-Struve-Schule ",
+        "beschreibung": "Jacob-Struve-Schule ",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.81620, 9.62192<br><i>Jacob-Struve-Schule</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 9.52464, 53.91968 ] },
+      "properties": {
+        "name": "🟢 Auguste Victoria Schule",
+        "beschreibung": "Auguste Victoria Schule",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.91968, 9.52464<br><i>Auguste Victoria Schule</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 9.37486, 54.02764 ] },
+      "properties": {
+        "name": "🟢 Grundschule Wacken ",
+        "beschreibung": "Grundschule Wacken ",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.02764, 9.37486<br><i>Grundschule Wacken</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 9.71500, 53.95714 ] },
+      "properties": {
+        "name": "🟢 Gemeinschaftsschule Kellinghusen",
+        "beschreibung": "Gemeinschaftsschule Kellinghusen",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.95714, 9.71500<br><i>Gemeinschaftsschule Kellinghusen</i>"
+      }
     }
   ]
 };
