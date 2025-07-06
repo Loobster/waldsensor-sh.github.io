@@ -1,70 +1,111 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>WALDSENSOR.SH</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <style>
-        body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: auto; line-height: 1.6; }
-        h1 { color: forestgreen; }
-        a { color: #0066cc; }
-        footer { margin-top: 40px; font-size: 0.9em; color: #666; }
-    </style>
+  <meta charset="UTF-8">
+  <title>WALDSENSOR.SH – Digitaler Wald für alle</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 2em auto;
+      padding: 0 1em;
+      line-height: 1.6;
+      color: #111;
+    }
+    h1 {
+      color: green;
+    }
+    a {
+      color: #0077cc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    ul {
+      margin-top: 0;
+    }
+    .section {
+      margin-top: 2em;
+    }
+  </style>
 </head>
 <body>
-   
-    <h1>WALDSENSOR.SH</h1>
-    <p><strong>Citizen Science trifft auf digitale Wälder in Schleswig-Holstein.</strong></p>
- <img src="images/Waldsensor_Logo.png" alt="Waldsensor Logo" style="position: absolute; top: 20px; right: 20px; width: 100px;">
+
+  <h1>WALDSENSOR.SH</h1>
+  <p><strong>Citizen Science trifft auf digitale Wälder in Schleswig-Holstein.</strong></p>
+
+  <div class="section">
     <h2>Was ist WALDSENSOR.SH?</h2>
-    <p>Mit einfachen Umweltsensoren und LoRaWAN-Funk erfassen wir Daten aus Wald und Natur.
-    Temperatur, Bodenfeuchte, Wind – offen, datensparsam und gemeinwohlorientiert. </p>
-      
-    <p> Die Kosten für die Hardware betragen ca. 80 € - 130 €, je nach Ausbaustufe.
-      Für 80 € bekommt man den Node + den  Sensor für Temperatur und Luftfeuchtigkeit. 
-      Das reicht für den Anfang völlig aus.</p>
+    <p>
+      Mit einfachen Umweltsensoren und LoRaWAN-Funk erfassen wir Daten aus Wald und Natur: Temperatur, Bodenfeuchte, Luftfeuchtigkeit, Wind – offen, datensparsam und gemeinwohlorientiert.
+    </p>
+    <p>
+      Seit Sommer 2025 steht dafür das landesweite <strong>LoRaWAN-Netz</strong> des <strong>IoT-Hub Schleswig-Holstein</strong> zur Verfügung – <strong>kostenfrei</strong> für Schulen und Bildungsakteure! Die Sensordaten lassen sich live beobachten und in Unterricht, Forschung oder Umweltbildung einsetzen.
+    </p>
+  </div>
 
-    <h2>Anleitungen</h2>
+  <div class="section">
+    <h2>Aktuell: Unsere Pilotschule in Kropp 🌳🎓</h2>
+    <p>
+      Seit letzter Woche ist die <strong>Geestlandschule Kropp</strong> unsere erste offizielle Pilotschule. Dort wird ein vollständig ausgestatteter Referenzstandort aufgebaut – mit Sensorik, QR-Codes, Bildungstafeln und Live-Daten aus dem Schulwald.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Für Schulwälder <em>und</em> MINT-Schulen</h2>
+    <p>
+      WALDSENSOR.SH richtet sich besonders an:
+    </p>
     <ul>
-        <li><a href="pdf/WALDSENSOR_SH_HowTo_Offiziell.pdf">Offizielles HowTo (PDF)</a></li>
-        <li><a href="pdf/WALDSENSOR_SH_HowTo_Pragmatisch.pdf">Technisches HowTo für Maker (PDF)</a></li>
-        <li><a href="pdf/WALDSENSOR_SH_HowTo_Einsteigerfreundlich.pdf">Einsteiger-Anleitung (PDF)</a></li>
+      <li>Schulen mit eigenem <strong>Schulwald</strong>, die Umweltwerte erfassen und pädagogisch nutzen möchten</li>
+      <li><strong>MINT-Schulen</strong>, die praxisnahe Anwendungen in Technik, Umwelt und Datenanalyse suchen</li>
     </ul>
-
-    <a href="aufbau/index.html">Bebilderte Anleitung, wie man einen SHT35-Sensor am Dragino SN50v3 anschliesst.</a>
-    
-    <h2>Mach mit – WALDSENSOR.SH für alle!</h2>
     <p>
-      WALDSENSOR.SH ist ein Projekt für alle, die sich für Natur, Klima und digitale Technik interessieren.
-      Unsere Sensoren messen Temperatur, Feuchtigkeit, Bodenwerte und Wind – mitten im Wald.
-      Die gesammelten Daten helfen dabei, Wälder besser zu verstehen, schützen und langfristig zu erhalten.
+      Egal ob Förderschule oder Gymnasium – unser Ansatz ist offen, niedrigschwellig und kooperativ.
     </p>
+  </div>
 
-    <p>
-      Du kannst auch mitmachen:
-    </p>
+  <div class="section">
+    <h2>So einfach geht’s:</h2>
     <ul>
-      <li>Einen eigenen Sensor bauen oder aufstellen (Anleitung auf dieser Seite)</li>
+      <li>Einen eigenen Sensor bauen oder aufstellen (Anleitung siehe unten)</li>
       <li>Live-Daten beobachten – ganz anonym & offen</li>
       <li>Das Projekt weiterempfehlen – z. B. an Schulen, Nachbarn oder Förster</li>
     </ul>
-
     <p>
-      <strong>Eine Karte mit den aktiven Sensoren gibt es auch schon <a href="https://waldsensor.sh/karte.html">waldsensor.sh</a>!</strong>
+      <strong>Eine Karte mit den aktiven Sensoren gibt es unter <a href="https://waldsensor.sh/karte.html" target="_blank">waldsensor.sh</a></strong>
     </p>
+  </div>
 
-  
+  <div class="section">
+    <h2>Anleitungen</h2>
+    <ul>
+      <li><a href="#">Offizielles HowTo (PDF)</a></li>
+      <li><a href="#">Technisches HowTo für Maker (PDF)</a></li>
+      <li><a href="#">Einsteiger-Anleitung (PDF)</a></li>
+      <li><a href="#">Bildanleitung: SHT35-Sensor am Dragino SN50v3 anschließen</a></li>
+    </ul>
+  </div>
+
+  <div class="section">
     <h2>Lizenz</h2>
-    <p>Die bereitgestellten Daten stehen unter der <strong>ODbL 1.0</strong> – alternativ auch <strong>CC0</strong>.</p>
+    <p>
+      Die bereitgestellten Daten stehen unter der <strong>ODbL 1.0</strong> – alternativ auch unter <strong>CC0</strong>.
+    </p>
+  </div>
 
+  <div class="section">
     <h2>Kontakt</h2>
-    <p>Projekt bei GitHub: <a href="https://github.com/Loobster/waldsensor-sh.github.io">https://github.com/Loobster</a></p>
-    <p>Fragen oder Interesse? Schreib uns an: <a href="mailto:info@waldsensor.sh">info@waldsensor.sh</a></p>
+    <p>
+      Projekt bei GitHub: <a href="https://github.com/Loobster" target="_blank">https://github.com/Loobster</a><br>
+      Fragen oder Interesse? Schreib uns an: <a href="mailto:info@waldsensor.sh">info@waldsensor.sh</a>
+    </p>
+  </div>
 
-    <footer>
-        &copy; 2025 WALDSENSOR.SH – Digitaler Wald für alle.                          
-    </footer>
-  <a href="impressum.html">Impressum</a>
+  <footer style="margin-top: 3em; font-size: 0.9em; color: #666;">
+    <p>© 2025 WALDSENSOR.SH – Digitaler Wald für alle. <a href="#">Impressum</a></p>
+  </footer>
+
 </body>
 </html>
