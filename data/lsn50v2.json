@@ -1,25 +1,25 @@
 {
   "node": "lsn50v2",
   "position": {
-    "lat": 54.501576317102,
-    "lon": 9.58694958832219
+    "lat": 0.0,
+    "lon": 0.0
   },
-  "time": "2025-07-06T19:39:14.327771Z",
+  "time": "2025-07-06T19:59:14.334058Z",
   "gateways": [
     {
-      "id": "lora-gateway-fahrdorf",
-      "rssi": -114.0,
-      "snr": 3.5
+      "id": "laird-lorawan-gw",
+      "rssi": -87.0,
+      "snr": 7.2
     },
     {
-      "id": "laird-lorawan-gw",
-      "rssi": -88.0,
-      "snr": 9.0
+      "id": "unknown",
+      "rssi": 0.0,
+      "snr": 0.0
     }
   ],
   "values": {
     "BatV": 3.421,
-    "Hum_SHT31": 74.4,
-    "TempC_SHT31": 20.0
+    "Hum_SHT31": 74.5,
+    "TempC_SHT31": 19.8
   }
 }
