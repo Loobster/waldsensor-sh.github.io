@@ -523,6 +523,16 @@ const schulwaelder = {
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.95714, 9.71500<br><i>Gemeinschaftsschule Kellinghusen</i>"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 9.70739, 53.85062 ] },
+      "properties": {
+        "name": "🟢 Grundschule Hörnerkirchen",
+        "beschreibung": "Grundschule Hörnerkirchen",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.85062, 9.70739<br><i>Grundschule Hörnerkirchen</i>"
+      }
     }
   ]
 };
