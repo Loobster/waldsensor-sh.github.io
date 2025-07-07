@@ -526,12 +526,12 @@ const schulwaelder = {
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [ 9.70739, 53.85062 ] },
+      "geometry": { "type": "Point", "coordinates": [ 9.700876, 53.850296 ] },
       "properties": {
         "name": "🟢 Grundschule Hörnerkirchen",
         "beschreibung": "Grundschule Hörnerkirchen",
         "typ": "Polygonfläche",
-        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.85062, 9.70739<br><i>Grundschule Hörnerkirchen</i>"
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.850296, 9.700876<br><i>Grundschule Hörnerkirchen</i>"
       }
     }
   ]
