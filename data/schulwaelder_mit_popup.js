@@ -286,12 +286,12 @@ const schulwaelder = {
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [ 10.049567, 54.069733 ] },
+      "geometry": { "type": "Point", "coordinates": [ 10.04973, 54.07002 ] },
       "properties": {
         "name": "🟢 Grundschule Bönebüttel",
         "beschreibung": "Grundschule Bönebüttel",
         "typ": "Polygonfläche",
-        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.06973, 10.04957<br><i>Grundschule Bönebüttel</i>"
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.07002, 10.04973<br><i>Grundschule Bönebüttel</i>"
       }
     },
     {
@@ -398,10 +398,10 @@ const schulwaelder = {
       "type": "Feature",
       "geometry": { "type": "Point", "coordinates": [ 10.278289, 54.234881 ] },
       "properties": {
-        "name": "🟢 Th.-Heuss-Gem.Schule",
-        "beschreibung": "Th.-Heuss-Gem.Schule",
+        "name": "🟢 Th.-Heuss-Gem.Schule Preetz",
+        "beschreibung": "Th.-Heuss-Gem.Schule Preetz",
         "typ": "Polygonfläche",
-        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.23488, 10.27829<br><i>Th.-Heuss-Gem.Schule</i>"
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 54.23488, 10.27829<br><i>Th.-Heuss-Gem.Schule Preetz</i>"
       }
     },
     {
