@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WALDSENSOR.SH – Forscherfragen</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #006d3e;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    main {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+    }
+    h1 {
+      color: #006d3e;
+    }
+    h3 {
+      margin-bottom: 0.3rem;
+    }
+    .antwort {
+      display: none;
+      background: #e6f2ec;
+      padding: 0.8rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #006d3e;
+    }
+    button {
+      margin-right: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Forscherfragen zu WALDSENSOR.SH</h1>
+    <p>Fragen rund um Klima, Wald, Sensoren und Daten – für Unterricht und Entdeckungen</p>
+  </header>
+  <main>
+
+    <div>
+      <h3>1. Warum sinkt die Luftfeuchtigkeit, wenn die Temperatur steigt?</h3>
+      <button onclick="toggle('a1')">Antwort einblenden</button>
+      <a href="antworten/frage01.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a1" class="antwort">
+        Warme Luft kann mehr Feuchtigkeit halten. Wenn die Temperatur steigt, sinkt die relative Luftfeuchtigkeit – obwohl die absolute Feuchte gleich bleiben kann.
+      </div>
+    </div>
+
+    <div>
+      <h3>2. Wie verändert sich die Bodenfeuchte nach mehreren heißen Tagen ohne Regen?</h3>
+      <button onclick="toggle('a2')">Antwort einblenden</button>
+      <a href="antworten/frage02.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a2" class="antwort">
+        Durch Verdunstung verliert der Boden nach und nach Wasser – die Bodenfeuchte sinkt messbar, je wärmer und trockener es ist.
+      </div>
+    </div>
+
+    <div>
+      <h3>3. Warum ist es im Wald oft kühler als auf einem Schulhof?</h3>
+      <button onclick="toggle('a3')">Antwort einblenden</button>
+      <a href="antworten/frage03.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a3" class="antwort">
+        Bäume spenden Schatten und verdunsten Wasser über die Blätter – das kühlt die Umgebung. Asphalt speichert hingegen Wärme.
+      </div>
+    </div>
+
+    <div>
+      <h3>4. Welche Tageszeit ist im Sommer am trockensten?</h3>
+      <button onclick="toggle('a4')">Antwort einblenden</button>
+      <a href="antworten/frage04.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a4" class="antwort">
+        Meist ist es am frühen Nachmittag am trockensten – etwa zwischen 13 und 16 Uhr. Das liegt daran, dass die Temperatur ihren Höchststand erreicht und die Verdunstung am stärksten ist.
+      </div>
+    </div>
+
+    <div>
+      <h3>5. Wie erkennt man in den Daten, dass es geregnet hat?</h3>
+      <button onclick="toggle('a5')">Antwort einblenden</button>
+      <a href="antworten/frage05.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a5" class="antwort">
+        Ein plötzlicher Anstieg der Bodenfeuchte und ein leichter Temperaturabfall deuten meist auf Regen hin. Besonders deutlich nach längerer Trockenheit.
+      </div>
+    </div>
+
+    <div>
+      <h3>6. Wie lange dauert es, bis der Boden nach einem Regen wieder trocken ist?</h3>
+      <button onclick="toggle('a6')">Antwort einblenden</button>
+      <a href="antworten/frage06.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a6" class="antwort">
+        Je nach Temperatur, Wind und Bodentyp kann das 1 bis 3 Tage dauern. Sandige Böden trocknen schneller als lehmige.
+      </div>
+    </div>
+
+    <div>
+      <h3>7. Wie unterscheiden sich Temperatur und Feuchte an sonnigen und schattigen Orten?</h3>
+      <button onclick="toggle('a7')">Antwort einblenden</button>
+      <a href="antworten/frage07.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a7" class="antwort">
+        In der Sonne ist es deutlich wärmer und trockener. Im Schatten bleibt es kühler und feuchter. Das lässt sich gut messen und vergleichen.
+      </div>
+    </div>
+
+    <div>
+      <h3>8. Welche Rolle spielt Wind für die Austrocknung des Bodens?</h3>
+      <button onclick="toggle('a8')">Antwort einblenden</button>
+      <a href="antworten/frage08.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a8" class="antwort">
+        Wind führt dazu, dass feuchte Luft schnell abtransportiert wird. Dadurch verdunstet Wasser schneller von der Bodenoberfläche.
+      </div>
+    </div>
+
+    <footer>
+      <p><a href="index.html">⬅ Zur Startseite für Lehrkräfte</a></p>
+    </footer>
+
+  </main>
+
+  <script>
+    function toggle(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
