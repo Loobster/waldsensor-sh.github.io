@@ -533,6 +533,16 @@ const schulwaelder = {
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.850296, 9.700876<br><i>Grundschule Hörnerkirchen</i>"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 10.21242, 53.60216 ] },
+      "properties": {
+        "name": "🟢 Grundschule Stapelfeld, Kreis Stormarn",
+        "beschreibung": "Grundschule Stapelfeld, Kreis Stormarn",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.850296, 9.700876<br><i>Grundschule Stapelfeld</i>"
+      }
     }
   ]
 };
