@@ -543,6 +543,46 @@ const schulwaelder = {
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.850296, 9.700876<br><i>Grundschule Stapelfeld</i>"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 9.66706, 53.66440 ] },
+      "properties": {
+        "name": "🟢 Gemeinschaftsschule Am Himmelsbarg, Moorrege ",
+        "beschreibung": "Gemeinschaftsschule Am Himmelsbarg, Moorregen ",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.66440, 9.66706<br><i>Gemeinschaftsschule Am Himmelsbarg, Moorrege</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 9.71584, 53.59239 ] },
+      "properties": {
+        "name": "🟢 Moorwegschule Wedel",
+        "beschreibung": "Moorwegschule Wedel",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.59239, 9.71584<br><i>Moorwegschule Wedel</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [  9.96224, 53.75452 ] },
+      "properties": {
+        "name": "🟢 GS-Waldschule Quickborn",
+        "beschreibung": "GS-Waldschule Quickborn",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.75452, 9.96224<br><i>GS-Waldschule Quickborn</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 9.71049, 53.69035 ] },
+      "properties": {
+        "name": "🟢 Klaus-Groth-Schule Tornesch",
+        "beschreibung": "Klaus-Groth-Schule Tornesch",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.69035, 9.71049<br><i>Klaus-Groth-Schule Tornesch</i>"
+      }
     }
   ]
 };
