@@ -583,6 +583,26 @@ const schulwaelder = {
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.69035, 9.71049<br><i>Klaus-Groth-Schule Tornesch</i>"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 9.90593, 53.72161 ] },
+      "properties": {
+        "name": "🟢 Elsensee-Gymnasium, Quickborn",
+        "beschreibung": "Elsensee-Gymnasium, Quickborn",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.72161, 9.90593<br><i>Elsensee-Gymnasium, Quickborn</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 9.90593, 53.72161 ] },
+      "properties": {
+        "name": "🟢 Gemeinschaftsschule Am Himmelsbarg, Moorrege",
+        "beschreibung": "Gemeinschaftsschule Am Himmelsbarg, Moorrege",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.72161, 9.90593<br><i>Gemeinschaftsschule Am Himmelsbarg, Moorrege</i>"
+      }
     }
   ]
 };
