@@ -596,12 +596,12 @@ const schulwaelder = {
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [ 9.90593, 53.72161 ] },
+      "geometry": { "type": "Point", "coordinates": [  9.66706, 53.66440 ] },
       "properties": {
         "name": "🟢 Gemeinschaftsschule Am Himmelsbarg, Moorrege",
         "beschreibung": "Gemeinschaftsschule Am Himmelsbarg, Moorrege",
         "typ": "Polygonfläche",
-        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.72161, 9.90593<br><i>Gemeinschaftsschule Am Himmelsbarg, Moorrege</i>"
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.66440, 9.66706<br><i>Gemeinschaftsschule Am Himmelsbarg, Moorrege</i>"
       }
     }
   ]
