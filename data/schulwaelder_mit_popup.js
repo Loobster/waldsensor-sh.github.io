@@ -593,7 +593,26 @@ const schulwaelder = {
         "typ": "Polygonfläche",
         "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.72161, 9.90593<br><i>Elsensee-Gymnasium, Quickborn</i>"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 10.38043, 53.81675 ] },
+      "properties": {
+        "name": "🟢 Grundschule Klaus-Groth-Schule Bad Oldesloe,",
+        "beschreibung": "Grundschule Klaus-Groth-Schule Bad Oldesloe,",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.81675, 10.38043<br><i>Grundschule Klaus-Groth-Schule Bad Oldesloe,</i>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [ 10.49788, 53.83634 ] },
+      "properties": {
+        "name": "🟢 Gemeinschaftsschule mit Oberstufe Immanuel-Kant-Schule Reinfeld",
+        "beschreibung": "Gemeinschaftsschule mit Oberstufe Immanuel-Kant-Schule Reinfeld",
+        "typ": "Polygonfläche",
+        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.83634, 10.49788<br><i>Gemeinschaftsschule mit Oberstufe Immanuel-Kant-Schule Reinfeld</i>"
+      }
     }
-    
   ]
 };
