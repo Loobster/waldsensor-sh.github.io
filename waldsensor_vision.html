@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>WALDSENSOR.SH – Projektdokumentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; margin: 2em; line-height: 1.6; }
+        h1, h2, h3 { color: #2a5d34; }
+        h1 { border-bottom: 2px solid #2a5d34; padding-bottom: 0.3em; }
+        section { margin-bottom: 2em; }
+    </style>
+</head>
+<body>
+    <h1>Projektdokumentation und Vision: WALDSENSOR.SH</h1>
+    <h2>Stand: Juni 2025 – Ausblick 2026–2028</h2>
+
+    <section>
+        <h3>1. Zusammenfassung</h3>
+        <p>WALDSENSOR.SH ist ein landesweites Umwelt- und Bildungsprojekt in Schleswig-Holstein. Es verbindet digitale Bildung, angewandte Klimaforschung und präventiven Katastrophenschutz. Dafür nutzt das Projekt ein flexibles IoT-Sensornetzwerk auf Basis der landeseigenen LoRaWAN-Infrastruktur. Aktuell befindet sich das Projekt in einer fortgeschrittenen Pilotphase. Der Fokus liegt auf der bevorstehenden Skalierung und dem vollständigen Wechsel auf die Plattform „IoT-Hub SH“.</p>
+    </section>
+
+    <section>
+        <h3>2. Wo wir heute stehen</h3>
+        <ul>
+            <li><strong>Mission:</strong>
+                <ul>
+                    <li>Bildung: Integration praxisnaher IoT-Technologie an MINT-Schulen und Schulen mit Schulwald</li>
+                    <li>Ökologie: Monitoring klimarelevanter Umweltparameter im Nahbereich</li>
+                    <li>Sicherheit: Entwicklung eines Frühwarnsystems für Waldbrandgefahren (30/30/30-Regel)</li>
+                </ul>
+            </li>
+            <li><strong>Technik:</strong>
+                <ul>
+                    <li>Hardware: Standardisierte Nodes (Dragino SN50V3-LB), flexibel erweiterbar</li>
+                    <li>Software: Nutzung von ChirpStack (Netzverwaltung) und ThingsBoard (Visualisierung)</li>
+                    <li>Netzanbindung: Zugriff auf das landesweite LoRaWAN mit über 450 Gateways</li>
+                </ul>
+            </li>
+            <li><strong>Pilotbetrieb:</strong>
+                <ul>
+                    <li>Erste Sensoren (u. a. Kropp) senden zuverlässig Daten</li>
+                    <li>Interaktive Karten und schulspezifische Webseiten verfügbar</li>
+                    <li>Geo-Daten zu Feuerwehrstandorten bereits integriert</li>
+                </ul>
+            </li>
+            <li><strong>Partnerschaften:</strong>
+                <ul>
+                    <li>Zusammenarbeit mit der CAU Kiel in Vorbereitung</li>
+                    <li>Aktive Rolle in der IoT-Community nodes.sh</li>
+                    <li>Kontakte zu Partnern aus dem SmartCity-Umfeld bestehen</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>3. Nächste Schritte (2025–2026)</h3>
+        <ul>
+            <li>Roll-out von 20–30 Nodes in der Pilotregion Kiel (Kiel, Plön, RD-Eck)</li>
+            <li>Migration aller Nodes vom Testbetrieb (TTN) zum IoT-Hub SH</li>
+            <li>Testlauf eines Frühwarnsystems mit Feuerwehrbeteiligung</li>
+            <li>Aufbau dauerhafter API-Anbindung an die Universität Kiel</li>
+            <li>Einbindung kommunaler Umweltämter und Naturschutzakteure</li>
+            <li>Erstellung von Unterrichtsmaterialien für den Schulalltag</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>4. Vision 2028</h3>
+        <ul>
+            <li>Aufbau eines hochauflösenden Klimadaten-Netzes mit 100–200 Sensoren</li>
+            <li>Bereitstellung aller Daten unter offener Lizenz für Verwaltung und Forschung</li>
+            <li>KI-gestützte Risikoanalyse für Waldbrandwarnungen</li>
+            <li>Integration ins MINT-Curriculum an vielen Schulen</li>
+            <li>Schüler:innen arbeiten eigenständig mit Live-Daten aus ihrer Region</li>
+            <li>Das Konzept dient als Open-Source-Vorbild für andere Bundesländer</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Technische Basis und Kosten</h3>
+        <ul>
+            <li>Hardwarekosten: 80–130 € je Node (je nach Ausbaustufe)</li>
+            <li>Sensoren: Temperatur, Luftfeuchtigkeit, Bodenfeuchte, Bodentemperatur, Windgeschwindigkeit</li>
+            <li>Datenverarbeitung: MQTT → InfluxDB → Grafana / ThingsBoard / CSV-Export</li>
+            <li>Sichtbarmachung vor Ort: QR-Code am Sensorstandort führt zu Echtzeitdaten</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Fazit</h3>
+        <p>WALDSENSOR.SH steht für:</p>
+        <ul>
+            <li>Digitale Bildung mit Umweltbezug</li>
+            <li>Praktische Umsetzung von Digitalisierung auf Landesebene</li>
+            <li>Ein Projekt mit Vorbildcharakter – pragmatisch, skalierbar und offen zugänglich</li>
+        </ul>
+        <p>Das Projekt zeigt, wie Technik, Bildung und Nachhaltigkeit auf regionaler Ebene zusammenspielen können – und welchen Beitrag engagierte Initiativen für das Gemeinwohl leisten können.</p>
+    </section>
+</body>
+</html>
