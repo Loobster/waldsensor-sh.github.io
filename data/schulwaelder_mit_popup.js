@@ -13,16 +13,6 @@ const schulwaelder = {
     },
     {
       "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [ 10.497931191911881, 53.837800040679184 ] },
-      "properties": {
-        "name": "🟢 Schulzentrum Reinfeld",
-        "beschreibung": "Schulname noch ergänzen",
-        "typ": "Polygonfläche",
-        "popup": "<b>🟢 Schulwald</b><br>Typ: Polygonfläche<br>Koordinaten: 53.83780, 10.49793<br><i>Schulname noch ergänzen</i>"
-      }
-    },
-    {
-      "type": "Feature",
       "geometry": { "type": "Point", "coordinates": [ 9.674405187866641, 53.74103990974692 ] },
       "properties": {
         "name": "🟢 Erich Kästner Gemeinschaftsschule Elmshorn",
