@@ -73,31 +73,41 @@
       createChart('batChart', labels, bat, 'Batteriespannung (V)', 'green');
     }
 
-    function createChart(id, labels, data, label, color) {
-      new Chart(document.getElementById(id), {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: label,
-            data: data,
-            borderColor: color,
-            backgroundColor: color,
-            pointRadius: 1,
-            fill: false
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: { display: false },
-            y: { beginAtZero: false }
-          }
+function createChart(id, labels, data, label, color) {
+  new Chart(document.getElementById(id), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: label,
+        data: data,
+        borderColor: color,
+        backgroundColor: color,
+        pointRadius: 2,              // vorher: 1
+        pointHoverRadius: 6,         // neu: größerer Bereich für Maus
+        fill: false
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'nearest',            // verbessert Treffgenauigkeit
+        intersect: false
+      },
+      plugins: {
+        tooltip: {
+          mode: 'index',
+          intersect: false
         }
-      });
+      },
+      scales: {
+        x: { display: false },
+        y: { beginAtZero: false }
+      }
     }
-
+  });
+}
     fetchData();
   </script>
 </body>
