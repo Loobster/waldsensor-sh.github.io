@@ -17,10 +17,11 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
       padding: 1em;
       margin-bottom: 2em;
+      height: 300px;
     }
     canvas {
-      width: 100%;
-      height: 300px !important; /* Feste Höhe gegen Scrollen */
+      max-width: 100%;
+      height: 100%;
     }
     .linkbox {
       font-size: 0.9em;
@@ -61,6 +62,7 @@
       lines.forEach(line => {
         const parts = line.split(',');
         if (!line || parts.length < 5) return;
+
         const timestamp = parts[1].slice(0, 16).replace('T', ' ');
         labels.push(timestamp);
         temp.push(parseFloat(parts[2]));
@@ -73,41 +75,60 @@
       createChart('batChart', labels, bat, 'Batteriespannung (V)', 'green');
     }
 
-function createChart(id, labels, data, label, color) {
-  new Chart(document.getElementById(id), {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: label,
-        data: data,
-        borderColor: color,
-        backgroundColor: color,
-        pointRadius: 2,              // vorher: 1
-        pointHoverRadius: 6,         // neu: größerer Bereich für Maus
-        fill: false
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: {
-        mode: 'nearest',            // verbessert Treffgenauigkeit
-        intersect: false
-      },
-      plugins: {
-        tooltip: {
-          mode: 'index',
-          intersect: false
+    function createChart(id, labels, data, label, color) {
+      new Chart(document.getElementById(id), {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: label,
+            data: data,
+            borderColor: color,
+            backgroundColor: color,
+            pointRadius: 1,
+            pointHoverRadius: 6,
+            fill: false,
+            tension: 0.2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'nearest',
+            intersect: false
+          },
+          scales: {
+            x: {
+              display: true,
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 10,
+                callback: function(value, index, ticks) {
+                  return this.getLabelForValue(value).split(' ')[0];
+                }
+              }
+            },
+            y: {
+              beginAtZero: false
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                boxWidth: 15,
+                font: { size: 12 }
+              }
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false
+            }
+          }
         }
-      },
-      scales: {
-        x: { display: false },
-        y: { beginAtZero: false }
-      }
+      });
     }
-  });
-}
+
     fetchData();
   </script>
 </body>
