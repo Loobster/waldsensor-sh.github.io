@@ -19,7 +19,8 @@
       margin-bottom: 2em;
     }
     canvas {
-      max-width: 100%;
+      width: 100%;
+      height: 300px !important; /* Feste Höhe gegen Scrollen */
     }
     .linkbox {
       font-size: 0.9em;
@@ -59,8 +60,7 @@
 
       lines.forEach(line => {
         const parts = line.split(',');
-        if (!line || parts.length < 5) return;  // Zeile überspringen
-
+        if (!line || parts.length < 5) return;
         const timestamp = parts[1].slice(0, 16).replace('T', ' ');
         labels.push(timestamp);
         temp.push(parseFloat(parts[2]));
