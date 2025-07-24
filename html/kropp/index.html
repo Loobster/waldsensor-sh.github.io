@@ -2,36 +2,38 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Kropp – Sensor-Daten</title>
+  <title>🌳 Sensor Kropp – Temperatur, Luftfeuchtigkeit & Batterie</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: sans-serif;
-      background: #fdfdfd;
-      padding: 20px;
-      color: #333;
+      background-color: #f9f9f9;
+      margin: 2em;
     }
-    h1 {
-      margin-top: 0;
-    }
+    h1 { margin-top: 0; }
     .chart-container {
-      background-color: rgba(240, 240, 240, 0.4);
+      background: #fff;
       border-radius: 12px;
-      padding: 15px;
-      margin-bottom: 40px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      padding: 1em;
+      margin-bottom: 2em;
     }
     canvas {
       max-width: 100%;
-      height: auto;
+    }
+    .linkbox {
+      font-size: 0.9em;
+      margin-top: 1em;
     }
   </style>
 </head>
 <body>
   <h1>🌳 Sensor Kropp – Temperatur, Luftfeuchtigkeit & Batterie</h1>
+  <p>Datenquelle: Automatisch erzeugte CSV-Datei des aktuellen Monats.<br>
+  Download: <a href="csv/2025-07.csv" target="_blank">CSV anzeigen</a></p>
 
   <div class="chart-container">
-    <h3>🌡 Temperatur (°C)</h3>
+    <h3>🌡️ Temperatur (°C)</h3>
     <canvas id="tempChart"></canvas>
   </div>
 
@@ -45,62 +47,58 @@
     <canvas id="batChart"></canvas>
   </div>
 
-  <p>📁 Ältere CSV-Dateien: <a href="csv/">CSV-Archiv anzeigen</a></p>
+  <div class="linkbox">📑 Ältere CSV-Dateien: <a href="csv/" target="_blank">CSV-Archiv anzeigen</a></div>
 
   <script>
     async function fetchData() {
-      const response = await fetch("2025-07.csv");
+      const response = await fetch('csv/2025-07.csv');
       const data = await response.text();
-      const lines = data.trim().split("\n").slice(1); // skip header
-      const timestamps = [];
-      const temps = [];
-      const hums = [];
-      const bats = [];
+
+      const lines = data.trim().split('\n').slice(1); // Header entfernen
+      const labels = [], temp = [], hum = [], bat = [];
 
       lines.forEach(line => {
-        const parts = line.split(",");
-        timestamps.push(parts[1].slice(0, 16).replace("T", " "));
-        temps.push(parseFloat(parts[2]));
-        hums.push(parseFloat(parts[3]));
-        bats.push(parseFloat(parts[4]));
+        const parts = line.split(',');
+        if (!line || parts.length < 5) return;  // Zeile überspringen
+
+        const timestamp = parts[1].slice(0, 16).replace('T', ' ');
+        labels.push(timestamp);
+        temp.push(parseFloat(parts[2]));
+        hum.push(parseFloat(parts[3]));
+        bat.push(parseFloat(parts[4]));
       });
 
-      return { timestamps, temps, hums, bats };
+      createChart('tempChart', labels, temp, 'Temperatur (°C)', 'red');
+      createChart('humChart', labels, hum, 'Luftfeuchtigkeit (%)', 'blue');
+      createChart('batChart', labels, bat, 'Batteriespannung (V)', 'green');
     }
 
-    function createChart(canvasId, label, data, color) {
-      new Chart(document.getElementById(canvasId), {
+    function createChart(id, labels, data, label, color) {
+      new Chart(document.getElementById(id), {
         type: 'line',
         data: {
-          labels: data.timestamps,
+          labels: labels,
           datasets: [{
             label: label,
-            data: data[canvasId],
+            data: data,
             borderColor: color,
-            fill: false,
-            pointRadius: 0,
-            borderWidth: 1.8
+            backgroundColor: color,
+            pointRadius: 1,
+            fill: false
           }]
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           scales: {
-            x: { ticks: { maxTicksLimit: 10 } },
+            x: { display: false },
             y: { beginAtZero: false }
-          },
-          plugins: { legend: { display: false } }
+          }
         }
       });
     }
 
-    fetchData().then(data => {
-      data.tempChart = data.temps;
-      data.humChart = data.hums;
-      data.batChart = data.bats;
-      createChart("tempChart", "Temperatur (°C)", data, "red");
-      createChart("humChart", "Luftfeuchtigkeit (%)", data, "blue");
-      createChart("batChart", "Batterie (V)", data, "green");
-    });
+    fetchData();
   </script>
 </body>
 </html>
