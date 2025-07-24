@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Kropp – Sensor-Daten</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #fdfdfd;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    .chart-container {
+      background-color: rgba(240, 240, 240, 0.4);
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 40px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    canvas {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌳 Sensor Kropp – Temperatur, Luftfeuchtigkeit & Batterie</h1>
+
+  <div class="chart-container">
+    <h3>🌡 Temperatur (°C)</h3>
+    <canvas id="tempChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h3>💧 Luftfeuchtigkeit (%)</h3>
+    <canvas id="humChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h3>🔋 Batteriespannung (V)</h3>
+    <canvas id="batChart"></canvas>
+  </div>
+
+  <p>📁 Ältere CSV-Dateien: <a href="csv/">CSV-Archiv anzeigen</a></p>
+
+  <script>
+    async function fetchData() {
+      const response = await fetch("2025-07.csv");
+      const data = await response.text();
+      const lines = data.trim().split("\n").slice(1); // skip header
+      const timestamps = [];
+      const temps = [];
+      const hums = [];
+      const bats = [];
+
+      lines.forEach(line => {
+        const parts = line.split(",");
+        timestamps.push(parts[1].slice(0, 16).replace("T", " "));
+        temps.push(parseFloat(parts[2]));
+        hums.push(parseFloat(parts[3]));
+        bats.push(parseFloat(parts[4]));
+      });
+
+      return { timestamps, temps, hums, bats };
+    }
+
+    function createChart(canvasId, label, data, color) {
+      new Chart(document.getElementById(canvasId), {
+        type: 'line',
+        data: {
+          labels: data.timestamps,
+          datasets: [{
+            label: label,
+            data: data[canvasId],
+            borderColor: color,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 1.8
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: { ticks: { maxTicksLimit: 10 } },
+            y: { beginAtZero: false }
+          },
+          plugins: { legend: { display: false } }
+        }
+      });
+    }
+
+    fetchData().then(data => {
+      data.tempChart = data.temps;
+      data.humChart = data.hums;
+      data.batChart = data.bats;
+      createChart("tempChart", "Temperatur (°C)", data, "red");
+      createChart("humChart", "Luftfeuchtigkeit (%)", data, "blue");
+      createChart("batChart", "Batterie (V)", data, "green");
+    });
+  </script>
+</body>
+</html>
