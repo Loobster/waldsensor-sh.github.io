@@ -18,8 +18,14 @@
   <script src="scripts/oms.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.min.js"></script>
   <script>
-    const map = L.map("map").setView([54.6, 9.0], 8);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+//    const map = L.map("map").setView([54.6, 9.0], 8);
+ 
+   map.fitBounds([
+     [53.4, 8.8],  // Südwesten von SH (z. B. Brunsbüttel)
+     [55.1, 11.0]  // Nordosten (Grenze zu DK / Fehmarn)
+   ]);
+
+   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>'
     }).addTo(map);
 
