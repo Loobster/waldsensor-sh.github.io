@@ -1,20 +1,20 @@
 {
-  "node": "sn50v3_reinfeld",
+  "node": "sn50v3_kropp",
   "position": {
-    "lat":  53.83687,
-    "lon": 10.49778 
+    "lat": 54.41018,
+    "lon": 9.52839
   },
   "time": "2025-07-25T10:56:40.607202Z",
   "gateways": [
     {
-      "id": "geplant-nach-den-sommerferien",
+      "id": "eui-00007076ff030d23",
       "rssi": -107.0,
       "snr": 9.0
     }
   ],
   "values": {
-    "BatV": geplant-nach-den-sommerferien,
-    "Hum_SHT": geplant-nach-den-sommerferien,
-    "TempC_SHT" geplant-nach-den-sommerferien
+    "BatV": 3.636,
+    "Hum_SHT": 88.6,
+    "TempC_SHT": 19.3
   }
 }
