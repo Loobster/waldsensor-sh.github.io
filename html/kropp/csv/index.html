@@ -2,22 +2,27 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>📁 CSV-Archiv – Sensor Kropp</title>
+  <title>CSV-Archiv Sensor Kropp</title>
   <style>
     body {
       font-family: sans-serif;
-      background: #f9f9f9;
-      padding: 2em;
+      background-color: #f9f9f9;
+      margin: 2em;
     }
     h1 {
-      margin-top: 0;
+      color: #333;
     }
     ul {
-      line-height: 1.8em;
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 0.5em;
     }
     a {
       text-decoration: none;
-      color: #0645ad;
+      color: #007bff;
+      font-size: 1.1em;
     }
     a:hover {
       text-decoration: underline;
@@ -25,13 +30,41 @@
   </style>
 </head>
 <body>
-  <h1>📁 CSV-Archiv – Sensor Kropp</h1>
-  <p>Hier findest du die automatisch erstellten Monatsdateien zur Auswertung des Sensors in Kropp.</p>
-  <ul>
-    <!-- Liste aller CSV-Dateien im Verzeichnis (muss vom Webserver bereitgestellt werden) -->
-    <li><a href="2025-07.csv">2025-07.csv</a></li>
-    <!-- Weitere Dateien erscheinen automatisch im Verzeichnis, wenn vorhanden -->
-  </ul>
-  <p><a href="../index.html">⬅ Zurück zur Sensorseite</a></p>
+  <h1>CSV-Archiv Sensor Kropp</h1>
+  <p>Hier finden Sie die automatisch erstellten CSV-Dateien der vergangenen Monate.</p>
+  <ul id="csv-list"></ul>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const csvList = document.getElementById('csv-list');
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      let currentMonth = now.getMonth() + 1; // getMonth() ist 0-basiert
+      
+      // Liste der letzten 12 Monate generieren
+      for (let i = 0; i < 12; i++) {
+        const year = currentYear;
+        const month = (currentMonth).toString().padStart(2, '0');
+        const filename = `${year}-${month}.csv`;
+
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        
+        // Link zur Datei im aktuellen Verzeichnis
+        link.href = filename;
+        link.textContent = `CSV-Datei für ${year}-${month}`;
+        
+        listItem.appendChild(link);
+        csvList.appendChild(listItem);
+        
+        // Gehe zum vorherigen Monat
+        currentMonth--;
+        if (currentMonth === 0) {
+          currentMonth = 12;
+          currentYear--;
+        }
+      }
+    });
+  </script>
 </body>
 </html>
