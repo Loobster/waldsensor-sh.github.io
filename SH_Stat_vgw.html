@@ -57,9 +57,9 @@
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
     <script src="https://tyrasd.github.io/osmtogeojson/osmtogeojson.js"></script>
-    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
 
     <script>
+        // Definition der Marker-Icons für die verschiedenen Datentypen
         const iconMap = {
             'Gateways': L.icon({ iconUrl: 'icons/gateway.png', iconSize: [30, 30], iconAnchor: [15, 15] }),
             'MINT-Schulen': L.icon({ iconUrl: 'icons/mintschule.png', iconSize: [30, 30], iconAnchor: [15, 15] }),
@@ -68,9 +68,12 @@
             'Feuerwehren': L.icon({ iconUrl: 'icons/feuerwehr.png', iconSize: [30, 30], iconAnchor: [15, 15] }),
             'Virtuelles GW': L.icon({ iconUrl: 'icons/gateway_virtual.png', iconSize: [30, 30], iconAnchor: [15, 15] }),
         };
+
+        // Initialisierung der Leaflet-Karte mit Startposition und Zoom
         const map = L.map('map').setView([54.2, 9.8], 8);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
+        // Deklaration der globalen Variablen
         const areas = {}; 
         let shOutline = null; 
         let currentAreaLayer = null; 
@@ -90,34 +93,11 @@
             { name: "Feuerwehren", data: typeof feuerwehren !== 'undefined' ? feuerwehren : null, layer: L.markerClusterGroup() }
         ];
 
-        const mockTemperatureData = [
-            [53.88, 10.68, 0.9], [53.87, 10.70, 0.8], [53.86, 10.66, 1.0], 
-            [53.90, 10.68, 0.95], [53.91, 10.72, 0.85], 
-            [53.86, 10.82, 0.6], [53.85, 10.85, 0.7], 
-            [54.00, 10.75, 0.9], 
-            [53.9, 10.9, 0.5], 
-        ];
-        
-        const heatLayer = L.heatLayer(mockTemperatureData, {
-            radius: 20,
-            blur: 15,
-            maxZoom: 17,
-            gradient: {
-                0.0: 'blue',
-                0.4: 'cyan',
-                0.6: 'lime',
-                0.8: 'yellow',
-                1.0: 'red'
-            }
-        });
-
         const overlayMaps = {};
         dataSources.forEach(s => { if (s.data) overlayMaps[s.name] = s.layer; });
-        overlayMaps["Wärmeinsel-Analyse"] = heatLayer;
-
         const layerControl = L.control.layers(null, overlayMaps, { collapsed: false }).addTo(map);
         document.getElementById('layer-control-container').appendChild(layerControl.getContainer());
-
+        
         const shOutlineStyle = {
             color: "#000000",
             weight: 2, 
@@ -247,6 +227,7 @@
         };
         removeBtn.addTo(map);
 
+        // Lade alle Landkreise und kreisfreien Städte aus SH
         const query = `[out:json][timeout:60];
         (
           relation(27021);    // Kiel (Stadt)
