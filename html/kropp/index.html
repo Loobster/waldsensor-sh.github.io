@@ -29,12 +29,26 @@
       margin-top: 1em;
       margin-bottom: 3em;
     }
+    .controls {
+      margin-bottom: 1em;
+    }
   </style>
 </head>
 <body>
   <h1>🌳 Sensor Kropp – Temperatur, Luftfeuchtigkeit & Batterie</h1>
-  <p>Datenquelle: Automatisch erzeugte CSV-Datei des aktuellen Monats.<br>
+  
+  <div class="controls">
+    <label for="time-range">Zeitraum anzeigen:</label>
+    <select id="time-range">
+      <option value="30">Letzte 30 Tage</option>
+      <option value="60">Letzte 60 Tage</option>
+      <option value="90">Letzte 90 Tage</option>
+    </select>
+  </div>
+  
+  <p>Datenquelle: Automatisch erzeugte CSV-Datei der letzten <span id="days-span">30</span> Tage.<br>
   Download: <a id="csv-link" href="#" target="_blank">CSV anzeigen</a></p>
+  
   <div class="chart-container">
     <h3>🌡️ Temperatur (°C)</h3>
     <canvas id="tempChart"></canvas>
@@ -48,30 +62,66 @@
     <canvas id="batChart"></canvas>
   </div>
   <div class="linkbox">📑 Ältere CSV-Dateien: <a href="csv/index.html" target="_blank">CSV-Archiv anzeigen</a></div>
+  
   <script>
-    async function fetchData() {
+    async function fetchData(daysToShow = 30) {
+        // UI-Texte anpassen
+        document.getElementById('days-span').textContent = daysToShow;
+        document.getElementById('csv-link').href = `csv/${new Date().getFullYear()}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}.csv`;
+
+        // 1. Startdatum basierend auf der Auswahl ermitteln
         const now = new Date();
-        const year = now.getFullYear();
-        const month = (now.getMonth() + 1).toString().padStart(2, '0');
-        const filename = `csv/${year}-${month}.csv`;
-
-        try {
-            const response = await fetch(filename);
-            if (!response.ok) {
-                throw new Error(`Fehler beim Laden der Datei: ${filename}`);
+        const startDate = new Date(now.getTime() - (daysToShow * 24 * 60 * 60 * 1000));
+        
+        // 2. Erforderliche Dateipfade ermitteln
+        const filesToFetch = [];
+        let currentDate = new Date(now);
+        while (currentDate >= startDate) {
+            const year = currentDate.getFullYear();
+            const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            const filename = `csv/${year}-${month}.csv`;
+            if (!filesToFetch.includes(filename)) {
+                filesToFetch.push(filename);
             }
-            const data = await response.text();
-            const lines = data.trim().split('\n').slice(1);
-            const labels = [], temp = [], hum = [], bat = [];
+            // Gehe zum vorherigen Monat
+            currentDate.setMonth(currentDate.getMonth() - 1);
+        }
+        filesToFetch.reverse(); // Älteste Datei zuerst laden
+        
+        try {
+            // 3. Alle benötigten Dateien parallel laden
+            const responses = await Promise.all(filesToFetch.map(url => fetch(url).catch(e => ({ok: false}))));
+            
+            let combinedData = "";
+            let hasHeader = false;
 
+            for (const response of responses) {
+                if (response.ok) {
+                    let dataText = await response.text();
+                    const lines = dataText.split('\n');
+                    if (!hasHeader) {
+                        combinedData += lines[0] + '\n'; // Header hinzufügen
+                        hasHeader = true;
+                    }
+                    combinedData += lines.slice(1).join('\n') + '\n';
+                }
+            }
+
+            const lines = combinedData.trim().split('\n').slice(1);
+            const labels = [], temp = [], hum = [], bat = [];
+            
+            // 4. Daten im gewünschten Zeitraum filtern
             lines.forEach(line => {
                 const parts = line.split(',');
                 if (!line || parts.length < 5) return;
-                const timestamp = parts[1].slice(0, 16).replace('T', ' ');
-                labels.push(timestamp);
-                temp.push(parseFloat(parts[2]));
-                hum.push(parseFloat(parts[3]));
-                bat.push(parseFloat(parts[4]));
+                const timestamp = new Date(parts[1]);
+
+                if (timestamp >= startDate) {
+                  labels.push(parts[1].slice(0, 16).replace('T', ' '));
+                  temp.push(parseFloat(parts[2]));
+                  hum.push(parseFloat(parts[3]));
+                  bat.push(parseFloat(parts[4]));
+                }
             });
 
             createChart('tempChart', labels, temp, 'Temperatur (°C)', 'red');
@@ -79,10 +129,10 @@
             createChart('batChart', labels, bat, 'Batteriespannung (V)', 'green');
         } catch (error) {
             console.error(error);
-            alert(`Es konnten keine Daten für den aktuellen Monat (${filename}) geladen werden. Bitte überprüfen Sie, ob die Datei existiert.`);
+            alert(`Es konnten nicht alle Daten für den ausgewählten Zeitraum geladen werden.`);
         }
     }
-
+    
     function createChart(id, labels, data, label, color) {
         new Chart(document.getElementById(id), {
             type: 'line',
@@ -111,11 +161,11 @@
                         display: true,
                         ticks: {
                             autoSkip: true,
-                            maxTicksLimit: 12, // Mehr Ticks anzeigen
-                            maxRotation: 45, // Beschriftung um 45 Grad drehen
+                            maxTicksLimit: 12,
+                            maxRotation: 45,
                             minRotation: 45,
                             font: {
-                                size: 10 // Schriftgröße der Ticks reduzieren
+                                size: 10
                             }
                         }
                     },
@@ -139,7 +189,17 @@
         });
     }
 
-    fetchData();
-</script>
+    // Event-Listener für das Dropdown-Menü hinzufügen
+    document.addEventListener('DOMContentLoaded', () => {
+        const timeRangeSelect = document.getElementById('time-range');
+        timeRangeSelect.addEventListener('change', (event) => {
+            const selectedDays = parseInt(event.target.value);
+            fetchData(selectedDays);
+        });
+
+        // Initiales Laden der Daten (standardmäßig 30 Tage)
+        fetchData();
+    });
+  </script>
 </body>
 </html>
