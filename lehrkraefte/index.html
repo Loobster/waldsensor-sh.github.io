@@ -1,60 +1,111 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>WALDSENSOR.SH – Einstieg für Lehrkräfte</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-  body {
-    font-family: sans-serif;
-    margin: 2rem;
-    line-height: 1.6;
-  }
-  h1 {
-    color: #14532d; /* Dunkelgrün */
-  }
-  h2 {
-    color: #15803d; /* Mittelgrün */
-    margin-top: 2rem;
-  }
-  a {
-    color: #15803d;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-</style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 840px;
+      margin: 2em auto;
+      padding: 0 1em;
+      line-height: 1.7;
+      color: #111;
+      background-color: #fff;
+    }
+
+    h1, h2 {
+      color: #2e5e2e;
+      margin-top: 1.4em;
+      margin-bottom: 0.5em;
+    }
+
+    h1 {
+      font-size: 2em;
+      border-bottom: 2px solid #2e5e2e;
+      padding-bottom: 0.3em;
+    }
+
+    a {
+      color: #0077cc;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      margin-top: 0.5em;
+      margin-bottom: 1em;
+      padding-left: 1.2em;
+    }
+
+    .content-box {
+      background-color: #f9f9f9;
+      padding: 1em 1.2em;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      margin-top: 2em;
+    }
+
+    footer {
+      margin-top: 4em;
+      font-size: 0.9em;
+      color: #666;
+      text-align: center;
+      border-top: 1px solid #ccc;
+      padding-top: 1em;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 0 0.8em;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      h2 {
+        font-size: 1.2em;
+      }
+    }
+  </style>
 </head>
 <body>
   <h1>WALDSENSOR.SH im Unterricht</h1>
-  <p>
+  <section class="content-box">
     Willkommen im Bildungsbereich des Projekts <strong>WALDSENSOR.SH</strong>.  
     Hier finden Sie gezielte Informationen zur Einbindung des Projekts in den Schulalltag –  
     ob in der Grundschule, in der Mittelstufe oder an einer MINT-Schule.
-  </p>
+  </section>
 
-  <h2>🔬 Für MINT-Schulen</h2>
-  <p>
+ <section class="content-box">
+   <h2>🔬 Für MINT-Schulen</h2>
     Umwelt messen, Daten verstehen, Zukunft gestalten:  
     So können Sie WALDSENSOR.SH im MINT-Unterricht einsetzen – mit echten Sensordaten direkt vom Schulstandort.
-  </p>
+  
   <p><a href="mint-schulen.html">Zur Seite für MINT-Schulen →</a></p>
-
-  <h2>🌱 Für den Sachunterricht an Grundschulen</h2>
-  <p>
+</section>
+  
+  <section class="content-box"><h2>🌱 Für den Sachunterricht an Grundschulen</h2>
+  
     Wie entsteht Bodenfeuchte? Was zeigt ein Thermometer? Warum messen wir überhaupt das Wetter?  
     WALDSENSOR.SH unterstützt Lehrkräfte im Sachunterricht – mit echten Daten, QR-Codes vor Ort und kindgerechten Materialien.
-  </p>
-  <p><a href="grundschule.html">Zur Seite für Grundschulen →</a></p>
 
-  <h2>📂 Materialien & Downloads</h2>
+  <p><a href="grundschule.html">Zur Seite für Grundschulen →</a></p>
+  </section>
+  <section class="content-box"><h2>📂 Materialien & Downloads</h2>
   <p>
     (In Vorbereitung: Unterrichtseinheiten, CSV-Dateien, Arbeitsblätter, Beispielprojekte)
   </p>
 
   <hr />
   <p><small>Letzte Aktualisierung: Juli 2025</small></p>
+    </section>
 </body>
 </html>
