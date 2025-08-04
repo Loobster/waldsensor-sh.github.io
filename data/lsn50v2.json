@@ -1,20 +1,20 @@
 {
   "node": "lsn50v2",
   "position": {
-    "lat": 54.501576317102,
-    "lon": 9.58694958832219
+    "lat": 0.0,
+    "lon": 0.0
   },
-  "time": "2025-08-04T02:39:23.490079Z",
+  "time": "2025-08-04T02:59:23.521934Z",
   "gateways": [
-    {
-      "id": "lora-gateway-fahrdorf",
-      "rssi": -122.0,
-      "snr": -3.2
-    },
     {
       "id": "laird-lorawan-gw",
       "rssi": -84.0,
-      "snr": 9.5
+      "snr": 10.5
+    },
+    {
+      "id": "unknown",
+      "rssi": 0.0,
+      "snr": 0.0
     }
   ],
   "values": {
