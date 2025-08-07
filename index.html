@@ -75,6 +75,22 @@
         font-size: 1.2em;
       }
     }
+    
+    .dragino-footer {
+        display: flex;
+        justify-content: flex-start; /* Ordnet Elemente von links an */
+        align-items: center;
+        padding: 10px;
+    }
+
+    .dragino-footer p {
+        margin: 0;
+    }
+
+    .dragino-footer img {
+        width: 180px;
+        margin-left: 100px; /* Dieser Wert schiebt das Bild nach rechts */
+    }
   </style>
 </head>
 <body>
@@ -84,6 +100,8 @@
     <p><strong>Citizen Science trifft auf digitale Wälder in Schleswig-Holstein.</strong></p>
     
 </div>
+  
+ 
 
   <section class="content-box">
     <h2>Was ist WALDSENSOR.SH?</h2>
@@ -101,8 +119,10 @@
     <h2>🤝 Unser Technologie-Partner: <strong>Dragino</strong></h2>
     <p>Wir bedanken uns herzlich bei der Firma <strong>Dragino</strong>, die unser Projekt <strong>WALDSENSOR.SH</strong> durch die kostenfreie Bereitstellung von <strong>drei SN50V3-LB Sensor-Nodes</strong> unterstützt hat.</p>
     <p>Diese energieeffizienten LoRaWAN-Nodes ermöglichen es Schulen in Schleswig-Holstein, Umweltfaktoren wie Temperatur, Luftfeuchte, Windgeschwindigkeit und Bodenfeuchte live zu messen und im Unterricht auszuwerten.</p>
+   <div class="dragino-footer">
     <p>🔗 Mehr über Dragino erfahren Sie hier: <a href="https://www.dragino.com" target="_blank" rel="noopener">www.dragino.com</a></p>
-    <img src="/images/dragino-logo.png" alt="Dragino Logo" width="180" style="margin-top: 10px;">
+    <img src="/images/dragino-logo.png" alt="Dragino Logo">
+</div>
   </section>
 
   <section class="content-box">
