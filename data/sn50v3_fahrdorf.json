@@ -4,12 +4,12 @@
     "lat": 54.501576317102,
     "lon": 9.58694958832219
   },
-  "time": "2025-08-13T05:16:32.550865Z",
+  "time": "2025-08-13T05:36:32.322157Z",
   "gateways": [
     {
       "id": "lora-gateway-fahrdorf",
-      "rssi": -105.0,
-      "snr": 6.8
+      "rssi": -108.0,
+      "snr": -2.2
     }
   ],
   "values": {
@@ -18,14 +18,14 @@
     "Digital_IStatus": "L",
     "Door_status": "OPEN",
     "EXTI_Trigger": "FALSE",
-    "Hum_SHT": 88.9,
+    "Hum_SHT": 87.8,
     "TempC1": 0.0,
-    "TempC_SHT": 18.1,
+    "TempC_SHT": 18.6,
     "Work_mode": "IIC",
     "alt1": 8.0,
     "alt2": 0.0,
-    "chan1": 6.0,
-    "f_cnt": 57.0,
+    "chan1": 0.0,
+    "f_cnt": 58.0,
     "freq1": 0.0,
     "gw1": "lora-gateway-fahrdorf",
     "gw2": "laird-lorawan-gw",
@@ -33,9 +33,9 @@
     "lat2": 54.501576317102,
     "lon1": 9.58799756,
     "lon2": 9.58694958832219,
-    "rssi1": -105.0,
-    "rx_time1": "2025-08-13T05:16:32.293212Z",
+    "rssi1": -108.0,
+    "rx_time1": "2025-08-13T05:36:32.069130Z",
     "sf": 7.0,
-    "snr1": 6.8
+    "snr1": -2.2
   }
 }
