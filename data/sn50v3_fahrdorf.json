@@ -1,15 +1,15 @@
 {
   "node": "sn50v3_fahrdorf",
   "position": {
-    "lat": 54.501576317102,
-    "lon": 9.58694958832219
+    "lat": 54.50311486,
+    "lon": 9.58799756
   },
-  "time": "2025-08-15T11:35:54.803273Z",
+  "time": "2025-08-15T11:55:54.567910Z",
   "gateways": [
     {
-      "id": "lora-gateway-fahrdorf",
-      "rssi": -116.0,
-      "snr": -1.0
+      "id": "laird-lorawan-gw",
+      "rssi": -88.0,
+      "snr": 9.5
     }
   ],
   "values": {
@@ -18,24 +18,24 @@
     "Digital_IStatus": "L",
     "Door_status": "OPEN",
     "EXTI_Trigger": "FALSE",
-    "Hum_SHT": 67.5,
+    "Hum_SHT": 68.0,
     "TempC1": 0.0,
-    "TempC_SHT": 25.2,
+    "TempC_SHT": 25.7,
     "Work_mode": "IIC",
-    "alt1": 8.0,
-    "alt2": 0.0,
-    "chan1": 5.0,
-    "f_cnt": 220.0,
+    "alt1": 0.0,
+    "alt2": 8.0,
+    "chan1": 3.0,
+    "f_cnt": 221.0,
     "freq1": 0.0,
-    "gw1": "lora-gateway-fahrdorf",
-    "gw2": "laird-lorawan-gw",
-    "lat1": 54.50311486,
-    "lat2": 54.501576317102,
-    "lon1": 9.58799756,
-    "lon2": 9.58694958832219,
-    "rssi1": -116.0,
-    "rx_time1": "2025-08-15T11:35:54.547207Z",
+    "gw1": "laird-lorawan-gw",
+    "gw2": "lora-gateway-fahrdorf",
+    "lat1": 54.501576317102,
+    "lat2": 54.50311486,
+    "lon1": 9.58694958832219,
+    "lon2": 9.58799756,
+    "rssi1": -88.0,
+    "rx_time1": "",
     "sf": 7.0,
-    "snr1": -1.0
+    "snr1": 9.5
   }
 }
