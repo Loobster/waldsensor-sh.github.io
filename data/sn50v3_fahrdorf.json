@@ -4,12 +4,12 @@
     "lat": 0.0,
     "lon": 0.0
   },
-  "time": "2025-08-15T13:15:53.645369Z",
+  "time": "2025-08-15T13:35:53.422171Z",
   "gateways": [
     {
       "id": "laird-lorawan-gw",
-      "rssi": -89.0,
-      "snr": 9.0
+      "rssi": -88.0,
+      "snr": 10.0
     }
   ],
   "values": {
@@ -18,14 +18,14 @@
     "Digital_IStatus": "L",
     "Door_status": "OPEN",
     "EXTI_Trigger": "FALSE",
-    "Hum_SHT": 66.2,
+    "Hum_SHT": 67.6,
     "TempC1": 0.0,
-    "TempC_SHT": 25.8,
+    "TempC_SHT": 26.0,
     "Work_mode": "IIC",
     "alt1": 0.0,
     "alt2": 0.0,
-    "chan1": 7.0,
-    "f_cnt": 225.0,
+    "chan1": 0.0,
+    "f_cnt": 226.0,
     "freq1": 0.0,
     "gw1": "laird-lorawan-gw",
     "gw2": "unknown",
@@ -33,9 +33,9 @@
     "lat2": 0.0,
     "lon1": 9.58694958832219,
     "lon2": 0.0,
-    "rssi1": -89.0,
+    "rssi1": -88.0,
     "rx_time1": "",
     "sf": 7.0,
-    "snr1": 9.0
+    "snr1": 10.0
   }
 }
