@@ -616,6 +616,20 @@ const mint_schulen = {
         "name": "Schule St. Nicolai Sylt",
         "ec": false
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.37268,
+          54.39786
+        ]
+      },
+      "properties": {
+        "name": "Gemeinschaftschule Probstei Schönberg",
+        "ec": false
+      }
     }
   ]
 };
