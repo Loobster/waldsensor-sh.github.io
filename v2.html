@@ -31,7 +31,7 @@
       position: fixed;
       z-index: 999;
       top: 14px;
-      left: 14px;
+      left: 14px; /* ggf. später auf 70px erhöhen, um nicht von +/- überlagert zu werden */
       background: var(--pill-bg);
       color: var(--pill-text);
       padding: 10px 14px;
@@ -78,7 +78,7 @@
     const DATA_URL = "/data/v2/latest/_all.json";  // GitHub Pages Pfad
     const AUTO_REFRESH_MS = 60_000;                // 60s neu laden
 
-    // Manuelle Koordinaten
+    // Manuelle Koordinaten (Overrides)
     const MANUAL_LOC = {
       "breklum-sn50v3":  [54.60669, 8.98195], // Breklum
       "s31-lb":          [54.65000, 8.96000], // Bredstedt
@@ -122,7 +122,7 @@
       for (const [k,v] of Object.entries(fields || {})){
         if (OMIT_FIELDS.has(k)) continue;
         if (v === undefined || v === null || v === "NULL") continue;
-        if (typeof v === "number" && v === 0) continue;
+        if (typeof v === "number" && v === 0) continue; // „leere“ 0er weglassen
         out[k] = v;
       }
       return out;
@@ -164,21 +164,18 @@
       return html;
     }
 
-    function setStamp(tsArr){
-      const pill = document.getElementById("stamp");
-      const last = document.getElementById("last");
-      if (!tsArr.length){
-        pill.textContent = "Letzte Aktualisierung: –";
-        last.textContent = "Letzte Node-Meldung: –";
-        return;
+    function latestRecord(data){
+      let best = null, bestT = -Infinity;
+      for (const r of (data||[])){
+        if (!r || !r.ts) continue;
+        const t = new Date(r.ts).getTime();
+        if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
       }
-      const newest = tsArr.sort().at(-1);
-      pill.textContent = "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
-      last.textContent = "Letzte Node-Meldung: " + deTime(newest);
+      return best; // { id, ts, fields... } oder null
     }
 
     async function loadData(){
-      const url = `${DATA_URL}?t=${Date.now()}`;
+      const url = `${DATA_URL}?t=${Date.now()}`; // Cache-Busting
       const res = await fetch(url, { cache:"no-store" });
       if (!res.ok) throw new Error("fetch failed " + res.status);
       return res.json();
@@ -187,11 +184,8 @@
     function render(data){
       markersLayer.clearLayers();
       const bounds = [];
-      const timestamps = [];
 
       for (const item of (data || [])){
-        if (item.ts) timestamps.push(item.ts);
-
         const coord = pickCoord(item);
         if (!coord) continue;
 
@@ -205,7 +199,15 @@
         map.fitBounds(b.pad(0.12));
       }
 
-      setStamp(timestamps);
+      // Stempel setzen (Abrufzeit + letzte Node-Meldung mit ID)
+      document.getElementById("stamp").textContent =
+        "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
+
+      const lastEl = document.getElementById("last");
+      const lastRec = latestRecord(data);
+      lastEl.textContent = lastRec
+        ? ("Letzte Node-Meldung: " + deTime(lastRec.ts) + " – " + (lastRec.id || "unbekannt"))
+        : "Letzte Node-Meldung: –";
     }
 
     async function run(){
