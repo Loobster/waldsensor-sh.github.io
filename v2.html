@@ -16,6 +16,9 @@
     crossorigin=""
   ></script>
 
+  <!-- QRCode -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
   <style>
     :root{
       --pill-bg:#fff;
@@ -29,7 +32,7 @@
       position: fixed;
       z-index: 999;
       top: 14px;
-      left: 70px; /* verschoben, damit nicht von +/- überlagert */
+      left: 70px;
       background: var(--pill-bg);
       color: var(--pill-text);
       padding: 10px 14px;
@@ -55,10 +58,7 @@
       text-align: right;
     }
 
-    .popup h3{
-      margin:0 0 .25rem 0;
-      font: 700 20px/1.25 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    }
+    .popup h3{ margin:0 0 .25rem 0; font:700 20px/1.25 system-ui; }
     .popup hr{ border:0; height:1px; background:#ececec; margin:.5rem 0 .75rem; }
     .popup .kv{ margin:.15rem 0; }
     .popup .kv b{ font-weight:700; }
@@ -136,6 +136,8 @@
         if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV","lat","lon"].includes(k)) continue;
         html += `<div class="kv">${k}: <b>${v}</b></div>`;
       }
+      // QR-Code Container
+      html += `<div id="qrcode-${item.id}" style="margin-top:8px;"></div>`;
       return html + `</div>`;
     }
 
@@ -162,7 +164,18 @@
       for (const item of (data || [])){
         const coord = pickCoord(item);
         if (!coord) continue;
-        L.marker(coord).bindPopup(popupHtml(item)).addTo(markersLayer);
+        const marker = L.marker(coord).bindPopup(popupHtml(item));
+        marker.on("popupopen", () => {
+          const shortId = item.id ? item.id.split("-")[0] : "unbekannt";
+          const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+          const qrDiv = document.getElementById(`qrcode-${item.id}`);
+          if (qrDiv && !qrDiv.hasChildNodes()) {
+            QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 128 }, (err, canvas) => {
+              if (!err) qrDiv.appendChild(canvas);
+            });
+          }
+        });
+        marker.addTo(markersLayer);
         bounds.push(coord);
       }
       if (bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
@@ -195,4 +208,3 @@
   </script>
 </body>
 </html>
-
