@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>WALDSENSOR.SH – Karte v2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
+    .badge { position:absolute; right:10px; top:10px; z-index:999;
+      background:rgba(255,255,255,.9); border:1px solid #ddd; padding:6px 10px; border-radius:8px;
+      font:14px system-ui,-apple-system,Segoe UI,Roboto,Arial; }
+    .error{color:#b00020;} .ok{color:#0a7f2e;}
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="status" class="badge">Lade Daten…</div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const SH_CENTER = [54.3, 9.7];
+    const map = L.map('map').setView(SH_CENTER, 8);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap-Mitwirkende'
+    }).addTo(map);
+
+    const MANUAL_LOC = {
+      // "kropp-sn50v3":[54.4,9.5],
+      // "breklum-sn50v3":[54.62,9.0],
+      // "fahrdorf-sn50v3":[54.48,9.58],
+      // "lsn50-v2":[54.33,10.13],
+      // "s31-lb":[54.65,9.3],
+    };
+
+    const markers = new Map();
+    const statusEl = document.getElementById('status');
+
+    const fmt = n => (typeof n === 'number' ? (Number.isInteger(n)? n : n.toFixed(2)) : (n ?? '–'));
+
+    function buildPopup(rec){
+      const t = rec.ts ? new Date(rec.ts) : null;
+      const when = t ? t.toLocaleString('de-DE') : '–';
+      const f = rec.fields || {};
+      const lines = [];
+      if (f.TempC_SHT !== undefined)  lines.push(`Temp (SHT): <b>${fmt(f.TempC_SHT)} °C</b>`);
+      if (f.Hum_SHT !== undefined)    lines.push(`Hum (SHT): <b>${fmt(f.Hum_SHT)} %</b>`);
+      if (f.TempC_SHT31 !== undefined)lines.push(`Temp (SHT31): <b>${fmt(f.TempC_SHT31)} °C</b>`);
+      if (f.Hum_SHT31 !== undefined)  lines.push(`Hum (SHT31): <b>${fmt(f.Hum_SHT31)} %</b>`);
+      if (f.temp_SOIL !== undefined)  lines.push(`Boden-Temp: <b>${fmt(f.temp_SOIL)} °C</b>`);
+      if (f.water_SOIL !== undefined) lines.push(`Boden-Feuchte: <b>${fmt(f.water_SOIL)}</b>`);
+      if (f.BatV !== undefined)       lines.push(`Batterie: <b>${fmt(f.BatV)} V</b>`);
+      const shown = new Set(['TempC_SHT','Hum_SHT','TempC_SHT31','Hum_SHT31','temp_SOIL','water_SOIL','BatV','lat','lon']);
+      const rest = Object.keys(f).filter(k => !shown.has(k));
+      if (rest.length){
+        lines.push('<hr style="border:none;border-top:1px solid #eee;margin:6px 0">');
+        rest.forEach(k => lines.push(`${k}: <b>${fmt(f[k])}</b>`));
+      }
+      return `<div><div><b>${rec.id || 'unbekannt'}</b></div>
+              <div>Zeit: ${when}</div>
+              <div style="margin-top:6px">${lines.join('<br>')}</div></div>`;
+    }
+
+    function coordFor(rec){
+      const f = rec.fields || {};
+      if (typeof f.lat === 'number' && typeof f.lon === 'number') return [f.lat, f.lon];
+      if (MANUAL_LOC[rec.id]) return MANUAL_LOC[rec.id];
+      return SH_CENTER;
+    }
+
+    async function loadAndRender(){
+      try{
+        const url = `/data/v2/latest/_all.json?ts=${Date.now()}`;
+        const res = await fetch(url, {cache:'no-store'});
+        if(!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if(!Array.isArray(data)) throw new Error('JSON ist kein Array');
+
+        const seen = new Set();
+        data.forEach(rec=>{
+          if(!rec || !rec.id) return;
+          seen.add(rec.id);
+          const pos = coordFor(rec);
+          const pop = buildPopup(rec);
+          if (markers.has(rec.id)){
+            const m = markers.get(rec.id);
+            m.setLatLng(pos).setPopupContent(pop);
+          } else {
+            markers.set(rec.id, L.marker(pos).addTo(map).bindPopup(pop));
+          }
+        });
+        for(const [id,m] of markers){
+          if(!seen.has(id)){ map.removeLayer(m); markers.delete(id); }
+        }
+        statusEl.textContent = `Letzte Aktualisierung: ${new Date().toLocaleTimeString('de-DE')}`;
+        statusEl.className = 'badge ok';
+      }catch(err){
+        statusEl.textContent = `Fehler beim Laden: ${String(err)}`;
+        statusEl.className = 'badge error';
+        console.error(err);
+      }
+    }
+
+    loadAndRender();
+    setInterval(loadAndRender, 60000);
+  </script>
+</body>
+</html>
