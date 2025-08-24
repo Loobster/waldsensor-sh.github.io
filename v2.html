@@ -1,4 +1,4 @@
-<!doctype html>
+A<!doctype html>
 <html lang="de">
 <head>
   <meta charset="utf-8" />
@@ -9,12 +9,10 @@
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""
   />
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""
   ></script>
 
@@ -31,7 +29,7 @@
       position: fixed;
       z-index: 999;
       top: 14px;
-      left: 14px; /* ggf. später auf 70px erhöhen, um nicht von +/- überlagert zu werden */
+      left: 70px; /* verschoben, damit nicht von +/- überlagert */
       background: var(--pill-bg);
       color: var(--pill-text);
       padding: 10px 14px;
@@ -72,42 +70,26 @@
   <div id="map"></div>
 
   <script>
-    // ------------------------------
-    // Konfiguration
-    // ------------------------------
-    const DATA_URL = "/data/v2/latest/_all.json";  // GitHub Pages Pfad
-    const AUTO_REFRESH_MS = 60_000;                // 60s neu laden
+    const DATA_URL = "/data/v2/latest/_all.json";  
+    const AUTO_REFRESH_MS = 60_000;                
 
-    // Manuelle Koordinaten (Overrides)
     const MANUAL_LOC = {
-      "breklum-sn50v3":  [54.60669, 8.98195], // Breklum
-      "s31-lb":          [54.65000, 8.96000], // Bredstedt
-      "kropp-sn50v3":    [54.41018, 9.52839], // Kropp
-      "fahrdorf-sn50v3": [54.50158, 9.58690], // Fahrdorf
-      // "lsn50-v2":      [LAT, LON],          // optional
+      "breklum-sn50v3":  [54.60669, 8.98195],
+      "s31-lb":          [54.65000, 8.96000],
+      "kropp-sn50v3":    [54.41018, 9.52839],
+      "fahrdorf-sn50v3": [54.50158, 9.58690],
     };
 
-    // Felder, die in Popups NICHT angezeigt werden sollen
     const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status"]);
 
-    // ------------------------------
-    // Map aufsetzen
-    // ------------------------------
     const map = L.map("map", { zoomSnap: 0.25 });
-    const osm = L.tileLayer(
-      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> Mitwirkende'
-      }
-    ).addTo(map);
-
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+    }).addTo(map);
     map.setView([54.4, 9.6], 8.25);
     let markersLayer = L.layerGroup().addTo(map);
 
-    // ------------------------------
-    // Helfer
-    // ------------------------------
     function deTime(ts){
       try {
         return new Date(ts).toLocaleString("de-DE", {
@@ -122,7 +104,7 @@
       for (const [k,v] of Object.entries(fields || {})){
         if (OMIT_FIELDS.has(k)) continue;
         if (v === undefined || v === null || v === "NULL") continue;
-        if (typeof v === "number" && v === 0) continue; // „leere“ 0er weglassen
+        if (typeof v === "number" && v === 0) continue;
         out[k] = v;
       }
       return out;
@@ -138,30 +120,23 @@
 
     function popupHtml(item){
       const f = cleanFields(item.fields);
-      let html = `<div class="popup">`;
-      html += `<h3>${item.id}</h3>`;
-      html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div>`;
-      html += `<hr/>`;
-
+      let html = `<div class="popup"><h3>${item.id}</h3>`;
+      html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
       if (typeof f.TempC_SHT31 === "number")
         html += `<div class="kv">Temp (SHT31): <b>${f.TempC_SHT31.toFixed(2)} °C</b></div>`;
       else if (typeof f.TempC_SHT === "number")
         html += `<div class="kv">Temp (SHT): <b>${f.TempC_SHT.toFixed(1)} °C</b></div>`;
-
       if (typeof f.Hum_SHT31 === "number")
         html += `<div class="kv">Hum (SHT31): <b>${f.Hum_SHT31.toFixed(2)} %</b></div>`;
       else if (typeof f.Hum_SHT === "number")
         html += `<div class="kv">Hum (SHT): <b>${f.Hum_SHT.toFixed(1)} %</b></div>`;
-
       if (typeof f.BatV === "number")
         html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
-
       for (const [k,v] of Object.entries(f)){
         if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV","lat","lon"].includes(k)) continue;
         html += `<div class="kv">${k}: <b>${v}</b></div>`;
       }
-      html += `</div>`;
-      return html;
+      return html + `</div>`;
     }
 
     function latestRecord(data){
@@ -171,11 +146,11 @@
         const t = new Date(r.ts).getTime();
         if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
       }
-      return best; // { id, ts, fields... } oder null
+      return best;
     }
 
     async function loadData(){
-      const url = `${DATA_URL}?t=${Date.now()}`; // Cache-Busting
+      const url = `${DATA_URL}?t=${Date.now()}`;
       const res = await fetch(url, { cache:"no-store" });
       if (!res.ok) throw new Error("fetch failed " + res.status);
       return res.json();
@@ -184,37 +159,31 @@
     function render(data){
       markersLayer.clearLayers();
       const bounds = [];
-
       for (const item of (data || [])){
         const coord = pickCoord(item);
         if (!coord) continue;
-
-        const m = L.marker(coord).bindPopup(popupHtml(item));
-        m.addTo(markersLayer);
+        L.marker(coord).bindPopup(popupHtml(item)).addTo(markersLayer);
         bounds.push(coord);
       }
+      if (bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
 
-      if (bounds.length){
-        const b = L.latLngBounds(bounds);
-        map.fitBounds(b.pad(0.12));
-      }
-
-      // Stempel setzen (Abrufzeit + letzte Node-Meldung mit ID)
       document.getElementById("stamp").textContent =
         "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
 
       const lastEl = document.getElementById("last");
       const lastRec = latestRecord(data);
-      lastEl.textContent = lastRec
-        ? ("Letzte Node-Meldung: " + deTime(lastRec.ts) + " – " + (lastRec.id || "unbekannt"))
-        : "Letzte Node-Meldung: –";
+      if (lastRec){
+        let shortId = lastRec.id ? lastRec.id.split("-")[0] : "unbekannt";
+        lastEl.textContent =
+          "Letzte Node-Meldung: " + deTime(lastRec.ts) + " – " + shortId;
+      } else {
+        lastEl.textContent = "Letzte Node-Meldung: –";
+      }
     }
 
     async function run(){
-      try{
-        const data = await loadData();
-        render(data);
-      }catch(err){
+      try{ render(await loadData()); }
+      catch(err){
         console.error(err);
         document.getElementById("stamp").textContent =
           "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
@@ -226,3 +195,4 @@
   </script>
 </body>
 </html>
+
