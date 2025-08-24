@@ -78,16 +78,14 @@
     const DATA_URL = "/data/v2/latest/_all.json";  // GitHub Pages Pfad
     const AUTO_REFRESH_MS = 60_000;                // 60s neu laden
 
-    // Manuelle Koordinaten (override), falls nicht im JSON (fields.lat/lon)
-    // -> bitte bei Bedarf anpassen/ergänzen
+    // Manuelle Koordinaten
     const MANUAL_LOC = {
-      const MANUAL_LOC = {
       "breklum-sn50v3":  [54.60669, 8.98195], // Breklum
       "s31-lb":          [54.65000, 8.96000], // Bredstedt
       "kropp-sn50v3":    [54.41018, 9.52839], // Kropp
       "fahrdorf-sn50v3": [54.50158, 9.58690], // Fahrdorf
-      // "lsn50-v2":      [LAT, LON],          // ggf. später ergänzen
-     };
+      // "lsn50-v2":      [LAT, LON],          // optional
+    };
 
     // Felder, die in Popups NICHT angezeigt werden sollen
     const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status"]);
@@ -104,9 +102,7 @@
       }
     ).addTo(map);
 
-    // sanfter Startfokus Schleswig-Holstein
     map.setView([54.4, 9.6], 8.25);
-
     let markersLayer = L.layerGroup().addTo(map);
 
     // ------------------------------
@@ -126,18 +122,16 @@
       for (const [k,v] of Object.entries(fields || {})){
         if (OMIT_FIELDS.has(k)) continue;
         if (v === undefined || v === null || v === "NULL") continue;
-        if (typeof v === "number" && v === 0) continue; // „leere“ 0er weglassen
+        if (typeof v === "number" && v === 0) continue;
         out[k] = v;
       }
       return out;
     }
 
     function pickCoord(item){
-      // 1) bevorzugt aus JSON feldern
       if (item?.fields?.lat !== undefined && item?.fields?.lon !== undefined){
         return [Number(item.fields.lat), Number(item.fields.lon)];
       }
-      // 2) manueller Override
       if (MANUAL_LOC[item.id]) return MANUAL_LOC[item.id];
       return null;
     }
@@ -149,7 +143,6 @@
       html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div>`;
       html += `<hr/>`;
 
-      // bevorzugt SHT31, fallback SHT
       if (typeof f.TempC_SHT31 === "number")
         html += `<div class="kv">Temp (SHT31): <b>${f.TempC_SHT31.toFixed(2)} °C</b></div>`;
       else if (typeof f.TempC_SHT === "number")
@@ -163,12 +156,10 @@
       if (typeof f.BatV === "number")
         html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
 
-      // Restliche sinnvolle Felder generisch anhängen (außer lat/lon)
       for (const [k,v] of Object.entries(f)){
         if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV","lat","lon"].includes(k)) continue;
         html += `<div class="kv">${k}: <b>${v}</b></div>`;
       }
-
       html += `</div>`;
       return html;
     }
@@ -187,7 +178,6 @@
     }
 
     async function loadData(){
-      // Cache-Busting, damit GitHub Pages nicht cached
       const url = `${DATA_URL}?t=${Date.now()}`;
       const res = await fetch(url, { cache:"no-store" });
       if (!res.ok) throw new Error("fetch failed " + res.status);
@@ -197,21 +187,19 @@
     function render(data){
       markersLayer.clearLayers();
       const bounds = [];
-
       const timestamps = [];
 
       for (const item of (data || [])){
         if (item.ts) timestamps.push(item.ts);
 
         const coord = pickCoord(item);
-        if (!coord) continue; // ohne Koordinate kein Marker
+        if (!coord) continue;
 
         const m = L.marker(coord).bindPopup(popupHtml(item));
         m.addTo(markersLayer);
         bounds.push(coord);
       }
 
-      // Karte fokussieren, wenn wir Marker haben
       if (bounds.length){
         const b = L.latLngBounds(bounds);
         map.fitBounds(b.pad(0.12));
@@ -226,13 +214,11 @@
         render(data);
       }catch(err){
         console.error(err);
-        // Anzeige beibehalten, aber Stempel updaten:
         document.getElementById("stamp").textContent =
           "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
       }
     }
 
-    // Initial & Auto-Refresh
     run();
     setInterval(run, AUTO_REFRESH_MS);
   </script>
