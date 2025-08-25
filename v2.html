@@ -2,8 +2,8 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Waldsensor.SH – Karte V2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WALDSENSOR.SH – Karte (v2)</title>
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -13,34 +13,38 @@
   <style>
     html, body, #map { height: 100%; margin: 0; }
     .badge {
-      position: fixed;
-      z-index: 1000;
-      background: #fff;
-      color: #2e7d32;
-      border: 2px solid #e0e0e0;
+      background: rgba(255,255,255,0.92);
+      color: #111;
+      padding: 10px 14px;
       border-radius: 12px;
-      padding: 8px 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.15);
-      font: 15px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
-      pointer-events: none;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.12);
+      border: 1px solid rgba(0,0,0,.08);
     }
-    .badge-left  { top: 14px;  left: 14px; }
-    .badge-right { top: 14px; right: 14px; color:#222; }
-    .popup h3 {
-      margin: 0 0 6px;
-      font-size: 18px;
+    /* linke Badge so platzieren, dass sie NICHT die Zoom-Buttons überdeckt */
+    .leaflet-top.leaflet-left { margin-top: 56px; }          /* Abstand nach unten */
+    .badge-left { transform: translateX(68px); }             /* leicht nach rechts schieben */
+    .badge-right { /* bleibt rechts oben */ }
+
+    .popup h3{
+      margin:0 0 8px 0;
+      font-size:20px;
     }
-    .popup .kv { margin: 2px 0; }
-    .popup .kv b { display:inline-block; min-width: 145px; }
-    .sep { margin: 10px 0; height:1px; background:#eee; }
+    .popup .row{
+      display:flex; justify-content:space-between;
+      gap:18px; margin:4px 0;
+      font-size:15px;
+    }
+    .popup hr{
+      border:none; border-top:1px solid #e7e7e7; margin:10px 0;
+    }
+    .popup .label{ color:#333; }
+    .popup .val{ font-weight:600; }
   </style>
 </head>
 <body>
   <div id="map"></div>
-
-  <!-- Banner -->
-  <div id="badge-left"  class="badge badge-left">Letzte Aktualisierung: –</div>
-  <div id="badge-right" class="badge badge-right">Letzte Node-Meldung: –</div>
 
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -48,140 +52,146 @@
     crossorigin=""
   ></script>
   <script>
-  (async function () {
-    // ------------------ Einstellungen ------------------
-    const DATA_URL = '/data/v2/latest/_all.json';
-    const FETCH_URL = DATA_URL + '?v=' + Date.now(); // Cache buster
-
-    // Positions-Registry (aktuelle 6 – kann später automatisiert befüllt werden)
-    const POSITIONS = {
-      'breklum-sn50v3': { lat: 54.60669, lon: 8.98195 },
-      's31-lb':         { lat: 54.65000, lon: 8.96000 },
-      'lsn50-v2':       { lat: 54.66100, lon: 9.51000 }, // placeholder wenn gebraucht
-      'kropp-sn50v3':   { lat: 54.41018, lon: 9.52839 },
-      'sn50v3_fahrdorf':{ lat: 54.50158, lon: 9.58690 }, // falls abweichende ID, darunter Alias
-      'fahrdorf-sn50v3':{ lat: 54.50158, lon: 9.58690 },
-      'se01-lb':        { lat: 54.65111, lon: 9.51685 }  // kam aus deinem Debug
-    };
-
-    // Felder, die wir pro Typ im Popup ausblenden
-    const FIELDS_TO_IGNORE = {
-      sn50v3: ['ADC1_V','Digital_IStatus','Door_status','EXTI_Trigger','TempC1','Work_mode',
-               'alt1','alt2','bw','chan1','f_cnt','freq1','gw1','gw2','lat1','lat2','lon1','lon2',
-               'rssi1','rx_time1','sf','snr1','snr2'],
-      lsn50:  ['alt1','alt2','bw','chan1','f_cnt','freq1','gw1','gw2','lat1','lat2','lon1','lon2',
-               'rssi1','rssi2','rx_time1','sf','snr1','snr2'],
-      s31lb:  ['EXTI_Trigger','alt1','alt2','bw','chan1','f_cnt','freq1','gw1','gw2','lat1','lat2',
-               'lon1','lon2','rssi1','rssi2','rx_time1','sf','snr1','snr2'],
-      se01lb: ['Mod','conduct_SOIL','i_flag','s_flag','temp_DS18B20', // technisch da, aber für Popup meist Raus
-               'alt1','alt2','bw','chan1','f_cnt','freq1','gw1','gw2','lat1','lat2','lon1','lon2',
-               'rssi1','rssi2','rx_time1','sf','snr1','snr2']
-    };
-
-    function typeFromId(id){
-      const low=id.toLowerCase();
-      if (low.includes('sn50v3')) return 'sn50v3';
-      if (low.includes('lsn50'))  return 'lsn50';
-      if (low.includes('s31'))    return 's31lb';
-      if (low.includes('se01'))   return 'se01lb';
-      return 'generic';
-    }
-
-    const map = L.map('map', { zoomControl:true }).setView([54.6, 9.3], 9);
+    // -----------------------------
+    // 1) Karte
+    // -----------------------------
+    const map = L.map('map').setView([54.5, 9.3], 8);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
+      maxZoom: 18,
       attribution: '&copy; OpenStreetMap'
     }).addTo(map);
 
-    // linkes Badge – lokale Uhrzeit
-    const leftBadge = document.getElementById('badge-left');
-    function tickLocalClock(){
-      const now = new Date();
-      leftBadge.textContent = 'Letzte Aktualisierung: '
-        + now.toLocaleTimeString('de-DE', {hour12:false});
-    }
-    tickLocalClock();
-    setInterval(tickLocalClock, 1000);
-
-    // Daten laden
-    let data;
-    try {
-      const res = await fetch(FETCH_URL, {cache:'no-store'});
-      data = await res.json();
-      if (!Array.isArray(data)) throw new Error('JSON ist kein Array');
-    } catch(e) {
-      console.error('Daten laden fehlgeschlagen:', e);
-      alert('Konnte /data/v2/latest/_all.json nicht laden.');
-      return;
-    }
-
-    // Rechts oben: letzte Node-Meldung (max ts)
-    const rightBadge = document.getElementById('badge-right');
-    let latest = null;
-    for (const r of data) {
-      if (!latest || new Date(r.ts) > new Date(latest.ts)) latest = r;
-    }
-    if (latest) {
-      rightBadge.textContent = `Letzte Node-Meldung: ${latest.id} — `
-        + new Date(latest.ts).toLocaleString('de-DE', {hour12:false});
-    }
-
-    // Anti-Overlap: kleiner Versatz (Zickzack) bei exakt gleichen Koordinaten
-    const coordCount = new Map();
-    function coordKey(lat,lon){ return lat.toFixed(6)+','+lon.toFixed(6); }
-    function jitter(lat,lon){
-      const key = coordKey(lat,lon);
-      const n = (coordCount.get(key) || 0);
-      coordCount.set(key, n+1);
-      if (n===0) return [lat,lon];
-      const d = 0.00025 * n; // ~25m
-      const a = (n%2===0) ? 1 : -1;
-      return [lat + d*a, lon - d*a];
-    }
-
-    // Marker & Popups
-    for (const rec of data){
-      const id = rec.id;
-      const pos = POSITIONS[id];
-      if (!pos){ 
-        console.warn('Keine Koordinaten für', id); 
-        continue; 
+    // -----------------------------
+    // 2) Badges (links & rechts)
+    // -----------------------------
+    const BadgeControlLeft = L.Control.extend({
+      options: { position: 'topleft' },
+      onAdd: function(){
+        const div = L.DomUtil.create('div','badge badge-left');
+        div.id = 'badge-left';
+        div.textContent = 'Letzte Aktualisierung: …';
+        return div;
       }
-      const [lat,lon] = jitter(pos.lat, pos.lon);
-
-      const t = typeFromId(id);
-      const ignore = new Set(FIELDS_TO_IGNORE[t] || []);
-
-      // Werte
-      const f = rec.fields || {};
-      const bat = (f.BatV!=null) ? f.BatV : null;
-      const t31 = (f.TempC_SHT31!=null) ? f.TempC_SHT31
-                : (f.TempC_SHT!=null)   ? f.TempC_SHT
-                : null;
-      const h31 = (f.Hum_SHT31!=null) ? f.Hum_SHT31
-                : (f.Hum_SHT!=null)   ? f.Hum_SHT
-                : null;
-
-      // Popup-HTML
-      let html = `<div class="popup">`
-               + `<h3>${id}</h3>`
-               + `<div class="kv"><b>Zeit:</b> ${new Date(rec.ts).toLocaleString('de-DE',{hour12:false})}</div>`;
-      if (t31!=null) html += `<div class="kv"><b>Temp (SHT31):</b> ${Number(t31).toFixed(1)} °C</div>`;
-      if (h31!=null) html += `<div class="kv"><b>Hum (SHT31):</b> ${Number(h31).toFixed(1)} %</div>`;
-      if (bat!=null) html += `<div class="kv"><b>Batterie:</b> ${Number(bat).toFixed(2)} V</div>`;
-      html += `<div class="sep"></div>`;
-
-      // Rest anzeigen – gefiltert
-      for (const [k,v] of Object.entries(f)){
-        if (ignore.has(k)) continue;
-        if (k==='BatV' || k==='TempC_SHT' || k==='TempC_SHT31' || k==='Hum_SHT' || k==='Hum_SHT31') continue;
-        html += `<div class="kv"><b>${k}:</b> ${String(v)}</div>`;
+    });
+    const BadgeControlRight = L.Control.extend({
+      options: { position: 'topright' },
+      onAdd: function(){
+        const div = L.DomUtil.create('div','badge badge-right');
+        div.id = 'badge-right';
+        div.textContent = 'Letzte Node-Meldung: …';
+        return div;
       }
-      html += `</div>`;
+    });
+    map.addControl(new BadgeControlLeft());
+    map.addControl(new BadgeControlRight());
 
-      L.marker([lat,lon]).addTo(map).bindPopup(html);
+    const badgeLeft  = document.getElementById('badge-left');
+    const badgeRight = document.getElementById('badge-right');
+
+    // -----------------------------
+    // 3) Welche Felder NICHT anzeigen
+    // -----------------------------
+    const FIELDS_TO_IGNORE = new Set([
+      'ADC1_V','Digital_IStatus','Door_status','EXTI_Trigger',
+      'Mod','conduct_SOIL','i_flag','s_flag','temp_DS18B20',
+      'alt1','alt2','bw','chan1','f_cnt','freq1','gw1','gw2',
+      'lat1','lat2','lon1','lon2','rssi1','rssi2','rx_time1','sf','snr1','snr2',
+      'data_time' // 1970-… raus
+    ]);
+
+    // -----------------------------
+    // 4) Koordinaten-Fallback (temporär!)
+    //    -> bis Node-RED automatisch lat/lon in _all.json mitschreibt
+    // -----------------------------
+    const POSITIONS = {
+      'breklum-sn50v3': { lat: 54.60669, lon: 8.98195 },
+      's31-lb':         { lat: 54.65000, lon: 8.96000 },
+      'kropp-sn50v3':   { lat: 54.41018, lon: 9.52839 },
+      'fahrdorf-sn50v3':{ lat: 54.50158, lon: 9.58690 }
+      // lsn50-v2 lassen wir bewusst weg, solange keine Koordinaten vorliegen
+    };
+
+    // -----------------------------
+    // 5) Daten laden & darstellen
+    // -----------------------------
+    const URL = '/v2/latest/_all.json'; // auf GitHub Pages: https://www.waldsensor.sh/v2/latest/_all.json
+
+    async function loadData(){
+      try{
+        // Cache-Buster, damit die Seite immer frische Daten lädt.
+        const res = await fetch(`${URL}?t=${Date.now()}`);
+        if(!res.ok) throw new Error(`HTTP ${res.status}`);
+        const arr = await res.json();
+
+        // letzte Aktualisierung (links)
+        const now = new Date();
+        badgeLeft.textContent = `Letzte Aktualisierung: ${now.toLocaleTimeString('de-DE')}`;
+
+        // letzte Node-Meldung (rechts)
+        if(Array.isArray(arr) && arr.length){
+          const newest = [...arr].sort((a,b)=>new Date(b.ts)-new Date(a.ts))[0];
+          const tsText = new Date(newest.ts).toLocaleString('de-DE');
+          badgeRight.textContent = `Letzte Node-Meldung: ${newest.id} — ${tsText}`;
+        } else {
+          badgeRight.textContent = 'Letzte Node-Meldung: —';
+        }
+
+        // Marker zuerst entfernen (bei Auto-Refresh in Zukunft)
+        // (für jetzt einmalig nicht nötig, aber sauber.)
+        // map.eachLayer(l => { if(l instanceof L.Marker) map.removeLayer(l); });
+
+        // Marker zeichnen
+        for(const rec of arr){
+          const id = rec?.id ?? '';
+          const fields = rec?.fields ?? {};
+          // Koordinaten-Quelle 1: aus fields
+          let lat = Number(fields.lat);
+          let lon = Number(fields.lon);
+
+          // Falls in den Feldern nichts vorhanden: Fallback
+          if(!Number.isFinite(lat) || !Number.isFinite(lon)){
+            const pos = POSITIONS[id];
+            if(pos){
+              lat = pos.lat; lon = pos.lon;
+            }
+          }
+
+          // Ohne Koordinaten –> überspringen (kein Zombie mehr)
+          if(!Number.isFinite(lat) || !Number.isFinite(lon)){
+            console.debug('Übersprungen (keine Koordinaten):', id);
+            continue;
+          }
+
+          // Popup zusammenbauen (bereinigt)
+          const fmt = (v, unit='') => (v==null || Number.isNaN(v)) ? '—' :
+                (typeof v === 'number' ? v.toLocaleString('de-DE') : String(v)) + (unit?` ${unit}`:'');
+
+          const html = `
+            <div class="popup">
+              <h3>${id}</h3>
+              <div class="row"><div class="label">Zeit:</div><div class="val">${new Date(rec.ts).toLocaleString('de-DE')}</div></div>
+              <div class="row"><div class="label">Temp (SHT31):</div><div class="val">${fmt(fields.TempC_SHT ?? fields.TempC_SHT31,'°C')}</div></div>
+              <div class="row"><div class="label">Hum (SHT31):</div><div class="val">${fmt(fields.Hum_SHT ?? fields.Hum_SHT31,'%')}</div></div>
+              <div class="row"><div class="label">Batterie:</div><div class="val">${fmt(fields.BatV,'V')}</div></div>
+              <hr/>
+              ${Object.entries(fields)
+                  .filter(([k]) => !FIELDS_TO_IGNORE.has(k) && !['TempC_SHT','TempC_SHT31','Hum_SHT','Hum_SHT31','BatV','lat','lon'].includes(k))
+                  .map(([k,v]) => `<div class="row"><div class="label">${k}:</div><div class="val">${fmt(v)}</div></div>`).join('')}
+            </div>
+          `;
+
+          L.marker([lat, lon]).addTo(map).bindPopup(html);
+        }
+
+      }catch(e){
+        console.error('Fehler beim Laden:', e);
+        badgeRight.textContent = 'Letzte Node-Meldung: — (Fehler beim Laden)';
+      }
     }
-  })();
+
+    loadData();
+    // Wenn du Auto-Refresh willst, kannst du später z. B. alle 5 min nachladen:
+    // setInterval(loadData, 5*60*1000);
   </script>
 </body>
 </html>
