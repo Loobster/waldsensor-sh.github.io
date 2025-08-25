@@ -95,18 +95,19 @@
     setInterval(tickLocalClock, 1000);
 
     // -------- Daten laden --------
-    let data;
-    try {
-      const res = await fetch(FETCH_URL, {cache:'no-store'});
-      if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
-      data = await res.json();
-      if (!Array.isArray(data)) throw new Error('JSON ist kein Array');
-    } catch(e) {
-      console.error('Daten laden fehlgeschlagen:', e);
-      rightBadge.textContent = 'Letzte Node-Meldung: — (Fehler beim Laden)';
-      return;
-    }
-
+// -------- Daten laden --------
+let data;
+try {
+  const url = FETCH_URL + "?t=" + new Date().getTime();   // Cache-Buster
+  const res = await fetch(url, {cache:'no-store'});
+  if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+  data = await res.json();
+  if (!Array.isArray(data)) throw new Error('JSON ist kein Array');
+} catch(e) {
+  console.error('Daten laden fehlgeschlagen:', e);
+  rightBadge.textContent = 'Letzte Node-Meldung: — (Fehler beim Laden)';
+  return;
+}
     // Rechts: letzte Node-Meldung
     let latest = null;
     for (const r of data) {
