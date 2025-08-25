@@ -1,219 +1,213 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Schulwaldsensor – Detail</title>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" />
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<style>
-  :root{
-    --bg:#f6f9fc;
-    --card:#ffffff;
-    --text:#0f172a;
-    --muted:#64748b;
-    --accent:#e6f4ea;        /* Badge-Hintergrund (hellgrün) */
-    --accent-border:#b6e2c4; /* Badge-Rand */
-    --accent-text:#1f7a3e;   /* Badge-Text (waldgrün) */
+  <meta charset="utf-8" />
+  <title>WALDSENSOR.SH – Sensor</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-    --temp:#8EC9FF;          /* helles Blau */
-    --hum:#8BD8B0;           /* helles Grün */
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; padding:24px;
-    background:var(--bg); color:var(--text);
-    font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Noto Sans",sans-serif;
-  }
-  a.back{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--muted);margin-bottom:16px}
-  h1{margin:0 0 16px;font-size:clamp(24px,4vw,40px);font-weight:800;letter-spacing:.2px}
-  .grid{display:grid;gap:20px;grid-template-columns:1fr;max-width:1200px}
-  @media (min-width:980px){.grid{grid-template-columns:1fr 1fr}}
-  .card{
-    background:var(--card);
-    border-radius:18px;
-    padding:20px;
-    box-shadow:0 6px 24px rgba(15,23,42,.06);
-  }
-  .badge{
-    display:inline-flex;align-items:center;gap:.6rem;
-    background:var(--accent); color:var(--accent-text);
-    border:1px solid var(--accent-border);
-    padding:10px 14px; border-radius:14px; font-weight:700;
-  }
-  .kv{display:grid;gap:12px;margin-top:16px}
-  .kv-row{display:flex;gap:10px;align-items:center}
-  .kv-key{min-width:170px;font-weight:700}
-  .muted{color:var(--muted)}
-  .aside h3{margin:0 0 12px}
-  .aside .kv-key{min-width:auto}
-  canvas{max-width:100%;height:360px}
-</style>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #f3f6f9;
+      --card: #fff;
+      --text: #0f172a;
+      --muted:#5b6476;
+      --green:#16a34a;
+      --green-soft:#dcfce7;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --accent:#1d4ed8;    /* blau */
+      --accent2:#059669;   /* türkisgrün */
+    }
+    html,body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; }
+    .wrap { max-width:1200px; margin:24px auto; padding:0 16px; }
+    a.back { display:inline-flex; gap:8px; align-items:center; text-decoration:none; color:var(--muted); font-weight:600; }
+    h1 { margin:18px 0 12px; font-size:clamp(28px,4vw,44px); }
+    .grid { display:grid; grid-template-columns:1fr 340px; gap:20px; }
+    .card { background:var(--card); border-radius:20px; box-shadow:var(--shadow); padding:18px; }
+    .stamp { display:inline-flex; gap:10px; align-items:center; padding:10px 14px; background:var(--green-soft); color:#14532d; border-radius:14px; font-weight:700; border:1px solid #c7f0d2;}
+    .kv { margin-top:12px; line-height:1.8; font-size:18px; }
+    .kv b { font-variant-numeric: tabular-nums; }
+    .muted { color:var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    canvas { width:100%; height:360px; }
+    @media (max-width: 980px){ .grid { grid-template-columns:1fr; } }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <a class="back" href="../v2.html">← Zur Karte</a>
+    <h1 id="title">Schulwaldsensor — …</h1>
 
-<a class="back" href="/v2.html">← Zur Karte</a>
-<h1 id="title">Schulwaldsensor</h1>
+    <div class="grid">
+      <div class="card">
+        <div id="stamp" class="stamp">⏱️ Stand: —</div>
+        <div class="kv" id="facts"></div>
+        <div class="muted" style="margin-top:10px">Quelle: /data/v2/latest/_all.json</div>
+      </div>
 
-<div class="grid">
-  <!-- linke Karte: aktuelle Werte -->
-  <section class="card">
-    <div class="badge" id="badge">
-      <span>⏱️</span><span id="badgeText">Stand: —</span>
-    </div>
-
-    <div class="kv">
-      <div class="kv-row"><div class="kv-key">🔋 Batterie:</div><div id="batt">—</div></div>
-      <div class="kv-row"><div class="kv-key">🌡️ Temperatur:</div><div id="temp">—</div></div>
-      <div class="kv-row"><div class="kv-key">💧 Luftfeuchtigkeit:</div><div id="hum">—</div></div>
-      <div class="kv-row muted"><div class="kv-key">Quelle:</div><div>/data/v2/latest/_all.json</div></div>
-    </div>
-  </section>
-
-  <!-- rechte Karte: Verlauf -->
-  <section class="card">
-    <h3>📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</h3>
-    <div style="margin:10px 0 6px; display:flex; gap:12px; color:var(--muted);">
-      <span>🌡️ Temperatur (°C)</span>
-      <span>💧 Luftfeuchtigkeit (%)</span>
-    </div>
-    <canvas id="chart"></canvas>
-
-    <div class="aside" style="margin-top:18px">
-      <div class="card" style="padding:14px">
-        <h3>Aktuelle Werte</h3>
-        <div class="kv">
-          <div class="kv-row"><div class="kv-key">Temperatur:</div><div id="asideT">—</div></div>
-          <div class="kv-row"><div class="kv-key">Luftfeuchte:</div><div id="asideH">—</div></div>
-          <div class="kv-row"><div class="kv-key">Batterie:</div><div id="asideV">—</div></div>
-        </div>
+      <div class="card">
+        <h3 style="margin:0 0 10px">Aktuelle Werte</h3>
+        <div id="current" class="kv">—</div>
       </div>
     </div>
-  </section>
-</div>
+
+    <div class="card" style="margin-top:16px">
+      <h3 style="margin:0 0 8px">📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</h3>
+      <div class="muted" id="hint" style="display:none"></div>
+      <canvas id="chart"></canvas>
+    </div>
+  </div>
 
 <script>
-(async function(){
-  // --------- Hilfen
-  const qs = new URLSearchParams(location.search);
-  const nodeId = (qs.get("node") || "").trim();
-  const niceName = nodeId ? nodeId.replace(/-/g," – ") : "Unbekannt";
-  document.getElementById("title").textContent = `Schulwaldsensor — ${niceName.split("–")[0].toUpperCase()}`;
+const LATEST_URL = "/data/v2/latest/_all.json";
 
-  const fmtTs = (iso) => {
-    try {
-      const d = new Date(iso);
-      return d.toLocaleString("de-DE",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"});
-    } catch { return "—"; }
-  };
-  const text = (sel, val) => document.getElementById(sel).textContent = val;
-
-  // --------- Live-Werte laden
-  try {
-    const res = await fetch("/data/v2/latest/_all.json",{cache:"no-store"});
-    const all = await res.json();
-    const rec = all.find(r => r.id === nodeId);
-    if (rec) {
-      text("badgeText", `Stand: ${fmtTs(rec.ts)}`);
-      const f = rec.fields || {};
-      text("batt", `${(f.BatV ?? f.batt ?? 0).toFixed ? (f.BatV).toFixed(3) : f.BatV} V`);
-      const t = f.TempC_SHT ?? f.TempC_SHT31 ?? f.t ?? null;
-      const h = f.Hum_SHT ?? f.Hum_SHT31 ?? f.h ?? null;
-      if (t != null) text("temp", `${Number(t).toFixed(1)} °C (SHT)`);
-      if (h != null) text("hum",  `${Number(h).toFixed(1)} % (SHT)`);
-
-      text("asideT", t!=null ? `${Number(t).toFixed(1)} °C` : "—");
-      text("asideH", h!=null ? `${Number(h).toFixed(1)} %` : "—");
-      text("asideV", f.BatV!=null ? `${Number(f.BatV).toFixed(3)} V` : "—");
-    } else {
-      text("badgeText","Stand: —");
-    }
-  } catch(e){
-    text("badgeText","Stand: —");
-  }
-
-  // --------- Verlauf laden (beide Namensvarianten)
-  async function loadHistory() {
-    const p1 = `/data/v2/history/${nodeId}.json`;
-    const p2 = `/data/v2/history_${nodeId}.json`;
-    let data = null, used = "";
-    for (const p of [p1,p2]) {
-      try {
-        const r = await fetch(p,{cache:"no-store"});
-        if (r.ok) { data = await r.json(); used = p; break; }
-      } catch {}
-    }
-    return {data,used};
-  }
-
-  const {data} = await loadHistory();
-
-  const ctx = document.getElementById("chart").getContext("2d");
-  const chartData = {
-    labels: [],
-    datasets: [
-      {
-        label: "🌡️ Temperatur (°C)",
-        data: [],
-        borderColor: getComputedStyle(document.documentElement).getPropertyValue('--temp').trim(),
-        backgroundColor: "transparent",
-        pointRadius: 3,
-        pointHoverRadius: 4,
-        tension: 0.25,
-        yAxisID: "y"
-      },
-      {
-        label: "💧 Luftfeuchtigkeit (%)",
-        data: [],
-        borderColor: getComputedStyle(document.documentElement).getPropertyValue('--hum').trim(),
-        backgroundColor: "transparent",
-        pointRadius: 3,
-        pointHoverRadius: 4,
-        tension: 0.25,
-        yAxisID: "y1"
-      }
-    ]
-  };
-
-  if (Array.isArray(data) && data.length) {
-    data.slice(-48).forEach(d => {
-      chartData.labels.push(new Date(d.ts).toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"}));
-      chartData.datasets[0].data.push(d.t ?? null);
-      chartData.datasets[1].data.push(d.h ?? null);
+function fmtLocal(iso){
+  try{
+    return new Date(iso).toLocaleString('de-DE',{
+      day:'2-digit',month:'2-digit',year:'numeric',
+      hour:'2-digit',minute:'2-digit',second:'2-digit'
     });
-  } else {
-    // keine Daten → leeres Chart mit Hinweis
-    chartData.labels.push("");
-    chartData.datasets[0].data.push(null);
-    chartData.datasets[1].data.push(null);
+  }catch{ return '—'; }
+}
+function n(v){ return (v===null||v===undefined||Number.isNaN(+v))?'–':((''+v).replace('.',',')); }
+
+async function resolveNodeId(requested){
+  if (requested.includes('-')) return requested; // schon voll
+  try{
+    const res = await fetch(LATEST_URL, {cache:'no-store'});
+    const arr = await res.json();
+    const hit = arr.find(r => r.id && r.id.startsWith(requested+'-'));
+    if (hit) return hit.id;
+  }catch(e){ console.warn('resolveNodeId:', e); }
+  return requested;
+}
+
+(async()=>{
+  const p = new URLSearchParams(location.search);
+  const raw = (p.get('node')||'').trim();
+  if(!raw){ document.body.innerHTML='<div class="wrap"><h2>❌ Kein Node angegeben</h2></div>'; return; }
+
+  const nodeId = await resolveNodeId(raw);
+
+  // ---- latest laden
+  let latest;
+  try{
+    const res = await fetch(LATEST_URL, {cache:'no-store'});
+    const arr = await res.json();
+    latest = arr.find(r => r.id === nodeId);
+    if(!latest){ throw new Error('Node nicht in _all.json'); }
+  }catch(e){
+    document.body.innerHTML = `<div class="wrap"><h2>❌ Node „${nodeId}“ nicht gefunden.</h2><div class="muted">_all.json konnte nicht gelesen werden.</div></div>`;
+    return;
   }
+
+  const fields = latest.fields || {};
+  const temp = fields.TempC_SHT ?? fields.TempC_SHT31 ?? null;
+  const hum  = fields.Hum_SHT  ?? fields.Hum_SHT31  ?? null;
+  const vbat = fields.BatV ?? null;
+
+  document.getElementById('title').textContent = `Schulwaldsensor — ${nodeId.split('-')[0].toUpperCase()}`;
+  document.getElementById('stamp').textContent = `⏱️ Stand: ${fmtLocal(latest.ts)}`;
+
+  document.getElementById('facts').innerHTML = `
+    🔋 Batterie: <b>${n(vbat)}</b> V<br/>
+    🌡️ Temperatur: <b>${n(temp)}</b> °C (SHT)<br/>
+    💧 Luftfeuchtigkeit: <b>${n(hum)}</b> % (SHT)
+  `;
+  document.getElementById('current').innerHTML = `
+    Temperatur: <b>${n(temp)}</b> °C<br/>
+    Luftfeuchte: <b>${n(hum)}</b> %<br/>
+    Batterie: <b>${n(vbat)}</b> V
+  `;
+
+  // ---- History laden (zwei mögliche Dateinamen)
+  const historyCandidates = [
+    `/data/v2/history/${nodeId}.json`,
+    `/data/v2/history_${nodeId}.json`
+  ];
+
+  let hist = null, usedUrl = null;
+  for (const url of historyCandidates){
+    try{
+      const r = await fetch(url, {cache:'no-store'});
+      if (r.ok){
+        hist = await r.json(); usedUrl = url; break;
+      }
+    }catch{}
+  }
+
+  const hint = document.getElementById('hint');
+  const ctx  = document.getElementById('chart').getContext('2d');
+
+  if (!hist || !Array.isArray(hist) || hist.length === 0){
+    hint.style.display='block';
+    hint.textContent = `Kein Verlauf verfügbar.`;
+    new Chart(ctx, {
+      type:'line',
+      data:{ labels:[], datasets:[] },
+      options:{ plugins:{legend:{display:false}} }
+    });
+    return;
+  }
+
+  // Datenreihen
+  const labels = hist.map(d => new Date(d.ts).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}));
+  const tempSeries = hist.map(d => (d.t==null? null : Number(d.t)));
+  const humSeries  = hist.map(d => (d.h==null? null : Number(d.h)));
+
+  hint.style.display='none';
 
   new Chart(ctx, {
-    type: "line",
-    data: chartData,
-    options: {
+    type:'line',
+    data:{
+      labels,
+      datasets:[
+        {
+          label:'Temperatur (°C)',
+          data: tempSeries,
+          yAxisID: 'y1',
+          tension:.35,
+          borderWidth:3,
+          pointRadius:3,
+          borderColor:'rgba(37,99,235,.9)',     /* helleres Blau */
+          backgroundColor:'rgba(37,99,235,.12)',
+          spanGaps:true
+        },
+        {
+          label:'Luftfeuchtigkeit (%)',
+          data: humSeries,
+          yAxisID: 'y2',
+          tension:.35,
+          pointRadius:3,
+          borderWidth:3,
+          borderColor:'rgba(5,150,105,.9)',     /* helleres Grün */
+          backgroundColor:'rgba(5,150,105,.12)',
+          spanGaps:true
+        }
+      ]
+    },
+    options:{
       responsive:true,
-      maintainAspectRatio:false,
-      interaction:{mode:"index", intersect:false},
+      interaction:{ mode:'index', intersect:false },
       plugins:{
-        legend:{display:true, labels:{boxWidth:12, usePointStyle:true}},
-        tooltip:{enabled:true}
+        legend:{ position:'top' },
+        tooltip:{ callbacks:{
+          label: ctx => `${ctx.dataset.label}: ${ctx.formattedValue.replace('.',',')}`
+        }}
       },
       scales:{
-        y:{
-          type:"linear", position:"left",
-          title:{display:true, text:"°C"},
-          suggestedMin: Math.min(...chartData.datasets[0].data.filter(x=>x!=null)) - 1 || 0,
-          suggestedMax: Math.max(...chartData.datasets[0].data.filter(x=>x!=null)) + 1 || 10,
-          grid:{color:"rgba(15,23,42,.08)"}
-        },
         y1:{
-          type:"linear", position:"right", grid:{drawOnChartArea:false, color:"rgba(15,23,42,.08)"},
-          title:{display:true, text:"%"},
-          suggestedMin: Math.min(...chartData.datasets[1].data.filter(x=>x!=null)) - 1 || 0,
-          suggestedMax: Math.max(...chartData.datasets[1].data.filter(x=>x!=null)) + 1 || 100
+          type:'linear', display:true, position:'left',
+          title:{ display:true, text:'°C' },
+          grid:{ drawOnChartArea:false }
         },
-        x:{grid:{color:"rgba(15,23,42,.06)"}}
+        y2:{
+          type:'linear', display:true, position:'right',
+          suggestedMin: 30, suggestedMax: 100,
+          title:{ display:true, text:'% rF' }
+        },
+        x:{ title:{ display:false } }
       }
     }
   });
