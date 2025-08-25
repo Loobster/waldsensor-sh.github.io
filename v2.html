@@ -2,216 +2,238 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WALDSENSOR.SH – Karte (V2)</title>
-
-  <!-- Leaflet -->
+  <title>Waldsensor SH – Karte (V2)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""
   />
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
-
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    crossorigin=""
-  ></script>
-
-  <!-- QRCode -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-
   <style>
-    :root{
-      --pill-bg:#fff;
-      --pill-text:#106e2a;
-      --pill-shadow:0 2px 10px rgba(0,0,0,.15);
-    }
-    html, body { height:100%; margin:0; }
-    #map { height:100%; width:100%; }
+    html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", "Apple Color Emoji", "Segoe UI Emoji"; }
+    #map { height: 100%; }
 
-    .pill {
-      position: fixed;
-      z-index: 999;
-      top: 14px;
-      left: 70px;
-      background: var(--pill-bg);
-      color: var(--pill-text);
+    /* Badge oben links: wir schieben es etwas nach rechts, damit +/- nicht überdeckt */
+    .info {
+      position: absolute;
+      top: 12px;
+      left: 80px; /* vorher 16px, jetzt weiter rechts */
+      z-index: 1000;
+      background: #fff;
+      border-radius: 12px;
       padding: 10px 14px;
-      border-radius: 14px;
-      font: 600 18px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      box-shadow: var(--pill-shadow);
-      border: 1px solid #e8e8e8;
+      line-height: 1.35;
+      box-shadow: 0 2px 10px rgba(0,0,0,.12);
+      border: 1px solid rgba(0,0,0,.08);
+      color: #14532d;
+      font-weight: 600;
     }
+    .info small { display: block; color: #374151; font-weight: 500; }
 
-    .last-node {
-      position: fixed;
-      z-index: 999;
-      top: 14px;
-      right: 14px;
-      background: #e9f3ff;
-      color: #0b4da2;
-      padding: 10px 14px;
-      border-radius: 14px;
-      font: 600 16px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      box-shadow: var(--pill-shadow);
-      border: 1px solid #d6e6ff;
-      max-width: 42ch;
-      text-align: right;
+    .leaflet-popup-content h3 {
+      margin: 0 0 6px 0;
+      font-size: 18px;
+      line-height: 1.2;
     }
-
-    .popup h3{ margin:0 0 .25rem 0; font:700 20px/1.25 system-ui; }
-    .popup hr{ border:0; height:1px; background:#ececec; margin:.5rem 0 .75rem; }
-    .popup .kv{ margin:.15rem 0; }
-    .popup .kv b{ font-weight:700; }
+    .kv { margin: 2px 0; }
+    .kv b { display: inline-block; min-width: 11em; }
+    .sep { height: 1px; background: #e5e7eb; margin: 10px 0; }
+    .muted { color: #6b7280; }
   </style>
 </head>
 <body>
-  <div class="pill" id="stamp">Letzte Aktualisierung: –</div>
-  <div class="last-node" id="last">Letzte Node-Meldung: –</div>
   <div id="map"></div>
+  <div class="info" id="infoBox">
+    Letzte Aktualisierung: <span id="lastUpdate">–:–:–</span>
+    <small>Letzte Node-Meldung: <span id="lastNode">–</span></small>
+  </div>
 
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
   <script>
-    const DATA_URL = "/data/v2/latest/_all.json";  
-    const AUTO_REFRESH_MS = 60_000;                
+    // ---------- Einstellungen ----------
+    // Pfad im GitHub Pages Repo (öffentlich): data/v2/latest/_all.json
+    const ALL_URL = "/data/v2/latest/_all.json";
 
-    const MANUAL_LOC = {
-      "breklum-sn50v3":  [54.60669, 8.98195],
-      "s31-lb":          [54.65000, 8.96000],
-      "se01-lb":         [54.65000, 8.96000],
-      "kropp-sn50v3":    [54.41018, 9.52839],
-      "fahrdorf-sn50v3": [54.50158, 9.58690],
+    // Manuelle Positionen (falls im Datensatz keine Koordinaten existieren oder wir überschreiben wollen)
+    const POSITION_OVERRIDES = {
+      "breklum-sn50v3": { lat: 54.60669, lon: 8.98195 },
+      "s31-lb":        { lat: 54.65000, lon: 8.96000 },
+      "kropp-sn50v3":  { lat: 54.41018, lon: 9.52839 },
+      "fahrdorf-sn50v3": { lat: 54.50158, lon: 9.58690 }
+      // "se01-lb" => hat schon korrekte Koordinaten im Override? ggf. ergänzen
     };
 
-    const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status"]);
+    // Felder, die wir in Popups NICHT zeigen wollen (nach Gerätetyp)
+    const FIELDS_TO_IGNORE = {
+      lsn50v2: ["alt1","alt2","bw","chan1","f_cnt","freq1","gw1","gw2","lat1","lat2","lon1","lon2","rssi1","rssi2","rx_time1","sf","snr1","snr2"],
+      s31lb:   ["EXTI_Trigger","alt1","alt2","bw","chan1","f_cnt","freq1","gw1","gw2","lat1","lat2","lon1","lon2","rssi1","rssi2","rx_time1","sf","snr1","snr2"],
+      se01lb:  ["Mod","alt1","alt2","bw","chan1","conduct_SOIL","f_cnt","freq1","gw1","gw2","i_flag","lat1","lat2","lon1","lon2","rssi1","rssi2","rx_time1","s_flag","sf","snr1","snr2","temp_DS18B20"],
+      sn50v3:  ["ADC1_V","Digital_IStatus","Door_status","EXTI_Trigger","TempC1","Work_mode","alt1","alt2","bw","chan1","f_cnt","freq1","gw1","gw2","lat1","lat2","lon1","lon2","rssi1","rx_time1","sf","snr1"]
+    };
 
-    const map = L.map("map", { zoomSnap: 0.25 });
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-    }).addTo(map);
-    map.setView([54.4, 9.6], 8.25);
-    let markersLayer = L.layerGroup().addTo(map);
+    // Auto-Reload: alle 5 Minuten frische Daten ziehen
+    const REFRESH_MS = 5 * 60 * 1000;
 
-    function deTime(ts){
+    // ---------- Hilfsfunktionen ----------
+    const shortName = id => (id || "").split("-")[0] || id || "–";
+    const fmtTime = ts => {
       try {
-        return new Date(ts).toLocaleString("de-DE", {
-          year:"numeric", month:"2-digit", day:"2-digit",
-          hour:"2-digit", minute:"2-digit", second:"2-digit"
-        });
-      } catch(_){ return ts || "–"; }
+        const d = new Date(ts);
+        return d.toLocaleString("de-DE", { day:"2-digit", month:"2-digit", year:"numeric", hour:"2-digit", minute:"2-digit", second:"2-digit" });
+      } catch { return ts || "–"; }
+    };
+    const nodeTypeFromId = id => {
+      if (!id) return "generic";
+      const idLower = id.toLowerCase();
+      if (idLower.includes("sn50v3")) return "sn50v3";
+      if (idLower.includes("s31-lb"))  return "s31lb";
+      if (idLower.includes("se01-lb")) return "se01lb";
+      if (idLower.includes("lsn50"))   return "lsn50v2";
+      return "generic";
+    };
+    const niceLabel = key => {
+      const map = {
+        BatV:"Batterie (V)",
+        Hum_SHT:"Luftfeuchte (%)",
+        TempC_SHT:"Temperatur (°C)",
+        Hum_SHT31:"Luftfeuchte (SHT31) (%)",
+        TempC_SHT31:"Temperatur (SHT31) (°C)",
+        temp_SOIL:"Bodentemp (°C)",
+        water_SOIL:"Bodenwasser (%)",
+        conduct_SOIL:"Leitf. Boden",
+        temp_DS18B20:"Temp DS18B20 (°C)"
+      };
+      return map[key] || key;
+    };
+
+    // ---------- Karte ----------
+    const map = L.map('map', { zoomControl: true }).setView([54.5, 9.5], 9);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    let markers = [];
+
+    async function loadAll() {
+      // Cache-Buster, damit GitHub Pages nicht zu lange cached
+      const url = `${ALL_URL}?t=${Date.now()}`;
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status} für ${url}`);
+      const data = await res.json(); // erwartet Array [{id, ts, fields, (optional) lat/lon }, ...]
+      return Array.isArray(data) ? data : [];
     }
 
-    function cleanFields(fields){
-      const out = {};
-      for (const [k,v] of Object.entries(fields || {})){
-        if (OMIT_FIELDS.has(k)) continue;
-        if (v === undefined || v === null || v === "NULL") continue;
-        if (typeof v === "number" && v === 0) continue;
-        out[k] = v;
+    function clearMarkers() {
+      markers.forEach(m => m.remove());
+      markers = [];
+    }
+
+    function buildPopupHtml(item) {
+      const id = item.id || "unbekannt";
+      const t = nodeTypeFromId(id);
+      const ignores = FIELDS_TO_IGNORE[t] || [];
+
+      // Kopie der Felder, gefiltert
+      const clean = {};
+      for (const [k, v] of Object.entries(item.fields || {})) {
+        if (!ignores.includes(k) && v !== null && v !== undefined && v !== "") {
+          clean[k] = v;
+        }
       }
-      return out;
-    }
 
-    function pickCoord(item){
-      if (item?.fields?.lat !== undefined && item?.fields?.lon !== undefined){
-        return [Number(item.fields.lat), Number(item.fields.lon)];
+      // ein paar schöne Zeilen nach oben (falls vorhanden)
+      const linesTop = [];
+      if ("TempC_SHT31" in clean) linesTop.push(`<div class="kv"><b>Temp (SHT31):</b> ${Number(clean.TempC_SHT31).toFixed(2)} °C</div>`);
+      if ("Hum_SHT31" in clean)   linesTop.push(`<div class="kv"><b>Hum (SHT31):</b> ${Number(clean.Hum_SHT31).toFixed(2)} %</div>`);
+      if ("TempC_SHT" in clean)   linesTop.push(`<div class="kv"><b>Temp (SHT):</b> ${Number(clean.TempC_SHT).toFixed(2)} °C</div>`);
+      if ("Hum_SHT" in clean)     linesTop.push(`<div class="kv"><b>Hum (SHT):</b> ${Number(clean.Hum_SHT).toFixed(2)} %</div>`);
+      if ("BatV" in clean)        linesTop.push(`<div class="kv"><b>Batterie:</b> ${Number(clean.BatV).toFixed(2)} V</div>`);
+
+      // restliche Felder tabellarisch
+      const rest = [];
+      for (const [k, v] of Object.entries(clean)) {
+        if (["TempC_SHT31","Hum_SHT31","TempC_SHT","Hum_SHT","BatV"].includes(k)) continue;
+        const val = (typeof v === "number") ? Number(v).toString() : String(v);
+        rest.push(`<div class="kv"><b>${niceLabel(k)}:</b> ${val}</div>`);
       }
-      if (MANUAL_LOC[item.id]) return MANUAL_LOC[item.id];
-      return null;
+
+      return `
+        <h3>${id}</h3>
+        <div class="muted">Zeit: ${fmtTime(item.ts)}</div>
+        ${linesTop.join("")}
+        <div class="sep"></div>
+        ${rest.length ? rest.join("") : `<div class="muted">Keine weiteren Felder</div>`}
+      `;
     }
 
-    function popupHtml(item){
-      const f = cleanFields(item.fields);
-      let html = `<div class="popup"><h3>${item.id}</h3>`;
-      html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
-      if (typeof f.TempC_SHT31 === "number")
-        html += `<div class="kv">Temp (SHT31): <b>${f.TempC_SHT31.toFixed(2)} °C</b></div>`;
-      else if (typeof f.TempC_SHT === "number")
-        html += `<div class="kv">Temp (SHT): <b>${f.TempC_SHT.toFixed(1)} °C</b></div>`;
-      if (typeof f.Hum_SHT31 === "number")
-        html += `<div class="kv">Hum (SHT31): <b>${f.Hum_SHT31.toFixed(2)} %</b></div>`;
-      else if (typeof f.Hum_SHT === "number")
-        html += `<div class="kv">Hum (SHT): <b>${f.Hum_SHT.toFixed(1)} %</b></div>`;
-      if (typeof f.BatV === "number")
-        html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
-      for (const [k,v] of Object.entries(f)){
-        if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV","lat","lon"].includes(k)) continue;
-        html += `<div class="kv">${k}: <b>${v}</b></div>`;
+    function placeMarkers(items) {
+      clearMarkers();
+      const group = [];
+
+      items.forEach(item => {
+        const id = item.id || "";
+        // Position priorisieren: Override > item.lat/lon
+        let lat = undefined, lon = undefined;
+        if (POSITION_OVERRIDES[id]) {
+          lat = POSITION_OVERRIDES[id].lat;
+          lon = POSITION_OVERRIDES[id].lon;
+        } else if (item.lat && item.lon) {
+          lat = item.lat; lon = item.lon;
+        }
+
+        if (typeof lat !== "number" || typeof lon !== "number") return; // ohne Position nicht anzeigen
+
+        const marker = L.marker([lat, lon]).addTo(map);
+        marker.bindPopup(buildPopupHtml(item), { maxWidth: 360 });
+        markers.push(marker);
+        group.push(marker);
+      });
+
+      if (group.length) {
+        const g = L.featureGroup(group);
+        map.fitBounds(g.getBounds().pad(0.15), { animate: false });
       }
-      // QR-Code Container
-      html += `<div id="qrcode-${item.id}" style="margin-top:8px;"></div>`;
-      return html + `</div>`;
     }
 
-    function latestRecord(data){
-      let best = null, bestT = -Infinity;
-      for (const r of (data||[])){
-        if (!r || !r.ts) continue;
-        const t = new Date(r.ts).getTime();
-        if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
+    function updateHeader(items) {
+      // UI-Zeit jetzt:
+      document.getElementById("lastUpdate").textContent =
+        new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+
+      // Neueste Meldung ermitteln
+      let latest = null;
+      for (const it of items) {
+        if (!it.ts) continue;
+        if (!latest || new Date(it.ts) > new Date(latest.ts)) latest = it;
       }
-      return best;
-    }
-
-    async function loadData(){
-      const url = `${DATA_URL}?t=${Date.now()}`;
-      const res = await fetch(url, { cache:"no-store" });
-      if (!res.ok) throw new Error("fetch failed " + res.status);
-      return res.json();
-    }
-
-    function render(data){
-      markersLayer.clearLayers();
-      const bounds = [];
-      for (const item of (data || [])){
-        const coord = pickCoord(item);
-        if (!coord) continue;
-        const marker = L.marker(coord).bindPopup(popupHtml(item));
-        marker.on("popupopen", () => {
-          const shortId = item.id ? item.id.split("-")[0] : "unbekannt";
-          const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
-          const qrDiv = document.getElementById(`qrcode-${item.id}`);
-          if (qrDiv && !qrDiv.hasChildNodes()) {
-            QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 128 }, (err, canvas) => {
-              if (!err) qrDiv.appendChild(canvas);
-            });
-          }
-        });
-        marker.addTo(markersLayer);
-        bounds.push(coord);
-      }
-      if (bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
-
-      document.getElementById("stamp").textContent =
-        "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
-
-      const lastEl = document.getElementById("last");
-      const lastRec = latestRecord(data);
-      if (lastRec){
-        let shortId = lastRec.id ? lastRec.id.split("-")[0] : "unbekannt";
-        lastEl.textContent =
-          "Letzte Node-Meldung: " + deTime(lastRec.ts) + " – " + shortId;
+      const lastNodeEl = document.getElementById("lastNode");
+      if (latest) {
+        const nice = `${shortName(latest.id)} – ${fmtTime(latest.ts)}`;
+        lastNodeEl.textContent = nice;
       } else {
-        lastEl.textContent = "Letzte Node-Meldung: –";
+        lastNodeEl.textContent = "–";
       }
     }
 
-    async function run(){
-      try{ render(await loadData()); }
-      catch(err){
-        console.error(err);
-        document.getElementById("stamp").textContent =
-          "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
+    async function refresh() {
+      try {
+        const items = await loadAll();
+        updateHeader(items);
+        placeMarkers(items);
+      } catch (e) {
+        console.error(e);
       }
     }
 
-    run();
-    setInterval(run, AUTO_REFRESH_MS);
+    // Initial + Auto-Refresh
+    refresh();
+    setInterval(refresh, REFRESH_MS);
   </script>
 </body>
 </html>
