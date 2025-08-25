@@ -1,230 +1,185 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Schulwaldsensor – Detail</title>
-
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
-  <style>
-    :root{
-      --bg:#f6f8fb;
-      --card:#ffffff;
-      --text:#0e1a2b;
-      --muted:#5b6b81;
-      --accent:#1463ff;
-      --ok:#0a7f3f;
-      --shadow:0 12px 30px rgba(10,30,70,.08);
-      --radius:18px;
-    }
-    html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-    .wrap{max-width:980px;margin:32px auto;padding:0 16px}
-    .title{
-      display:flex;align-items:center;gap:.6rem;
-      font-weight:800;font-size:clamp(22px,3.7vw,34px);letter-spacing:.2px;
-    }
-    .crumb{margin:10px 0 22px}
-    .crumb a{color:var(--accent);text-decoration:none}
-    .grid{display:grid;grid-template-columns:1fr;gap:18px}
-    @media(min-width:860px){ .grid{grid-template-columns:1.1fr 1fr} }
-    .card{
-      background:var(--card); border-radius:var(--radius);
-      box-shadow:var(--shadow); padding:20px 22px;
-    }
-    .kv{display:flex;gap:10px;align-items:center;}
-    .kv b{font-weight:800}
-    .kv .val{font-weight:700}
-    .muted{color:var(--muted)}
-    .pill{
-      display:inline-flex;align-items:center;gap:.5rem;
-      background:#eaf7ef;color:var(--ok);border-radius:999px;
-      padding:6px 12px;font-weight:700;border:1px solid #d8efdf;
-    }
-    .chart-title{font-weight:900;font-size:22px;margin:0 0 12px}
-    .row{display:flex;flex-wrap:wrap;gap:10px}
-    .row .chip{background:#f0f4ff;color:#294a9c;border:1px solid #e1e9ff;border-radius:10px;padding:6px 10px;font-weight:600}
-    .footer{margin:22px 0 8px;color:var(--muted)}
-    canvas{width:100%!important;height:auto!important;aspect-ratio:16/9}
-    .empty{padding:28px 0;color:var(--muted)}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Waldsensor.SH – Sensor</title>
+<style>
+  body{font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;margin:0;padding:16px;color:#111}
+  .wrap{max-width:900px;margin:0 auto}
+  .badge{display:inline-block;background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:6px 10px;font-weight:600}
+  .muted{color:#555}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  .card{border:1px solid #eee;border-radius:12px;padding:12px}
+  h1{margin:0 0 8px}
+  canvas{width:100%;height:280px}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="crumb"><a href="/v2.html">← Zur Karte</a></div>
-
-    <h1 class="title">🌳 Schulwaldsensor — <span id="nodeName">–</span></h1>
-
-    <div class="grid">
-      <!-- linke Spalte: Status -->
-      <section class="card">
-        <div class="row" style="margin-bottom:12px">
-          <span class="pill">🔄 <span id="lastTs">–</span></span>
-        </div>
-
-        <div class="kv" style="margin:.3rem 0">
-          <span>🔋</span> <b>Batterie:</b>&nbsp;<span class="val" id="bat">–</span>
-        </div>
-        <div class="kv" style="margin:.3rem 0">
-          <span>🌡️</span> <b>Temperatur:</b>&nbsp;<span class="val" id="temp">–</span>
-        </div>
-        <div class="kv" style="margin:.3rem 0">
-          <span>💧</span> <b>Luftfeuchtigkeit:</b>&nbsp;<span class="val" id="hum">–</span>
-        </div>
-
-        <p class="footer">Quelle: <code>/data/v2/latest/_all.json</code></p>
-      </section>
-
-      <!-- rechte Spalte: Verlauf -->
-      <section class="card">
-        <h3 class="chart-title">📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</h3>
-        <div class="row" style="margin-bottom:6px">
-          <span class="chip">🌡️ Temperatur (°C)</span>
-          <span class="chip">💧 Luftfeuchtigkeit (%)</span>
-        </div>
-        <canvas id="chart"></canvas>
-        <div class="empty" id="chartEmpty" hidden>Kein Verlauf verfügbar.</div>
-        <p class="footer muted" id="histNote">Sucht: <code>/data/v2/history/&lt;node&gt;.json</code> oder <code>/data/v2/history_&lt;node&gt;.json</code></p>
-      </section>
-    </div>
+<div class="wrap">
+  <h1 id="title">Sensor</h1>
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+    <span id="status" class="badge">Stand: —</span>
+    <span id="search" class="muted">Sucht: —</span>
   </div>
 
-  <script>
-    // --- Helfer --------------------------------------------------------------
-    const qs = new URLSearchParams(location.search);
-    const short = (qs.get("node") || "").trim();
-    const el = id => document.getElementById(id);
-    const fmtTime = ts => {
-      try {
-        return new Date(ts).toLocaleString("de-DE", {
-          year:"numeric",month:"2-digit",day:"2-digit",
-          hour:"2-digit",minute:"2-digit",second:"2-digit"
-        });
-      } catch { return ts ?? "–"; }
-    };
-    const pick = (f) => {
-      // nimmt SHT31 vor SHT
-      if (typeof f?.TempC_SHT31 === "number") return {t:f.TempC_SHT31, tLabel:"SHT31"};
-      if (typeof f?.TempC_SHT   === "number") return {t:f.TempC_SHT,    tLabel:"SHT"};
-      return {t:null,tLabel:""};
-    };
-    const pickHum = (f) => {
-      if (typeof f?.Hum_SHT31 === "number") return {h:f.Hum_SHT31, hLabel:"SHT31"};
-      if (typeof f?.Hum_SHT   === "number") return {h:f.Hum_SHT,    hLabel:"SHT"};
-      return {h:null,hLabel:""};
-    };
+  <div class="grid">
+    <div class="card">
+      <h3>Temperatur / Feuchte (24h)</h3>
+      <canvas id="chart" aria-label="Verlauf" role="img"></canvas>
+      <div id="note" class="muted" style="margin-top:8px;"></div>
+    </div>
+    <div class="card">
+      <h3>Aktuelle Werte</h3>
+      <div id="current">—</div>
+    </div>
+  </div>
+</div>
 
-    // --- Überschrift ---------------------------------------------------------
-    el("nodeName").textContent = short ? short.charAt(0).toUpperCase()+short.slice(1) : "–";
+<script>
+(async function(){
+  // --- Helpers ---
+  const qp = new URLSearchParams(location.search);
+  const nodeParam = (qp.get('node') || '').trim();
+  const statusEl = document.getElementById('status');
+  const searchEl = document.getElementById('search');
+  const titleEl  = document.getElementById('title');
+  const currentEl= document.getElementById('current');
+  const noteEl   = document.getElementById('note');
 
-    // --- 1) Aktuellen Datensatz laden ---------------------------------------
-    async function loadLatest() {
-      const res = await fetch("/data/v2/latest/_all.json?ts="+Date.now(), {cache:"no-store"});
-      if (!res.ok) throw new Error("latest fetch failed");
+  function fmtNum(v,unit=''){
+    if (v==null || Number.isNaN(Number(v))) return '—';
+    return (typeof v==='number'? v.toLocaleString('de-DE'): String(v)) + (unit?(' '+unit):'');
+  }
+
+  // 1) vollen Device-Namen ermitteln (Prefix → Vollname) über _all.json
+  const ALL_URL = '/data/v2/latest/_all.json';
+  let fullId = nodeParam;
+  try{
+    if (!fullId.includes('-')) {
+      const res = await fetch(ALL_URL+'?t='+Date.now(), {cache:'no-store'});
+      if (res.ok) {
+        const arr = await res.json();
+        if (Array.isArray(arr)) {
+          // suche erstes id, das mit nodeParam beginnt (case-sensitiv)
+          const hit = arr.find(r => typeof r.id === 'string' && r.id.startsWith(nodeParam));
+          if (hit) fullId = hit.id;
+        }
+      }
+    }
+  }catch(e){ /* egal – wir probieren mit nodeParam weiter */ }
+
+  if (!fullId){
+    titleEl.textContent = 'Sensor (unbekannt)';
+    searchEl.textContent = 'Sucht: (kein Parameter)';
+    noteEl.textContent = 'Kein Node-Parameter übergeben.';
+    return;
+  }
+
+  titleEl.textContent = fullId;
+  // Anzeige des gesuchten Pfads (absolut, mit führendem Slash)
+  const histUrl = `/data/v2/history/${fullId}.json`;
+  const histAlt = `/data/v2/history_${fullId}.json`;
+  searchEl.textContent = `Sucht: ${histUrl} oder ${histAlt}`;
+
+  // 2) History laden
+  let hist = null;
+  async function tryFetch(url){
+    const r = await fetch(url+'?t='+Date.now(), {cache:'no-store'});
+    if (!r.ok) return null;
+    const j = await r.json();
+    return Array.isArray(j) ? j : null;
+  }
+  hist = await tryFetch(histUrl);
+  if (!hist) hist = await tryFetch(histAlt);
+
+  // 3) Aktuelle Werte (aus _all.json)
+  try{
+    const res = await fetch(ALL_URL+'?t='+Date.now(), {cache:'no-store'});
+    if (res.ok){
       const arr = await res.json();
-      if (!Array.isArray(arr)) throw new Error("latest malformed");
-      const rec = arr.find(r => r?.id && r.id.startsWith(short + "-"));
-      return rec || null;
-    }
-
-    function fillCurrent(rec){
-      if (!rec){ el("lastTs").textContent = "–"; return; }
-      el("lastTs").textContent = "Stand: " + fmtTime(rec.ts);
-
-      const {t,tLabel} = pick(rec.fields);
-      const {h,hLabel} = pickHum(rec.fields);
-      const vBat = typeof rec?.fields?.BatV === "number" ? rec.fields.BatV.toFixed(3)+" V" : "–";
-
-      el("bat").textContent  = vBat;
-      el("temp").textContent = (t!=null ? t.toFixed(1)+" °C" : "–") + (tLabel?` (${tLabel})`:"");
-      el("hum").textContent  = (h!=null ? h.toFixed(1)+" %" : "–") + (hLabel?` (${hLabel})`:"");
-    }
-
-    // --- 2) Verlauf laden (zwei mögliche Dateinamen) ------------------------
-    async function tryHistoryUrls() {
-      const urls = [
-        `/data/v2/history/${short}.json`,
-        `/data/v2/history_${short}.json`
-      ];
-      for (const u of urls) {
-        const r = await fetch(u+"?ts="+Date.now(), {cache:"no-store"});
-        if (r.ok) {
-          const json = await r.json();
-          if (Array.isArray(json) && json.length) return {url:u, data:json};
-        }
+      const rec = Array.isArray(arr) ? arr.find(r => r.id === fullId) : null;
+      if (rec){
+        statusEl.textContent = 'Stand: ' + new Date(rec.ts).toLocaleString('de-DE',{hour12:false});
+        const f = rec.fields || {};
+        const temp = (f.TempC_SHT31 ?? f.TempC_SHT ?? f.temp_SOIL);
+        const hum  = (f.Hum_SHT31   ?? f.Hum_SHT   ?? f.water_SOIL);
+        const bat  = f.BatV;
+        currentEl.innerHTML =
+          `<div><b>Temperatur:</b> ${fmtNum(temp,'°C')}</div>`+
+          `<div><b>Feuchte:</b> ${fmtNum(hum,'%')}</div>`+
+          `<div><b>Batterie:</b> ${fmtNum(bat,'V')}</div>`;
       }
-      return null;
+    }
+  }catch(e){ /* ignore */ }
+
+  // 4) Verlauf anzeigen (ab 2 Punkten Linie; bei 1 Punkt Hinweis)
+  const ctx = document.getElementById('chart').getContext('2d');
+
+  function drawAxes(ctx, W, H){
+    ctx.strokeStyle = '#ddd';
+    ctx.beginPath();
+    ctx.moveTo(40,10); ctx.lineTo(40,H-30); ctx.lineTo(W-10,H-30);
+    ctx.stroke();
+  }
+
+  function simpleLine(ctx, pts, color, W, H, minY, maxY){
+    if (pts.length<2) return;
+    const left=40, bottom=H-30, top=10, right=W-10;
+    const w = right-left, h = bottom-top;
+    const xs = pts.map(p=>new Date(p.t).getTime());
+    const minX = Math.min(...xs), maxX = Math.max(...xs)|| (minX+1);
+    ctx.beginPath();
+    for (let i=0;i<pts.length;i++){
+      const x = left + w * ((new Date(pts[i].t).getTime() - minX) / (maxX - minX || 1));
+      const yVal = pts[i].y;
+      const y = bottom - h * ((yVal - minY)/(maxY-minY || 1));
+      if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  function drawChart(hist){
+    const W = ctx.canvas.width  = ctx.canvas.clientWidth;
+    const H = ctx.canvas.height = ctx.canvas.clientHeight;
+
+    ctx.clearRect(0,0,W,H);
+    drawAxes(ctx, W, H);
+
+    if (!hist || hist.length===0){
+      noteEl.textContent = 'Kein Verlauf verfügbar.';
+      return;
+    }
+    // temp/hum Arrays bauen (nur Punkte mit Zahlen)
+    const tPts = hist.filter(p=> typeof p.t === 'number' && typeof p.h === 'number' ? false : true); // Platzhalter
+    // Korrigiert: wir erwarten p.temp/p.hum (siehe History-Writer)
+    const TT  = hist.filter(p=> typeof p.temp === 'number').map(p=>({t:p.ts||p.t, y:p.temp}));
+    const HH  = hist.filter(p=> typeof p.h   === 'number').map(p=>({t:p.ts||p.t, y:p.h}));
+
+    const combined = TT.concat(HH);
+    if (combined.length===0){
+      noteEl.textContent = 'Kein Verlauf verfügbar.';
+      return;
+    }
+    const ys = combined.map(p=>p.y);
+    const minY = Math.min(...ys), maxY = Math.max(...ys);
+
+    // Hinweise
+    if (TT.length+HH.length === 1){
+      noteEl.textContent = 'Hinweis: Nur ein Datenpunkt vorhanden (Linie ab 2 Punkten).';
+    } else {
+      noteEl.textContent = '';
     }
 
-    function drawChart(list){
-      const ctx = document.getElementById("chart");
-      const tArr = [], hArr = [], labels = [];
+    // Zeichnen
+    if (TT.length>=2) simpleLine(ctx, TT, '#1565c0', W, H, minY, maxY); // blau
+    if (HH.length>=2) simpleLine(ctx, HH, '#2e7d32', W, H, minY, maxY); // grün
+  }
 
-      for (const r of list) {
-        labels.push(fmtTime(r.ts));
-        const {t} = pick(r.fields);
-        const {h} = pickHum(r.fields);
-        tArr.push(t);
-        hArr.push(h);
-      }
-
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels,
-          datasets: [
-            {
-              label: 'Temperatur (°C)',
-              data: tArr,
-              borderWidth: 3,
-              tension: .25,
-              borderColor: '#f59f0b',
-              pointRadius: 0
-            },
-            {
-              label: 'Luftfeuchtigkeit (%)',
-              data: hArr,
-              borderWidth: 3,
-              tension: .25,
-              borderColor: '#2563eb',
-              pointRadius: 0
-            }
-          ]
-        },
-        options: {
-          maintainAspectRatio: true,
-          plugins: {
-            legend: { labels: { boxWidth: 16 } },
-            tooltip: { mode: 'index', intersect: false }
-          },
-          scales: {
-            x: { grid: { color: 'rgba(0,0,0,.06)' }, ticks: { maxRotation: 0, autoSkip: true } },
-            y: { grid: { color: 'rgba(0,0,0,.06)' }, title: {display:true,text:'Messwert'} }
-          }
-        }
-      });
-    }
-
-    (async () => {
-      // Aktuell
-      try { fillCurrent(await loadLatest()); } catch(e){ console.warn(e); }
-
-      // Verlauf
-      try {
-        const h = await tryHistoryUrls();
-        if (h){
-          document.getElementById("histNote").innerHTML =
-            `Quelle: <code>${h.url.replace(location.origin,'')}</code>`;
-          drawChart(h.data);
-        } else {
-          document.getElementById("chartEmpty").hidden = false;
-        }
-      } catch(e){
-        console.warn(e);
-        document.getElementById("chartEmpty").hidden = false;
-      }
-    })();
-  </script>
+  drawChart(hist||[]);
+})();
+</script>
 </body>
 </html>
