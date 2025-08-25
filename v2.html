@@ -1,199 +1,144 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Waldsensor.SH – Karte V2</title>
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
-  />
+  <meta charset="utf-8">
+  <title>WALDSENSOR.SH – Karte V2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <style>
     html, body, #map { height: 100%; margin: 0; }
     .badge {
-      position: fixed;
+      position: absolute;
+      top: 10px;
+      padding: 6px 12px;
+      background: white;
+      border-radius: 6px;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       z-index: 1000;
-      background: rgba(255,255,255,0.96);
-      color: #111;
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 12px;
-      padding: 8px 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.15);
-      font: 15px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
-      pointer-events: none;
     }
-    /* linke Badge 60px nach rechts, damit Leaflet-Buttons frei bleiben */
-    #badge-left  { top: 12px; left: 60px; }
-    #badge-right { top: 12px; right: 12px; }
-
-    .popup h3 { margin: 0 0 6px; font-size: 18px; }
-    .popup .kv { margin: 3px 0; font-size: 15px; }
-    .popup .kv b { display:inline-block; min-width: 145px; }
-    .sep { margin: 10px 0; height:1px; background:#eee; }
-    .qrbox {
-      display:flex; align-items:center; gap:12px; margin-top:8px;
-      padding:8px; border:1px solid #eee; border-radius:10px; background:#fafafa;
+    #leftBadge { left: 10px; }
+    #rightBadge { right: 10px; }
+    .popup-qr {
+      text-align: center;
+      margin-top: 8px;
     }
-    .btn {
-      display:inline-block; padding:6px 10px; border-radius:8px;
-      background:#d4edda; color:#fff; text-decoration:none; font-weight:600;
+    .qr-button {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 6px 10px;
+      background: linear-gradient(45deg, #6fdc6f, #9ff49f); /* helles Grün */
+      color: black;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 13px;
     }
   </style>
 </head>
 <body>
   <div id="map"></div>
-  <!-- feste Badges -->
-  <div id="badge-left"  class="badge">Letzte Aktualisierung: –</div>
-  <div id="badge-right" class="badge">Letzte Node-Meldung: –</div>
+  <div id="leftBadge" class="badge">Letzte Aktualisierung: —</div>
+  <div id="rightBadge" class="badge">Letzte Node-Meldung: —</div>
 
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-  ></script>
   <script>
-  (async function () {
-    // -------- Einstellungen --------
-    const ALL_URL   = '/data/v2/latest/_all.json';           // Datenquelle (unverändert)
-    const FETCH_URL = ALL_URL + '?t=' + Date.now();          // Cache-Buster
+    const FETCH_URL = "data/v2/latest/_all.json";
+    const leftBadge  = document.getElementById('leftBadge');
+    const rightBadge = document.getElementById('rightBadge');
 
-    // Fallback-Koordinaten für 5 produktive Nodes
-    const POSITIONS = {
-      'breklum-sn50v3': { lat: 54.60669, lon: 8.98195 },
-      's31-lb':         { lat: 54.65000, lon: 8.96000 }, // Bredstedt
-      'se01-lb':        { lat: 54.65111, lon: 8.95688 }, // Bredstedt (nahe)
-      'kropp-sn50v3':   { lat: 54.41018, lon: 9.52839 },
-      'fahrdorf-sn50v3':{ lat: 54.50158, lon: 9.58690 }
-    };
-
-    // Technik-/Debug-Felder im Popup ausblenden (inkl. Node_type)
-    const FIELDS_TO_IGNORE = new Set([
-      'ADC1_V','Digital_IStatus','Door_status','EXTI_Trigger','TempC1','Work_mode',
-      'Mod','conduct_SOIL','i_flag','s_flag','temp_DS18B20',
-      'alt1','alt2','bw','chan1','f_cnt','freq1','gw1','gw2',
-      'lat1','lat2','lon1','lon2','rssi1','rssi2','rx_time1','sf','snr1','snr2',
-      'data_time','Data_time','Node_type' // <- entfernt "Node_type: —"
-    ]);
-
-    // -------- Karte --------
-    const map = L.map('map', { zoomControl:true }).setView([54.6, 9.3], 9);
+    const map = L.map('map').setView([54.3, 9.7], 8);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19, attribution: '&copy; OpenStreetMap'
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a>'
     }).addTo(map);
 
-    // Badges aktualisieren
-    const leftBadge  = document.getElementById('badge-left');
-    const rightBadge = document.getElementById('badge-right');
-    function tickLocalClock(){
-      const now = new Date();
-      leftBadge.textContent = 'Letzte Aktualisierung: '
-        + now.toLocaleTimeString('de-DE', {hour12:false});
-    }
-    tickLocalClock();
-    setInterval(tickLocalClock, 1000);
+    let markers = {};
 
-    // -------- Daten laden --------
-// -------- Daten laden --------
-let data;
-try {
-  const url = FETCH_URL + "?t=" + new Date().getTime();   // Cache-Buster
-  const res = await fetch(url, {cache:'no-store'});
-  if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
-  data = await res.json();
-  if (!Array.isArray(data)) throw new Error('JSON ist kein Array');
-} catch(e) {
-  console.error('Daten laden fehlgeschlagen:', e);
-  rightBadge.textContent = 'Letzte Node-Meldung: — (Fehler beim Laden)';
-  return;
-}
-    // Rechts: letzte Node-Meldung
-    let latest = null;
-    for (const r of data) {
-      if (!latest || new Date(r.ts) > new Date(latest.ts)) latest = r;
-    }
-    if (latest) {
-      rightBadge.textContent = `Letzte Node-Meldung: ${latest.id} — `
-        + new Date(latest.ts).toLocaleString('de-DE', {hour12:false});
-    } else {
-      rightBadge.textContent = 'Letzte Node-Meldung: —';
-    }
+    // -------- Badge für Nodes --------
+    async function updateLatestBadge() {
+      try {
+        const url = FETCH_URL + "?t=" + Date.now();   // Cache-Buster
+        const res = await fetch(url, { cache:'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error('JSON ist kein Array');
 
-    // Anti-Overlap: kleiner Versatz bei exakt gleichen Koordinaten
-    const coordCount = new Map();
-    const key = (lat,lon)=> lat.toFixed(6)+','+lon.toFixed(6);
-    function jitter(lat,lon){
-      const k = key(lat,lon);
-      const n = (coordCount.get(k) || 0);
-      coordCount.set(k, n+1);
-      if (n===0) return [lat,lon];
-      const d = 0.00025 * n; // ~25m
-      const a = (n%2===0) ? 1 : -1;
-      return [lat + d*a, lon - d*a];
-    }
+        // jüngsten Datensatz bestimmen
+        data.sort((a,b) => new Date(b.ts) - new Date(a.ts));
+        const newest = data[0];
 
-    // -------- Marker & Popups --------
-    for (const rec of data){
-      const id = rec?.id || '';
-      const f  = rec?.fields || {};
-
-      // 1) Koordinaten: bevorzugt aus JSON, sonst Fallback
-      let lat = Number(f.lat), lon = Number(f.lon);
-      if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
-        const pos = POSITIONS[id];
-        if (pos) { lat = pos.lat; lon = pos.lon; }
+        if (newest) {
+          const ts = new Date(newest.ts);
+          rightBadge.textContent =
+            `Letzte Node-Meldung ${newest.id.replace(/-.*/, '')} — ` +
+            ts.toLocaleString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+        } else {
+          rightBadge.textContent = 'Letzte Node-Meldung: —';
+        }
+      } catch (e) {
+        console.error('Daten laden fehlgeschlagen:', e);
+        rightBadge.textContent = 'Letzte Node-Meldung: — (Fehler beim Laden)';
       }
-      if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
-        // ohne Koordinaten kein Marker
-        continue;
-      }
-      const [Jlat,Jlon] = jitter(lat, lon);
-
-      // 2) Werte fürs Popup (Temp/Hum/Bat)
-      const temp = (f.TempC_SHT31 ?? f.TempC_SHT ?? f.temp_SOIL);
-      const hum  = (f.Hum_SHT31   ?? f.Hum_SHT   ?? f.water_SOIL);
-      const bat  = f.BatV;
-
-      const fmt = (v,unit='') => (v==null || Number.isNaN(Number(v)))
-        ? '—'
-        : (typeof v === 'number' ? v.toLocaleString('de-DE') : String(v)) + (unit?` ${unit}`:'');
-
-      // Kurzname für QR/Link: Teil vor dem ersten Bindestrich
-      const short = id.includes('-') ? id.split('-')[0] : id;
-      const detailUrl = `https://www.waldsensor.sh/html/sensor.html?node=${encodeURIComponent(short)}`;
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(detailUrl)}`;
-
-      let html = `<div class="popup">`
-               + `<h3>${id}</h3>`
-               + `<div class="kv"><b>Zeit:</b> ${new Date(rec.ts).toLocaleString('de-DE',{hour12:false})}</div>`
-               + `<div class="kv"><b>Temp:</b> ${fmt(temp,'°C')}</div>`
-               + `<div class="kv"><b>Feuchte:</b> ${fmt(hum,'%')}</div>`
-               + `<div class="kv"><b>Batterie:</b> ${fmt(bat,'V')}</div>`
-               + `<div class="sep"></div>`;
-
-      // restliche Felder – bereinigt
-      for (const [k,v] of Object.entries(f)){
-        if (FIELDS_TO_IGNORE.has(k)) continue;
-        if (['TempC_SHT','TempC_SHT31','temp_SOIL','Hum_SHT','Hum_SHT31','water_SOIL','BatV','lat','lon'].includes(k)) continue;
-        html += `<div class="kv"><b>${k}:</b> ${fmt(v)}</div>`;
-      }
-
-      // QR + Link
-      html += `<div class="sep"></div>
-               <div class="qrbox">
-                 <img src="${qrUrl}" alt="QR" width="140" height="140" loading="lazy">
-                 <div>
-                   <div style="font-weight:600; margin-bottom:6px;">Sensor-Details</div>
-                   <a class="btn" href="${detailUrl}" target="_blank" rel="noopener">Seite öffnen</a>
-                   <div style="font-size:12px; color:#555; margin-top:6px;">oder QR-Code scannen</div>
-                 </div>
-               </div>
-               </div>`;
-
-      L.marker([Jlat, Jlon]).addTo(map).bindPopup(html);
     }
-  })();
+
+    // alle 60 Sekunden Badge aktualisieren
+    setInterval(updateLatestBadge, 60_000);
+
+    // -------- Karte aktualisieren --------
+    async function loadData() {
+      try {
+        const res = await fetch(FETCH_URL + "?t=" + Date.now(), { cache:'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error('JSON ist kein Array');
+
+        // Update-Text links
+        leftBadge.textContent = "Letzte Aktualisierung: " +
+          new Date().toLocaleString('de-DE', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+
+        // Marker neu setzen
+        for (const rec of data) {
+          const id = rec.id;
+          const coords = rec.fields;
+          if (!coords || !coords.lat || !coords.lon) continue;
+
+          if (markers[id]) map.removeLayer(markers[id]);
+
+          const marker = L.marker([coords.lat, coords.lon]).addTo(map);
+          let popupHtml = `<b>${id}</b><br>`;
+          for (const [k,v] of Object.entries(rec.fields)) {
+            if (typeof v === "number") {
+              popupHtml += `${k}: ${v}<br>`;
+            }
+          }
+          popupHtml += `<div class="popup-qr"><canvas id="qr-${id}"></canvas><br>
+                        <a class="qr-button" href="html/sensor.html?node=${id}" target="_blank">Seite öffnen</a></div>`;
+
+          marker.bindPopup(popupHtml);
+          marker.on('popupopen', () => {
+            const canvas = document.getElementById(`qr-${id}`);
+            if (canvas) {
+              QRCode.toCanvas(canvas, 
+                window.location.origin + "/html/sensor.html?node=" + id,
+                { width: 100 }, err => { if (err) console.error(err); });
+            }
+          });
+          markers[id] = marker;
+        }
+
+        // auch rechts sofort Badge aktualisieren
+        updateLatestBadge();
+
+      } catch(e) {
+        console.error("Fehler beim Laden:", e);
+        leftBadge.textContent = "Letzte Aktualisierung: — (Fehler)";
+      }
+    }
+
+    // sofort und alle 5 Minuten Karte neu laden
+    loadData();
+    setInterval(loadData, 300_000);
   </script>
 </body>
 </html>
