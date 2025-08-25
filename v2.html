@@ -24,7 +24,7 @@
       font: 15px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
       pointer-events: none;
     }
-    /* Leaflet-Zoom-Buttons stehen links oben – wir rücken die linke Badge 60px nach rechts */
+    /* linke Badge 60px nach rechts, damit Leaflet-Buttons frei bleiben */
     #badge-left  { top: 12px; left: 60px; }
     #badge-right { top: 12px; right: 12px; }
 
@@ -32,6 +32,14 @@
     .popup .kv { margin: 3px 0; font-size: 15px; }
     .popup .kv b { display:inline-block; min-width: 145px; }
     .sep { margin: 10px 0; height:1px; background:#eee; }
+    .qrbox {
+      display:flex; align-items:center; gap:12px; margin-top:8px;
+      padding:8px; border:1px solid #eee; border-radius:10px; background:#fafafa;
+    }
+    .btn {
+      display:inline-block; padding:6px 10px; border-radius:8px;
+      background:#1e88e5; color:#fff; text-decoration:none; font-weight:600;
+    }
   </style>
 </head>
 <body>
@@ -48,8 +56,8 @@
   <script>
   (async function () {
     // -------- Einstellungen --------
-    const ALL_URL = '/data/v2/latest/_all.json'; // funktionierender Pfad
-    const FETCH_URL = ALL_URL + '?t=' + Date.now(); // Cache-Buster
+    const ALL_URL   = '/data/v2/latest/_all.json';           // Datenquelle (unverändert)
+    const FETCH_URL = ALL_URL + '?t=' + Date.now();          // Cache-Buster
 
     // Fallback-Koordinaten für 5 produktive Nodes
     const POSITIONS = {
@@ -60,13 +68,13 @@
       'fahrdorf-sn50v3':{ lat: 54.50158, lon: 9.58690 }
     };
 
-    // Technik-/Debug-Felder im Popup ausblenden
+    // Technik-/Debug-Felder im Popup ausblenden (inkl. Node_type)
     const FIELDS_TO_IGNORE = new Set([
       'ADC1_V','Digital_IStatus','Door_status','EXTI_Trigger','TempC1','Work_mode',
       'Mod','conduct_SOIL','i_flag','s_flag','temp_DS18B20',
       'alt1','alt2','bw','chan1','f_cnt','freq1','gw1','gw2',
       'lat1','lat2','lon1','lon2','rssi1','rssi2','rx_time1','sf','snr1','snr2',
-      'data_time','Data_time' // 1970-… raus
+      'data_time','Data_time','Node_type' // <- entfernt "Node_type: —"
     ]);
 
     // -------- Karte --------
@@ -136,8 +144,7 @@
         if (pos) { lat = pos.lat; lon = pos.lon; }
       }
       if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
-        // ohne Koordinaten kein Marker (keine Zombies)
-        console.debug('Kein Marker (keine Koordinaten):', id);
+        // ohne Koordinaten kein Marker
         continue;
       }
       const [Jlat,Jlon] = jitter(lat, lon);
@@ -150,6 +157,11 @@
       const fmt = (v,unit='') => (v==null || Number.isNaN(Number(v)))
         ? '—'
         : (typeof v === 'number' ? v.toLocaleString('de-DE') : String(v)) + (unit?` ${unit}`:'');
+
+      // Kurzname für QR/Link: Teil vor dem ersten Bindestrich
+      const short = id.includes('-') ? id.split('-')[0] : id;
+      const detailUrl = `https://www.waldsensor.sh/html/sensor.html?node=${encodeURIComponent(short)}`;
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(detailUrl)}`;
 
       let html = `<div class="popup">`
                + `<h3>${id}</h3>`
@@ -165,7 +177,18 @@
         if (['TempC_SHT','TempC_SHT31','temp_SOIL','Hum_SHT','Hum_SHT31','water_SOIL','BatV','lat','lon'].includes(k)) continue;
         html += `<div class="kv"><b>${k}:</b> ${fmt(v)}</div>`;
       }
-      html += `</div>`;
+
+      // QR + Link
+      html += `<div class="sep"></div>
+               <div class="qrbox">
+                 <img src="${qrUrl}" alt="QR" width="140" height="140" loading="lazy">
+                 <div>
+                   <div style="font-weight:600; margin-bottom:6px;">Sensor-Details</div>
+                   <a class="btn" href="${detailUrl}" target="_blank" rel="noopener">Seite öffnen</a>
+                   <div style="font-size:12px; color:#555; margin-top:6px;">oder QR-Code scannen</div>
+                 </div>
+               </div>
+               </div>`;
 
       L.marker([Jlat, Jlon]).addTo(map).bindPopup(html);
     }
