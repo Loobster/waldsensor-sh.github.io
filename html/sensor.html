@@ -1,184 +1,265 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Waldsensor.SH – Sensor</title>
 <style>
-  body{font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;margin:0;padding:16px;color:#111}
-  .wrap{max-width:900px;margin:0 auto}
-  .badge{display:inline-block;background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:8px;padding:6px 10px;font-weight:600}
-  .muted{color:#555}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
-  .card{border:1px solid #eee;border-radius:12px;padding:12px}
-  h1{margin:0 0 8px}
-  canvas{width:100%;height:280px}
+  :root{
+    --bg:#f7f9fb; --card:#fff; --ink:#0f172a; --muted:#5b677a;
+    --ok:#1e7f3a; --ok-bg:#dff4e6; --lineT:#1565c0; --lineH:#2e7d32;
+    --grid:#e6e8ee;
+  }
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+  .wrap{max-width:1100px;margin:0 auto;padding:16px}
+  h1{margin:0 0 12px;font-size:clamp(22px,3vw,40px);letter-spacing:.3px}
+  .status{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+  .badge{background:var(--ok-bg);color:var(--ok);border:1px solid #caecd3;border-radius:12px;padding:6px 12px;font-weight:700}
+  .muted{color:var(--muted)}
+  .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+  .card{background:var(--card);border:1px solid #eef1f6;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.03)}
+  .card h3{margin:0 0 12px}
+  .legend{display:flex;gap:14px;align-items:center;margin-bottom:8px}
+  .dot{width:10px;height:10px;border-radius:2px;display:inline-block}
+  .dot.t{background:var(--lineT)}
+  .dot.h{background:var(--lineH)}
+  canvas{width:100%;height:360px;display:block}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:17px}
+  .kv b{font-weight:700}
+  .tooltip{position:absolute;pointer-events:none;background:#111;color:#fff;font-size:12px;padding:6px 8px;border-radius:6px;transform:translate(-50%,-120%);white-space:nowrap;opacity:0;transition:.08s}
+  .note{margin-top:8px;color:var(--muted)}
+  @media (max-width:900px){ .grid{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1 id="title">Sensor</h1>
-  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-    <span id="status" class="badge">Stand: —</span>
+  <div class="status">
+    <span id="badge" class="badge">Stand: —</span>
     <span id="search" class="muted">Sucht: —</span>
   </div>
 
   <div class="grid">
     <div class="card">
-      <h3>Temperatur / Feuchte (24h)</h3>
-      <canvas id="chart" aria-label="Verlauf" role="img"></canvas>
-      <div id="note" class="muted" style="margin-top:8px;"></div>
+      <div class="legend">
+        <span class="dot t"></span><span class="muted">Temperatur (°C)</span>
+        <span class="dot h"></span><span class="muted">Luftfeuchte (%)</span>
+      </div>
+      <div style="position:relative">
+        <canvas id="chart" aria-label="Verlauf" role="img"></canvas>
+        <div id="tip" class="tooltip"></div>
+      </div>
+      <div id="note" class="note"></div>
     </div>
+
     <div class="card">
       <h3>Aktuelle Werte</h3>
-      <div id="current">—</div>
+      <div class="kv" id="current">—</div>
     </div>
   </div>
 </div>
 
 <script>
 (async function(){
-  // --- Helpers ---
   const qp = new URLSearchParams(location.search);
-  const nodeParam = (qp.get('node') || '').trim();
-  const statusEl = document.getElementById('status');
-  const searchEl = document.getElementById('search');
-  const titleEl  = document.getElementById('title');
-  const currentEl= document.getElementById('current');
-  const noteEl   = document.getElementById('note');
+  const nodeParam = (qp.get('node')||'').trim();
 
-  function fmtNum(v,unit=''){
-    if (v==null || Number.isNaN(Number(v))) return '—';
-    return (typeof v==='number'? v.toLocaleString('de-DE'): String(v)) + (unit?(' '+unit):'');
-  }
+  const ALL = '/data/v2/latest/_all.json';
+  const makeHistUrl = id => `/data/v2/history/${id}.json`;
+  const makeHistAlt = id => `/data/v2/history_${id}.json`;
 
-  // 1) vollen Device-Namen ermitteln (Prefix → Vollname) über _all.json
-  const ALL_URL = '/data/v2/latest/_all.json';
+  const el = s=>document.querySelector(s);
+  const title = el('#title'), badge = el('#badge'), search = el('#search'), cur = el('#current');
+  const tip = el('#tip'), note = el('#note');
+  const cvs = el('#chart'), ctx = cvs.getContext('2d');
+
+  function nfmt(v,u=''){ if(v==null||v==='') return '—'; const x=+v; return (isFinite(x)?x.toLocaleString('de-DE'):+v)+ (u?' '+u:''); }
+  function tsfmt(x){ return new Date(x).toLocaleString('de-DE',{hour12:false}); }
+  function tlabel(x){ const d=new Date(x); return d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',hour12:false}); }
+
+  // 1) Voll-ID aus _all.json (Prefix → exakte id)
   let fullId = nodeParam;
+  if (!fullId.includes('-')) {
+    try{
+      const r = await fetch(ALL+'?t='+Date.now(), {cache:'no-store'});
+      if (r.ok){
+        const a = await r.json();
+        const hit = a.find(e => e && e.id && e.id.startsWith(nodeParam));
+        if (hit) fullId = hit.id;
+      }
+    }catch{}
+  }
+  if (!fullId){ title.textContent='Sensor (unbekannt)'; search.textContent='Sucht: —'; return; }
+  title.textContent = fullId;
+  search.textContent = `Sucht: ${makeHistUrl(fullId)} oder ${makeHistAlt(fullId)}`;
+
+  // 2) Aktuelle Werte aus _all.json
   try{
-    if (!fullId.includes('-')) {
-      const res = await fetch(ALL_URL+'?t='+Date.now(), {cache:'no-store'});
-      if (res.ok) {
-        const arr = await res.json();
-        if (Array.isArray(arr)) {
-          // suche erstes id, das mit nodeParam beginnt (case-sensitiv)
-          const hit = arr.find(r => typeof r.id === 'string' && r.id.startsWith(nodeParam));
-          if (hit) fullId = hit.id;
-        }
+    const r = await fetch(ALL+'?t='+Date.now(), {cache:'no-store'});
+    if (r.ok){
+      const a = await r.json();
+      const rec = a.find(e=>e.id===fullId);
+      if (rec){
+        badge.textContent = 'Stand: ' + tsfmt(rec.ts);
+        const f = rec.fields||{};
+        const temp = f.TempC_SHT31 ?? f.TempC_SHT ?? f.temp_SOIL;
+        const hum  = f.Hum_SHT31   ?? f.Hum_SHT   ?? f.water_SOIL;
+        cur.innerHTML =
+          `<b>Temperatur:</b><span>${nfmt(temp,'°C')}</span>`+
+          `<b>Luftfeuchte:</b><span>${nfmt(hum,'%')}</span>`+
+          `<b>Batterie:</b><span>${nfmt(f.BatV,'V')}</span>`;
       }
     }
-  }catch(e){ /* egal – wir probieren mit nodeParam weiter */ }
+  }catch{}
 
-  if (!fullId){
-    titleEl.textContent = 'Sensor (unbekannt)';
-    searchEl.textContent = 'Sucht: (kein Parameter)';
-    noteEl.textContent = 'Kein Node-Parameter übergeben.';
-    return;
-  }
-
-  titleEl.textContent = fullId;
-  // Anzeige des gesuchten Pfads (absolut, mit führendem Slash)
-  const histUrl = `/data/v2/history/${fullId}.json`;
-  const histAlt = `/data/v2/history_${fullId}.json`;
-  searchEl.textContent = `Sucht: ${histUrl} oder ${histAlt}`;
-
-  // 2) History laden
-  let hist = null;
-  async function tryFetch(url){
+  // 3) History laden (zuerst normal, ggf. Alternate)
+  async function load(url){
     const r = await fetch(url+'?t='+Date.now(), {cache:'no-store'});
     if (!r.ok) return null;
     const j = await r.json();
-    return Array.isArray(j) ? j : null;
+    return Array.isArray(j)? j : null;
   }
-  hist = await tryFetch(histUrl);
-  if (!hist) hist = await tryFetch(histAlt);
+  let hist = await load(makeHistUrl(fullId));
+  if (!hist) hist = await load(makeHistAlt(fullId));
+  if (!hist) { note.textContent='Kein Verlauf verfügbar.'; draw([]); return; }
 
-  // 3) Aktuelle Werte (aus _all.json)
-  try{
-    const res = await fetch(ALL_URL+'?t='+Date.now(), {cache:'no-store'});
-    if (res.ok){
-      const arr = await res.json();
-      const rec = Array.isArray(arr) ? arr.find(r => r.id === fullId) : null;
-      if (rec){
-        statusEl.textContent = 'Stand: ' + new Date(rec.ts).toLocaleString('de-DE',{hour12:false});
-        const f = rec.fields || {};
-        const temp = (f.TempC_SHT31 ?? f.TempC_SHT ?? f.temp_SOIL);
-        const hum  = (f.Hum_SHT31   ?? f.Hum_SHT   ?? f.water_SOIL);
-        const bat  = f.BatV;
-        currentEl.innerHTML =
-          `<div><b>Temperatur:</b> ${fmtNum(temp,'°C')}</div>`+
-          `<div><b>Feuchte:</b> ${fmtNum(hum,'%')}</div>`+
-          `<div><b>Batterie:</b> ${fmtNum(bat,'V')}</div>`;
+  // Normiere Felder: {ts, temp, hum}
+  const rows = hist.map(p=>({
+    ts:  p.ts || p.t,
+    temp: (p.temp ?? p.t ?? null),
+    hum:  (p.h   ?? p.hum ?? null)
+  })).filter(r=>r.ts);
+
+  draw(rows);
+
+  // ===== Zeichnen =====
+  function draw(rows){
+    // Größe
+    const W = cvs.width = cvs.clientWidth * devicePixelRatio;
+    const H = cvs.height= cvs.clientHeight* devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+    ctx.clearRect(0,0,cvs.clientWidth,cvs.clientHeight);
+
+    const pad = {l:50, r:50, t:14, b:34};
+    const w = cvs.clientWidth - pad.l - pad.r;
+    const h = cvs.clientHeight- pad.t - pad.b;
+
+    // Axen & Grid
+    ctx.strokeStyle = '#e6e8ee';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, pad.t+h); ctx.lineTo(pad.l+w, pad.t+h);
+    ctx.stroke();
+
+    if (rows.length===0){ note.textContent='Kein Verlauf verfügbar.'; return; }
+
+    const xs = rows.map(r=>+new Date(r.ts));
+    const minX = Math.min(...xs), maxX = Math.max(...xs) || (minX+1);
+
+    const tVals = rows.filter(r=>typeof r.temp==='number').map(r=>r.temp);
+    const hVals = rows.filter(r=>typeof r.hum==='number').map(r=>r.hum);
+
+    const hasT = tVals.length>0;
+    const hasH = hVals.length>0;
+
+    if (!hasT && !hasH){ note.textContent='Kein Verlauf verfügbar.'; return; }
+
+    // linke (T) und rechte (H) Achse
+    const minT = hasT? Math.min(...tVals):0;
+    const maxT = hasT? Math.max(...tVals):1;
+    const minH = hasH? Math.min(...hVals):0;
+    const maxH = hasH? Math.max(...hVals):1;
+
+    const padT = hasT? (maxT-minT||1)*0.1:1;
+    const padH = hasH? (maxH-minH||1)*0.1:1;
+
+    // Ticks X
+    const TICKS = 6;
+    ctx.fillStyle = '#728099';
+    ctx.textAlign='center'; ctx.textBaseline='top'; ctx.font='12px system-ui';
+    for (let i=0;i<=TICKS;i++){
+      const t = minX + (i*(maxX-minX))/TICKS;
+      const x = pad.l + w*( (t-minX)/(maxX-minX||1) );
+      ctx.fillText(tlabel(t), x, pad.t+h+6);
+      ctx.strokeStyle = '#eff2f7';
+      ctx.beginPath(); ctx.moveTo(x, pad.t); ctx.lineTo(x, pad.t+h); ctx.stroke();
+    }
+
+    // Y links (Temp)
+    if (hasT){
+      const ticks=5;
+      ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.fillStyle='#728099';
+      for (let i=0;i<=ticks;i++){
+        const v = minT-padT + (i*(maxT+padT - (minT-padT)))/ticks;
+        const y = pad.t + h*(1 - ( (v-(minT-padT))/((maxT+padT)-(minT-padT)) ));
+        ctx.fillText(v.toFixed(1), pad.l-8, y);
+        ctx.strokeStyle='#eff2f7'; ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l+w, y); ctx.stroke();
       }
     }
-  }catch(e){ /* ignore */ }
 
-  // 4) Verlauf anzeigen (ab 2 Punkten Linie; bei 1 Punkt Hinweis)
-  const ctx = document.getElementById('chart').getContext('2d');
+    // Y rechts (Hum)
+    if (hasH){
+      const ticks=5;
+      ctx.textAlign='left'; ctx.textBaseline='middle'; ctx.fillStyle='#728099';
+      for (let i=0;i<=ticks;i++){
+        const v = minH-padH + (i*(maxH+padH - (minH-padH)))/ticks;
+        const y = pad.t + h*(1 - ( (v-(minH-padH))/((maxH+padH)-(minH-padH)) ));
+        ctx.fillText(v.toFixed(0), pad.l+w+8, y);
+      }
+    }
 
-  function drawAxes(ctx, W, H){
-    ctx.strokeStyle = '#ddd';
-    ctx.beginPath();
-    ctx.moveTo(40,10); ctx.lineTo(40,H-30); ctx.lineTo(W-10,H-30);
-    ctx.stroke();
+    // Skalenfunktionen
+    const xMap = t => pad.l + w*( (+new Date(t)-minX)/(maxX-minX||1) );
+    const yT   = v => pad.t + h*(1 - ( (v-(minT-padT))/((maxT+padT)-(minT-padT)) ));
+    const yH   = v => pad.t + h*(1 - ( (v-(minH-padH))/((maxH+padH)-(minH-padH)) ));
+
+    // Linien + Punkte
+    function line(series, color, yfn){
+      if (series.length===0) return;
+      ctx.lineWidth=2; ctx.strokeStyle=color;
+      if (series.length>=2){
+        ctx.beginPath();
+        series.forEach((p,i)=>{ const x=xMap(p.ts), y=yfn(p.v); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
+        ctx.stroke();
+      }
+      // Punkte
+      ctx.fillStyle=color;
+      series.forEach(p=>{
+        const x=xMap(p.ts), y=yfn(p.v);
+        ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill();
+      });
+    }
+
+    const sT = hasT ? rows.filter(r=>typeof r.temp==='number').map(r=>({ts:r.ts,v:r.temp})) : [];
+    const sH = hasH ? rows.filter(r=>typeof r.hum ==='number').map(r=>({ts:r.ts,v:r.hum })) : [];
+
+    line(sT, getComputedStyle(document.documentElement).getPropertyValue('--lineT').trim() || '#1565c0', yT);
+    line(sH, getComputedStyle(document.documentElement).getPropertyValue('--lineH').trim() || '#2e7d32', yH);
+
+    // Tooltip (nahe nächstem Punkt)
+    const pts = sT.map(p=>({...p, kind:'T', y:yT(p.v)}))
+                  .concat(sH.map(p=>({...p, kind:'H', y:yH(p.v)})))
+                  .map(p=>({x:xMap(p.ts), y:p.y, ts:p.ts, v:p.v, kind:p.kind}));
+    cvs.onmousemove = e=>{
+      const r = cvs.getBoundingClientRect();
+      const mx = (e.clientX - r.left), my = (e.clientY - r.top);
+      let best=null, d2=9999;
+      pts.forEach(p=>{
+        const dx = p.x - mx, dy = p.y - my; const dd = dx*dx+dy*dy;
+        if (dd<d2){ d2=dd; best=p; }
+      });
+      if (!best || d2>200) { tip.style.opacity=0; return; }
+      tip.style.left = Math.round(best.x)+'px';
+      tip.style.top  = Math.round(best.y)+'px';
+      tip.textContent = `${tlabel(best.ts)} · ${best.kind==='T'?'T':'H'}: ${best.v}`;
+      tip.style.opacity=1;
+    };
+    cvs.onmouseleave = ()=> tip.style.opacity=0;
+
+    // Hinweis
+    const count = (hasT?sT.length:0) + (hasH?sH.length:0);
+    note.textContent = (count<=1) ? 'Hinweis: nur ein Messpunkt vorhanden – Linie ab 2 Punkten.' : '';
   }
-
-  function simpleLine(ctx, pts, color, W, H, minY, maxY){
-    if (pts.length<2) return;
-    const left=40, bottom=H-30, top=10, right=W-10;
-    const w = right-left, h = bottom-top;
-    const xs = pts.map(p=>new Date(p.t).getTime());
-    const minX = Math.min(...xs), maxX = Math.max(...xs)|| (minX+1);
-    ctx.beginPath();
-    for (let i=0;i<pts.length;i++){
-      const x = left + w * ((new Date(pts[i].t).getTime() - minX) / (maxX - minX || 1));
-      const yVal = pts[i].y;
-      const y = bottom - h * ((yVal - minY)/(maxY-minY || 1));
-      if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-    }
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  }
-
-  function drawChart(hist){
-    const W = ctx.canvas.width  = ctx.canvas.clientWidth;
-    const H = ctx.canvas.height = ctx.canvas.clientHeight;
-
-    ctx.clearRect(0,0,W,H);
-    drawAxes(ctx, W, H);
-
-    if (!hist || hist.length===0){
-      noteEl.textContent = 'Kein Verlauf verfügbar.';
-      return;
-    }
-    // temp/hum Arrays bauen (nur Punkte mit Zahlen)
-    const tPts = hist.filter(p=> typeof p.t === 'number' && typeof p.h === 'number' ? false : true); // Platzhalter
-    // Korrigiert: wir erwarten p.temp/p.hum (siehe History-Writer)
-    const TT  = hist.filter(p=> typeof p.temp === 'number').map(p=>({t:p.ts||p.t, y:p.temp}));
-    const HH  = hist.filter(p=> typeof p.h   === 'number').map(p=>({t:p.ts||p.t, y:p.h}));
-
-    const combined = TT.concat(HH);
-    if (combined.length===0){
-      noteEl.textContent = 'Kein Verlauf verfügbar.';
-      return;
-    }
-    const ys = combined.map(p=>p.y);
-    const minY = Math.min(...ys), maxY = Math.max(...ys);
-
-    // Hinweise
-    if (TT.length+HH.length === 1){
-      noteEl.textContent = 'Hinweis: Nur ein Datenpunkt vorhanden (Linie ab 2 Punkten).';
-    } else {
-      noteEl.textContent = '';
-    }
-
-    // Zeichnen
-    if (TT.length>=2) simpleLine(ctx, TT, '#1565c0', W, H, minY, maxY); // blau
-    if (HH.length>=2) simpleLine(ctx, HH, '#2e7d32', W, H, minY, maxY); // grün
-  }
-
-  drawChart(hist||[]);
 })();
 </script>
 </body>
