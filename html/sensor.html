@@ -1,265 +1,222 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Waldsensor.SH – Sensor</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Schulwaldsensor – Detail</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
   :root{
-    --bg:#f7f9fb; --card:#fff; --ink:#0f172a; --muted:#5b677a;
-    --ok:#1e7f3a; --ok-bg:#dff4e6; --lineT:#1565c0; --lineH:#2e7d32;
-    --grid:#e6e8ee;
+    --bg:#f6f9fc;
+    --card:#ffffff;
+    --text:#0f172a;
+    --muted:#64748b;
+    --accent:#e6f4ea;        /* Badge-Hintergrund (hellgrün) */
+    --accent-border:#b6e2c4; /* Badge-Rand */
+    --accent-text:#1f7a3e;   /* Badge-Text (waldgrün) */
+
+    --temp:#8EC9FF;          /* helles Blau */
+    --hum:#8BD8B0;           /* helles Grün */
   }
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
-  .wrap{max-width:1100px;margin:0 auto;padding:16px}
-  h1{margin:0 0 12px;font-size:clamp(22px,3vw,40px);letter-spacing:.3px}
-  .status{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
-  .badge{background:var(--ok-bg);color:var(--ok);border:1px solid #caecd3;border-radius:12px;padding:6px 12px;font-weight:700}
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:24px;
+    background:var(--bg); color:var(--text);
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Noto Sans",sans-serif;
+  }
+  a.back{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--muted);margin-bottom:16px}
+  h1{margin:0 0 16px;font-size:clamp(24px,4vw,40px);font-weight:800;letter-spacing:.2px}
+  .grid{display:grid;gap:20px;grid-template-columns:1fr;max-width:1200px}
+  @media (min-width:980px){.grid{grid-template-columns:1fr 1fr}}
+  .card{
+    background:var(--card);
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 6px 24px rgba(15,23,42,.06);
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:.6rem;
+    background:var(--accent); color:var(--accent-text);
+    border:1px solid var(--accent-border);
+    padding:10px 14px; border-radius:14px; font-weight:700;
+  }
+  .kv{display:grid;gap:12px;margin-top:16px}
+  .kv-row{display:flex;gap:10px;align-items:center}
+  .kv-key{min-width:170px;font-weight:700}
   .muted{color:var(--muted)}
-  .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
-  .card{background:var(--card);border:1px solid #eef1f6;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(15,23,42,.03)}
-  .card h3{margin:0 0 12px}
-  .legend{display:flex;gap:14px;align-items:center;margin-bottom:8px}
-  .dot{width:10px;height:10px;border-radius:2px;display:inline-block}
-  .dot.t{background:var(--lineT)}
-  .dot.h{background:var(--lineH)}
-  canvas{width:100%;height:360px;display:block}
-  .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:17px}
-  .kv b{font-weight:700}
-  .tooltip{position:absolute;pointer-events:none;background:#111;color:#fff;font-size:12px;padding:6px 8px;border-radius:6px;transform:translate(-50%,-120%);white-space:nowrap;opacity:0;transition:.08s}
-  .note{margin-top:8px;color:var(--muted)}
-  @media (max-width:900px){ .grid{grid-template-columns:1fr} }
+  .aside h3{margin:0 0 12px}
+  .aside .kv-key{min-width:auto}
+  canvas{max-width:100%;height:360px}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1 id="title">Sensor</h1>
-  <div class="status">
-    <span id="badge" class="badge">Stand: —</span>
-    <span id="search" class="muted">Sucht: —</span>
-  </div>
 
-  <div class="grid">
-    <div class="card">
-      <div class="legend">
-        <span class="dot t"></span><span class="muted">Temperatur (°C)</span>
-        <span class="dot h"></span><span class="muted">Luftfeuchte (%)</span>
-      </div>
-      <div style="position:relative">
-        <canvas id="chart" aria-label="Verlauf" role="img"></canvas>
-        <div id="tip" class="tooltip"></div>
-      </div>
-      <div id="note" class="note"></div>
+<a class="back" href="/v2.html">← Zur Karte</a>
+<h1 id="title">Schulwaldsensor</h1>
+
+<div class="grid">
+  <!-- linke Karte: aktuelle Werte -->
+  <section class="card">
+    <div class="badge" id="badge">
+      <span>⏱️</span><span id="badgeText">Stand: —</span>
     </div>
 
-    <div class="card">
-      <h3>Aktuelle Werte</h3>
-      <div class="kv" id="current">—</div>
+    <div class="kv">
+      <div class="kv-row"><div class="kv-key">🔋 Batterie:</div><div id="batt">—</div></div>
+      <div class="kv-row"><div class="kv-key">🌡️ Temperatur:</div><div id="temp">—</div></div>
+      <div class="kv-row"><div class="kv-key">💧 Luftfeuchtigkeit:</div><div id="hum">—</div></div>
+      <div class="kv-row muted"><div class="kv-key">Quelle:</div><div>/data/v2/latest/_all.json</div></div>
     </div>
-  </div>
+  </section>
+
+  <!-- rechte Karte: Verlauf -->
+  <section class="card">
+    <h3>📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</h3>
+    <div style="margin:10px 0 6px; display:flex; gap:12px; color:var(--muted);">
+      <span>🌡️ Temperatur (°C)</span>
+      <span>💧 Luftfeuchtigkeit (%)</span>
+    </div>
+    <canvas id="chart"></canvas>
+
+    <div class="aside" style="margin-top:18px">
+      <div class="card" style="padding:14px">
+        <h3>Aktuelle Werte</h3>
+        <div class="kv">
+          <div class="kv-row"><div class="kv-key">Temperatur:</div><div id="asideT">—</div></div>
+          <div class="kv-row"><div class="kv-key">Luftfeuchte:</div><div id="asideH">—</div></div>
+          <div class="kv-row"><div class="kv-key">Batterie:</div><div id="asideV">—</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <script>
 (async function(){
-  const qp = new URLSearchParams(location.search);
-  const nodeParam = (qp.get('node')||'').trim();
+  // --------- Hilfen
+  const qs = new URLSearchParams(location.search);
+  const nodeId = (qs.get("node") || "").trim();
+  const niceName = nodeId ? nodeId.replace(/-/g," – ") : "Unbekannt";
+  document.getElementById("title").textContent = `Schulwaldsensor — ${niceName.split("–")[0].toUpperCase()}`;
 
-  const ALL = '/data/v2/latest/_all.json';
-  const makeHistUrl = id => `/data/v2/history/${id}.json`;
-  const makeHistAlt = id => `/data/v2/history_${id}.json`;
+  const fmtTs = (iso) => {
+    try {
+      const d = new Date(iso);
+      return d.toLocaleString("de-DE",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"});
+    } catch { return "—"; }
+  };
+  const text = (sel, val) => document.getElementById(sel).textContent = val;
 
-  const el = s=>document.querySelector(s);
-  const title = el('#title'), badge = el('#badge'), search = el('#search'), cur = el('#current');
-  const tip = el('#tip'), note = el('#note');
-  const cvs = el('#chart'), ctx = cvs.getContext('2d');
+  // --------- Live-Werte laden
+  try {
+    const res = await fetch("/data/v2/latest/_all.json",{cache:"no-store"});
+    const all = await res.json();
+    const rec = all.find(r => r.id === nodeId);
+    if (rec) {
+      text("badgeText", `Stand: ${fmtTs(rec.ts)}`);
+      const f = rec.fields || {};
+      text("batt", `${(f.BatV ?? f.batt ?? 0).toFixed ? (f.BatV).toFixed(3) : f.BatV} V`);
+      const t = f.TempC_SHT ?? f.TempC_SHT31 ?? f.t ?? null;
+      const h = f.Hum_SHT ?? f.Hum_SHT31 ?? f.h ?? null;
+      if (t != null) text("temp", `${Number(t).toFixed(1)} °C (SHT)`);
+      if (h != null) text("hum",  `${Number(h).toFixed(1)} % (SHT)`);
 
-  function nfmt(v,u=''){ if(v==null||v==='') return '—'; const x=+v; return (isFinite(x)?x.toLocaleString('de-DE'):+v)+ (u?' '+u:''); }
-  function tsfmt(x){ return new Date(x).toLocaleString('de-DE',{hour12:false}); }
-  function tlabel(x){ const d=new Date(x); return d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',hour12:false}); }
-
-  // 1) Voll-ID aus _all.json (Prefix → exakte id)
-  let fullId = nodeParam;
-  if (!fullId.includes('-')) {
-    try{
-      const r = await fetch(ALL+'?t='+Date.now(), {cache:'no-store'});
-      if (r.ok){
-        const a = await r.json();
-        const hit = a.find(e => e && e.id && e.id.startsWith(nodeParam));
-        if (hit) fullId = hit.id;
-      }
-    }catch{}
+      text("asideT", t!=null ? `${Number(t).toFixed(1)} °C` : "—");
+      text("asideH", h!=null ? `${Number(h).toFixed(1)} %` : "—");
+      text("asideV", f.BatV!=null ? `${Number(f.BatV).toFixed(3)} V` : "—");
+    } else {
+      text("badgeText","Stand: —");
+    }
+  } catch(e){
+    text("badgeText","Stand: —");
   }
-  if (!fullId){ title.textContent='Sensor (unbekannt)'; search.textContent='Sucht: —'; return; }
-  title.textContent = fullId;
-  search.textContent = `Sucht: ${makeHistUrl(fullId)} oder ${makeHistAlt(fullId)}`;
 
-  // 2) Aktuelle Werte aus _all.json
-  try{
-    const r = await fetch(ALL+'?t='+Date.now(), {cache:'no-store'});
-    if (r.ok){
-      const a = await r.json();
-      const rec = a.find(e=>e.id===fullId);
-      if (rec){
-        badge.textContent = 'Stand: ' + tsfmt(rec.ts);
-        const f = rec.fields||{};
-        const temp = f.TempC_SHT31 ?? f.TempC_SHT ?? f.temp_SOIL;
-        const hum  = f.Hum_SHT31   ?? f.Hum_SHT   ?? f.water_SOIL;
-        cur.innerHTML =
-          `<b>Temperatur:</b><span>${nfmt(temp,'°C')}</span>`+
-          `<b>Luftfeuchte:</b><span>${nfmt(hum,'%')}</span>`+
-          `<b>Batterie:</b><span>${nfmt(f.BatV,'V')}</span>`;
-      }
+  // --------- Verlauf laden (beide Namensvarianten)
+  async function loadHistory() {
+    const p1 = `/data/v2/history/${nodeId}.json`;
+    const p2 = `/data/v2/history_${nodeId}.json`;
+    let data = null, used = "";
+    for (const p of [p1,p2]) {
+      try {
+        const r = await fetch(p,{cache:"no-store"});
+        if (r.ok) { data = await r.json(); used = p; break; }
+      } catch {}
     }
-  }catch{}
-
-  // 3) History laden (zuerst normal, ggf. Alternate)
-  async function load(url){
-    const r = await fetch(url+'?t='+Date.now(), {cache:'no-store'});
-    if (!r.ok) return null;
-    const j = await r.json();
-    return Array.isArray(j)? j : null;
+    return {data,used};
   }
-  let hist = await load(makeHistUrl(fullId));
-  if (!hist) hist = await load(makeHistAlt(fullId));
-  if (!hist) { note.textContent='Kein Verlauf verfügbar.'; draw([]); return; }
 
-  // Normiere Felder: {ts, temp, hum}
-  const rows = hist.map(p=>({
-    ts:  p.ts || p.t,
-    temp: (p.temp ?? p.t ?? null),
-    hum:  (p.h   ?? p.hum ?? null)
-  })).filter(r=>r.ts);
+  const {data} = await loadHistory();
 
-  draw(rows);
-
-  // ===== Zeichnen =====
-  function draw(rows){
-    // Größe
-    const W = cvs.width = cvs.clientWidth * devicePixelRatio;
-    const H = cvs.height= cvs.clientHeight* devicePixelRatio;
-    ctx.scale(devicePixelRatio, devicePixelRatio);
-    ctx.clearRect(0,0,cvs.clientWidth,cvs.clientHeight);
-
-    const pad = {l:50, r:50, t:14, b:34};
-    const w = cvs.clientWidth - pad.l - pad.r;
-    const h = cvs.clientHeight- pad.t - pad.b;
-
-    // Axen & Grid
-    ctx.strokeStyle = '#e6e8ee';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, pad.t+h); ctx.lineTo(pad.l+w, pad.t+h);
-    ctx.stroke();
-
-    if (rows.length===0){ note.textContent='Kein Verlauf verfügbar.'; return; }
-
-    const xs = rows.map(r=>+new Date(r.ts));
-    const minX = Math.min(...xs), maxX = Math.max(...xs) || (minX+1);
-
-    const tVals = rows.filter(r=>typeof r.temp==='number').map(r=>r.temp);
-    const hVals = rows.filter(r=>typeof r.hum==='number').map(r=>r.hum);
-
-    const hasT = tVals.length>0;
-    const hasH = hVals.length>0;
-
-    if (!hasT && !hasH){ note.textContent='Kein Verlauf verfügbar.'; return; }
-
-    // linke (T) und rechte (H) Achse
-    const minT = hasT? Math.min(...tVals):0;
-    const maxT = hasT? Math.max(...tVals):1;
-    const minH = hasH? Math.min(...hVals):0;
-    const maxH = hasH? Math.max(...hVals):1;
-
-    const padT = hasT? (maxT-minT||1)*0.1:1;
-    const padH = hasH? (maxH-minH||1)*0.1:1;
-
-    // Ticks X
-    const TICKS = 6;
-    ctx.fillStyle = '#728099';
-    ctx.textAlign='center'; ctx.textBaseline='top'; ctx.font='12px system-ui';
-    for (let i=0;i<=TICKS;i++){
-      const t = minX + (i*(maxX-minX))/TICKS;
-      const x = pad.l + w*( (t-minX)/(maxX-minX||1) );
-      ctx.fillText(tlabel(t), x, pad.t+h+6);
-      ctx.strokeStyle = '#eff2f7';
-      ctx.beginPath(); ctx.moveTo(x, pad.t); ctx.lineTo(x, pad.t+h); ctx.stroke();
-    }
-
-    // Y links (Temp)
-    if (hasT){
-      const ticks=5;
-      ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.fillStyle='#728099';
-      for (let i=0;i<=ticks;i++){
-        const v = minT-padT + (i*(maxT+padT - (minT-padT)))/ticks;
-        const y = pad.t + h*(1 - ( (v-(minT-padT))/((maxT+padT)-(minT-padT)) ));
-        ctx.fillText(v.toFixed(1), pad.l-8, y);
-        ctx.strokeStyle='#eff2f7'; ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l+w, y); ctx.stroke();
+  const ctx = document.getElementById("chart").getContext("2d");
+  const chartData = {
+    labels: [],
+    datasets: [
+      {
+        label: "🌡️ Temperatur (°C)",
+        data: [],
+        borderColor: getComputedStyle(document.documentElement).getPropertyValue('--temp').trim(),
+        backgroundColor: "transparent",
+        pointRadius: 3,
+        pointHoverRadius: 4,
+        tension: 0.25,
+        yAxisID: "y"
+      },
+      {
+        label: "💧 Luftfeuchtigkeit (%)",
+        data: [],
+        borderColor: getComputedStyle(document.documentElement).getPropertyValue('--hum').trim(),
+        backgroundColor: "transparent",
+        pointRadius: 3,
+        pointHoverRadius: 4,
+        tension: 0.25,
+        yAxisID: "y1"
       }
-    }
+    ]
+  };
 
-    // Y rechts (Hum)
-    if (hasH){
-      const ticks=5;
-      ctx.textAlign='left'; ctx.textBaseline='middle'; ctx.fillStyle='#728099';
-      for (let i=0;i<=ticks;i++){
-        const v = minH-padH + (i*(maxH+padH - (minH-padH)))/ticks;
-        const y = pad.t + h*(1 - ( (v-(minH-padH))/((maxH+padH)-(minH-padH)) ));
-        ctx.fillText(v.toFixed(0), pad.l+w+8, y);
-      }
-    }
-
-    // Skalenfunktionen
-    const xMap = t => pad.l + w*( (+new Date(t)-minX)/(maxX-minX||1) );
-    const yT   = v => pad.t + h*(1 - ( (v-(minT-padT))/((maxT+padT)-(minT-padT)) ));
-    const yH   = v => pad.t + h*(1 - ( (v-(minH-padH))/((maxH+padH)-(minH-padH)) ));
-
-    // Linien + Punkte
-    function line(series, color, yfn){
-      if (series.length===0) return;
-      ctx.lineWidth=2; ctx.strokeStyle=color;
-      if (series.length>=2){
-        ctx.beginPath();
-        series.forEach((p,i)=>{ const x=xMap(p.ts), y=yfn(p.v); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
-        ctx.stroke();
-      }
-      // Punkte
-      ctx.fillStyle=color;
-      series.forEach(p=>{
-        const x=xMap(p.ts), y=yfn(p.v);
-        ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill();
-      });
-    }
-
-    const sT = hasT ? rows.filter(r=>typeof r.temp==='number').map(r=>({ts:r.ts,v:r.temp})) : [];
-    const sH = hasH ? rows.filter(r=>typeof r.hum ==='number').map(r=>({ts:r.ts,v:r.hum })) : [];
-
-    line(sT, getComputedStyle(document.documentElement).getPropertyValue('--lineT').trim() || '#1565c0', yT);
-    line(sH, getComputedStyle(document.documentElement).getPropertyValue('--lineH').trim() || '#2e7d32', yH);
-
-    // Tooltip (nahe nächstem Punkt)
-    const pts = sT.map(p=>({...p, kind:'T', y:yT(p.v)}))
-                  .concat(sH.map(p=>({...p, kind:'H', y:yH(p.v)})))
-                  .map(p=>({x:xMap(p.ts), y:p.y, ts:p.ts, v:p.v, kind:p.kind}));
-    cvs.onmousemove = e=>{
-      const r = cvs.getBoundingClientRect();
-      const mx = (e.clientX - r.left), my = (e.clientY - r.top);
-      let best=null, d2=9999;
-      pts.forEach(p=>{
-        const dx = p.x - mx, dy = p.y - my; const dd = dx*dx+dy*dy;
-        if (dd<d2){ d2=dd; best=p; }
-      });
-      if (!best || d2>200) { tip.style.opacity=0; return; }
-      tip.style.left = Math.round(best.x)+'px';
-      tip.style.top  = Math.round(best.y)+'px';
-      tip.textContent = `${tlabel(best.ts)} · ${best.kind==='T'?'T':'H'}: ${best.v}`;
-      tip.style.opacity=1;
-    };
-    cvs.onmouseleave = ()=> tip.style.opacity=0;
-
-    // Hinweis
-    const count = (hasT?sT.length:0) + (hasH?sH.length:0);
-    note.textContent = (count<=1) ? 'Hinweis: nur ein Messpunkt vorhanden – Linie ab 2 Punkten.' : '';
+  if (Array.isArray(data) && data.length) {
+    data.slice(-48).forEach(d => {
+      chartData.labels.push(new Date(d.ts).toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"}));
+      chartData.datasets[0].data.push(d.t ?? null);
+      chartData.datasets[1].data.push(d.h ?? null);
+    });
+  } else {
+    // keine Daten → leeres Chart mit Hinweis
+    chartData.labels.push("");
+    chartData.datasets[0].data.push(null);
+    chartData.datasets[1].data.push(null);
   }
+
+  new Chart(ctx, {
+    type: "line",
+    data: chartData,
+    options: {
+      responsive:true,
+      maintainAspectRatio:false,
+      interaction:{mode:"index", intersect:false},
+      plugins:{
+        legend:{display:true, labels:{boxWidth:12, usePointStyle:true}},
+        tooltip:{enabled:true}
+      },
+      scales:{
+        y:{
+          type:"linear", position:"left",
+          title:{display:true, text:"°C"},
+          suggestedMin: Math.min(...chartData.datasets[0].data.filter(x=>x!=null)) - 1 || 0,
+          suggestedMax: Math.max(...chartData.datasets[0].data.filter(x=>x!=null)) + 1 || 10,
+          grid:{color:"rgba(15,23,42,.08)"}
+        },
+        y1:{
+          type:"linear", position:"right", grid:{drawOnChartArea:false, color:"rgba(15,23,42,.08)"},
+          title:{display:true, text:"%"},
+          suggestedMin: Math.min(...chartData.datasets[1].data.filter(x=>x!=null)) - 1 || 0,
+          suggestedMax: Math.max(...chartData.datasets[1].data.filter(x=>x!=null)) + 1 || 100
+        },
+        x:{grid:{color:"rgba(15,23,42,.06)"}}
+      }
+    }
+  });
 })();
 </script>
 </body>
