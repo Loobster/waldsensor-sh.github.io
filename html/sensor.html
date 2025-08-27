@@ -94,6 +94,8 @@ async function resolveNodeId(requested){
   let latest;
   try{
     const res = await fetch(LATEST_URL, {cache:'no-store'});
+    const res = await fetch(`${LATEST_URL}?nocache=${Date.now()}`, {cache:'no-store'}); 
+
     const arr = await res.json();
     latest = arr.find(r => r.id === nodeId);
     if(!latest){ throw new Error('Node nicht in _all.json'); }
@@ -121,11 +123,12 @@ async function resolveNodeId(requested){
     Batterie: <b>${n(vbat)}</b> V
   `;
 
-  // ---- History laden (zwei mögliche Dateinamen)
-  const historyCandidates = [
-    `/data/v2/history/${nodeId}.json`,
-    `/data/v2/history_${nodeId}.json`
-  ];
+// ---- History laden (zwei mögliche Dateinamen)
+const historyCandidates = [ 
+  `/data/v2/history/${nodeId}.json?nocache=${Date.now()}`,
+  `/data/v2/history_${nodeId}.json?nocache=${Date.now()}`
+];
+
 
   let hist = null, usedUrl = null;
   for (const url of historyCandidates){
