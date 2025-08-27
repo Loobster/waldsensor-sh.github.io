@@ -5,162 +5,144 @@
   <title>Schulwaldsensor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: system-ui, sans-serif; margin: 2em; background: #f5f7fa; }
-    .wrap { max-width: 800px; margin: auto; }
-    h1 { font-size: 1.6em; }
-    .card { background: white; padding: 1em 1.5em; margin: 1em 0; border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .muted { color: #666; font-size: 0.9em; }
-    .values { display: flex; gap: 2em; }
-    .values div { flex: 1; font-size: 1.2em; }
-    canvas { width: 100% !important; height: 320px !important; }
+    body { font-family: sans-serif; margin: 0; padding: 0; background: #f7f9fb; }
+    .wrap { max-width: 900px; margin: auto; padding: 1rem; }
+    .back { display:inline-block; margin-bottom:1rem; text-decoration:none; color:#0366d6; }
+    .card { background: white; padding: 1rem; margin-bottom: 1rem; border-radius: .5rem; box-shadow: 0 2px 5px rgba(0,0,0,.1);}
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    h1 { margin-top:0; }
+    .value { font-size:1.2rem; }
+    .muted { color:#666; font-size:.9rem; }
+    canvas { width:100%!important; height:400px!important; }
+    .hidden { display:none; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <a href="https://www.waldsensor.sh/html/">← Zur Karte</a>
-    <h1 id="title">Schulwaldsensor</h1>
-
-    <div class="card">
-      <div>🕒 <b>Stand: <span id="standzeit">—</span></b></div>
-      <div class="values">
-        <div>🌡️ <span id="val-temp">—</span></div>
-        <div>💧 <span id="val-hum">—</span></div>
-        <div>🔋 <span id="val-bat">—</span></div>
+    <a href="/v2.html" class="back">&larr; Zur Karte</a>
+    <h1 id="title">Schulwaldsensor — …</h1>
+    <div class="card grid">
+      <div>
+        <div id="stand" class="muted">⏱ Stand: —</div>
+        <div class="value">🌡 <span id="temp">—</span> °C</div>
+        <div class="value">💧 <span id="hum">—</span> %</div>
+        <div class="value">🔋 <span id="bat">—</span> V</div>
+        <div class="muted">Quelle: /data/v2/latest/_all.json</div>
       </div>
-      <div class="muted">Quelle: /data/v2/latest/_all.json</div>
+      <div>
+        <h3>Aktuelle Werte</h3>
+        <div>Temperatur: <span id="val-temp">—</span> °C</div>
+        <div>Luftfeuchte: <span id="val-hum">—</span> %</div>
+        <div>Batterie: <span id="val-bat">—</span> V</div>
+      </div>
     </div>
 
     <div class="card">
-      <h3>📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</h3>
+      <h3>📊 Verlauf Temperatur & Luftfeuchtigkeit</h3>
       <canvas id="chart"></canvas>
+      <div id="history-empty" class="muted hidden">Keine Verlaufsdaten gefunden.</div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-  // Chart-Renderer
-  function renderChart(xs, ysT, ysH) {
-    const ctx = document.getElementById('chart').getContext('2d');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: xs.map(d => d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'})),
-        datasets: [
-          { label: 'Temperatur (°C)', data: ysT, borderColor: 'blue', fill: false, yAxisID: 'y1' },
-          { label: 'Luftfeuchte (%)', data: ysH, borderColor: 'green', fill: false, yAxisID: 'y2' }
-        ]
-      },
-      options: {
-        responsive: true,
-        interaction: { mode: 'index', intersect: false },
-        stacked: false,
-        scales: {
-          y1: { type: 'linear', position: 'left', ticks: { callback: v => v+' °C' } },
-          y2: { type: 'linear', position: 'right', ticks: { callback: v => v+' %' },
-                grid: { drawOnChartArea: false } }
-        }
-      }
-    });
-  }
-  </script>
+  // --- Hilfsfunktionen
+  const qs = new URLSearchParams(location.search);
+  const nodeId = qs.get("id") || "unknown";
 
-  <script>
+  document.getElementById("title").textContent = "Schulwaldsensor — " + nodeId;
+
+  const LATEST_URL = "/data/v2/latest/_all.json";
+
+  // Chart.js init
+  const ctx = document.getElementById('chart').getContext('2d');
+  window.chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [
+        { label: 'Temperatur (°C)', borderColor: 'blue', fill:false, data: [] },
+        { label: 'Luftfeuchte (%)', borderColor: 'green', fill:false, data: [] }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: false }
+      }
+    }
+  });
+
+  // ---- Latest laden
   (async () => {
-    // Node-ID robust bestimmen
-    function getNodeId() {
-      const p = new URLSearchParams(location.search);
-      for (const k of ['node','id','dev','sensor']) {
-        const v = (p.get(k) || '').trim();
-        if (v) return v;
-      }
-      const m = location.pathname.split('/').pop().replace(/\.html$/,'');
-      return (m && m !== 'sensor') ? m : '';
-    }
+    try{
+      const res = await fetch(LATEST_URL + "?t=" + Date.now(), {cache:'no-store'});
+      const arr = await res.json();
+      const latest = arr.find(r => r.id === nodeId);
+      if(!latest) throw new Error("Node nicht in _all.json");
 
-    const nodeId = getNodeId();
-    if (!nodeId) {
-      document.body.innerHTML = `<div class="wrap"><h2>❌ Keine Node-ID angegeben.</h2></div>`;
+      document.getElementById("stand").textContent = "⏱ Stand: " + (latest.ts || latest.time || "—");
+      document.getElementById("temp").textContent = pickNum(latest.fields, ["TempC_SHT","TempC_SHT31","t"]) ?? "—";
+      document.getElementById("hum").textContent  = pickNum(latest.fields, ["Hum_SHT","Hum_SHT31","h"]) ?? "—";
+      document.getElementById("bat").textContent  = pickNum(latest.fields, ["BatV","batt"]) ?? "—";
+
+      document.getElementById("val-temp").textContent = document.getElementById("temp").textContent;
+      document.getElementById("val-hum").textContent  = document.getElementById("hum").textContent;
+      document.getElementById("val-bat").textContent  = document.getElementById("bat").textContent;
+    }catch(e){
+      document.body.innerHTML = `<div class="wrap"><h2>❌ Node „${nodeId}“ nicht gefunden.</h2><div class="muted">_all.json konnte nicht gelesen werden.</div></div>`;
       return;
     }
-    document.getElementById('title').textContent = "Schulwaldsensor — " + nodeId;
-
-    // Helper zum Laden von JSON mit Cache-Busting
-    async function getJSON(url) {
-      const u = `${url}${url.includes('?') ? '&' : '?'}t=${Date.now()}`;
-      const res = await fetch(u, { cache: 'no-store' });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const txt = await res.text();
-      if (!txt) throw new Error("Leere Antwort");
-      return JSON.parse(txt);
-    }
-
-    // Latest laden: erst _all.json, sonst Einzeldatei
-    let latestRec = null;
-    try {
-      const all = await getJSON('/data/v2/latest/_all.json');
-      if (Array.isArray(all)) {
-        latestRec = all.find(r => r && r.id === nodeId) || null;
-      }
-    } catch(e) { console.warn("_all.json Fehler:", e.message); }
-
-    if (!latestRec) {
-      try {
-        const single = await getJSON(`/data/v2/latest/${nodeId}.json`);
-        if (single && single.id) latestRec = single;
-        else if (Array.isArray(single) && single[0]) latestRec = single[0];
-      } catch(e) { console.warn("Fallback latest/<id>.json Fehler:", e.message); }
-    }
-
-    if (!latestRec) {
-      document.body.innerHTML =
-        `<div class="wrap"><h2>❌ Keine Daten für ${nodeId}</h2></div>`;
-      return;
-    }
-
-    // History laden
-    async function loadHistory(id) {
-      const tries = [
-        `/data/v2/history/${id}.json`,
-        `/data/v2/history_${id}.json`
-      ];
-      for (const u of tries) {
-        try {
-          const h = await getJSON(u);
-          if (Array.isArray(h) && h.length) return h;
-        } catch {}
-      }
-      return [];
-    }
-    const history = await loadHistory(nodeId);
-
-    // Zeit formatieren
-    function fmtTS(s) {
-      try {
-        const d = new Date(s);
-        return d.toLocaleDateString('de-DE') + ", " +
-               d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
-      } catch { return s; }
-    }
-
-    document.getElementById('standzeit').textContent = fmtTS(latestRec.ts);
-
-    const temp = latestRec.fields.TempC_SHT ?? latestRec.fields.TempC_SHT31 ?? latestRec.fields.TempC1;
-    const hum  = latestRec.fields.Hum_SHT ?? latestRec.fields.Hum_SHT31;
-    const bat  = latestRec.fields.BatV;
-
-    if (temp!=null) document.getElementById('val-temp').textContent = temp + " °C";
-    if (hum !=null) document.getElementById('val-hum').textContent  = hum  + " %";
-    if (bat !=null) document.getElementById('val-bat').textContent  = bat  + " V";
-
-    // Chart rendern
-    const points = history.slice(-96);
-    const xs  = points.map(p => new Date(p.ts));
-    const ysT = points.map(p => p.TempC_SHT ?? p.TempC_SHT31 ?? p.TempC1 ?? p.temp ?? null);
-    const ysH = points.map(p => p.Hum_SHT ?? p.Hum_SHT31 ?? p.hum ?? null);
-
-    renderChart(xs, ysT, ysH);
   })();
+
+  // ---- History laden
+  const historyCandidates = [
+    `/data/v2/history/${nodeId}.json`,
+    `/data/v2/history_${nodeId}.json`
+  ];
+
+  const pickNum = (obj, keys) => {
+    if (!obj) return null;
+    for (const k of keys) {
+      if (obj[k] != null && obj[k] !== "") {
+        const n = Number(obj[k]);
+        if (!isNaN(n)) return n;
+      }
+    }
+    return null;
+  };
+
+  async function loadHistory(){
+    let points = [];
+    for(const url of historyCandidates){
+      try{
+        const res = await fetch(url + "?t=" + Date.now(), {cache:'no-store'});
+        if(res.ok){
+          const arr = await res.json();
+          if(Array.isArray(arr) && arr.length){ points = arr; break; }
+        }
+      }catch{}
+    }
+    if(!points.length){
+      document.getElementById("history-empty").classList.remove("hidden");
+      return;
+    }
+
+    const labels = points.map(p=>{
+      const d = new Date(p.ts || p.time || 0);
+      return isNaN(d)? "" : d.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});
+    });
+
+    const temps = points.map(p=>pickNum(p,["t","TempC_SHT","TempC_SHT31","temp"]));
+    const hums  = points.map(p=>pickNum(p,["h","Hum_SHT","Hum_SHT31","humidity"]));
+
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = temps;
+    chart.data.datasets[1].data = hums;
+    chart.update();
+  }
+
+  loadHistory();
   </script>
 </body>
 </html>
