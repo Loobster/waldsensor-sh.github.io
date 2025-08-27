@@ -1,220 +1,166 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <title>WALDSENSOR.SH – Sensor</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
+  <meta charset="UTF-8">
+  <title>Schulwaldsensor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    :root {
-      --bg: #f3f6f9;
-      --card: #fff;
-      --text: #0f172a;
-      --muted:#5b6476;
-      --green:#16a34a;
-      --green-soft:#dcfce7;
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
-      --accent:#1d4ed8;    /* blau */
-      --accent2:#059669;   /* türkisgrün */
-    }
-    html,body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; }
-    .wrap { max-width:1200px; margin:24px auto; padding:0 16px; }
-    a.back { display:inline-flex; gap:8px; align-items:center; text-decoration:none; color:var(--muted); font-weight:600; }
-    h1 { margin:18px 0 12px; font-size:clamp(28px,4vw,44px); }
-    .grid { display:grid; grid-template-columns:1fr 340px; gap:20px; }
-    .card { background:var(--card); border-radius:20px; box-shadow:var(--shadow); padding:18px; }
-    .stamp { display:inline-flex; gap:10px; align-items:center; padding:10px 14px; background:var(--green-soft); color:#14532d; border-radius:14px; font-weight:700; border:1px solid #c7f0d2;}
-    .kv { margin-top:12px; line-height:1.8; font-size:18px; }
-    .kv b { font-variant-numeric: tabular-nums; }
-    .muted { color:var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    canvas { width:100%; height:360px; }
-    @media (max-width: 980px){ .grid { grid-template-columns:1fr; } }
+    body { font-family: system-ui, sans-serif; margin: 2em; background: #f5f7fa; }
+    .wrap { max-width: 800px; margin: auto; }
+    h1 { font-size: 1.6em; }
+    .card { background: white; padding: 1em 1.5em; margin: 1em 0; border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .muted { color: #666; font-size: 0.9em; }
+    .values { display: flex; gap: 2em; }
+    .values div { flex: 1; font-size: 1.2em; }
+    canvas { width: 100% !important; height: 320px !important; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <a class="back" href="../v2.html">← Zur Karte</a>
-    <h1 id="title">Schulwaldsensor — …</h1>
+    <a href="v2.html">← Zur Karte</a>
+    <h1 id="title">Schulwaldsensor</h1>
 
-    <div class="grid">
-      <div class="card">
-        <div id="stamp" class="stamp">⏱️ Stand: —</div>
-        <div class="kv" id="facts"></div>
-        <div class="muted" style="margin-top:10px">Quelle: /data/v2/latest/_all.json</div>
+    <div class="card">
+      <div>🕒 <b>Stand: <span id="standzeit">—</span></b></div>
+      <div class="values">
+        <div>🌡️ <span id="val-temp">—</span></div>
+        <div>💧 <span id="val-hum">—</span></div>
+        <div>🔋 <span id="val-bat">—</span></div>
       </div>
-
-      <div class="card">
-        <h3 style="margin:0 0 10px">Aktuelle Werte</h3>
-        <div id="current" class="kv">—</div>
-      </div>
+      <div class="muted">Quelle: /data/v2/latest/_all.json</div>
     </div>
 
-    <div class="card" style="margin-top:16px">
-      <h3 style="margin:0 0 8px">📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</h3>
-      <div class="muted" id="hint" style="display:none"></div>
+    <div class="card">
+      <h3>📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</h3>
       <canvas id="chart"></canvas>
     </div>
   </div>
 
-<script>
-const LATEST_URL = "/data/v2/latest/_all.json";
-
-function fmtLocal(iso){
-  try{
-    return new Date(iso).toLocaleString('de-DE',{
-      day:'2-digit',month:'2-digit',year:'numeric',
-      hour:'2-digit',minute:'2-digit',second:'2-digit'
-    });
-  }catch{ return '—'; }
-}
-function n(v){ return (v===null||v===undefined||Number.isNaN(+v))?'–':((''+v).replace('.',',')); }
-
-async function resolveNodeId(requested){
-  if (requested.includes('-')) return requested; // schon voll
-  try{
-    const res = await fetch(LATEST_URL, {cache:'no-store'});
-    const arr = await res.json();
-    const hit = arr.find(r => r.id && r.id.startsWith(requested+'-'));
-    if (hit) return hit.id;
-  }catch(e){ console.warn('resolveNodeId:', e); }
-  return requested;
-}
-
-(async()=>{
-  const p = new URLSearchParams(location.search);
-  const raw = (p.get('node')||'').trim();
-  if(!raw){ document.body.innerHTML='<div class="wrap"><h2>❌ Kein Node angegeben</h2></div>'; return; }
-
-  const nodeId = await resolveNodeId(raw);
-
-  // ---- latest laden
-  let latest;
-  try{
-    const res = await fetch(LATEST_URL, {cache:'no-store'});
-    const res = await fetch(`${LATEST_URL}?nocache=${Date.now()}`, {cache:'no-store'}); 
-
-    const arr = await res.json();
-    latest = arr.find(r => r.id === nodeId);
-    if(!latest){ throw new Error('Node nicht in _all.json'); }
-  }catch(e){
-    document.body.innerHTML = `<div class="wrap"><h2>❌ Node „${nodeId}“ nicht gefunden.</h2><div class="muted">_all.json konnte nicht gelesen werden.</div></div>`;
-    return;
-  }
-
-  const fields = latest.fields || {};
-  const temp = fields.TempC_SHT ?? fields.TempC_SHT31 ?? null;
-  const hum  = fields.Hum_SHT  ?? fields.Hum_SHT31  ?? null;
-  const vbat = fields.BatV ?? null;
-
-  document.getElementById('title').textContent = `Schulwaldsensor — ${nodeId.split('-')[0].toUpperCase()}`;
-  document.getElementById('stamp').textContent = `⏱️ Stand: ${fmtLocal(latest.ts)}`;
-
-  document.getElementById('facts').innerHTML = `
-    🔋 Batterie: <b>${n(vbat)}</b> V<br/>
-    🌡️ Temperatur: <b>${n(temp)}</b> °C (SHT)<br/>
-    💧 Luftfeuchtigkeit: <b>${n(hum)}</b> % (SHT)
-  `;
-  document.getElementById('current').innerHTML = `
-    Temperatur: <b>${n(temp)}</b> °C<br/>
-    Luftfeuchte: <b>${n(hum)}</b> %<br/>
-    Batterie: <b>${n(vbat)}</b> V
-  `;
-
-// ---- History laden (zwei mögliche Dateinamen)
-const historyCandidates = [ 
-  `/data/v2/history/${nodeId}.json?nocache=${Date.now()}`,
-  `/data/v2/history_${nodeId}.json?nocache=${Date.now()}`
-];
-
-
-  let hist = null, usedUrl = null;
-  for (const url of historyCandidates){
-    try{
-      const r = await fetch(url, {cache:'no-store'});
-      if (r.ok){
-        hist = await r.json(); usedUrl = url; break;
-      }
-    }catch{}
-  }
-
-  const hint = document.getElementById('hint');
-  const ctx  = document.getElementById('chart').getContext('2d');
-
-  if (!hist || !Array.isArray(hist) || hist.length === 0){
-    hint.style.display='block';
-    hint.textContent = `Kein Verlauf verfügbar.`;
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+  // Chart-Renderer
+  function renderChart(xs, ysT, ysH) {
+    const ctx = document.getElementById('chart').getContext('2d');
     new Chart(ctx, {
-      type:'line',
-      data:{ labels:[], datasets:[] },
-      options:{ plugins:{legend:{display:false}} }
-    });
-    return;
-  }
-
-  // Datenreihen
-  const labels = hist.map(d => new Date(d.ts).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}));
-  const tempSeries = hist.map(d => (d.t==null? null : Number(d.t)));
-  const humSeries  = hist.map(d => (d.h==null? null : Number(d.h)));
-
-  hint.style.display='none';
-
-  new Chart(ctx, {
-    type:'line',
-    data:{
-      labels,
-      datasets:[
-        {
-          label:'Temperatur (°C)',
-          data: tempSeries,
-          yAxisID: 'y1',
-          tension:.35,
-          borderWidth:3,
-          pointRadius:3,
-          borderColor:'rgba(37,99,235,.9)',     /* helleres Blau */
-          backgroundColor:'rgba(37,99,235,.12)',
-          spanGaps:true
-        },
-        {
-          label:'Luftfeuchtigkeit (%)',
-          data: humSeries,
-          yAxisID: 'y2',
-          tension:.35,
-          pointRadius:3,
-          borderWidth:3,
-          borderColor:'rgba(5,150,105,.9)',     /* helleres Grün */
-          backgroundColor:'rgba(5,150,105,.12)',
-          spanGaps:true
-        }
-      ]
-    },
-    options:{
-      responsive:true,
-      interaction:{ mode:'index', intersect:false },
-      plugins:{
-        legend:{ position:'top' },
-        tooltip:{ callbacks:{
-          label: ctx => `${ctx.dataset.label}: ${ctx.formattedValue.replace('.',',')}`
-        }}
+      type: 'line',
+      data: {
+        labels: xs.map(d => d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'})),
+        datasets: [
+          { label: 'Temperatur (°C)', data: ysT, borderColor: 'blue', fill: false, yAxisID: 'y1' },
+          { label: 'Luftfeuchte (%)', data: ysH, borderColor: 'green', fill: false, yAxisID: 'y2' }
+        ]
       },
-      scales:{
-        y1:{
-          type:'linear', display:true, position:'left',
-          title:{ display:true, text:'°C' },
-          grid:{ drawOnChartArea:false }
-        },
-        y2:{
-          type:'linear', display:true, position:'right',
-          suggestedMin: 30, suggestedMax: 100,
-          title:{ display:true, text:'% rF' }
-        },
-        x:{ title:{ display:false } }
+      options: {
+        responsive: true,
+        interaction: { mode: 'index', intersect: false },
+        stacked: false,
+        scales: {
+          y1: { type: 'linear', position: 'left', ticks: { callback: v => v+' °C' } },
+          y2: { type: 'linear', position: 'right', ticks: { callback: v => v+' %' },
+                grid: { drawOnChartArea: false } }
+        }
       }
+    });
+  }
+  </script>
+
+  <script>
+  (async () => {
+    // Node-ID robust bestimmen
+    function getNodeId() {
+      const p = new URLSearchParams(location.search);
+      for (const k of ['node','id','dev','sensor']) {
+        const v = (p.get(k) || '').trim();
+        if (v) return v;
+      }
+      const m = location.pathname.split('/').pop().replace(/\.html$/,'');
+      return (m && m !== 'sensor') ? m : '';
     }
-  });
-})();
-</script>
+
+    const nodeId = getNodeId();
+    if (!nodeId) {
+      document.body.innerHTML = `<div class="wrap"><h2>❌ Keine Node-ID angegeben.</h2></div>`;
+      return;
+    }
+    document.getElementById('title').textContent = "Schulwaldsensor — " + nodeId;
+
+    // Helper zum Laden von JSON mit Cache-Busting
+    async function getJSON(url) {
+      const u = `${url}${url.includes('?') ? '&' : '?'}t=${Date.now()}`;
+      const res = await fetch(u, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const txt = await res.text();
+      if (!txt) throw new Error("Leere Antwort");
+      return JSON.parse(txt);
+    }
+
+    // Latest laden: erst _all.json, sonst Einzeldatei
+    let latestRec = null;
+    try {
+      const all = await getJSON('/data/v2/latest/_all.json');
+      if (Array.isArray(all)) {
+        latestRec = all.find(r => r && r.id === nodeId) || null;
+      }
+    } catch(e) { console.warn("_all.json Fehler:", e.message); }
+
+    if (!latestRec) {
+      try {
+        const single = await getJSON(`/data/v2/latest/${nodeId}.json`);
+        if (single && single.id) latestRec = single;
+        else if (Array.isArray(single) && single[0]) latestRec = single[0];
+      } catch(e) { console.warn("Fallback latest/<id>.json Fehler:", e.message); }
+    }
+
+    if (!latestRec) {
+      document.body.innerHTML =
+        `<div class="wrap"><h2>❌ Keine Daten für ${nodeId}</h2></div>`;
+      return;
+    }
+
+    // History laden
+    async function loadHistory(id) {
+      const tries = [
+        `/data/v2/history/${id}.json`,
+        `/data/v2/history_${id}.json`
+      ];
+      for (const u of tries) {
+        try {
+          const h = await getJSON(u);
+          if (Array.isArray(h) && h.length) return h;
+        } catch {}
+      }
+      return [];
+    }
+    const history = await loadHistory(nodeId);
+
+    // Zeit formatieren
+    function fmtTS(s) {
+      try {
+        const d = new Date(s);
+        return d.toLocaleDateString('de-DE') + ", " +
+               d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+      } catch { return s; }
+    }
+
+    document.getElementById('standzeit').textContent = fmtTS(latestRec.ts);
+
+    const temp = latestRec.fields.TempC_SHT ?? latestRec.fields.TempC_SHT31 ?? latestRec.fields.TempC1;
+    const hum  = latestRec.fields.Hum_SHT ?? latestRec.fields.Hum_SHT31;
+    const bat  = latestRec.fields.BatV;
+
+    if (temp!=null) document.getElementById('val-temp').textContent = temp + " °C";
+    if (hum !=null) document.getElementById('val-hum').textContent  = hum  + " %";
+    if (bat !=null) document.getElementById('val-bat').textContent  = bat  + " V";
+
+    // Chart rendern
+    const points = history.slice(-96);
+    const xs  = points.map(p => new Date(p.ts));
+    const ysT = points.map(p => p.TempC_SHT ?? p.TempC_SHT31 ?? p.TempC1 ?? p.temp ?? null);
+    const ysH = points.map(p => p.Hum_SHT ?? p.Hum_SHT31 ?? p.hum ?? null);
+
+    renderChart(xs, ysT, ysH);
+  })();
+  </script>
 </body>
 </html>
