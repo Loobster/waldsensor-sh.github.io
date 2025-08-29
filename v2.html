@@ -50,7 +50,7 @@
 
   <script>
     // -------- Konfiguration --------
-    const FETCH_URL = '/data/v2/latest/_all.json';
+    const FETCH_URL = '/data/v2/latest/_all.json?nocache=' + Date.now();
 
     // IDs, die NICHT angezeigt werden sollen (Zombie etc.)
     const HIDE_IDS = new Set(['lsn50-v2']);
