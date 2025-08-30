@@ -6,15 +6,13 @@
   <title>WALDSENSOR.SH – Karte (V2)</title>
 
   <!-- Leaflet -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    crossorigin=""
-  />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <!-- (Optional) MarkerCluster – geladen wie bei dir, aktuell nicht genutzt -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
   <!-- QRCode -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
@@ -62,12 +60,16 @@
     .popup hr{ border:0; height:1px; background:#ececec; margin:.5rem 0 .75rem; }
     .popup .kv{ margin:.15rem 0; }
     .popup .kv b{ font-weight:700; }
-    .popup .actions { margin-top:.5rem; display:flex; align-items:center; gap:10px; }
-    .popup .btn {
-      display:inline-block; padding:6px 10px; border:1px solid #cbd5e1;
-      border-radius:8px; text-decoration:none; color:#0b4da2; background:#fff;
+
+    .popup .actions{
+      display:flex; align-items:center; gap:12px; margin-top:8px;
     }
-    .popup .muted{ color:#6b7280; font-size:12px; }
+    .popup .btn{
+      display:inline-block; padding:10px 14px; border-radius:10px;
+      border:1px solid #dfe4ea; background:#fff; text-decoration:none; font-weight:600; color:#0b4da2;
+    }
+    .popup .qr{ width:128px; height:128px; }
+    .popup .hint{ margin-top:6px; color:#6b7280; font-size:.9rem; }
   </style>
 </head>
 <body>
@@ -79,11 +81,11 @@
     const DATA_URL = "/data/v2/latest/_all.json";
     const AUTO_REFRESH_MS = 60_000;
 
-    // Fallback-Positionen
+    // Manuelle Fallback-Positionen (wie bei dir – plus 5-m-Versatz: s31-lb minimal nach Osten)
     const MANUAL_LOC = {
       "breklum-sn50v3":  [54.60669, 8.98195],
-      "s31-lb":          [54.65000, 8.96000],
-      "se01-lb":         [54.65000, 8.96000],
+      "s31-lb":          [54.65000, 8.960077],  // ~5 m Ost-Versatz
+      "se01-lb":         [54.65000, 8.960000],
       "kropp-sn50v3":    [54.41018, 9.52839],
       "fahrdorf-sn50v3": [54.50158, 9.58690],
     };
@@ -96,86 +98,111 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
     }).addTo(map);
     map.setView([54.4, 9.6], 8.25);
+
     let markersLayer = L.layerGroup().addTo(map);
 
-    const toDETime = ts => {
+    // ---------- Helfer ----------
+    function deTime(ts){
       try {
         return new Date(ts).toLocaleString("de-DE", {
           year:"numeric", month:"2-digit", day:"2-digit",
           hour:"2-digit", minute:"2-digit", second:"2-digit"
         });
       } catch(_){ return ts || "–"; }
-    };
-    const asNum = v => (v===null||v===undefined||v===""||Number.isNaN(+v)) ? null : +v;
+    }
 
     function cleanFields(fields){
       const out = {};
       for (const [k,v] of Object.entries(fields || {})){
         if (OMIT_FIELDS.has(k)) continue;
         if (v === undefined || v === null || v === "NULL") continue;
+        if (typeof v === "number" && v === 0) continue;
         out[k] = v;
       }
       return out;
     }
 
-    // Koordinaten-Suche: fields.lat/lon -> root.lat/lon -> MANUAL_LOC
+    // kleine Entzerrung für identische Koordinaten (ca. 5–8 m)
+    const seenCoords = new Map(); // key "lat,lon" -> count
+    function deOverlap(lat, lon, id){
+      const key = `${lat.toFixed(6)},${lon.toFixed(6)}`;
+      const n = (seenCoords.get(key) || 0) + 1;
+      seenCoords.set(key, n);
+      if (n === 1) return [lat, lon];
+
+      // deterministischer kleiner Offset je ID+Index
+      const seed = (id || "") + ":" + n;
+      let h = 0; for (let i=0;i<seed.length;i++) h = ((h<<5)-h) + seed.charCodeAt(i) | 0;
+      const angle = (h >>> 0) % 360;                 // 0..359
+      const radius_m = 5 + ((h>>>9) % 3);            // 5..7 m
+      const dLat = (radius_m / 111320) * Math.cos(angle*Math.PI/180);
+      const dLon = (radius_m / (111320 * Math.cos(lat*Math.PI/180))) * Math.sin(angle*Math.PI/180);
+      return [lat + dLat, lon + dLon];
+    }
+
     function pickCoord(item){
-      const f = item?.fields || {};
-      let lat = f.lat ?? f.Lat ?? item.lat ?? item.Lat;
-      let lon = f.lon ?? f.lng ?? f.Lon ?? f.LON ?? item.lon ?? item.lng ?? item.Lon ?? item.LON;
-      if (lat !== undefined && lon !== undefined){
-        lat = Number(lat); lon = Number(lon);
-        if (Number.isFinite(lat) && Number.isFinite(lon)) return [lat, lon];
+      // 1) item.fields.lat/lon
+      if (item?.fields && item.fields.lat != null && item.fields.lon != null) {
+        const lat = Number(item.fields.lat), lon = Number(item.fields.lon);
+        if (Number.isFinite(lat) && Number.isFinite(lon)) return deOverlap(lat, lon, item.id);
       }
-      if (MANUAL_LOC[item.id]) return MANUAL_LOC[item.id];
+      // 2) item.lat/lon
+      if (item && item.lat != null && item.lon != null) {
+        const lat = Number(item.lat), lon = Number(item.lon);
+        if (Number.isFinite(lat) && Number.isFinite(lon)) return deOverlap(lat, lon, item.id);
+      }
+      // 3) Fallback manuell
+      if (MANUAL_LOC[item?.id]) {
+        const [lat, lon] = MANUAL_LOC[item.id];
+        return deOverlap(Number(lat), Number(lon), item.id);
+      }
       return null;
+    }
+
+    function baseId(id){
+      if (!id) return "unbekannt";
+      const i = id.indexOf("-");
+      return i > 0 ? id.slice(0, i) : id;
     }
 
     function popupHtml(item){
       const f = cleanFields(item.fields);
-      // Messwerte tolerant finden:
-      const t = asNum(f.TempC_SHT31 ?? f.TempC_SHT ?? f.TempC ?? f.temp ?? f.t);
-      const h = asNum(f.Hum_SHT31   ?? f.Hum_SHT   ?? f.Hum   ?? f.hum ?? f.h);
-      const v = asNum(f.BatV ?? f.v);
-      const tTxt = (t==null) ? "—" : `${t.toFixed(1)} °C`;
-      const hTxt = (h==null) ? "—" : `${Math.round(h)} %`;
-      const vTxt = (v==null) ? "—" : `${v.toFixed(2)} V`;
+      let html = `<div class="popup"><h3>${item.id || "unbekannt"}</h3>`;
+      html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
 
-      const baseId = (item.id || "").split("-")[0] || "unbekannt";
-      const detailUrl = `/html/sensor.html?node=${encodeURIComponent(baseId)}`;
-      const absoluteUrl = `${location.origin}${detailUrl}`;
+      const temp = (typeof f.TempC_SHT31 === "number") ? f.TempC_SHT31
+                  : (typeof f.TempC_SHT   === "number") ? f.TempC_SHT
+                  : undefined;
+      const hum  = (typeof f.Hum_SHT31   === "number") ? f.Hum_SHT31
+                  : (typeof f.Hum_SHT     === "number") ? f.Hum_SHT
+                  : undefined;
 
-      let html = `<div class="popup"><h3>${item.id ?? "Unbekannt"}</h3>`;
-      html += `<div class="kv">Zeit: <b>${toDETime(item.ts)}</b></div><hr/>`;
-      html += `<div class="kv">Temp: <b>${tTxt}</b></div>`;
-      html += `<div class="kv">Feuchte: <b>${hTxt}</b></div>`;
-      html += `<div class="kv">Batterie: <b>${vTxt}</b></div>`;
+      if (temp !== undefined) html += `<div class="kv">Temp: <b>${temp.toFixed(1)} °C</b></div>`;
+      if (hum  !== undefined) html += `<div class="kv">Feuchte: <b>${hum.toFixed(0)} %</b></div>`;
+      if (typeof f.BatV === "number") html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
 
-      // übrige Felder anzeigen (ohne die oben genutzten + Koordinaten)
-      for (const [k,vRaw] of Object.entries(f)){
-        if (["TempC_SHT31","TempC_SHT","TempC","temp","t","Hum_SHT31","Hum_SHT","Hum","hum","h","BatV","v","lat","lon","lng","Lat","Lon","LON","LNG"].includes(k)) continue;
-        const v = (typeof vRaw === "number") ? vRaw.toString() : String(vRaw);
+      for (const [k,v] of Object.entries(f)){
+        if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV","lat","lon"].includes(k)) continue;
         html += `<div class="kv">${k}: <b>${v}</b></div>`;
       }
 
-      // Aktionen: Link + QR
-      html += `
-        <div class="actions">
-          <a class="btn" href="${detailUrl}">Seite öffnen</a>
-          <div id="qrcode-${CSS.escape(item.id || baseId)}"></div>
-        </div>
-        <div class="muted">Link nutzt Basis-ID: <code>${baseId}</code></div>
-      `;
-      html += `</div>`;
-      return html;
+      const bid = baseId(item.id);
+      const url = `https://www.waldsensor.sh/html/sensor.html?node=${encodeURIComponent(bid)}`;
+      html += `<div class="actions">
+        <a class="btn" href="${url}" target="_blank" rel="noopener">Seite öffnen</a>
+        <div id="qr-${item.id}" class="qr"></div>
+      </div>
+      <div class="hint">Link nutzt Basis-ID: <code>${bid}</code></div>`;
+
+      return html + `</div>`;
     }
 
     function latestRecord(data){
       let best = null, bestT = -Infinity;
       for (const r of (data||[])){
         if (!r || !r.ts) continue;
-        const t = new Date(r.ts).getTime();
-        if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
+        const t = Date.parse(r.ts);
+        if (Number.isFinite(t) && t > bestT){ bestT = t; best = r; }
       }
       return best;
     }
@@ -188,7 +215,9 @@
     }
 
     function render(data){
+      seenCoords.clear();
       markersLayer.clearLayers();
+
       const bounds = [];
       for (const item of (data || [])){
         const coord = pickCoord(item);
@@ -196,13 +225,12 @@
 
         const marker = L.marker(coord).bindPopup(popupHtml(item));
         marker.on("popupopen", () => {
-          const baseId = (item.id || "").split("-")[0] || "unbekannt";
-          const detailUrl = `${location.origin}/html/sensor.html?node=${encodeURIComponent(baseId)}`;
-          const holderId = `qrcode-${item.id || baseId}`;
-          const holder = document.getElementById(holderId);
-          if (holder && !holder.hasChildNodes()){
-            QRCode.toCanvas(detailUrl, { errorCorrectionLevel: 'M', width: 120 }, (err, canvas) => {
-              if (!err) holder.appendChild(canvas);
+          const qrDiv = document.getElementById(`qr-${item.id}`);
+          if (qrDiv && !qrDiv.hasChildNodes()) {
+            const bid = baseId(item.id);
+            const url = `https://www.waldsensor.sh/html/sensor.html?node=${encodeURIComponent(bid)}`;
+            QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 128 }, (err, canvas) => {
+              if (!err) qrDiv.appendChild(canvas);
             });
           }
         });
@@ -211,15 +239,15 @@
       }
       if (bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
 
+      // Stempel links
       document.getElementById("stamp").textContent =
         "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
 
+      // Neueste Meldung rechts
       const lastEl = document.getElementById("last");
       const lastRec = latestRecord(data);
       if (lastRec){
-        const shortId = (lastRec.id || "").split("-")[0] || "unbekannt";
-        lastEl.textContent =
-          "Letzte Node-Meldung: " + toDETime(lastRec.ts) + " – " + shortId;
+        lastEl.textContent = "Letzte Node-Meldung: " + deTime(lastRec.ts) + " – " + baseId(lastRec.id);
       } else {
         lastEl.textContent = "Letzte Node-Meldung: –";
       }
