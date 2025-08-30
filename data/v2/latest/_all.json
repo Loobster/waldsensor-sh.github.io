@@ -1,59 +1,9 @@
 [
-  {
-    "id": "breklum-sn50v3",
-    "ts": "2025-08-27T14:43:39.977273936Z",
-    "fields": {
-      "BatV": 3.636,
-      "Hum_SHT": 55.8,
-      "Node_type": "SN50_v3-LB",
-      "TempC_SHT": 25.5
-    }
-  },
-  {
-    "id": "fahrdorf-sn50v3",
-    "ts": "2025-08-27T14:32:34.024898948Z",
-    "fields": {
-      "BatV": 3.588,
-      "Hum_SHT": 65.8,
-      "Node_type": "SN50_v3-LB",
-      "TempC_SHT": 24.1
-    }
-  },
-  {
-    "id": "kropp-sn50v3",
-    "ts": "2025-08-27T14:27:53.724441334Z",
-    "fields": {
-      "BatV": 3.636,
-      "Hum_SHT": 67.3,
-      "Node_type": "SN50_v3-LB",
-      "TempC_SHT": 23.7
-    }
-  },
-  {
-    "id": "lsn50-v2",
-    "ts": "2025-08-27T14:39:33.433863953Z",
-    "fields": {
-      "BatV": 3.419,
-      "Hum_SHT31": 68.4,
-      "TempC_SHT31": 22.3
-    }
-  },
-  {
-    "id": "s31-lb",
-    "ts": "2025-08-27T14:44:38.842638001Z",
-    "fields": {
-      "BatV": 3.612,
-      "Hum_SHT31": 80.6,
-      "TempC_SHT31": 20.1
-    }
-  },
-  {
-    "id": "se01-lb",
-    "ts": "2025-08-27T14:30:29.093954163Z",
-    "fields": {
-      "BatV": 3.326,
-      "temp_SOIL": 14.48,
-      "water_SOIL": 7.19
-    }
-  }
+  {"id":"-measurement","ts":"_time","fields":{"_field": _value}},
+  {"id":"breklum","ts":"2025-08-30T16:02:50.878Z","fields":{"BatV": 3.636,"Hum_SHT": 53.5,"TempC_SHT": 25.9}},
+  {"id":"fahrdorf","ts":"2025-08-30T16:11:43.251Z","fields":{"BatV": 3.588,"Hum_SHT": 65.4,"TempC_SHT": 21.3}},
+  {"id":"kropp","ts":"2025-08-30T16:07:05.005Z","fields":{"BatV": 3.636,"Hum_SHT": 72.2,"TempC_SHT": 19.9}},
+  {"id":"lsn50","ts":"2025-08-30T16:19:34.807Z","fields":{"BatV": 3.419,"Hum_SHT31": 68.1,"TempC_SHT31": 21.4}},
+  {"id":"s31","ts":"2025-08-30T16:03:53.213Z","fields":{"BatV": 3.612,"Hum_SHT31": 82.5,"TempC_SHT31": 19}},
+  {"id":"se01","ts":"2025-08-30T16:09:37.216Z","fields":{"BatV": 3.326,"temp_SOIL": 14.87,"water_SOIL": 7.43}}
 ]
