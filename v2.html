@@ -77,182 +77,179 @@
   <div class="last-node" id="last">Letzte Node-Meldung: –</div>
   <div id="map"></div>
 
-  <script>
-    const DATA_URL = "/data/v2/latest/_all.json";
-    const AUTO_REFRESH_MS = 60_000;
+<script>
+  // Feste Datenquelle – so wie sie bei dir liegt
+  const DATA_URL = "/data/v2/latest/_all.json";
+  const AUTO_REFRESH_MS = 60_000;
+  const STALE_HOURS = 6; // ab wann wir "veraltet" anzeigen
 
-    // Manuelle Fallback-Positionen (wie bei dir – plus 5-m-Versatz: s31-lb minimal nach Osten)
-    const MANUAL_LOC = {
-      "breklum-sn50v3":  [54.60669, 8.98195],
-      "s31-lb":          [54.65000, 8.960077],  // ~5 m Ost-Versatz
-      "se01-lb":         [54.65000, 8.960000],
-      "kropp-sn50v3":    [54.41018, 9.52839],
-      "fahrdorf-sn50v3": [54.50158, 9.58690],
-    };
+  // feste/ersatz Koordinaten (+5m Versatz)
+  const MANUAL_LOC = {
+    "breklum-sn50v3":  [54.60669, 8.98195],
+    "s31-lb":          [54.65000, 8.96000],
+    "se01-lb":         [54.65005, 8.96005], // ~5 m versetzt
+    "kropp-sn50v3":    [54.41018, 9.52839],
+    "fahrdorf-sn50v3": [54.50158, 9.58690],
+  };
 
-    const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status"]);
+  const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status"]);
 
-    const map = L.map("map", { zoomSnap: 0.25 });
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-    }).addTo(map);
-    map.setView([54.4, 9.6], 8.25);
+  // Leaflet
+  const map = L.map("map", { zoomSnap: 0.25 });
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+  }).addTo(map);
+  map.setView([54.4, 9.6], 8.25);
+  let markersLayer = L.layerGroup().addTo(map);
 
-    let markersLayer = L.layerGroup().addTo(map);
+  function deTime(ts){
+    try {
+      return new Date(ts).toLocaleString("de-DE", {
+        year:"numeric", month:"2-digit", day:"2-digit",
+        hour:"2-digit", minute:"2-digit", second:"2-digit"
+      });
+    } catch(_){ return ts || "–"; }
+  }
 
-    // ---------- Helfer ----------
-    function deTime(ts){
-      try {
-        return new Date(ts).toLocaleString("de-DE", {
-          year:"numeric", month:"2-digit", day:"2-digit",
-          hour:"2-digit", minute:"2-digit", second:"2-digit"
-        });
-      } catch(_){ return ts || "–"; }
+  function cleanFields(fields){
+    const out = {};
+    for (const [k,v] of Object.entries(fields || {})){
+      if (OMIT_FIELDS.has(k)) continue;
+      if (v === undefined || v === null || v === "NULL") continue;
+      if (typeof v === "number" && v === 0) continue;
+      out[k] = v;
+    }
+    return out;
+  }
+
+  function pickCoord(item){
+    if (item?.lat !== undefined && item?.lon !== undefined)
+      return [Number(item.lat), Number(item.lon)];
+    if (item?.fields?.lat !== undefined && item?.fields?.lon !== undefined)
+      return [Number(item.fields.lat), Number(item.fields.lon)];
+    if (MANUAL_LOC[item.id]) return MANUAL_LOC[item.id];
+    return null;
+  }
+
+  function popupHtml(item){
+    const f = cleanFields(item.fields);
+    let html = `<div class="popup"><h3>${item.id}</h3>`;
+    html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
+    if (typeof f.TempC_SHT31 === "number")
+      html += `<div class="kv">Temp (SHT31): <b>${f.TempC_SHT31.toFixed(2)} °C</b></div>`;
+    else if (typeof f.TempC_SHT === "number")
+      html += `<div class="kv">Temp (SHT): <b>${f.TempC_SHT.toFixed(1)} °C</b></div>`;
+    if (typeof f.Hum_SHT31 === "number")
+      html += `<div class="kv">Hum (SHT31): <b>${f.Hum_SHT31.toFixed(2)} %</b></div>`;
+    else if (typeof f.Hum_SHT === "number")
+      html += `<div class="kv">Hum (SHT): <b>${f.Hum_SHT.toFixed(1)} %</b></div>`;
+    if (typeof f.BatV === "number")
+      html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
+
+    for (const [k,v] of Object.entries(f)){
+      if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV","lat","lon"].includes(k)) continue;
+      html += `<div class="kv">${k}: <b>${v}</b></div>`;
     }
 
-    function cleanFields(fields){
-      const out = {};
-      for (const [k,v] of Object.entries(fields || {})){
-        if (OMIT_FIELDS.has(k)) continue;
-        if (v === undefined || v === null || v === "NULL") continue;
-        if (typeof v === "number" && v === 0) continue;
-        out[k] = v;
-      }
-      return out;
-    }
-
-    // kleine Entzerrung für identische Koordinaten (ca. 5–8 m)
-    const seenCoords = new Map(); // key "lat,lon" -> count
-    function deOverlap(lat, lon, id){
-      const key = `${lat.toFixed(6)},${lon.toFixed(6)}`;
-      const n = (seenCoords.get(key) || 0) + 1;
-      seenCoords.set(key, n);
-      if (n === 1) return [lat, lon];
-
-      // deterministischer kleiner Offset je ID+Index
-      const seed = (id || "") + ":" + n;
-      let h = 0; for (let i=0;i<seed.length;i++) h = ((h<<5)-h) + seed.charCodeAt(i) | 0;
-      const angle = (h >>> 0) % 360;                 // 0..359
-      const radius_m = 5 + ((h>>>9) % 3);            // 5..7 m
-      const dLat = (radius_m / 111320) * Math.cos(angle*Math.PI/180);
-      const dLon = (radius_m / (111320 * Math.cos(lat*Math.PI/180))) * Math.sin(angle*Math.PI/180);
-      return [lat + dLat, lon + dLon];
-    }
-
-    function pickCoord(item){
-      // 1) item.fields.lat/lon
-      if (item?.fields && item.fields.lat != null && item.fields.lon != null) {
-        const lat = Number(item.fields.lat), lon = Number(item.fields.lon);
-        if (Number.isFinite(lat) && Number.isFinite(lon)) return deOverlap(lat, lon, item.id);
-      }
-      // 2) item.lat/lon
-      if (item && item.lat != null && item.lon != null) {
-        const lat = Number(item.lat), lon = Number(item.lon);
-        if (Number.isFinite(lat) && Number.isFinite(lon)) return deOverlap(lat, lon, item.id);
-      }
-      // 3) Fallback manuell
-      if (MANUAL_LOC[item?.id]) {
-        const [lat, lon] = MANUAL_LOC[item.id];
-        return deOverlap(Number(lat), Number(lon), item.id);
-      }
-      return null;
-    }
-
-    function baseId(id){
-      if (!id) return "unbekannt";
-      const i = id.indexOf("-");
-      return i > 0 ? id.slice(0, i) : id;
-    }
-
-    function popupHtml(item){
-      const f = cleanFields(item.fields);
-      let html = `<div class="popup"><h3>${item.id || "unbekannt"}</h3>`;
-      html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
-
-      const temp = (typeof f.TempC_SHT31 === "number") ? f.TempC_SHT31
-                  : (typeof f.TempC_SHT   === "number") ? f.TempC_SHT
-                  : undefined;
-      const hum  = (typeof f.Hum_SHT31   === "number") ? f.Hum_SHT31
-                  : (typeof f.Hum_SHT     === "number") ? f.Hum_SHT
-                  : undefined;
-
-      if (temp !== undefined) html += `<div class="kv">Temp: <b>${temp.toFixed(1)} °C</b></div>`;
-      if (hum  !== undefined) html += `<div class="kv">Feuchte: <b>${hum.toFixed(0)} %</b></div>`;
-      if (typeof f.BatV === "number") html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
-
-      for (const [k,v] of Object.entries(f)){
-        if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV","lat","lon"].includes(k)) continue;
-        html += `<div class="kv">${k}: <b>${v}</b></div>`;
-      }
-
-      const bid = baseId(item.id);
-      const url = `https://www.waldsensor.sh/html/sensor.html?node=${encodeURIComponent(bid)}`;
-      html += `<div class="actions">
-        <a class="btn" href="${url}" target="_blank" rel="noopener">Seite öffnen</a>
-        <div id="qr-${item.id}" class="qr"></div>
+    const shortId = item.id ? item.id.split("-")[0] : "unbekannt";
+    const targetUrl = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+    html += `
+      <div style="display:flex;align-items:center;gap:12px;margin-top:10px;">
+        <a href="${targetUrl}" class="leaflet-popup-close-button" style="
+           position:static;display:inline-block;padding:.6rem .9rem;border-radius:.7rem;
+           border:1px solid #cfe2ff;background:#e9f3ff;color:#0b4da2;text-decoration:none;font-weight:700;">
+          Seite öffnen
+        </a>
+        <div id="qrcode-${item.id}"></div>
       </div>
-      <div class="hint">Link nutzt Basis-ID: <code>${bid}</code></div>`;
+      <div style="margin-top:8px;color:#64748b;">Link nutzt Basis-ID: <b>${shortId}</b></div>
+    `;
+    return html + `</div>`;
+  }
 
-      return html + `</div>`;
+  function latestRecord(data){
+    let best = null, bestT = -Infinity;
+    for (const r of (data||[])){
+      const t = new Date(r?.ts).getTime();
+      if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
+    }
+    return best;
+  }
+
+  async function loadData(){
+    const url = `${DATA_URL}?t=${Date.now()}`; // Cache-Busting
+    const res = await fetch(url, { cache:"no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    if (!Array.isArray(json)) throw new Error("Kein Array");
+    console.info("[waldsensor] Quelle:", DATA_URL, "Einträge:", json.length);
+    return json;
+  }
+
+  function render(data){
+    markersLayer.clearLayers();
+    const bounds = [];
+
+    for (const item of (data || [])){
+      const coord = pickCoord(item);
+      if (!coord) continue;
+
+      const marker = L.marker(coord).bindPopup(popupHtml(item));
+      marker.on("popupopen", () => {
+        const shortId = item.id ? item.id.split("-")[0] : "unbekannt";
+        const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+        const qrDiv = document.getElementById(`qrcode-${item.id}`);
+        if (qrDiv && !qrDiv.hasChildNodes()) {
+          QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 128 }, (err, canvas) => {
+            if (!err) qrDiv.appendChild(canvas);
+          });
+        }
+      });
+      marker.addTo(markersLayer);
+      bounds.push(coord);
     }
 
-    function latestRecord(data){
-      let best = null, bestT = -Infinity;
-      for (const r of (data||[])){
-        if (!r || !r.ts) continue;
-        const t = Date.parse(r.ts);
-        if (Number.isFinite(t) && t > bestT){ bestT = t; best = r; }
-      }
-      return best;
+    if (bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
+
+    // Stempel links
+    document.getElementById("stamp").textContent =
+      "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
+
+    // Badge rechts + Stale-Check
+    const lastEl = document.getElementById("last");
+    const lastRec = latestRecord(data);
+
+    if (!lastRec) {
+      lastEl.textContent = "Letzte Node-Meldung: –";
+      return;
     }
 
-    async function loadData(){
-      const url = `${DATA_URL}?t=${Date.now()}`;
-      const res = await fetch(url, { cache:"no-store" });
-      if (!res.ok) throw new Error("fetch failed " + res.status);
-      return res.json();
+    const shortId = (lastRec.id || "").split("-")[0] || "unbekannt";
+    const lastTs = new Date(lastRec.ts).getTime();
+    const ageHours = (Date.now() - lastTs) / 3_600_000;
+
+    let text = `Letzte Node-Meldung: ${deTime(lastRec.ts)} – ${shortId}`;
+    if (Number.isFinite(ageHours) && ageHours > STALE_HOURS) {
+      text += " (veraltet)";
     }
+    lastEl.textContent = text;
+  }
 
-    function render(data){
-      seenCoords.clear();
-      markersLayer.clearLayers();
-
-      const bounds = [];
-      for (const item of (data || [])){
-        const coord = pickCoord(item);
-        if (!coord) continue;
-
-        const marker = L.marker(coord).bindPopup(popupHtml(item));
-        marker.on("popupopen", () => {
-          const qrDiv = document.getElementById(`qr-${item.id}`);
-          if (qrDiv && !qrDiv.hasChildNodes()) {
-            const bid = baseId(item.id);
-            const url = `https://www.waldsensor.sh/html/sensor.html?node=${encodeURIComponent(bid)}`;
-            QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 128 }, (err, canvas) => {
-              if (!err) qrDiv.appendChild(canvas);
-            });
-          }
-        });
-        marker.addTo(markersLayer);
-        bounds.push(coord);
-      }
-      if (bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
-
-      // Stempel links
+  async function run(){
+    try { render(await loadData()); }
+    catch(err){
+      console.error("[waldsensor] Datenfehler:", err);
       document.getElementById("stamp").textContent =
         "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
-
-      // Neueste Meldung rechts
-      const lastEl = document.getElementById("last");
-      const lastRec = latestRecord(data);
-      if (lastRec){
-        lastEl.textContent = "Letzte Node-Meldung: " + deTime(lastRec.ts) + " – " + baseId(lastRec.id);
-      } else {
-        lastEl.textContent = "Letzte Node-Meldung: –";
-      }
+      document.getElementById("last").textContent =
+        "Letzte Node-Meldung: (Quelle nicht erreichbar)";
     }
+  }
 
+  run();
+  setInterval(run, AUTO_REFRESH_MS);
+</script>
     async function run(){
       try{ render(await loadData()); }
       catch(err){
