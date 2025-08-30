@@ -2,187 +2,216 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>WALDSENSOR.SH – Live-Karte (v2)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WALDSENSOR.SH – Karte (V2)</title>
 
   <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
+  />
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    crossorigin=""
+  ></script>
+
+  <!-- QRCode -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
   <style>
-    html, body, #map { height: 100%; margin: 0; }
+    :root{
+      --pill-bg:#fff;
+      --pill-text:#106e2a;
+      --pill-shadow:0 2px 10px rgba(0,0,0,.15);
+    }
+    html, body { height:100%; margin:0; }
+    #map { height:100%; width:100%; }
 
-    .badge {
+    .pill {
       position: fixed;
-      z-index: 1000;
-      background: rgba(255,255,255,0.92);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-      border-radius: 14px;
+      z-index: 999;
+      top: 14px;
+      left: 70px;
+      background: var(--pill-bg);
+      color: var(--pill-text);
       padding: 10px 14px;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      font-size: 18px;
-      color: #0c2a1b;
-      border: 1px solid rgba(0,0,0,0.08);
-      backdrop-filter: saturate(180%) blur(6px);
+      border-radius: 14px;
+      font: 600 18px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: var(--pill-shadow);
+      border: 1px solid #e8e8e8;
     }
-    .badge-left  { top: 12px; left: 60px; }  /* frei von +/– */
-    .badge-right { top: 12px; right: 12px; }
 
-    /* Popups freundlich & neutral (kein dunkles Grün) */
-    .leaflet-popup-content { color:#111; }
-    .popup { color:#111; }
-    .popup h3 { margin: 0 0 6px 0; font-size: 20px; font-weight: 700; }
-    .popup .kv { margin: 2px 0; }
-    .popup .kv b { display:inline-block; width: 120px; }
-    .popup .hr { height: 1px; background: #e7ecef; margin: 8px 0; }
-    .popup .qrbox {
-      display:flex; gap:14px; align-items:center; padding:10px; border:1px solid #e7ecef; border-radius:12px; background:#fafdfb;
+    .last-node {
+      position: fixed;
+      z-index: 999;
+      top: 14px;
+      right: 14px;
+      background: #e9f3ff;
+      color: #0b4da2;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font: 600 16px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: var(--pill-shadow);
+      border: 1px solid #d6e6ff;
+      max-width: 42ch;
+      text-align: right;
     }
-    .popup .qrbox button {
-      cursor:pointer; border:0; border-radius:10px; padding:9px 14px; background:#1976d2; color:#fff; font-weight:600;
-    }
+
+    .popup h3{ margin:0 0 .25rem 0; font:700 20px/1.25 system-ui; }
+    .popup hr{ border:0; height:1px; background:#ececec; margin:.5rem 0 .75rem; }
+    .popup .kv{ margin:.15rem 0; }
+    .popup .kv b{ font-weight:700; }
   </style>
 </head>
 <body>
+  <div class="pill" id="stamp">Letzte Aktualisierung: –</div>
+  <div class="last-node" id="last">Letzte Node-Meldung: –</div>
   <div id="map"></div>
-  <div id="leftBadge"  class="badge badge-left">Letzte Aktualisierung: …</div>
-  <div id="rightBadge" class="badge badge-right">Letzte Node-Meldung: —</div>
 
   <script>
-    // -------- Konfiguration --------
-    const FETCH_URL = '/data/v2/latest/_all.json?nocache=' + Date.now();
+    const DATA_URL = "/data/v2/latest/_all.json";  
+    const AUTO_REFRESH_MS = 60_000;                
 
-    // IDs, die NICHT angezeigt werden sollen (Zombie etc.)
-    const HIDE_IDS = new Set(['lsn50-v2']);
-
-    // Feste Positionen (weil lat/lon im _all.json bewusst fehlen)
-    const POSITIONS = {
-      'breklum-sn50v3': [54.60669, 8.98195],
-      'kropp-sn50v3'  : [54.41018, 9.52839],
-      'fahrdorf-sn50v3': [54.50158, 9.58690],
-      's31-lb'        : [54.65000, 8.96000],
-      'se01-lb'       : [54.65000, 8.96000]
-      // 'lsn50-v2' absichtlich NICHT, der ist in HIDE_IDS
+    const MANUAL_LOC = {
+      "breklum-sn50v3":  [54.60669, 8.98195],
+      "s31-lb":          [54.65000, 8.96000],
+      "se01-lb":         [54.65000, 8.96000],
+      "kropp-sn50v3":    [54.41018, 9.52839],
+      "fahrdorf-sn50v3": [54.50158, 9.58690],
     };
 
-    // Bei exakt gleichen Koordinaten Marker minimal versetzen (einige Meter),
-    // damit zwei Marker am selben Ort beide anklickbar sind.
-    const usedCoords = new Map(); // key "lat,lon" -> count
+    const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status"]);
 
-    function nudgeIfDuplicate([lat, lon]) {
-      const key = lat.toFixed(5)+','+lon.toFixed(5); // Raster ~ Meterbereich
-      const count = (usedCoords.get(key) || 0);
-      usedCoords.set(key, count+1);
-
-      if (count === 0) return [lat, lon]; // erstes Exemplar unverändert
-
-      // pro Duplikat kleine Spirale (ca. ~10–20 m) um den Punkt
-      const d = 0.00015 * count;               // Abstand (≈ 15 m * count)
-      const angle = (count * 137.508) * Math.PI / 180; // Goldener Winkel
-      return [lat + d*Math.sin(angle), lon + d*Math.cos(angle)];
-    }
-
-    function shortName(id) {
-      const i = id.indexOf('-');
-      return i>0 ? id.slice(0,i) : id;
-    }
-    function fmtNum(v, dec=1) {
-      if (v===null || v===undefined || isNaN(v)) return '—';
-      return Number(v).toLocaleString('de-DE', {minimumFractionDigits:dec, maximumFractionDigits:dec});
-    }
-    function fmtTimeLocal(ts) {
-      const d = new Date(ts);
-      return d.toLocaleString('de-DE', {
-        day:'2-digit', month:'2-digit', year:'numeric',
-        hour:'2-digit', minute:'2-digit', second:'2-digit'
-      });
-    }
-
-    // -------- Karte --------
-    const map = L.map('map').setView([54.5, 9.5], 8);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const map = L.map("map", { zoomSnap: 0.25 });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
-      attribution: '&copy; OpenStreetMap'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
     }).addTo(map);
-    const markerLayer = L.layerGroup().addTo(map);
+    map.setView([54.4, 9.6], 8.25);
+    let markersLayer = L.layerGroup().addTo(map);
 
-    const leftBadge  = document.getElementById('leftBadge');
-    const rightBadge = document.getElementById('rightBadge');
-
-    async function loadAndRender() {
-      leftBadge.textContent = 'Letzte Aktualisierung: ' + new Date().toLocaleTimeString('de-DE');
-
-      let data;
+    function deTime(ts){
       try {
-        const res = await fetch(FETCH_URL + '?t=' + Date.now(), { cache: 'no-store' });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        data = await res.json();
-        if (!Array.isArray(data)) throw new Error('JSON ist kein Array');
-      } catch (e) {
-        console.error('Fetch fehlgeschlagen:', e);
-        rightBadge.textContent = 'Letzte Node-Meldung: — (Fehler beim Laden)';
-        return;
-      }
-
-      if (data.length === 0) {
-        markerLayer.clearLayers();
-        rightBadge.textContent = 'Letzte Node-Meldung: —';
-        return;
-      }
-
-      // neueste Meldung
-      const newest = data.reduce((a,b) =>
-        (new Date(a.ts).getTime() > new Date(b.ts).getTime()) ? a : b
-      );
-      rightBadge.textContent = `Letzte Node-Meldung: ${newest.id} — ${fmtTimeLocal(newest.ts)}`;
-
-      // Marker neu aufbauen
-      markerLayer.clearLayers();
-      usedCoords.clear();
-
-      data.forEach(rec => {
-        const id = rec.id;
-        const baseId = id.replace(/-.+$/, ''); // "kropp-sn50v3" -> "kropp" 
-        if (HIDE_IDS.has(id)) return; // z. B. Zombie ausblenden
-
-        const basePos = POSITIONS[id];
-        if (!basePos) { console.warn('Keine Koordinate für', id); return; }
-
-        const pos = nudgeIfDuplicate(basePos.slice());
-
-        const f = rec.fields || {};
-        const temp = f.TempC_SHT ?? f.TempC_SHT31 ?? f.TempC ?? null;
-        const hum  = f.Hum_SHT  ?? f.Hum_SHT31  ?? null;
-        const bat  = f.BatV     ?? null;
-
-        const html =
-          `<div class="popup">
-             <h3>${id}</h3>
-             <div class="kv"><b>Zeit:</b> ${fmtTimeLocal(rec.ts)}</div>
-             <div class="kv"><b>Temp:</b> ${fmtNum(temp,1)} °C</div>
-             <div class="kv"><b>Feuchte:</b> ${fmtNum(hum,1)} %</div>
-             <div class="kv"><b>Batterie:</b> ${fmtNum(bat,3)} V</div>
-             <div class="hr"></div>
-             <div class="qrbox">
-               <div>
-                 <img alt="QR" width="96" height="96"
-                      src="https://api.qrserver.com/v1/create-qr-code/?size=192x192&data=${encodeURIComponent(location.origin + '/html/sensor.html?node=' + baseId)}"
-               </div>
-               <div>
-                 <div><b>Sensor-Details</b></div>
-                 <button onclick="location.href='/html/sensor.html?node=${encodeURIComponent(baseId)}'">Seite öffnen</button>
-               </div>
-             </div>
-           </div>`;
-
-        L.marker(pos, { title: id })
-          .bindPopup(html, { maxWidth: 420 })
-          .addTo(markerLayer);
-      });
+        return new Date(ts).toLocaleString("de-DE", {
+          year:"numeric", month:"2-digit", day:"2-digit",
+          hour:"2-digit", minute:"2-digit", second:"2-digit"
+        });
+      } catch(_){ return ts || "–"; }
     }
 
-    loadAndRender();
-    setInterval(loadAndRender, 60 * 1000);
+    function cleanFields(fields){
+      const out = {};
+      for (const [k,v] of Object.entries(fields || {})){
+        if (OMIT_FIELDS.has(k)) continue;
+        if (v === undefined || v === null || v === "NULL") continue;
+        if (typeof v === "number" && v === 0) continue;
+        out[k] = v;
+      }
+      return out;
+    }
+
+    function pickCoord(item){
+      if (item?.fields?.lat !== undefined && item?.fields?.lon !== undefined){
+        return [Number(item.fields.lat), Number(item.fields.lon)];
+      }
+      if (MANUAL_LOC[item.id]) return MANUAL_LOC[item.id];
+      return null;
+    }
+
+    function popupHtml(item){
+      const f = cleanFields(item.fields);
+      let html = `<div class="popup"><h3>${item.id}</h3>`;
+      html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
+      if (typeof f.TempC_SHT31 === "number")
+        html += `<div class="kv">Temp (SHT31): <b>${f.TempC_SHT31.toFixed(2)} °C</b></div>`;
+      else if (typeof f.TempC_SHT === "number")
+        html += `<div class="kv">Temp (SHT): <b>${f.TempC_SHT.toFixed(1)} °C</b></div>`;
+      if (typeof f.Hum_SHT31 === "number")
+        html += `<div class="kv">Hum (SHT31): <b>${f.Hum_SHT31.toFixed(2)} %</b></div>`;
+      else if (typeof f.Hum_SHT === "number")
+        html += `<div class="kv">Hum (SHT): <b>${f.Hum_SHT.toFixed(1)} %</b></div>`;
+      if (typeof f.BatV === "number")
+        html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
+      for (const [k,v] of Object.entries(f)){
+        if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV","lat","lon"].includes(k)) continue;
+        html += `<div class="kv">${k}: <b>${v}</b></div>`;
+      }
+      // QR-Code Container
+      html += `<div id="qrcode-${item.id}" style="margin-top:8px;"></div>`;
+      return html + `</div>`;
+    }
+
+    function latestRecord(data){
+      let best = null, bestT = -Infinity;
+      for (const r of (data||[])){
+        if (!r || !r.ts) continue;
+        const t = new Date(r.ts).getTime();
+        if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
+      }
+      return best;
+    }
+
+    async function loadData(){
+      const url = `${DATA_URL}?t=${Date.now()}`;
+      const res = await fetch(url, { cache:"no-store" });
+      if (!res.ok) throw new Error("fetch failed " + res.status);
+      return res.json();
+    }
+
+    function render(data){
+      markersLayer.clearLayers();
+      const bounds = [];
+      for (const item of (data || [])){
+        const coord = pickCoord(item);
+        if (!coord) continue;
+        const marker = L.marker(coord).bindPopup(popupHtml(item));
+        marker.on("popupopen", () => {
+          const shortId = item.id ? item.id.split("-")[0] : "unbekannt";
+          const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+          const qrDiv = document.getElementById(`qrcode-${item.id}`);
+          if (qrDiv && !qrDiv.hasChildNodes()) {
+            QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 128 }, (err, canvas) => {
+              if (!err) qrDiv.appendChild(canvas);
+            });
+          }
+        });
+        marker.addTo(markersLayer);
+        bounds.push(coord);
+      }
+      if (bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
+
+      document.getElementById("stamp").textContent =
+        "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
+
+      const lastEl = document.getElementById("last");
+      const lastRec = latestRecord(data);
+      if (lastRec){
+        let shortId = lastRec.id ? lastRec.id.split("-")[0] : "unbekannt";
+        lastEl.textContent =
+          "Letzte Node-Meldung: " + deTime(lastRec.ts) + " – " + shortId;
+      } else {
+        lastEl.textContent = "Letzte Node-Meldung: –";
+      }
+    }
+
+    async function run(){
+      try{ render(await loadData()); }
+      catch(err){
+        console.error(err);
+        document.getElementById("stamp").textContent =
+          "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
+      }
+    }
+
+    run();
+    setInterval(run, AUTO_REFRESH_MS);
   </script>
 </body>
 </html>
