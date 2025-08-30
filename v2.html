@@ -142,6 +142,7 @@
 
       data.forEach(rec => {
         const id = rec.id;
+        const baseId = id.replace(/-.+$/, ''); // "kropp-sn50v3" -> "kropp" 
         if (HIDE_IDS.has(id)) return; // z. B. Zombie ausblenden
 
         const basePos = POSITIONS[id];
@@ -165,11 +166,11 @@
              <div class="qrbox">
                <div>
                  <img alt="QR" width="96" height="96"
-                      src="https://api.qrserver.com/v1/create-qr-code/?size=192x192&data=${encodeURIComponent(location.origin + '/html/sensor.html?node=' + id)}" />
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=192x192&data=${encodeURIComponent(location.origin + '/html/sensor.html?node=' + baseId)}"
                </div>
                <div>
                  <div><b>Sensor-Details</b></div>
-                 <button onclick="location.href='/html/sensor.html?node=${encodeURIComponent(id)}'">Seite öffnen</button>
+                 <button onclick="location.href='/html/sensor.html?node=${encodeURIComponent(baseId)}'">Seite öffnen</button>
                </div>
              </div>
            </div>`;
