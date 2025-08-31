@@ -132,42 +132,33 @@
     return null;
   }
 
-  function popupHtml(item){
-    const f = cleanFields(item.fields);
-    let html = `<div class="popup"><h3>${item.id}</h3>`;
-    html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
-    if (typeof f.TempC_SHT31 === "number")
-      html += `<div class="kv">Temp (SHT31): <b>${f.TempC_SHT31.toFixed(2)} °C</b></div>`;
-    else if (typeof f.TempC_SHT === "number")
-      html += `<div class="kv">Temp (SHT): <b>${f.TempC_SHT.toFixed(1)} °C</b></div>`;
-    if (typeof f.Hum_SHT31 === "number")
-      html += `<div class="kv">Hum (SHT31): <b>${f.Hum_SHT31.toFixed(2)} %</b></div>`;
-    else if (typeof f.Hum_SHT === "number")
-      html += `<div class="kv">Hum (SHT): <b>${f.Hum_SHT.toFixed(1)} %</b></div>`;
-    if (typeof f.BatV === "number")
-      html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
+function popupHtml(item){
+  const f = cleanFields(item.fields);
+  let html = `<div class="popup"><h3>${item.id}</h3>`;
+  html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
+  if (typeof f.TempC_SHT === "number")
+    html += `<div class="kv">Temp (SHT): <b>${f.TempC_SHT.toFixed(1)} °C</b></div>`;
+  if (typeof f.Hum_SHT === "number")
+    html += `<div class="kv">Hum (SHT): <b>${f.Hum_SHT.toFixed(1)} %</b></div>`;
+  if (typeof f.BatV === "number")
+    html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
 
-    for (const [k,v] of Object.entries(f)){
-      if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV","lat","lon"].includes(k)) continue;
-      html += `<div class="kv">${k}: <b>${v}</b></div>`;
-    }
-
-    const shortId = item.id ? item.id.split("-")[0] : "unbekannt";
-    const targetUrl = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
-    html += `
-      <div style="display:flex;align-items:center;gap:12px;margin-top:10px;">
-        <a href="${targetUrl}" class="leaflet-popup-close-button" style="
-           position:static;display:inline-block;padding:.6rem .9rem;border-radius:.7rem;
-           border:1px solid #cfe2ff;background:#e9f3ff;color:#0b4da2;text-decoration:none;font-weight:700;">
-          Seite öffnen
-        </a>
-        <div id="qrcode-${item.id}"></div>
-      </div>
-      <div style="margin-top:8px;color:#64748b;">Link nutzt Basis-ID: <b>${shortId}</b></div>
-    `;
-    return html + `</div>`;
-  }
-
+  // QR-Code + Button in Container packen
+  html += `
+    <div style="margin-top:10px; display:flex; align-items:center; justify-content:space-between; gap:8px;">
+      <div id="qrcode-${item.id}"></div>
+      <a href="https://www.waldsensor.sh/html/sensor.html?node=${item.id}" 
+         target="_blank" 
+         style="display:inline-block; padding:6px 10px; background:#f0f6ff; border-radius:6px; color:#004aad; font-weight:600; text-decoration:none;">
+         Seite öffnen
+      </a>
+    </div>
+    <div style="margin-top:6px; font-size:0.85em; color:#555;">
+      Link nutzt Basis-ID: <b>${item.id}</b>
+    </div>
+  `;
+  return html + `</div>`;
+}
   function latestRecord(data){
     let best = null, bestT = -Infinity;
     for (const r of (data||[])){
