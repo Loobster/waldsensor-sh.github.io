@@ -6,13 +6,15 @@
   <title>WALDSENSOR.SH – Karte (V2)</title>
 
   <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-
-  <!-- (Optional) MarkerCluster – geladen wie bei dir, aktuell nicht genutzt -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
+  />
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    crossorigin=""
+  ></script>
 
   <!-- QRCode -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
@@ -28,7 +30,7 @@
 
     .pill {
       position: fixed;
-      z-index: 999;
+      z-index: 500; /* unterhalb Leaflet-Popups (die ~600-700 liegen) */
       top: 14px;
       left: 70px;
       background: var(--pill-bg);
@@ -42,7 +44,7 @@
 
     .last-node {
       position: fixed;
-      z-index: 999;
+      z-index: 500;
       top: 14px;
       right: 14px;
       background: #e9f3ff;
@@ -56,20 +58,18 @@
       text-align: right;
     }
 
+    /* Popup-Inhalt */
+    .popup { max-width: 260px; }
     .popup h3{ margin:0 0 .25rem 0; font:700 20px/1.25 system-ui; }
     .popup hr{ border:0; height:1px; background:#ececec; margin:.5rem 0 .75rem; }
     .popup .kv{ margin:.15rem 0; }
     .popup .kv b{ font-weight:700; }
+    .popup .qr { margin-top:10px; display:flex; gap:8px; align-items:center; }
+    .popup .qr canvas{ display:block; }
+    .popup a.open { font-size:14px; text-decoration:none; color:#0ea5e9; }
 
-    .popup .actions{
-      display:flex; align-items:center; gap:12px; margin-top:8px;
-    }
-    .popup .btn{
-      display:inline-block; padding:10px 14px; border-radius:10px;
-      border:1px solid #dfe4ea; background:#fff; text-decoration:none; font-weight:600; color:#0b4da2;
-    }
-    .popup .qr{ width:128px; height:128px; }
-    .popup .hint{ margin-top:6px; color:#6b7280; font-size:.9rem; }
+    /* Sicherheitsnetz: Leaflet-Popup z.B. über dem Pill */
+    .leaflet-pane.leaflet-popup-pane { z-index: 700 !important; }
   </style>
 </head>
 <body>
@@ -77,170 +77,177 @@
   <div class="last-node" id="last">Letzte Node-Meldung: –</div>
   <div id="map"></div>
 
-<script>
-  // Feste Datenquelle – so wie sie bei dir liegt
-  const DATA_URL = "/data/v2/latest/_all.json";
-  const AUTO_REFRESH_MS = 60_000;
-  const STALE_HOURS = 6; // ab wann wir "veraltet" anzeigen
+  <script>
+    // ---- Einstellungen ----
+    const DATA_URL = "/data/v2/latest/_all.json";
+    const AUTO_REFRESH_MS = 60_000;
 
-  // feste/ersatz Koordinaten (+5m Versatz)
-  const MANUAL_LOC = {
-    "breklum":  [54.60669, 8.98195],
-    "s31":          [54.65000, 8.96000],
-    "se01":         [54.65005, 8.96005], // ~5 m versetzt
-    "kropp":    [54.41018, 9.52839],
-    "fahrdorf": [54.50158, 9.58690],
-  };
+    // Manuelle Koordinaten (kurze IDs!)
+    const MANUAL_LOC = {
+      "breklum":  [54.60669, 8.98195],
+      "s31":      [54.65000, 8.96000],
+      "se01":     [54.65005, 8.96005], // ~5 m versetzt
+      "kropp":    [54.41018, 9.52839],
+      "fahrdorf": [54.50158, 9.58690],
+      "lsn50":    [54.60000, 9.00000]  // ggf. später genauer setzen
+    };
 
-  const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status"]);
+    // Felder, die wir im Popup auslassen
+    const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status","lat","lon"]);
 
-  // Leaflet
-  const map = L.map("map", { zoomSnap: 0.25 });
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-  }).addTo(map);
-  map.setView([54.4, 9.6], 8.25);
-  let markersLayer = L.layerGroup().addTo(map);
+    // ---- Map ----
+    const map = L.map("map", {
+      zoomSnap: 0.25
+    });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+    }).addTo(map);
+    map.setView([54.4, 9.6], 8.25);
+    let markersLayer = L.layerGroup().addTo(map);
 
-  function deTime(ts){
-    try {
-      return new Date(ts).toLocaleString("de-DE", {
-        year:"numeric", month:"2-digit", day:"2-digit",
-        hour:"2-digit", minute:"2-digit", second:"2-digit"
-      });
-    } catch(_){ return ts || "–"; }
-  }
-
-  function cleanFields(fields){
-    const out = {};
-    for (const [k,v] of Object.entries(fields || {})){
-      if (OMIT_FIELDS.has(k)) continue;
-      if (v === undefined || v === null || v === "NULL") continue;
-      if (typeof v === "number" && v === 0) continue;
-      out[k] = v;
-    }
-    return out;
-  }
-
-  function pickCoord(item){
-    if (item?.lat !== undefined && item?.lon !== undefined)
-      return [Number(item.lat), Number(item.lon)];
-    if (item?.fields?.lat !== undefined && item?.fields?.lon !== undefined)
-      return [Number(item.fields.lat), Number(item.fields.lon)];
-    if (MANUAL_LOC[item.id]) return MANUAL_LOC[item.id];
-    return null;
-  }
-
-function popupHtml(item){
-  const f = cleanFields(item.fields);
-  let html = `<div class="popup"><h3>${item.id}</h3>`;
-  html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
-  if (typeof f.TempC_SHT === "number")
-    html += `<div class="kv">Temp (SHT): <b>${f.TempC_SHT.toFixed(1)} °C</b></div>`;
-  if (typeof f.Hum_SHT === "number")
-    html += `<div class="kv">Hum (SHT): <b>${f.Hum_SHT.toFixed(1)} %</b></div>`;
-  if (typeof f.BatV === "number")
-    html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
-
-  // QR-Code + Button in Container packen
-  html += `
-    <div style="margin-top:10px; display:flex; align-items:center; justify-content:space-between; gap:8px;">
-      <div id="qrcode-${item.id}"></div>
-      <a href="https://www.waldsensor.sh/html/sensor.html?node=${item.id}" 
-         target="_blank" 
-         style="display:inline-block; padding:6px 10px; background:#f0f6ff; border-radius:6px; color:#004aad; font-weight:600; text-decoration:none;">
-         Seite öffnen
-      </a>
-    </div>
-    <div style="margin-top:6px; font-size:0.85em; color:#555;">
-      Link nutzt Basis-ID: <b>${item.id}</b>
-    </div>
-  `;
-  return html + `</div>`;
-}
-  function latestRecord(data){
-    let best = null, bestT = -Infinity;
-    for (const r of (data||[])){
-      const t = new Date(r?.ts).getTime();
-      if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
-    }
-    return best;
-  }
-
-  async function loadData(){
-    const url = `${DATA_URL}?t=${Date.now()}`; // Cache-Busting
-    const res = await fetch(url, { cache:"no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const json = await res.json();
-    if (!Array.isArray(json)) throw new Error("Kein Array");
-    console.info("[waldsensor] Quelle:", DATA_URL, "Einträge:", json.length);
-    return json;
-  }
-
-  function render(data){
-    markersLayer.clearLayers();
-    const bounds = [];
-
-    for (const item of (data || [])){
-      const coord = pickCoord(item);
-      if (!coord) continue;
-
-      const marker = L.marker(coord).bindPopup(popupHtml(item));
-      marker.on("popupopen", () => {
-        const shortId = item.id ? item.id.split("-")[0] : "unbekannt";
-        const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
-        const qrDiv = document.getElementById(`qrcode-${item.id}`);
-        if (qrDiv && !qrDiv.hasChildNodes()) {
-          QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 128 }, (err, canvas) => {
-            if (!err) qrDiv.appendChild(canvas);
-          });
-        }
-      });
-      marker.addTo(markersLayer);
-      bounds.push(coord);
+    // ---- Utils ----
+    function normId(raw) {
+      return String(raw || "").replace(/[\r\n]+/g, "").trim();
     }
 
-    if (bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
-
-    // Stempel links
-    document.getElementById("stamp").textContent =
-      "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
-
-    // Badge rechts + Stale-Check
-    const lastEl = document.getElementById("last");
-    const lastRec = latestRecord(data);
-
-    if (!lastRec) {
-      lastEl.textContent = "Letzte Node-Meldung: –";
-      return;
+    function deTime(ts){
+      try {
+        return new Date(ts).toLocaleString("de-DE", {
+          year:"numeric", month:"2-digit", day:"2-digit",
+          hour:"2-digit", minute:"2-digit", second:"2-digit"
+        });
+      } catch(_){ return ts || "—"; }
     }
 
-    const shortId = (lastRec.id || "").split("-")[0] || "unbekannt";
-    const lastTs = new Date(lastRec.ts).getTime();
-    const ageHours = (Date.now() - lastTs) / 3_600_000;
-
-    let text = `Letzte Node-Meldung: ${deTime(lastRec.ts)} – ${shortId}`;
-    if (Number.isFinite(ageHours) && ageHours > STALE_HOURS) {
-      text += " (veraltet)";
+    function cleanFields(fields){
+      const out = {};
+      for (const [k,v] of Object.entries(fields || {})){
+        if (OMIT_FIELDS.has(k)) continue;
+        if (v === undefined || v === null || v === "NULL") continue;
+        out[k] = v;
+      }
+      return out;
     }
-    lastEl.textContent = text;
-  }
 
-  async function run(){
-    try { render(await loadData()); }
-    catch(err){
-      console.error("[waldsensor] Datenfehler:", err);
+    function pickCoord(item){
+      const id = normId(item?.id);
+      // evtl. spätere JSON-Koordinaten
+      const f = item?.fields || {};
+      if (f.lat != null && f.lon != null) return [Number(f.lat), Number(f.lon)];
+      if (MANUAL_LOC[id]) return MANUAL_LOC[id];
+      return null;
+    }
+
+    function popupHtml(item){
+      const id = normId(item?.id);
+      const f = cleanFields(item.fields);
+      let html = `<div class="popup"><h3>${id}</h3>`;
+      html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
+
+      // Temperatur
+      if (typeof f.TempC_SHT31 === "number")
+        html += `<div class="kv">Temp (SHT31): <b>${f.TempC_SHT31.toFixed(1)} °C</b></div>`;
+      else if (typeof f.TempC_SHT === "number")
+        html += `<div class="kv">Temp (SHT): <b>${f.TempC_SHT.toFixed(1)} °C</b></div>`;
+
+      // Feuchte
+      if (typeof f.Hum_SHT31 === "number")
+        html += `<div class="kv">Hum (SHT31): <b>${f.Hum_SHT31.toFixed(1)} %</b></div>`;
+      else if (typeof f.Hum_SHT === "number")
+        html += `<div class="kv">Hum (SHT): <b>${f.Hum_SHT.toFixed(1)} %</b></div>`;
+
+      // Batterie
+      if (typeof f.BatV === "number")
+        html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
+
+      // Restliche Felder
+      for (const [k,v] of Object.entries(f)){
+        if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV","lat","lon"].includes(k)) continue;
+        html += `<div class="kv">${k}: <b>${v}</b></div>`;
+      }
+
+      // QR-Code + Link unten, damit nichts überlappt
+      const qrId = `qrcode-${id}`;
+      html += `<div class="qr"><div id="${qrId}"></div><a class="open" target="_blank" rel="noopener" href="https://www.waldsensor.sh/html/sensor.html?node=${id}">Seite öffnen →</a></div>`;
+
+      return html + `</div>`;
+    }
+
+    function latestRecord(data){
+      let best = null, bestT = -Infinity;
+      for (const r of (data||[])){
+        if (!r || !r.ts) continue;
+        const t = new Date(r.ts).getTime();
+        if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
+      }
+      return best;
+    }
+
+    async function loadData(){
+      const url = `${DATA_URL}?t=${Date.now()}`; // hart gegen Cache
+      const res = await fetch(url, { cache:"no-store" });
+      if (!res.ok) throw new Error("fetch failed " + res.status);
+      return res.json();
+    }
+
+    async function render(data){
+      markersLayer.clearLayers();
+      const bounds = [];
+
+      for (const raw of (data || [])){
+        // ID überall normieren
+        const id = normId(raw?.id);
+        if (!id) continue;
+        const item = { ...raw, id };
+
+        const coord = pickCoord(item);
+        if (!coord) continue;
+
+        const marker = L.marker(coord).bindPopup(
+          popupHtml(item),
+          {
+            autoPan: true,
+            // Platz oberhalb für die Badges lassen:
+            autoPanPaddingTopLeft: L.point(20, 70),
+            maxWidth: 300
+          }
+        );
+
+        marker.on("popupopen", () => {
+          const qrDiv = document.getElementById(`qrcode-${id}`);
+          const url = `https://www.waldsensor.sh/html/sensor.html?node=${id}`;
+          if (qrDiv && !qrDiv.hasChildNodes()) {
+            QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 120 }, (err, canvas) => {
+              if (!err) qrDiv.appendChild(canvas);
+            });
+          }
+        });
+
+        marker.addTo(markersLayer);
+        bounds.push(coord);
+      }
+
+      if (bounds.length) {
+        map.fitBounds(L.latLngBounds(bounds).pad(0.12));
+      } else {
+        console.warn("Keine Marker – prüfen: IDs, Koordinaten, JSON-Ladung.");
+      }
+
+      // Stempel links
       document.getElementById("stamp").textContent =
         "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
-      document.getElementById("last").textContent =
-        "Letzte Node-Meldung: (Quelle nicht erreichbar)";
-    }
-  }
 
-  run();
-  setInterval(run, AUTO_REFRESH_MS);
-</script>
+      // Neueste Meldung rechts
+      const lastRec = latestRecord(data);
+      const lastEl = document.getElementById("last");
+      if (lastRec){
+        lastEl.textContent = "Letzte Node-Meldung: " + deTime(lastRec.ts) + " – " + normId(lastRec.id || "unbekannt");
+      } else {
+        lastEl.textContent = "Letzte Node-Meldung: –";
+      }
+    }
+
     async function run(){
       try{ render(await loadData()); }
       catch(err){
