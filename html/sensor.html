@@ -2,293 +2,209 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
-  />
-  <title>Schulwaldsensor – Details</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Schulwaldsensor — Detail</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
-    :root {
-      --bg: #f4f7fb;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #5b6785;
-      --ok: #e6f7ec;
-      --ok-text: #0f5132;
-      --accent: #0ea5e9;
-      --border: #e5e7eb;
-    }
-    html, body { margin:0; padding:0; background:var(--bg); color:var(--text); font:16px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; }
-    .wrap { max-width: 1100px; margin: 16px auto 48px; padding: 0 16px; }
-    a.back { display:inline-block; margin:4px 0 12px; color:#0ea5e9; text-decoration:none; }
-    h1 { font-size: clamp(28px, 4vw, 42px); margin:8px 0 20px; letter-spacing:.3px; }
-    .grid { display:grid; grid-template-columns: 1fr 380px; gap:18px; }
-    .card { background:var(--card); border-radius:16px; box-shadow:0 6px 24px rgba(15,23,42,.06); padding:18px 20px; }
-    .pill { display:inline-flex; align-items:center; gap:10px; background:var(--ok); color:var(--ok-text); padding:8px 14px; border-radius:999px; font-weight:600; }
-    .row { display:flex; flex-wrap:wrap; gap:18px; margin-top:12px; }
-    .kv { display:flex; align-items:center; gap:10px; padding:10px 12px; background:#f8fafc; border-radius:12px; min-width:170px; }
-    .kv b { font-size:18px; }
-    .muted { color:var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace; }
-    .section-title { display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px; margin:4px 0 14px; }
-    .err { color:#b91c1c; background:#fee2e2; border:1px solid #fecaca; padding:16px; border-radius:12px; }
-    .src { margin-top:8px; color:var(--muted); }
-    @media (max-width:980px){ .grid { grid-template-columns: 1fr; } }
+    :root{ --card:#fff; --muted:#667; --soft:#eef2f7; }
+    body{ margin:0; font: 16px/1.45 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:#0e1320; background:#f6f8fb; }
+    .wrap{ max-width:1200px; margin:24px auto; padding:0 16px; }
+    a.back{ color:#0b4da2; text-decoration:none; display:inline-flex; gap:.4rem; align-items:center; margin-bottom:8px; }
+    h1{ font: 800 44px/1.1 system-ui; letter-spacing:.2px; margin:8px 0 18px; }
+    .grid{ display:grid; grid-template-columns: 1fr 380px; gap:20px; }
+    .card{ background:var(--card); border:1px solid #e9edf3; border-radius:16px; padding:16px; box-shadow:0 6px 20px rgba(10,20,40,.04); }
+    .pill{ display:inline-block; background:#e9f7ea; color:#0f6a28; padding:8px 12px; border-radius:999px; font-weight:700; border:1px solid #d2efd7; }
+    .kpirow{ display:flex; gap:16px; margin-top:14px; }
+    .kpi{ flex:1; background:#f8fbff; padding:16px; border-radius:14px; border:1px solid #e7eef9; }
+    .kpi b{ font-size:22px; }
+    .muted{ color:var(--muted); }
+    .src{ font: 600 14px/1.3 system-ui; color:#334; margin-top:10px; }
+    .panel{ background:var(--card); border:1px solid #e9edf3; border-radius:16px; padding:16px; margin-top:20px; }
+    .panel h3{ margin:0 0 8px; font:800 18px/1.2 system-ui; }
+    .warn{ color:#a00; background:#fdeeee; border:1px solid #f7d3d3; padding:10px 12px; border-radius:10px; }
+    canvas{ width:100% !important; height:340px !important; }
   </style>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <div class="wrap">
     <a class="back" href="/v2.html">← Zur Karte</a>
-    <h1 id="title">Schulwaldsensor — …</h1>
+    <h1>Schulwaldsensor — <span id="title">…</span></h1>
 
     <div class="grid">
-      <!-- Links: letzte Werte -->
       <div class="card">
-        <div class="pill" id="status">⏱️ Stand: —</div>
-        <div class="row">
-          <div class="kv">🌡️ <div><div>Temperatur</div><b id="val-temp">—</b></div></div>
-          <div class="kv">💧 <div><div>Luftfeuchte</div><b id="val-hum">—</b></div></div>
-          <div class="kv">🪫 <div><div>Batterie</div><b id="val-bat">—</b></div></div>
+        <div class="pill">Stand: <span id="stand">—</span></div>
+
+        <div class="kpirow">
+          <div class="kpi">
+            <div class="muted">Temperatur</div>
+            <b id="temp">—</b>
+          </div>
+          <div class="kpi">
+            <div class="muted">Luftfeuchte</div>
+            <b id="hum">—</b>
+          </div>
+          <div class="kpi">
+            <div class="muted">Batterie</div>
+            <b id="bat">—</b>
+          </div>
         </div>
-        <div class="src">Quelle: <span class="muted">/data/v2/latest/_all.json</span></div>
+
+        <div class="src">Quelle: /data/v2/latest/_all.json</div>
       </div>
 
-      <!-- Rechts: aktuelle Werte gespiegelt -->
       <div class="card">
-        <div class="section-title">Aktuelle Werte</div>
-        <div id="now-list" class="muted">—</div>
+        <h3>Aktuelle Werte</h3>
+        <div id="aktu" class="muted">—</div>
       </div>
     </div>
 
-    <!-- Verlauf (Rohwerte) -->
-    <div class="card" style="margin-top:18px;">
-      <div class="section-title">📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</div>
-      <canvas id="hist" height="140"></canvas>
-      <div id="hist-hint" class="src"></div>
+    <div class="panel">
+      <h3>📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</h3>
+      <canvas id="chart1"></canvas>
+      <div id="hint1" class="muted"></div>
     </div>
 
-    <!-- NEU: 31 Tage – Tagesmittel -->
-    <div class="card" style="margin-top:18px;">
-      <div class="section-title">📆 31 Tage — Tagesmittel (Temp / Feuchte)</div>
-      <canvas id="hist30" height="150"></canvas>
-      <div id="hist30-hint" class="src"></div>
+    <div class="panel">
+      <h3>🗓️ 31 Tage — Tagesmittel (Temp / Feuchte)</h3>
+      <canvas id="chart2"></canvas>
+      <div id="hint2" class="muted"></div>
     </div>
 
-    <div id="err" class="err" style="display:none;"></div>
+    <div id="err" style="margin-top:16px;"></div>
   </div>
 
 <script>
-(async () => {
-  const qs = new URLSearchParams(location.search);
-  const nodeId = (qs.get('node') || '').trim();
-  const errBox = document.getElementById('err');
-  const showErr = (msg) => { errBox.textContent = msg; errBox.style.display = 'block'; };
+function normalizeId(s){
+  return String(s||'')
+    .toLowerCase()
+    .replace(/\r|\s+/g,'')
+    .replace(/^waldsensor[_-]/,'')
+    .replace(/_/g,'-')
+    .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,'');
+}
 
-  // UI-Refs
-  const elTitle = document.getElementById('title');
-  const elStatus = document.getElementById('status');
-  const elTemp   = document.getElementById('val-temp');
-  const elHum    = document.getElementById('val-hum');
-  const elBat    = document.getElementById('val-bat');
-  const elNow    = document.getElementById('now-list');
-  const elHint   = document.getElementById('hist-hint');
-  const elHint30 = document.getElementById('hist30-hint');
+const qs = new URLSearchParams(location.search);
+const wanted = normalizeId(qs.get('node') || '');
 
-  if (!nodeId) { showErr('❌ Kein Node angegeben (?node=<id>).'); return; }
-
-  // ---------- _all.json laden ----------
-  const ALL_URL = `/data/v2/latest/_all.json?nocache=${Date.now()}`;
-  let latestArr = [];
+const fmtTs = ts => {
   try {
-    const r = await fetch(ALL_URL, { cache: 'no-store' });
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    latestArr = await r.json();
-    if (!Array.isArray(latestArr)) throw new Error('Kein Array in _all.json');
-  } catch (e) { showErr(`❌ _all.json konnte nicht gelesen werden. (${e.message})`); return; }
+    return new Date(ts).toLocaleString("de-DE",{year:"numeric",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"});
+  } catch { return ts || "—"; }
+};
 
-  // Datensatz suchen (IDs sind kurz, z.B. "kropp", "fahrdorf")
-  const rec = latestArr.find(x => x && x.id === nodeId);
-  if (!rec) { showErr(`❌ Node „${nodeId}“ nicht gefunden.`); return; }
+const el = id => document.getElementById(id);
+el('title').textContent = wanted || '…';
 
-  // ---------- Header/Boxen ----------
-  elTitle.textContent = `Schulwaldsensor — ${nodeId}`;
-  try {
-    const ts = new Date(rec.ts);
-    const dt = ts.toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
-    elStatus.textContent = `⏱️ Stand: ${dt}`;
-  } catch { elStatus.textContent = '⏱️ Stand: —'; }
+function showError(msg){
+  el('err').innerHTML = `<div class="warn">❌ ${msg}</div>`;
+}
 
-  const f = rec.fields || {};
-  const fmt = (v, suf='') => (v === undefined || v === null || Number.isNaN(v)) ? '—' : `${v}${suf}`;
+async function loadLatest(){
+  const res = await fetch('/data/v2/latest/_all.json?t=' + Date.now(), {cache:'no-store'});
+  if(!res.ok) throw new Error('latest fetch ' + res.status);
+  const arr = await res.json();
+  // robust: IDs normalisieren
+  return arr.map(x => ({...x, id: normalizeId(x.id)}));
+}
 
-  // Luft-Sensor bevorzugen; Boden als Fallback
-  const tNow = (f.TempC_SHT ?? f.TempC_SHT31 ?? f.temp_SOIL ?? null);
-  const hNow = (f.Hum_SHT ?? f.Hum_SHT31 ?? f.water_SOIL ?? null);
-
-  elTemp.textContent = (tNow == null) ? '—' : `${Number(tNow).toFixed(1)} °C`;
-  elHum.textContent  = (hNow == null) ? '—' : `${Number(hNow).toFixed(1)} %`;
-  elBat.textContent  = fmt(f.BatV, ' V');
-
-  elNow.innerHTML =
-    `<div>🌡️ Temperatur: <b>${elTemp.textContent}</b></div>`+
-    `<div>💧 Luftfeuchte: <b>${elHum.textContent}</b></div>`+
-    `<div>🔋 Batterie: <b>${elBat.textContent}</b></div>`;
-
-  // ---------- History laden ----------
-  // ---------- History laden (kurzer & alter langer Name) ----------
-  function makeHistUrls(baseId){
-    // Mögliche alte Suffixe
-    const suffixes = ['', '-sn50v3', '-SN50_v3', '-lb', '-v2', '-sn50'];
-    // Alle Kandidaten (kurz + lang) dedupliziert
-    const ids = Array.from(new Set(suffixes.map(s => baseId + s)));
-    // Zu URLs in beiden Schemata machen
-    const cacheBust = `?t=${Date.now()}`;
-    const urls = [];
-    for (const id of ids){
-      urls.push(`/data/v2/history/${encodeURIComponent(id)}.json${cacheBust}`);
-      urls.push(`/data/v2/history_${encodeURIComponent(id)}.json${cacheBust}`);
-    }
-    return urls;
+async function loadHistory(id){
+  // zwei mögliche Dateinamen unterstützen
+  const paths = [
+    `/data/v2/history/${id}.json`,
+    `/data/v2/history/history_${id}.json`
+  ];
+  for (const p of paths){
+    const res = await fetch(p + '?t=' + Date.now(), {cache:'no-store'});
+    if (res.ok) return res.json();
   }
+  return null;
+}
 
-  const histCandidates = makeHistUrls(nodeId);
-  let hist = null, usedUrl = null;
-  for (const url of histCandidates) {
-    try {
-      const r = await fetch(url, { cache: 'no-store' });
-      if (!r.ok) continue;
-      const body = await r.text();
-      if (!body || !body.trim().startsWith('[')) continue;
-      hist = JSON.parse(body);
-      if (!Array.isArray(hist)) { hist = null; continue; }
-      usedUrl = url.replace(/\?t=\d+$/, '');
-      break;
-    } catch { /* next */ }
+function setKPIs(n){
+  el('stand').textContent = fmtTs(n.ts);
+  const f = n.fields || {};
+  const temp = (typeof f.TempC_SHT31 === 'number') ? f.TempC_SHT31
+             : (typeof f.TempC_SHT === 'number')  ? f.TempC_SHT
+             : (typeof f.temp_SOIL === 'number')  ? f.temp_SOIL : null;
+  const hum  = (typeof f.Hum_SHT31 === 'number') ? f.Hum_SHT31
+             : (typeof f.Hum_SHT === 'number')   ? f.Hum_SHT
+             : (typeof f.water_SOIL === 'number')? f.water_SOIL : null;
+  const bat  = (typeof f.BatV === 'number') ? f.BatV : null;
+
+  el('temp').textContent = temp==null ? '—' : `${temp.toFixed(1)} °C`;
+  el('hum').textContent  = hum==null  ? '—' : `${hum.toFixed(1)} %`;
+  el('bat').textContent  = bat==null  ? '—' : `${bat.toFixed(3)} V`;
+
+  el('aktu').textContent =
+    `🌡️ Temperatur: ${el('temp').textContent}  ·  💧 Luftfeuchte: ${el('hum').textContent}  ·  🔋 Batterie: ${el('bat').textContent}`;
+}
+
+let chart1, chart2;
+
+function drawHistory(raw){
+  if (!raw || !raw.length){
+    el('hint1').textContent = 'Kein Verlauf verfügbar. Sucht: /data/v2/history/<node>.json oder /data/v2/history_history_<node>.json';
+    return;
   }
+  const labels = raw.map(r => r.ts && r.ts !== "0" ? r.ts.slice(0,10) : '—');
+  const temps  = raw.map(r => (typeof r.t === 'number') ? r.t : null);
+  const hums   = raw.map(r => (typeof r.h === 'number') ? r.h : null);
 
-  // ---------- Chart 1: Rohverlauf ----------
-  const ctx = document.getElementById('hist').getContext('2d');
-
-  if (!hist || !hist.length) {
-    elHint.textContent = 'Kein Verlauf verfügbar. Sucht: ' +
-      '/data/v2/history/<node>.json oder /data/v2/history_<node>.json';
-  } else {
-    const labels = [];
-    const tVals  = [];
-    const hVals  = [];
-
-    hist.forEach(p => {
-      const d = new Date(p.ts);
-      labels.push(d.toLocaleTimeString('de-DE', { hour: '2-digit', minute:'2-digit' }));
-      tVals.push(p.t ?? p.temp ?? null);
-      hVals.push(p.h ?? p.hum  ?? null);
-    });
-
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [
-          { label: 'Temperatur (°C)', data: tVals, borderWidth: 2, tension: 0.25, yAxisID: 'y' },
-          { label: 'Luftfeuchte (%)', data: hVals, borderWidth: 2, tension: 0.25, yAxisID: 'y1' }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y:  { title: { display:true, text: '°C' } },
-          y1: { position:'right', grid:{ drawOnChartArea:false }, title:{ display:true, text:'%' } }
-        },
-        parsing: false,
-        plugins: { legend: { display:true } }
-      }
-    });
-    elHint.textContent = `Sucht: ${usedUrl || '(n/a)'}`;
-  }
-
-  // ---------- Chart 2: 31 Tage – Tagesmittel ----------
-  const ctx30 = document.getElementById('hist30').getContext('2d');
-
-  if (!hist || !hist.length) {
-    elHint30.textContent = 'Keine Tageswerte möglich (es fehlt Verlauf).';
-  } else {
-    // Bucketing nach lokalem Kalendertag (Europe/Berlin)
-    const tz = 'Europe/Berlin';
-    const bucket = new Map(); // key YYYY-MM-DD -> {tsMax, tSum,tN, hSum,hN}
-
-    for (const p of hist) {
-      const d = new Date(p.ts);
-      // lokales Datum in YYYY-MM-DD
-      const y = d.toLocaleString('de-DE', { timeZone: tz, year:'numeric' });
-      const m = d.toLocaleString('de-DE', { timeZone: tz, month:'2-digit' });
-      const day= d.toLocaleString('de-DE', { timeZone: tz, day:'2-digit' });
-      const key = `${y}-${m}-${day}`;
-
-      const t = (p.t ?? p.temp);
-      const h = (p.h ?? p.hum);
-      if (!bucket.has(key)) bucket.set(key, { tsMax: d.getTime(), tSum:0, tN:0, hSum:0, hN:0 });
-      const b = bucket.get(key);
-      if (d.getTime() > b.tsMax) b.tsMax = d.getTime();
-      if (typeof t === 'number') { b.tSum += t; b.tN++; }
-      if (typeof h === 'number') { b.hSum += h; b.hN++; }
+  const ctx1 = document.getElementById('chart1').getContext('2d');
+  chart1 && chart1.destroy();
+  chart1 = new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Temperatur (°C)', data: temps, borderWidth: 2, tension: .2 },
+        { label: 'Luftfeuchte (%)', data: hums,  borderWidth: 2, tension: .2 }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      scales: { x: { ticks:{ maxTicksLimit: 8 } }, y: { beginAtZero: false } }
     }
+  });
 
-    // last 31 days timeline (inkl. Lücken)
-    const days = [];
-    const now = new Date();
-    for (let i=30; i>=0; i--){
-      const d = new Date(now);
-      d.setDate(d.getDate() - i);
-      const y = d.toLocaleString('de-DE', { timeZone: tz, year:'numeric' });
-      const m = d.toLocaleString('de-DE', { timeZone: tz, month:'2-digit' });
-      const day= d.toLocaleString('de-DE', { timeZone: tz, day:'2-digit' });
-      const key = `${y}-${m}-${day}`;
-      const label = `${day}.${m}.`;
-      days.push({key, label});
+  // 31-Tage Balken-Tagesmittel – wenn genug Daten vorhanden
+  const ctx2 = document.getElementById('chart2').getContext('2d');
+  chart2 && chart2.destroy();
+  chart2 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Temp Ø (°C)', data: temps, borderWidth: 1 },
+        { label: 'Feuchte Ø (%)', data: hums, borderWidth: 1 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'top' } },
+      scales: { x: { ticks:{ maxTicksLimit: 12 } } }
     }
+  });
+}
 
-    const labels30 = [];
-    const tAvg = [];
-    const hAvg = [];
-
-    for (const d of days) {
-      labels30.push(d.label);
-      const b = bucket.get(d.key);
-      if (!b) { tAvg.push(null); hAvg.push(null); continue; }
-      tAvg.push(b.tN ? +(b.tSum/b.tN).toFixed(1) : null);
-      hAvg.push(b.hN ? +(b.hSum/b.hN).toFixed(1) : null);
+(async function init(){
+  try{
+    const all = await loadLatest();
+    const node = all.find(n => normalizeId(n.id) === wanted);
+    if(!node){
+      showError(`Node „${wanted || '—'}“ nicht gefunden.`);
+      return;
     }
+    setKPIs(node);
 
-    new Chart(ctx30, {
-      data: {
-        labels: labels30,
-        datasets: [
-          { type:'line', label:'Temp Ø (°C)', data:tAvg, borderWidth:2, tension:0.25, yAxisID:'y' },
-          { type:'line', label:'Feuchte Ø (%)', data:hAvg, borderWidth:2, tension:0.25, yAxisID:'y1' }
-        ]
-      },
-      options: {
-        responsive:true,
-        scales:{
-          y:  { title:{display:true, text:'°C'} },
-          y1: { position:'right', grid:{drawOnChartArea:false}, title:{display:true, text:'%'} }
-        },
-        plugins:{
-          legend:{display:true},
-          tooltip:{ mode:'index', intersect:false }
-        }
-      }
-    });
-
-    // kleine Hilfezeile
-    const haveDays = [...bucket.keys()].length;
-    if (haveDays < 31) {
-      elHint30.textContent = `Hinweis: Nur ${haveDays} Tag(e) mit Daten im Verlauf.`;
-    } else {
-      elHint30.textContent = '';
-    }
+    const hist = await loadHistory(wanted);
+    if (!hist){ el('hint1').textContent = 'Kein Verlauf gefunden.'; el('hint2').textContent = 'Keine Tageswerte möglich.'; return; }
+    drawHistory(hist);
+  }catch(err){
+    console.error(err);
+    showError('Fehler beim Laden der Daten.');
   }
 })();
 </script>
