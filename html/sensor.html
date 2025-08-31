@@ -137,12 +137,24 @@
     `<div>🔋 Batterie: <b>${elBat.textContent}</b></div>`;
 
   // ---------- History laden ----------
-  const histCandidates = [
-    `/data/v2/history/${encodeURIComponent(nodeId)}.json?t=${Date.now()}`,
-    `/data/v2/history_${encodeURIComponent(nodeId)}.json?t=${Date.now()}`
-  ];
-  let hist = null, usedUrl = null;
+  // ---------- History laden (kurzer & alter langer Name) ----------
+  function makeHistUrls(baseId){
+    // Mögliche alte Suffixe
+    const suffixes = ['', '-sn50v3', '-SN50_v3', '-lb', '-v2', '-sn50'];
+    // Alle Kandidaten (kurz + lang) dedupliziert
+    const ids = Array.from(new Set(suffixes.map(s => baseId + s)));
+    // Zu URLs in beiden Schemata machen
+    const cacheBust = `?t=${Date.now()}`;
+    const urls = [];
+    for (const id of ids){
+      urls.push(`/data/v2/history/${encodeURIComponent(id)}.json${cacheBust}`);
+      urls.push(`/data/v2/history_${encodeURIComponent(id)}.json${cacheBust}`);
+    }
+    return urls;
+  }
 
+  const histCandidates = makeHistUrls(nodeId);
+  let hist = null, usedUrl = null;
   for (const url of histCandidates) {
     try {
       const r = await fetch(url, { cache: 'no-store' });
