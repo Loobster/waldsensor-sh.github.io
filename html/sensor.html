@@ -95,10 +95,10 @@
 
   <script>
     // ------------------ Einstellungen ------------------
-    const ALL_JSON_URL = "/data/v2/latest/_all.json";
-    const HISTORY_DIR  = "/data/v2/history/"; // <node>.json
-    const AUTO_REFRESH_MS = 5 * 60 * 1000;
-
+     // NEU: Pfade relativ zum aktuellen Verzeichnisroot der Seite konstruieren
+    const ROOT = location.pathname.replace(/\/html\/.*$/, "/");     // z.B. /  oder /waldsensor-sh.github.io/
+    const ALL_JSON_URL = ROOT + "data/v2/latest/_all.json";
+    const HISTORY_DIR  = ROOT + "data/v2/history/";
     // Farben
     const COL_TEMP = "#2563eb";  // blau
     const COL_HUM  = "#16a34a";  // grün
