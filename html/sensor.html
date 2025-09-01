@@ -3,346 +3,258 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Schulwaldsensor — Detail</title>
-
-  <!-- schlichtes, unaufdringliches Styling – lässt dein bestehendes Layout in Ruhe -->
+  <title>Schulwaldsensor — <span id="titleNode">…</span></title>
   <style>
-    :root {
-      --bg: #f7f9fb;
-      --panel: #ffffff;
-      --muted: #6b7280;
-      --txt: #0f172a;
-      --ok: #16a34a;
-      --card: #eef2f7;
-      --border: #e5e7eb;
-      --accent: #0ea5e9;
-    }
-    html, body { margin:0; padding:0; background:var(--bg); color:var(--txt); font:16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji"; }
-    a { color:var(--accent); text-decoration:none; }
-    .wrap { max-width:1200px; margin:0 auto; padding:20px; }
-    .back { display:inline-flex; align-items:center; gap:.5rem; font-weight:600; color:#2563eb; }
-    h1 { font-size:clamp(26px, 3.4vw, 44px); margin:18px 0 10px; letter-spacing:.4px; }
-    .grid { display:grid; gap:14px; grid-template-columns: 1fr; }
-    @media (min-width: 900px) { .grid { grid-template-columns: 2fr 1.3fr; } }
-    .card { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; }
-    .muted { color:var(--muted); }
-    .row { display:flex; gap:14px; flex-wrap:wrap; }
-    .pill { display:inline-block; background:#eaf7ee; color:#155e31; border-radius:999px; padding:6px 12px; font-weight:700; }
-    .kpi { flex:1 1 220px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; min-height:74px; }
-    .kpi h3 { margin:0 0 8px; font-size:15px; color:#111827; font-weight:600; }
-    .kpi .v { font-size:22px; font-weight:800; letter-spacing:.3px; }
-    .src { font-size:13px; color:var(--muted); margin-top:6px; }
-    .section-title { display:flex; align-items:center; gap:10px; font-weight:800; margin:2px 0 10px; }
-    .empty { color:var(--muted); font-size:14px; padding:10px 0 4px; }
-    canvas { width:100%; height:280px; }
-    .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background:#f3f4f6; border:1px solid var(--border); border-radius:8px; padding:2px 6px; }
+    :root { --bg:#f6f8fb; --card:#ffffff; --muted:#6b7280; --ink:#0f172a; --accent:#14532d; --chip:#dbefe0; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--ink); }
+    .page { max-width: 1100px; margin: 20px auto 64px; padding: 0 16px; }
+    a.back { display:inline-flex; gap:8px; align-items:center; color:#2563eb; text-decoration:none; margin-bottom: 8px; }
+    h1 { font-size: clamp(28px, 4vw, 40px); margin: 4px 0 16px; }
+    .grid { display: grid; grid-template-columns: 1fr 420px; gap: 16px; }
+    @media (max-width: 980px){ .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--card); border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(15,23,42,.05); }
+    .chip { display:inline-block; padding: 6px 10px; border-radius: 999px; background: var(--chip); color: var(--accent); font-weight:600; }
+    .kachelWrap { display:grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+    .kachel { background:#eef2f7; border-radius:12px; padding:14px; min-height:84px; }
+    .kachel h4 { margin:0 0 6px; font-size:14px; color: var(--muted); font-weight:600; }
+    .kachel .val { font-size:22px; font-weight:700; }
+    .muted { color: var(--muted); }
+    .src { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: 12px; color: var(--muted); }
+    .sectionTitle { font-weight:800; margin: 8px 0 10px; display:flex; align-items:center; gap:8px; }
+    .empty { color: var(--muted); font-size: 14px; }
+    canvas { width:100%; height: 320px; }
   </style>
-
-  <!-- Chart.js nur für die zwei Diagramme -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Chart.js (leichtgewichtig per CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 </head>
 <body>
-  <div class="wrap">
-    <a class="back" href="/v2.html">← Zur Karte</a>
-    <h1>Schulwaldsensor — <span id="nodeTitle">…</span></h1>
+  <div class="page">
+    <a class="back" href="../v2.html">← Zur Karte</a>
+    <h1>Schulwaldsensor — <span id="titleNode">…</span></h1>
 
     <div class="grid">
-      <!-- linke Spalte: Live-Infos -->
       <div class="card">
-        <div class="row" style="align-items:center; justify-content:space-between;">
-          <div class="pill">Stand: <span id="stamp">—</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span id="stamp" class="chip">Stand: —</span>
         </div>
 
-        <div class="row" style="margin-top:12px;">
-          <div class="kpi">
-            <h3>Temperatur</h3>
-            <div class="v" id="kpiTemp">—</div>
+        <div class="kachelWrap">
+          <div class="kachel">
+            <h4 id="labelTemp">Temperatur</h4>
+            <div class="val" id="valTemp">—</div>
           </div>
-          <div class="kpi">
-            <h3>Luftfeuchte</h3>
-            <div class="v" id="kpiHum">—</div>
+          <div class="kachel">
+            <h4 id="labelHum">Luftfeuchte</h4>
+            <div class="val" id="valHum">—</div>
           </div>
-          <div class="kpi">
-            <h3>Batterie</h3>
-            <div class="v" id="kpiBat">—</div>
+          <div class="kachel" style="grid-column:1 / -1;">
+            <h4>Batterie</h4>
+            <div class="val" id="valBat">—</div>
           </div>
         </div>
 
-        <div class="src">Quelle: <span class="code">/data/v2/latest/_all.json</span></div>
+        <div class="src" style="margin-top:10px;">Quelle: <code>/data/v2/latest/_all.json</code></div>
       </div>
 
-      <!-- rechte Spalte: Aktuelle Werte als Liste -->
       <div class="card">
-        <div class="section-title">Aktuelle Werte</div>
-        <div id="currentList" class="muted">—</div>
+        <div style="font-weight:700; margin-bottom:8px;">Aktuelle Werte</div>
+        <div class="muted" id="listCurrent">—</div>
       </div>
     </div>
 
-    <!-- Verlauf 7 Tage -->
     <div class="card" style="margin-top:14px;">
-      <div class="section-title">📊 Verlauf Temperatur & Luftfeuchtigkeit</div>
-      <div id="no7d" class="empty" style="display:none;">Kein Verlauf gefunden.</div>
-      <canvas id="chart7d"></canvas>
+      <div class="sectionTitle">📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</div>
+      <div id="msgHistory" class="empty" style="margin-bottom:8px;">—</div>
+      <canvas id="chartHourly"></canvas>
+      <div class="src" style="margin-top:8px;">Sucht: <code>/data/v2/history/&lt;node&gt;.json</code></div>
     </div>
 
-    <!-- 31 Tage Tagesmittel -->
     <div class="card" style="margin-top:14px;">
-      <div class="section-title">🗓️ 31 Tage — Tagesmittel (Temp / Feuchte)</div>
-      <div id="no31" class="empty" style="display:none;">Keine Tageswerte möglich (es fehlt Verlauf).</div>
-      <canvas id="chart31d"></canvas>
+      <div class="sectionTitle">📅 31 Tage — Tagesmittel (Temp / Feuchte)</div>
+      <div id="msgDaily" class="empty" style="margin-bottom:8px;">—</div>
+      <canvas id="chartDaily"></canvas>
     </div>
   </div>
 
-  <script>
-    // ------------------ Einstellungen ------------------
-     // NEU: Pfade relativ zum aktuellen Verzeichnisroot der Seite konstruieren
-    const ROOT = location.pathname.replace(/\/html\/.*$/, "/");     // z.B. /  oder /waldsensor-sh.github.io/
-    const ALL_JSON_URL = ROOT + "data/v2/latest/_all.json";
-    const HISTORY_DIR  = ROOT + "data/v2/history/";
-    // Farben
-    const COL_TEMP = "#2563eb";  // blau
-    const COL_HUM  = "#16a34a";  // grün
-    const COL_SOIL = "#8b5cf6";  // lila (Bodenserie)
+<script>
+/* -------------------------- Hilfen & Konfiguration -------------------------- */
+const ALL_JSON_URL = "/data/v2/latest/_all.json";
+const HISTORY_URL   = id => `/data/v2/history/${encodeURIComponent(id)}.json`;
 
-    // Zahl-Formatter
-    const fmt1 = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 1 });
-    const fmt0 = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 });
+// IDs normalisieren (CR/LF, Whitespace, Case)
+const norm = s => (s || "").replace(/[\r\n]+/g,"").trim().toLowerCase();
 
-    // Charts
-    let chart7d = null;
-    let chart31 = null;
+// Zahlen hübsch formatieren
+const fmt = (n, digits=1) => (n==null || Number.isNaN(n)) ? "—" : Number(n).toLocaleString("de-DE",{maximumFractionDigits:digits});
 
-    // Hilfen
-    const byId = (id) => document.getElementById(id);
-    const qs   = (s) => document.querySelector(s);
+/* -------------------------- Node-Auswahl robust ---------------------------- */
+function newestNode(rows){
+  if (!Array.isArray(rows) || rows.length === 0) return null;
+  return rows.reduce((a,b)=> (a.ts > b.ts ? a : b));
+}
+function pickNodeId(rows){
+  const urlId = norm(new URLSearchParams(location.search).get("node"));
+  const ids = new Set(rows.map(r => norm(r.id)));
+  if (urlId && ids.has(urlId)) return urlId;
+  const n = newestNode(rows);
+  return n ? norm(n.id) : null;
+}
 
-    // Node aus URL (?node=breklum)
-    function getUrlNode() {
-      const p = new URLSearchParams(location.search);
-      const n = p.get("node");
-      return n ? n.trim() : null;
+/* -------------------------- Charts ----------------------------------------- */
+let chartHourly, chartDaily;
+
+function drawHourly(series){
+  const ctx = document.getElementById("chartHourly").getContext("2d");
+  if (chartHourly) chartHourly.destroy();
+
+  const labels = series.map(p => p.ts.replace("T"," ").replace("Z",""));
+  const dsT = series.map(p => p.t ?? null);
+  const dsH = series.map(p => p.h ?? null);
+
+  chartHourly = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [
+        { label: "Temperatur (°C)", data: dsT, tension: .25, pointRadius: 0 },
+        { label: "Feuchte (%)",     data: dsH, tension: .25, pointRadius: 0 }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: { x: { ticks: { maxRotation: 0, autoSkip: true } } },
+      plugins: { legend: { position: "bottom" } }
     }
+  });
+}
 
-    // CR/LF etc. entfernen (Windows-Zeilenenden aus CSV/Perl-Pipe)
-    function cleanId(id) { return String(id || "").replace(/[\r\n]+$/g,""); }
+function drawDaily(series){
+  const ctx = document.getElementById("chartDaily").getContext("2d");
+  if (chartDaily) chartDaily.destroy();
+  const byDay = new Map();
+  for (const p of series){
+    const d = p.ts.slice(0,10);
+    if (!byDay.has(d)) byDay.set(d, []);
+    byDay.get(d).push(p);
+  }
+  // Tagesmittel
+  const days = [...byDay.keys()].sort();
+  const avgT = days.map(d => {
+    const arr = byDay.get(d).map(x => x.t).filter(v => v!=null);
+    if (arr.length===0) return null;
+    return arr.reduce((a,b)=>a+b,0)/arr.length;
+  });
+  const avgH = days.map(d => {
+    const arr = byDay.get(d).map(x => x.h).filter(v => v!=null);
+    if (arr.length===0) return null;
+    return arr.reduce((a,b)=>a+b,0)/arr.length;
+  });
 
-    // Latest JSON laden
-    async function loadLatest() {
-      const arr = await fetch(ALL_JSON_URL, { cache:"no-store" }).then(r=>r.json());
-      // IDs säubern
-      arr.forEach(x => x.id = cleanId(x.id));
-      return arr;
+  chartDaily = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: days,
+      datasets: [
+        { label: "Ø Temp (°C)", data: avgT, tension: .25, pointRadius: 0 },
+        { label: "Ø Feuchte (%)", data: avgH, tension: .25, pointRadius: 0 }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom" } }
     }
+  });
+}
 
-    // History JSON laden
-    async function loadHistory(node) {
-      const url = `${HISTORY_DIR}${node}.json`;
-      const arr = await fetch(url, { cache:"no-store" }).then(r=>r.json());
-      return Array.isArray(arr) ? arr : [];
-    }
+/* -------------------------- Rendering -------------------------------------- */
+function fillCurrentCard(nodeId, row){
+  const isSoil = nodeId === "se01";
+  document.getElementById("stamp").textContent =
+    row?.ts ? ("Stand: " + new Date(row.ts).toLocaleString("de-DE")) : "Stand: —";
 
-    // Knoten auswählen
-    function pickNode(latest) {
-      const want = getUrlNode();
-      if (want && latest.some(x => x.id === want)) return want;
-      return latest.length ? latest[0].id : null;
-    }
+  // Labels
+  document.getElementById("labelTemp").textContent = isSoil ? "Boden-Temp." : "Temperatur";
+  document.getElementById("labelHum").textContent  = isSoil ? "Boden-Feuchte" : "Luftfeuchte";
 
-    // Batteriefeld ermitteln (kann fehlen)
-    function findBattery(fields) {
-      if (!fields) return null;
-      if ("BatV" in fields) return fields.BatV;
-      if ("batV" in fields) return fields.batV;
-      return null;
-    }
+  // Werte
+  let t, h, bat;
+  if (isSoil){
+    // se01: in _all.json heißen Felder temp_SOIL / water_SOIL
+    t = row?.fields?.temp_SOIL;
+    h = row?.fields?.water_SOIL;
+  } else {
+    t = row?.fields?.TempC_SHT ?? row?.fields?.TempC_SHT31;
+    h = row?.fields?.Hum_SHT   ?? row?.fields?.Hum_SHT31;
+  }
+  bat = row?.fields?.BatV;
 
-    // Felder für Anzeige (Temp/Hum – oder Boden)
-    function extractDisplayFields(history) {
-      // Varianten:
-      //  - t / h                     (Standard)
-      //  - t_soil / water_SOIL      (Boden neu)
-      //  - temp_SOIL / water_SOIL   (Boden alt)
-      const hasTH      = history.some(x => x.t != null || x.h != null);
-      const hasSoilNew = history.some(x => x.t_soil != null || x.water_SOIL != null);
-      const hasSoilOld = history.some(x => x.temp_SOIL != null || x.water_SOIL != null);
+  document.getElementById("valTemp").textContent = (t!=null)? `${fmt(t,1)} °C` : "—";
+  document.getElementById("valHum").textContent  = (h!=null)? `${fmt(h,1)} %`  : "—";
+  document.getElementById("valBat").textContent  = (bat!=null)? `${fmt(bat,3)} V` : "—";
 
-      if (hasTH) {
-        return { mode:"air", tempKey:"t", humKey:"h", tempLabel:"Temperatur (°C)", humLabel:"Luftfeuchte (%)", colorT:COL_TEMP, colorH:COL_HUM };
-      }
-      if (hasSoilNew) {
-        return { mode:"soil", tempKey:"t_soil", humKey:"water_SOIL", tempLabel:"Boden-Temp (°C)", humLabel:"Boden-Feuchte (%)", colorT:COL_SOIL, colorH:COL_HUM };
-      }
-      if (hasSoilOld) {
-        return { mode:"soil", tempKey:"temp_SOIL", humKey:"water_SOIL", tempLabel:"Boden-Temp (°C)", humLabel:"Boden-Feuchte (%)", colorT:COL_SOIL, colorH:COL_HUM };
-      }
-      // Fallback (falls noch gar kein Verlauf existiert)
-      return { mode:"air", tempKey:"t", humKey:"h", tempLabel:"Temperatur (°C)", humLabel:"Luftfeuchte (%)", colorT:COL_TEMP, colorH:COL_HUM };
-    }
+  // rechte Liste
+  document.getElementById("listCurrent").innerHTML =
+    `🌡️ Temperatur: <b>${(t!=null)? fmt(t,1)+" °C" : "—"}</b><br/>
+     💧 ${isSoil?"Bodenfeuchte":"Luftfeuchte"}: <b>${(h!=null)? fmt(h,1)+" %" : "—"}</b><br/>
+     🪫 Batterie: <b>${(bat!=null)? fmt(bat,3)+" V" : "—"}</b>`;
+}
 
-    // Tagesmittel aus Stundenwerten bilden (clientseitig)
-    function dailyMeans(rows, key) {
-      const byDay = new Map(); // YYYY-MM-DD -> {sum, n}
-      for (const r of rows) {
-        const v = r[key];
-        if (v == null) continue;
-        const d = String(r.ts).slice(0,10); // YYYY-MM-DD
-        const obj = byDay.get(d) || { sum:0, n:0 };
-        obj.sum += Number(v);
-        obj.n   += 1;
-        byDay.set(d, obj);
-      }
-      const out = [];
-      for (const [d, agg] of Array.from(byDay.entries()).sort()) {
-        out.push({ d, mean: agg.n ? (agg.sum / agg.n) : null });
-      }
-      return out.slice(-31); // letzte 31 Tage
-    }
+async function render(){
+  // 1) _all.json laden und IDs normalisieren
+  const all = await (await fetch(ALL_JSON_URL, {cache:"no-store"})).json();
+  all.forEach(o => { o.id = norm(o.id); });
 
-    // Linien-Chart erzeugen/aktualisieren
-    function drawLineChart(canvas, chartRef, labels, series) {
-      if (chartRef && chartRef.data) {
-        chartRef.data.labels = labels;
-        chartRef.data.datasets = series;
-        chartRef.update();
-        return chartRef;
-      }
-      return new Chart(canvas.getContext("2d"), {
-        type: "line",
-        data: { labels, datasets: series },
-        options: {
-          responsive: true,
-          interaction: { mode: "index", intersect: false },
-          plugins: {
-            legend: { display: true },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => {
-                  const v = ctx.parsed.y;
-                  return `${ctx.dataset.label}: ${v == null ? "—" : fmt1.format(v)}`;
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              ticks: { maxRotation: 0, autoSkip: true },
-              grid: { display:false }
-            },
-            y: {
-              beginAtZero: false,
-              grid: { color: "rgba(0,0,0,.06)" }
-            }
-          },
-          elements: { line: { tension: .25 }, point: { radius: 0 } }
-        }
-      });
-    }
+  // 2) Node bestimmen
+  const nodeId = pickNodeId(all);
+  document.getElementById("titleNode").textContent = nodeId || "—";
+  if (!nodeId){ 
+    document.getElementById("msgHistory").textContent = "Kein Node gefunden.";
+    document.getElementById("msgDaily").textContent = "Keine Tageswerte möglich.";
+    return;
+  }
 
-    // Oberer Bereich füllen
-    function renderTop(latest, node, histInfo, lastRow) {
-      byId("nodeTitle").textContent = node || "—";
+  // 3) Aktuelle Werte aus _all.json
+  const row = all.find(o => norm(o.id) === nodeId) || null;
+  fillCurrentCard(nodeId, row);
 
-      // Zeitstempel
-      const entry = latest.find(x => x.id === node);
-      const ts = entry?.ts ? new Date(entry.ts) : null;
-      byId("stamp").textContent = ts ? ts.toLocaleString("de-DE") : "—";
+  // 4) Verlauf laden
+  const histUrl = HISTORY_URL(nodeId);
+  let hist = [];
+  try {
+    hist = await (await fetch(histUrl, {cache:"no-store"})).json();
+  } catch(e){
+    console.error("History laden fehlgeschlagen", e);
+  }
 
-      // aktuelle Werte
-      const temp = lastRow?.[histInfo.tempKey];
-      const hum  = lastRow?.[histInfo.humKey];
-      const bat  = findBattery(entry?.fields);
+  const hasSeries = Array.isArray(hist) && hist.length>0;
+  const msgH = document.getElementById("msgHistory");
+  if (!hasSeries){
+    msgH.textContent = "Kein Verlauf gefunden.";
+    if (chartHourly){ chartHourly.destroy(); chartHourly = null; }
+    if (chartDaily){  chartDaily.destroy();  chartDaily  = null; }
+    document.getElementById("msgDaily").textContent = "Keine Tageswerte möglich (es fehlt Verlauf).";
+    return;
+  } else {
+    msgH.textContent = "";
+  }
 
-      byId("kpiTemp").textContent = temp == null ? "—" : `${fmt1.format(temp)} °C`;
-      byId("kpiHum").textContent  = hum  == null ? "—" : `${fmt1.format(hum)} %`;
-      byId("kpiBat").textContent  = bat  == null ? "—" : `${fmt3(bat)} V`;
+  // 5) Charts zeichnen
+  drawHourly(hist);
+  document.getElementById("msgDaily").textContent = "";
+  // Nur wenn genügend Zeitraum vorhanden ist, macht Tagesmittel Sinn
+  const spanDays = (Date.parse(hist.at(-1).ts) - Date.parse(hist[0].ts)) / (1000*60*60*24);
+  if (spanDays >= 1){
+    drawDaily(hist);
+  } else {
+    if (chartDaily){ chartDaily.destroy(); chartDaily = null; }
+    document.getElementById("msgDaily").textContent = "Keine Tageswerte möglich (Zeitfenster < 24 h).";
+  }
+}
 
-      // rechte Box (als kleine Liste)
-      const list = [];
-      if (temp != null) list.push(`🌡️ <strong>${histInfo.tempLabel.replace(/\s*$begin:math:text$.*$end:math:text$/,'')}</strong>: ${fmt1.format(temp)} °C`);
-      if (hum  != null) list.push(`💧 <strong>${histInfo.humLabel.replace(/\s*$begin:math:text$.*$end:math:text$/,'')}</strong>: ${fmt1.format(hum)} %`);
-      if (bat  != null) list.push(`🪫 <strong>Batterie</strong>: ${fmt3(bat)} V`);
-      byId("currentList").innerHTML = list.length ? ("• " + list.join("<br>• ")) : "—";
-    }
-
-    function fmt3(v){ return new Intl.NumberFormat("de-DE",{minimumFractionDigits:3, maximumFractionDigits:3}).format(v); }
-
-    // Hauptlauf
-    async function run() {
-      try {
-        const latest = await loadLatest();
-        if (!latest.length) throw new Error("latest leer");
-
-        // Node bestimmen
-        const node = pickNode(latest);
-
-        // Verlauf holen
-        const hist = await loadHistory(node);
-
-        // Diagramm-Felder erkennen
-        const info = extractDisplayFields(hist);
-
-        // 7d: wir nehmen die letzten ~7*24 Punkte (falls vorhanden)
-        const rows7 = hist.slice(-7*24);
-        // letzter Datensatz für Anzeige
-        const lastRow = hist.at(-1) || null;
-
-        // Oberer Block
-        renderTop(latest, node, info, lastRow);
-
-        // Labels (zeitachse)
-        const labels7 = rows7.map(r => (new Date(r.ts)).toLocaleString("de-DE", { weekday:"short", hour:"2-digit" }).replace(" ", " "));
-        const serieT7 = rows7.map(r => (r[info.tempKey] != null ? Number(r[info.tempKey]) : null));
-        const serieH7 = rows7.map(r => (r[info.humKey]  != null ? Number(r[info.humKey])  : null));
-
-        const has7 = serieT7.some(v => v != null) || serieH7.some(v => v != null);
-        byId("no7d").style.display = has7 ? "none" : "block";
-
-        if (has7) {
-          const ds = [];
-          if (serieT7.some(v => v != null)) {
-            ds.push({ label: info.tempLabel, data: serieT7, borderColor: info.colorT, backgroundColor: info.colorT });
-          }
-          if (serieH7.some(v => v != null)) {
-            ds.push({ label: info.humLabel,  data: serieH7, borderColor: info.colorH, backgroundColor: info.colorH });
-          }
-          chart7d = drawLineChart(byId("chart7d"), chart7d, labels7, ds);
-        }
-
-        // 31 Tage Tagesmittel
-        const daysT = dailyMeans(hist, info.tempKey);
-        const daysH = dailyMeans(hist, info.humKey);
-
-        const labels31 = Array.from(new Set([...daysT.map(d=>d.d), ...daysH.map(d=>d.d)])).sort();
-        const mapT = new Map(daysT.map(x => [x.d, x.mean == null ? null : Number(x.mean)]));
-        const mapH = new Map(daysH.map(x => [x.d, x.mean == null ? null : Number(x.mean)]));
-
-        const serieT31 = labels31.map(d => mapT.has(d) ? mapT.get(d) : null);
-        const serieH31 = labels31.map(d => mapH.has(d) ? mapH.get(d) : null);
-
-        const has31 = (serieT31.some(v => v != null) || serieH31.some(v => v != null));
-        byId("no31").style.display = has31 ? "none" : "block";
-
-        if (has31) {
-          const ds31 = [];
-          if (serieT31.some(v => v != null)) {
-            ds31.push({ label: info.tempLabel + " (Ø)", data: serieT31, borderColor: info.colorT, backgroundColor: info.colorT });
-          }
-          if (serieH31.some(v => v != null)) {
-            ds31.push({ label: info.humLabel + " (Ø)",  data: serieH31, borderColor: info.colorH, backgroundColor: info.colorH });
-          }
-          chart31 = drawLineChart(byId("chart31d"), chart31, labels31, ds31);
-        }
-      } catch (err) {
-        console.error(err);
-        byId("stamp").textContent = "—";
-        byId("currentList").textContent = "—";
-        byId("no7d").style.display = "block";
-        byId("no31").style.display = "block";
-      }
-    }
-
-    run();
-    setInterval(run, AUTO_REFRESH_MS);
-  </script>
+render();
+</script>
 </body>
 </html>
