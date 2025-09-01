@@ -1,105 +1,212 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <title>🌳 WALDSENSOR.SH – Sensordaten</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Schulwaldsensor — Detail</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
-    body { font-family: system-ui, sans-serif; margin: 1rem; background:#f9f9f9; color:#222; }
-    h1,h2 { margin:0.5rem 0; }
-    .card { background:#fff; padding:1rem; margin:0.5rem 0; border-radius:0.75rem; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
-    canvas { width:100%; height:200px; }
+    :root{ --card:#fff; --muted:#667; --soft:#eef2f7; }
+    body{ margin:0; font: 16px/1.45 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:#0e1320; background:#f6f8fb; }
+    .wrap{ max-width:1200px; margin:24px auto; padding:0 16px; }
+    a.back{ color:#0b4da2; text-decoration:none; display:inline-flex; gap:.4rem; align-items:center; margin-bottom:8px; }
+    h1{ font: 800 44px/1.1 system-ui; letter-spacing:.2px; margin:8px 0 18px; }
+    .grid{ display:grid; grid-template-columns: 1fr 380px; gap:20px; }
+    .card{ background:var(--card); border:1px solid #e9edf3; border-radius:16px; padding:16px; box-shadow:0 6px 20px rgba(10,20,40,.04); }
+    .pill{ display:inline-block; background:#e9f7ea; color:#0f6a28; padding:8px 12px; border-radius:999px; font-weight:700; border:1px solid #d2efd7; }
+    .kpirow{ display:flex; gap:16px; margin-top:14px; }
+    .kpi{ flex:1; background:#f8fbff; padding:16px; border-radius:14px; border:1px solid #e7eef9; }
+    .kpi b{ font-size:22px; }
+    .muted{ color:var(--muted); }
+    .src{ font: 600 14px/1.3 system-ui; color:#334; margin-top:10px; }
+    .panel{ background:var(--card); border:1px solid #e9edf3; border-radius:16px; padding:16px; margin-top:20px; }
+    .panel h3{ margin:0 0 8px; font:800 18px/1.2 system-ui; }
+    .warn{ color:#a00; background:#fdeeee; border:1px solid #f7d3d3; padding:10px 12px; border-radius:10px; }
+    canvas{ width:100% !important; height:340px !important; }
   </style>
 </head>
 <body>
-  <h1>🌳 WALDSENSOR.SH – Sensor Live-Daten</h1>
-  <p>Diese Seite zeigt die aktuellen Werte aller angeschlossenen Nodes.</p>
+  <div class="wrap">
+    <a class="back" href="/v2.html">← Zur Karte</a>
+    <h1>Schulwaldsensor — <span id="title">…</span></h1>
 
-  <section id="latest">
-    <h2>Letzte Messwerte</h2>
-    <div id="latest-wrap"></div>
-  </section>
+    <div class="grid">
+      <div class="card">
+        <div class="pill">Stand: <span id="stand">—</span></div>
 
-  <!-- ======== History (unterer Teil) ======== -->
-  <section id="history" style="margin:1rem 0;">
-    <h2>Verlauf (letzte 7 Tage)</h2>
-    <div id="histograms"></div>
-  </section>
+        <div class="kpirow">
+          <div class="kpi">
+            <div class="muted">Temperatur</div>
+            <b id="temp">—</b>
+          </div>
+          <div class="kpi">
+            <div class="muted">Luftfeuchte</div>
+            <b id="hum">—</b>
+          </div>
+          <div class="kpi">
+            <div class="muted">Batterie</div>
+            <b id="bat">—</b>
+          </div>
+        </div>
 
-  <script>
-  const ALL_JSON   = "data/v2/latest/_all.json";
-  const HIST_PATH  = "data/v2/history/";
+        <div class="src">Quelle: /data/v2/latest/_all.json</div>
+      </div>
 
-  // bekannte Nodes
-  const NODES = [
-    { id: "breklum",  title: "Breklum" },
-    { id: "fahrdorf", title: "Fahrdorf" },
-    { id: "kropp",    title: "Kropp" },
-    { id: "lsn50",    title: "LSN50" },
-    { id: "s31",      title: "S31" },
-    { id: "se01",     title: "SE01 (Boden)" }
+      <div class="card">
+        <h3>Aktuelle Werte</h3>
+        <div id="aktu" class="muted">—</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</h3>
+      <canvas id="chart1"></canvas>
+      <div id="hint1" class="muted"></div>
+    </div>
+
+    <div class="panel">
+      <h3>🗓️ 31 Tage — Tagesmittel (Temp / Feuchte)</h3>
+      <canvas id="chart2"></canvas>
+      <div id="hint2" class="muted"></div>
+    </div>
+
+    <div id="err" style="margin-top:16px;"></div>
+  </div>
+
+<script>
+function normalizeId(s){
+  return String(s||'')
+    .toLowerCase()
+    .replace(/\r|\s+/g,'')
+    .replace(/^waldsensor[_-]/,'')
+    .replace(/_/g,'-')
+    .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,'');
+}
+
+const qs = new URLSearchParams(location.search);
+const wanted = normalizeId(qs.get('node') || '');
+
+const fmtTs = ts => {
+  try {
+    return new Date(ts).toLocaleString("de-DE",{year:"numeric",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"});
+  } catch { return ts || "—"; }
+};
+
+const el = id => document.getElementById(id);
+el('title').textContent = wanted || '…';
+
+function showError(msg){
+  el('err').innerHTML = `<div class="warn">❌ ${msg}</div>`;
+}
+
+async function loadLatest(){
+  const res = await fetch('/data/v2/latest/_all.json?t=' + Date.now(), {cache:'no-store'});
+  if(!res.ok) throw new Error('latest fetch ' + res.status);
+  const arr = await res.json();
+  // robust: IDs normalisieren
+  return arr.map(x => ({...x, id: normalizeId(x.id)}));
+}
+
+async function loadHistory(id){
+  // zwei mögliche Dateinamen unterstützen
+  const paths = [
+    `/data/v2/history/${id}.json`,
+    `/data/v2/history/history_${id}.json`
   ];
-
-  async function fetchJSON(url){
-    const r = await fetch(url, {cache:"no-store"});
-    if(!r.ok) throw new Error(url+" → "+r.status);
-    return r.json();
+  for (const p of paths){
+    const res = await fetch(p + '?t=' + Date.now(), {cache:'no-store'});
+    if (res.ok) return res.json();
   }
-  function el(tag, attrs={}, ...kids){
-    const x=document.createElement(tag);
-    for(const [k,v] of Object.entries(attrs)) (k in x?x[k]=v:x.setAttribute(k,v));
-    kids.forEach(k=>x.append(k));
-    return x;
+  return null;
+}
+
+function setKPIs(n){
+  el('stand').textContent = fmtTs(n.ts);
+  const f = n.fields || {};
+  const temp = (typeof f.TempC_SHT31 === 'number') ? f.TempC_SHT31
+             : (typeof f.TempC_SHT === 'number')  ? f.TempC_SHT
+             : (typeof f.temp_SOIL === 'number')  ? f.temp_SOIL : null;
+  const hum  = (typeof f.Hum_SHT31 === 'number') ? f.Hum_SHT31
+             : (typeof f.Hum_SHT === 'number')   ? f.Hum_SHT
+             : (typeof f.water_SOIL === 'number')? f.water_SOIL : null;
+  const bat  = (typeof f.BatV === 'number') ? f.BatV : null;
+
+  el('temp').textContent = temp==null ? '—' : `${temp.toFixed(1)} °C`;
+  el('hum').textContent  = hum==null  ? '—' : `${hum.toFixed(1)} %`;
+  el('bat').textContent  = bat==null  ? '—' : `${bat.toFixed(3)} V`;
+
+  el('aktu').textContent =
+    `🌡️ Temperatur: ${el('temp').textContent}  ·  💧 Luftfeuchte: ${el('hum').textContent}  ·  🔋 Batterie: ${el('bat').textContent}`;
+}
+
+let chart1, chart2;
+
+function drawHistory(raw){
+  if (!raw || !raw.length){
+    el('hint1').textContent = 'Kein Verlauf verfügbar. Sucht: /data/v2/history/<node>.json oder /data/v2/history_history_<node>.json';
+    return;
   }
-  function fmt(ts){ return new Date(ts).toLocaleString("de-DE",{dateStyle:"short",timeStyle:"short"}); }
+  const labels = raw.map(r => r.ts && r.ts !== "0" ? r.ts.slice(0,10) : '—');
+  const temps  = raw.map(r => (typeof r.t === 'number') ? r.t : null);
+  const hums   = raw.map(r => (typeof r.h === 'number') ? r.h : null);
 
-  // kleines Canvas-Chart
-  function drawLine(canvas, series, opts={}) {
-    const ctx=canvas.getContext("2d"), W=canvas.width, H=canvas.height;
-    ctx.clearRect(0,0,W,H);
-    if(!series.length){ctx.fillText("Keine Daten",10,20);return;}
-    const xs=series.map(p=>p.x), ys=series.map(p=>p.y);
-    const minX=Math.min(...xs), maxX=Math.max(...xs);
-    const minY=Math.min(...ys), maxY=Math.max(...ys);
-    const pad=30, sx=x=>pad+((x-minX)/(maxX-minX||1))*(W-2*pad),
-                sy=y=>(H-pad)-((y-minY)/(maxY-minY||1))*(H-2*pad);
-    ctx.beginPath();ctx.moveTo(pad,H-pad);ctx.lineTo(W-pad,H-pad);ctx.moveTo(pad,H-pad);ctx.lineTo(pad,pad);ctx.stroke();
-    ctx.strokeStyle=opts.color||"#0a84ff";ctx.beginPath();
-    series.forEach((p,i)=>{const X=sx(p.x),Y=sy(p.y);i?ctx.lineTo(X,Y):ctx.moveTo(X,Y);});ctx.stroke();
-  }
-
-  async function render(){
-    // --- Latest ---
-    const latest=await fetchJSON(ALL_JSON);
-    const Lwrap=document.getElementById("latest-wrap"); Lwrap.innerHTML="";
-    latest.forEach(node=>{
-      const card=el("div",{className:"card"},
-        el("h3",{},node.id),
-        el("p",{},"Zeit: "+fmt(node.ts)),
-        el("pre",{},JSON.stringify(node.fields,null,2))
-      );
-      Lwrap.append(card);
-    });
-
-    // --- History ---
-    const Hwrap=document.getElementById("histograms"); Hwrap.innerHTML="";
-    for(const n of NODES){
-      try {
-        const data=await fetchJSON(HIST_PATH+n.id+".json");
-        const tSeries=data.filter(p=>p.t!=null).map(p=>({x:new Date(p.ts).getTime(),y:p.t}));
-        const hSeries=data.filter(p=>p.h!=null).map(p=>({x:new Date(p.ts).getTime(),y:p.h}));
-        const card=el("div",{className:"card"},
-          el("h3",{},n.title),
-          el("canvas",{width:400,height:200,id:"c"+n.id+"t"}),
-          el("canvas",{width:400,height:200,id:"c"+n.id+"h"})
-        );
-        Hwrap.append(card);
-        drawLine(card.querySelector("#c"+n.id+"t"),tSeries,{color:"red"});
-        drawLine(card.querySelector("#c"+n.id+"h"),hSeries,{color:"blue"});
-      } catch(err){ console.warn("History-Fehler",n.id,err); }
+  const ctx1 = document.getElementById('chart1').getContext('2d');
+  chart1 && chart1.destroy();
+  chart1 = new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Temperatur (°C)', data: temps, borderWidth: 2, tension: .2 },
+        { label: 'Luftfeuchte (%)', data: hums,  borderWidth: 2, tension: .2 }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      scales: { x: { ticks:{ maxTicksLimit: 8 } }, y: { beginAtZero: false } }
     }
+  });
+
+  // 31-Tage Balken-Tagesmittel – wenn genug Daten vorhanden
+  const ctx2 = document.getElementById('chart2').getContext('2d');
+  chart2 && chart2.destroy();
+  chart2 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Temp Ø (°C)', data: temps, borderWidth: 1 },
+        { label: 'Feuchte Ø (%)', data: hums, borderWidth: 1 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'top' } },
+      scales: { x: { ticks:{ maxTicksLimit: 12 } } }
+    }
+  });
+}
+
+(async function init(){
+  try{
+    const all = await loadLatest();
+    const node = all.find(n => normalizeId(n.id) === wanted);
+    if(!node){
+      showError(`Node „${wanted || '—'}“ nicht gefunden.`);
+      return;
+    }
+    setKPIs(node);
+
+    const hist = await loadHistory(wanted);
+    if (!hist){ el('hint1').textContent = 'Kein Verlauf gefunden.'; el('hint2').textContent = 'Keine Tageswerte möglich.'; return; }
+    drawHistory(hist);
+  }catch(err){
+    console.error(err);
+    showError('Fehler beim Laden der Daten.');
   }
-  render();
-  </script>
+})();
+</script>
 </body>
-</html>i
+</html>
