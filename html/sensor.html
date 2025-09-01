@@ -4,209 +4,345 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Schulwaldsensor — Detail</title>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- schlichtes, unaufdringliches Styling – lässt dein bestehendes Layout in Ruhe -->
   <style>
-    :root{ --card:#fff; --muted:#667; --soft:#eef2f7; }
-    body{ margin:0; font: 16px/1.45 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:#0e1320; background:#f6f8fb; }
-    .wrap{ max-width:1200px; margin:24px auto; padding:0 16px; }
-    a.back{ color:#0b4da2; text-decoration:none; display:inline-flex; gap:.4rem; align-items:center; margin-bottom:8px; }
-    h1{ font: 800 44px/1.1 system-ui; letter-spacing:.2px; margin:8px 0 18px; }
-    .grid{ display:grid; grid-template-columns: 1fr 380px; gap:20px; }
-    .card{ background:var(--card); border:1px solid #e9edf3; border-radius:16px; padding:16px; box-shadow:0 6px 20px rgba(10,20,40,.04); }
-    .pill{ display:inline-block; background:#e9f7ea; color:#0f6a28; padding:8px 12px; border-radius:999px; font-weight:700; border:1px solid #d2efd7; }
-    .kpirow{ display:flex; gap:16px; margin-top:14px; }
-    .kpi{ flex:1; background:#f8fbff; padding:16px; border-radius:14px; border:1px solid #e7eef9; }
-    .kpi b{ font-size:22px; }
-    .muted{ color:var(--muted); }
-    .src{ font: 600 14px/1.3 system-ui; color:#334; margin-top:10px; }
-    .panel{ background:var(--card); border:1px solid #e9edf3; border-radius:16px; padding:16px; margin-top:20px; }
-    .panel h3{ margin:0 0 8px; font:800 18px/1.2 system-ui; }
-    .warn{ color:#a00; background:#fdeeee; border:1px solid #f7d3d3; padding:10px 12px; border-radius:10px; }
-    canvas{ width:100% !important; height:340px !important; }
+    :root {
+      --bg: #f7f9fb;
+      --panel: #ffffff;
+      --muted: #6b7280;
+      --txt: #0f172a;
+      --ok: #16a34a;
+      --card: #eef2f7;
+      --border: #e5e7eb;
+      --accent: #0ea5e9;
+    }
+    html, body { margin:0; padding:0; background:var(--bg); color:var(--txt); font:16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji"; }
+    a { color:var(--accent); text-decoration:none; }
+    .wrap { max-width:1200px; margin:0 auto; padding:20px; }
+    .back { display:inline-flex; align-items:center; gap:.5rem; font-weight:600; color:#2563eb; }
+    h1 { font-size:clamp(26px, 3.4vw, 44px); margin:18px 0 10px; letter-spacing:.4px; }
+    .grid { display:grid; gap:14px; grid-template-columns: 1fr; }
+    @media (min-width: 900px) { .grid { grid-template-columns: 2fr 1.3fr; } }
+    .card { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; }
+    .muted { color:var(--muted); }
+    .row { display:flex; gap:14px; flex-wrap:wrap; }
+    .pill { display:inline-block; background:#eaf7ee; color:#155e31; border-radius:999px; padding:6px 12px; font-weight:700; }
+    .kpi { flex:1 1 220px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; min-height:74px; }
+    .kpi h3 { margin:0 0 8px; font-size:15px; color:#111827; font-weight:600; }
+    .kpi .v { font-size:22px; font-weight:800; letter-spacing:.3px; }
+    .src { font-size:13px; color:var(--muted); margin-top:6px; }
+    .section-title { display:flex; align-items:center; gap:10px; font-weight:800; margin:2px 0 10px; }
+    .empty { color:var(--muted); font-size:14px; padding:10px 0 4px; }
+    canvas { width:100%; height:280px; }
+    .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background:#f3f4f6; border:1px solid var(--border); border-radius:8px; padding:2px 6px; }
   </style>
+
+  <!-- Chart.js nur für die zwei Diagramme -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <div class="wrap">
     <a class="back" href="/v2.html">← Zur Karte</a>
-    <h1>Schulwaldsensor — <span id="title">…</span></h1>
+    <h1>Schulwaldsensor — <span id="nodeTitle">…</span></h1>
 
     <div class="grid">
+      <!-- linke Spalte: Live-Infos -->
       <div class="card">
-        <div class="pill">Stand: <span id="stand">—</span></div>
+        <div class="row" style="align-items:center; justify-content:space-between;">
+          <div class="pill">Stand: <span id="stamp">—</span></div>
+        </div>
 
-        <div class="kpirow">
+        <div class="row" style="margin-top:12px;">
           <div class="kpi">
-            <div class="muted">Temperatur</div>
-            <b id="temp">—</b>
+            <h3>Temperatur</h3>
+            <div class="v" id="kpiTemp">—</div>
           </div>
           <div class="kpi">
-            <div class="muted">Luftfeuchte</div>
-            <b id="hum">—</b>
+            <h3>Luftfeuchte</h3>
+            <div class="v" id="kpiHum">—</div>
           </div>
           <div class="kpi">
-            <div class="muted">Batterie</div>
-            <b id="bat">—</b>
+            <h3>Batterie</h3>
+            <div class="v" id="kpiBat">—</div>
           </div>
         </div>
 
-        <div class="src">Quelle: /data/v2/latest/_all.json</div>
+        <div class="src">Quelle: <span class="code">/data/v2/latest/_all.json</span></div>
       </div>
 
+      <!-- rechte Spalte: Aktuelle Werte als Liste -->
       <div class="card">
-        <h3>Aktuelle Werte</h3>
-        <div id="aktu" class="muted">—</div>
+        <div class="section-title">Aktuelle Werte</div>
+        <div id="currentList" class="muted">—</div>
       </div>
     </div>
 
-    <div class="panel">
-      <h3>📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</h3>
-      <canvas id="chart1"></canvas>
-      <div id="hint1" class="muted"></div>
+    <!-- Verlauf 7 Tage -->
+    <div class="card" style="margin-top:14px;">
+      <div class="section-title">📊 Verlauf Temperatur & Luftfeuchtigkeit</div>
+      <div id="no7d" class="empty" style="display:none;">Kein Verlauf gefunden.</div>
+      <canvas id="chart7d"></canvas>
     </div>
 
-    <div class="panel">
-      <h3>🗓️ 31 Tage — Tagesmittel (Temp / Feuchte)</h3>
-      <canvas id="chart2"></canvas>
-      <div id="hint2" class="muted"></div>
+    <!-- 31 Tage Tagesmittel -->
+    <div class="card" style="margin-top:14px;">
+      <div class="section-title">🗓️ 31 Tage — Tagesmittel (Temp / Feuchte)</div>
+      <div id="no31" class="empty" style="display:none;">Keine Tageswerte möglich (es fehlt Verlauf).</div>
+      <canvas id="chart31d"></canvas>
     </div>
-
-    <div id="err" style="margin-top:16px;"></div>
   </div>
 
-<script>
-function normalizeId(s){
-  return String(s||'')
-    .toLowerCase()
-    .replace(/\r|\s+/g,'')
-    .replace(/^waldsensor[_-]/,'')
-    .replace(/_/g,'-')
-    .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,'');
-}
+  <script>
+    // ------------------ Einstellungen ------------------
+    const ALL_JSON_URL = "/data/v2/latest/_all.json";
+    const HISTORY_DIR  = "/data/v2/history/"; // <node>.json
+    const AUTO_REFRESH_MS = 5 * 60 * 1000;
 
-const qs = new URLSearchParams(location.search);
-const wanted = normalizeId(qs.get('node') || '');
+    // Farben
+    const COL_TEMP = "#2563eb";  // blau
+    const COL_HUM  = "#16a34a";  // grün
+    const COL_SOIL = "#8b5cf6";  // lila (Bodenserie)
 
-const fmtTs = ts => {
-  try {
-    return new Date(ts).toLocaleString("de-DE",{year:"numeric",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"});
-  } catch { return ts || "—"; }
-};
+    // Zahl-Formatter
+    const fmt1 = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 1 });
+    const fmt0 = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 });
 
-const el = id => document.getElementById(id);
-el('title').textContent = wanted || '…';
+    // Charts
+    let chart7d = null;
+    let chart31 = null;
 
-function showError(msg){
-  el('err').innerHTML = `<div class="warn">❌ ${msg}</div>`;
-}
+    // Hilfen
+    const byId = (id) => document.getElementById(id);
+    const qs   = (s) => document.querySelector(s);
 
-async function loadLatest(){
-  const res = await fetch('/data/v2/latest/_all.json?t=' + Date.now(), {cache:'no-store'});
-  if(!res.ok) throw new Error('latest fetch ' + res.status);
-  const arr = await res.json();
-  // robust: IDs normalisieren
-  return arr.map(x => ({...x, id: normalizeId(x.id)}));
-}
-
-async function loadHistory(id){
-  // zwei mögliche Dateinamen unterstützen
-  const paths = [
-    `/data/v2/history/${id}.json`,
-    `/data/v2/history/history_${id}.json`
-  ];
-  for (const p of paths){
-    const res = await fetch(p + '?t=' + Date.now(), {cache:'no-store'});
-    if (res.ok) return res.json();
-  }
-  return null;
-}
-
-function setKPIs(n){
-  el('stand').textContent = fmtTs(n.ts);
-  const f = n.fields || {};
-  const temp = (typeof f.TempC_SHT31 === 'number') ? f.TempC_SHT31
-             : (typeof f.TempC_SHT === 'number')  ? f.TempC_SHT
-             : (typeof f.temp_SOIL === 'number')  ? f.temp_SOIL : null;
-  const hum  = (typeof f.Hum_SHT31 === 'number') ? f.Hum_SHT31
-             : (typeof f.Hum_SHT === 'number')   ? f.Hum_SHT
-             : (typeof f.water_SOIL === 'number')? f.water_SOIL : null;
-  const bat  = (typeof f.BatV === 'number') ? f.BatV : null;
-
-  el('temp').textContent = temp==null ? '—' : `${temp.toFixed(1)} °C`;
-  el('hum').textContent  = hum==null  ? '—' : `${hum.toFixed(1)} %`;
-  el('bat').textContent  = bat==null  ? '—' : `${bat.toFixed(3)} V`;
-
-  el('aktu').textContent =
-    `🌡️ Temperatur: ${el('temp').textContent}  ·  💧 Luftfeuchte: ${el('hum').textContent}  ·  🔋 Batterie: ${el('bat').textContent}`;
-}
-
-let chart1, chart2;
-
-function drawHistory(raw){
-  if (!raw || !raw.length){
-    el('hint1').textContent = 'Kein Verlauf verfügbar. Sucht: /data/v2/history/<node>.json oder /data/v2/history_history_<node>.json';
-    return;
-  }
-  const labels = raw.map(r => r.ts && r.ts !== "0" ? r.ts.slice(0,10) : '—');
-  const temps  = raw.map(r => (typeof r.t === 'number') ? r.t : null);
-  const hums   = raw.map(r => (typeof r.h === 'number') ? r.h : null);
-
-  const ctx1 = document.getElementById('chart1').getContext('2d');
-  chart1 && chart1.destroy();
-  chart1 = new Chart(ctx1, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [
-        { label: 'Temperatur (°C)', data: temps, borderWidth: 2, tension: .2 },
-        { label: 'Luftfeuchte (%)', data: hums,  borderWidth: 2, tension: .2 }
-      ]
-    },
-    options: {
-      responsive: true,
-      interaction: { mode: 'index', intersect: false },
-      scales: { x: { ticks:{ maxTicksLimit: 8 } }, y: { beginAtZero: false } }
+    // Node aus URL (?node=breklum)
+    function getUrlNode() {
+      const p = new URLSearchParams(location.search);
+      const n = p.get("node");
+      return n ? n.trim() : null;
     }
-  });
 
-  // 31-Tage Balken-Tagesmittel – wenn genug Daten vorhanden
-  const ctx2 = document.getElementById('chart2').getContext('2d');
-  chart2 && chart2.destroy();
-  chart2 = new Chart(ctx2, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [
-        { label: 'Temp Ø (°C)', data: temps, borderWidth: 1 },
-        { label: 'Feuchte Ø (%)', data: hums, borderWidth: 1 }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { position: 'top' } },
-      scales: { x: { ticks:{ maxTicksLimit: 12 } } }
+    // CR/LF etc. entfernen (Windows-Zeilenenden aus CSV/Perl-Pipe)
+    function cleanId(id) { return String(id || "").replace(/[\r\n]+$/g,""); }
+
+    // Latest JSON laden
+    async function loadLatest() {
+      const arr = await fetch(ALL_JSON_URL, { cache:"no-store" }).then(r=>r.json());
+      // IDs säubern
+      arr.forEach(x => x.id = cleanId(x.id));
+      return arr;
     }
-  });
-}
 
-(async function init(){
-  try{
-    const all = await loadLatest();
-    const node = all.find(n => normalizeId(n.id) === wanted);
-    if(!node){
-      showError(`Node „${wanted || '—'}“ nicht gefunden.`);
-      return;
+    // History JSON laden
+    async function loadHistory(node) {
+      const url = `${HISTORY_DIR}${node}.json`;
+      const arr = await fetch(url, { cache:"no-store" }).then(r=>r.json());
+      return Array.isArray(arr) ? arr : [];
     }
-    setKPIs(node);
 
-    const hist = await loadHistory(wanted);
-    if (!hist){ el('hint1').textContent = 'Kein Verlauf gefunden.'; el('hint2').textContent = 'Keine Tageswerte möglich.'; return; }
-    drawHistory(hist);
-  }catch(err){
-    console.error(err);
-    showError('Fehler beim Laden der Daten.');
-  }
-})();
-</script>
+    // Knoten auswählen
+    function pickNode(latest) {
+      const want = getUrlNode();
+      if (want && latest.some(x => x.id === want)) return want;
+      return latest.length ? latest[0].id : null;
+    }
+
+    // Batteriefeld ermitteln (kann fehlen)
+    function findBattery(fields) {
+      if (!fields) return null;
+      if ("BatV" in fields) return fields.BatV;
+      if ("batV" in fields) return fields.batV;
+      return null;
+    }
+
+    // Felder für Anzeige (Temp/Hum – oder Boden)
+    function extractDisplayFields(history) {
+      // Varianten:
+      //  - t / h                     (Standard)
+      //  - t_soil / water_SOIL      (Boden neu)
+      //  - temp_SOIL / water_SOIL   (Boden alt)
+      const hasTH      = history.some(x => x.t != null || x.h != null);
+      const hasSoilNew = history.some(x => x.t_soil != null || x.water_SOIL != null);
+      const hasSoilOld = history.some(x => x.temp_SOIL != null || x.water_SOIL != null);
+
+      if (hasTH) {
+        return { mode:"air", tempKey:"t", humKey:"h", tempLabel:"Temperatur (°C)", humLabel:"Luftfeuchte (%)", colorT:COL_TEMP, colorH:COL_HUM };
+      }
+      if (hasSoilNew) {
+        return { mode:"soil", tempKey:"t_soil", humKey:"water_SOIL", tempLabel:"Boden-Temp (°C)", humLabel:"Boden-Feuchte (%)", colorT:COL_SOIL, colorH:COL_HUM };
+      }
+      if (hasSoilOld) {
+        return { mode:"soil", tempKey:"temp_SOIL", humKey:"water_SOIL", tempLabel:"Boden-Temp (°C)", humLabel:"Boden-Feuchte (%)", colorT:COL_SOIL, colorH:COL_HUM };
+      }
+      // Fallback (falls noch gar kein Verlauf existiert)
+      return { mode:"air", tempKey:"t", humKey:"h", tempLabel:"Temperatur (°C)", humLabel:"Luftfeuchte (%)", colorT:COL_TEMP, colorH:COL_HUM };
+    }
+
+    // Tagesmittel aus Stundenwerten bilden (clientseitig)
+    function dailyMeans(rows, key) {
+      const byDay = new Map(); // YYYY-MM-DD -> {sum, n}
+      for (const r of rows) {
+        const v = r[key];
+        if (v == null) continue;
+        const d = String(r.ts).slice(0,10); // YYYY-MM-DD
+        const obj = byDay.get(d) || { sum:0, n:0 };
+        obj.sum += Number(v);
+        obj.n   += 1;
+        byDay.set(d, obj);
+      }
+      const out = [];
+      for (const [d, agg] of Array.from(byDay.entries()).sort()) {
+        out.push({ d, mean: agg.n ? (agg.sum / agg.n) : null });
+      }
+      return out.slice(-31); // letzte 31 Tage
+    }
+
+    // Linien-Chart erzeugen/aktualisieren
+    function drawLineChart(canvas, chartRef, labels, series) {
+      if (chartRef && chartRef.data) {
+        chartRef.data.labels = labels;
+        chartRef.data.datasets = series;
+        chartRef.update();
+        return chartRef;
+      }
+      return new Chart(canvas.getContext("2d"), {
+        type: "line",
+        data: { labels, datasets: series },
+        options: {
+          responsive: true,
+          interaction: { mode: "index", intersect: false },
+          plugins: {
+            legend: { display: true },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => {
+                  const v = ctx.parsed.y;
+                  return `${ctx.dataset.label}: ${v == null ? "—" : fmt1.format(v)}`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { maxRotation: 0, autoSkip: true },
+              grid: { display:false }
+            },
+            y: {
+              beginAtZero: false,
+              grid: { color: "rgba(0,0,0,.06)" }
+            }
+          },
+          elements: { line: { tension: .25 }, point: { radius: 0 } }
+        }
+      });
+    }
+
+    // Oberer Bereich füllen
+    function renderTop(latest, node, histInfo, lastRow) {
+      byId("nodeTitle").textContent = node || "—";
+
+      // Zeitstempel
+      const entry = latest.find(x => x.id === node);
+      const ts = entry?.ts ? new Date(entry.ts) : null;
+      byId("stamp").textContent = ts ? ts.toLocaleString("de-DE") : "—";
+
+      // aktuelle Werte
+      const temp = lastRow?.[histInfo.tempKey];
+      const hum  = lastRow?.[histInfo.humKey];
+      const bat  = findBattery(entry?.fields);
+
+      byId("kpiTemp").textContent = temp == null ? "—" : `${fmt1.format(temp)} °C`;
+      byId("kpiHum").textContent  = hum  == null ? "—" : `${fmt1.format(hum)} %`;
+      byId("kpiBat").textContent  = bat  == null ? "—" : `${fmt3(bat)} V`;
+
+      // rechte Box (als kleine Liste)
+      const list = [];
+      if (temp != null) list.push(`🌡️ <strong>${histInfo.tempLabel.replace(/\s*$begin:math:text$.*$end:math:text$/,'')}</strong>: ${fmt1.format(temp)} °C`);
+      if (hum  != null) list.push(`💧 <strong>${histInfo.humLabel.replace(/\s*$begin:math:text$.*$end:math:text$/,'')}</strong>: ${fmt1.format(hum)} %`);
+      if (bat  != null) list.push(`🪫 <strong>Batterie</strong>: ${fmt3(bat)} V`);
+      byId("currentList").innerHTML = list.length ? ("• " + list.join("<br>• ")) : "—";
+    }
+
+    function fmt3(v){ return new Intl.NumberFormat("de-DE",{minimumFractionDigits:3, maximumFractionDigits:3}).format(v); }
+
+    // Hauptlauf
+    async function run() {
+      try {
+        const latest = await loadLatest();
+        if (!latest.length) throw new Error("latest leer");
+
+        // Node bestimmen
+        const node = pickNode(latest);
+
+        // Verlauf holen
+        const hist = await loadHistory(node);
+
+        // Diagramm-Felder erkennen
+        const info = extractDisplayFields(hist);
+
+        // 7d: wir nehmen die letzten ~7*24 Punkte (falls vorhanden)
+        const rows7 = hist.slice(-7*24);
+        // letzter Datensatz für Anzeige
+        const lastRow = hist.at(-1) || null;
+
+        // Oberer Block
+        renderTop(latest, node, info, lastRow);
+
+        // Labels (zeitachse)
+        const labels7 = rows7.map(r => (new Date(r.ts)).toLocaleString("de-DE", { weekday:"short", hour:"2-digit" }).replace(" ", " "));
+        const serieT7 = rows7.map(r => (r[info.tempKey] != null ? Number(r[info.tempKey]) : null));
+        const serieH7 = rows7.map(r => (r[info.humKey]  != null ? Number(r[info.humKey])  : null));
+
+        const has7 = serieT7.some(v => v != null) || serieH7.some(v => v != null);
+        byId("no7d").style.display = has7 ? "none" : "block";
+
+        if (has7) {
+          const ds = [];
+          if (serieT7.some(v => v != null)) {
+            ds.push({ label: info.tempLabel, data: serieT7, borderColor: info.colorT, backgroundColor: info.colorT });
+          }
+          if (serieH7.some(v => v != null)) {
+            ds.push({ label: info.humLabel,  data: serieH7, borderColor: info.colorH, backgroundColor: info.colorH });
+          }
+          chart7d = drawLineChart(byId("chart7d"), chart7d, labels7, ds);
+        }
+
+        // 31 Tage Tagesmittel
+        const daysT = dailyMeans(hist, info.tempKey);
+        const daysH = dailyMeans(hist, info.humKey);
+
+        const labels31 = Array.from(new Set([...daysT.map(d=>d.d), ...daysH.map(d=>d.d)])).sort();
+        const mapT = new Map(daysT.map(x => [x.d, x.mean == null ? null : Number(x.mean)]));
+        const mapH = new Map(daysH.map(x => [x.d, x.mean == null ? null : Number(x.mean)]));
+
+        const serieT31 = labels31.map(d => mapT.has(d) ? mapT.get(d) : null);
+        const serieH31 = labels31.map(d => mapH.has(d) ? mapH.get(d) : null);
+
+        const has31 = (serieT31.some(v => v != null) || serieH31.some(v => v != null));
+        byId("no31").style.display = has31 ? "none" : "block";
+
+        if (has31) {
+          const ds31 = [];
+          if (serieT31.some(v => v != null)) {
+            ds31.push({ label: info.tempLabel + " (Ø)", data: serieT31, borderColor: info.colorT, backgroundColor: info.colorT });
+          }
+          if (serieH31.some(v => v != null)) {
+            ds31.push({ label: info.humLabel + " (Ø)",  data: serieH31, borderColor: info.colorH, backgroundColor: info.colorH });
+          }
+          chart31 = drawLineChart(byId("chart31d"), chart31, labels31, ds31);
+        }
+      } catch (err) {
+        console.error(err);
+        byId("stamp").textContent = "—";
+        byId("currentList").textContent = "—";
+        byId("no7d").style.display = "block";
+        byId("no31").style.display = "block";
+      }
+    }
+
+    run();
+    setInterval(run, AUTO_REFRESH_MS);
+  </script>
 </body>
 </html>
