@@ -10,6 +10,7 @@
     html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
     .wrap{max-width:1180px;margin:0 auto;padding:20px}
     h1{font-weight:800;letter-spacing:.2px;margin:6px 0 18px;font-size:clamp(26px,4vw,40px)}
+    .ver{font-size:13px;color:var(--muted);font-weight:700;margin-left:8px}
     .row{display:grid;gap:18px;grid-template-columns:1fr}
     @media(min-width:980px){.row{grid-template-columns:1.1fr .9fr}}
     .card{background:var(--card);border-radius:var(--radius);box-shadow:0 1px 0 rgba(0,0,0,.04),0 10px 30px -20px rgba(0,0,0,.15);padding:var(--pad)}
@@ -25,15 +26,16 @@
     .section-title{font-weight:800;margin:0 0 10px}
     a.back{text-decoration:none;color:#2563eb;font-weight:600}
     .err{color:#b91c1c;font-weight:700}
+    /* Neu fürs Netz-Panel */
+    .badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef2f7;margin:2px 6px 2px 0;font-size:12px}
+    .kv{display:grid;grid-template-columns:160px 1fr;gap:6px 10px}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div style="margin-bottom:8px;"><a class="back" href="/v2.html">← Zur Karte</a></div>
-<h1>
-  Schulwaldsensor — <span id="nodeTitle">…</span>
-  <span style="font-size:14px; color:#888; font-weight:400;">v0.3</span>
-</h1>
+    <h1>Schulwaldsensor — <span id="nodeTitle">…</span><span class="ver">v0.4</span></h1>
+
     <div class="row">
       <div class="card">
         <div style="margin-bottom:10px;">
@@ -50,7 +52,12 @@
       <div class="card">
         <div class="section-title">Aktuelle Werte</div>
         <div class="muted" id="aktuell">—</div>
-        <div id="netStats" style="margin-top:12px"></div>
+
+        <hr style="border:none;height:1px;background:#eef2f7;margin:14px 0">
+
+        <div class="section-title">Netz & Gateways</div>
+        <div id="netz" class="muted">lade…</div>
+        <div id="netzErr" class="hint err" style="display:none"></div>
       </div>
     </div>
 
@@ -179,122 +186,89 @@
       return out.slice(-31);
     }
 
-    /* ------- Netzwerk/Gateway-Teil ------- */
-
-    async function loadLinks(node){
-      const url = `/data/v2/links/${encodeURIComponent(node)}.json`;
-      try{
-        const r = await fetch(url, {cache:"no-store"});
-        if(!r.ok) return [];
-        const arr = await r.json();
-        return Array.isArray(arr) ? arr.filter(x=>x && x.ts && x.gw_id) : [];
-      }catch{ return []; }
-    }
-
-    function haversineKm(lat1,lon1,lat2,lon2){
-      if([lat1,lon1,lat2,lon2].some(v=>typeof v!=="number")) return null;
-      const R=6371, toRad = d=>d*Math.PI/180;
-      const dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
-      const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
-      return 2*R*Math.asin(Math.sqrt(a));
-    }
-
-    function median(arr){
-      const v = arr.filter(n=>typeof n==="number" && !Number.isNaN(n)).sort((a,b)=>a-b);
-      if(!v.length) return null;
-      const m = Math.floor(v.length/2);
-      return v.length%2 ? v[m] : (v[m-1]+v[m])/2;
-    }
-
-    function summarizeLinks(links, nowTs=Date.now()){
-      const dayAgo = nowTs - 24*3600*1000;
-      const last24 = links.filter(l=>new Date(l.ts).getTime() >= dayAgo);
-
-      const gws = new Map();
-      let bestRssi = null, bestSnr = null, airtimes=[], rssis=[], snrs=[];
-      let drCount = new Map();
-
-      for(const l of last24){
-        const rssi = Number(l.rssi), snr = Number(l.snr);
-        if(Number.isFinite(rssi)){ rssis.push(rssi); bestRssi = Math.max(bestRssi??-1e9, rssi); }
-        if(Number.isFinite(snr)){  snrs.push(snr);  bestSnr  = Math.max(bestSnr ??-1e9, snr);  }
-        if(Number.isFinite(l.airtime_ms)) airtimes.push(Number(l.airtime_ms));
-        const dr = l.dr || (l.sf? `SF${l.sf}BW${l.bw||125000}`: null);
-        if(dr) drCount.set(dr, (drCount.get(dr)||0)+1);
-
-        const e = gws.get(l.gw_id) || {name:l.gw_name||l.gw_id, bestRssi:-1e9, bestSnr:-1e9, lastTs:0, lat:l.gw_lat, lon:l.gw_lon};
-        if(Number.isFinite(rssi) && rssi>e.bestRssi) e.bestRssi=rssi;
-        if(Number.isFinite(snr)  && snr>e.bestSnr)  e.bestSnr=snr;
-        e.lastTs = Math.max(e.lastTs, new Date(l.ts).getTime());
-        if(l.gw_lat!=null && l.gw_lon!=null){ e.lat=l.gw_lat; e.lon=l.gw_lon; }
-        gws.set(l.gw_id, e);
-      }
-
-      let topDR = "—"; if(drCount.size){
-        topDR = [...drCount.entries()].sort((a,b)=>b[1]-a[1])[0][0];
-      }
-
-      let farName="—", farKm=null;
-      const nodeLat = null, nodeLon = null; // optional: falls bekannt
-      if(nodeLat!=null && nodeLon!=null){
-        for(const e of gws.values()){
-          const d = haversineKm(nodeLat,nodeLon,e.lat,e.lon);
-          if(d!=null && (farKm==null || d>farKm)){ farKm=d; farName=e.name; }
-        }
-      }
-
-      let pdr = "—";
-      const withCnt = last24.filter(l=>Number.isFinite(Number(l.f_cnt))).sort((a,b)=>a.f_cnt-b.f_cnt);
-      if(withCnt.length>=2){
-        const received = withCnt.length;
-        const expected = withCnt[withCnt.length-1].f_cnt - withCnt[0].f_cnt + 1;
-        if(expected>0 && received>0) pdr = Math.max(0, Math.min(100, 100*received/expected)).toFixed(0)+" %";
-      }
-
-      return {
-        uplinks24: last24.length,
-        gateways24: gws.size,
-        bestRssi, bestSnr,
-        medianRssi: median(rssis),
-        medianSnr: median(snrs),
-        avgAirtime: airtimes.length ? (airtimes.reduce((a,b)=>a+b,0)/airtimes.length) : null,
-        topDR,
-        farName, farKm,
-        pdr
+    /* ---------- Neu: Netzwerk/CSV laden und anzeigen ---------- */
+    async function loadRawCsv(){
+      const r = await fetch("/data/v2/latest/_raw.csv",{cache:"no-store"});
+      if(!r.ok) throw new Error("raw.csv "+r.status);
+      const txt = await r.text();
+      const lines = txt.trim().split(/\r?\n/);
+      if(lines.length < 2) return [];
+      const head = lines[0].split(",").map(s=>s.trim());
+      const idx = (name) => head.findIndex(h => h.toLowerCase()===name.toLowerCase());
+      const ix = {
+        ts:    [idx("ts"), idx("_time")].find(i=>i>=0),
+        node:  [idx("id"), idx("device_id"), idx("dev_id")].find(i=>i>=0),
+        gw:    [idx("gateway_id"), idx("gw"), idx("gateway")].find(i=>i>=0),
+        rssi:  idx("rssi"),
+        snr:   idx("snr"),
+        dr:    [idx("dr"), idx("datarate")].find(i=>i>=0),
+        sf:    idx("sf"),
+        bw:    idx("bw"),
+        fcnt:  [idx("fcnt"), idx("frame_counter")].find(i=>i>=0)
       };
+      const out=[];
+      for(let i=1;i<lines.length;i++){
+        const cols = lines[i].split(",");
+        const get=(j)=> j>=0 && j<cols.length ? cols[j].trim() : "";
+        out.push({
+          ts:   get(ix.ts),
+          node: get(ix.node),
+          gw:   get(ix.gw),
+          rssi: Number(get(ix.rssi)),
+          snr:  Number(get(ix.snr)),
+          dr:   get(ix.dr)||"",
+          sf:   get(ix.sf)||"",
+          bw:   get(ix.bw)||"",
+          fcnt: Number(get(ix.fcnt))
+        });
+      }
+      return out;
     }
 
-    function renderNetStats(s){
-      const fmtDbm = v => (v==null || Number.isNaN(v)) ? "—" : `${v.toFixed(1).replace(".",",")} dBm`;
-      const fmtDb  = v => (v==null || Number.isNaN(v)) ? "—" : `${v.toFixed(1).replace(".",",")} dB`;
-      const fmtMs  = v => (v==null || Number.isNaN(v)) ? "—" : `${v.toFixed(0)} ms`;
-      const fmtKm  = v => (v==null || Number.isNaN(v)) ? "—" : `${v.toFixed(1).replace(".",",")} km`;
+    function renderNetPanel(node, rows){
+      const box = byId("netz");
+      const err = byId("netzErr");
+      err.style.display="none";
 
-      const cells = [
-        {k:"Uplinks (24 h)", v:String(s.uplinks24), t:"Anzahl empfangener Uplinks in den letzten 24 Stunden (alle Gateways zusammen)."},
-        {k:"Gateways (24 h)", v:String(s.gateways24), t:"Wie viele verschiedene Gateways haben in den letzten 24 Stunden Pakete gehört?"},
-        {k:"Beste SNR", v:fmtDb(s.bestSnr), t:"Größtes Signal-Rausch-Verhältnis eines empfangenen Pakets in den letzten 24 h."},
-        {k:"Beste RSSI", v:fmtDbm(s.bestRssi), t:"Bestes (am wenigsten negatives) Empfangssignal in dBm in den letzten 24 h."},
-        {k:"Median RSSI", v:fmtDbm(s.medianRssi), t:"Median der RSSI-Werte aller Uplinks der letzten 24 h."},
-        {k:"Ø Airtime", v:fmtMs(s.avgAirtime), t:"Durchschnittliche Sendezeit pro Uplink (aus LoRa-PHY)."},
-        {k:"Häufigster DR/SF", v:(s.topDR||"—"), t:"Meistgenutzte Datenrate (z. B. SF7BW125) der letzten 24 h."},
-        {k:"PDR (24 h)", v:(s.pdr||"—"), t:"Packet Delivery Ratio basierend auf f_cnt-Lücken (sofern verfügbar)."},
-        {k:"weitestes GW", v:(s.farKm!=null? `${fmtKm(s.farKm)} · ${s.farName||""}` : "—"), t:"Weitestes Gateway (nur wenn Koordinaten bekannt)."}
-      ];
+      if(!rows.length){ box.textContent="Keine Rohdaten gefunden."; return; }
 
-      const html = `
-      <div class="section-title" style="margin-top:10px">Netz &amp; Gateways (24 h)</div>
-      <div class="grid3">
-        ${cells.map(c=>`
-          <div class="tile" title="${c.t.replace(/"/g,'&quot;')}">
-            <div class="k">${c.k}</div>
-            <div class="v">${c.v}</div>
-          </div>`).join("")}
-      </div>`;
-      byId("netStats").innerHTML = html;
+      // nur letzte 24h
+      const since = Date.now()-24*3600*1000;
+      rows = rows.filter(r => r.node===node && new Date(r.ts).getTime()>=since);
+      if(!rows.length){ box.textContent="Letzte 24 h: keine Einträge."; return; }
+
+      // Gateways + Stats
+      const gws = new Map(); // gw -> {n, rssiSum, snrSum, lastTs}
+      let last = rows[0];
+      for(const r of rows){
+        if(new Date(r.ts) > new Date(last.ts)) last = r;
+        if(!r.gw) continue;
+        if(!gws.has(r.gw)) gws.set(r.gw,{n:0,rssiSum:0,snrSum:0,lastTs:r.ts});
+        const g = gws.get(r.gw);
+        g.n++; g.rssiSum += isFinite(r.rssi)?r.rssi:0; g.snrSum += isFinite(r.snr)?r.snr:0;
+        if(new Date(r.ts)>new Date(g.lastTs)) g.lastTs=r.ts;
+      }
+
+      const uniqGws = [...gws.keys()];
+      const avg = arr => arr.length? (arr.reduce((a,b)=>a+b,0)/arr.length) : null;
+
+      const rssiAvg = avg(rows.map(r=>isFinite(r.rssi)?r.rssi:NaN).filter(n=>!Number.isNaN(n)));
+      const snrAvg  = avg(rows.map(r=>isFinite(r.snr)?r.snr:NaN).filter(n=>!Number.isNaN(n)));
+
+      // HTML
+      const parts = [];
+      parts.push(`<div class="kv"><div>Uplinks (24 h)</div><div>${rows.length}</div>`);
+      parts.push(`<div>Gateways</div><div>${uniqGws.map(g=>`<span class="badge">${g}</span>`).join(" ")||"—"}</div>`);
+      parts.push(`<div>Ø RSSI</div><div>${rssiAvg!=null? fmt(rssiAvg,1)+" dBm":"—"}</div>`);
+      parts.push(`<div>Ø SNR</div><div>${snrAvg!=null? fmt(snrAvg,1)+" dB":"—"}</div>`);
+      parts.push(`<div>Letzter Uplink</div><div>${last?.ts ? new Date(last.ts).toLocaleString("de-DE") : "—"}</div>`);
+      const drText = last?.dr || (last?.sf && last?.bw ? `SF${last.sf}/${last.bw}` : "");
+      parts.push(`<div>Datenrate</div><div>${drText || "—"}</div>`);
+      parts.push(`</div>`);
+
+      box.innerHTML = parts.join("");
     }
-
-    /* --------------- Main --------------- */
+    /* ---------- Ende Netz ---------- */
 
     (async ()=>{
       try{
@@ -318,14 +292,7 @@
         byId("bat").textContent  = bat!=null  ? fmt(bat,3)+" V"  : "—";
         byId("aktuell").innerHTML = `🌡️ Temperatur: <b>${byId("temp").textContent}</b><br>${soil?"💧 Bodenwasser":"💧 Luftfeuchte"}: <b>${byId("hum").textContent}</b><br>🪫 Batterie: <b>${byId("bat").textContent}</b>`;
 
-        // Netzwerk/Gateway-Statistik (benötigt /data/v2/links/<node>.json)
-        const links = await loadLinks(node);
-        if(links.length){
-          const stats = summarizeLinks(links);
-          renderNetStats(stats);
-        }
-
-        // Verlauf 7 Tage
+        // Historie & Charts
         const hist = await loadHistory(node);
         const seven = Date.now() - 7*24*3600*1000;
         const recent = hist.filter(x=>new Date(x.ts).getTime() >= seven);
@@ -335,14 +302,22 @@
         }else{
           byId("noHourly").style.display="block";
         }
-
-        // Tagesmittel 31 Tage
         const days = groupDaily(hist);
         if(days.length){
           byId("noDaily").style.display="none";
           makeDailyChart(byId("chartDaily").getContext("2d"), days, soil);
         }else{
           byId("noDaily").style.display="block";
+        }
+
+        // Netz-Panel
+        try{
+          const raw = await loadRawCsv();
+          renderNetPanel(node, raw);
+        }catch(ne){
+          byId("netzErr").style.display="block";
+          byId("netzErr").textContent = "Netz-Infos: "+(ne?.message||ne);
+          byId("netz").textContent = "—";
         }
       }catch(e){
         console.error(e);
