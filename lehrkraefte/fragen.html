@@ -1,49 +1,94 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WALDSENSOR.SH – Forscherfragen</title>
+  <meta charset="UTF-8">
+  <title>WALDSENSOR.SH – Digitaler Wald für alle</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f7f7f7;
-      color: #333;
-      margin: 0;
-      padding: 0;
+      font-family: system-ui, sans-serif;
+      max-width: 840px;
+      margin: 2em auto;
+      padding: 0 1em;
+      line-height: 1.7;
+      color: #111;
+      background-color: #fff;
     }
-    header {
-      background: #006d3e;
-      color: white;
-      padding: 1.5rem;
-      text-align: center;
+
+    h1, h2 {
+      color: #2e5e2e;
+      margin-top: 1.4em;
+      margin-bottom: 0.5em;
     }
-    main {
-      max-width: 900px;
-      margin: auto;
-      background: white;
-      padding: 2rem;
-    }
+
     h1 {
-      color: #006d3e;
+      font-size: 2em;
+      border-bottom: 2px solid #2e5e2e;
+      padding-bottom: 0.3em;
     }
-    h3 {
-      margin-bottom: 0.3rem;
+
+    a {
+      color: #0077cc;
+      text-decoration: none;
     }
-    .antwort {
-      display: none;
-      background: #e6f2ec;
-      padding: 0.8rem;
-      margin-bottom: 1.5rem;
-      border-left: 4px solid #006d3e;
+
+    a:hover {
+      text-decoration: underline;
     }
-    button {
-      margin-right: 1rem;
-      margin-bottom: 0.5rem;
+
+    ul {
+      margin-top: 0.5em;
+      margin-bottom: 1em;
+      padding-left: 1.2em;
     }
+
+    .content-box {
+      background-color: #f9f9f9;
+      padding: 1em 1.2em;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      margin-top: 2em;
+    }
+
     footer {
-      margin-top: 2rem;
+      margin-top: 4em;
+      font-size: 0.9em;
+      color: #666;
       text-align: center;
+      border-top: 1px solid #ccc;
+      padding-top: 1em;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 0 0.8em;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      h2 {
+        font-size: 1.2em;
+      }
+    }
+    
+    .dragino-footer {
+        display: flex;
+        justify-content: flex-start; /* Ordnet Elemente von links an */
+        align-items: center;
+        padding: 10px;
+    }
+
+    .dragino-footer p {
+        margin: 0;
+    }
+
+    .dragino-footer img {
+        width: 180px;
+        margin-left: 100px; /* Dieser Wert schiebt das Bild nach rechts */
     }
   </style>
 </head>
@@ -58,80 +103,216 @@
       <h3>1. Warum sinkt die Luftfeuchtigkeit, wenn die Temperatur steigt?</h3>
       <button onclick="toggle('a1')">Antwort einblenden</button>
       <a href="antworten/frage01.html" target="_blank">Ausführliche Antwort öffnen</a>
-      <div id="a1" class="antwort">
-        Warme Luft kann mehr Feuchtigkeit halten. Wenn die Temperatur steigt, sinkt die relative Luftfeuchtigkeit – obwohl die absolute Feuchte gleich bleiben kann.
-      </div>
+      <div id="a1" class="antwort">Warme Luft kann mehr Feuchtigkeit halten. Wenn die Temperatur steigt, sinkt die relative Luftfeuchtigkeit – obwohl die absolute Feuchte gleich bleiben kann.</div>
     </div>
-
+    
     <div>
       <h3>2. Wie verändert sich die Bodenfeuchte nach mehreren heißen Tagen ohne Regen?</h3>
       <button onclick="toggle('a2')">Antwort einblenden</button>
       <a href="antworten/frage02.html" target="_blank">Ausführliche Antwort öffnen</a>
-      <div id="a2" class="antwort">
-        Durch Verdunstung verliert der Boden nach und nach Wasser – die Bodenfeuchte sinkt messbar, je wärmer und trockener es ist.
-      </div>
+      <div id="a2" class="antwort">Durch Verdunstung verliert der Boden nach und nach Wasser – die Bodenfeuchte sinkt messbar, je wärmer und trockener es ist.</div>
     </div>
-
+    
     <div>
       <h3>3. Warum ist es im Wald oft kühler als auf einem Schulhof?</h3>
       <button onclick="toggle('a3')">Antwort einblenden</button>
       <a href="antworten/frage03.html" target="_blank">Ausführliche Antwort öffnen</a>
-      <div id="a3" class="antwort">
-        Bäume spenden Schatten und verdunsten Wasser über die Blätter – das kühlt die Umgebung. Asphalt speichert hingegen Wärme.
-      </div>
+      <div id="a3" class="antwort">Bäume spenden Schatten und verdunsten Wasser über die Blätter – das kühlt die Umgebung. Asphalt speichert hingegen Wärme.</div>
     </div>
-
+    
     <div>
       <h3>4. Welche Tageszeit ist im Sommer am trockensten?</h3>
       <button onclick="toggle('a4')">Antwort einblenden</button>
       <a href="antworten/frage04.html" target="_blank">Ausführliche Antwort öffnen</a>
-      <div id="a4" class="antwort">
-        Meist ist es am frühen Nachmittag am trockensten – etwa zwischen 13 und 16 Uhr. Das liegt daran, dass die Temperatur ihren Höchststand erreicht und die Verdunstung am stärksten ist.
-      </div>
+      <div id="a4" class="antwort">Meist ist es am frühen Nachmittag am trockensten – etwa zwischen 13 und 16 Uhr. Das liegt daran, dass die Temperatur ihren Höchststand erreicht und die Verdunstung am stärksten ist.</div>
     </div>
-
+    
     <div>
       <h3>5. Wie erkennt man in den Daten, dass es geregnet hat?</h3>
       <button onclick="toggle('a5')">Antwort einblenden</button>
       <a href="antworten/frage05.html" target="_blank">Ausführliche Antwort öffnen</a>
-      <div id="a5" class="antwort">
-        Ein plötzlicher Anstieg der Bodenfeuchte und ein leichter Temperaturabfall deuten meist auf Regen hin. Besonders deutlich nach längerer Trockenheit.
-      </div>
+      <div id="a5" class="antwort">Ein plötzlicher Anstieg der Bodenfeuchte und ein leichter Temperaturabfall deuten meist auf Regen hin. Besonders deutlich nach längerer Trockenheit.</div>
     </div>
-
+    
     <div>
       <h3>6. Wie lange dauert es, bis der Boden nach einem Regen wieder trocken ist?</h3>
       <button onclick="toggle('a6')">Antwort einblenden</button>
       <a href="antworten/frage06.html" target="_blank">Ausführliche Antwort öffnen</a>
-      <div id="a6" class="antwort">
-        Je nach Temperatur, Wind und Bodentyp kann das 1 bis 3 Tage dauern. Sandige Böden trocknen schneller als lehmige.
-      </div>
+      <div id="a6" class="antwort">Je nach Temperatur, Wind und Bodentyp kann das 1 bis 3 Tage dauern. Sandige Böden trocknen schneller als lehmige.</div>
     </div>
-
+    
     <div>
       <h3>7. Wie unterscheiden sich Temperatur und Feuchte an sonnigen und schattigen Orten?</h3>
       <button onclick="toggle('a7')">Antwort einblenden</button>
       <a href="antworten/frage07.html" target="_blank">Ausführliche Antwort öffnen</a>
-      <div id="a7" class="antwort">
-        In der Sonne ist es deutlich wärmer und trockener. Im Schatten bleibt es kühler und feuchter. Das lässt sich gut messen und vergleichen.
-      </div>
+      <div id="a7" class="antwort">In der Sonne ist es deutlich wärmer und trockener. Im Schatten bleibt es kühler und feuchter. Das lässt sich gut messen und vergleichen.</div>
     </div>
-
+    
     <div>
       <h3>8. Welche Rolle spielt Wind für die Austrocknung des Bodens?</h3>
       <button onclick="toggle('a8')">Antwort einblenden</button>
       <a href="antworten/frage08.html" target="_blank">Ausführliche Antwort öffnen</a>
-      <div id="a8" class="antwort">
-        Wind führt dazu, dass feuchte Luft schnell abtransportiert wird. Dadurch verdunstet Wasser schneller von der Bodenoberfläche.
-      </div>
+      <div id="a8" class="antwort">Wind führt dazu, dass feuchte Luft schnell abtransportiert wird. Dadurch verdunstet Wasser schneller von der Bodenoberfläche.</div>
     </div>
-
+    
+    <div>
+      <h3>9. Wie verändert sich die Temperatur im Wald zwischen Tag und Nacht?</h3>
+      <button onclick="toggle('a9')">Antwort einblenden</button>
+      <a href="antworten/frage09.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a9" class="antwort">Tagsüber bleibt es im Wald kühler, nachts hingegen oft wärmer als auf einer Freifläche. Das liegt an der isolierenden Wirkung der Bäume.</div>
+    </div>
+    
+    <div>
+      <h3>10. Warum zeigen Sensoren manchmal unterschiedliche Werte am selben Standort?</h3>
+      <button onclick="toggle('a10')">Antwort einblenden</button>
+      <a href="antworten/frage10.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a10" class="antwort">Schon wenige Meter Abstand können Unterschiede verursachen: Ein Sensor in der Sonne zeigt höhere Werte als einer im Schatten.</div>
+    </div>
+    
+    <div>
+      <h3>11. Wie erkennt man in den Daten, dass die Sonne scheint?</h3>
+      <button onclick="toggle('a11')">Antwort einblenden</button>
+      <a href="antworten/frage11.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a11" class="antwort">Wenn die Sonne scheint, steigt die Temperatur und die relative Luftfeuchtigkeit sinkt gleichzeitig.</div>
+    </div>
+    
+    <div>
+      <h3>12. Warum ist die Bodenfeuchtigkeit nach Regen oft unterschiedlich verteilt?</h3>
+      <button onclick="toggle('a12')">Antwort einblenden</button>
+      <a href="antworten/frage12.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a12" class="antwort">Sandiger Boden lässt Wasser schneller versickern als lehmiger. Auch Pflanzen beeinflussen die Bodenfeuchte.</div>
+    </div>
+    
+    <div>
+      <h3>13. Warum ist die Batteriespannung für die Sensoren wichtig?</h3>
+      <button onclick="toggle('a13')">Antwort einblenden</button>
+      <a href="antworten/frage13.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a13" class="antwort">Sinkt die Spannung unter 3,2 V, können Messungen ausfallen oder ungenau werden.</div>
+    </div>
+    
+    <div>
+      <h3>14. Wie lange dauert es, bis der Boden nach starkem Regen wieder trocken ist?</h3>
+      <button onclick="toggle('a14')">Antwort einblenden</button>
+      <a href="antworten/frage14.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a14" class="antwort">Das hängt von Bodentyp, Temperatur und Wind ab – meist mehrere Stunden bis Tage.</div>
+    </div>
+    
+    <div>
+      <h3>15. Warum ist Wind für den Wasserhaushalt des Waldes so wichtig?</h3>
+      <button onclick="toggle('a15')">Antwort einblenden</button>
+      <a href="antworten/frage15.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a15" class="antwort">Wind ersetzt feuchte Luft durch trockenere – das beschleunigt die Verdunstung.</div>
+    </div>
+    
+    <div>
+      <h3>16. Warum sind Daten über mehrere Monate besonders wertvoll?</h3>
+      <button onclick="toggle('a16')">Antwort einblenden</button>
+      <a href="antworten/frage16.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a16" class="antwort">Erst durch längere Zeiträume werden Trends wie Trockenperioden sichtbar.</div>
+    </div>
+    
+    <div>
+      <h3>17. Welche Rolle spielt der Waldboden beim Waldklima?</h3>
+      <button onclick="toggle('a17')">Antwort einblenden</button>
+      <a href="antworten/frage17.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a17" class="antwort">Der Boden speichert Wasser und sorgt für eine gleichmäßige Feuchte im Wald.</div>
+    </div>
+    
+    <div>
+      <h3>18. Warum schwanken die Messwerte manchmal stark von Tag zu Tag?</h3>
+      <button onclick="toggle('a18')">Antwort einblenden</button>
+      <a href="antworten/frage18.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a18" class="antwort">Wetterumschwünge und lokale Einflüsse wie Wolken oder Wind verändern die Werte.</div>
+    </div>
+    
+    <div>
+      <h3>19. Warum sind Temperatur und Luftfeuchte wichtige Indikatoren für Waldbrandgefahr?</h3>
+      <button onclick="toggle('a19')">Antwort einblenden</button>
+      <a href="antworten/frage19.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a19" class="antwort">Die 30-30-30-Regel zeigt: heiß, trocken, windig = hohe Waldbrandgefahr.</div>
+    </div>
+    
+    <div>
+      <h3>20. Warum brauchen wir mehrere Sensoren in verschiedenen Schulwäldern?</h3>
+      <button onclick="toggle('a20')">Antwort einblenden</button>
+      <a href="antworten/frage20.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a20" class="antwort">Standortunterschiede machen Vergleiche spannend – jeder Schulwald ist anders.</div>
+    </div>
+    
+    <div>
+      <h3>21. Warum fühlt sich die Luft im Wald oft frischer an als auf dem Schulhof?</h3>
+      <button onclick="toggle('a21')">Antwort einblenden</button>
+      <a href="antworten/frage21.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a21" class="antwort">Bäume verdunsten Wasser und filtern Staub – das verbessert das Mikroklima.</div>
+    </div>
+    
+    <div>
+      <h3>22. Wie beeinflussen Bäume die Temperatur im Sommer?</h3>
+      <button onclick="toggle('a22')">Antwort einblenden</button>
+      <a href="antworten/frage22.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a22" class="antwort">Sie spenden Schatten und kühlen durch Verdunstung.</div>
+    </div>
+    
+    <div>
+      <h3>23. Warum misst man Bodentemperatur und Lufttemperatur getrennt?</h3>
+      <button onclick="toggle('a23')">Antwort einblenden</button>
+      <a href="antworten/frage23.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a23" class="antwort">Weil sich Boden und Luft unterschiedlich schnell erwärmen und abkühlen.</div>
+    </div>
+    
+    <div>
+      <h3>24. Warum ist die Luftfeuchtigkeit morgens oft am höchsten?</h3>
+      <button onclick="toggle('a24')">Antwort einblenden</button>
+      <a href="antworten/frage24.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a24" class="antwort">Kühle Luft speichert weniger Feuchtigkeit – es kommt zur Tau- oder Nebelbildung.</div>
+    </div>
+    
+    <div>
+      <h3>25. Warum werden im Sommer manche Bäume schneller braun als andere?</h3>
+      <button onclick="toggle('a25')">Antwort einblenden</button>
+      <a href="antworten/frage25.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a25" class="antwort">Flachwurzler erreichen weniger Wasser und vertrocknen schneller.</div>
+    </div>
+    
+    <div>
+      <h3>26. Warum ist die Bodenfeuchtigkeit so wichtig für die Pflanzen?</h3>
+      <button onclick="toggle('a26')">Antwort einblenden</button>
+      <a href="antworten/frage26.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a26" class="antwort">Ohne Wasser kann keine Fotosynthese oder Nährstofftransport stattfinden.</div>
+    </div>
+    
+    <div>
+      <h3>27. Warum unterscheiden sich die Daten von zwei Sensoren am gleichen Standort?</h3>
+      <button onclick="toggle('a27')">Antwort einblenden</button>
+      <a href="antworten/frage27.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a27" class="antwort">Schon kleine Unterschiede in Höhe, Schatten oder Untergrund wirken sich aus.</div>
+    </div>
+    
+    <div>
+      <h3>28. Warum ist die Kombination mehrerer Messwerte aussagekräftiger?</h3>
+      <button onclick="toggle('a28')">Antwort einblenden</button>
+      <a href="antworten/frage28.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a28" class="antwort">Erst Temperatur, Feuchte und Wind zusammen zeigen das ganze Bild.</div>
+    </div>
+    
+    <div>
+      <h3>29. Warum sind die Daten für den Klimaschutz interessant?</h3>
+      <button onclick="toggle('a29')">Antwort einblenden</button>
+      <a href="antworten/frage29.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a29" class="antwort">Sie zeigen lokale Auswirkungen von Hitze, Trockenheit und Regen.</div>
+    </div>
+    
+    <div>
+      <h3>30. Warum eignen sich die Daten für den Unterricht?</h3>
+      <button onclick="toggle('a30')">Antwort einblenden</button>
+      <a href="antworten/frage30.html" target="_blank">Ausführliche Antwort öffnen</a>
+      <div id="a30" class="antwort">Sie stammen aus dem eigenen Umfeld der Schüler:innen – das macht sie greifbar.</div>
+    </div>
+    
     <footer>
       <p><a href="index.html">⬅ Zur Startseite für Lehrkräfte</a></p>
     </footer>
-
   </main>
-
   <script>
     function toggle(id) {
       const el = document.getElementById(id);
