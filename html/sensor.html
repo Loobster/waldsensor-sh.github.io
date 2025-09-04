@@ -10,6 +10,7 @@
     html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
     .wrap{max-width:1180px;margin:0 auto;padding:20px}
     h1{font-weight:800;letter-spacing:.2px;margin:6px 0 18px;font-size:clamp(26px,4vw,40px)}
+    .ver{font-size:12px;font-weight:700;color:#94a3b8;margin-left:8px}
     .row{display:grid;gap:18px;grid-template-columns:1fr}
     @media(min-width:980px){.row{grid-template-columns:1.1fr .9fr}}
     .card{background:var(--card);border-radius:var(--radius);box-shadow:0 1px 0 rgba(0,0,0,.04),0 10px 30px -20px rgba(0,0,0,.15);padding:var(--pad)}
@@ -30,10 +31,9 @@
 <body>
   <div class="wrap">
     <div style="margin-bottom:8px;"><a class="back" href="/v2.html">← Zur Karte</a></div>
-    <h1>Schulwaldsensor — <span id="nodeTitle">…</span> <span class="muted" style="font-weight:700">v0.5</span></h1>
+    <h1>Schulwaldsensor — <span id="nodeTitle">…</span><small class="ver">v0.5</small></h1>
 
     <div class="row">
-      <!-- Linke Karte: Livewerte kompakt -->
       <div class="card">
         <div style="margin-bottom:10px;">
           <span class="pill">Stand: <span id="stand">—</span></span>
@@ -46,14 +46,13 @@
         <div class="hint">Quelle: <span class="mono">/data/v2/latest/_all.json</span></div>
       </div>
 
-      <!-- Rechte Karte: Netz & Gateways -->
       <div class="card">
         <div class="section-title">Netz &amp; Gateways</div>
-        <div id="netBox" class="muted">Lade Netzdaten…</div>
+        <div class="muted" id="netinfo">—</div>
+        <div class="hint">Quelle: <span class="mono" id="netPath">—</span></div>
       </div>
     </div>
 
-    <!-- Verlauf -->
     <div class="card" style="margin-top:18px;">
       <div class="section-title">📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</div>
       <canvas id="chartHourly"></canvas>
@@ -62,7 +61,6 @@
       <div class="hint" id="noHourly" style="display:none">Kein Verlauf gefunden.</div>
     </div>
 
-    <!-- Tagesmittel -->
     <div class="card" style="margin-top:18px;">
       <div class="section-title">🗓️ 31 Tage — Tagesmittel (Temp / Feuchte)</div>
       <canvas id="chartDaily"></canvas>
@@ -96,6 +94,24 @@
       return arr.map(x=>({...x,id:(x.id||"").replace(/[\r\n]+/g,"").trim()}));
     }
 
+    async function loadNetstats(node){
+      const url = `/data/v2/net/netstats_${encodeURIComponent(node)}.json`;
+      byId("netPath").textContent = url;
+      try{
+        const r = await fetch(url,{cache:"no-store"});
+        if(!r.ok) throw new Error("Netz-Quelle nicht erreichbar");
+        const d = await r.json();
+        if(d && typeof d==="object"){
+          const ts = d.last_ts ? new Date(d.last_ts).toLocaleString("de-DE") : "—";
+          byId("netinfo").innerHTML =
+            `Letzte 24 h: <b>${d.frames24||0}</b> Uplinks<br>`+
+            `Letzter Uplink: <b>${ts}</b>`;
+        }
+      }catch(e){
+        byId("netinfo").textContent = "Fehler: "+e.message;
+      }
+    }
+
     function pickFields(entry){
       const f = entry.fields||{};
       if(isSoilNode(entry.id)){
@@ -123,23 +139,6 @@
       if(!Array.isArray(data)) return [];
       data = data.filter(x=>x && x.ts).sort((a,b)=>new Date(a.ts)-new Date(b.ts));
       return data;
-    }
-
-    // Netz-/Gateway-Kasten: liest /data/v2/latest/netstats_<node>.json
-    async function loadNetstats(node){
-      const path = `/data/v2/latest/netstats_${encodeURIComponent(node)}.json`;
-      try{
-        const r = await fetch(path,{cache:"no-store"});
-        if(!r.ok) throw new Error(r.status);
-        const j = await r.json();
-        const ts = j.last_ts ? new Date(String(j.last_ts).replace(/\r$/,'')).toLocaleString('de-DE') : "—";
-        byId("netBox").innerHTML =
-          `Letzte 24 h: <b>${j.frames24 ?? "—"}</b> Uplinks<br>` +
-          `Letzter Uplink: <b>${ts}</b>` +
-          `<div class="hint">Quelle: <span class="mono">${path}</span></div>`;
-      }catch(e){
-        byId("netBox").textContent = "Letzte 24 h: keine Einträge.";
-      }
     }
 
     let chH, chD;
