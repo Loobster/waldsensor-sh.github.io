@@ -48,6 +48,7 @@
       <div class="card">
         <div class="section-title">Aktuelle Werte</div>
         <div class="muted" id="aktuell">—</div>
+        <div id="netStats" style="margin-top:12px"></div>
       </div>
     </div>
 
@@ -176,6 +177,123 @@
       return out.slice(-31);
     }
 
+    /* ------- Netzwerk/Gateway-Teil ------- */
+
+    async function loadLinks(node){
+      const url = `/data/v2/links/${encodeURIComponent(node)}.json`;
+      try{
+        const r = await fetch(url, {cache:"no-store"});
+        if(!r.ok) return [];
+        const arr = await r.json();
+        return Array.isArray(arr) ? arr.filter(x=>x && x.ts && x.gw_id) : [];
+      }catch{ return []; }
+    }
+
+    function haversineKm(lat1,lon1,lat2,lon2){
+      if([lat1,lon1,lat2,lon2].some(v=>typeof v!=="number")) return null;
+      const R=6371, toRad = d=>d*Math.PI/180;
+      const dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
+      const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+      return 2*R*Math.asin(Math.sqrt(a));
+    }
+
+    function median(arr){
+      const v = arr.filter(n=>typeof n==="number" && !Number.isNaN(n)).sort((a,b)=>a-b);
+      if(!v.length) return null;
+      const m = Math.floor(v.length/2);
+      return v.length%2 ? v[m] : (v[m-1]+v[m])/2;
+    }
+
+    function summarizeLinks(links, nowTs=Date.now()){
+      const dayAgo = nowTs - 24*3600*1000;
+      const last24 = links.filter(l=>new Date(l.ts).getTime() >= dayAgo);
+
+      const gws = new Map();
+      let bestRssi = null, bestSnr = null, airtimes=[], rssis=[], snrs=[];
+      let drCount = new Map();
+
+      for(const l of last24){
+        const rssi = Number(l.rssi), snr = Number(l.snr);
+        if(Number.isFinite(rssi)){ rssis.push(rssi); bestRssi = Math.max(bestRssi??-1e9, rssi); }
+        if(Number.isFinite(snr)){  snrs.push(snr);  bestSnr  = Math.max(bestSnr ??-1e9, snr);  }
+        if(Number.isFinite(l.airtime_ms)) airtimes.push(Number(l.airtime_ms));
+        const dr = l.dr || (l.sf? `SF${l.sf}BW${l.bw||125000}`: null);
+        if(dr) drCount.set(dr, (drCount.get(dr)||0)+1);
+
+        const e = gws.get(l.gw_id) || {name:l.gw_name||l.gw_id, bestRssi:-1e9, bestSnr:-1e9, lastTs:0, lat:l.gw_lat, lon:l.gw_lon};
+        if(Number.isFinite(rssi) && rssi>e.bestRssi) e.bestRssi=rssi;
+        if(Number.isFinite(snr)  && snr>e.bestSnr)  e.bestSnr=snr;
+        e.lastTs = Math.max(e.lastTs, new Date(l.ts).getTime());
+        if(l.gw_lat!=null && l.gw_lon!=null){ e.lat=l.gw_lat; e.lon=l.gw_lon; }
+        gws.set(l.gw_id, e);
+      }
+
+      let topDR = "—"; if(drCount.size){
+        topDR = [...drCount.entries()].sort((a,b)=>b[1]-a[1])[0][0];
+      }
+
+      let farName="—", farKm=null;
+      const nodeLat = null, nodeLon = null; // optional: falls bekannt
+      if(nodeLat!=null && nodeLon!=null){
+        for(const e of gws.values()){
+          const d = haversineKm(nodeLat,nodeLon,e.lat,e.lon);
+          if(d!=null && (farKm==null || d>farKm)){ farKm=d; farName=e.name; }
+        }
+      }
+
+      let pdr = "—";
+      const withCnt = last24.filter(l=>Number.isFinite(Number(l.f_cnt))).sort((a,b)=>a.f_cnt-b.f_cnt);
+      if(withCnt.length>=2){
+        const received = withCnt.length;
+        const expected = withCnt[withCnt.length-1].f_cnt - withCnt[0].f_cnt + 1;
+        if(expected>0 && received>0) pdr = Math.max(0, Math.min(100, 100*received/expected)).toFixed(0)+" %";
+      }
+
+      return {
+        uplinks24: last24.length,
+        gateways24: gws.size,
+        bestRssi, bestSnr,
+        medianRssi: median(rssis),
+        medianSnr: median(snrs),
+        avgAirtime: airtimes.length ? (airtimes.reduce((a,b)=>a+b,0)/airtimes.length) : null,
+        topDR,
+        farName, farKm,
+        pdr
+      };
+    }
+
+    function renderNetStats(s){
+      const fmtDbm = v => (v==null || Number.isNaN(v)) ? "—" : `${v.toFixed(1).replace(".",",")} dBm`;
+      const fmtDb  = v => (v==null || Number.isNaN(v)) ? "—" : `${v.toFixed(1).replace(".",",")} dB`;
+      const fmtMs  = v => (v==null || Number.isNaN(v)) ? "—" : `${v.toFixed(0)} ms`;
+      const fmtKm  = v => (v==null || Number.isNaN(v)) ? "—" : `${v.toFixed(1).replace(".",",")} km`;
+
+      const cells = [
+        {k:"Uplinks (24 h)", v:String(s.uplinks24), t:"Anzahl empfangener Uplinks in den letzten 24 Stunden (alle Gateways zusammen)."},
+        {k:"Gateways (24 h)", v:String(s.gateways24), t:"Wie viele verschiedene Gateways haben in den letzten 24 Stunden Pakete gehört?"},
+        {k:"Beste SNR", v:fmtDb(s.bestSnr), t:"Größtes Signal-Rausch-Verhältnis eines empfangenen Pakets in den letzten 24 h."},
+        {k:"Beste RSSI", v:fmtDbm(s.bestRssi), t:"Bestes (am wenigsten negatives) Empfangssignal in dBm in den letzten 24 h."},
+        {k:"Median RSSI", v:fmtDbm(s.medianRssi), t:"Median der RSSI-Werte aller Uplinks der letzten 24 h."},
+        {k:"Ø Airtime", v:fmtMs(s.avgAirtime), t:"Durchschnittliche Sendezeit pro Uplink (aus LoRa-PHY)."},
+        {k:"Häufigster DR/SF", v:(s.topDR||"—"), t:"Meistgenutzte Datenrate (z. B. SF7BW125) der letzten 24 h."},
+        {k:"PDR (24 h)", v:(s.pdr||"—"), t:"Packet Delivery Ratio basierend auf f_cnt-Lücken (sofern verfügbar)."},
+        {k:"weitestes GW", v:(s.farKm!=null? `${fmtKm(s.farKm)} · ${s.farName||""}` : "—"), t:"Weitestes Gateway (nur wenn Koordinaten bekannt)."}
+      ];
+
+      const html = `
+      <div class="section-title" style="margin-top:10px">Netz &amp; Gateways (24 h)</div>
+      <div class="grid3">
+        ${cells.map(c=>`
+          <div class="tile" title="${c.t.replace(/"/g,'&quot;')}">
+            <div class="k">${c.k}</div>
+            <div class="v">${c.v}</div>
+          </div>`).join("")}
+      </div>`;
+      byId("netStats").innerHTML = html;
+    }
+
+    /* --------------- Main --------------- */
+
     (async ()=>{
       try{
         const wanted = detectNode();
@@ -198,9 +316,15 @@
         byId("bat").textContent  = bat!=null  ? fmt(bat,3)+" V"  : "—";
         byId("aktuell").innerHTML = `🌡️ Temperatur: <b>${byId("temp").textContent}</b><br>${soil?"💧 Bodenwasser":"💧 Luftfeuchte"}: <b>${byId("hum").textContent}</b><br>🪫 Batterie: <b>${byId("bat").textContent}</b>`;
 
-        const hist = await loadHistory(node);
+        // Netzwerk/Gateway-Statistik (benötigt /data/v2/links/<node>.json)
+        const links = await loadLinks(node);
+        if(links.length){
+          const stats = summarizeLinks(links);
+          renderNetStats(stats);
+        }
 
         // Verlauf 7 Tage
+        const hist = await loadHistory(node);
         const seven = Date.now() - 7*24*3600*1000;
         const recent = hist.filter(x=>new Date(x.ts).getTime() >= seven);
         if(recent.length){
