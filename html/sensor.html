@@ -10,7 +10,6 @@
     html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
     .wrap{max-width:1180px;margin:0 auto;padding:20px}
     h1{font-weight:800;letter-spacing:.2px;margin:6px 0 18px;font-size:clamp(26px,4vw,40px)}
-    .ver{font-size:13px;color:var(--muted);font-weight:700;margin-left:8px}
     .row{display:grid;gap:18px;grid-template-columns:1fr}
     @media(min-width:980px){.row{grid-template-columns:1.1fr .9fr}}
     .card{background:var(--card);border-radius:var(--radius);box-shadow:0 1px 0 rgba(0,0,0,.04),0 10px 30px -20px rgba(0,0,0,.15);padding:var(--pad)}
@@ -26,17 +25,15 @@
     .section-title{font-weight:800;margin:0 0 10px}
     a.back{text-decoration:none;color:#2563eb;font-weight:600}
     .err{color:#b91c1c;font-weight:700}
-    /* Neu fürs Netz-Panel */
-    .badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef2f7;margin:2px 6px 2px 0;font-size:12px}
-    .kv{display:grid;grid-template-columns:160px 1fr;gap:6px 10px}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div style="margin-bottom:8px;"><a class="back" href="/v2.html">← Zur Karte</a></div>
-    <h1>Schulwaldsensor — <span id="nodeTitle">…</span><span class="ver">v0.4</span></h1>
+    <h1>Schulwaldsensor — <span id="nodeTitle">…</span> <span class="muted" style="font-weight:700">v0.5</span></h1>
 
     <div class="row">
+      <!-- Linke Karte: Livewerte kompakt -->
       <div class="card">
         <div style="margin-bottom:10px;">
           <span class="pill">Stand: <span id="stand">—</span></span>
@@ -49,18 +46,14 @@
         <div class="hint">Quelle: <span class="mono">/data/v2/latest/_all.json</span></div>
       </div>
 
+      <!-- Rechte Karte: Netz & Gateways -->
       <div class="card">
-        <div class="section-title">Aktuelle Werte</div>
-        <div class="muted" id="aktuell">—</div>
-
-        <hr style="border:none;height:1px;background:#eef2f7;margin:14px 0">
-
-        <div class="section-title">Netz & Gateways</div>
-        <div id="netz" class="muted">lade…</div>
-        <div id="netzErr" class="hint err" style="display:none"></div>
+        <div class="section-title">Netz &amp; Gateways</div>
+        <div id="netBox" class="muted">Lade Netzdaten…</div>
       </div>
     </div>
 
+    <!-- Verlauf -->
     <div class="card" style="margin-top:18px;">
       <div class="section-title">📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</div>
       <canvas id="chartHourly"></canvas>
@@ -69,6 +62,7 @@
       <div class="hint" id="noHourly" style="display:none">Kein Verlauf gefunden.</div>
     </div>
 
+    <!-- Tagesmittel -->
     <div class="card" style="margin-top:18px;">
       <div class="section-title">🗓️ 31 Tage — Tagesmittel (Temp / Feuchte)</div>
       <canvas id="chartDaily"></canvas>
@@ -131,6 +125,23 @@
       return data;
     }
 
+    // Netz-/Gateway-Kasten: liest /data/v2/latest/netstats_<node>.json
+    async function loadNetstats(node){
+      const path = `/data/v2/latest/netstats_${encodeURIComponent(node)}.json`;
+      try{
+        const r = await fetch(path,{cache:"no-store"});
+        if(!r.ok) throw new Error(r.status);
+        const j = await r.json();
+        const ts = j.last_ts ? new Date(String(j.last_ts).replace(/\r$/,'')).toLocaleString('de-DE') : "—";
+        byId("netBox").innerHTML =
+          `Letzte 24 h: <b>${j.frames24 ?? "—"}</b> Uplinks<br>` +
+          `Letzter Uplink: <b>${ts}</b>` +
+          `<div class="hint">Quelle: <span class="mono">${path}</span></div>`;
+      }catch(e){
+        byId("netBox").textContent = "Letzte 24 h: keine Einträge.";
+      }
+    }
+
     let chH, chD;
     function makeHourlyChart(ctx, items, soil){
       const labels = items.map(x=>x.ts);
@@ -186,90 +197,6 @@
       return out.slice(-31);
     }
 
-    /* ---------- Neu: Netzwerk/CSV laden und anzeigen ---------- */
-    async function loadRawCsv(){
-      const r = await fetch("/data/v2/latest/_raw.csv",{cache:"no-store"});
-      if(!r.ok) throw new Error("raw.csv "+r.status);
-      const txt = await r.text();
-      const lines = txt.trim().split(/\r?\n/);
-      if(lines.length < 2) return [];
-      const head = lines[0].split(",").map(s=>s.trim());
-      const idx = (name) => head.findIndex(h => h.toLowerCase()===name.toLowerCase());
-      const ix = {
-        ts:    [idx("ts"), idx("_time")].find(i=>i>=0),
-        node:  [idx("id"), idx("device_id"), idx("dev_id")].find(i=>i>=0),
-        gw:    [idx("gateway_id"), idx("gw"), idx("gateway")].find(i=>i>=0),
-        rssi:  idx("rssi"),
-        snr:   idx("snr"),
-        dr:    [idx("dr"), idx("datarate")].find(i=>i>=0),
-        sf:    idx("sf"),
-        bw:    idx("bw"),
-        fcnt:  [idx("fcnt"), idx("frame_counter")].find(i=>i>=0)
-      };
-      const out=[];
-      for(let i=1;i<lines.length;i++){
-        const cols = lines[i].split(",");
-        const get=(j)=> j>=0 && j<cols.length ? cols[j].trim() : "";
-        out.push({
-          ts:   get(ix.ts),
-          node: get(ix.node),
-          gw:   get(ix.gw),
-          rssi: Number(get(ix.rssi)),
-          snr:  Number(get(ix.snr)),
-          dr:   get(ix.dr)||"",
-          sf:   get(ix.sf)||"",
-          bw:   get(ix.bw)||"",
-          fcnt: Number(get(ix.fcnt))
-        });
-      }
-      return out;
-    }
-
-    function renderNetPanel(node, rows){
-      const box = byId("netz");
-      const err = byId("netzErr");
-      err.style.display="none";
-
-      if(!rows.length){ box.textContent="Keine Rohdaten gefunden."; return; }
-
-      // nur letzte 24h
-      const since = Date.now()-24*3600*1000;
-      rows = rows.filter(r => r.node===node && new Date(r.ts).getTime()>=since);
-      if(!rows.length){ box.textContent="Letzte 24 h: keine Einträge."; return; }
-
-      // Gateways + Stats
-      const gws = new Map(); // gw -> {n, rssiSum, snrSum, lastTs}
-      let last = rows[0];
-      for(const r of rows){
-        if(new Date(r.ts) > new Date(last.ts)) last = r;
-        if(!r.gw) continue;
-        if(!gws.has(r.gw)) gws.set(r.gw,{n:0,rssiSum:0,snrSum:0,lastTs:r.ts});
-        const g = gws.get(r.gw);
-        g.n++; g.rssiSum += isFinite(r.rssi)?r.rssi:0; g.snrSum += isFinite(r.snr)?r.snr:0;
-        if(new Date(r.ts)>new Date(g.lastTs)) g.lastTs=r.ts;
-      }
-
-      const uniqGws = [...gws.keys()];
-      const avg = arr => arr.length? (arr.reduce((a,b)=>a+b,0)/arr.length) : null;
-
-      const rssiAvg = avg(rows.map(r=>isFinite(r.rssi)?r.rssi:NaN).filter(n=>!Number.isNaN(n)));
-      const snrAvg  = avg(rows.map(r=>isFinite(r.snr)?r.snr:NaN).filter(n=>!Number.isNaN(n)));
-
-      // HTML
-      const parts = [];
-      parts.push(`<div class="kv"><div>Uplinks (24 h)</div><div>${rows.length}</div>`);
-      parts.push(`<div>Gateways</div><div>${uniqGws.map(g=>`<span class="badge">${g}</span>`).join(" ")||"—"}</div>`);
-      parts.push(`<div>Ø RSSI</div><div>${rssiAvg!=null? fmt(rssiAvg,1)+" dBm":"—"}</div>`);
-      parts.push(`<div>Ø SNR</div><div>${snrAvg!=null? fmt(snrAvg,1)+" dB":"—"}</div>`);
-      parts.push(`<div>Letzter Uplink</div><div>${last?.ts ? new Date(last.ts).toLocaleString("de-DE") : "—"}</div>`);
-      const drText = last?.dr || (last?.sf && last?.bw ? `SF${last.sf}/${last.bw}` : "");
-      parts.push(`<div>Datenrate</div><div>${drText || "—"}</div>`);
-      parts.push(`</div>`);
-
-      box.innerHTML = parts.join("");
-    }
-    /* ---------- Ende Netz ---------- */
-
     (async ()=>{
       try{
         const wanted = detectNode();
@@ -290,10 +217,12 @@
         byId("hum").textContent  = hum!=null  ? fmt(hum,1)+" %"  : "—";
         byId("humLabel").textContent = humLabel;
         byId("bat").textContent  = bat!=null  ? fmt(bat,3)+" V"  : "—";
-        byId("aktuell").innerHTML = `🌡️ Temperatur: <b>${byId("temp").textContent}</b><br>${soil?"💧 Bodenwasser":"💧 Luftfeuchte"}: <b>${byId("hum").textContent}</b><br>🪫 Batterie: <b>${byId("bat").textContent}</b>`;
 
-        // Historie & Charts
+        await loadNetstats(node);
+
         const hist = await loadHistory(node);
+
+        // Verlauf 7 Tage
         const seven = Date.now() - 7*24*3600*1000;
         const recent = hist.filter(x=>new Date(x.ts).getTime() >= seven);
         if(recent.length){
@@ -302,22 +231,14 @@
         }else{
           byId("noHourly").style.display="block";
         }
+
+        // Tagesmittel 31 Tage
         const days = groupDaily(hist);
         if(days.length){
           byId("noDaily").style.display="none";
           makeDailyChart(byId("chartDaily").getContext("2d"), days, soil);
         }else{
           byId("noDaily").style.display="block";
-        }
-
-        // Netz-Panel
-        try{
-          const raw = await loadRawCsv();
-          renderNetPanel(node, raw);
-        }catch(ne){
-          byId("netzErr").style.display="block";
-          byId("netzErr").textContent = "Netz-Infos: "+(ne?.message||ne);
-          byId("netz").textContent = "—";
         }
       }catch(e){
         console.error(e);
