@@ -1,66 +1,95 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <title>WALDSENSOR.SH – Einführung für Lehrkräfte</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Einführung für Lehrkräfte</title>
   <style>
     body {
-      font-family: sans-serif;
-      margin: 0;
-      background: #f7f7f7;
-      color: #333;
-      line-height: 1.6;
+      font-family: system-ui, sans-serif;
+      max-width: 840px;
+      margin: 2em auto;
+      padding: 0 1em;
+      line-height: 1.7;
+      color: #111;
+      background-color: #fff;
     }
-    header {
-      background: #006d3e;
-      color: white;
-      padding: 1.5rem;
-      text-align: center;
-    }
-    main {
-      max-width: 900px;
-      margin: auto;
-      background: white;
-      padding: 2rem;
-    }
+
     h1, h2 {
-      color: #006d3e;
+      color: #2e5e2e;
+      margin-top: 1.4em;
+      margin-bottom: 0.5em;
     }
-    h3 {
-      margin-top: 1.5rem;
+
+    h1 {
+      font-size: 2em;
+      border-bottom: 2px solid #2e5e2e;
+      padding-bottom: 0.3em;
     }
-    ul {
-      padding-left: 1.2rem;
-    }
+
     a {
-      color: #006d3e;
+      color: #0077cc;
+      text-decoration: none;
     }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      margin-top: 0.5em;
+      margin-bottom: 1em;
+      padding-left: 1.2em;
+    }
+
+    .content-box {
+      background-color: #f9f9f9;
+      padding: 1em 1.2em;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      margin-top: 2em;
+    }
+
+    .nav-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2em;
+      font-size: 0.95em;
+      border-top: 1px solid #ccc;
+      padding-top: 1em;
+    }
+
     footer {
-      text-align: center;
-      padding: 1rem;
+      margin-top: 3em;
       font-size: 0.9em;
-      color: #777;
+      color: #666;
+      text-align: center;
+      border-top: 1px solid #ccc;
+      padding-top: 1em;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1rem 0;
+
+    img {
+      max-width: 100%;
+      height: auto;
     }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 0.6rem;
-      text-align: left;
-    }
-    th {
-      background: #e9f5ee;
+
+    @media (max-width: 600px) {
+      body {
+        padding: 0 0.8em;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      h2 {
+        font-size: 1.2em;
+      }
     }
   </style>
 </head>
 <body>
 
 <main>
-
+  
+  <section class="content-box">
 <h2>Was ist WALDSENSOR.SH?</h2>
 <p>
 WALDSENSOR.SH ist ein innovatives Umweltbildungsprojekt für Schulen in Schleswig-Holstein.  
@@ -69,7 +98,9 @@ Teilnehmende Schulen erhalten Zugang zu echten Messdaten aus Wald und Natur –
 direkt nutzbar für den Unterricht im Klassenzimmer oder draußen im Gelände.
 </p>
 <p>Das Projekt ist kostenfrei, wissenschaftlich begleitet und offen für jede Schulform.</p>
-
+</section> 
+  
+  <section class="content-box">
 <h2>Was messen die Sensoren?</h2>
 <p>Die eingesetzten Sensoren messen z. B.:</p>
 <ul>
@@ -82,7 +113,9 @@ direkt nutzbar für den Unterricht im Klassenzimmer oder draußen im Gelände.
 Die Geräte funktionieren mit dem <strong>LoRaWAN-Funknetz</strong>, das speziell für IoT (Internet of Things) entwickelt wurde.  
 Die Messdaten erscheinen in regelmäßigen Abständen auf einer Online-Plattform – sichtbar auf interaktiven Karten.
 </p>
-
+</section> 
+  
+    <section class="content-box">
 <h2>Warum ist das spannend für Grundschüler:innen?</h2>
 <p>Kinder beobachten gern. WALDSENSOR.SH nutzt diese Neugier:</p>
 <ul>
@@ -90,7 +123,9 @@ Die Messdaten erscheinen in regelmäßigen Abständen auf einer Online-Plattform
   <li>Wetterverläufe können selbst entdeckt werden</li>
   <li>Echte Daten regen eigene Fragestellungen an</li>
 </ul>
-
+</section> 
+  
+      <section class="content-box">
 <h2>Wie passt das in den Sachunterricht?</h2>
 <p>Der Sachunterricht in der Grundschule ist interdisziplinär. WALDSENSOR.SH liefert dazu konkrete, altersgerechte Bezüge:</p>
 
@@ -101,7 +136,9 @@ Die Messdaten erscheinen in regelmäßigen Abständen auf einer Online-Plattform
 <tr><td>Technik und Medien</td><td>Funktechnik, Daten lesen & deuten</td></tr>
 <tr><td>Forschen & Erkennen</td><td>Beobachten, Messen, Dokumentieren</td></tr>
 </table>
-
+</section> 
+  
+        <section class="content-box">
 <h2>Was sehen wir auf der Karte?</h2>
 <p>
 Über eine öffentliche Website (z. B. <a href="https://waldsensor.sh/karte.html" target="_blank">waldsensor.sh</a>)  
@@ -113,7 +150,9 @@ können die Daten auf einer <strong>interaktiven Karte</strong> angezeigt werden
   <li>Aktuelle Messwerte als Pop-ups</li>
   <li>Statistiken und CSV-Downloads</li>
 </ul>
-
+</section> 
+  
+  <section class="content-box">
 <h2>Erste Unterrichtsimpulse</h2>
 <ul>
   <li>Wie ändert sich die Bodenfeuchte nach Regen?</li>
@@ -128,8 +167,10 @@ Weitere Ideen:
   <li>Daten auswerten und mit dem Wetterbericht vergleichen</li>
   <li>QR-Code am Sensor scannen und live prüfen</li>
 </ul>
-</p>
+  </section> 
 
+
+  <section class="content-box">
 <h2>Was braucht meine Schule?</h2>
 <p>Zur Teilnahme genügen:</p>
 <ul>
@@ -137,13 +178,18 @@ Weitere Ideen:
   <li>Bereitschaft zur pädagogischen Nutzung der Daten</li>
   <li><strong>Kein WLAN nötig</strong> – die Sensoren nutzen das kostenfreie Funknetz LoRaWAN</li>
 </ul>
+       
+  </section>     
+ <section class="content-box">
 <h2>🧠 Forscherfragen für den Unterricht</h2>
 <p>
   Eine Sammlung von 20 spannenden Fragen zu Umwelt, Klima, Sensorik und dem eigenen Schulwald –
   mit Lösungen zum Einblenden oder Öffnen:
   <a href="fragen.html">Zu den Forscherfragen</a>
 </p>
+  </section> 
   
+   <section class="content-box">
 <h2>Was bekommen wir?</h2>
 <ul>
   <li>Umwelt-Sensorik für einen Schulstandort</li>
@@ -152,7 +198,9 @@ Weitere Ideen:
   <li>QR-Code-Schilder für das Gelände</li>
   <li>Technische und didaktische Unterstützung</li>
 </ul>
-
+</section> 
+  
+     <section class="content-box">
 <h2>Kontakt & Mitmachen</h2>
 <p>
 <b>Heinrich Rode</b><br/>
@@ -161,6 +209,8 @@ Projektleitung WALDSENSOR.SH<br/>
 🌍 <a href="https://www.waldsensor.sh">www.waldsensor.sh</a><br/>
 📍 <a href="https://waldsensor.sh/karte.html" target="_blank">Zur interaktiven Karte</a>
 </p>
+      </section>  
+       <section class="content-box">
 <h2>🔽 Materialien zum Herunterladen</h2>
 <p>
   Alle PDFs, CSV-Beispiele und Arbeitsblätter finden Sie im 
