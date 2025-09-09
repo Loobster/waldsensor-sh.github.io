@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WALDSENSOR.SH – Karte (V2)</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <!-- MarkerCluster (optional, bleibt geladen für später) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- QRCode -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+  <style>
+    :root{
+      --pill-bg:#fff;
+      --pill-text:#106e2a;
+      --pill-shadow:0 2px 10px rgba(0,0,0,.15);
+    }
+    html, body { height:100%; margin:0; }
+    #map { height:100%; width:100%; }
+
+    .pill {
+      position: fixed;
+      z-index: 1001;
+      top: 14px;
+      left: 70px;
+      background: var(--pill-bg);
+      color: var(--pill-text);
+      padding: 10px 14px;
+      border-radius: 14px;
+      font: 600 18px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: var(--pill-shadow);
+      border: 1px solid #e8e8e8;
+    }
+
+    .last-node {
+      position: fixed;
+      z-index: 1001;
+      top: 14px;
+      right: 14px;
+      background: #e9f3ff;
+      color: #0b4da2;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font: 600 16px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: var(--pill-shadow);
+      border: 1px solid #d6e6ff;
+      max-width: 42ch;
+      text-align: right;
+    }
+
+    /* Popup-Optik & Z-Index, damit nichts von den Badges verdeckt wird */
+    .leaflet-popup { z-index: 1002; }
+    .popup { width: 320px; }
+    .popup h3{ margin:0 0 .25rem 0; font:700 20px/1.25 system-ui; }
+    .popup hr{ border:0; height:1px; background:#ececec; margin:.5rem 0 .75rem; }
+    .popup .kv{ margin:.35rem 0; }
+    .popup .kv b{ font-weight:700; }
+    .popup .qrrow {
+      display:flex; gap:14px; align-items:center; margin-top:8px;
+    }
+    .popup .openbtn {
+      display:inline-block; padding:12px 16px; border-radius:14px;
+      background:#eef4ff; color:#0b4da2; font:700 20px/1.1 system-ui;
+      text-decoration:none; border:1px solid #d6e6ff;
+      white-space:nowrap;
+    }
+    .popup .hint { color:#666; font:500 13px/1.3 system-ui; margin-top:6px; }
+  </style>
+</head>
+<body>
+  <div class="pill" id="stamp">Letzte Aktualisierung: –</div>
+  <div class="last-node" id="last">Letzte Node-Meldung: –</div>
+  <div id="map"></div>
+
+  <script>
+    // ------------------- Konstante Pfade & Refresh -------------------
+    const DATA_URL = "https://raw.githubusercontent.com/Loobster/waldsensor-sh.github.io/main/data/v2/latest/all.json";
+    const AUTO_REFRESH_MS = 60_000;
+
+    // ------------------- ID-Normalisierung (einheitlich kurz) -------------------
+    function normalizeId(s){
+      return String(s||'')
+        .toLowerCase()
+        .replace(/\r|\s+/g,'')                 // CR/Spaces raus
+        .replace(/^waldsensor[_-]/,'')         // Präfix weg
+        .replace(/_/g,'-')                     // _ -> -
+        .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,''); // gängige Suffixe weg
+    }
+
+    // ------------------- manuelle Koordinaten (short IDs) -------------------
+    const MANUAL_LOC = {
+      "breklum":  [54.60669, 8.98195],
+      "s31":      [54.65000, 8.96000],
+      "se01":     [54.65005, 8.96005], // ~5 m versetzt
+      "kropp":    [54.41018, 9.52839],
+      "fahrdorf": [54.50158, 9.58690],
+      "lsn50":    [54.475,   9.05]     // notfalls grob, falls gebraucht
+    };
+
+    const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status","lat","lon"]);
+
+    // ------------------- Leaflet-Setup -------------------
+    const map = L.map("map", { zoomSnap: 0.25 });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+    }).addTo(map);
+    map.setView([54.4, 9.6], 8.25);
+    let markersLayer = L.layerGroup().addTo(map);
+
+    // ------------------- Hilfsfunktionen -------------------
+    function deTime(ts){
+      try {
+        return new Date(ts).toLocaleString("de-DE", {
+          year:"numeric", month:"2-digit", day:"2-digit",
+          hour:"2-digit", minute:"2-digit", second:"2-digit"
+        });
+      } catch(_){ return ts || "–"; }
+    }
+
+    function cleanFields(fields){
+      const out = {};
+      for (const [k,v] of Object.entries(fields || {})){
+        if (OMIT_FIELDS.has(k)) continue;
+        if (v === undefined || v === null || v === "NULL") continue;
+        if (typeof v === "number" && !Number.isFinite(v)) continue;
+        out[k] = v;
+      }
+      return out;
+    }
+
+    function pickCoord(item){
+      const f = item?.fields || {};
+      if (typeof f.lat !== "undefined" && typeof f.lon !== "undefined"){
+        const la = Number(f.lat), lo = Number(f.lon);
+        if (Number.isFinite(la) && Number.isFinite(lo)) return [la, lo];
+      }
+      const short = normalizeId(item.id);
+      if (MANUAL_LOC[short]) return MANUAL_LOC[short];
+      return null;
+    }
+
+    function popupHtml(item){
+      const f = cleanFields(item.fields);
+      let html = `<div class="popup"><h3>${normalizeId(item.id)}</h3>`;
+      html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
+
+      // bevorzugte Felder kompakt:
+      if (typeof f.TempC_SHT31 === "number")
+        html += `<div class="kv">Temp (SHT31): <b>${f.TempC_SHT31.toFixed(1)} °C</b></div>`;
+      else if (typeof f.TempC_SHT === "number")
+        html += `<div class="kv">Temp (SHT): <b>${f.TempC_SHT.toFixed(1)} °C</b></div>`;
+
+      if (typeof f.Hum_SHT31 === "number")
+        html += `<div class="kv">Hum (SHT31): <b>${f.Hum_SHT31.toFixed(1)} %</b></div>`;
+      else if (typeof f.Hum_SHT === "number")
+        html += `<div class="kv">Hum (SHT): <b>${f.Hum_SHT.toFixed(1)} %</b></div>`;
+
+      if (typeof f.BatV === "number")
+        html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
+
+      // alle restlichen Felder
+      for (const [k,v] of Object.entries(f)){
+        if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV"].includes(k)) continue;
+        html += `<div class="kv">${k}: <b>${v}</b></div>`;
+      }
+
+      const shortId = normalizeId(item.id);
+      const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+
+      html += `
+        <div class="qrrow">
+          <div id="qrcode-${shortId}"></div>
+          <a class="openbtn" href="${url}" target="_blank" rel="noopener">Seite<br/>öffnen</a>
+        </div>
+        <div class="hint">Link nutzt Basis-ID: <b>${shortId}</b></div>
+      `;
+
+      return html + `</div>`;
+    }
+
+    function latestRecord(data){
+      let best = null, bestT = -Infinity;
+      for (const r of (data||[])){
+        if (!r || !r.ts) continue;
+        const t = new Date(r.ts).getTime();
+        if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
+      }
+      return best;
+    }
+
+    async function loadData(){
+      const res = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache:"no-store" });
+      if (!res.ok) throw new Error("fetch failed " + res.status);
+      return res.json();
+    }
+
+    function render(raw){
+      // ggf. IDs normalisieren (falls _all.json noch \r enthält)
+      const data = (raw||[]).map(x => ({...x, id: normalizeId(x.id)}));
+
+      markersLayer.clearLayers();
+      const bounds = [];
+
+      for (const item of data){
+        const coord = pickCoord(item);
+        if (!coord) continue;
+
+        const marker = L.marker(coord).bindPopup(popupHtml(item));
+        marker.on("popupopen", () => {
+          const shortId = normalizeId(item.id);
+          const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+          const qrDiv = document.getElementById(`qrcode-${shortId}`);
+          if (qrDiv && !qrDiv.hasChildNodes()) {
+            QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 140 }, (err, canvas) => {
+              if (!err) qrDiv.appendChild(canvas);
+            });
+          }
+        });
+        marker.addTo(markersLayer);
+        bounds.push(coord);
+      }
+
+      if (bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
+
+      document.getElementById("stamp").textContent =
+        "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
+
+      const lastEl = document.getElementById("last");
+      const lastRec = latestRecord(data);
+      if (lastRec){
+        lastEl.textContent =
+          "Letzte Node-Meldung: " + deTime(lastRec.ts) + " — " + normalizeId(lastRec.id);
+      } else {
+        lastEl.textContent = "Letzte Node-Meldung: –";
+      }
+    }
+
+    async function run(){
+      try{ render(await loadData()); }
+      catch(err){
+        console.error(err);
+        document.getElementById("stamp").textContent =
+          "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
+      }
+    }
+
+    run();
+    setInterval(run, AUTO_REFRESH_MS);
+  </script>
+</body>
+</html>
+
+<!-- redeploy 2025-09-09T18:36:56+02:00 -->
