@@ -1,1 +1,74 @@
-[{"ts":"2025-09-09T15:08:58.211Z","fields":{"TempC_SHT":20.9,"Hum_SHT":69.9,"BatV":3.588},"id":"fahrdorf\r"},{"fields":{"temp_SOIL":14.89,"water_SOIL":6.92,"BatV":3.326},"ts":"2025-09-09T15:06:48.594Z","id":"se01\r"},{"ts":"2025-09-09T15:10:39.678Z","fields":{"TempC_SHT":24.5,"Hum_SHT":56.3,"BatV":3.642},"id":"neumuenstertl\r"},{"ts":"2025-09-09T14:59:38.953Z","fields":{"BatV":3.414,"Hum_SHT31":72,"TempC_SHT31":20.7},"id":"lsn50\r"},{"fields":{"TempC_SHT":24.3,"Hum_SHT":55.9,"BatV":3.636},"ts":"2025-09-09T15:00:10.026Z","id":"breklum\r"},{"id":"s31\r","fields":{"TempC_SHT31":20.2,"Hum_SHT31":73.2,"BatV":3.612},"ts":"2025-09-09T15:01:24.223Z"},{"fields":{"lon":8.5464,"lat":54.5582,"BatV":3.654},"ts":"2025-09-09T14:57:54.696Z","id":"hooge\r"},{"id":"kropp\r","ts":"2025-09-09T15:04:26.666Z","fields":{"BatV":3.636,"TempC_SHT":20.9,"Hum_SHT":72.5}}]
+[
+  {
+    "ts": "2025-09-09T15:08:58.211Z",
+    "fields": {
+      "TempC_SHT": 20.9,
+      "Hum_SHT": 69.9,
+      "BatV": 3.588
+    },
+    "id": "fahrdorf"
+  },
+  {
+    "fields": {
+      "temp_SOIL": 14.89,
+      "water_SOIL": 6.92,
+      "BatV": 3.326
+    },
+    "ts": "2025-09-09T15:06:48.594Z",
+    "id": "se01"
+  },
+  {
+    "ts": "2025-09-09T15:10:39.678Z",
+    "fields": {
+      "TempC_SHT": 24.5,
+      "Hum_SHT": 56.3,
+      "BatV": 3.642
+    },
+    "id": "neumuenstertl"
+  },
+  {
+    "ts": "2025-09-09T14:59:38.953Z",
+    "fields": {
+      "BatV": 3.414,
+      "Hum_SHT31": 72,
+      "TempC_SHT31": 20.7
+    },
+    "id": "lsn50"
+  },
+  {
+    "fields": {
+      "TempC_SHT": 24.3,
+      "Hum_SHT": 55.9,
+      "BatV": 3.636
+    },
+    "ts": "2025-09-09T15:00:10.026Z",
+    "id": "breklum"
+  },
+  {
+    "id": "s31",
+    "fields": {
+      "TempC_SHT31": 20.2,
+      "Hum_SHT31": 73.2,
+      "BatV": 3.612
+    },
+    "ts": "2025-09-09T15:01:24.223Z"
+  },
+  {
+    "fields": {
+      "lon": 8.5464,
+      "lat": 54.5582,
+      "BatV": 3.654
+    },
+    "ts": "2025-09-09T14:57:54.696Z",
+    "id": "hooge"
+  },
+  {
+    "id": "kropp",
+    "ts": "2025-09-09T15:04:26.666Z",
+    "fields": {
+      "BatV": 3.636,
+      "TempC_SHT": 20.9,
+      "Hum_SHT": 72.5
+    }
+  }
+]
