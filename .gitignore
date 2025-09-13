@@ -1,14 +1,13 @@
-# Laufzeitdaten, nicht versionieren
-data/v2/latest/
-data/v2/history/
 # Logs / Helper
 v2_autopush.log
 tools/
-!data/v2/latest/_all.json
-html/seonsor.html_270825
-data/v2/history/
-data/v2/latest/_all.json
+data/v2/history/_trash_*/
 
-# allow data exports
-data/v2/latest/_all.json
-data/v2/history/*.json
+# Wichtige Daten behalten
+!data/v2/
+!data/v2/latest/
+!data/v2/history/
+
+!data/v2/latest/all.json
+!data/v2/latest/_raw.csv
+!data/v2/history/history_*.json
