@@ -87,6 +87,10 @@
     const DATA_URL = "./data/v2/latest/all.json"; 
     const AUTO_REFRESH_MS = 60_000;
 
+    const BUILD_STAMP = "2025-09-13T18:38:48+02:00";
+    console.log("v2.html build:", BUILD_STAMP);
+
+
     // ------------------- ID-Normalisierung (einheitlich kurz) -------------------
     function normalizeId(s){
       return String(s||'')
