@@ -1,13 +1,8 @@
-# Logs / Helper
-v2_autopush.log
-tools/
-data/v2/history/_trash_*/
-
-# Wichtige Daten behalten
-!data/v2/
-!data/v2/latest/
-!data/v2/history/
-
+# v2: nur die kanonischen Dateien verfolgen
+data/v2/latest/*
 !data/v2/latest/all.json
 !data/v2/latest/_raw.csv
+
+data/v2/history/*
 !data/v2/history/history_*.json
+!data/v2/history/_trash*/
