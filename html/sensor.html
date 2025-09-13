@@ -43,7 +43,7 @@
           <div class="tile"><div class="k" id="humLabel">Luftfeuchte</div><div class="v" id="hum">—</div></div>
           <div class="tile" style="grid-column:1/-1"><div class="k">Batterie</div><div class="v" id="bat">—</div></div>
         </div>
-        <div class="hint">Quelle: <span class="mono">/data/v2/latest/_all.json</span></div>
+        <div class="hint">Quelle: <span class="mono">/data/v2/latest/all.json</span></div>
       </div>
 
       <div class="card">
@@ -88,7 +88,7 @@
     }
 
     async function loadLatest(){
-      const r = await fetch("/data/v2/latest/_all.json",{cache:"no-store"});
+      const r = await fetch("/data/v2/latest/all.json",{cache:"no-store"});
       if(!r.ok) throw new Error("Live-Quelle nicht erreichbar: "+r.status);
       const arr = await r.json();
       return arr.map(x=>({...x,id:(x.id||"").replace(/[\r\n]+/g,"").trim()}));
