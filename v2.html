@@ -4,11 +4,17 @@
   <meta charset="utf-8" />
   <title>WALDSENSOR.SH – v2 Karte</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Leaflet (Karte) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <style>
+    /* Seite/Karte auf volle Höhe bringen */
     html, body { height:100%; margin:0; }
     #map { height:100%; width:100%; }
+
+    /* Infobadges oben links/rechts */
     .badge {
       position: fixed; z-index: 900; padding: 8px 12px; border-radius: 14px;
       background: #e8f5e9; color:#1b5e20; font: 16px/1.2 system-ui, sans-serif;
@@ -16,14 +22,17 @@
     }
     .badge.right { right: 12px; top: 12px; background:#e3f2fd; color:#0d47a1; }
     .badge.left  { left: 12px;  top: 12px; }
+
+    /* Popup-Tabelle schlicht/lesbar */
     .popup-table { border-collapse: collapse; font: 14px system-ui, sans-serif; }
     .popup-table td { padding: 2px 6px; border: 1px solid #ddd; }
+
+    /* Fehlerbanner unten */
     .banner {
       position: fixed; left:0; right:0; bottom:0; padding: 8px 12px; text-align:center;
       background:#c62828; color:#fff; font: 14px/1.2 system-ui, sans-serif; display:none; z-index: 950;
     }
   </style>
-  <!-- build: v2.html with HIDE_NODES + MANUAL_LOC fallback -->
 </head>
 <body>
   <div id="map"></div>
@@ -34,6 +43,7 @@
   <script>
   "use strict";
 
+  /* ---------------- Grundsetup ---------------- */
   const map = L.map('map').setView([54.3, 9.7], 8);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap', maxZoom: 18
@@ -46,22 +56,27 @@
   const clearError = () => { banner.style.display='none'; };
 
   const LATEST_URL = '/data/v2/latest/all.json';
-  const REFRESH_MS = 120000;
+  const REFRESH_MS = 120000; // alle 2 Minuten
   const markers = new Map();
 
-  // ---- Sichtbarkeit & Fallback-Koordinaten ----
+  /* ---- Sichtbarkeit & manuelle Fallback-Koordinaten ----
+     HIDE_NODES: hier kannst du alte/Test-Nodes temporär ausblenden.
+     MANUAL_LOC: wird NUR benutzt, wenn die DB KEINE lat/lon liefert. */
   const HIDE_NODES = new Set([
-    'lsn50', // ausblenden (alt/Test)
+    'lsn50', // vorerst ausblenden; war Pilot in Kropp
   ]);
+
+  // ------------------- manuelle Koordinaten (short IDs, nur Fallback!) -------------------
   const MANUAL_LOC = {
     "breklum":  [54.60669, 8.98195],
     "s31":      [54.65000, 8.96000],
     "se01":     [54.65005, 8.96005],
     "kropp":    [54.41018, 9.52839],
     "fahrdorf": [54.50158, 9.58690],
-    // keine lsn50-Koordinate → sonst taucht er „falsch“ auf
+    // "lsn50":  [54.475, 9.05], // nicht setzen, damit er nicht „falsch“ auftaucht
   };
 
+  /* ---------------- Helfer ---------------- */
   const numOrNull = v => {
     const n = (v===null || v===undefined || v==='') ? NaN : Number(v);
     return Number.isFinite(n) ? n : null;
@@ -71,104 +86,145 @@
     Number.isFinite(d.lat) && Number.isFinite(d.lon) &&
     d.lat >= -90 && d.lat <= 90 && d.lon >= -180 && d.lon <= 180;
 
-  function fmtNum(v, digits){ return (v==null||Number.isNaN(Number(v)))?'–':Number(v).toFixed(digits); }
-  function fmtTime(ts){ const t=ts?Date.parse(ts):NaN; return Number.isFinite(t)?new Date(t).toLocaleString():'–'; }
+  // ID stabilisieren (Präfix weg, CR/Whitespace raus)
+  function cleanId(s) {
+    return String(s || '')
+      .replace(/^waldsensor_/, '')
+      .replace(/\r/g, '')
+      .trim();
+  }
 
-  function normalizeEntry(e){
-    if(!e||typeof e!=='object') return null;
-    if('fields' in e){
-      const f=e.fields||{};
+  // hübsche Zahlen
+  function fmtNum(v, digits) {
+    return (v === null || v === undefined || Number.isNaN(Number(v)))
+      ? '–' : Number(v).toFixed(digits);
+  }
+  // hübsche Zeit (lokal)
+  function fmtTime(tsIso) {
+    if (!tsIso) return '–';
+    const t = Date.parse(tsIso);
+    return Number.isFinite(t) ? new Date(t).toLocaleString() : '–';
+  }
+
+  // Eintrag vereinheitlichen (altes fields{}-Schema ODER neues flaches Schema)
+  function normalizeEntry(e) {
+    if (!e || typeof e !== 'object') return null;
+
+    if ('fields' in e) { // altes Schema
+      const f = e.fields || {};
       return {
-        device_id:String(e.id||'').replace(/^waldsensor_/,''),
-        ts_iso:e.ts||null,
-        lat:numOrNull(f.lat), lon:numOrNull(f.lon), alt:numOrNull(f.alt),
-        bat_v:numOrNull(f.BatV),
-        temp_c:numOrNull(f.TempC_SHT ?? f.TempC_SHT31),
-        hum_pct:numOrNull(f.Hum_SHT   ?? f.Hum_SHT31),
-        temp_soil_c:numOrNull(f.temp_SOIL),
-        water_soil:numOrNull(f.water_SOIL),
+        device_id: cleanId(e.id),
+        ts_iso: e.ts || null,
+        lat: numOrNull(f.lat),
+        lon: numOrNull(f.lon),
+        alt: numOrNull(f.alt),
+        bat_v: numOrNull(f.BatV),
+        temp_c: numOrNull(f.TempC_SHT ?? f.TempC_SHT31),
+        hum_pct: numOrNull(f.Hum_SHT ?? f.Hum_SHT31),
+        temp_soil_c: numOrNull(f.temp_SOIL),
+        water_soil: numOrNull(f.water_SOIL),
       };
     }
+
+    // neues flaches Schema
     return {
-      device_id:String(e.device_id||'').replace(/^waldsensor_/,''),
-      ts_iso:e.ts_iso??null,
-      lat:numOrNull(e.lat), lon:numOrNull(e.lon), alt:numOrNull(e.alt),
-      bat_v:numOrNull(e.bat_v ?? e.BatV),
-      temp_c:numOrNull(e.temp_c ?? e.TempC_SHT ?? e.TempC_SHT31),
-      hum_pct:numOrNull(e.hum_pct ?? e.Hum_SHT  ?? e.Hum_SHT31),
-      temp_soil_c:numOrNull(e.temp_soil_c ?? e.temp_SOIL),
-      water_soil:numOrNull(e.water_soil   ?? e.water_SOIL),
+      device_id: cleanId(e.device_id),
+      ts_iso: e.ts_iso ?? null,
+      lat: numOrNull(e.lat),
+      lon: numOrNull(e.lon),
+      alt: numOrNull(e.alt),
+      bat_v: numOrNull(e.bat_v ?? e.BatV),
+      temp_c: numOrNull(e.temp_c ?? e.TempC_SHT ?? e.TempC_SHT31),
+      hum_pct: numOrNull(e.hum_pct ?? e.Hum_SHT ?? e.Hum_SHT31),
+      temp_soil_c: numOrNull(e.temp_soil_c ?? e.temp_SOIL),
+      water_soil: numOrNull(e.water_soil ?? e.water_SOIL),
     };
   }
 
-  function popupHtml(d){
-    const coords=(d.lat!=null&&d.lon!=null)?`${d.lat}, ${d.lon}`:'–';
-    const detailsUrl=`/html/sensor.html?node=${encodeURIComponent(d.device_id||'')}`;
-    let html=`<b>${d.device_id||'unbekannt'}</b><br><table class="popup-table">`;
-    html+=`<tr><td>Zeit</td><td>${fmtTime(d.ts_iso)}</td></tr>`;
-    html+=`<tr><td>Batterie [V]</td><td>${fmtNum(d.bat_v,3)}</td></tr>`;
-    html+=`<tr><td>Temp [°C]</td><td>${fmtNum(d.temp_c,1)}</td></tr>`;
-    html+=`<tr><td>Feuchte [%]</td><td>${fmtNum(d.hum_pct,1)}</td></tr>`;
-    if(d.temp_soil_c!=null) html+=`<tr><td>Boden Temp [°C]</td><td>${fmtNum(d.temp_soil_c,1)}</td></tr>`;
-    if(d.water_soil!=null)  html+=`<tr><td>Boden Wasser</td><td>${fmtNum(d.water_soil,1)}</td></tr>`;
-    html+=`<tr><td>Koordinaten</td><td>${coords}</td></tr></table>`;
-    html+=`<div style="margin-top:6px;"><a href="${detailsUrl}" target="_blank" rel="noopener">Details &amp; History öffnen</a></div>`;
+  // Popup-Inhalt (mit Link zur Detailseite)
+  function popupHtml(d) {
+    const coords = (d.lat!==null && d.lon!==null) ? `${d.lat}, ${d.lon}` : '–';
+    const detailsUrl = `/html/sensor.html?node=${encodeURIComponent(d.device_id || '')}`;
+    let html = `<b>${d.device_id || 'unbekannt'}</b><br>` +
+               `<table class="popup-table">` +
+               `<tr><td>Zeit</td><td>${fmtTime(d.ts_iso)}</td></tr>` +
+               `<tr><td>Batterie [V]</td><td>${fmtNum(d.bat_v, 3)}</td></tr>` +
+               `<tr><td>Temp [°C]</td><td>${fmtNum(d.temp_c, 1)}</td></tr>` +
+               `<tr><td>Feuchte [%]</td><td>${fmtNum(d.hum_pct, 1)}</td></tr>`;
+    if (d.temp_soil_c !== null) html += `<tr><td>Boden Temp [°C]</td><td>${fmtNum(d.temp_soil_c, 1)}</td></tr>`;
+    if (d.water_soil !== null)  html += `<tr><td>Boden Wasser</td><td>${fmtNum(d.water_soil, 1)}</td></tr>`;
+    html += `<tr><td>Koordinaten</td><td>${coords}</td></tr>` +
+            `</table>` +
+            `<div style="margin-top:6px;"><a href="${detailsUrl}" target="_blank" rel="noopener">Details &amp; History öffnen</a></div>`;
     return html;
   }
 
-  async function loadLatest(){
-    const url = `${LATEST_URL}?_=${Date.now()}`;
-    try{
-      clearError(); elRefresh.textContent='lädt…';
-      const resp=await fetch(url,{cache:'no-store'});
-      if(!resp.ok) throw new Error(`HTTP ${resp.status} ${resp.statusText}`);
-      const data=await resp.json();
-      if(!Array.isArray(data)) throw new Error('all.json: kein Array');
+  /* ---------------- Daten laden & Karte aktualisieren ---------------- */
+  async function loadLatest() {
+    const url = `${LATEST_URL}?_=${Date.now()}`; // Cache-Busting
+    try {
+      clearError();
+      elRefresh.textContent = 'lädt…';
 
-      // normalisieren
+      const resp = await fetch(url, { cache: 'no-store' });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status} ${resp.statusText}`);
+      const data = await resp.json();
+      if (!Array.isArray(data)) throw new Error('all.json: kein Array');
+
+      // Normalisieren
       const list = data.map(normalizeEntry).filter(Boolean);
 
-      // Fallback-Koordinaten nur wenn DB keine lat/lon hat
-      for(const d of list){
-        const id=d?.device_id||'';
-        if(id && (!Number.isFinite(d.lat) || !Number.isFinite(d.lon))){
-          const m=MANUAL_LOC[id]; if(m&&m.length===2){ d.lat=+m[0]; d.lon=+m[1]; }
+      // MANUAL_LOC: nur Fallback, wenn DB keine lat/lon hat
+      for (const d of list) {
+        const id = d?.device_id || '';
+        if (id && (!Number.isFinite(d.lat) || !Number.isFinite(d.lon))) {
+          const m = MANUAL_LOC[id];
+          if (m && m.length === 2) { d.lat = Number(m[0]); d.lon = Number(m[1]); }
         }
       }
 
-      // Unerwünschte Nodes filtern
-      const listVisible = list.filter(d => d && !HIDE_NODES.has(d.device_id||''));
+      // Unerwünschte/alte Nodes ausblenden
+      const listVisible = list.filter(d => d && !HIDE_NODES.has(d.device_id || ''));
 
-      // neueste Node-Meldung bestimmen
-      const maxTs = listVisible.reduce((max,d)=>{
-        const t=d.ts_iso?Date.parse(d.ts_iso):NaN;
-        return Number.isFinite(t)?Math.max(max,t):max;
+      // Neueste Node-Meldung (max ts_iso) bestimmen
+      const maxTs = listVisible.reduce((maxVal, d) => {
+        const t = d.ts_iso ? Date.parse(d.ts_iso) : NaN;
+        return Number.isFinite(t) ? Math.max(maxVal, t) : maxVal;
       }, -Infinity);
-      elLastNode.textContent = (maxTs>0)? new Date(maxTs).toLocaleTimeString() : '–';
+      elLastNode.textContent = (maxTs > 0)
+        ? new Date(maxTs).toLocaleTimeString()
+        : '–';
 
       // Marker setzen/aktualisieren
       const withGeo = listVisible.filter(hasLatLon);
       const alive = new Set();
-      for(const d of withGeo){
+
+      for (const d of withGeo) {
         const key = d.device_id || `${d.lat},${d.lon}`;
-        if(markers.has(key)){
-          markers.get(key).setLatLng([d.lat,d.lon]).setPopupContent(popupHtml(d));
-        }else{
-          const m=L.marker([d.lat,d.lon]).addTo(map).bindPopup(popupHtml(d));
-          markers.set(key,m);
+        if (markers.has(key)) {
+          markers.get(key).setLatLng([d.lat, d.lon]).setPopupContent(popupHtml(d));
+        } else {
+          const m = L.marker([d.lat, d.lon]).addTo(map).bindPopup(popupHtml(d));
+          markers.set(key, m);
         }
         alive.add(key);
       }
-      for(const [key,m] of Array.from(markers.entries())){
-        if(!alive.has(key)){ map.removeLayer(m); markers.delete(key); }
+
+      // Nicht mehr vorhandene Marker entfernen
+      for (const [key, m] of Array.from(markers.entries())) {
+        if (!alive.has(key)) { map.removeLayer(m); markers.delete(key); }
       }
 
-      elRefresh.textContent=new Date().toLocaleTimeString();
-    }catch(err){
-      console.error(err); showError(`Fehler beim Laden von ${LATEST_URL}: ${err.message}`);
+      // Zeitpunkt des letzten erfolgreichen Ladevorgangs (lokal)
+      elRefresh.textContent = new Date().toLocaleTimeString();
+
+    } catch (err) {
+      console.error(err);
+      showError(`Fehler beim Laden von ${LATEST_URL}: ${err.message}`);
     }
   }
 
+  // Initial & Intervall
   loadLatest();
   setInterval(loadLatest, REFRESH_MS);
   </script>
