@@ -1,26 +1,49 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+  <!-- Zeichensatz definieren, damit Umlaute korrekt sind -->
   <meta charset="utf-8" />
+
+  <!-- Seitentitel im Browser-Tab -->
   <title>WALDSENSOR.SH – v2 Karte</title>
+
+  <!-- Responsives Verhalten auf mobilen Geräten -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Leaflet -->
+  <!-- Leaflet CSS von CDN einbinden (Karten-Framework, reine Darstellung) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Leaflet JavaScript von CDN einbinden (Kartenlogik) -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+  <!-- Einfache, robuste Basisklassen (keine Framework-Abhängigkeiten) -->
   <style>
+    <!-- Body und HTML nehmen die volle Höhe ein -->
     html, body { height:100%; margin:0; }
+
+    <!-- Kartencontainer soll die ganze Seite ausfüllen -->
     #map { height:100%; width:100%; }
+
+    <!-- Kleine Infobadges oben links/rechts -->
     .badge {
       position: fixed; z-index: 900; padding: 8px 12px; border-radius: 14px;
       background: #e8f5e9; color:#1b5e20; font: 16px/1.2 system-ui, sans-serif;
       box-shadow: 0 2px 10px rgba(0,0,0,.15);
     }
+
+    <!-- Rechte Badge (andere Farbe, um Infos zu trennen) -->
     .badge.right { right: 12px; top: 12px; background:#e3f2fd; color:#0d47a1; }
+
+    <!-- Linke Badge -->
     .badge.left  { left: 12px; top: 12px; }
+
+    <!-- Tabellenstil im Popup (schlank, lesbar) -->
     .popup-table { border-collapse: collapse; font: 14px system-ui, sans-serif; }
+
+    <!-- Zellen erhalten leichte Rahmen und kleine Abstände -->
     .popup-table td { padding: 2px 6px; border: 1px solid #ddd; }
+
+    <!-- Fehlerbanner unten (einblendbar bei Ladefehlern) -->
     .banner {
       position: fixed; left:0; right:0; bottom:0; padding: 8px 12px; text-align:center;
       background:#c62828; color:#fff; font: 14px/1.2 system-ui, sans-serif; display:none; z-index: 950;
@@ -28,81 +51,138 @@
   </style>
 </head>
 <body>
+  <!-- Kartencontainer -->
   <div id="map"></div>
+
+  <!-- Badge: Zeitpunkt des letzten erfolgreichen JSON-Ladevorgangs -->
   <div class="badge left">Letzte Aktualisierung: <span id="last-refresh">–</span></div>
+
+  <!-- Badge: Maximaler Zeitstempel (ts_iso) aus all.json -->
   <div class="badge right">Letzte Node-Meldung: <span id="last-node">–</span></div>
+
+  <!-- Fehlerbanner (wird per JS ein-/ausgeblendet) -->
   <div id="banner" class="banner"></div>
 
+  <!-- Hauptlogik (bewusst ohne Frameworks, nur Vanilla JS + Leaflet) -->
   <script>
+  // "use strict" erzwingt striktere Regeln (z. B. keine stillen globalen Variablen)
   "use strict";
 
-  // Karte
+  // Karte initial auf Schleswig-Holstein zentrieren (ungefähre Mitte)
   const map = L.map('map').setView([54.3, 9.7], 8);
+
+  // OpenStreetMap-Kacheln einbinden (freie Tiles, ausreichendes Zoomlimit für unsere Zwecke)
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap', maxZoom: 18
+    // Rechtlicher Hinweis auf die Datenquelle
+    attribution: '&copy; OpenStreetMap',
+    // Maximales Zoom-Level (18 reicht für unsere Marker)
+    maxZoom: 18
   }).addTo(map);
 
-  // UI
+  // Referenzen auf UI-Elemente (wir schreiben dort Status-/Zeitinfos hinein)
   const elRefresh = document.getElementById('last-refresh');
   const elLastNode = document.getElementById('last-node');
   const banner = document.getElementById('banner');
+
+  // Hilfsfunktion: Fehlerbanner mit Nachricht anzeigen
   const showError = (msg) => { banner.textContent = msg; banner.style.display='block'; };
+
+  // Hilfsfunktion: Fehlerbanner wieder ausblenden
   const clearError = () => { banner.style.display='none'; };
 
-  // Datenquelle & Intervall
+  // Fester Endpunkt: Nur diese eine JSON-Quelle wird regelmäßig geladen
+  // (bewusst keine weiteren Dateien wie history/netstats, um 404 zu vermeiden)
   const LATEST_URL = '/data/v2/latest/all.json';
-  const REFRESH_MS = 120000; // 2 Minuten
 
+  // Aktualisierungsintervall: 120 Sekunden (Nodes senden ca. alle 20 min → das reicht)
+  const REFRESH_MS = 120000;
+
+  // Marker-Cache: Map von device_id (oder Fallback-Key) zu Leaflet-Marker
   const markers = new Map();
 
-  // Helpers
+  // Helper: Versucht einen Wert in eine Zahl zu wandeln; bei Fehlschlag → null
+  // (z. B. wenn Felder fehlen oder als leere Strings ankommen)
   const numOrNull = v => {
     const n = (v===null || v===undefined || v==='') ? NaN : Number(v);
     return Number.isFinite(n) ? n : null;
   };
+
+  // Helper: Prüft, ob Datensatz gültige geographische Koordinaten besitzt
+  // (nur dann zeichnen wir einen Marker; verhindert Fehler bei unvollständigen Einträgen)
   const hasLatLon = d =>
     d && d.lat !== null && d.lon !== null &&
     d.lat >= -90 && d.lat <= 90 && d.lon >= -180 && d.lon <= 180;
 
-  // Normalisiert altes (fields{}) und neues (flach) Schema
+  // Normalisierung: Unterstützt altes v1-Schema (fields{…}) UND neues flaches v2-Schema.
+  // Ziel ist ein einheitliches Objekt, das die Karte direkt versteht.
   function normalizeEntry(e) {
+    // Schutz: nur Objekte verarbeiten
     if (!e || typeof e !== 'object') return null;
 
+    // Fall 1: Altes Schema – Felder stecken unter e.fields, Zeit unter e.ts, ID unter e.id
     if ('fields' in e) {
+      // Shortcuts
       const f = e.fields || {};
+
+      // Zusammenbau eines flachen, einheitlichen Objekts für die Karte/Popups
       return {
+        // Device-ID (präfix 'waldsensor_' entfernen, damit Kurzname bleibt)
         device_id: String(e.id || '').replace(/^waldsensor_/, ''),
+        // Zeitstempel im ISO-Format (kann null sein, wenn nicht vorhanden)
         ts_iso: e.ts || null,
+        // Geokoordinaten (auf Zahlen geprüft)
         lat: numOrNull(f.lat),
         lon: numOrNull(f.lon),
+        // Höhe (optional)
         alt: numOrNull(f.alt),
+        // Batteriespannung (V)
         bat_v: numOrNull(f.BatV),
+        // Temperatur (°C) – je nach Sensor SHT oder SHT31
         temp_c: numOrNull(f.TempC_SHT ?? f.TempC_SHT31),
+        // relative Feuchte (%) – je nach Sensor SHT oder SHT31
         hum_pct: numOrNull(f.Hum_SHT ?? f.Hum_SHT31),
+        // Bodentemperatur (°C) – optional
         temp_soil_c: numOrNull(f.temp_SOIL),
+        // Bodenwasser (Sensorwert) – optional
         water_soil: numOrNull(f.water_SOIL),
       };
     }
 
+    // Fall 2: Neues flaches Schema – Werte liegen direkt oben (z. B. e.lat, e.bat_v)
     return {
+      // Device-ID vereinheitlichen (Präfix entfernen)
       device_id: String(e.device_id || '').replace(/^waldsensor_/, ''),
+      // ISO-Zeit (falls vorhanden)
       ts_iso: e.ts_iso ?? null,
+      // Geokoordinaten
       lat: numOrNull(e.lat),
       lon: numOrNull(e.lon),
+      // Höhe (optional)
       alt: numOrNull(e.alt),
+      // Batteriespannung (V) – toleriert auch altes Feld BatV
       bat_v: numOrNull(e.bat_v ?? e.BatV),
+      // Temperatur (°C) – toleriert alte Feldnamen
       temp_c: numOrNull(e.temp_c ?? e.TempC_SHT ?? e.TempC_SHT31),
+      // relative Feuchte (%) – toleriert alte Feldnamen
       hum_pct: numOrNull(e.hum_pct ?? e.Hum_SHT ?? e.Hum_SHT31),
+      // Bodentemperatur (°C) – optional
       temp_soil_c: numOrNull(e.temp_soil_c ?? e.temp_SOIL),
+      // Bodenwasser (Sensorwert) – optional
       water_soil: numOrNull(e.water_soil ?? e.water_SOIL),
     };
   }
 
+  // Helper: Formatiert Werte für die Popup-Anzeige (– bei fehlenden Werten)
   function fmt(v, suf='') {
     return (v===null || v===undefined || Number.isNaN(v)) ? '–' : `${v}${suf}`;
   }
+
+  // Erzeugt den HTML-Inhalt des Popups für einen Datensatz
   function popupHtml(d) {
+    // Koordinaten zusammenbauen, falls vorhanden
     const coords = (d.lat!==null && d.lon!==null) ? `${d.lat}, ${d.lon}` : '–';
+
+    // Tabelle mit den wichtigsten Werten (Zeit, Batterie, Temp, Feuchte, evtl. Boden)
     let html = `<b>${d.device_id || 'unbekannt'}</b><br><table class="popup-table">`;
     html += `<tr><td>Zeit</td><td>${d.ts_iso || '–'}</td></tr>`;
     html += `<tr><td>Batterie [V]</td><td>${fmt(d.bat_v)}</td></tr>`;
@@ -115,57 +195,94 @@
     return html;
   }
 
+  // Lädt die all.json, aktualisiert Marker & Statusbadges; fängt Fehler robust ab
   async function loadLatest() {
-    const url = `${LATEST_URL}?_=${Date.now()}`; // cache-bust
+    // Cache-Busting über Query-Parameter, damit Browser nicht eine alte Datei liefert
+    const url = `${LATEST_URL}?_=${Date.now()}`;
+
     try {
+      // Vor dem Laden evtl. alten Fehler ausblenden
       clearError();
+
+      // Nutzerinfo aktualisieren: gerade am Laden
       elRefresh.textContent = 'lädt…';
 
+      // JSON abrufen (no-store: Browser soll nicht aus Cache bedienen)
       const resp = await fetch(url, { cache: 'no-store' });
+
+      // HTTP-Fehler abfangen (z. B. 404/500)
       if (!resp.ok) throw new Error(`HTTP ${resp.status} ${resp.statusText}`);
+
+      // Antwort als JSON interpretieren
       const data = await resp.json();
+
+      // Schutz: wir erwarten ein Array (Liste von Einträgen)
       if (!Array.isArray(data)) throw new Error('all.json: kein Array');
 
-      // Normalisieren
+      // Einträge normalisieren (altes + neues Schema) und ungültige verwerfen (null)
       const list = data.map(normalizeEntry).filter(Boolean);
-      // Zeitstempel „letzte Node-Meldung“
+
+      // Ermitteln des maximalen Zeitstempels (letzte Node-Meldung)
       const maxTs = list
         .map(d => d.ts_iso ? Date.parse(d.ts_iso) : NaN)
         .filter(Number.isFinite)
         .reduce((a,b) => Math.max(a,b), NaN);
 
+      // Anzeige rechts oben aktualisieren (lokale Uhrzeit, gut lesbar)
       elLastNode.textContent = Number.isFinite(maxTs)
         ? new Date(maxTs).toLocaleTimeString()
         : '–';
 
-      // Marker setzen/aktualisieren
+      // Nur Einträge mit validen Koordinaten werden als Marker angezeigt
       const withGeo = list.filter(hasLatLon);
+
+      // Menge der noch „lebenden“ Marker (für späteres Aufräumen)
       const alive = new Set();
+
+      // Über alle gültigen Datensätze iterieren und Marker setzen/aktualisieren
       for (const d of withGeo) {
+        // Stabiler Schlüssel: bevorzugt device_id, sonst Not-Fallback über Koordinaten
         const key = d.device_id || `${d.lat},${d.lon}`;
+
+        // Falls schon vorhanden → Position & Popup aktualisieren
         if (markers.has(key)) {
-          markers.get(key).setLatLng([d.lat, d.lon]).setPopupContent(popupHtml(d));
+          markers.get(key)
+            .setLatLng([d.lat, d.lon])
+            .setPopupContent(popupHtml(d));
         } else {
+          // Neuen Marker anlegen und Popup binden
           const m = L.marker([d.lat, d.lon]).addTo(map).bindPopup(popupHtml(d));
           markers.set(key, m);
         }
+
+        // Diesen Marker als „lebend“ markieren
         alive.add(key);
       }
-      // Alte Marker entfernen, die nicht mehr im Feed sind
+
+      // Alle Marker, die im aktuellen Feed nicht mehr vorkommen, entfernen (Aufräumen)
       for (const [key, m] of Array.from(markers.entries())) {
-        if (!alive.has(key)) { map.removeLayer(m); markers.delete(key); }
+        if (!alive.has(key)) {
+          map.removeLayer(m);
+          markers.delete(key);
+        }
       }
 
-      // UI: letzter erfolgreicher Ladevorgang (lokale Zeit)
+      // Links oben: Zeitpunkt des letzten erfolgreichen Ladevorgangs (lokale Zeit)
       elRefresh.textContent = new Date().toLocaleTimeString();
+
     } catch (err) {
+      // Fehler in der Konsole zeigen (für Entwickler)
       console.error(err);
+
+      // Nutzerfreundliche Banner-Meldung einblenden
       showError(`Fehler beim Laden von ${LATEST_URL}: ${err.message}`);
     }
   }
 
-  // Initial & Intervall
+  // Direkt beim Laden der Seite einmal Daten ziehen
   loadLatest();
+
+  // Danach zyklisch alle REFRESH_MS Millisekunden aktualisieren
   setInterval(loadLatest, REFRESH_MS);
   </script>
 </body>
