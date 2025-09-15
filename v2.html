@@ -17,38 +17,40 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <!-- Einfache, robuste Basisklassen (keine Framework-Abhängigkeiten) -->
+
   <style>
-    <!-- Body und HTML nehmen die volle Höhe ein -->
+    /* Body und HTML nehmen die volle Höhe ein */
     html, body { height:100%; margin:0; }
 
-    <!-- Kartencontainer soll die ganze Seite ausfüllen -->
+    /* Kartencontainer soll die ganze Seite ausfüllen */
     #map { height:100%; width:100%; }
 
-    <!-- Kleine Infobadges oben links/rechts -->
+    /* Kleine Infobadges oben links/rechts */
     .badge {
       position: fixed; z-index: 900; padding: 8px 12px; border-radius: 14px;
       background: #e8f5e9; color:#1b5e20; font: 16px/1.2 system-ui, sans-serif;
       box-shadow: 0 2px 10px rgba(0,0,0,.15);
     }
 
-    <!-- Rechte Badge (andere Farbe, um Infos zu trennen) -->
+    /* Rechte Badge (andere Farbe, um Infos zu trennen) */
     .badge.right { right: 12px; top: 12px; background:#e3f2fd; color:#0d47a1; }
 
-    <!-- Linke Badge -->
+    /* Linke Badge */
     .badge.left  { left: 12px; top: 12px; }
 
-    <!-- Tabellenstil im Popup (schlank, lesbar) -->
+    /* Tabellenstil im Popup (schlank, lesbar) */
     .popup-table { border-collapse: collapse; font: 14px system-ui, sans-serif; }
 
-    <!-- Zellen erhalten leichte Rahmen und kleine Abstände -->
+    /* Zellen erhalten leichte Rahmen und kleine Abstände */
     .popup-table td { padding: 2px 6px; border: 1px solid #ddd; }
 
-    <!-- Fehlerbanner unten (einblendbar bei Ladefehlern) -->
+    /* Fehlerbanner unten (einblendbar bei Ladefehlern) */
     .banner {
       position: fixed; left:0; right:0; bottom:0; padding: 8px 12px; text-align:center;
       background:#c62828; color:#fff; font: 14px/1.2 system-ui, sans-serif; display:none; z-index: 950;
     }
   </style>
+
 </head>
 <body>
   <!-- Kartencontainer -->
