@@ -4,22 +4,22 @@
     "lat": 54.50311486,
     "lon": 9.58799756
   },
-  "time": "2025-09-15T23:19:42.796115Z",
+  "time": "2025-09-15T23:39:42.809420Z",
   "gateways": [
     {
       "id": "laird-lorawan-gw",
       "rssi": -85.0,
-      "snr": 9.8
+      "snr": 8.0
     },
     {
       "id": "lora-gateway-fahrdorf",
       "rssi": -109.0,
-      "snr": 4.5
+      "snr": 6.0
     }
   ],
   "values": {
     "BatV": 3.405,
-    "Hum_SHT31": 78.9,
+    "Hum_SHT31": 79.0,
     "TempC_SHT31": 15.0
   }
 }
