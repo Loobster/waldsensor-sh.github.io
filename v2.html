@@ -6,15 +6,10 @@
   <title>WALDSENSOR.SH – Karte (V2)</title>
 
   <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin></script>
 
-  <!-- MarkerCluster (optional, bleibt geladen für später) -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
-  <!-- QRCode -->
+  <!-- QRCode (für Popup-Link) -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
   <style>
@@ -22,57 +17,52 @@
       --pill-bg:#fff;
       --pill-text:#106e2a;
       --pill-shadow:0 2px 10px rgba(0,0,0,.15);
+      --blue:#0b4da2;
     }
-    html, body { height:100%; margin:0; }
+    html, body { height:100%; margin:0; background:#f7f7f7; }
     #map { height:100%; width:100%; }
 
+    /* Kopf-Badges */
     .pill {
-      position: fixed;
-      z-index: 1001;
-      top: 14px;
-      left: 70px;
-      background: var(--pill-bg);
-      color: var(--pill-text);
-      padding: 10px 14px;
-      border-radius: 14px;
-      font: 600 18px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      box-shadow: var(--pill-shadow);
-      border: 1px solid #e8e8e8;
-    }
-
-    .last-node {
-      position: fixed;
-      z-index: 1001;
-      top: 14px;
-      right: 14px;
-      background: #e9f3ff;
-      color: #0b4da2;
-      padding: 10px 14px;
-      border-radius: 14px;
+      position: fixed; z-index: 1001; top: 12px; left: 68px;
+      background: var(--pill-bg); color: var(--pill-text);
+      padding: 10px 14px; border-radius: 14px;
       font: 600 16px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      box-shadow: var(--pill-shadow);
-      border: 1px solid #d6e6ff;
-      max-width: 42ch;
-      text-align: right;
+      box-shadow: var(--pill-shadow); border: 1px solid #e8e8e8;
+    }
+    .last-node {
+      position: fixed; z-index: 1001; top: 12px; right: 12px;
+      background: #e9f3ff; color: var(--blue);
+      padding: 10px 14px; border-radius: 14px;
+      font: 600 15px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: var(--pill-shadow); border: 1px solid #d6e6ff;
+      max-width: 42ch; text-align: right;
     }
 
-    /* Popup-Optik & Z-Index, damit nichts von den Badges verdeckt wird */
+    /* Popup-Optik */
     .leaflet-popup { z-index: 1002; }
     .popup { width: 320px; }
-    .popup h3{ margin:0 0 .25rem 0; font:700 20px/1.25 system-ui; }
+    .popup h3{
+      margin:0 0 .25rem 0; font:700 20px/1.25 system-ui;
+      color:#222;
+    }
     .popup hr{ border:0; height:1px; background:#ececec; margin:.5rem 0 .75rem; }
-    .popup .kv{ margin:.35rem 0; }
-    .popup .kv b{ font-weight:700; }
-    .popup .qrrow {
-      display:flex; gap:14px; align-items:center; margin-top:8px;
+
+    .row{
+      display:flex; justify-content:space-between; align-items:baseline;
+      gap:12px; padding:2px 0;
+      font: 500 14px/1.25 system-ui;
     }
-    .popup .openbtn {
-      display:inline-block; padding:12px 16px; border-radius:14px;
-      background:#eef4ff; color:#0b4da2; font:700 20px/1.1 system-ui;
-      text-decoration:none; border:1px solid #d6e6ff;
-      white-space:nowrap;
+    .label{ color:#555; }
+    .value{ font-weight:700; color:#111; }
+
+    .qrrow { display:flex; gap:14px; align-items:center; margin-top:10px; }
+    .openbtn {
+      display:inline-block; padding:10px 14px; border-radius:14px;
+      background:#eef4ff; color:var(--blue); font:700 16px/1.1 system-ui;
+      text-decoration:none; border:1px solid #d6e6ff; white-space:nowrap;
     }
-    .popup .hint { color:#666; font:500 13px/1.3 system-ui; margin-top:6px; }
+    .hint { color:#666; font:500 12px/1.35 system-ui; margin-top:6px; }
   </style>
 </head>
 <body>
@@ -81,51 +71,61 @@
   <div id="map"></div>
 
   <script>
-    // ------------------- Konstante Pfade & Refresh -------------------
-    const DATA_URL = "/data/v2/latest/all.json";
-    const AUTO_REFRESH_MS = 60_000;
+    // --------- Datenquelle & Aktualisierung ---------
+    const DATA_URL = "/data/v2/latest/all.json";   // lokal aus dem Repo
+    const AUTO_REFRESH_MS = 60_000;                // 60s
+    const FETCH_TIMEOUT_MS = 8_000;                // robust gegen Hänger
 
-    // ------------------- ID-Normalisierung (einheitlich kurz) -------------------
+    // --------- ID-Normalisierung ---------
     function normalizeId(s){
-      return String(s||'')
+      return String(s||"")
         .toLowerCase()
-        .replace(/\r|\s+/g,'')                 // CR/Spaces raus
-        .replace(/^waldsensor[_-]/,'')         // Präfix weg
-        .replace(/_/g,'-')                     // _ -> -
-        .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,''); // gängige Suffixe weg
+        .replace(/\r|\s+/g,"")                 // CR/Spaces raus
+        .replace(/^waldsensor[_-]/,"")         // Präfix weg
+        .replace(/_/g,"-")                     // _ -> -
+        .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,""); // gängige Suffixe weg
     }
 
-    // ------------------- manuelle Koordinaten (short IDs) -------------------
+    // --------- Manuelle Koordinaten (Kurz-IDs) ---------
+    // (Fallbacks, falls in all.json keine lat/lon stehen oder falsch sind)
     const MANUAL_LOC = {
       "breklum":  [54.60669, 8.98195],
       "s31":      [54.65000, 8.96000],
-      "se01":     [54.65005, 8.96005], // ~5 m versetzt
+      "se01":     [54.65005, 8.96005],   // ~5 m versetzt
       "kropp":    [54.41018, 9.52839],
       "fahrdorf": [54.50158, 9.58690],
-      "lsn50":    [54.475,   9.05]     // notfalls grob, falls gebraucht
+      "lsn50":    [54.47500, 9.05000],   // bitte bei Bedarf anpassen
     };
 
+    // Diese Felder lassen wir im Popup weg
     const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status","lat","lon"]);
 
-    // ------------------- Leaflet-Setup -------------------
+    // --------- Leaflet-Setup ---------
     const map = L.map("map", { zoomSnap: 0.25 });
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
     }).addTo(map);
     map.setView([54.4, 9.6], 8.25);
-    let markersLayer = L.layerGroup().addTo(map);
 
-    // ------------------- Hilfsfunktionen -------------------
+    // Layer & Marker-Index (ruckelfrei: wir aktualisieren selektiv)
+    const markersLayer = L.layerGroup().addTo(map);
+    const markersById = new Map(); // id -> { marker, lastTs }
+
+    // --------- Helfer ---------
     function deTime(ts){
-      try {
+      try{
         return new Date(ts).toLocaleString("de-DE", {
           year:"numeric", month:"2-digit", day:"2-digit",
           hour:"2-digit", minute:"2-digit", second:"2-digit"
         });
-      } catch(_){ return ts || "–"; }
+      } catch{ return ts || "–"; }
     }
-
+    function deNum(n, digits=1){
+      return (typeof n === "number" && Number.isFinite(n))
+        ? n.toLocaleString("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits })
+        : "–";
+    }
     function cleanFields(fields){
       const out = {};
       for (const [k,v] of Object.entries(fields || {})){
@@ -136,7 +136,6 @@
       }
       return out;
     }
-
     function pickCoord(item){
       const f = item?.fields || {};
       if (typeof f.lat !== "undefined" && typeof f.lon !== "undefined"){
@@ -147,46 +146,6 @@
       if (MANUAL_LOC[short]) return MANUAL_LOC[short];
       return null;
     }
-
-    function popupHtml(item){
-      const f = cleanFields(item.fields);
-      let html = `<div class="popup"><h3>${normalizeId(item.id)}</h3>`;
-      html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
-
-      // bevorzugte Felder kompakt:
-      if (typeof f.TempC_SHT31 === "number")
-        html += `<div class="kv">Temp (SHT31): <b>${f.TempC_SHT31.toFixed(1)} °C</b></div>`;
-      else if (typeof f.TempC_SHT === "number")
-        html += `<div class="kv">Temp (SHT): <b>${f.TempC_SHT.toFixed(1)} °C</b></div>`;
-
-      if (typeof f.Hum_SHT31 === "number")
-        html += `<div class="kv">Hum (SHT31): <b>${f.Hum_SHT31.toFixed(1)} %</b></div>`;
-      else if (typeof f.Hum_SHT === "number")
-        html += `<div class="kv">Hum (SHT): <b>${f.Hum_SHT.toFixed(1)} %</b></div>`;
-
-      if (typeof f.BatV === "number")
-        html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
-
-      // alle restlichen Felder
-      for (const [k,v] of Object.entries(f)){
-        if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV"].includes(k)) continue;
-        html += `<div class="kv">${k}: <b>${v}</b></div>`;
-      }
-
-      const shortId = normalizeId(item.id);
-      const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
-
-      html += `
-        <div class="qrrow">
-          <div id="qrcode-${shortId}"></div>
-          <a class="openbtn" href="${url}" target="_blank" rel="noopener">Seite<br/>öffnen</a>
-        </div>
-        <div class="hint">Link nutzt Basis-ID: <b>${shortId}</b></div>
-      `;
-
-      return html + `</div>`;
-    }
-
     function latestRecord(data){
       let best = null, bestT = -Infinity;
       for (const r of (data||[])){
@@ -197,66 +156,142 @@
       return best;
     }
 
-    async function loadData(){
-      const res = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache:"no-store" });
-      if (!res.ok) throw new Error("fetch failed " + res.status);
-      return res.json();
+    function popupHtml(item){
+      const f = cleanFields(item.fields);
+      const shortId = normalizeId(item.id);
+      const temp = (typeof f.TempC_SHT31 === "number") ? f.TempC_SHT31
+                : (typeof f.TempC_SHT   === "number") ? f.TempC_SHT : null;
+      const hum  = (typeof f.Hum_SHT31  === "number") ? f.Hum_SHT31
+                : (typeof f.Hum_SHT    === "number") ? f.Hum_SHT  : null;
+      const bat  = (typeof f.BatV       === "number") ? f.BatV : null;
+
+      let html = `<div class="popup">`;
+      html += `<h3>Sensor: ${shortId}</h3>`;
+      html += `<div class="row"><span class="label">Zuletzt aktiv</span><span class="value">${deTime(item.ts)}</span></div>`;
+      html += `<hr/>`;
+      if (bat  !== null) html += `<div class="row"><span class="label">BatV</span><span class="value">${deNum(bat,3)} V</span></div>`;
+      if (hum  !== null) html += `<div class="row"><span class="label">Hum_SHT</span><span class="value">${deNum(hum,1)} %</span></div>`;
+      if (temp !== null) html += `<div class="row"><span class="label">TempC_SHT</span><span class="value">${deNum(temp,1)} °C</span></div>`;
+      if (typeof f.temp_SOIL  === "number") html += `<div class="row"><span class="label">Bodentemp</span><span class="value">${deNum(f.temp_SOIL,1)} °C</span></div>`;
+      if (typeof f.water_SOIL === "number") html += `<div class="row"><span class="label">Bodenfeuchte</span><span class="value">${deNum(f.water_SOIL,1)} %</span></div>`;
+
+      // übrige Felder
+      for (const [k,v] of Object.entries(f)){
+        if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV","temp_SOIL","water_SOIL"].includes(k)) continue;
+        html += `<div class="row"><span class="label">${k}</span><span class="value">${v}</span></div>`;
+      }
+
+      const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+      html += `
+        <div class="qrrow">
+          <div id="qrcode-${shortId}"></div>
+          <a class="openbtn" href="${url}" target="_blank" rel="noopener">Seite&nbsp;öffnen</a>
+        </div>
+        <div class="hint">Link nutzt Basis-ID: <b>${shortId}</b></div>
+      `;
+      html += `</div>`;
+      return html;
     }
 
-    function render(raw){
-      // ggf. IDs normalisieren (falls _all.json noch \r enthält)
-      const data = (raw||[]).map(x => ({...x, id: normalizeId(x.id)}));
+    function ensureQRCode(shortId){
+      const qrDiv = document.getElementById(`qrcode-${shortId}`);
+      if (qrDiv && !qrDiv.hasChildNodes()){
+        const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+        QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 140 }, (err, canvas) => {
+          if (!err) qrDiv.appendChild(canvas);
+        });
+      }
+    }
 
-      markersLayer.clearLayers();
+    // --------- Rendering ohne Flackern ---------
+    function renderIncremental(raw){
+      const data = (raw||[]).map(x => ({...x, id: normalizeId(x.id)}));
+      const seen = new Set();
       const bounds = [];
 
       for (const item of data){
+        const id = item.id;
         const coord = pickCoord(item);
         if (!coord) continue;
-
-        const marker = L.marker(coord).bindPopup(popupHtml(item));
-        marker.on("popupopen", () => {
-          const shortId = normalizeId(item.id);
-          const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
-          const qrDiv = document.getElementById(`qrcode-${shortId}`);
-          if (qrDiv && !qrDiv.hasChildNodes()) {
-            QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 140 }, (err, canvas) => {
-              if (!err) qrDiv.appendChild(canvas);
-            });
-          }
-        });
-        marker.addTo(markersLayer);
+        seen.add(id);
         bounds.push(coord);
+
+        const exists = markersById.get(id);
+        const html = popupHtml(item);
+
+        if (!exists){
+          const marker = L.marker(coord).addTo(markersLayer).bindPopup(html);
+          marker.on("popupopen", () => ensureQRCode(id));
+          markersById.set(id, { marker, lastTs: item.ts, coord });
+        } else {
+          const { marker, lastTs } = exists;
+
+          // Position nur ändern, wenn sie sich geändert hat (spart Repaint)
+          const latlng = marker.getLatLng();
+          if (Math.abs(latlng.lat - coord[0]) > 1e-6 || Math.abs(latlng.lng - coord[1]) > 1e-6) {
+            marker.setLatLng(coord);
+          }
+
+          // Popup-Inhalt nur aktualisieren, wenn sich ts geändert hat
+          if (item.ts !== lastTs) {
+            marker.setPopupContent(html);
+            exists.lastTs = item.ts;
+          }
+        }
       }
 
-      if (bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
+      // Entferne Marker, die in der neuen Antwort fehlen
+      for (const [id, obj] of markersById){
+        if (!seen.has(id)){
+          markersLayer.removeLayer(obj.marker);
+          markersById.delete(id);
+        }
+      }
+
+      if (bounds.length){
+        // Fit nur beim ersten Lauf oder wenn noch keine Marker da waren
+        if (!renderIncremental._hasFit){
+          map.fitBounds(L.latLngBounds(bounds).pad(0.12));
+          renderIncremental._hasFit = true;
+        }
+      }
 
       document.getElementById("stamp").textContent =
         "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
 
       const lastEl = document.getElementById("last");
       const lastRec = latestRecord(data);
-      if (lastRec){
-        lastEl.textContent =
-          "Letzte Node-Meldung: " + deTime(lastRec.ts) + " — " + normalizeId(lastRec.id);
-      } else {
-        lastEl.textContent = "Letzte Node-Meldung: –";
-      }
+      lastEl.textContent = lastRec
+        ? ("Letzte Node-Meldung: " + deTime(lastRec.ts) + " — " + lastRec.id)
+        : "Letzte Node-Meldung: –";
     }
 
-    async function run(){
-      try{ render(await loadData()); }
-      catch(err){
-        console.error(err);
+    // --------- Fetch mit Timeout (stabil gegen Hänger) ---------
+    async function loadData(){
+      const ac = new AbortController();
+      const to = setTimeout(()=>ac.abort(), FETCH_TIMEOUT_MS);
+      try{
+        const res = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache:"no-store", signal: ac.signal });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return await res.json();
+      } finally { clearTimeout(to); }
+    }
+
+    async function runOnce(){
+      try{
+        const raw = await loadData();
+        renderIncremental(raw);
+      } catch(err){
+        console.error("[v2] fetch/render error:", err);
+        // Anzeige trotzdem aktualisieren, aber Karte nicht leeren
         document.getElementById("stamp").textContent =
-          "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
+          "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE") + " (Fehler)";
       }
     }
 
-    run();
-    setInterval(run, AUTO_REFRESH_MS);
+    // Start
+    runOnce();
+    setInterval(runOnce, AUTO_REFRESH_MS);
   </script>
 </body>
 </html>
-
-<!-- redeploy 2025-09-09T18:36:56+02:00 -->
