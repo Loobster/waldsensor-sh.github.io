@@ -5,16 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WALDSENSOR.SH – Karte (V2)</title>
 
-  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin></script>
 
-  <!-- MarkerCluster (geladen, aber aktuell nicht genutzt) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
-  <!-- QRCode -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
   <style>
@@ -25,82 +22,68 @@
       --blue:#0b4da2;
       --blue-bg:#eef4ff;
       --blue-brd:#d6e6ff;
-      --card:#f2f6fa;
     }
-
     html, body { height:100%; margin:0; }
     #map { height:100%; width:100%; }
 
-    /* Badges */
-    .pill, .last-node {
-      position: fixed; z-index: 2000;
-      background: var(--pill-bg);
-      padding: 10px 14px;
-      border-radius: 14px;
-      box-shadow: var(--pill-shadow);
-      border: 1px solid #e8e8e8;
-      font: 600 16px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    .pill, .last-node{
+      position:fixed; z-index:2000; background:var(--pill-bg);
+      padding:8px 12px; border-radius:12px; box-shadow:var(--pill-shadow);
+      border:1px solid #e8e8e8; font:600 14px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
     }
-    .pill { top: 14px; left: 70px; color: var(--pill-text); }
-    .last-node {
-      top: 14px; right: 14px;
-      background: #e9f3ff; color: var(--blue);
-      border-color: var(--blue-brd);
-      max-width: 42ch; text-align: right;
+    .pill{ top:12px; left:70px; color:var(--pill-text); }
+    .last-node{
+      top:12px; right:12px; background:#e9f3ff; color:var(--blue); border-color:var(--blue-brd);
+      max-width:40ch; text-align:right;
     }
 
-    /* Popup über Badges */
-    .leaflet-popup { z-index: 2001; }
+    .leaflet-popup{ z-index:2001; }
 
-    /* Kompakteres Popup */
-    .popup {
-      width: 320px; max-width: 92vw;
-      font: 500 15px/1.35 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      color:#1b1f23;
-      word-wrap: break-word;
+    /* ——— kompakteres Popup ——— */
+    .popup{
+      width:260px; max-width:92vw;
+      font:500 14px/1.3 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:#1b1f23; word-wrap:break-word;
     }
-    .popup h3{
-      margin:0 0 .25rem 0;
-      font: 800 22px/1.2 system-ui;
-    }
-    .popup .muted { color:#5f6b7a; }
-    .popup hr{ border:0; height:1px; background:#eceff3; margin:.5rem 0 .75rem; }
+    .popup h3{ margin:0 0 .2rem; font:800 18px/1.2 system-ui; }
+    .popup .muted{ color:#5f6b7a; }
+    .popup hr{ border:0; height:1px; background:#eceff3; margin:.4rem 0 .55rem; }
 
-    /* Label/Value Grid – bündig, keine Riesensprünge */
     .grid{
       display:grid;
-      grid-template-columns: 1fr auto;
-      gap: 6px 14px;
-      align-items: baseline;
-      margin:.25rem 0 .5rem;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:4px 10px; align-items:baseline; margin:.2rem 0 .4rem;
     }
     .label{ color:#5f6b7a; font-weight:700; }
-    .value{ font: 800 18px/1.2 system-ui; }
+    .value{
+      font:800 16px/1.1 system-ui;
+      color:var(--blue);
+      justify-self:start;   /* links statt am rechten Rand kleben */
+    }
 
-    .qrrow{
-      display:flex; gap:14px; align-items:center; margin-top:8px;
+    .qrrow{ display:flex; gap:10px; align-items:center; margin-top:6px; }
+    .qrbox{
+      width:80px; height:80px;
+      display:flex; align-items:center; justify-content:center;
+      background:#fff; border-radius:8px; box-shadow:0 1px 5px rgba(0,0,0,.08);
     }
-    .qrbox{ width:120px; height:120px; display:flex; align-items:center; justify-content:center; background:#fff; border-radius:10px; box-shadow:0 1px 6px rgba(0,0,0,.08); }
     .openbtn{
-      display:inline-block; padding:10px 14px; border-radius:12px;
-      background:var(--blue-bg); color:var(--blue); font:700 18px/1.1 system-ui;
-      text-decoration:none; border:1px solid var(--blue-brd);
-      white-space:nowrap;
+      display:inline-block; padding:8px 12px; border-radius:10px;
+      background:var(--blue-bg); color:var(--blue); font:700 14px/1.1 system-ui;
+      text-decoration:none; border:1px solid var(--blue-brd); white-space:nowrap;
     }
-    .hint{ color:#6b7280; font:500 13px/1.3 system-ui; margin-top:8px; }
+    .hint{ color:#6b7280; font:500 12px/1.3 system-ui; margin-top:6px; }
   </style>
 </head>
 <body>
-  <div class="pill" id="stamp">Letzte Aktualisierung: –</div>
+  <div class="pill" id="stamp">Stand: –</div>
   <div class="last-node" id="last">Letzte Node-Meldung: –</div>
   <div id="map"></div>
 
   <script>
-    // -------- Einstellungen --------
     const DATA_URL = "/data/v2/latest/all.json";
     const AUTO_REFRESH_MS = 60_000;
 
-    // ID-Normalisierung (kurz/robust)
     function normalizeId(s){
       return String(s||'')
         .toLowerCase()
@@ -110,89 +93,85 @@
         .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,'');
     }
 
-    // Manuelle Koordinaten (lsn50 entfernt)
+    // lsn50 bewusst entfernt
     const MANUAL_LOC = {
-      breklum:  [54.60669, 8.98195],
-      s31:      [54.65000, 8.96000],
-      se01:     [54.65005, 8.96005],
-      kropp:    [54.41018, 9.52839],
-      fahrdorf: [54.50158, 9.58690],
-      // lsn50 – bewusst entfernt
+      breklum:[54.60669, 8.98195],
+      s31:[54.65000, 8.96000],
+      se01:[54.65005, 8.96005],
+      kropp:[54.41018, 9.52839],
+      fahrdorf:[54.50158, 9.58690],
     };
 
     const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status","lat","lon"]);
 
-    // -------- Leaflet --------
-    const map = L.map("map", { zoomSnap: 0.25 });
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+    const map = L.map("map",{zoomSnap:0.25});
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+      maxZoom:19,
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
     }).addTo(map);
     map.setView([54.4, 9.6], 8.25);
 
-    // Inkrementelles Marker-Management
-    const markers = new Map(); // key: shortId -> L.Marker
-    let currentAbort = null;
+    const markers = new Map();
+    let currentAbort=null;
 
-    // -------- Helpers --------
     function deTime(ts){
       try{
-        return new Date(ts).toLocaleString("de-DE", {
-          year:"numeric", month:"2-digit", day:"2-digit",
-          hour:"2-digit", minute:"2-digit", second:"2-digit"
+        return new Date(ts).toLocaleString("de-DE",{
+          year:"numeric",month:"2-digit",day:"2-digit",
+          hour:"2-digit",minute:"2-digit",second:"2-digit"
         });
-      }catch(_){ return ts || "–"; }
+      }catch(_){return ts||"–";}
     }
-    function deNum(n, digits=1){
-      return (typeof n === "number" && Number.isFinite(n))
-        ? n.toLocaleString("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits })
+    function deNum(n,d=1){
+      return (typeof n==="number" && Number.isFinite(n))
+        ? n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d})
         : "–";
     }
-    function cleanFields(fields){
-      const out = {};
-      for (const [k,v] of Object.entries(fields || {})){
-        if (OMIT_FIELDS.has(k)) continue;
-        if (v === undefined || v === null || v === "NULL") continue;
-        if (typeof v === "number" && !Number.isFinite(v)) continue;
-        out[k] = v;
+    function cleanFields(f){
+      const out={};
+      for(const [k,v] of Object.entries(f||{})){
+        if(OMIT_FIELDS.has(k)) continue;
+        if(v===undefined||v===null||v==="NULL") continue;
+        if(typeof v==="number" && !Number.isFinite(v)) continue;
+        out[k]=v;
       }
       return out;
     }
     function pickCoord(item){
-      const f = item?.fields || {};
-      if (typeof f.lat !== "undefined" && typeof f.lon !== "undefined"){
-        const la = Number(f.lat), lo = Number(f.lon);
-        if (Number.isFinite(la) && Number.isFinite(lo)) return [la, lo];
+      const f=item?.fields||{};
+      if(f.lat!==undefined && f.lon!==undefined){
+        const la=Number(f.lat), lo=Number(f.lon);
+        if(Number.isFinite(la)&&Number.isFinite(lo)) return [la,lo];
       }
-      const short = normalizeId(item.id);
-      if (MANUAL_LOC[short]) return MANUAL_LOC[short];
+      const sid=normalizeId(item.id);
+      if(MANUAL_LOC[sid]) return MANUAL_LOC[sid];
       return null;
     }
     function latestRecord(data){
-      let best = null, bestT = -Infinity;
-      for (const r of (data||[])){
-        if (!r || !r.ts) continue;
-        const t = new Date(r.ts).getTime();
-        if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
+      let best=null,bT=-Infinity;
+      for(const r of (data||[])){
+        if(!r||!r.ts) continue;
+        const t=new Date(r.ts).getTime();
+        if(!Number.isNaN(t)&&t>bT){bT=t;best=r;}
       }
       return best;
     }
 
     function popupHtml(item){
-      const f = cleanFields(item.fields);
-      const shortId = normalizeId(item.id);
-      const temp = (typeof f.TempC_SHT31 === "number") ? f.TempC_SHT31
-                  : (typeof f.TempC_SHT   === "number") ? f.TempC_SHT : null;
-      const hum  = (typeof f.Hum_SHT31  === "number") ? f.Hum_SHT31
-                  : (typeof f.Hum_SHT    === "number") ? f.Hum_SHT  : null;
-      const bat  = (typeof f.BatV       === "number") ? f.BatV : null;
-      const url  = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+      const f=cleanFields(item.fields);
+      const sid=normalizeId(item.id);
+      const temp=(typeof f.TempC_SHT31==="number")?f.TempC_SHT31:
+                  (typeof f.TempC_SHT==="number")?f.TempC_SHT:null;
+      const hum =(typeof f.Hum_SHT31==="number")?f.Hum_SHT31:
+                  (typeof f.Hum_SHT==="number")?f.Hum_SHT:null;
+      const bat =(typeof f.BatV==="number")?f.BatV:null;
+      const url =`https://www.waldsensor.sh/html/sensor.html?node=${sid}`;
 
       return `
         <div class="popup">
-          <h3>${shortId}</h3>
+          <h3>${sid}</h3>
           <div class="muted">Zuletzt aktiv</div>
-          <div style="font:800 16px/1.2 system-ui; margin:.15rem 0 .4rem">${deTime(item.ts)}</div>
+          <div style="font:800 14px/1.2 system-ui; margin:.1rem 0 .35rem">${deTime(item.ts)}</div>
           <hr/>
           <div class="grid">
             ${bat  !== null ? `<div class="label">BatV</div><div class="value">${deNum(bat,3)} V</div>` : ``}
@@ -203,106 +182,80 @@
           </div>
 
           <div class="qrrow">
-            <div class="qrbox" id="qr-${shortId}"></div>
+            <div class="qrbox" id="qr-${sid}"></div>
             <a class="openbtn" href="${url}" target="_blank" rel="noopener">Seite öffnen</a>
           </div>
-          <div class="hint">Link nutzt Basis-ID: <b>${shortId}</b></div>
+          <div class="hint">Link nutzt Basis-ID: <b>${sid}</b></div>
         </div>
       `;
     }
-
-    function ensureQR(shortId, url){
-      const box = document.getElementById(`qr-${shortId}`);
-      if (box && !box.hasChildNodes()){
-        QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 120 }, (err, canvas) => {
-          if (!err) box.appendChild(canvas);
+    function ensureQR(sid,url){
+      const box=document.getElementById(`qr-${sid}`);
+      if(box && !box.hasChildNodes()){
+        QRCode.toCanvas(url,{errorCorrectionLevel:'M',width:80},(err,canvas)=>{
+          if(!err) box.appendChild(canvas);
         });
       }
     }
 
-    // -------- Daten laden & Karte inkrementell aktualisieren --------
     async function loadData(){
-      if (currentAbort) currentAbort.abort();
-      currentAbort = new AbortController();
-      const t0 = Date.now();
-      const res = await fetch(`${DATA_URL}?t=${t0}`, { cache:"no-store", signal: currentAbort.signal });
-      if (!res.ok) throw new Error("fetch failed " + res.status);
+      if(currentAbort) currentAbort.abort();
+      currentAbort=new AbortController();
+      const res=await fetch(`${DATA_URL}?t=${Date.now()}`,{cache:"no-store",signal:currentAbort.signal});
+      if(!res.ok) throw new Error("fetch "+res.status);
       return res.json();
     }
 
     function updateMap(raw){
-      const data = (raw||[]).map(x => ({...x, id: normalizeId(x.id)}));
+      const data=(raw||[]).map(x=>({...x,id:normalizeId(x.id)}));
+      const incoming=new Map();
+      for(const it of data){ incoming.set(normalizeId(it.id), it); }
 
-      // Indexe bauen
-      const incoming = new Map(); // shortId -> item
-      for (const item of data){
-        const sid = normalizeId(item.id);
-        incoming.set(sid, item);
+      for(const [sid,mk] of [...markers.entries()]){
+        if(!incoming.has(sid)){ map.removeLayer(mk); markers.delete(sid); }
       }
 
-      // Entfernte Marker löschen
-      for (const [sid, mk] of [...markers.entries()]){
-        if (!incoming.has(sid)){
-          map.removeLayer(mk);
-          markers.delete(sid);
-        }
-      }
-
-      // Neue/aktualisierte Marker setzen
-      const bounds = [];
-      for (const [sid, item] of incoming.entries()){
-        const coord = pickCoord(item);
-        if (!coord) continue;
+      const bounds=[];
+      for(const [sid,item] of incoming.entries()){
+        const coord=pickCoord(item);
+        if(!coord) continue;
         bounds.push(coord);
 
-        const url = `https://www.waldsensor.sh/html/sensor.html?node=${sid}`;
-        const html = popupHtml(item);
+        const url=`https://www.waldsensor.sh/html/sensor.html?node=${sid}`;
+        const html=popupHtml(item);
 
-        if (markers.has(sid)){
-          // Position evtl. korrigieren und Popup neu setzen
+        if(markers.has(sid)){
           markers.get(sid).setLatLng(coord).unbindPopup().bindPopup(html);
-        } else {
-          const m = L.marker(coord).bindPopup(html);
-          m.on("popupopen", () => ensureQR(sid, url));
+        }else{
+          const m=L.marker(coord).bindPopup(html);
+          m.on("popupopen",()=>ensureQR(sid,url));
           m.addTo(map);
-          markers.set(sid, m);
+          markers.set(sid,m);
         }
       }
 
-      // Beim allerersten Füllen zoomen (später nicht mehr nerven)
-      if (updateMap._firstRun === undefined){
-        updateMap._firstRun = false;
-        if (bounds.length){
-          map.fitBounds(L.latLngBounds(bounds).pad(0.12));
-        }
+      if(updateMap._firstRun===undefined){
+        updateMap._firstRun=false;
+        if(bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
       }
 
-      // Headline-Zeiten
-      const stamp = document.getElementById("stamp");
-      stamp.textContent = "Stand: " + new Date().toLocaleString("de-DE");
-
-      const lastEl = document.getElementById("last");
-      const lastRec = latestRecord(data);
-      if (lastRec){
-        lastEl.textContent = "Letzte Node-Meldung: " + deTime(lastRec.ts) + " — " + normalizeId(lastRec.id);
-      } else {
-        lastEl.textContent = "Letzte Node-Meldung: –";
-      }
+      document.getElementById("stamp").textContent="Stand: "+new Date().toLocaleString("de-DE");
+      const lastRec=latestRecord(data);
+      document.getElementById("last").textContent = lastRec
+        ? "Letzte Node-Meldung: "+deTime(lastRec.ts)+" — "+normalizeId(lastRec.id)
+        : "Letzte Node-Meldung: –";
     }
 
     async function tick(){
       try{
-        const json = await loadData();
+        const json=await loadData();
         updateMap(json);
       }catch(e){
-        console.warn("Update übersprungen:", e?.message || e);
-        // Anzeige freundlich – Karte bleibt stehen
-        const stamp = document.getElementById("stamp");
-        stamp.textContent = "Stand (unverändert): " + new Date().toLocaleTimeString("de-DE");
+        console.warn("Update ausgelassen:", e?.message||e);
+        document.getElementById("stamp").textContent="Stand (unverändert): "+new Date().toLocaleTimeString("de-DE");
       }
     }
 
-    // Start
     tick();
     setInterval(tick, AUTO_REFRESH_MS);
   </script>
