@@ -5,74 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WALDSENSOR.SH – Karte (V2)</title>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin></script>
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
+  <!-- MarkerCluster -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
+  <!-- QRCode -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
   <style>
-    :root{
-      --pill-bg:#fff;
-      --pill-text:#106e2a;
-      --pill-shadow:0 2px 10px rgba(0,0,0,.15);
-      --blue:#0b4da2;
-      --blue-bg:#eef4ff;
-      --blue-brd:#d6e6ff;
-    }
     html, body { height:100%; margin:0; }
     #map { height:100%; width:100%; }
 
-    .pill, .last-node{
-      position:fixed; z-index:2000; background:var(--pill-bg);
-      padding:8px 12px; border-radius:12px; box-shadow:var(--pill-shadow);
-      border:1px solid #e8e8e8; font:600 14px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    .pill {
+      position: fixed;
+      z-index: 1001;
+      top: 14px;
+      left: 70px;
+      background: #fff;
+      color: #106e2a;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font: 600 14px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: 0 2px 10px rgba(0,0,0,.15);
+      border: 1px solid #e8e8e8;
     }
-    .pill{ top:12px; left:70px; color:var(--pill-text); }
-    .last-node{
-      top:12px; right:12px; background:#e9f3ff; color:var(--blue); border-color:var(--blue-brd);
-      max-width:40ch; text-align:right;
-    }
-
-    .leaflet-popup{ z-index:2001; }
-
-    /* ——— kompakteres Popup ——— */
-    .popup{
-      width:260px; max-width:92vw;
-      font:500 14px/1.3 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      color:#1b1f23; word-wrap:break-word;
-    }
-    .popup h3{ margin:0 0 .2rem; font:800 18px/1.2 system-ui; }
-    .popup .muted{ color:#5f6b7a; }
-    .popup hr{ border:0; height:1px; background:#eceff3; margin:.4rem 0 .55rem; }
-
-    .grid{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) auto;
-      gap:4px 10px; align-items:baseline; margin:.2rem 0 .4rem;
-    }
-    .label{ color:#5f6b7a; font-weight:700; }
-    .value{
-      font:800 16px/1.1 system-ui;
-      color:var(--blue);
-      justify-self:start;   /* links statt am rechten Rand kleben */
+    .last-node {
+      position: fixed;
+      z-index: 1001;
+      top: 14px;
+      right: 14px;
+      background: #e9f3ff;
+      color: #0b4da2;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font: 600 14px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: 0 2px 10px rgba(0,0,0,.15);
+      border: 1px solid #d6e6ff;
+      max-width: 42ch;
+      text-align: right;
     }
 
-    .qrrow{ display:flex; gap:10px; align-items:center; margin-top:6px; }
-    .qrbox{
-      width:80px; height:80px;
-      display:flex; align-items:center; justify-content:center;
-      background:#fff; border-radius:8px; box-shadow:0 1px 5px rgba(0,0,0,.08);
-    }
-    .openbtn{
+    .leaflet-popup { z-index: 1002; }
+    .popup { width:260px; font:500 14px/1.3 system-ui; }
+    .popup h3{ margin:0 0 .25rem 0; font:700 16px/1.2 system-ui; }
+    .popup hr{ border:0; height:1px; background:#ececec; margin:.5rem 0 .5rem; }
+    .row{ display:flex; justify-content:space-between; margin:.2rem 0; }
+    .row .label{ color:#555; }
+    .row .value{ color:#0b4da2; font-weight:600; }
+    .qrrow { display:flex; gap:10px; align-items:center; margin-top:6px; }
+    .qrrow canvas{ width:80px!important; height:80px!important; }
+    .openbtn {
       display:inline-block; padding:8px 12px; border-radius:10px;
-      background:var(--blue-bg); color:var(--blue); font:700 14px/1.1 system-ui;
-      text-decoration:none; border:1px solid var(--blue-brd); white-space:nowrap;
+      background:#eef4ff; color:#0b4da2; font:600 14px/1.2 system-ui;
+      text-decoration:none; border:1px solid #d6e6ff;
     }
-    .hint{ color:#6b7280; font:500 12px/1.3 system-ui; margin-top:6px; }
+    .hint { color:#666; font:500 11px/1.3 system-ui; margin-top:4px; }
   </style>
 </head>
 <body>
@@ -84,6 +76,17 @@
     const DATA_URL = "/data/v2/latest/all.json";
     const AUTO_REFRESH_MS = 60_000;
 
+    const MANUAL_LOC = {
+      "breklum":  [54.60669, 8.98195],
+      "s31":      [54.65000, 8.96000],
+      "se01":     [54.65005, 8.96005],
+      "kropp":    [54.41018, 9.52839],
+      "fahrdorf": [54.50158, 9.58690]
+    };
+
+    const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status","lat","lon"]);
+    const IGNORE_IDS = new Set(["lsn50"]);
+
     function normalizeId(s){
       return String(s||'')
         .toLowerCase()
@@ -92,172 +95,97 @@
         .replace(/_/g,'-')
         .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,'');
     }
-
-    // lsn50 bewusst entfernt
-    const MANUAL_LOC = {
-      breklum:[54.60669, 8.98195],
-      s31:[54.65000, 8.96000],
-      se01:[54.65005, 8.96005],
-      kropp:[54.41018, 9.52839],
-      fahrdorf:[54.50158, 9.58690],
-    };
-
-    const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status","lat","lon"]);
-
-    const map = L.map("map",{zoomSnap:0.25});
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
-      maxZoom:19,
-      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-    }).addTo(map);
-    map.setView([54.4, 9.6], 8.25);
-
-    const markers = new Map();
-    let currentAbort=null;
-
     function deTime(ts){
-      try{
-        return new Date(ts).toLocaleString("de-DE",{
-          year:"numeric",month:"2-digit",day:"2-digit",
-          hour:"2-digit",minute:"2-digit",second:"2-digit"
-        });
-      }catch(_){return ts||"–";}
+      try {
+        return new Date(ts).toLocaleString("de-DE",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"});
+      } catch(_){ return ts||"–"; }
     }
-    function deNum(n,d=1){
-      return (typeof n==="number" && Number.isFinite(n))
-        ? n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d})
-        : "–";
-    }
-    function cleanFields(f){
+    function deNum(n,d=1){ return (typeof n==="number"&&Number.isFinite(n))? n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d}):"–"; }
+    function cleanFields(fields){
       const out={};
-      for(const [k,v] of Object.entries(f||{})){
+      for(const [k,v] of Object.entries(fields||{})){
         if(OMIT_FIELDS.has(k)) continue;
-        if(v===undefined||v===null||v==="NULL") continue;
-        if(typeof v==="number" && !Number.isFinite(v)) continue;
+        if(v==null||v==="NULL"|| (typeof v==="number"&&!Number.isFinite(v))) continue;
         out[k]=v;
       }
       return out;
     }
     function pickCoord(item){
       const f=item?.fields||{};
-      if(f.lat!==undefined && f.lon!==undefined){
+      if(f.lat!==undefined&&f.lon!==undefined){
         const la=Number(f.lat), lo=Number(f.lon);
         if(Number.isFinite(la)&&Number.isFinite(lo)) return [la,lo];
       }
-      const sid=normalizeId(item.id);
-      if(MANUAL_LOC[sid]) return MANUAL_LOC[sid];
+      const short=normalizeId(item.id);
+      if(MANUAL_LOC[short]) return MANUAL_LOC[short];
       return null;
     }
+    function popupHtml(item){
+      const f=cleanFields(item.fields);
+      const shortId=normalizeId(item.id);
+      const temp=(typeof f.TempC_SHT31==="number")?f.TempC_SHT31:(typeof f.TempC_SHT==="number")?f.TempC_SHT:null;
+      const hum =(typeof f.Hum_SHT31==="number")?f.Hum_SHT31:(typeof f.Hum_SHT==="number")?f.Hum_SHT:null;
+      const bat =(typeof f.BatV==="number")?f.BatV:null;
+      let html=`<div class="popup"><h3>${shortId}</h3>`;
+      html+=`<div class="row"><span class="label">Zeit</span><span class="value">${deTime(item.ts)}</span></div><hr/>`;
+      if(bat!==null) html+=`<div class="row"><span class="label">Batterie</span><span class="value">${deNum(bat,3)} V</span></div>`;
+      if(hum!==null) html+=`<div class="row"><span class="label">Luftfeuchte</span><span class="value">${deNum(hum,1)} %</span></div>`;
+      if(temp!==null) html+=`<div class="row"><span class="label">Temperatur</span><span class="value">${deNum(temp,1)} °C</span></div>`;
+      html+=`<div class="qrrow"><div id="qrcode-${shortId}"></div><a class="openbtn" href="https://www.waldsensor.sh/html/sensor.html?node=${shortId}" target="_blank">Seite öffnen</a></div>`;
+      html+=`<div class="hint">Link nutzt Basis-ID: <b>${shortId}</b></div></div>`;
+      return html;
+    }
     function latestRecord(data){
-      let best=null,bT=-Infinity;
-      for(const r of (data||[])){
-        if(!r||!r.ts) continue;
-        const t=new Date(r.ts).getTime();
-        if(!Number.isNaN(t)&&t>bT){bT=t;best=r;}
-      }
+      let best=null, bestT=-Infinity;
+      for(const r of(data||[])){ if(!r||!r.ts) continue; const t=new Date(r.ts).getTime(); if(!Number.isNaN(t)&&t>bestT){bestT=t; best=r;} }
       return best;
     }
 
-    function popupHtml(item){
-      const f=cleanFields(item.fields);
-      const sid=normalizeId(item.id);
-      const temp=(typeof f.TempC_SHT31==="number")?f.TempC_SHT31:
-                  (typeof f.TempC_SHT==="number")?f.TempC_SHT:null;
-      const hum =(typeof f.Hum_SHT31==="number")?f.Hum_SHT31:
-                  (typeof f.Hum_SHT==="number")?f.Hum_SHT:null;
-      const bat =(typeof f.BatV==="number")?f.BatV:null;
-      const url =`https://www.waldsensor.sh/html/sensor.html?node=${sid}`;
+    const map=L.map("map",{zoomSnap:0.25});
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'}).addTo(map);
+    map.setView([54.4,9.6],8.25);
+    const markers=L.layerGroup().addTo(map);
 
-      return `
-        <div class="popup">
-          <h3>${sid}</h3>
-          <div class="muted">Zuletzt aktiv</div>
-          <div style="font:800 14px/1.2 system-ui; margin:.1rem 0 .35rem">${deTime(item.ts)}</div>
-          <hr/>
-          <div class="grid">
-            ${bat  !== null ? `<div class="label">BatV</div><div class="value">${deNum(bat,3)} V</div>` : ``}
-            ${hum  !== null ? `<div class="label">Hum_SHT</div><div class="value">${deNum(hum,1)} %</div>` : ``}
-            ${temp !== null ? `<div class="label">TempC_SHT</div><div class="value">${deNum(temp,1)} °C</div>` : ``}
-            ${typeof f.temp_SOIL  === "number" ? `<div class="label">Bodentemp</div><div class="value">${deNum(f.temp_SOIL,1)} °C</div>` : ``}
-            ${typeof f.water_SOIL === "number" ? `<div class="label">Bodenfeuchte</div><div class="value">${deNum(f.water_SOIL,1)} %</div>` : ``}
-          </div>
-
-          <div class="qrrow">
-            <div class="qrbox" id="qr-${sid}"></div>
-            <a class="openbtn" href="${url}" target="_blank" rel="noopener">Seite öffnen</a>
-          </div>
-          <div class="hint">Link nutzt Basis-ID: <b>${sid}</b></div>
-        </div>
-      `;
-    }
-    function ensureQR(sid,url){
-      const box=document.getElementById(`qr-${sid}`);
-      if(box && !box.hasChildNodes()){
-        QRCode.toCanvas(url,{errorCorrectionLevel:'M',width:80},(err,canvas)=>{
-          if(!err) box.appendChild(canvas);
-        });
-      }
-    }
-
-    async function loadData(){
-      if(currentAbort) currentAbort.abort();
-      currentAbort=new AbortController();
-      const res=await fetch(`${DATA_URL}?t=${Date.now()}`,{cache:"no-store",signal:currentAbort.signal});
-      if(!res.ok) throw new Error("fetch "+res.status);
-      return res.json();
-    }
-
+    let LAST_GOOD=null;
     function updateMap(raw){
-      const data=(raw||[]).map(x=>({...x,id:normalizeId(x.id)}));
-      const incoming=new Map();
-      for(const it of data){ incoming.set(normalizeId(it.id), it); }
-
-      for(const [sid,mk] of [...markers.entries()]){
-        if(!incoming.has(sid)){ map.removeLayer(mk); markers.delete(sid); }
-      }
-
+      if(!raw||!Array.isArray(raw)){console.warn("no data");return;}
+      LAST_GOOD=raw;
+      markers.clearLayers();
       const bounds=[];
-      for(const [sid,item] of incoming.entries()){
+      for(const item of raw){
+        const short=normalizeId(item.id);
+        if(IGNORE_IDS.has(short)) continue;
         const coord=pickCoord(item);
         if(!coord) continue;
+        const marker=L.marker(coord).bindPopup(popupHtml(item));
+        marker.on("popupopen",()=>{
+          const qrDiv=document.getElementById(`qrcode-${short}`);
+          if(qrDiv&&!qrDiv.hasChildNodes()){
+            QRCode.toCanvas(`https://www.waldsensor.sh/html/sensor.html?node=${short}`,{errorCorrectionLevel:'M',width:80},(err,canvas)=>{if(!err)qrDiv.appendChild(canvas);});
+          }
+        });
+        marker.addTo(markers);
         bounds.push(coord);
-
-        const url=`https://www.waldsensor.sh/html/sensor.html?node=${sid}`;
-        const html=popupHtml(item);
-
-        if(markers.has(sid)){
-          markers.get(sid).setLatLng(coord).unbindPopup().bindPopup(html);
-        }else{
-          const m=L.marker(coord).bindPopup(html);
-          m.on("popupopen",()=>ensureQR(sid,url));
-          m.addTo(map);
-          markers.set(sid,m);
-        }
       }
-
-      if(updateMap._firstRun===undefined){
-        updateMap._firstRun=false;
-        if(bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
-      }
-
+      if(bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
       document.getElementById("stamp").textContent="Stand: "+new Date().toLocaleString("de-DE");
-      const lastRec=latestRecord(data);
-      document.getElementById("last").textContent = lastRec
-        ? "Letzte Node-Meldung: "+deTime(lastRec.ts)+" — "+normalizeId(lastRec.id)
-        : "Letzte Node-Meldung: –";
+      const lastEl=document.getElementById("last"); const lastRec=latestRecord(raw);
+      lastEl.textContent=lastRec? "Letzte Node-Meldung: "+deTime(lastRec.ts)+" — "+normalizeId(lastRec.id):"Letzte Node-Meldung: –";
     }
 
-    async function tick(){
+    async function loadAndRender(){
       try{
-        const json=await loadData();
-        updateMap(json);
+        const res=await fetch(DATA_URL+"?t="+Date.now(),{cache:"no-store"});
+        if(!res.ok) throw new Error("fetch failed "+res.status);
+        const data=await res.json();
+        updateMap(data);
       }catch(e){
-        console.warn("Update ausgelassen:", e?.message||e);
-        document.getElementById("stamp").textContent="Stand (unverändert): "+new Date().toLocaleTimeString("de-DE");
+        console.error(e);
+        if(LAST_GOOD) updateMap(LAST_GOOD);
       }
     }
-
-    tick();
-    setInterval(tick, AUTO_REFRESH_MS);
+    loadAndRender();
+    setInterval(loadAndRender,AUTO_REFRESH_MS);
   </script>
 </body>
 </html>
