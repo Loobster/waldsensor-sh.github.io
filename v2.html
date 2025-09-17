@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin></script>
 
-  <!-- QRCode -->
+  <!-- QRCode (für Link im Popup) -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
   <style>
@@ -17,70 +17,74 @@
       --pill-bg:#fff;
       --pill-text:#106e2a;
       --pill-shadow:0 2px 10px rgba(0,0,0,.15);
-      --blue:#0b4da2;
     }
-    html, body { height:100%; margin:0; background:#f7f7f7; }
+    html, body { height:100%; margin:0; }
     #map { height:100%; width:100%; }
 
+    /* Badge: Stand (links oben) */
     .pill {
-      position: fixed; z-index: 1001; top: 12px; left: 68px;
-      background: var(--pill-bg); color: var(--pill-text);
-      padding: 10px 14px; border-radius: 14px;
-      font: 600 16px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      box-shadow: var(--pill-shadow); border: 1px solid #e8e8e8;
+      position: fixed;
+      z-index: 1001;
+      top: 14px;
+      left: 70px;
+      background: var(--pill-bg);
+      color: var(--pill-text);
+      padding: 10px 14px;
+      border-radius: 14px;
+      font: 700 18px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: var(--pill-shadow);
+      border: 1px solid #e8e8e8;
     }
+    /* Badge: letzte Node (rechts oben) */
     .last-node {
-      position: fixed; z-index: 1001; top: 12px; right: 12px;
-      background: #e9f3ff; color: var(--blue);
-      padding: 10px 14px; border-radius: 14px;
-      font: 600 15px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      box-shadow: var(--pill-shadow); border: 1px solid #d6e6ff;
-      max-width: 42ch; text-align: right;
+      position: fixed;
+      z-index: 1001;
+      top: 14px;
+      right: 14px;
+      background: #e9f3ff;
+      color: #0b4da2;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font: 700 16px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: var(--pill-shadow);
+      border: 1px solid #d6e6ff;
+      max-width: 44ch;
+      text-align: right;
+      white-space: nowrap;
     }
 
-/* Popup neu: kompakt, klare Typo */
-  .leaflet-popup { z-index: 1002; }
-  .popup { width: 360px; font: 500 15px/1.35 system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
-  .popup h3 { margin: 0 0 .35rem; font: 800 22px/1.2 system-ui; letter-spacing:.2px; }
-  .popup .when { margin:.15rem 0 .5rem; color:#2a2a2a; font-weight:700; }
-  .popup hr { border:0; height:1px; background:#ececec; margin:.35rem 0 .6rem; }
+    /* Popup neu: kompakt, gut lesbar */
+    .leaflet-popup { z-index: 1002; }
+    .popup { width: 360px; font: 500 15px/1.35 system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    .popup h3 { margin: 0 0 .35rem; font: 800 22px/1.2 system-ui; letter-spacing:.2px; }
+    .popup .when { margin:.15rem 0 .5rem; color:#2a2a2a; font-weight:700; }
+    .popup hr { border:0; height:1px; background:#ececec; margin:.35rem 0 .6rem; }
+    .popup .row { display:grid; grid-template-columns: 1fr auto; gap:14px; align-items:baseline; margin:.25rem 0; }
+    .popup .label { color:#475569; font-weight:800; }
+    .popup .value { font: 800 18px/1.2 system-ui; color:#0f172a; }
 
-  /* Label-Wert-Zeilen dicht nebeneinander */
-  .popup .row { display:grid; grid-template-columns: 1fr auto; gap:14px; align-items:baseline; margin:.25rem 0; }
-  .popup .label { color:#475569; font-weight:700; }
-  .popup .value { font: 800 18px/1.2 system-ui; color:#0f172a; }
-
-  /* QR + Button kompakter */
-  .popup .qrrow { display:flex; gap:16px; align-items:center; margin-top:8px; }
-  .popup .qrrow canvas { width:130px !important; height:130px !important; }
-  .popup .openbtn {
-    display:inline-block; padding:12px 16px; border-radius:14px;
-    background:#eef4ff; color:#0b4da2; font:800 20px/1.1 system-ui;
-    text-decoration:none; border:1px solid #d6e6ff; white-space:nowrap;
-  }
-  .popup .hint { color:#64748b; font:600 13px/1.3 system-ui; margin-top:6px; }
-</style>
+    .popup .qrrow { display:flex; gap:16px; align-items:center; margin-top:8px; }
+    .popup .qrrow canvas { width:130px !important; height:130px !important; }
+    .popup .openbtn {
+      display:inline-block; padding:12px 16px; border-radius:14px;
+      background:#eef4ff; color:#0b4da2; font:800 20px/1.1 system-ui;
+      text-decoration:none; border:1px solid #d6e6ff; white-space:nowrap;
+    }
+    .popup .hint { color:#64748b; font:600 13px/1.3 system-ui; margin-top:6px; }
+  </style>
 </head>
 <body>
-  <div class="pill" id="stamp">Letzte Aktualisierung: –</div>
+  <div class="pill" id="stamp">Stand: –</div>
   <div class="last-node" id="last">Letzte Node-Meldung: –</div>
   <div id="map"></div>
 
   <script>
-    const DATA_URL = "/data/v2/latest/all.json";
-    const AUTO_REFRESH_MS = 60_000;
-    const FETCH_TIMEOUT_MS = 8_000;
+    // ---------------- Einstellungen ----------------
+    const DATA_URL = "/data/v2/latest/all.json";   // lokal = stabil
+    const AUTO_REFRESH_MS = 60_000;                // 60 s Rhythmus
+    const EXCLUDE_IDS = new Set(["lsn50"]);        // ausblenden
 
-    function normalizeId(s){
-      return String(s||"")
-        .toLowerCase()
-        .replace(/\r|\s+/g,"")
-        .replace(/^waldsensor[_-]/,"")
-        .replace(/_/g,"-")
-        .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,"");
-    }
-
-    // Manuelle Koordinaten (Fallbacks, lsn50 entfernt)
+    // feste Koordinaten (Fallback), KEIN lsn50 mehr
     const MANUAL_LOC = {
       "breklum":  [54.60669, 8.98195],
       "s31":      [54.65000, 8.96000],
@@ -91,149 +95,196 @@
 
     const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status","lat","lon"]);
 
+    // ---------------- Karte ----------------
     const map = L.map("map", { zoomSnap: 0.25 });
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
     }).addTo(map);
     map.setView([54.4, 9.6], 8.25);
-
     const markersLayer = L.layerGroup().addTo(map);
-    const markersById = new Map();
 
+    // No-Flicker Cache
+    const markerById = new Map();
+
+    // ---------------- Helpers ----------------
+    function normalizeId(s){
+      return String(s||'')
+        .toLowerCase()
+        .replace(/\r|\s+/g,'')
+        .replace(/^waldsensor[_-]/,'')
+        .replace(/_/g,'-')
+        .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,'');
+    }
     function deTime(ts){
-      try{ return new Date(ts).toLocaleString("de-DE", {
-        year:"numeric", month:"2-digit", day:"2-digit",
-        hour:"2-digit", minute:"2-digit", second:"2-digit"
-      }); } catch{ return ts || "–"; }
+      try {
+        return new Date(ts).toLocaleString("de-DE", {
+          year:"numeric", month:"2-digit", day:"2-digit",
+          hour:"2-digit", minute:"2-digit", second:"2-digit"
+        });
+      } catch(_){ return ts || "–"; }
     }
     function deNum(n, digits=1){
       return (typeof n === "number" && Number.isFinite(n))
-        ? n.toLocaleString("de-DE",{minimumFractionDigits:digits,maximumFractionDigits:digits})
+        ? n.toLocaleString("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits })
         : "–";
     }
     function cleanFields(fields){
       const out = {};
-      for (const [k,v] of Object.entries(fields||{})){
+      for (const [k,v] of Object.entries(fields || {})){
         if (OMIT_FIELDS.has(k)) continue;
-        if (v==null||v==="NULL") continue;
-        if (typeof v==="number" && !Number.isFinite(v)) continue;
-        out[k]=v;
+        if (v === undefined || v === null || v === "NULL") continue;
+        if (typeof v === "number" && !Number.isFinite(v)) continue;
+        out[k] = v;
       }
       return out;
     }
     function pickCoord(item){
-      const f=item?.fields||{};
-      if(f.lat!=null && f.lon!=null){
-        const la=+f.lat, lo=+f.lon;
-        if(Number.isFinite(la)&&Number.isFinite(lo)) return [la,lo];
+      const f = item?.fields || {};
+      if (typeof f.lat !== "undefined" && typeof f.lon !== "undefined"){
+        const la = Number(f.lat), lo = Number(f.lon);
+        if (Number.isFinite(la) && Number.isFinite(lo)) return [la, lo];
       }
-      const short=normalizeId(item.id);
-      if(MANUAL_LOC[short]) return MANUAL_LOC[short];
+      const short = normalizeId(item.id);
+      if (MANUAL_LOC[short]) return MANUAL_LOC[short];
       return null;
     }
     function latestRecord(data){
-      let best=null,bestT=-Infinity;
-      for(const r of (data||[])){
-        if(!r||!r.ts) continue;
-        const t=new Date(r.ts).getTime();
-        if(!Number.isNaN(t)&&t>bestT){bestT=t;best=r;}
+      let best = null, bestT = -Infinity;
+      for (const r of (data||[])){
+        if (!r || !r.ts) continue;
+        const t = new Date(r.ts).getTime();
+        if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
       }
       return best;
     }
+
+    // ---------------- Popup ----------------
     function popupHtml(item){
-      const f=cleanFields(item.fields);
-      const shortId=normalizeId(item.id);
-      const temp=(typeof f.TempC_SHT31==="number")?f.TempC_SHT31
-                :(typeof f.TempC_SHT==="number")?f.TempC_SHT:null;
-      const hum=(typeof f.Hum_SHT31==="number")?f.Hum_SHT31
-               :(typeof f.Hum_SHT==="number")?f.Hum_SHT:null;
-      const bat=(typeof f.BatV==="number")?f.BatV:null;
+      const f = cleanFields(item.fields);
+      const idShort = normalizeId(item.id);
 
-      let html=`<div class="popup"><h3>Sensor: ${shortId}</h3>`;
-      html+=`<div class="row"><span class="label">Zuletzt aktiv</span><span class="value">${deTime(item.ts)}</span></div><hr/>`;
-      if(bat!==null) html+=`<div class="row"><span class="label">BatV</span><span class="value">${deNum(bat,3)} V</span></div>`;
-      if(hum!==null) html+=`<div class="row"><span class="label">Hum_SHT</span><span class="value">${deNum(hum,1)} %</span></div>`;
-      if(temp!==null) html+=`<div class="row"><span class="label">TempC_SHT</span><span class="value">${deNum(temp,1)} °C</span></div>`;
-      if(typeof f.temp_SOIL==="number") html+=`<div class="row"><span class="label">Bodentemp</span><span class="value">${deNum(f.temp_SOIL,1)} °C</span></div>`;
-      if(typeof f.water_SOIL==="number") html+=`<div class="row"><span class="label">Bodenfeuchte</span><span class="value">${deNum(f.water_SOIL,1)} %</span></div>`;
+      const temp = (typeof f.TempC_SHT31 === "number") ? f.TempC_SHT31
+                 : (typeof f.TempC_SHT   === "number") ? f.TempC_SHT : null;
+      const hum  = (typeof f.Hum_SHT31  === "number") ? f.Hum_SHT31
+                 : (typeof f.Hum_SHT    === "number") ? f.Hum_SHT  : null;
+      const bat  = (typeof f.BatV       === "number") ? f.BatV : null;
 
-      for(const [k,v] of Object.entries(f)){
-        if(["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV","temp_SOIL","water_SOIL"].includes(k)) continue;
-        html+=`<div class="row"><span class="label">${k}</span><span class="value">${v}</span></div>`;
-      }
+      let html = `<div class="popup">`;
+      html += `<h3>${idShort}</h3>`;
+      html += `<div class="when">${deTime(item.ts)}</div>`;
+      html += `<hr/>`;
+      if (temp !== null) html += `<div class="row"><div class="label">Temperatur</div><div class="value">${deNum(temp,1)} °C</div></div>`;
+      if (hum  !== null) html += `<div class="row"><div class="label">Luftfeuchte</div><div class="value">${deNum(hum,1)} %</div></div>`;
+      if (bat  !== null) html += `<div class="row"><div class="label">Batterie</div><div class="value">${deNum(bat,3)} V</div></div>`;
 
-      const url=`https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
-      html+=`<div class="qrrow"><div id="qrcode-${shortId}"></div>
-             <a class="openbtn" href="${url}" target="_blank">Seite&nbsp;öffnen</a></div>
-             <div class="hint">Link nutzt Basis-ID: <b>${shortId}</b></div></div>`;
-      return html;
-    }
-    function ensureQRCode(shortId){
-      const qrDiv=document.getElementById(`qrcode-${shortId}`);
-      if(qrDiv && !qrDiv.hasChildNodes()){
-        const url=`https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
-        QRCode.toCanvas(url,{errorCorrectionLevel:"M",width:140},(err,canvas)=>{
-          if(!err) qrDiv.appendChild(canvas);
-        });
-      }
+      const url = `https://www.waldsensor.sh/html/sensor.html?node=${idShort}`;
+      html += `
+        <div class="qrrow">
+          <div id="qrcode-${idShort}"></div>
+          <a class="openbtn" href="${url}" target="_blank" rel="noopener">Seite<br/>öffnen</a>
+        </div>
+        <div class="hint">Link nutzt Basis-ID: <b>${idShort}</b></div>
+      `;
+      return html + `</div>`;
     }
 
-    function renderIncremental(raw){
-      const data=(raw||[]).map(x=>({...x,id:normalizeId(x.id)}));
-      const seen=new Set(); const bounds=[];
-      for(const item of data){
-        const id=item.id; const coord=pickCoord(item);
-        if(!coord) continue;
-        seen.add(id); bounds.push(coord);
-        const exists=markersById.get(id);
-        const html=popupHtml(item);
-        if(!exists){
-          const marker=L.marker(coord).addTo(markersLayer).bindPopup(html);
-          marker.on("popupopen",()=>ensureQRCode(id));
-          markersById.set(id,{marker,lastTs:item.ts,coord});
-        } else {
-          const {marker,lastTs}=exists;
-          const latlng=marker.getLatLng();
-          if(Math.abs(latlng.lat-coord[0])>1e-6||Math.abs(latlng.lng-coord[1])>1e-6){
-            marker.setLatLng(coord);
-          }
-          if(item.ts!==lastTs){
-            marker.setPopupContent(html);
-            exists.lastTs=item.ts;
-          }
+    // ---------------- Marker No-Flicker ----------------
+    function upsertMarker(item){
+      const id = item.id;
+      const coord = pickCoord(item);
+      if (!coord) return;
+
+      const existing = markerById.get(id);
+      if (existing){
+        const ll = existing.getLatLng();
+        if (Math.abs(ll.lat - coord[0]) > 1e-6 || Math.abs(ll.lng - coord[1]) > 1e-6){
+          existing.setLatLng(coord);
+        }
+        existing.setPopupContent(popupHtml(item));
+        return;
+      }
+      const m = L.marker(coord).bindPopup(popupHtml(item));
+      m.on("popupopen", () => {
+        const shortId = normalizeId(item.id);
+        const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+        const qrDiv = document.getElementById(`qrcode-${shortId}`);
+        if (qrDiv && !qrDiv.hasChildNodes()){
+          QRCode.toCanvas(url, { errorCorrectionLevel:'M', width:130 }, (err, canvas) => {
+            if (!err) qrDiv.appendChild(canvas);
+          });
+        }
+      });
+      m.addTo(markersLayer);
+      markerById.set(id, m);
+    }
+
+    function syncMarkers(data){
+      for (const item of data) upsertMarker(item);
+
+      const valid = new Set(data.map(d => d.id));
+      for (const [id, m] of markerById){
+        if (!valid.has(id)){
+          markersLayer.removeLayer(m);
+          markerById.delete(id);
         }
       }
-      for(const [id,obj] of markersById){
-        if(!seen.has(id)){ markersLayer.removeLayer(obj.marker); markersById.delete(id); }
+    }
+
+    // ---------------- Rendering & Fetch ----------------
+    function render(raw){
+      const data = (raw||[])
+        .map(x => ({...x, id: normalizeId(x.id)}))
+        .filter(x => !EXCLUDE_IDS.has(x.id));
+
+      syncMarkers(data);
+
+      // Bounds nur beim ersten Mal setzen
+      if (markerById.size && !render.didFit){
+        const bounds = Array.from(markerById.values()).map(m => m.getLatLng());
+        map.fitBounds(L.latLngBounds(bounds).pad(0.12));
+        render.didFit = true;
       }
-      if(bounds.length && !renderIncremental._hasFit){
-        map.fitBounds(L.latLngBounds(bounds).pad(0.12)); renderIncremental._hasFit=true;
-      }
-      document.getElementById("stamp").textContent="Letzte Aktualisierung: "+new Date().toLocaleTimeString("de-DE");
-      const lastRec=latestRecord(data);
-      document.getElementById("last").textContent=lastRec
-        ? "Letzte Node-Meldung: "+deTime(lastRec.ts)+" — "+lastRec.id
+
+      document.getElementById("stamp").textContent =
+        "Stand: " + new Date().toLocaleString("de-DE");
+
+      const lastEl = document.getElementById("last");
+      const lastRec = latestRecord(data);
+      lastEl.textContent = lastRec
+        ? ("Letzte Node-Meldung: " + deTime(lastRec.ts) + " — " + normalizeId(lastRec.id))
         : "Letzte Node-Meldung: –";
     }
 
+    let fetching = false;
     async function loadData(){
-      const ac=new AbortController(); const to=setTimeout(()=>ac.abort(),FETCH_TIMEOUT_MS);
-      try{
-        const res=await fetch(`${DATA_URL}?t=${Date.now()}`,{cache:"no-store",signal:ac.signal});
-        if(!res.ok) throw new Error("HTTP "+res.status);
+      // niemals zwei Fetches parallel starten
+      if (fetching) return null;
+      fetching = true;
+      try {
+        const res = await fetch(DATA_URL + "?t=" + Date.now(), { cache:"no-store" });
+        if (!res.ok) throw new Error("fetch failed " + res.status);
         return await res.json();
-      } finally{ clearTimeout(to); }
-    }
-    async function runOnce(){
-      try{ renderIncremental(await loadData()); }
-      catch(err){
-        console.error("[v2] fetch/render error:",err);
-        document.getElementById("stamp").textContent="Letzte Aktualisierung: "+new Date().toLocaleTimeString("de-DE")+" (Fehler)";
+      } finally {
+        fetching = false;
       }
     }
-    runOnce();
-    setInterval(runOnce,AUTO_REFRESH_MS);
+
+    async function tick(){
+      try{
+        const json = await loadData();
+        if (json) render(json);             // bei Fehler: UI bleibt wie zuvor (kein Flackern)
+      } catch(e){
+        // Ruhig bleiben – beim nächsten Tick erneut versuchen
+        console.error(e);
+        document.getElementById("stamp").textContent =
+          "Stand: " + new Date().toLocaleString("de-DE");
+      }
+    }
+
+    // Start
+    tick();
+    setInterval(tick, AUTO_REFRESH_MS);
   </script>
 </body>
 </html>
