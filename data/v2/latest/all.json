@@ -1,1 +1,11 @@
-[{"fields":{"Hum_SHT":80.6,"TempC_SHT":12.4,"BatV":3.582,"lat":54.50158,"lon":9.5869},"ts":"2025-09-25T22:44:30.425Z","id":"fahrdorf"},{"fields":{"lat":53.95655,"lon":9.71426,"BatV":3.582},"ts":"2025-09-25T22:54:33.603Z","id":"kellinghusen_lsn50v2"},{"fields":{"Hum_SHT":91.7,"TempC_SHT":8.4,"BatV":3.636,"lat":54.4093988908855,"lon":9.5285027323752},"id":"kropp","ts":"2025-09-25T22:40:09.642Z"},{"fields":{"lat":54.07586,"lon":9.98926,"TempC_SHT":21.8,"Hum_SHT":56,"BatV":3.636},"ts":"2025-09-25T22:29:23.797Z","id":"neumuenstertl"},{"fields":{"BatV":3.582,"lon":9.7196,"lat":54.30687},"id":"schacht_audorf","ts":"2025-09-25T22:49:03.353Z"},{"fields":{"BatV":3.582},"ts":"2025-09-25T22:53:29.721Z","id":"test"},{"fields":{"BatV":3.582},"ts":"2025-09-25T22:55:12.212Z","id":"test1"},{"ts":"2025-09-25T22:52:24.396Z","id":"test2","fields":{"BatV":3.582}},{"id":"test3","ts":"2025-09-25T22:38:04.914Z","fields":{"BatV":3.582}}]
+[
+{"device_id":"fahrdorf","ts_iso":"2025-09-25T22:44:30.425Z","lat":54.50158,"lon":9.5869,"alt":5,"bat_v":3.582,"temp_c":12.4,"hum_pct":80.6,"temp_soil_c":null,"water_soil":null},
+{"device_id":"kellinghusen_lsn50v2","ts_iso":"2025-09-25T22:54:33.603Z","lat":53.95655,"lon":9.71426,"alt":18,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
+{"device_id":"kropp","ts_iso":"2025-09-25T22:40:09.642Z","lat":54.40939889088546,"lon":9.5285027323752,"alt":null,"bat_v":3.636,"temp_c":8.4,"hum_pct":91.7,"temp_soil_c":null,"water_soil":null},
+{"device_id":"neumuenstertl","ts_iso":"2025-09-25T22:29:23.797Z","lat":54.07586,"lon":9.98926,"alt":null,"bat_v":3.636,"temp_c":21.8,"hum_pct":56,"temp_soil_c":null,"water_soil":null},
+{"device_id":"schacht_audorf","ts_iso":"2025-09-25T22:49:03.353Z","lat":54.30687,"lon":9.7196,"alt":18,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
+{"device_id":"test","ts_iso":"2025-09-25T22:53:29.721Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
+{"device_id":"test1","ts_iso":"2025-09-25T22:55:12.212Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
+{"device_id":"test2","ts_iso":"2025-09-25T22:52:24.396Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
+{"device_id":"test3","ts_iso":"2025-09-25T22:58:04.681Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null}
+]
