@@ -1,10 +1,1 @@
-[
-{"device_id":"fahrdorf","ts_iso":"2025-09-26T07:04:24.795Z","lat":54.50158,"lon":9.5869,"alt":5,"bat_v":3.582,"temp_c":13.4,"hum_pct":74.2,"temp_soil_c":null,"water_soil":null},
-{"device_id":"kellinghusen_lsn50v2","ts_iso":"2025-09-26T07:14:33.129Z","lat":53.95655,"lon":9.71426,"alt":18,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"kropp","ts_iso":"2025-09-26T07:00:04.286Z","lat":54.40939889088546,"lon":9.5285027323752,"alt":null,"bat_v":3.636,"temp_c":12.5,"hum_pct":73.8,"temp_soil_c":null,"water_soil":null},
-{"device_id":"schacht_audorf","ts_iso":"2025-09-26T07:08:57.743Z","lat":54.30687,"lon":9.7196,"alt":18,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"test","ts_iso":"2025-09-26T07:13:23.076Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"test1","ts_iso":"2025-09-26T07:15:06.411Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"test2","ts_iso":"2025-09-26T07:12:18.417Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"test3","ts_iso":"2025-09-26T07:17:59.043Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null}
-]
+[{"fields":{"TempC_SHT":13.4,"lon":9.5869,"BatV":3.582,"Hum_SHT":74.2,"lat":54.50158},"id":"fahrdorf","ts":"2025-09-26T07:04:24.795Z"},{"ts":"2025-09-26T07:14:33.129Z","id":"kellinghusen_lsn50v2","fields":{"lat":53.95655,"BatV":3.582,"lon":9.71426}},{"id":"kropp","ts":"2025-09-26T07:20:04.046Z","fields":{"lat":54.4093988908855,"BatV":3.636,"Hum_SHT":73.3,"TempC_SHT":12,"lon":9.5285027323752}},{"id":"neumuenstertl","ts":"2025-09-26T06:09:17.274Z","fields":{"lat":54.07586,"BatV":3.636,"Hum_SHT":55.5,"TempC_SHT":21.4,"lon":9.98926}},{"ts":"2025-09-26T07:08:57.743Z","id":"schacht_audorf","fields":{"lat":54.30687,"BatV":3.582,"lon":9.7196}},{"fields":{"BatV":3.582},"id":"test","ts":"2025-09-26T07:13:23.076Z"},{"ts":"2025-09-26T07:15:06.411Z","id":"test1","fields":{"BatV":3.582}},{"fields":{"BatV":3.582},"ts":"2025-09-26T07:12:18.417Z","id":"test2"},{"fields":{"BatV":3.582},"ts":"2025-09-26T07:17:59.043Z","id":"test3"}]
