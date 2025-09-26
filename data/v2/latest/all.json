@@ -1,11 +1,1 @@
-[
-{"device_id":"fahrdorf","ts_iso":"2025-09-26T02:24:27.953Z","lat":54.50158,"lon":9.5869,"alt":5,"bat_v":3.582,"temp_c":11.2,"hum_pct":76,"temp_soil_c":null,"water_soil":null},
-{"device_id":"kellinghusen_lsn50v2","ts_iso":"2025-09-26T02:14:33.625Z","lat":53.95655,"lon":9.71426,"alt":18,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"kropp","ts_iso":"2025-09-26T02:20:07.279Z","lat":54.40939889088546,"lon":9.5285027323752,"alt":null,"bat_v":3.636,"temp_c":7.4,"hum_pct":91.6,"temp_soil_c":null,"water_soil":null},
-{"device_id":"neumuenstertl","ts_iso":"2025-09-26T01:49:20.945Z","lat":54.07586,"lon":9.98926,"alt":null,"bat_v":3.636,"temp_c":21.6,"hum_pct":55.9,"temp_soil_c":null,"water_soil":null},
-{"device_id":"schacht_audorf","ts_iso":"2025-09-26T02:09:01.113Z","lat":54.30687,"lon":9.7196,"alt":18,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"test","ts_iso":"2025-09-26T02:13:27.065Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"test1","ts_iso":"2025-09-26T02:15:09.88Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"test2","ts_iso":"2025-09-26T02:12:22.018Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"test3","ts_iso":"2025-09-26T02:18:02.434Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null}
-]
+[{"ts":"2025-09-26T02:24:27.953Z","fields":{"lat":54.50158,"BatV":3.582,"TempC_SHT":11.2,"Hum_SHT":76,"lon":9.5869},"id":"fahrdorf"},{"ts":"2025-09-26T02:14:33.625Z","fields":{"lon":9.71426,"BatV":3.582,"lat":53.95655},"id":"kellinghusen_lsn50v2"},{"ts":"2025-09-26T02:20:07.279Z","id":"kropp","fields":{"lon":9.5285027323752,"Hum_SHT":91.6,"lat":54.4093988908855,"BatV":3.636,"TempC_SHT":7.4}},{"fields":{"Hum_SHT":55.9,"lon":9.98926,"lat":54.07586,"BatV":3.636,"TempC_SHT":21.6},"id":"neumuenstertl","ts":"2025-09-26T01:49:20.945Z"},{"ts":"2025-09-26T02:09:01.113Z","fields":{"lon":9.7196,"BatV":3.582,"lat":54.30687},"id":"schacht_audorf"},{"ts":"2025-09-26T02:13:27.065Z","id":"test","fields":{"BatV":3.582}},{"id":"test1","fields":{"BatV":3.582},"ts":"2025-09-26T02:15:09.88Z"},{"ts":"2025-09-26T02:12:22.018Z","id":"test2","fields":{"BatV":3.582}},{"ts":"2025-09-26T02:18:02.434Z","fields":{"BatV":3.582},"id":"test3"}]
