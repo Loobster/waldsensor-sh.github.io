@@ -1,10 +1,1 @@
-[
-{"device_id":"fahrdorf","ts_iso":"2025-09-26T03:44:27.045Z","lat":54.50158,"lon":9.5869,"alt":5,"bat_v":3.582,"temp_c":11.2,"hum_pct":79.7,"temp_soil_c":null,"water_soil":null},
-{"device_id":"kellinghusen_lsn50v2","ts_iso":"2025-09-26T03:54:33.633Z","lat":53.95655,"lon":9.71426,"alt":18,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"kropp","ts_iso":"2025-09-26T03:40:06.433Z","lat":54.40939889088546,"lon":9.5285027323752,"alt":null,"bat_v":3.636,"temp_c":7.8,"hum_pct":90.5,"temp_soil_c":null,"water_soil":null},
-{"device_id":"schacht_audorf","ts_iso":"2025-09-26T03:48:59.996Z","lat":54.30687,"lon":9.7196,"alt":18,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"test","ts_iso":"2025-09-26T03:53:25.735Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"test1","ts_iso":"2025-09-26T03:35:08.953Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"test2","ts_iso":"2025-09-26T03:52:20.801Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
-{"device_id":"test3","ts_iso":"2025-09-26T03:38:01.528Z","lat":null,"lon":null,"alt":null,"bat_v":3.582,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null}
-]
+[{"id":"fahrdorf","fields":{"lat":54.50158,"lon":9.5869,"Hum_SHT":79.7,"BatV":3.582,"TempC_SHT":11.2},"ts":"2025-09-26T03:44:27.045Z"},{"fields":{"lat":53.95655,"lon":9.71426,"BatV":3.582},"ts":"2025-09-26T03:54:33.633Z","id":"kellinghusen_lsn50v2"},{"ts":"2025-09-26T03:40:06.433Z","fields":{"lat":54.4093988908855,"Hum_SHT":90.5,"lon":9.5285027323752,"TempC_SHT":7.8,"BatV":3.636},"id":"kropp"},{"ts":"2025-09-26T03:09:19.825Z","fields":{"BatV":3.636,"TempC_SHT":21.6,"lon":9.98926,"Hum_SHT":55.8,"lat":54.07586},"id":"neumuenstertl"},{"id":"schacht_audorf","fields":{"lat":54.30687,"lon":9.7196,"BatV":3.582},"ts":"2025-09-26T03:48:59.996Z"},{"ts":"2025-09-26T03:53:25.735Z","fields":{"BatV":3.582},"id":"test"},{"fields":{"BatV":3.582},"ts":"2025-09-26T03:55:08.723Z","id":"test1"},{"id":"test2","ts":"2025-09-26T03:52:20.801Z","fields":{"BatV":3.582}},{"id":"test3","fields":{"BatV":3.582},"ts":"2025-09-26T03:38:01.528Z"}]
