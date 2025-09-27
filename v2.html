@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <!-- WALDSENSOR.SH | v2.html — v03 (2025-09-27)
-       Änderungen:
-       - QR-Code erst bei popupopen rendern (Fix für "appendChild null")
-       - Popup kompakter (~70%) und unter Badges positionieren
-       - Statistik-Ansicht reaktiviert (?stats=1&id=<node>)
-       - Schönere Namen (Schacht-Audorf, Kappeln, …)
+  <!-- WALDSENSOR.SH | v2.html — v04 (2025-09-27)
+       Fix: lat/lon auch am Root-Level lesen (row.lat/lon),
+       robustere Fallbacks (latitude/longitude), Denylist leer.
+       Popup kompakt + unter Badges, Stats-Seite aktiv, QR erst bei popupopen.
   -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -25,118 +23,67 @@
     crossorigin=""
   ></script>
 
-  <!-- QRCode (für Popup und Stats) -->
+  <!-- QRCode -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     :root{
-      --bg:#fff;
-      --ink:#0b2239;
-      --muted:#6b7280;
-      --brand:#14532d;
-      --brand2:#1d4ed8;
-      --chip:#eff6ff;
-      --chip2:#ecfdf5;
-      --shadow:0 8px 24px rgba(0,0,0,.12);
-      --radius:16px;
+      --bg:#fff; --ink:#0b2239; --muted:#6b7280;
+      --brand:#14532d; --brand2:#1d4ed8;
+      --chip:#eff6ff; --shadow:0 8px 24px rgba(0,0,0,.12);
     }
-    html,body{height:100%;margin:0;background:#eef2f7;color:var(--ink);font:16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica, Arial, sans-serif}
-    #app{height:100%}
-    #map{height:100%}
+    html,body{height:100%;margin:0;background:#eef2f7;color:var(--ink);
+      font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif}
+    #app,#map{height:100%}
 
-    /* Badges oben */
     .badge{
-      position:fixed;
-      z-index:500;
-      top:14px;
-      padding:10px 14px;
-      background:#fff;
-      border-radius:16px;
-      box-shadow:var(--shadow);
-      font-weight:600;
-      letter-spacing:.2px;
+      position:fixed; z-index:500; top:14px; padding:10px 14px; background:#fff;
+      border-radius:16px; box-shadow:var(--shadow); font-weight:600; letter-spacing:.2px
     }
     .badge small{font-weight:500;color:var(--muted)}
     #badge-left{left:14px;border-left:6px solid var(--brand2)}
     #badge-right{right:14px;border-left:6px solid var(--brand)}
 
-    /* Popup kompakter (~70% des vorherigen Eindrucks) */
-    .ws-popup .leaflet-popup-content{
-      margin:10px 12px;
-      width:260px; /* kompakter */
-    }
-    .ws-popup .ws-h1{
-      margin:0 0 6px 0;
-      font-size:18px;
-      font-weight:800;
-    }
-    .ws-popup .ws-meta{
-      margin:8px 0 10px 0;
-      padding-top:8px;
-      border-top:1px solid #e5e7eb;
-      color:var(--muted);
-      font-size:12px;
-    }
-    .ws-popup .ws-row{
-      display:flex;justify-content:space-between;align-items:center;
-      font-size:15px;margin:2px 0;
-    }
-    .ws-popup .ws-key{color:#111;font-weight:700}
-    .ws-popup .ws-val{color:#0b3b91;font-weight:800}
-    .ws-actions{display:flex;gap:10px;align-items:center;margin-top:10px}
-    .ws-open{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:8px 12px;border-radius:12px;background:var(--chip);
-      border:1px solid #dbeafe;color:#0b3b91;font-weight:700;cursor:pointer
-    }
+    .ws-popup .leaflet-popup-content{margin:10px 12px; width:260px}
+    .ws-popup .ws-h1{margin:0 0 6px 0; font-size:18px; font-weight:800}
+    .ws-popup .ws-meta{margin:8px 0 10px; padding-top:8px; border-top:1px solid #e5e7eb; color:var(--muted); font-size:12px}
+    .ws-popup .ws-row{display:flex; justify-content:space-between; align-items:center; font-size:15px; margin:2px 0}
+    .ws-popup .ws-key{color:#111; font-weight:700}
+    .ws-popup .ws-val{color:#0b3b91; font-weight:800}
+    .ws-actions{display:flex; gap:10px; align-items:center; margin-top:10px}
+    .ws-open{display:inline-flex; align-items:center; justify-content:center;
+      padding:8px 12px; border-radius:12px; background:var(--chip); border:1px solid #dbeafe;
+      color:#0b3b91; font-weight:700; cursor:pointer}
     .ws-qr{width:110px;height:110px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;display:flex;align-items:center;justify-content:center}
 
-    /* Stats-Seite */
-    .stats-wrap{max-width:980px;margin:32px auto 64px auto;padding:0 16px}
-    .stats-h1{font-size:28px;font-weight:900;margin:0 0 8px 0}
+    .stats-wrap{max-width:980px;margin:32px auto 64px;padding:0 16px}
+    .stats-h1{font-size:28px;font-weight:900;margin:0 0 8px}
     .stats-src{color:var(--muted);margin:4px 0 14px}
     .stats-head{display:flex;gap:18px;align-items:flex-start;margin:10px 0 16px}
     .stats-qr{width:120px;height:120px;border:1px solid #e5e7eb;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#fff}
     pre{background:#0b1220;color:#e5e9f0;border-radius:12px;padding:16px;overflow:auto;box-shadow:var(--shadow)}
-    a{color:#0b3b91;text-decoration:none}
-    a:hover{text-decoration:underline}
+    a{color:#0b3b91;text-decoration:none} a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
 <div id="app"></div>
 
 <script>
-/* ---------------------- Helper ---------------------- */
-const $ = (sel, el=document) => el.querySelector(sel);
+const $ = (s,el=document)=>el.querySelector(s);
 const qs = new URLSearchParams(location.search);
 const NOW = () => new Date();
-const fmtDateTime = (d) => {
-  if (!d) return "–";
-  const dt = (d instanceof Date) ? d : new Date(d);
-  return dt.toLocaleString('de-DE', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' });
-};
-const neatName = (id) => {
-  // aus "schacht_audorf" → "Schacht-Audorf"
-  return String(id||'')
-    .replace(/_/g,'-')
-    .split('-')
-    .map(w => w ? w[0].toUpperCase()+w.slice(1) : w)
-    .join('-');
-};
+const fmtDateTime = d => (d? new Date(d): new Date()).toLocaleString('de-DE',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+const fmtTimeOnly = d => (d? new Date(d): new Date()).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+const escapeHtml = s => String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
+const neatName = id => String(id||'').replace(/_/g,'-').split('-').map(w=>w? w[0].toUpperCase()+w.slice(1):w).join('-');
+const toNum = v => (v==null? NaN : (typeof v==='number'? v : (Number.isFinite(parseFloat(String(v).replace(',','.'))) ? parseFloat(String(v).replace(',','.')) : NaN)));
 
-// Denylist (IDs in Kleinbuchstaben eintragen)
-const DENY = new Set([
-  "lsn50"
-]);
+// Denylist absichtlich leer
+const DENY = new Set([]);
 
-/* ---------------------- App Router ---------------------- */
-if (qs.get('stats') === '1') {
-  renderStatsPage(qs.get('id'));
-} else {
-  renderMap();
-}
+if (qs.get('stats') === '1') renderStatsPage(qs.get('id'));
+else renderMap();
 
-/* ---------------------- STATISTIK ---------------------- */
 async function renderStatsPage(id){
   const nodeId = (id||'').trim();
   const title = `Schulwaldsensor — ${neatName(nodeId)}`;
@@ -149,33 +96,27 @@ async function renderStatsPage(id){
     <div class="stats-src">Quelle: /data/v2/history/history_${escapeHtml(nodeId)}.json</div>
     <div class="stats-head">
       <div class="stats-qr" id="stats-qr"></div>
-      <div>
-        <div>Link: <a href="${location.origin}/v2.html?stats=1&id=${encodeURIComponent(nodeId)}" target="_blank">${location.origin}/v2.html?stats=1&id=${escapeHtml(nodeId)}</a></div>
+      <div>Link:
+        <a href="${location.origin}/v2.html?stats=1&id=${encodeURIComponent(nodeId)}" target="_blank">
+          ${location.origin}/v2.html?stats=1&id=${escapeHtml(nodeId)}
+        </a>
       </div>
     </div>
     <pre id="stats-pre">{ Lädt … }</pre>
   `;
   document.getElementById('app').replaceChildren(wrap);
+  new QRCode($('#stats-qr'), {text:`${location.origin}/v2.html?stats=1&id=${nodeId}`,width:110,height:110});
 
-  // QR bauen
-  new QRCode($('#stats-qr'), {
-    text: `${location.origin}/v2.html?stats=1&id=${nodeId}`,
-    width: 110, height: 110
-  });
-
-  // Daten laden
   try{
-    const url = `/data/v2/history/history_${encodeURIComponent(nodeId)}.json?c=${Date.now()}`;
-    const res = await fetch(url, {cache:'no-store'});
+    const res = await fetch(`/data/v2/history/history_${encodeURIComponent(nodeId)}.json?c=${Date.now()}`, {cache:'no-store'});
     if(!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
-    $('#stats-pre').textContent = JSON.stringify(json, null, 2);
+    $('#stats-pre').textContent = JSON.stringify(json,null,2);
   }catch(e){
     $('#stats-pre').textContent = `Fehler beim Laden: ${e.message}`;
   }
 }
 
-/* ---------------------- KARTE ---------------------- */
 async function renderMap(){
   const app = document.getElementById('app');
   app.innerHTML = `
@@ -184,58 +125,43 @@ async function renderMap(){
     <div id="map"></div>
   `;
 
-  const map = L.map('map', {
-    zoomControl: true
-  }).setView([54.5, 9.5], 8);
+  const map = L.map('map').setView([54.5,9.5],8);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution:'&copy; OpenStreetMap contributors'
-  }).addTo(map);
-
-  // Popup-Optionen: mehr Top-Padding, damit Badges nicht überdecken
   const popupOpts = {
     className:'ws-popup',
     autoPan:true,
-    autoPanPaddingTopLeft:[0, 120], // ↑ unter die Badges schieben
-    autoPanPaddingBottomRight:[0, 20],
-    maxWidth: 320
+    autoPanPaddingTopLeft:[0,120],  // unter Badges
+    autoPanPaddingBottomRight:[0,20],
+    maxWidth:320
   };
 
   let markers = [];
-  function clearMarkers(){
-    markers.forEach(m => map.removeLayer(m));
-    markers = [];
-  }
+  const clearMarkers = ()=>{ markers.forEach(m=>map.removeLayer(m)); markers=[]; };
 
   try{
-    const url = `/data/v2/latest/all.json?c=${Date.now()}`;
-    const res = await fetch(url,{cache:'no-store'});
+    const res = await fetch(`/data/v2/latest/all.json?c=${Date.now()}`, {cache:'no-store'});
     if(!res.ok) throw new Error(`HTTP ${res.status}`);
     const rows = await res.json();
 
-    // filtern & aufbereiten
+    // Robust extrahieren
     const good = rows
       .filter(r => r && r.id && !DENY.has(String(r.id).toLowerCase()))
       .map(r => {
         const f = r.fields || {};
-        const lat = toNum(f.lat);
-        const lon = toNum(f.lon);
-        return {
-          id: r.id,
-          ts: r.ts,
-          lat, lon,
-          bat: toNum(f.BatV),
-          hum: toNum(f.Hum_SHT ?? f.Hum_SHT31),
-          tmp: toNum(f.TempC_SHT ?? f.TempC_SHT31 ?? f.TempC1 ?? f.temp_SOIL)
-        };
+        // Koordinaten an allen üblichen Stellen suchen
+        const lat = toNum(r.lat ?? r.latitude ?? f.lat ?? f.latitude);
+        const lon = toNum(r.lon ?? r.longitude ?? f.lon ?? f.longitude);
+        const bat = toNum(f.BatV ?? r.BatV);
+        const hum = toNum(f.Hum_SHT ?? f.Hum_SHT31 ?? r.Hum_SHT ?? r.Hum_SHT31);
+        const tmp = toNum(f.TempC_SHT ?? f.TempC_SHT31 ?? f.TempC1 ?? f.temp_SOIL ?? r.TempC_SHT ?? r.TempC_SHT31 ?? r.TempC1 ?? r.temp_SOIL);
+        return { id:r.id, ts:r.ts, lat, lon, bat, hum, tmp };
       })
       .filter(x => Number.isFinite(x.lat) && Number.isFinite(x.lon));
 
-    // Badges
     $('#badge-ts').textContent = fmtTimeOnly(NOW());
     $('#badge-count').textContent = String(good.length);
 
-    // Letzte Node-Meldung
     if (good.length){
       const last = [...good].sort((a,b)=>new Date(b.ts)-new Date(a.ts))[0];
       $('#badge-last').textContent = `${fmtDateTime(last.ts)} — ${last.id}`;
@@ -243,49 +169,40 @@ async function renderMap(){
       $('#badge-last').textContent = '–';
     }
 
-    // Marker
     clearMarkers();
-    good.forEach(row => {
-      const m = L.marker([row.lat, row.lon]).addTo(map);
+    good.forEach(row=>{
+      const m = L.marker([row.lat,row.lon]).addTo(map);
       m.bindPopup(buildPopupHTML(row), popupOpts);
 
-      // ⚠️ QR-Code erst erzeugen, wenn Popup geöffnet ist
-      m.on('popupopen', () => {
+      m.on('popupopen', ()=>{
         const el = document.getElementById(`qr-${row.id}`);
         if (el && !el.dataset.done){
           const statsUrl = `${location.pathname}?stats=1&id=${encodeURIComponent(row.id)}`;
-          new QRCode(el, {text: statsUrl, width:110, height:110});
-          el.dataset.done = '1';
+          new QRCode(el, {text:statsUrl, width:110, height:110});
+          el.dataset.done='1';
         }
       });
-
       markers.push(m);
     });
 
-    // Karte so setzen, dass Marker sichtbar
     if (markers.length){
       const group = L.featureGroup(markers);
       map.fitBounds(group.getBounds().pad(0.2));
     }
-
   }catch(e){
     console.error(e);
     alert('Fehler beim Laden der Daten.');
   }
 }
 
-/* ---------- Popup ---------- */
 function buildPopupHTML(row){
   const id = row.id;
   const title = neatName(id);
   const ts = row.ts ? fmtDateTime(row.ts) : '–';
-  const b = (row.bat ?? null);
-  const h = (row.hum ?? null);
-  const t = (row.tmp ?? null);
 
-  const vBat = isFinite(b) ? `${b.toFixed(3)} V` : '—';
-  const vHum = isFinite(h) ? `${h.toFixed(1)} %` : '—';
-  const vTmp = isFinite(t) ? `${t.toFixed(1)} °C` : '—';
+  const vBat = Number.isFinite(row.bat) ? `${row.bat.toFixed(3)} V` : '—';
+  const vHum = Number.isFinite(row.hum) ? `${row.hum.toFixed(1)} %` : '—';
+  const vTmp = Number.isFinite(row.tmp) ? `${row.tmp.toFixed(1)} °C` : '—';
 
   const statsUrl = `${location.pathname}?stats=1&id=${encodeURIComponent(id)}`;
 
@@ -306,29 +223,6 @@ function buildPopupHTML(row){
       <div class="ws-meta">Link nutzt Node-ID: <strong>${escapeHtml(id)}</strong></div>
     </div>
   `;
-}
-
-/* ---------- Utils ---------- */
-function toNum(v){
-  if (v === null || v === undefined) return NaN;
-  if (typeof v === 'number') return v;
-  if (typeof v === 'string'){
-    const x = parseFloat(v.replace(',','.'));
-    return Number.isFinite(x) ? x : NaN;
-  }
-  return NaN;
-}
-function fmtTimeOnly(d){
-  const dt = (d instanceof Date) ? d : new Date(d);
-  return dt.toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
-}
-function escapeHtml(s){
-  return String(s ?? '')
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll("'",'&#039;');
 }
 </script>
 </body>
