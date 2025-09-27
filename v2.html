@@ -1,286 +1,312 @@
 <!doctype html>
 <html lang="de">
 <head>
+  <!-- WALDSENSOR.SH – v2.html – Version v02 – Stand: 2025-09-27 -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>WALDSENSOR.SH – Karte v2</title>
+  <title>WALDSENSOR.SH – v2</title>
 
   <!-- Leaflet -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
-  />
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-  ></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <!-- Echter QR-Code (klein, ohne weitere Abhängigkeiten) -->
+  <!-- Chart.js (für Statistikansicht) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- QRCode (klein & robust) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     :root{
-      --brand:#135e31;
-      --brand-2:#2577d5;
-      --chip-bg:#ffffff;
-      --chip-shadow:0 6px 18px rgba(0,0,0,.08);
-      --chip-radius:18px;
+      --badge-bg:#fff;
+      --badge-shadow:0 6px 22px rgba(0,0,0,.12);
+      --ok:#116b2d; --ok-bg:#e9f6ee;
+      --info:#1d57b9; --info-bg:#eaf2ff;
+      --muted:#6b7280;
     }
-    html,body,#map { height:100%; margin:0; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+    html,body,#map{height:100%;margin:0}
 
-    .badge {
-      position:absolute;
-      z-index:400;
-      background:var(--chip-bg);
-      box-shadow:var(--chip-shadow);
-      border-radius:var(--chip-radius);
-      padding:.65rem .9rem;
-      font-weight:700;
-      display:flex; align-items:center; gap:.5rem;
-      border:1px solid rgba(0,0,0,.05);
-      backdrop-filter:saturate(1.2) blur(2px);
-      -webkit-backdrop-filter:saturate(1.2) blur(2px);
+    .ws-badge{
+      position:absolute; z-index:500;
+      background:var(--badge-bg);
+      box-shadow:var(--badge-shadow);
+      border-radius:16px; padding:.6rem 1rem;
+      font:600 16px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
+      letter-spacing:.1px;
     }
-    .badge small{font-weight:600; opacity:.7}
-    #badge-upd{ left:.75rem; top:.75rem; color:var(--brand); }
-    #badge-last{ right:.75rem; top:.75rem; color:var(--brand-2); }
+    #badge-left{
+      top:14px; left:14px; color:var(--ok); background:var(--ok-bg);
+    }
+    #badge-right{
+      top:14px; right:14px; color:var(--info); background:var(--info-bg);
+    }
+    #nodes-count{color:#0f5132;margin-left:.5rem}
 
-    .leaflet-popup-content{ margin: 12px 14px; }
-    .popup-title{ font-size:1.2rem; font-weight:800; margin:0 0 .25rem 0; }
-    .kv{
-      display:grid; grid-template-columns:auto 1fr; gap:.25rem .75rem;
-      margin:.35rem 0; font-size:1rem;
+    /* Popup kompakter (~70% vorher) + etwas tiefere AutoPan-Reserve */
+    .ws-popup .leaflet-popup-content{
+      margin:10px 12px; width:240px;   /* vorher ~340px */
+      font:500 14px/1.25 system-ui,-apple-system,Segoe UI,Roboto;
     }
-    .kv b{ font-weight:800; }
-    .qr-wrap{ display:flex; align-items:center; gap:1rem; margin:.5rem 0; }
-    .qr-box{ width:132px; height:132px; display:flex; align-items:center; justify-content:center; }
-    .btn{
-      display:inline-block; font-weight:800; text-decoration:none;
-      background:#f2f6ff; border:2px solid #d9e6ff; color:#0a5bd3;
-      padding:.65rem .9rem; border-radius:14px;
-    }
-    .mini{ font-size:.92rem; opacity:.85; }
-    .hint{
-      position:absolute; left:50%; transform:translateX(-50%);
-      top:3.75rem;
-      z-index:401; background:#f4fff6; color:#0d7a2b;
-      border:1px solid #bfe7c9; border-radius:14px;
-      padding:.5rem .8rem; font-weight:700; display:none;
-      box-shadow:var(--chip-shadow);
-    }
+    .ws-popup h3{margin:.1rem 0 .35rem;font:700 18px/1.25 system-ui}
+    .ws-row{display:flex;justify-content:space-between;margin:.25rem 0}
+    .ws-key{color:#111}
+    .ws-val{color:#0b4eb3;font-weight:700}
+    .ws-qr-wrap{display:flex;gap:14px;align-items:center;margin:.5rem 0 .2rem}
+    .ws-qr{width:110px;height:110px;border-radius:8px;overflow:hidden;border:1px solid #e5e7eb}
+    .ws-btn{display:inline-block;margin:.25rem 0;padding:.55rem .9rem;border-radius:12px;background:#eef4ff;color:#0b4eb3;font-weight:700;border:1px solid #dbe7ff;cursor:pointer}
+    .ws-note{margin-top:.4rem;font-size:12px;color:#555}
+    .leaflet-popup-close-button{top:6px;right:8px}
+
+    /* Statistik-Seite */
+    .stats-wrap{max-width:980px;margin:24px auto;padding:0 16px;font:500 16px/1.45 system-ui}
+    .stats-h1{font:800 30px/1.1 system-ui;margin:4px 0 8px}
+    .stats-src{color:#6b7280;font-size:14px;margin:6px 0 18px}
+    .stats-grid{display:grid;grid-template-columns:1fr;gap:18px}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.06);padding:14px}
+    .kv{display:flex;gap:14px;flex-wrap:wrap}
+    .kv .pill{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:999px;padding:.4rem .7rem;font-size:14px}
+    .qr-col{display:flex;gap:14px;align-items:center}
+    .qr-box{width:128px;height:128px;border:1px solid #e5e7eb;border-radius:12px;display:grid;place-items:center;background:#fff}
+    .muted{color:#6b7280}
+    @media (min-width:900px){ .stats-grid{grid-template-columns:1.1fr .9fr} }
   </style>
 </head>
 <body>
-  <div id="map"></div>
+<div id="map" hidden></div>
 
-  <div id="badge-upd" class="badge">Letzte Aktualisierung: <span id="upd-ts">–</span> <small>•</small> Nodes: <span id="node-count">0</span></div>
-  <div id="badge-last" class="badge">Letzte Node-Meldung: <span id="last-node">–</span></div>
-  <div id="hint" class="hint">keine neuen gültigen Daten — <span class="mini">alte Anzeige bleibt</span></div>
+<!-- Badges -->
+<div id="badge-left" class="ws-badge" hidden>Letzte Aktualisierung: <span id="last-update">–</span> <span id="nodes-count"></span></div>
+<div id="badge-right" class="ws-badge" hidden>Letzte Node-Meldung: <span id="last-node">–</span></div>
 
-  <script>
-  /***** EINSTELLUNGEN *********************************************************/
-  const DATA_URL = '/data/v2/latest/all.json';
-  const DENY = new Set([
-    // 'breklum',
-  ]);
-  const HISTORY_FALLBACKS = [
-    ['-s31lb',  '/data/v2/history/history_s31.json'],
-    ['-se01lb', '/data/v2/history/history_se01.json'],
-    ['-sn50v3','/data/v2/history/history_sn50v3.json'],
-    ['-lsn50v2','/data/v2/history/history_lsn50v2.json'],
-  ];
-  /*****************************************************************************/
+<script>
+(() => {
+  const QS = new URLSearchParams(location.search);
+  const STATS = QS.get('stats') === '1';
+  const ID = QS.get('id') || '';
 
-  // "schacht-audorf" oder "schacht_audorf" → "Schacht-Audorf"
-  function prettyName(id){
-    return id.split(/[-_]/)
-      .map(s => s ? s[0].toUpperCase()+s.slice(1) : s)
-      .join('-');
-  }
+  // ————— Utilities
+  const fmtTime = iso => {
+    try {
+      const d = new Date(iso);
+      return d.toLocaleString('de-DE', {hour12:false});
+    } catch { return '–'; }
+  };
+  const titleCaseId = (id) => {
+    // behalte Bindestriche als Worttrenner
+    return String(id).split('-').map(p => p.charAt(0).toUpperCase()+p.slice(1)).join('-');
+  };
+  const byId = sel => document.getElementById(sel);
 
-  function statsUrlFor(nodeId){
-    return `/v2.html?stats=1&id=${encodeURIComponent(nodeId)}`;
-  }
+  // ————— Denylist (dauerhaft rausfiltern)
+  const DENYLIST = new Set(['lsn50', 'lsn50-v2', 'test', 'demo']);
 
-  function mountQR(el, text){
-    el.innerHTML = '';
-    new QRCode(el, { text, width:128, height:128, correctLevel: QRCode.CorrectLevel.M });
-  }
+  // ————— Datenquellen
+  const URL_LATEST = '/data/v2/latest/all.json';
+  const URL_HISTORY = (nodeId) => `/data/v2/history/history_${nodeId}.json`;
 
-  // Leaflet
-  const map = L.map('map', { zoomControl:true }).setView([54.5, 9.6], 8);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution:'&copy; OpenStreetMap contributors'
-  }).addTo(map);
-
-  let layerGroup = L.layerGroup().addTo(map);
-  let lastGoodPayload = null;
-  let lastRenderBounds = null;
-
-  const updTsEl = document.getElementById('upd-ts');
-  const nodeCountEl = document.getElementById('node-count');
-  const lastNodeEl = document.getElementById('last-node');
-  const hintEl = document.getElementById('hint');
-
-  function showHintOnce(){
-    hintEl.style.display='block';
-    clearTimeout(showHintOnce._t);
-    showHintOnce._t = setTimeout(()=> hintEl.style.display='none', 4500);
-  }
-
-  function parseData(arr){
-    if(!Array.isArray(arr)) return [];
-    return arr
-      .filter(d => d && d.id && !DENY.has(String(d.id).toLowerCase()))
-      .map(d => {
-        const id = String(d.id);
-        const ts = d.ts || d.time || null;
-        const f = d.fields || {};
-        const lat = Number(f.lat);
-        const lon = Number(f.lon);
-        const temp = f.TempC_SHT ?? f.TempC1 ?? f.temp_SOIL ?? null;
-        const hum  = f.Hum_SHT ?? f.Hum_SHT31 ?? null;
-        const bat  = f.BatV ?? null;
-        return {id, ts, lat, lon, temp, hum, bat, raw: d};
-      })
-      .filter(o => Number.isFinite(o.lat) && Number.isFinite(o.lon));
-  }
-
-  function renderMarkers(list){
-    layerGroup.clearLayers();
-    const bounds = [];
-    list.forEach(n => {
-      const m = L.marker([n.lat, n.lon]);
-
-      // Popup bauen
-      const root = document.createElement('div');
-
-      const title = document.createElement('div');
-      title.className='popup-title';
-      title.textContent = 'Sensor: ' + prettyName(n.id);
-      root.appendChild(title);
-
-      const kv = document.createElement('div'); kv.className='kv';
-      const fmt = (v, suf) => (v==null || Number.isNaN(Number(v))) ? '—' : (typeof v==='number' ? v.toLocaleString('de-DE') : v) + (suf||'');
-      const addRow = (k,v) => { const b=document.createElement('b'); b.textContent=k; kv.appendChild(b); const s=document.createElement('div'); s.textContent=v; kv.appendChild(s); };
-      addRow('Zuletzt aktiv', n.ts ? new Date(n.ts).toLocaleString('de-DE') : '—');
-      addRow('Batterie', fmt(n.bat,' V'));
-      addRow('Feuchte', fmt(n.hum,' %'));
-      addRow('Temperatur', fmt(n.temp,' °C'));
-      root.appendChild(kv);
-
-      const qrWrap = document.createElement('div'); qrWrap.className='qr-wrap';
-      const qrBox = document.createElement('div'); qrBox.className='qr-box';
-      const url = statsUrlFor(n.id);
-      mountQR(qrBox, url);
-      const a = document.createElement('a'); a.className='btn'; a.href=url; a.textContent='Statistik öffnen';
-      a.target='_blank'; a.rel='noopener';
-      qrWrap.appendChild(qrBox); qrWrap.appendChild(a);
-      root.appendChild(qrWrap);
-
-      const small = document.createElement('div');
-      small.className='mini';
-      small.textContent='Link nutzt Node-ID: ' + n.id;
-      root.appendChild(small);
-
-      m.bindPopup(root, { maxWidth: 360 }).addTo(layerGroup);
-      bounds.push([n.lat, n.lon]);
-    });
-
-    if(bounds.length){
-      const b = L.latLngBounds(bounds);
-      if(!lastRenderBounds || !lastRenderBounds.contains(b) || !b.contains(lastRenderBounds)){
-        map.fitBounds(b.pad(0.2));
-      }
-      lastRenderBounds = b;
-    }
-  }
-
-  function updateBadges(list, fetchTime){
-    updTsEl.textContent = fetchTime.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
-    nodeCountEl.textContent = String(list.length);
-
-    let latest = null;
-    for(const n of list){
-      if(n.ts && (!latest || n.ts > latest.ts)) latest = n;
-    }
-    if(latest){
-      const dt = new Date(latest.ts).toLocaleString('de-DE');
-      lastNodeEl.textContent = `${dt} — ${latest.id}`;
-    }else{
-      lastNodeEl.textContent = '–';
-    }
-  }
-
-  async function loadAndRender(){
-    const now = new Date();
-    try{
-      const res = await fetch(`${DATA_URL}?t=${Date.now()}`, {cache:'no-store'});
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      const json = await res.json();
-      const list = parseData(json);
-
-      if(list.length===0){
-        showHintOnce();
-        updateBadges(lastGoodPayload ?? [], now);
-        return;
-      }
-
-      lastGoodPayload = list;
-      renderMarkers(list);
-      updateBadges(list, now);
-    }catch(e){
-      showHintOnce();
-      updateBadges(lastGoodPayload ?? [], now);
-    }
-  }
-
-  loadAndRender();
-  setInterval(loadAndRender, 60_000);
-
-  /************** Sehr einfacher Statistik-Viewer im selben File ****************/
-  (function maybeStats(){
-    const p = new URLSearchParams(location.search);
-    if(p.get('stats')!=='1') return;
-    const nodeId = p.get('id') || '';
-    document.title = `Schulwaldsensor — ${prettyName(nodeId)}`;
+  if (STATS) {
+    // ======================== Statistik-Ansicht ===========================
     document.body.innerHTML = `
-      <div style="padding: 1.25rem 1rem; max-width: 1100px; margin: 0 auto; font-family: inherit">
-        <h1 style="margin:.2rem 0 1rem 0;">Schulwaldsensor — ${prettyName(nodeId)}</h1>
-        <div id="info" style="margin:.75rem 0; color:#444">Lade Daten …</div>
-        <div id="qr" class="qr-box" style="margin:.5rem 0 1rem 0;"></div>
-        <div class="mini">Link: ${location.href}</div>
-        <pre id="out" style="white-space:pre-wrap; background:#fafafa; border:1px solid #eee; border-radius:12px; padding:12px; font-size:.95rem;"></pre>
+      <div class="stats-wrap">
+        <div class="qr-col">
+          <div class="qr-box" id="qr"></div>
+          <div>
+            <div class="stats-h1">Schulwaldsensor — ${titleCaseId(ID || '–')}</div>
+            <div class="stats-src">Quelle: <code>${URL_HISTORY(ID)}</code></div>
+            <div class="muted">Link: https://www.waldsensor.sh/v2.html?stats=1&id=${encodeURIComponent(ID)}</div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="card">
+            <canvas id="chartTF"></canvas>
+          </div>
+          <div class="card">
+            <div class="kv" id="kv"></div>
+            <canvas id="chartBat" style="margin-top:12px;"></canvas>
+          </div>
+        </div>
       </div>
     `;
-    mountQR(document.getElementById('qr'), location.href);
 
-    const tryFiles = [
-      `/data/v2/history/history_${encodeURIComponent(nodeId)}.json`,
-      ...HISTORY_FALLBACKS.filter(([s])=> nodeId.endsWith(s)).map(([,u])=>u)
-    ];
+    new QRCode(byId('qr'), { text: location.href, width: 120, height: 120 });
 
-    (async ()=>{
-      for(const url of tryFiles){
-        try{
-          const r = await fetch(url, {cache:'no-store'});
-          if(r.ok){
-            const data = await r.json();
-            document.getElementById('info').textContent = `Quelle: ${url}`;
-            document.getElementById('out').textContent =
-              typeof data==='object' ? JSON.stringify(data,null,2) : String(data);
-            return;
-          }
-        }catch{}
+    fetch(URL_HISTORY(ID)).then(r => r.json()).then(hist => {
+      // Historie kann Array oder Objekt-Liste sein
+      const rows = Array.isArray(hist) ? hist : [];
+      // Basale Felder sammeln
+      const ptsTF = [];   // {t, temp, hum}
+      const ptsBat = [];  // {t, bat}
+      let lastTs = null, lastTemp = null, lastHum = null, lastBat = null;
+
+      for (const row of rows) {
+        const ts = row.ts || row.time || row.timestamp;
+        const f = row.fields || {};
+        const temp = f.TempC_SHT ?? f.TempC_SHT31 ?? f.TempC1 ?? f.temp_SOIL ?? null;
+        const hum  = f.Hum_SHT ?? f.Hum_SHT31 ?? f.water_SOIL ?? null;
+        const bat  = f.BatV ?? f.bat ?? null;
+
+        if (ts) {
+          if (temp != null || hum != null) ptsTF.push({t: ts, temp: (temp!=null? Number(temp): null), hum: (hum!=null? Number(hum): null)});
+          if (bat != null) ptsBat.push({t: ts, bat: Number(bat)});
+          lastTs = ts; lastTemp = temp ?? lastTemp; lastHum = hum ?? lastHum; lastBat = bat ?? lastBat;
+        }
       }
-      document.getElementById('info').textContent = 'Keine History-Datei gefunden.';
-      document.getElementById('out').textContent = '';
-    })();
-  })();
-  </script>
+
+      // Kennzahlen
+      const kv = byId('kv');
+      kv.innerHTML = `
+        <span class="pill">Letztes Update: <b>${lastTs ? fmtTime(lastTs) : '–'}</b></span>
+        <span class="pill">Temp: <b>${lastTemp!=null ? (Number(lastTemp).toFixed(1)+' °C'):'–'}</b></span>
+        <span class="pill">Feuchte: <b>${lastHum!=null ? (Number(lastHum).toFixed(1)+' %'):'–'}</b></span>
+        <span class="pill">Batterie: <b>${lastBat!=null ? (Number(lastBat).toFixed(3)+' V'):'–'}</b></span>
+      `;
+
+      // Charts
+      const labelsTF = ptsTF.map(p => fmtTime(p.t));
+      const tempData = ptsTF.map(p => p.temp);
+      const humData  = ptsTF.map(p => p.hum);
+
+      new Chart(byId('chartTF'), {
+        type: 'line',
+        data: {
+          labels: labelsTF,
+          datasets: [
+            {label: 'Temperatur [°C]', data: tempData},
+            {label: 'Luftfeuchte [%]', data: humData, yAxisID:'y1'}
+          ]
+        },
+        options: {
+          responsive:true,
+          scales: {
+            y: { title:{display:true, text:'°C'}, suggestedMin:0 },
+            y1:{ position:'right', title:{display:true, text:'%'} }
+          }
+        }
+      });
+
+      const labelsB = ptsBat.map(p => fmtTime(p.t));
+      const batData = ptsBat.map(p => p.bat);
+      new Chart(byId('chartBat'), {
+        type: 'line',
+        data: { labels: labelsB, datasets: [{label:'Batterie [V]', data: batData}] },
+        options: { responsive:true, scales:{ y:{ suggestedMin:2.8, suggestedMax:4.3 } } }
+      });
+    }).catch(() => {
+      byId('kv').innerHTML = `<span class="pill">Keine Daten gefunden</span>`;
+    });
+
+    return; // Ende Statistik-Ansicht
+  }
+
+  // ======================== Karten-Ansicht ===============================
+  const map = L.map('map', { zoomControl:true }).setView([54.5, 9.5], 9);
+  byId('map').hidden = false;
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18, attribution: '&copy; OpenStreetMap'
+  }).addTo(map);
+
+  // Kompakteres Popup + tieferes Auto-Pan
+  const popupOpts = {
+    maxWidth: 260,
+    className: 'ws-popup',
+    keepInView: true,
+    autoPanPaddingTopLeft: [0, 120],       // schiebt Popup unter die Badges
+    autoPanPaddingBottomRight: [0, 40]
+  };
+
+  const fmt = (v, unit='') => (v==null || Number.isNaN(v)) ? '—' : `${v}${unit}`;
+  const latestBadge = byId('badge-left');
+  const lastNodeBadge = byId('badge-right');
+  latestBadge.hidden = false; lastNodeBadge.hidden = false;
+
+  function buildPopupHTML(node){
+    const id = node.id;
+    const f = node.fields || {};
+    const name = titleCaseId(id);
+    const last = node.ts ? fmtTime(node.ts) : '–';
+    const bat = (f.BatV!=null) ? Number(f.BatV).toFixed(3)+' V' : '—';
+    const hum = (f.Hum_SHT!=null ? Number(f.Hum_SHT).toFixed(1)+' %' :
+                (f.Hum_SHT31!=null ? Number(f.Hum_SHT31).toFixed(1)+' %' : '—'));
+    const temp = (f.TempC_SHT!=null ? Number(f.TempC_SHT).toFixed(1)+' °C' :
+                 (f.TempC_SHT31!=null ? Number(f.TempC_SHT31).toFixed(1)+' °C' :
+                 (f.TempC1!=null ? Number(f.TempC1).toFixed(1)+' °C' : '—')));
+
+    const statsUrl = `${location.pathname}?stats=1&id=${encodeURIComponent(id)}`;
+
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <h3>Sensor: ${name}</h3>
+      <div class="ws-row"><span class="ws-key">Zuletzt aktiv</span><span class="ws-val">${last}</span></div>
+      <hr/>
+      <div class="ws-row"><span class="ws-key">Batterie</span><span class="ws-val">${bat}</span></div>
+      <div class="ws-row"><span class="ws-key">Feuchte</span><span class="ws-val">${hum}</span></div>
+      <div class="ws-row"><span class="ws-key">Temperatur</span><span class="ws-val">${temp}</span></div>
+      <div class="ws-qr-wrap">
+        <div class="ws-qr" id="qr-${id}"></div>
+        <a class="ws-btn" href="${statsUrl}">Statistik öffnen</a>
+      </div>
+      <div class="ws-note">Link nutzt Node-ID: <b>${id}</b></div>
+    `;
+    // QR erzeugen
+    setTimeout(() => {
+      new QRCode(document.getElementById(`qr-${id}`), { text: statsUrl, width: 110, height: 110 });
+    }, 0);
+    return div;
+  }
+
+  function addMarkers(data){
+    const nodes = [];
+    let lastNodeTs = null, lastNodeId = null;
+
+    for (const row of data){
+      if (!row || !row.id) continue;
+      const idLow = String(row.id).toLowerCase();
+      if (DENYLIST.has(idLow)) continue;
+
+      const f = row.fields || {};
+      const lat = Number(f.lat ?? row.lat);
+      const lon = Number(f.lon ?? row.lon);
+      if (!Number.isFinite(lat) || !Number.isFinite(lon)) continue;
+
+      nodes.push(row);
+
+      const m = L.marker([lat, lon]).addTo(map);
+      m.bindPopup(buildPopupHTML(row), popupOpts);
+
+      if (row.ts){
+        if (!lastNodeTs || row.ts > lastNodeTs){ lastNodeTs = row.ts; lastNodeId = row.id; }
+      }
+    }
+
+    // Badges
+    byId('nodes-count').textContent = `• Nodes: ${nodes.length}`;
+    byId('last-update').textContent = new Date().toLocaleTimeString('de-DE', {hour12:false});
+
+    if (lastNodeTs){
+      byId('last-node').textContent = `${fmtTime(lastNodeTs)} — ${lastNodeId}`;
+    } else {
+      byId('last-node').textContent = '—';
+    }
+
+    if (nodes.length){
+      // Auf Marker einzoomen
+      const group = L.featureGroup(nodes.map(n => L.marker([n.fields.lat, n.fields.lon])));
+      try{ map.fitBounds(group.getBounds().pad(0.2)); }catch{}
+    }
+  }
+
+  fetch(URL_LATEST)
+    .then(r => r.json())
+    .then(data => Array.isArray(data) ? data : [])
+    .then(addMarkers)
+    .catch(() => {
+      byId('last-update').textContent = '— (Fehler beim Laden)';
+      byId('nodes-count').textContent = '';
+      byId('last-node').textContent = '—';
+    });
+})();
+</script>
 </body>
 </html>
