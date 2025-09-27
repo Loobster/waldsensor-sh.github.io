@@ -3,13 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WALDSENSOR.SH – Karte (V2, failsafe)</title>
+  <title>WALDSENSOR.SH – Karte (V2)</title>
 
   <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-  <!-- QRCode (für Popup-Link) -->
+  <!-- MarkerCluster (optional, bleibt geladen für später) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- QRCode -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
   <style>
@@ -21,350 +26,237 @@
     html, body { height:100%; margin:0; }
     #map { height:100%; width:100%; }
 
-    /* Status-Pille links oben */
     .pill {
-      position: fixed; z-index: 1001;
-      top: 14px; left: 70px;
-      background: var(--pill-bg); color: var(--pill-text);
-      padding: 8px 12px; border-radius: 14px;
-      font: 600 15px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      box-shadow: var(--pill-shadow); border: 1px solid #e8e8e8;
-      max-width: 44ch;
-    }
-    /* Letzte Node rechts oben */
-    .last-node {
-      position: fixed; z-index: 1001;
-      top: 14px; right: 14px;
-      background: #e9f3ff; color: #0b4da2;
-      padding: 8px 12px; border-radius: 14px;
-      font: 600 14px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      box-shadow: var(--pill-shadow); border: 1px solid #d6e6ff;
-      max-width: 42ch; text-align: right;
-    }
-    /* Kleiner Debug-Streifen unten links (abschaltbar) */
-    .debug {
-      position: fixed; z-index: 1001;
-      left: 10px; bottom: 10px;
-      background:#fff; color:#444; border:1px solid #eee;
-      padding: 6px 8px; border-radius: 10px; font: 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
-      box-shadow: var(--pill-shadow); opacity:.85;
+      position: fixed;
+      z-index: 1001;
+      top: 14px;
+      left: 70px;
+      background: var(--pill-bg);
+      color: var(--pill-text);
+      padding: 10px 14px;
+      border-radius: 14px;
+      font: 600 18px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: var(--pill-shadow);
+      border: 1px solid #e8e8e8;
     }
 
-    /* Popup kompakt & nicht zu groß */
-    .leaflet-popup { z-index: 1002; }
-    .popup { width: 280px; }
-    .popup h3{ margin:0 0 .35rem 0; font:700 17px/1.25 system-ui; }
-    .popup hr{ border:0; height:1px; background:#ececec; margin:.4rem 0 .6rem; }
-    .row { display:flex; justify-content:space-between; gap:8px; margin:.28rem 0; }
-    .label { color:#555; font:600 12px/1.25 system-ui; }
-    .value { color:#0b4da2; font:700 13px/1.25 system-ui; }
-    .coords { color:#666; font:600 12px/1.2 system-ui; margin-top:.2rem; }
-    .qrrow { display:flex; gap:10px; align-items:center; margin-top:6px; }
-    .openbtn {
-      display:inline-block; padding:8px 12px; border-radius:12px;
-      background:#eef4ff; color:#0b4da2; font:700 14px/1.1 system-ui;
-      text-decoration:none; border:1px solid #d6e6ff; white-space:nowrap;
+    .last-node {
+      position: fixed;
+      z-index: 1001;
+      top: 14px;
+      right: 14px;
+      background: #e9f3ff;
+      color: #0b4da2;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font: 600 16px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: var(--pill-shadow);
+      border: 1px solid #d6e6ff;
+      max-width: 42ch;
+      text-align: right;
     }
-    .hint { color:#777; font:500 11px/1.3 system-ui; margin-top:4px; }
+
+    /* Popup-Optik & Z-Index, damit nichts von den Badges verdeckt wird */
+    .leaflet-popup { z-index: 1002; }
+    .popup { width: 320px; }
+    .popup h3{ margin:0 0 .25rem 0; font:700 20px/1.25 system-ui; }
+    .popup hr{ border:0; height:1px; background:#ececec; margin:.5rem 0 .75rem; }
+    .popup .kv{ margin:.35rem 0; }
+    .popup .kv b{ font-weight:700; }
+    .popup .qrrow {
+      display:flex; gap:14px; align-items:center; margin-top:8px;
+    }
+    .popup .openbtn {
+      display:inline-block; padding:12px 16px; border-radius:14px;
+      background:#eef4ff; color:#0b4da2; font:700 20px/1.1 system-ui;
+      text-decoration:none; border:1px solid #d6e6ff;
+      white-space:nowrap;
+    }
+    .popup .hint { color:#666; font:500 13px/1.3 system-ui; margin-top:6px; }
   </style>
 </head>
 <body>
-  <div class="pill" id="stamp">Lade Daten…</div>
+  <div class="pill" id="stamp">Letzte Aktualisierung: –</div>
   <div class="last-node" id="last">Letzte Node-Meldung: –</div>
   <div id="map"></div>
-  <div class="debug" id="dbg" hidden>debug</div>
 
-<script>
-(() => {
-  // =================== KONFIG ===================
-  // Datenquelle (Website-URL, damit CDN/CORS korrekt ist)
-  const DATA_URL = "/data/v2/latest/all.json";
-  // Auto-Refresh-Intervall
-  const AUTO_REFRESH_MS = 60_000;
-  // HTTP-Timeout (pro Versuch) + Anzahl Versuche
-  const FETCH_TIMEOUT_MS = 6000;
-  const FETCH_RETRIES = 2;
-  // Debug-Ausgabe ein/aus
-  const DEBUG = false;
+  <script>
+    // ------------------- Konstante Pfade & Refresh -------------------
+    const DATA_URL = "https://raw.githubusercontent.com/Loobster/waldsensor-sh.github.io/main/data/v2/latest/all.json";
+    const AUTO_REFRESH_MS = 60_000;
 
-  // Nodes, die wir hart ausblenden (Alt-/Testgeräte)
-  const DENYLIST = new Set(["lsn50","lsn50-v2"]);
-
-  // Felder, die im Popup NICHT angezeigt werden sollen (Technik/Noise)
-  const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status","lat","lon","alt","bw","sf","rssi1","rssi2","snr1","
-snr2"]);
-
-  // Fallback-Koordinaten per Kurz-ID (nur falls keine lat/lon in den Daten)
-  const MANUAL_LOC = {
-    //    "breklum":  [54.60669, 8.98195],
-    "s31":      [54.651105744662, 8.95686194107564],
-    "se01":     [54.651397869916885, 8.956861978868044],
-    "kropp":    [54.4093988908855, 9.5285027323752],
-    "fahrdorf": [54.50158, 9.5869],
-    "neumuenstertl": [54.07586, 9.98926]
-    //   "hooge":    [54.5582, 8.5464]
-  };
-
-  // =================== HILFE ===================
-  const $ = (id) => document.getElementById(id);
-  const stampEl = $("stamp"), lastEl = $("last"), dbgEl = $("dbg");
-
-  function dbg(t){ if(DEBUG){ dbgEl.hidden = false; dbgEl.textContent = t; } }
-
-  function deTime(ts){
-    try {
-      return new Date(ts).toLocaleString("de-DE", {
-        year:"numeric", month:"2-digit", day:"2-digit",
-        hour:"2-digit", minute:"2-digit", second:"2-digit"
-      });
-    } catch(_){ return ts || "–"; }
-  }
-  function deNum(n, digits=1){
-    return (typeof n === "number" && Number.isFinite(n))
-      ? n.toLocaleString("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits })
-      : "–";
-  }
-  function normalizeId(s){
-    return String(s||'')
-      .toLowerCase()
-      .replace(/\r|\s+/g,'')
-      .replace(/^waldsensor[_-]/,'')
-      .replace(/_/g,'-')
-      .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,'');
-  }
-  function cleanFields(fields){
-    const out = {};
-    for (const [k,v] of Object.entries(fields||{})){
-      if (OMIT_FIELDS.has(k)) continue;
-      if (v === undefined || v === null || v === "NULL") continue;
-      if (typeof v === "number" && !Number.isFinite(v)) continue;
-      out[k] = v;
-    }
-    return out;
-  }
-  function latestRecord(arr){
-    let best = null, bestT = -Infinity;
-    for (const r of (arr||[])){
-      if (!r || !r.ts) continue;
-      const t = Date.parse(r.ts);
-      if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
-    }
-    return best;
-  }
-
-  // =================== LEAFLET ===================
-  const map = L.map("map", {
-    zoomSnap: 0.25,
-    // Verhindert, dass Popups unter den Top-Badges verschwinden:
-    // Wir zwingen Leaflet, ausreichend Abstand nach oben zu lassen.
-    // (autoPan ist Standard true; Padding hebt die Map minimal an)
-    // Wird beim Öffnen eines Popups wirksam.
-  });
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-  }).addTo(map);
-  map.setView([54.4, 9.6], 8.25);
-
-  let markersLayer = L.layerGroup().addTo(map);
-  let haveRenderedOnce = false;   // verhindert „weiße Seite“
-  let lastGoodData = null;       // letzte gute Datengrundlage (gegen Aussetzer)
-
-  function pickCoord(item){
-    const f = item?.fields || {};
-    if (typeof f.lat !== "undefined" && typeof f.lon !== "undefined"){
-      const la = Number(f.lat), lo = Number(f.lon);
-      if (Number.isFinite(la) && Number.isFinite(lo)) return [la, lo];
-    }
-    const short = normalizeId(item.id);
-    if (MANUAL_LOC[short]) return MANUAL_LOC[short];
-    return null;
-  }
-
-  function popupHtml(item){
-    const f = cleanFields(item.fields);
-    const shortId = normalizeId(item.id);
-
-    // bevorzugte Sensorfelder
-    const temp = (typeof item.fields?.TempC_SHT31 === "number") ? item.fields.TempC_SHT31
-               : (typeof item.fields?.TempC_SHT   === "number") ? item.fields.TempC_SHT : null;
-    const hum  = (typeof item.fields?.Hum_SHT31  === "number") ? item.fields.Hum_SHT31
-               : (typeof item.fields?.Hum_SHT    === "number") ? item.fields.Hum_SHT : null;
-    const bat  = (typeof item.fields?.BatV       === "number") ? item.fields.BatV : null;
-
-    const hasLat = typeof item.fields?.lat === "number";
-    const hasLon = typeof item.fields?.lon === "number";
-
-    let html = `<div class="popup">`;
-    html += `<h3>Sensor: ${shortId}</h3>`;
-    html += `<div class="row"><span class="label">Zuletzt aktiv</span><span class="value">${deTime(item.ts)}</span></div>
-`;
-    html += `<hr/>`;
-
-    if (bat  !== null) html += `<div class="row"><span class="label">Batterie</span><span class="value">${deNum(bat,2)} V
-</span></div>`;
-    if (hum  !== null) html += `<div class="row"><span class="label">Luftfeuchte</span><span class="value">${deNum(hum,1)
-} %</span></div>`;
-    if (temp !== null) html += `<div class="row"><span class="label">Temperatur</span><span class="value">${deNum(temp,1)
-} °C</span></div>`;
-
-    // Rest-Felder (kompakt)
-    for (const [k,v] of Object.entries(f)){
-      if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV"].includes(k)) continue;
-      html += `<div class="row"><span class="label">${k}</span><span class="value">${v}</span></div>`;
+    // ------------------- ID-Normalisierung (einheitlich kurz) -------------------
+    function normalizeId(s){
+      return String(s||'')
+        .toLowerCase()
+        .replace(/\r|\s+/g,'')                 // CR/Spaces raus
+        .replace(/^waldsensor[_-]/,'')         // Präfix weg
+        .replace(/_/g,'-')                     // _ -> -
+        .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,''); // gängige Suffixe weg
     }
 
-    // Koordinatenzeile (wenn vorhanden)
-    if (hasLat || hasLon){
-      const lat = hasLat ? deNum(item.fields.lat, 6) : "–";
-      const lon = hasLon ? deNum(item.fields.lon, 6) : "–";
-      html += `<div class="coords">Koordinaten: ${lat}, ${lon}</div>`;
+    // ------------------- manuelle Koordinaten (short IDs) -------------------
+    const MANUAL_LOC = {
+      "breklum":  [54.60669, 8.98195],
+      "s31":      [54.65000, 8.96000],
+      "se01":     [54.65005, 8.96005], // ~5 m versetzt
+      "kropp":    [54.41018, 9.52839],
+      "fahrdorf": [54.50158, 9.58690],
+      "lsn50":    [54.475,   9.05]     // notfalls grob, falls gebraucht
+    };
+
+    const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status","lat","lon"]);
+
+    // ------------------- Leaflet-Setup -------------------
+    const map = L.map("map", { zoomSnap: 0.25 });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+    }).addTo(map);
+    map.setView([54.4, 9.6], 8.25);
+    let markersLayer = L.layerGroup().addTo(map);
+
+    // ------------------- Hilfsfunktionen -------------------
+    function deTime(ts){
+      try {
+        return new Date(ts).toLocaleString("de-DE", {
+          year:"numeric", month:"2-digit", day:"2-digit",
+          hour:"2-digit", minute:"2-digit", second:"2-digit"
+        });
+      } catch(_){ return ts || "–"; }
     }
 
-    const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
-    html += `
-      <div class="qrrow">
-        <div id="qrcode-${shortId}"></div>
-        <a class="openbtn" href="${url}" target="_blank" rel="noopener">Statistik öffnen</a>
-      </div>
-      <div class="hint">Link nutzt Basis-ID: <b>${shortId}</b></div>
-    `;
-    html += `</div>`;
-    return html;
-  }
+    function cleanFields(fields){
+      const out = {};
+      for (const [k,v] of Object.entries(fields || {})){
+        if (OMIT_FIELDS.has(k)) continue;
+        if (v === undefined || v === null || v === "NULL") continue;
+        if (typeof v === "number" && !Number.isFinite(v)) continue;
+        out[k] = v;
+      }
+      return out;
+    }
 
-  function render(data){
-    // Sanity / Denylist / Leere-Fälle behandeln
-    const arr = (data||[]).filter(x => x && x.id && !DENYLIST.has(normalizeId(x.id)));
-    if (!arr.length){
-      // Kein valider Datensatz => NICHT leerräumen, wenn wir schon was haben
-      if (haveRenderedOnce){
-        stampEl.textContent = `Letzte Aktualisierung: ${new Date().toLocaleTimeString("de-DE")} — keine neuen gültigen Da
-ten (alte Anzeige bleibt)`;
-        dbg("render: empty -> keep previous markers");
-        return;
+    function pickCoord(item){
+      const f = item?.fields || {};
+      if (typeof f.lat !== "undefined" && typeof f.lon !== "undefined"){
+        const la = Number(f.lat), lo = Number(f.lon);
+        if (Number.isFinite(la) && Number.isFinite(lo)) return [la, lo];
+      }
+      const short = normalizeId(item.id);
+      if (MANUAL_LOC[short]) return MANUAL_LOC[short];
+      return null;
+    }
+
+    function popupHtml(item){
+      const f = cleanFields(item.fields);
+      let html = `<div class="popup"><h3>${normalizeId(item.id)}</h3>`;
+      html += `<div class="kv">Zeit: <b>${deTime(item.ts)}</b></div><hr/>`;
+
+      // bevorzugte Felder kompakt:
+      if (typeof f.TempC_SHT31 === "number")
+        html += `<div class="kv">Temp (SHT31): <b>${f.TempC_SHT31.toFixed(1)} °C</b></div>`;
+      else if (typeof f.TempC_SHT === "number")
+        html += `<div class="kv">Temp (SHT): <b>${f.TempC_SHT.toFixed(1)} °C</b></div>`;
+
+      if (typeof f.Hum_SHT31 === "number")
+        html += `<div class="kv">Hum (SHT31): <b>${f.Hum_SHT31.toFixed(1)} %</b></div>`;
+      else if (typeof f.Hum_SHT === "number")
+        html += `<div class="kv">Hum (SHT): <b>${f.Hum_SHT.toFixed(1)} %</b></div>`;
+
+      if (typeof f.BatV === "number")
+        html += `<div class="kv">Batterie: <b>${f.BatV.toFixed(2)} V</b></div>`;
+
+      // alle restlichen Felder
+      for (const [k,v] of Object.entries(f)){
+        if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV"].includes(k)) continue;
+        html += `<div class="kv">${k}: <b>${v}</b></div>`;
+      }
+
+      const shortId = normalizeId(item.id);
+      const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+
+      html += `
+        <div class="qrrow">
+          <div id="qrcode-${shortId}"></div>
+          <a class="openbtn" href="${url}" target="_blank" rel="noopener">Seite<br/>öffnen</a>
+        </div>
+        <div class="hint">Link nutzt Basis-ID: <b>${shortId}</b></div>
+      `;
+
+      return html + `</div>`;
+    }
+
+    function latestRecord(data){
+      let best = null, bestT = -Infinity;
+      for (const r of (data||[])){
+        if (!r || !r.ts) continue;
+        const t = new Date(r.ts).getTime();
+        if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
+      }
+      return best;
+    }
+
+    async function loadData(){
+      const res = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache:"no-store" });
+      if (!res.ok) throw new Error("fetch failed " + res.status);
+      return res.json();
+    }
+
+    function render(raw){
+      // ggf. IDs normalisieren (falls _all.json noch \r enthält)
+      const data = (raw||[]).map(x => ({...x, id: normalizeId(x.id)}));
+
+      markersLayer.clearLayers();
+      const bounds = [];
+
+      for (const item of data){
+        const coord = pickCoord(item);
+        if (!coord) continue;
+
+        const marker = L.marker(coord).bindPopup(popupHtml(item));
+        marker.on("popupopen", () => {
+          const shortId = normalizeId(item.id);
+          const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+          const qrDiv = document.getElementById(`qrcode-${shortId}`);
+          if (qrDiv && !qrDiv.hasChildNodes()) {
+            QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 140 }, (err, canvas) => {
+              if (!err) qrDiv.appendChild(canvas);
+            });
+          }
+        });
+        marker.addTo(markersLayer);
+        bounds.push(coord);
+      }
+
+      if (bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
+
+      document.getElementById("stamp").textContent =
+        "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
+
+      const lastEl = document.getElementById("last");
+      const lastRec = latestRecord(data);
+      if (lastRec){
+        lastEl.textContent =
+          "Letzte Node-Meldung: " + deTime(lastRec.ts) + " — " + normalizeId(lastRec.id);
       } else {
-        stampEl.textContent = `Keine gültigen Daten. Warte auf nächste Aktualisierung…`;
-        dbg("render: first load is empty");
-        return;
+        lastEl.textContent = "Letzte Node-Meldung: –";
       }
     }
 
-    // Ab hier: gute Daten -> Marker neu zeichnen
-    markersLayer.clearLayers();
-    const bounds = [];
-
-    for (const item of arr){
-      const coord = pickCoord(item);
-      if (!coord) continue;
-
-      // Popup so öffnen, dass es nicht mit den Badges kollidiert:
-      const popup = L.popup({
-        autoPan: true,
-        autoPanPaddingTopLeft: [10, 70], // Platz unter der oberen Leiste
-        offset: [0, -8]
-      }).setContent(popupHtml(item));
-
-      const marker = L.marker(coord).bindPopup(popup);
-      marker.on("popupopen", () => {
-        const shortId = normalizeId(item.id);
-        const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
-        const qrDiv = document.getElementById(`qrcode-${shortId}`);
-        if (qrDiv && !qrDiv.hasChildNodes()) {
-          QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 100 }, (err, canvas) => {
-            if (!err) qrDiv.appendChild(canvas);
-          });
-        }
-      });
-      marker.addTo(markersLayer);
-      bounds.push(coord);
-    }
-
-    if (bounds.length){
-      // Nur beim ersten erfolgreichen Render automatisch fitBounds,
-      // danach nicht mehr (damit die Karte nicht „springt“).
-      if (!haveRenderedOnce){
-        map.fitBounds(L.latLngBounds(bounds).pad(0.12));
+    async function run(){
+      try{ render(await loadData()); }
+      catch(err){
+        console.error(err);
+        document.getElementById("stamp").textContent =
+          "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
       }
     }
 
-    const lastRec = latestRecord(arr);
-    if (lastRec){
-      lastEl.textContent = `Letzte Node-Meldung: ${deTime(lastRec.ts)} — ${normalizeId(lastRec.id)}`;
-    } else {
-      lastEl.textContent = "Letzte Node-Meldung: –";
-    }
-
-    stampEl.textContent = `Letzte Aktualisierung: ${new Date().toLocaleTimeString("de-DE")} — ${arr.length} Nodes`;
-    haveRenderedOnce = true;
-    lastGoodData = arr;
-    dbg(`render: ok (${arr.length} nodes)`);
-  }
-
-  async function fetchWithTimeout(url, ms){
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), ms);
-    try {
-      const res = await fetch(url, { cache:"no-store", signal: ctrl.signal });
-      return res;
-    } finally {
-      clearTimeout(t);
-    }
-  }
-
-  async function loadData(){
-    let lastErr = null;
-    for (let i=0; i<=FETCH_RETRIES; i++){
-      try{
-        const res = await fetchWithTimeout(`${DATA_URL}?t=${Date.now()}`, FETCH_TIMEOUT_MS);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const json = await res.json();
-        dbg(`fetch ok (try ${i+1})`);
-        return json;
-      } catch(err){
-        lastErr = err;
-        dbg(`fetch fail (try ${i+1}): ${err}`);
-      }
-    }
-    throw lastErr || new Error("fetch failed");
-  }
-
-  async function tick(){
-    // „Lade…“ nur anzeigen, wenn wir noch NIE etwas angezeigt haben
-    if (!haveRenderedOnce){
-      stampEl.textContent = "Lade Daten…";
-    }
-    try{
-      const data = await loadData();
-      if (!Array.isArray(data) || data.length === 0){
-        // leer -> alte Anzeige behalten
-        if (lastGoodData){
-          stampEl.textContent = `Keine neuen Daten (${new Date().toLocaleTimeString("de-DE")}); zeige letzte gültige Anze
-ige.`;
-          dbg("tick: empty array -> keep lastGoodData");
-          return;
-        }
-      }
-      render(data);
-    } catch(err){
-      // Fehler beim Laden -> alte Anzeige behalten (kein Weiß!)
-      console.error(err);
-      if (lastGoodData){
-        stampEl.textContent = `Netz-/Ladeproblem ${new Date().toLocaleTimeString("de-DE")} – zeige letzte gültige Anzeige
-`;
-        dbg(`tick: error -> keep lastGoodData (${err})`);
-        return;
-      } else {
-        stampEl.textContent = `Netz-/Ladeproblem – noch keine Daten`;
-        dbg(`tick: error, no last data (${err})`);
-      }
-    }
-  }
-
-  // Initial + Intervall
-  tick();
-  setInterval(tick, AUTO_REFRESH_MS);
-})();
-</script>
+    run();
+    setInterval(run, AUTO_REFRESH_MS);
+  </script>
 </body>
 </html>
+
+<!-- redeploy 2025-09-09T18:36:56+02:00 -->
