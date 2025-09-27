@@ -1,229 +1,370 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <!-- WALDSENSOR.SH | v2.html — v04 (2025-09-27)
-       Fix: lat/lon auch am Root-Level lesen (row.lat/lon),
-       robustere Fallbacks (latitude/longitude), Denylist leer.
-       Popup kompakt + unter Badges, Stats-Seite aktiv, QR erst bei popupopen.
-  -->
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>WALDSENSOR.SH – Karte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WALDSENSOR.SH – Karte (V2, failsafe)</title>
 
   <!-- Leaflet -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
-  />
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-  ></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-  <!-- QRCode -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- QRCode (für Popup-Link) -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
   <style>
     :root{
-      --bg:#fff; --ink:#0b2239; --muted:#6b7280;
-      --brand:#14532d; --brand2:#1d4ed8;
-      --chip:#eff6ff; --shadow:0 8px 24px rgba(0,0,0,.12);
+      --pill-bg:#fff;
+      --pill-text:#106e2a;
+      --pill-shadow:0 2px 10px rgba(0,0,0,.15);
     }
-    html,body{height:100%;margin:0;background:#eef2f7;color:var(--ink);
-      font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif}
-    #app,#map{height:100%}
+    html, body { height:100%; margin:0; }
+    #map { height:100%; width:100%; }
 
-    .badge{
-      position:fixed; z-index:500; top:14px; padding:10px 14px; background:#fff;
-      border-radius:16px; box-shadow:var(--shadow); font-weight:600; letter-spacing:.2px
+    /* Status-Pille links oben */
+    .pill {
+      position: fixed; z-index: 1001;
+      top: 14px; left: 70px;
+      background: var(--pill-bg); color: var(--pill-text);
+      padding: 8px 12px; border-radius: 14px;
+      font: 600 15px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: var(--pill-shadow); border: 1px solid #e8e8e8;
+      max-width: 44ch;
     }
-    .badge small{font-weight:500;color:var(--muted)}
-    #badge-left{left:14px;border-left:6px solid var(--brand2)}
-    #badge-right{right:14px;border-left:6px solid var(--brand)}
+    /* Letzte Node rechts oben */
+    .last-node {
+      position: fixed; z-index: 1001;
+      top: 14px; right: 14px;
+      background: #e9f3ff; color: #0b4da2;
+      padding: 8px 12px; border-radius: 14px;
+      font: 600 14px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      box-shadow: var(--pill-shadow); border: 1px solid #d6e6ff;
+      max-width: 42ch; text-align: right;
+    }
+    /* Kleiner Debug-Streifen unten links (abschaltbar) */
+    .debug {
+      position: fixed; z-index: 1001;
+      left: 10px; bottom: 10px;
+      background:#fff; color:#444; border:1px solid #eee;
+      padding: 6px 8px; border-radius: 10px; font: 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      box-shadow: var(--pill-shadow); opacity:.85;
+    }
 
-    .ws-popup .leaflet-popup-content{margin:10px 12px; width:260px}
-    .ws-popup .ws-h1{margin:0 0 6px 0; font-size:18px; font-weight:800}
-    .ws-popup .ws-meta{margin:8px 0 10px; padding-top:8px; border-top:1px solid #e5e7eb; color:var(--muted); font-size:12px}
-    .ws-popup .ws-row{display:flex; justify-content:space-between; align-items:center; font-size:15px; margin:2px 0}
-    .ws-popup .ws-key{color:#111; font-weight:700}
-    .ws-popup .ws-val{color:#0b3b91; font-weight:800}
-    .ws-actions{display:flex; gap:10px; align-items:center; margin-top:10px}
-    .ws-open{display:inline-flex; align-items:center; justify-content:center;
-      padding:8px 12px; border-radius:12px; background:var(--chip); border:1px solid #dbeafe;
-      color:#0b3b91; font-weight:700; cursor:pointer}
-    .ws-qr{width:110px;height:110px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;display:flex;align-items:center;justify-content:center}
-
-    .stats-wrap{max-width:980px;margin:32px auto 64px;padding:0 16px}
-    .stats-h1{font-size:28px;font-weight:900;margin:0 0 8px}
-    .stats-src{color:var(--muted);margin:4px 0 14px}
-    .stats-head{display:flex;gap:18px;align-items:flex-start;margin:10px 0 16px}
-    .stats-qr{width:120px;height:120px;border:1px solid #e5e7eb;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#fff}
-    pre{background:#0b1220;color:#e5e9f0;border-radius:12px;padding:16px;overflow:auto;box-shadow:var(--shadow)}
-    a{color:#0b3b91;text-decoration:none} a:hover{text-decoration:underline}
+    /* Popup kompakt & nicht zu groß */
+    .leaflet-popup { z-index: 1002; }
+    .popup { width: 280px; }
+    .popup h3{ margin:0 0 .35rem 0; font:700 17px/1.25 system-ui; }
+    .popup hr{ border:0; height:1px; background:#ececec; margin:.4rem 0 .6rem; }
+    .row { display:flex; justify-content:space-between; gap:8px; margin:.28rem 0; }
+    .label { color:#555; font:600 12px/1.25 system-ui; }
+    .value { color:#0b4da2; font:700 13px/1.25 system-ui; }
+    .coords { color:#666; font:600 12px/1.2 system-ui; margin-top:.2rem; }
+    .qrrow { display:flex; gap:10px; align-items:center; margin-top:6px; }
+    .openbtn {
+      display:inline-block; padding:8px 12px; border-radius:12px;
+      background:#eef4ff; color:#0b4da2; font:700 14px/1.1 system-ui;
+      text-decoration:none; border:1px solid #d6e6ff; white-space:nowrap;
+    }
+    .hint { color:#777; font:500 11px/1.3 system-ui; margin-top:4px; }
   </style>
 </head>
 <body>
-<div id="app"></div>
+  <div class="pill" id="stamp">Lade Daten…</div>
+  <div class="last-node" id="last">Letzte Node-Meldung: –</div>
+  <div id="map"></div>
+  <div class="debug" id="dbg" hidden>debug</div>
 
 <script>
-const $ = (s,el=document)=>el.querySelector(s);
-const qs = new URLSearchParams(location.search);
-const NOW = () => new Date();
-const fmtDateTime = d => (d? new Date(d): new Date()).toLocaleString('de-DE',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});
-const fmtTimeOnly = d => (d? new Date(d): new Date()).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-const escapeHtml = s => String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
-const neatName = id => String(id||'').replace(/_/g,'-').split('-').map(w=>w? w[0].toUpperCase()+w.slice(1):w).join('-');
-const toNum = v => (v==null? NaN : (typeof v==='number'? v : (Number.isFinite(parseFloat(String(v).replace(',','.'))) ? parseFloat(String(v).replace(',','.')) : NaN)));
+(() => {
+  // =================== KONFIG ===================
+  // Datenquelle (Website-URL, damit CDN/CORS korrekt ist)
+  const DATA_URL = "/data/v2/latest/all.json";
+  // Auto-Refresh-Intervall
+  const AUTO_REFRESH_MS = 60_000;
+  // HTTP-Timeout (pro Versuch) + Anzahl Versuche
+  const FETCH_TIMEOUT_MS = 6000;
+  const FETCH_RETRIES = 2;
+  // Debug-Ausgabe ein/aus
+  const DEBUG = false;
 
-// Denylist absichtlich leer
-const DENY = new Set([]);
+  // Nodes, die wir hart ausblenden (Alt-/Testgeräte)
+  const DENYLIST = new Set(["lsn50","lsn50-v2"]);
 
-if (qs.get('stats') === '1') renderStatsPage(qs.get('id'));
-else renderMap();
+  // Felder, die im Popup NICHT angezeigt werden sollen (Technik/Noise)
+  const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status","lat","lon","alt","bw","sf","rssi1","rssi2","snr1","
+snr2"]);
 
-async function renderStatsPage(id){
-  const nodeId = (id||'').trim();
-  const title = `Schulwaldsensor — ${neatName(nodeId)}`;
-  document.title = title;
-
-  const wrap = document.createElement('div');
-  wrap.className = "stats-wrap";
-  wrap.innerHTML = `
-    <h1 class="stats-h1">${title}</h1>
-    <div class="stats-src">Quelle: /data/v2/history/history_${escapeHtml(nodeId)}.json</div>
-    <div class="stats-head">
-      <div class="stats-qr" id="stats-qr"></div>
-      <div>Link:
-        <a href="${location.origin}/v2.html?stats=1&id=${encodeURIComponent(nodeId)}" target="_blank">
-          ${location.origin}/v2.html?stats=1&id=${escapeHtml(nodeId)}
-        </a>
-      </div>
-    </div>
-    <pre id="stats-pre">{ Lädt … }</pre>
-  `;
-  document.getElementById('app').replaceChildren(wrap);
-  new QRCode($('#stats-qr'), {text:`${location.origin}/v2.html?stats=1&id=${nodeId}`,width:110,height:110});
-
-  try{
-    const res = await fetch(`/data/v2/history/history_${encodeURIComponent(nodeId)}.json?c=${Date.now()}`, {cache:'no-store'});
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    const json = await res.json();
-    $('#stats-pre').textContent = JSON.stringify(json,null,2);
-  }catch(e){
-    $('#stats-pre').textContent = `Fehler beim Laden: ${e.message}`;
-  }
-}
-
-async function renderMap(){
-  const app = document.getElementById('app');
-  app.innerHTML = `
-    <div id="badge-left" class="badge">Letzte Aktualisierung: <span id="badge-ts">–</span> <small>• Nodes: <span id="badge-count">0</span></small></div>
-    <div id="badge-right" class="badge">Letzte Node-Meldung: <span id="badge-last">–</span></div>
-    <div id="map"></div>
-  `;
-
-  const map = L.map('map').setView([54.5,9.5],8);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
-
-  const popupOpts = {
-    className:'ws-popup',
-    autoPan:true,
-    autoPanPaddingTopLeft:[0,120],  // unter Badges
-    autoPanPaddingBottomRight:[0,20],
-    maxWidth:320
+  // Fallback-Koordinaten per Kurz-ID (nur falls keine lat/lon in den Daten)
+  const MANUAL_LOC = {
+    //    "breklum":  [54.60669, 8.98195],
+    "s31":      [54.651105744662, 8.95686194107564],
+    "se01":     [54.651397869916885, 8.956861978868044],
+    "kropp":    [54.4093988908855, 9.5285027323752],
+    "fahrdorf": [54.50158, 9.5869],
+    "neumuenstertl": [54.07586, 9.98926]
+    //   "hooge":    [54.5582, 8.5464]
   };
 
-  let markers = [];
-  const clearMarkers = ()=>{ markers.forEach(m=>map.removeLayer(m)); markers=[]; };
+  // =================== HILFE ===================
+  const $ = (id) => document.getElementById(id);
+  const stampEl = $("stamp"), lastEl = $("last"), dbgEl = $("dbg");
 
-  try{
-    const res = await fetch(`/data/v2/latest/all.json?c=${Date.now()}`, {cache:'no-store'});
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    const rows = await res.json();
+  function dbg(t){ if(DEBUG){ dbgEl.hidden = false; dbgEl.textContent = t; } }
 
-    // Robust extrahieren
-    const good = rows
-      .filter(r => r && r.id && !DENY.has(String(r.id).toLowerCase()))
-      .map(r => {
-        const f = r.fields || {};
-        // Koordinaten an allen üblichen Stellen suchen
-        const lat = toNum(r.lat ?? r.latitude ?? f.lat ?? f.latitude);
-        const lon = toNum(r.lon ?? r.longitude ?? f.lon ?? f.longitude);
-        const bat = toNum(f.BatV ?? r.BatV);
-        const hum = toNum(f.Hum_SHT ?? f.Hum_SHT31 ?? r.Hum_SHT ?? r.Hum_SHT31);
-        const tmp = toNum(f.TempC_SHT ?? f.TempC_SHT31 ?? f.TempC1 ?? f.temp_SOIL ?? r.TempC_SHT ?? r.TempC_SHT31 ?? r.TempC1 ?? r.temp_SOIL);
-        return { id:r.id, ts:r.ts, lat, lon, bat, hum, tmp };
-      })
-      .filter(x => Number.isFinite(x.lat) && Number.isFinite(x.lon));
+  function deTime(ts){
+    try {
+      return new Date(ts).toLocaleString("de-DE", {
+        year:"numeric", month:"2-digit", day:"2-digit",
+        hour:"2-digit", minute:"2-digit", second:"2-digit"
+      });
+    } catch(_){ return ts || "–"; }
+  }
+  function deNum(n, digits=1){
+    return (typeof n === "number" && Number.isFinite(n))
+      ? n.toLocaleString("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits })
+      : "–";
+  }
+  function normalizeId(s){
+    return String(s||'')
+      .toLowerCase()
+      .replace(/\r|\s+/g,'')
+      .replace(/^waldsensor[_-]/,'')
+      .replace(/_/g,'-')
+      .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,'');
+  }
+  function cleanFields(fields){
+    const out = {};
+    for (const [k,v] of Object.entries(fields||{})){
+      if (OMIT_FIELDS.has(k)) continue;
+      if (v === undefined || v === null || v === "NULL") continue;
+      if (typeof v === "number" && !Number.isFinite(v)) continue;
+      out[k] = v;
+    }
+    return out;
+  }
+  function latestRecord(arr){
+    let best = null, bestT = -Infinity;
+    for (const r of (arr||[])){
+      if (!r || !r.ts) continue;
+      const t = Date.parse(r.ts);
+      if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
+    }
+    return best;
+  }
 
-    $('#badge-ts').textContent = fmtTimeOnly(NOW());
-    $('#badge-count').textContent = String(good.length);
+  // =================== LEAFLET ===================
+  const map = L.map("map", {
+    zoomSnap: 0.25,
+    // Verhindert, dass Popups unter den Top-Badges verschwinden:
+    // Wir zwingen Leaflet, ausreichend Abstand nach oben zu lassen.
+    // (autoPan ist Standard true; Padding hebt die Map minimal an)
+    // Wird beim Öffnen eines Popups wirksam.
+  });
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+  }).addTo(map);
+  map.setView([54.4, 9.6], 8.25);
 
-    if (good.length){
-      const last = [...good].sort((a,b)=>new Date(b.ts)-new Date(a.ts))[0];
-      $('#badge-last').textContent = `${fmtDateTime(last.ts)} — ${last.id}`;
-    } else {
-      $('#badge-last').textContent = '–';
+  let markersLayer = L.layerGroup().addTo(map);
+  let haveRenderedOnce = false;   // verhindert „weiße Seite“
+  let lastGoodData = null;       // letzte gute Datengrundlage (gegen Aussetzer)
+
+  function pickCoord(item){
+    const f = item?.fields || {};
+    if (typeof f.lat !== "undefined" && typeof f.lon !== "undefined"){
+      const la = Number(f.lat), lo = Number(f.lon);
+      if (Number.isFinite(la) && Number.isFinite(lo)) return [la, lo];
+    }
+    const short = normalizeId(item.id);
+    if (MANUAL_LOC[short]) return MANUAL_LOC[short];
+    return null;
+  }
+
+  function popupHtml(item){
+    const f = cleanFields(item.fields);
+    const shortId = normalizeId(item.id);
+
+    // bevorzugte Sensorfelder
+    const temp = (typeof item.fields?.TempC_SHT31 === "number") ? item.fields.TempC_SHT31
+               : (typeof item.fields?.TempC_SHT   === "number") ? item.fields.TempC_SHT : null;
+    const hum  = (typeof item.fields?.Hum_SHT31  === "number") ? item.fields.Hum_SHT31
+               : (typeof item.fields?.Hum_SHT    === "number") ? item.fields.Hum_SHT : null;
+    const bat  = (typeof item.fields?.BatV       === "number") ? item.fields.BatV : null;
+
+    const hasLat = typeof item.fields?.lat === "number";
+    const hasLon = typeof item.fields?.lon === "number";
+
+    let html = `<div class="popup">`;
+    html += `<h3>Sensor: ${shortId}</h3>`;
+    html += `<div class="row"><span class="label">Zuletzt aktiv</span><span class="value">${deTime(item.ts)}</span></div>
+`;
+    html += `<hr/>`;
+
+    if (bat  !== null) html += `<div class="row"><span class="label">Batterie</span><span class="value">${deNum(bat,2)} V
+</span></div>`;
+    if (hum  !== null) html += `<div class="row"><span class="label">Luftfeuchte</span><span class="value">${deNum(hum,1)
+} %</span></div>`;
+    if (temp !== null) html += `<div class="row"><span class="label">Temperatur</span><span class="value">${deNum(temp,1)
+} °C</span></div>`;
+
+    // Rest-Felder (kompakt)
+    for (const [k,v] of Object.entries(f)){
+      if (["TempC_SHT31","TempC_SHT","Hum_SHT31","Hum_SHT","BatV"].includes(k)) continue;
+      html += `<div class="row"><span class="label">${k}</span><span class="value">${v}</span></div>`;
     }
 
-    clearMarkers();
-    good.forEach(row=>{
-      const m = L.marker([row.lat,row.lon]).addTo(map);
-      m.bindPopup(buildPopupHTML(row), popupOpts);
+    // Koordinatenzeile (wenn vorhanden)
+    if (hasLat || hasLon){
+      const lat = hasLat ? deNum(item.fields.lat, 6) : "–";
+      const lon = hasLon ? deNum(item.fields.lon, 6) : "–";
+      html += `<div class="coords">Koordinaten: ${lat}, ${lon}</div>`;
+    }
 
-      m.on('popupopen', ()=>{
-        const el = document.getElementById(`qr-${row.id}`);
-        if (el && !el.dataset.done){
-          const statsUrl = `${location.pathname}?stats=1&id=${encodeURIComponent(row.id)}`;
-          new QRCode(el, {text:statsUrl, width:110, height:110});
-          el.dataset.done='1';
+    const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+    html += `
+      <div class="qrrow">
+        <div id="qrcode-${shortId}"></div>
+        <a class="openbtn" href="${url}" target="_blank" rel="noopener">Statistik öffnen</a>
+      </div>
+      <div class="hint">Link nutzt Basis-ID: <b>${shortId}</b></div>
+    `;
+    html += `</div>`;
+    return html;
+  }
+
+  function render(data){
+    // Sanity / Denylist / Leere-Fälle behandeln
+    const arr = (data||[]).filter(x => x && x.id && !DENYLIST.has(normalizeId(x.id)));
+    if (!arr.length){
+      // Kein valider Datensatz => NICHT leerräumen, wenn wir schon was haben
+      if (haveRenderedOnce){
+        stampEl.textContent = `Letzte Aktualisierung: ${new Date().toLocaleTimeString("de-DE")} — keine neuen gültigen Da
+ten (alte Anzeige bleibt)`;
+        dbg("render: empty -> keep previous markers");
+        return;
+      } else {
+        stampEl.textContent = `Keine gültigen Daten. Warte auf nächste Aktualisierung…`;
+        dbg("render: first load is empty");
+        return;
+      }
+    }
+
+    // Ab hier: gute Daten -> Marker neu zeichnen
+    markersLayer.clearLayers();
+    const bounds = [];
+
+    for (const item of arr){
+      const coord = pickCoord(item);
+      if (!coord) continue;
+
+      // Popup so öffnen, dass es nicht mit den Badges kollidiert:
+      const popup = L.popup({
+        autoPan: true,
+        autoPanPaddingTopLeft: [10, 70], // Platz unter der oberen Leiste
+        offset: [0, -8]
+      }).setContent(popupHtml(item));
+
+      const marker = L.marker(coord).bindPopup(popup);
+      marker.on("popupopen", () => {
+        const shortId = normalizeId(item.id);
+        const url = `https://www.waldsensor.sh/html/sensor.html?node=${shortId}`;
+        const qrDiv = document.getElementById(`qrcode-${shortId}`);
+        if (qrDiv && !qrDiv.hasChildNodes()) {
+          QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 100 }, (err, canvas) => {
+            if (!err) qrDiv.appendChild(canvas);
+          });
         }
       });
-      markers.push(m);
-    });
-
-    if (markers.length){
-      const group = L.featureGroup(markers);
-      map.fitBounds(group.getBounds().pad(0.2));
+      marker.addTo(markersLayer);
+      bounds.push(coord);
     }
-  }catch(e){
-    console.error(e);
-    alert('Fehler beim Laden der Daten.');
+
+    if (bounds.length){
+      // Nur beim ersten erfolgreichen Render automatisch fitBounds,
+      // danach nicht mehr (damit die Karte nicht „springt“).
+      if (!haveRenderedOnce){
+        map.fitBounds(L.latLngBounds(bounds).pad(0.12));
+      }
+    }
+
+    const lastRec = latestRecord(arr);
+    if (lastRec){
+      lastEl.textContent = `Letzte Node-Meldung: ${deTime(lastRec.ts)} — ${normalizeId(lastRec.id)}`;
+    } else {
+      lastEl.textContent = "Letzte Node-Meldung: –";
+    }
+
+    stampEl.textContent = `Letzte Aktualisierung: ${new Date().toLocaleTimeString("de-DE")} — ${arr.length} Nodes`;
+    haveRenderedOnce = true;
+    lastGoodData = arr;
+    dbg(`render: ok (${arr.length} nodes)`);
   }
-}
 
-function buildPopupHTML(row){
-  const id = row.id;
-  const title = neatName(id);
-  const ts = row.ts ? fmtDateTime(row.ts) : '–';
+  async function fetchWithTimeout(url, ms){
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), ms);
+    try {
+      const res = await fetch(url, { cache:"no-store", signal: ctrl.signal });
+      return res;
+    } finally {
+      clearTimeout(t);
+    }
+  }
 
-  const vBat = Number.isFinite(row.bat) ? `${row.bat.toFixed(3)} V` : '—';
-  const vHum = Number.isFinite(row.hum) ? `${row.hum.toFixed(1)} %` : '—';
-  const vTmp = Number.isFinite(row.tmp) ? `${row.tmp.toFixed(1)} °C` : '—';
+  async function loadData(){
+    let lastErr = null;
+    for (let i=0; i<=FETCH_RETRIES; i++){
+      try{
+        const res = await fetchWithTimeout(`${DATA_URL}?t=${Date.now()}`, FETCH_TIMEOUT_MS);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        dbg(`fetch ok (try ${i+1})`);
+        return json;
+      } catch(err){
+        lastErr = err;
+        dbg(`fetch fail (try ${i+1}): ${err}`);
+      }
+    }
+    throw lastErr || new Error("fetch failed");
+  }
 
-  const statsUrl = `${location.pathname}?stats=1&id=${encodeURIComponent(id)}`;
+  async function tick(){
+    // „Lade…“ nur anzeigen, wenn wir noch NIE etwas angezeigt haben
+    if (!haveRenderedOnce){
+      stampEl.textContent = "Lade Daten…";
+    }
+    try{
+      const data = await loadData();
+      if (!Array.isArray(data) || data.length === 0){
+        // leer -> alte Anzeige behalten
+        if (lastGoodData){
+          stampEl.textContent = `Keine neuen Daten (${new Date().toLocaleTimeString("de-DE")}); zeige letzte gültige Anze
+ige.`;
+          dbg("tick: empty array -> keep lastGoodData");
+          return;
+        }
+      }
+      render(data);
+    } catch(err){
+      // Fehler beim Laden -> alte Anzeige behalten (kein Weiß!)
+      console.error(err);
+      if (lastGoodData){
+        stampEl.textContent = `Netz-/Ladeproblem ${new Date().toLocaleTimeString("de-DE")} – zeige letzte gültige Anzeige
+`;
+        dbg(`tick: error -> keep lastGoodData (${err})`);
+        return;
+      } else {
+        stampEl.textContent = `Netz-/Ladeproblem – noch keine Daten`;
+        dbg(`tick: error, no last data (${err})`);
+      }
+    }
+  }
 
-  return `
-    <div>
-      <div class="ws-h1">Sensor: ${escapeHtml(title)}</div>
-      <div class="ws-meta">Zuletzt aktiv&nbsp;&nbsp;<strong>${escapeHtml(ts)}</strong></div>
-
-      <div class="ws-row"><div class="ws-key">Batterie</div><div class="ws-val">${escapeHtml(vBat)}</div></div>
-      <div class="ws-row"><div class="ws-key">Feuchte</div><div class="ws-val">${escapeHtml(vHum)}</div></div>
-      <div class="ws-row"><div class="ws-key">Temperatur</div><div class="ws-val">${escapeHtml(vTmp)}</div></div>
-
-      <div class="ws-actions">
-        <div class="ws-qr" id="qr-${escapeHtml(id)}"></div>
-        <a class="ws-open" href="${statsUrl}" target="_blank" rel="noopener">Statistik öffnen</a>
-      </div>
-
-      <div class="ws-meta">Link nutzt Node-ID: <strong>${escapeHtml(id)}</strong></div>
-    </div>
-  `;
-}
+  // Initial + Intervall
+  tick();
+  setInterval(tick, AUTO_REFRESH_MS);
+})();
 </script>
 </body>
 </html>
