@@ -18,6 +18,9 @@
     crossorigin=""
   ></script>
 
+  <!-- Echter QR-Code (klein, ohne weitere Abhängigkeiten) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
   <style>
     :root{
       --brand:#135e31;
@@ -46,26 +49,21 @@
     #badge-upd{ left:.75rem; top:.75rem; color:var(--brand); }
     #badge-last{ right:.75rem; top:.75rem; color:var(--brand-2); }
 
-    .leaflet-popup-content{
-      margin: 12px 14px;
-    }
-    .popup-title{
-      font-size:1.2rem; font-weight:800; margin:0 0 .25rem 0;
-    }
+    .leaflet-popup-content{ margin: 12px 14px; }
+    .popup-title{ font-size:1.2rem; font-weight:800; margin:0 0 .25rem 0; }
     .kv{
       display:grid; grid-template-columns:auto 1fr; gap:.25rem .75rem;
-      margin:.35rem 0;
-      font-size:1rem;
+      margin:.35rem 0; font-size:1rem;
     }
     .kv b{ font-weight:800; }
-    .qr-wrap{
-      display:flex; align-items:center; gap:1rem; margin:.5rem 0;
-    }
+    .qr-wrap{ display:flex; align-items:center; gap:1rem; margin:.5rem 0; }
+    .qr-box{ width:132px; height:132px; display:flex; align-items:center; justify-content:center; }
     .btn{
       display:inline-block; font-weight:800; text-decoration:none;
       background:#f2f6ff; border:2px solid #d9e6ff; color:#0a5bd3;
       padding:.65rem .9rem; border-radius:14px;
     }
+    .mini{ font-size:.92rem; opacity:.85; }
     .hint{
       position:absolute; left:50%; transform:translateX(-50%);
       top:3.75rem;
@@ -74,7 +72,6 @@
       padding:.5rem .8rem; font-weight:700; display:none;
       box-shadow:var(--chip-shadow);
     }
-    .mini{ font-size:.92rem; opacity:.85; }
   </style>
 </head>
 <body>
@@ -87,11 +84,9 @@
   <script>
   /***** EINSTELLUNGEN *********************************************************/
   const DATA_URL = '/data/v2/latest/all.json';
-  // Nodes, die niemals angezeigt werden sollen (Alt-/Testgeräte)
   const DENY = new Set([
     // 'breklum',
   ]);
-  // optional: Fallback-History-Pfade nach Typ
   const HISTORY_FALLBACKS = [
     ['-s31lb',  '/data/v2/history/history_s31.json'],
     ['-se01lb', '/data/v2/history/history_se01.json'],
@@ -100,39 +95,23 @@
   ];
   /*****************************************************************************/
 
-  // Pretty: "schacht-audorf" -> "Schacht – Audorf", "bredstedt-s31lb" -> "Bredstedt – S31lb"
+  // "schacht-audorf" oder "schacht_audorf" → "Schacht-Audorf"
   function prettyName(id){
-    return id.split('-')
+    return id.split(/[-_]/)
       .map(s => s ? s[0].toUpperCase()+s.slice(1) : s)
-      .join(' – ');
+      .join('-');
   }
 
-  // Statistik-URL: immer volle Node-ID übergeben
   function statsUrlFor(nodeId){
     return `/v2.html?stats=1&id=${encodeURIComponent(nodeId)}`;
   }
 
-  // minimales QR (tiny): generiert wenige Byte-QR via Google Chart? -> nein (ohne externe)
-  // Sehr kleines Inline-„QR“: wir rendern eine Data-URL mit canvas (kein „echtes“ QR-Pattern,
-  // sondern nur ein Hinweis-Kästchen mit ID-Text). Für echte QR bitte bei Bedarf qrcode.js einbinden.
-  function drawFakeQR(canvas, text){
-    const ctx = canvas.getContext('2d');
-    const S = 132; canvas.width=S; canvas.height=S;
-    ctx.fillStyle='#000'; ctx.fillRect(0,0,S,S);
-    ctx.fillStyle='#fff'; ctx.fillRect(6,6,S-12,S-12);
-    ctx.fillStyle='#000'; ctx.font='12px system-ui, Arial';
-    ctx.textAlign='center'; ctx.textBaseline='middle';
-    // drei "Finder" als Deko
-    for(const [x,y] of [[20,20],[S-20,20],[20,S-20]]){
-      ctx.fillRect(x-12,y-12,24,24);
-      ctx.fillStyle='#fff'; ctx.fillRect(x-8,y-8,16,16);
-      ctx.fillStyle='#000';
-    }
-    ctx.fillText('Scan Link', S/2, S/2-10);
-    ctx.fillText(text.length>18? (text.slice(0,18)+'…') : text, S/2, S/2+10);
+  function mountQR(el, text){
+    el.innerHTML = '';
+    new QRCode(el, { text, width:128, height:128, correctLevel: QRCode.CorrectLevel.M });
   }
 
-  // Leaflet-Karte
+  // Leaflet
   const map = L.map('map', { zoomControl:true }).setView([54.5, 9.6], 8);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution:'&copy; OpenStreetMap contributors'
@@ -177,11 +156,13 @@
     list.forEach(n => {
       const m = L.marker([n.lat, n.lon]);
 
-      const div = document.createElement('div');
+      // Popup bauen
+      const root = document.createElement('div');
+
       const title = document.createElement('div');
       title.className='popup-title';
       title.textContent = 'Sensor: ' + prettyName(n.id);
-      div.appendChild(title);
+      root.appendChild(title);
 
       const kv = document.createElement('div'); kv.className='kv';
       const fmt = (v, suf) => (v==null || Number.isNaN(Number(v))) ? '—' : (typeof v==='number' ? v.toLocaleString('de-DE') : v) + (suf||'');
@@ -190,30 +171,28 @@
       addRow('Batterie', fmt(n.bat,' V'));
       addRow('Feuchte', fmt(n.hum,' %'));
       addRow('Temperatur', fmt(n.temp,' °C'));
-      div.appendChild(kv);
+      root.appendChild(kv);
 
       const qrWrap = document.createElement('div'); qrWrap.className='qr-wrap';
-      const canvas = document.createElement('canvas');
+      const qrBox = document.createElement('div'); qrBox.className='qr-box';
       const url = statsUrlFor(n.id);
-      drawFakeQR(canvas, n.id);
+      mountQR(qrBox, url);
       const a = document.createElement('a'); a.className='btn'; a.href=url; a.textContent='Statistik öffnen';
       a.target='_blank'; a.rel='noopener';
-      qrWrap.appendChild(canvas); qrWrap.appendChild(a);
-      div.appendChild(qrWrap);
+      qrWrap.appendChild(qrBox); qrWrap.appendChild(a);
+      root.appendChild(qrWrap);
 
       const small = document.createElement('div');
       small.className='mini';
       small.textContent='Link nutzt Node-ID: ' + n.id;
-      div.appendChild(small);
+      root.appendChild(small);
 
-      m.bindPopup(div, { maxWidth: 360 });
-      m.addTo(layerGroup);
+      m.bindPopup(root, { maxWidth: 360 }).addTo(layerGroup);
       bounds.push([n.lat, n.lon]);
     });
 
     if(bounds.length){
       const b = L.latLngBounds(bounds);
-      // Nur zoomen, wenn noch kein sinnvoller View gesetzt wurde oder Datenbestand stark änderte
       if(!lastRenderBounds || !lastRenderBounds.contains(b) || !b.contains(lastRenderBounds)){
         map.fitBounds(b.pad(0.2));
       }
@@ -225,7 +204,6 @@
     updTsEl.textContent = fetchTime.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
     nodeCountEl.textContent = String(list.length);
 
-    // letzte Node-Meldung nach ts
     let latest = null;
     for(const n of list){
       if(n.ts && (!latest || n.ts > latest.ts)) latest = n;
@@ -247,7 +225,6 @@
       const list = parseData(json);
 
       if(list.length===0){
-        // keine gültigen Datensätze -> alte Anzeige behalten, Hinweis zeigen
         showHintOnce();
         updateBadges(lastGoodPayload ?? [], now);
         return;
@@ -257,34 +234,30 @@
       renderMarkers(list);
       updateBadges(list, now);
     }catch(e){
-      // Netzwerk-/Parsefehler -> alte Anzeige behalten, Hinweis zeigen
       showHintOnce();
       updateBadges(lastGoodPayload ?? [], now);
     }
   }
 
-  // Erste Ladung, danach regelmäßig
   loadAndRender();
-  // alle 60s abrufen (kannst du anpassen)
   setInterval(loadAndRender, 60_000);
 
-  /************** Statistikmodus (einfacher Loader im selben File) *************/
+  /************** Sehr einfacher Statistik-Viewer im selben File ****************/
   (function maybeStats(){
     const p = new URLSearchParams(location.search);
     if(p.get('stats')!=='1') return;
-    // ganz schlanke Stats: wir tauschen Karte gegen Hinweis + versuchen History zu laden
     const nodeId = p.get('id') || '';
-    document.title = `Schulwaldsensor — ${nodeId}`;
+    document.title = `Schulwaldsensor — ${prettyName(nodeId)}`;
     document.body.innerHTML = `
       <div style="padding: 1.25rem 1rem; max-width: 1100px; margin: 0 auto; font-family: inherit">
         <h1 style="margin:.2rem 0 1rem 0;">Schulwaldsensor — ${prettyName(nodeId)}</h1>
         <div id="info" style="margin:.75rem 0; color:#444">Lade Daten …</div>
-        <canvas id="qr" style="margin:.5rem 0 1rem 0;"></canvas>
+        <div id="qr" class="qr-box" style="margin:.5rem 0 1rem 0;"></div>
         <div class="mini">Link: ${location.href}</div>
         <pre id="out" style="white-space:pre-wrap; background:#fafafa; border:1px solid #eee; border-radius:12px; padding:12px; font-size:.95rem;"></pre>
       </div>
     `;
-    drawFakeQR(document.getElementById('qr'), nodeId);
+    mountQR(document.getElementById('qr'), location.href);
 
     const tryFiles = [
       `/data/v2/history/history_${encodeURIComponent(nodeId)}.json`,
