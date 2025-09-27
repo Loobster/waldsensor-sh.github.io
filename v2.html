@@ -1,312 +1,335 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <!-- WALDSENSOR.SH – v2.html – Version v02 – Stand: 2025-09-27 -->
+  <!-- WALDSENSOR.SH | v2.html — v03 (2025-09-27)
+       Änderungen:
+       - QR-Code erst bei popupopen rendern (Fix für "appendChild null")
+       - Popup kompakter (~70%) und unter Badges positionieren
+       - Statistik-Ansicht reaktiviert (?stats=1&id=<node>)
+       - Schönere Namen (Schacht-Audorf, Kappeln, …)
+  -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>WALDSENSOR.SH – v2</title>
+  <title>WALDSENSOR.SH – Karte</title>
 
   <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
 
-  <!-- Chart.js (für Statistikansicht) -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
-  <!-- QRCode (klein & robust) -->
+  <!-- QRCode (für Popup und Stats) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     :root{
-      --badge-bg:#fff;
-      --badge-shadow:0 6px 22px rgba(0,0,0,.12);
-      --ok:#116b2d; --ok-bg:#e9f6ee;
-      --info:#1d57b9; --info-bg:#eaf2ff;
+      --bg:#fff;
+      --ink:#0b2239;
       --muted:#6b7280;
+      --brand:#14532d;
+      --brand2:#1d4ed8;
+      --chip:#eff6ff;
+      --chip2:#ecfdf5;
+      --shadow:0 8px 24px rgba(0,0,0,.12);
+      --radius:16px;
     }
-    html,body,#map{height:100%;margin:0}
+    html,body{height:100%;margin:0;background:#eef2f7;color:var(--ink);font:16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica, Arial, sans-serif}
+    #app{height:100%}
+    #map{height:100%}
 
-    .ws-badge{
-      position:absolute; z-index:500;
-      background:var(--badge-bg);
-      box-shadow:var(--badge-shadow);
-      border-radius:16px; padding:.6rem 1rem;
-      font:600 16px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
-      letter-spacing:.1px;
+    /* Badges oben */
+    .badge{
+      position:fixed;
+      z-index:500;
+      top:14px;
+      padding:10px 14px;
+      background:#fff;
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      font-weight:600;
+      letter-spacing:.2px;
     }
-    #badge-left{
-      top:14px; left:14px; color:var(--ok); background:var(--ok-bg);
-    }
-    #badge-right{
-      top:14px; right:14px; color:var(--info); background:var(--info-bg);
-    }
-    #nodes-count{color:#0f5132;margin-left:.5rem}
+    .badge small{font-weight:500;color:var(--muted)}
+    #badge-left{left:14px;border-left:6px solid var(--brand2)}
+    #badge-right{right:14px;border-left:6px solid var(--brand)}
 
-    /* Popup kompakter (~70% vorher) + etwas tiefere AutoPan-Reserve */
+    /* Popup kompakter (~70% des vorherigen Eindrucks) */
     .ws-popup .leaflet-popup-content{
-      margin:10px 12px; width:240px;   /* vorher ~340px */
-      font:500 14px/1.25 system-ui,-apple-system,Segoe UI,Roboto;
+      margin:10px 12px;
+      width:260px; /* kompakter */
     }
-    .ws-popup h3{margin:.1rem 0 .35rem;font:700 18px/1.25 system-ui}
-    .ws-row{display:flex;justify-content:space-between;margin:.25rem 0}
-    .ws-key{color:#111}
-    .ws-val{color:#0b4eb3;font-weight:700}
-    .ws-qr-wrap{display:flex;gap:14px;align-items:center;margin:.5rem 0 .2rem}
-    .ws-qr{width:110px;height:110px;border-radius:8px;overflow:hidden;border:1px solid #e5e7eb}
-    .ws-btn{display:inline-block;margin:.25rem 0;padding:.55rem .9rem;border-radius:12px;background:#eef4ff;color:#0b4eb3;font-weight:700;border:1px solid #dbe7ff;cursor:pointer}
-    .ws-note{margin-top:.4rem;font-size:12px;color:#555}
-    .leaflet-popup-close-button{top:6px;right:8px}
+    .ws-popup .ws-h1{
+      margin:0 0 6px 0;
+      font-size:18px;
+      font-weight:800;
+    }
+    .ws-popup .ws-meta{
+      margin:8px 0 10px 0;
+      padding-top:8px;
+      border-top:1px solid #e5e7eb;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .ws-popup .ws-row{
+      display:flex;justify-content:space-between;align-items:center;
+      font-size:15px;margin:2px 0;
+    }
+    .ws-popup .ws-key{color:#111;font-weight:700}
+    .ws-popup .ws-val{color:#0b3b91;font-weight:800}
+    .ws-actions{display:flex;gap:10px;align-items:center;margin-top:10px}
+    .ws-open{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:8px 12px;border-radius:12px;background:var(--chip);
+      border:1px solid #dbeafe;color:#0b3b91;font-weight:700;cursor:pointer
+    }
+    .ws-qr{width:110px;height:110px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;display:flex;align-items:center;justify-content:center}
 
-    /* Statistik-Seite */
-    .stats-wrap{max-width:980px;margin:24px auto;padding:0 16px;font:500 16px/1.45 system-ui}
-    .stats-h1{font:800 30px/1.1 system-ui;margin:4px 0 8px}
-    .stats-src{color:#6b7280;font-size:14px;margin:6px 0 18px}
-    .stats-grid{display:grid;grid-template-columns:1fr;gap:18px}
-    .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.06);padding:14px}
-    .kv{display:flex;gap:14px;flex-wrap:wrap}
-    .kv .pill{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:999px;padding:.4rem .7rem;font-size:14px}
-    .qr-col{display:flex;gap:14px;align-items:center}
-    .qr-box{width:128px;height:128px;border:1px solid #e5e7eb;border-radius:12px;display:grid;place-items:center;background:#fff}
-    .muted{color:#6b7280}
-    @media (min-width:900px){ .stats-grid{grid-template-columns:1.1fr .9fr} }
+    /* Stats-Seite */
+    .stats-wrap{max-width:980px;margin:32px auto 64px auto;padding:0 16px}
+    .stats-h1{font-size:28px;font-weight:900;margin:0 0 8px 0}
+    .stats-src{color:var(--muted);margin:4px 0 14px}
+    .stats-head{display:flex;gap:18px;align-items:flex-start;margin:10px 0 16px}
+    .stats-qr{width:120px;height:120px;border:1px solid #e5e7eb;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#fff}
+    pre{background:#0b1220;color:#e5e9f0;border-radius:12px;padding:16px;overflow:auto;box-shadow:var(--shadow)}
+    a{color:#0b3b91;text-decoration:none}
+    a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
-<div id="map" hidden></div>
-
-<!-- Badges -->
-<div id="badge-left" class="ws-badge" hidden>Letzte Aktualisierung: <span id="last-update">–</span> <span id="nodes-count"></span></div>
-<div id="badge-right" class="ws-badge" hidden>Letzte Node-Meldung: <span id="last-node">–</span></div>
+<div id="app"></div>
 
 <script>
-(() => {
-  const QS = new URLSearchParams(location.search);
-  const STATS = QS.get('stats') === '1';
-  const ID = QS.get('id') || '';
+/* ---------------------- Helper ---------------------- */
+const $ = (sel, el=document) => el.querySelector(sel);
+const qs = new URLSearchParams(location.search);
+const NOW = () => new Date();
+const fmtDateTime = (d) => {
+  if (!d) return "–";
+  const dt = (d instanceof Date) ? d : new Date(d);
+  return dt.toLocaleString('de-DE', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' });
+};
+const neatName = (id) => {
+  // aus "schacht_audorf" → "Schacht-Audorf"
+  return String(id||'')
+    .replace(/_/g,'-')
+    .split('-')
+    .map(w => w ? w[0].toUpperCase()+w.slice(1) : w)
+    .join('-');
+};
 
-  // ————— Utilities
-  const fmtTime = iso => {
-    try {
-      const d = new Date(iso);
-      return d.toLocaleString('de-DE', {hour12:false});
-    } catch { return '–'; }
-  };
-  const titleCaseId = (id) => {
-    // behalte Bindestriche als Worttrenner
-    return String(id).split('-').map(p => p.charAt(0).toUpperCase()+p.slice(1)).join('-');
-  };
-  const byId = sel => document.getElementById(sel);
+// Denylist (IDs in Kleinbuchstaben eintragen)
+const DENY = new Set([
+  "lsn50"
+]);
 
-  // ————— Denylist (dauerhaft rausfiltern)
-  const DENYLIST = new Set(['lsn50', 'lsn50-v2', 'test', 'demo']);
+/* ---------------------- App Router ---------------------- */
+if (qs.get('stats') === '1') {
+  renderStatsPage(qs.get('id'));
+} else {
+  renderMap();
+}
 
-  // ————— Datenquellen
-  const URL_LATEST = '/data/v2/latest/all.json';
-  const URL_HISTORY = (nodeId) => `/data/v2/history/history_${nodeId}.json`;
+/* ---------------------- STATISTIK ---------------------- */
+async function renderStatsPage(id){
+  const nodeId = (id||'').trim();
+  const title = `Schulwaldsensor — ${neatName(nodeId)}`;
+  document.title = title;
 
-  if (STATS) {
-    // ======================== Statistik-Ansicht ===========================
-    document.body.innerHTML = `
-      <div class="stats-wrap">
-        <div class="qr-col">
-          <div class="qr-box" id="qr"></div>
-          <div>
-            <div class="stats-h1">Schulwaldsensor — ${titleCaseId(ID || '–')}</div>
-            <div class="stats-src">Quelle: <code>${URL_HISTORY(ID)}</code></div>
-            <div class="muted">Link: https://www.waldsensor.sh/v2.html?stats=1&id=${encodeURIComponent(ID)}</div>
-          </div>
-        </div>
-
-        <div class="stats-grid">
-          <div class="card">
-            <canvas id="chartTF"></canvas>
-          </div>
-          <div class="card">
-            <div class="kv" id="kv"></div>
-            <canvas id="chartBat" style="margin-top:12px;"></canvas>
-          </div>
-        </div>
+  const wrap = document.createElement('div');
+  wrap.className = "stats-wrap";
+  wrap.innerHTML = `
+    <h1 class="stats-h1">${title}</h1>
+    <div class="stats-src">Quelle: /data/v2/history/history_${escapeHtml(nodeId)}.json</div>
+    <div class="stats-head">
+      <div class="stats-qr" id="stats-qr"></div>
+      <div>
+        <div>Link: <a href="${location.origin}/v2.html?stats=1&id=${encodeURIComponent(nodeId)}" target="_blank">${location.origin}/v2.html?stats=1&id=${escapeHtml(nodeId)}</a></div>
       </div>
-    `;
+    </div>
+    <pre id="stats-pre">{ Lädt … }</pre>
+  `;
+  document.getElementById('app').replaceChildren(wrap);
 
-    new QRCode(byId('qr'), { text: location.href, width: 120, height: 120 });
+  // QR bauen
+  new QRCode($('#stats-qr'), {
+    text: `${location.origin}/v2.html?stats=1&id=${nodeId}`,
+    width: 110, height: 110
+  });
 
-    fetch(URL_HISTORY(ID)).then(r => r.json()).then(hist => {
-      // Historie kann Array oder Objekt-Liste sein
-      const rows = Array.isArray(hist) ? hist : [];
-      // Basale Felder sammeln
-      const ptsTF = [];   // {t, temp, hum}
-      const ptsBat = [];  // {t, bat}
-      let lastTs = null, lastTemp = null, lastHum = null, lastBat = null;
-
-      for (const row of rows) {
-        const ts = row.ts || row.time || row.timestamp;
-        const f = row.fields || {};
-        const temp = f.TempC_SHT ?? f.TempC_SHT31 ?? f.TempC1 ?? f.temp_SOIL ?? null;
-        const hum  = f.Hum_SHT ?? f.Hum_SHT31 ?? f.water_SOIL ?? null;
-        const bat  = f.BatV ?? f.bat ?? null;
-
-        if (ts) {
-          if (temp != null || hum != null) ptsTF.push({t: ts, temp: (temp!=null? Number(temp): null), hum: (hum!=null? Number(hum): null)});
-          if (bat != null) ptsBat.push({t: ts, bat: Number(bat)});
-          lastTs = ts; lastTemp = temp ?? lastTemp; lastHum = hum ?? lastHum; lastBat = bat ?? lastBat;
-        }
-      }
-
-      // Kennzahlen
-      const kv = byId('kv');
-      kv.innerHTML = `
-        <span class="pill">Letztes Update: <b>${lastTs ? fmtTime(lastTs) : '–'}</b></span>
-        <span class="pill">Temp: <b>${lastTemp!=null ? (Number(lastTemp).toFixed(1)+' °C'):'–'}</b></span>
-        <span class="pill">Feuchte: <b>${lastHum!=null ? (Number(lastHum).toFixed(1)+' %'):'–'}</b></span>
-        <span class="pill">Batterie: <b>${lastBat!=null ? (Number(lastBat).toFixed(3)+' V'):'–'}</b></span>
-      `;
-
-      // Charts
-      const labelsTF = ptsTF.map(p => fmtTime(p.t));
-      const tempData = ptsTF.map(p => p.temp);
-      const humData  = ptsTF.map(p => p.hum);
-
-      new Chart(byId('chartTF'), {
-        type: 'line',
-        data: {
-          labels: labelsTF,
-          datasets: [
-            {label: 'Temperatur [°C]', data: tempData},
-            {label: 'Luftfeuchte [%]', data: humData, yAxisID:'y1'}
-          ]
-        },
-        options: {
-          responsive:true,
-          scales: {
-            y: { title:{display:true, text:'°C'}, suggestedMin:0 },
-            y1:{ position:'right', title:{display:true, text:'%'} }
-          }
-        }
-      });
-
-      const labelsB = ptsBat.map(p => fmtTime(p.t));
-      const batData = ptsBat.map(p => p.bat);
-      new Chart(byId('chartBat'), {
-        type: 'line',
-        data: { labels: labelsB, datasets: [{label:'Batterie [V]', data: batData}] },
-        options: { responsive:true, scales:{ y:{ suggestedMin:2.8, suggestedMax:4.3 } } }
-      });
-    }).catch(() => {
-      byId('kv').innerHTML = `<span class="pill">Keine Daten gefunden</span>`;
-    });
-
-    return; // Ende Statistik-Ansicht
+  // Daten laden
+  try{
+    const url = `/data/v2/history/history_${encodeURIComponent(nodeId)}.json?c=${Date.now()}`;
+    const res = await fetch(url, {cache:'no-store'});
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    $('#stats-pre').textContent = JSON.stringify(json, null, 2);
+  }catch(e){
+    $('#stats-pre').textContent = `Fehler beim Laden: ${e.message}`;
   }
+}
 
-  // ======================== Karten-Ansicht ===============================
-  const map = L.map('map', { zoomControl:true }).setView([54.5, 9.5], 9);
-  byId('map').hidden = false;
+/* ---------------------- KARTE ---------------------- */
+async function renderMap(){
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div id="badge-left" class="badge">Letzte Aktualisierung: <span id="badge-ts">–</span> <small>• Nodes: <span id="badge-count">0</span></small></div>
+    <div id="badge-right" class="badge">Letzte Node-Meldung: <span id="badge-last">–</span></div>
+    <div id="map"></div>
+  `;
+
+  const map = L.map('map', {
+    zoomControl: true
+  }).setView([54.5, 9.5], 8);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18, attribution: '&copy; OpenStreetMap'
+    attribution:'&copy; OpenStreetMap contributors'
   }).addTo(map);
 
-  // Kompakteres Popup + tieferes Auto-Pan
+  // Popup-Optionen: mehr Top-Padding, damit Badges nicht überdecken
   const popupOpts = {
-    maxWidth: 260,
-    className: 'ws-popup',
-    keepInView: true,
-    autoPanPaddingTopLeft: [0, 120],       // schiebt Popup unter die Badges
-    autoPanPaddingBottomRight: [0, 40]
+    className:'ws-popup',
+    autoPan:true,
+    autoPanPaddingTopLeft:[0, 120], // ↑ unter die Badges schieben
+    autoPanPaddingBottomRight:[0, 20],
+    maxWidth: 320
   };
 
-  const fmt = (v, unit='') => (v==null || Number.isNaN(v)) ? '—' : `${v}${unit}`;
-  const latestBadge = byId('badge-left');
-  const lastNodeBadge = byId('badge-right');
-  latestBadge.hidden = false; lastNodeBadge.hidden = false;
-
-  function buildPopupHTML(node){
-    const id = node.id;
-    const f = node.fields || {};
-    const name = titleCaseId(id);
-    const last = node.ts ? fmtTime(node.ts) : '–';
-    const bat = (f.BatV!=null) ? Number(f.BatV).toFixed(3)+' V' : '—';
-    const hum = (f.Hum_SHT!=null ? Number(f.Hum_SHT).toFixed(1)+' %' :
-                (f.Hum_SHT31!=null ? Number(f.Hum_SHT31).toFixed(1)+' %' : '—'));
-    const temp = (f.TempC_SHT!=null ? Number(f.TempC_SHT).toFixed(1)+' °C' :
-                 (f.TempC_SHT31!=null ? Number(f.TempC_SHT31).toFixed(1)+' °C' :
-                 (f.TempC1!=null ? Number(f.TempC1).toFixed(1)+' °C' : '—')));
-
-    const statsUrl = `${location.pathname}?stats=1&id=${encodeURIComponent(id)}`;
-
-    const div = document.createElement('div');
-    div.innerHTML = `
-      <h3>Sensor: ${name}</h3>
-      <div class="ws-row"><span class="ws-key">Zuletzt aktiv</span><span class="ws-val">${last}</span></div>
-      <hr/>
-      <div class="ws-row"><span class="ws-key">Batterie</span><span class="ws-val">${bat}</span></div>
-      <div class="ws-row"><span class="ws-key">Feuchte</span><span class="ws-val">${hum}</span></div>
-      <div class="ws-row"><span class="ws-key">Temperatur</span><span class="ws-val">${temp}</span></div>
-      <div class="ws-qr-wrap">
-        <div class="ws-qr" id="qr-${id}"></div>
-        <a class="ws-btn" href="${statsUrl}">Statistik öffnen</a>
-      </div>
-      <div class="ws-note">Link nutzt Node-ID: <b>${id}</b></div>
-    `;
-    // QR erzeugen
-    setTimeout(() => {
-      new QRCode(document.getElementById(`qr-${id}`), { text: statsUrl, width: 110, height: 110 });
-    }, 0);
-    return div;
+  let markers = [];
+  function clearMarkers(){
+    markers.forEach(m => map.removeLayer(m));
+    markers = [];
   }
 
-  function addMarkers(data){
-    const nodes = [];
-    let lastNodeTs = null, lastNodeId = null;
+  try{
+    const url = `/data/v2/latest/all.json?c=${Date.now()}`;
+    const res = await fetch(url,{cache:'no-store'});
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    const rows = await res.json();
 
-    for (const row of data){
-      if (!row || !row.id) continue;
-      const idLow = String(row.id).toLowerCase();
-      if (DENYLIST.has(idLow)) continue;
-
-      const f = row.fields || {};
-      const lat = Number(f.lat ?? row.lat);
-      const lon = Number(f.lon ?? row.lon);
-      if (!Number.isFinite(lat) || !Number.isFinite(lon)) continue;
-
-      nodes.push(row);
-
-      const m = L.marker([lat, lon]).addTo(map);
-      m.bindPopup(buildPopupHTML(row), popupOpts);
-
-      if (row.ts){
-        if (!lastNodeTs || row.ts > lastNodeTs){ lastNodeTs = row.ts; lastNodeId = row.id; }
-      }
-    }
+    // filtern & aufbereiten
+    const good = rows
+      .filter(r => r && r.id && !DENY.has(String(r.id).toLowerCase()))
+      .map(r => {
+        const f = r.fields || {};
+        const lat = toNum(f.lat);
+        const lon = toNum(f.lon);
+        return {
+          id: r.id,
+          ts: r.ts,
+          lat, lon,
+          bat: toNum(f.BatV),
+          hum: toNum(f.Hum_SHT ?? f.Hum_SHT31),
+          tmp: toNum(f.TempC_SHT ?? f.TempC_SHT31 ?? f.TempC1 ?? f.temp_SOIL)
+        };
+      })
+      .filter(x => Number.isFinite(x.lat) && Number.isFinite(x.lon));
 
     // Badges
-    byId('nodes-count').textContent = `• Nodes: ${nodes.length}`;
-    byId('last-update').textContent = new Date().toLocaleTimeString('de-DE', {hour12:false});
+    $('#badge-ts').textContent = fmtTimeOnly(NOW());
+    $('#badge-count').textContent = String(good.length);
 
-    if (lastNodeTs){
-      byId('last-node').textContent = `${fmtTime(lastNodeTs)} — ${lastNodeId}`;
+    // Letzte Node-Meldung
+    if (good.length){
+      const last = [...good].sort((a,b)=>new Date(b.ts)-new Date(a.ts))[0];
+      $('#badge-last').textContent = `${fmtDateTime(last.ts)} — ${last.id}`;
     } else {
-      byId('last-node').textContent = '—';
+      $('#badge-last').textContent = '–';
     }
 
-    if (nodes.length){
-      // Auf Marker einzoomen
-      const group = L.featureGroup(nodes.map(n => L.marker([n.fields.lat, n.fields.lon])));
-      try{ map.fitBounds(group.getBounds().pad(0.2)); }catch{}
-    }
-  }
+    // Marker
+    clearMarkers();
+    good.forEach(row => {
+      const m = L.marker([row.lat, row.lon]).addTo(map);
+      m.bindPopup(buildPopupHTML(row), popupOpts);
 
-  fetch(URL_LATEST)
-    .then(r => r.json())
-    .then(data => Array.isArray(data) ? data : [])
-    .then(addMarkers)
-    .catch(() => {
-      byId('last-update').textContent = '— (Fehler beim Laden)';
-      byId('nodes-count').textContent = '';
-      byId('last-node').textContent = '—';
+      // ⚠️ QR-Code erst erzeugen, wenn Popup geöffnet ist
+      m.on('popupopen', () => {
+        const el = document.getElementById(`qr-${row.id}`);
+        if (el && !el.dataset.done){
+          const statsUrl = `${location.pathname}?stats=1&id=${encodeURIComponent(row.id)}`;
+          new QRCode(el, {text: statsUrl, width:110, height:110});
+          el.dataset.done = '1';
+        }
+      });
+
+      markers.push(m);
     });
-})();
+
+    // Karte so setzen, dass Marker sichtbar
+    if (markers.length){
+      const group = L.featureGroup(markers);
+      map.fitBounds(group.getBounds().pad(0.2));
+    }
+
+  }catch(e){
+    console.error(e);
+    alert('Fehler beim Laden der Daten.');
+  }
+}
+
+/* ---------- Popup ---------- */
+function buildPopupHTML(row){
+  const id = row.id;
+  const title = neatName(id);
+  const ts = row.ts ? fmtDateTime(row.ts) : '–';
+  const b = (row.bat ?? null);
+  const h = (row.hum ?? null);
+  const t = (row.tmp ?? null);
+
+  const vBat = isFinite(b) ? `${b.toFixed(3)} V` : '—';
+  const vHum = isFinite(h) ? `${h.toFixed(1)} %` : '—';
+  const vTmp = isFinite(t) ? `${t.toFixed(1)} °C` : '—';
+
+  const statsUrl = `${location.pathname}?stats=1&id=${encodeURIComponent(id)}`;
+
+  return `
+    <div>
+      <div class="ws-h1">Sensor: ${escapeHtml(title)}</div>
+      <div class="ws-meta">Zuletzt aktiv&nbsp;&nbsp;<strong>${escapeHtml(ts)}</strong></div>
+
+      <div class="ws-row"><div class="ws-key">Batterie</div><div class="ws-val">${escapeHtml(vBat)}</div></div>
+      <div class="ws-row"><div class="ws-key">Feuchte</div><div class="ws-val">${escapeHtml(vHum)}</div></div>
+      <div class="ws-row"><div class="ws-key">Temperatur</div><div class="ws-val">${escapeHtml(vTmp)}</div></div>
+
+      <div class="ws-actions">
+        <div class="ws-qr" id="qr-${escapeHtml(id)}"></div>
+        <a class="ws-open" href="${statsUrl}" target="_blank" rel="noopener">Statistik öffnen</a>
+      </div>
+
+      <div class="ws-meta">Link nutzt Node-ID: <strong>${escapeHtml(id)}</strong></div>
+    </div>
+  `;
+}
+
+/* ---------- Utils ---------- */
+function toNum(v){
+  if (v === null || v === undefined) return NaN;
+  if (typeof v === 'number') return v;
+  if (typeof v === 'string'){
+    const x = parseFloat(v.replace(',','.'));
+    return Number.isFinite(x) ? x : NaN;
+  }
+  return NaN;
+}
+function fmtTimeOnly(d){
+  const dt = (d instanceof Date) ? d : new Date(d);
+  return dt.toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+function escapeHtml(s){
+  return String(s ?? '')
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'",'&#039;');
+}
 </script>
 </body>
 </html>
