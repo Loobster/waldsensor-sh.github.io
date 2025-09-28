@@ -107,16 +107,23 @@
     }
 
     // Marker
-    nodes.forEach(n=>{
-      const lat = n.fields.lat, lon = n.fields.lon;
-      const m = L.marker([lat,lon]).addTo(map);
 
-      // Werte je nach Node-Typ
-      const soil = isSoilNode(n.id);
-      const f = n.fields||{};
-      const temp = soil ? (f.temp_SOIL ?? null) : (f.TempC_SHT ?? f.TempC_SHT31 ?? null);
-      const hum  = soil ? (f.water_SOIL ?? null) : (f.Hum_SHT   ?? f.Hum_SHT31   ?? null);
-      const bat  = f.BatV ?? null;
+    // Werte je nach Node-Typ
+    const soil = isSoilNode(n.id);
+    const f = n.fields||{};
+    let temp, hum, humLabel, bat;
+
+    if (soil) {
+      temp = f.temp_SOIL ?? f.soil_temp ?? f.temp_soil ?? null;
+      hum  = f.water_SOIL ?? f.soil_water ?? f.SOILWater ?? f.water_soil ?? null;
+      humLabel = "Bodenwasser";
+    } else {
+      temp = f.TempC_SHT ?? f.TempC_SHT31 ?? f.temp ?? null;
+      hum  = f.Hum_SHT   ?? f.Hum_SHT31   ?? f.hum  ?? null;
+      humLabel = "Luftfeuchte";
+}
+bat = f.BatV ?? f.battery ?? null;
+
 
       // Popup HTML
       const pretty = displayName(n.id);
