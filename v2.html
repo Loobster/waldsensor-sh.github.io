@@ -3,361 +3,302 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WALDSENSOR.SH – v2</title>
-  <!-- version: v04 (2025-09-27) -->
+  <title>WALDSENSOR.SH – Karte (V2)</title>
+  <!-- v0.7 | Änderungen: kleinere Popups (~70%) + sicheres Zentrieren, Statistik-Link nutzt kanonische ID -->
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <!-- MarkerCluster (optional, bleibt geladen für später) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- QRCode -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
   <style>
     :root{
-      --ink:#0f172a; --muted:#64748b; --ok:#e6f9ec; --ok-ink:#0f5132;
-      --blue:#e8f1ff; --blue-ink:#1e3a8a; --bg:#f6f8fb; --card:#fff;
+      --pill-bg:#fff;
+      --pill-text:#106e2a;
+      --pill-shadow:0 2px 10px rgba(0,0,0,.15);
     }
-    html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif;background:var(--bg);color:var(--ink)}
-    #map{height:100vh;width:100vw}
-    /* Badges */
-    .ws-badge{position:fixed;z-index:9000;display:inline-block;background:#fff;border-radius:14px;
-      box-shadow:0 6px 24px -18px rgba(0,0,0,.6), 0 1px 0 rgba(0,0,0,.08);padding:10px 16px;font-weight:800}
-    .ws-badge small{font-weight:700;color:var(--muted)}
-    .ws-left{left:18px;top:20px;background:var(--ok);color:var(--ok-ink)}
-    .ws-right{right:18px;top:20px;background:var(--blue);color:var(--blue-ink)}
-    /* Kompaktes Popup (≈70% der bisherigen Größe) + tiefer positioniert */
-    .ws-popup .leaflet-popup-content{margin:8px 10px;min-width:220px;max-width:280px}
-    .ws-popup h3{margin:0 0 6px;font-size:16px;font-weight:900}
-    .ws-popup .meta{font-size:13px;color:var(--muted);margin:2px 0}
-    .ws-popup .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;margin:8px 0 6px}
-    .ws-popup .kv .k{color:var(--muted);font-size:13px}
-    .ws-popup .kv .v{font-weight:800}
-    .ws-popup .qr{display:flex;align-items:center;gap:12px;margin:8px 0}
-    .ws-popup .qr canvas, .ws-popup .qr img{width:96px;height:96px}
-    .ws-popup .btn{display:inline-block;background:#1e3a8a;color:#fff;text-decoration:none;
-      font-weight:800;border-radius:10px;padding:8px 12px}
-    /* Auf kleineren Screens die Badges nicht verdecken lassen */
-    @media (max-width:520px){ .ws-badge{padding:8px 12px} .ws-popup .leaflet-popup-content{max-width:260px} }
-  </style>
+    html, body { height:100%; margin:0; }
+    #map { height:100%; width:100%; }
 
-  <!-- Leaflet + QRCode + Chart (Chart nur in Statistikmodus benötigt, lädt aber klein) -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    .pill {
+      position: fixed;
+      z-index: 1001;
+      top: 14px;
+      left: 70px;
+      background: var(--pill-bg);
+      color: var(--pill-text);
+      padding: 8px 12px;               /* kleiner */
+      border-radius: 12px;              /* kleiner */
+      font: 700 15px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; /* kleiner */
+      box-shadow: var(--pill-shadow);
+      border: 1px solid #e8e8e8;
+    }
+
+    .last-node {
+      position: fixed;
+      z-index: 1001;
+      top: 14px;
+      right: 14px;
+      background: #e9f3ff;
+      color: #0b4da2;
+      padding: 8px 12px;                /* kleiner */
+      border-radius: 12px;              /* kleiner */
+      font: 700 14px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; /* kleiner */
+      box-shadow: var(--pill-shadow);
+      border: 1px solid #d6e6ff;
+      max-width: 42ch;
+      text-align: right;
+    }
+
+    /* Popup-Optik & Z-Index */
+    .leaflet-popup { z-index: 1002; }
+    .popup {
+      width: 240px;                     /* ~70% der vorherigen Breite */
+      font: 500 13px/1.35 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; /* kleiner */
+    }
+    .popup h3{
+      margin:0 0 .25rem 0;
+      font: 800 16px/1.25 system-ui;    /* kleiner */
+      letter-spacing:.2px;
+    }
+    .popup hr{ border:0; height:1px; background:#ececec; margin:.5rem 0 .6rem; }
+    .popup .row{
+      display:flex; justify-content:space-between; align-items:baseline;
+      gap:10px; margin:.25rem 0;
+    }
+    .popup .label{ color:#4b5563; font-weight:700; font-size:12px; }
+    .popup .value{ font-weight:800; font-size:14px; letter-spacing:.2px; }
+    .popup .qrrow { display:flex; gap:10px; align-items:center; margin-top:6px; }
+    .popup .openbtn {
+      display:inline-block; padding:10px 12px; border-radius:12px;
+      background:#eef4ff; color:#0b4da2; font:700 15px/1.1 system-ui;
+      text-decoration:none; border:1px solid #d6e6ff; white-space:nowrap;
+    }
+    .popup .hint { color:#666; font:600 11px/1.3 system-ui; margin-top:4px; }
+  </style>
+</head>
+<body>
+  <div class="pill" id="stamp">Letzte Aktualisierung: –</div>
+  <div class="last-node" id="last">Letzte Node-Meldung: –</div>
+  <div id="map"></div>
 
   <script>
-    // ---------- gemeinsame Helfer ----------
-    const $ = (id)=>document.getElementById(id);
-    const fmt = (n,d=1)=> (n==null||Number.isNaN(n)) ? "—" : Number(n).toFixed(d).replace(".",",");
-    const prettyTitle = (id)=> (id||"").replace(/[_]/g,"-").split("-").map(s=>s? s[0].toUpperCase()+s.slice(1):s).join("-");
-    const isSoilNode = (id)=>/(^|[-_])se01([-_]|$)/i.test(id||"");
-    const num = (v)=> (v==null?null:Number(String(v).replace(",", ".")));
+    // ------------------- Konstante Pfade & Refresh -------------------
+    const DATA_URL = "/data/v2/latest/all.json";
+    const AUTO_REFRESH_MS = 60_000;
 
-function pickFieldsFromObj(obj) {
-  let t = null, h = null, b = null;
+    // ------------------- ID-Normalisierung (kanonisch, klein, mit Bindestrichen) -------------------
+    function normalizeId(s){
+      return String(s||'')
+        .toLowerCase()
+        .replace(/\r|\s+/g,'')                 // CR/Spaces raus
+        .replace(/^waldsensor[_-]/,'')         // Präfix weg
+        .replace(/_/g,'-')                     // _ -> -
+        .replace(/-(sn\d.*|lsn\d.*|v\d+|lb)$/,''); // gängige Suffixe weg (nur Darstellung!)
+    }
 
-  // Batterie
-  b = obj.BatV || obj.bat || obj.battery || null;
+    // Für Anzeige hübsch (nur UI, nicht für Links/Dateinamen verwenden!)
+    function titleCaseId(id){
+      // z.B. "schacht-audorf" -> "Schacht-Audorf"
+      return String(id||'').split('-').map(w => w ? (w[0].toUpperCase()+w.slice(1)) : w).join('-');
+    }
 
-  // Luft- oder Bodenfeuchte
-  if (obj.Hum_SHT !== undefined) h = obj.Hum_SHT;
-  if (obj.SoilHum !== undefined) h = obj.SoilHum;
-  if (obj.h !== undefined) h = obj.h;
+    // ------------------- manuelle Koordinaten (Fallbacks) -------------------
+    const MANUAL_LOC = {
+      "breklum":  [54.60669, 8.98195],
+      "s31":      [54.65000, 8.96000],
+      "se01":     [54.65005, 8.96005],
+      "kropp":    [54.41018, 9.52839],
+      "fahrdorf": [54.50158, 9.58690]
+      // lsn50 ist absichtlich NICHT mehr enthalten
+    };
 
-  // Temperatur
-  if (obj.TempC_SHT !== undefined) t = obj.TempC_SHT;
-  if (obj.SoilTemp !== undefined) t = obj.SoilTemp;
-  if (obj.t !== undefined) t = obj.t;
+    // Felder, die im Popup weggelassen werden
+    const OMIT_FIELDS = new Set(["ADC1_V","EXTI_Trigger","Door_status","lat","lon"]);
 
-  return { t, h, b };
-}
-    function qs(k){const u=new URL(location.href);return u.searchParams.get(k)}
+    // ------------------- Leaflet-Setup -------------------
+    const map = L.map("map", {
+      zoomSnap: 0.25,
+      // etwas großzügige Panning-Polster, damit Popups oben/unten nicht kollidieren
+      // (wir pannen zusätzlich bei popupopen, siehe unten)
+    });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+    }).addTo(map);
+    map.setView([54.4, 9.6], 8.25);
+    let markersLayer = L.layerGroup().addTo(map);
+
+    // ------------------- Hilfsfunktionen -------------------
+    function deTime(ts){
+      try {
+        return new Date(ts).toLocaleString("de-DE", {
+          year:"numeric", month:"2-digit", day:"2-digit",
+          hour:"2-digit", minute:"2-digit", second:"2-digit"
+        });
+      } catch(_){ return ts || "–"; }
+    }
+
+    function deNum(n, digits=1){
+      return (typeof n === "number" && Number.isFinite(n))
+        ? n.toLocaleString("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits })
+        : "–";
+    }
+
+    function cleanFields(fields){
+      const out = {};
+      for (const [k,v] of Object.entries(fields || {})){
+        if (OMIT_FIELDS.has(k)) continue;
+        if (v === undefined || v === null || v === "NULL") continue;
+        if (typeof v === "number" && !Number.isFinite(v)) continue;
+        out[k] = v;
+      }
+      return out;
+    }
+
+    function pickCoord(item){
+      const f = item?.fields || {};
+      if (typeof f.lat !== "undefined" && typeof f.lon !== "undefined"){
+        const la = Number(f.lat), lo = Number(f.lon);
+        if (Number.isFinite(la) && Number.isFinite(lo)) return [la, lo];
+      }
+      const short = normalizeId(item.id);
+      if (MANUAL_LOC[short]) return MANUAL_LOC[short];
+      return null;
+    }
+
+    function popupHtml(item){
+      // Anzeige-Name (hübsch), Link-ID (kanonisch, klein)
+      const idRaw   = String(item.id||'').trim();
+      const idCanon = idRaw.toLowerCase();                     // für URL/Statistik
+      const idNice  = titleCaseId(normalizeId(idRaw));         // nur Anzeige
+
+      const f = cleanFields(item.fields);
+      const temp = (typeof f.TempC_SHT31 === "number") ? f.TempC_SHT31
+                  : (typeof f.TempC_SHT   === "number") ? f.TempC_SHT   : null;
+      const hum  = (typeof f.Hum_SHT31  === "number") ? f.Hum_SHT31
+                  : (typeof f.Hum_SHT    === "number") ? f.Hum_SHT    : null;
+      const bat  = (typeof f.BatV       === "number") ? f.BatV : null;
+      const lat  = (typeof f.lat        === "number") ? f.lat : null;
+      const lon  = (typeof f.lon        === "number") ? f.lon : null;
+
+      const url = `/html/sensor.html?node=${encodeURIComponent(idCanon)}`; // Statistik-Link: kanonische ID!
+
+      let html = `<div class="popup">`;
+      html += `<h3>Sensor: ${idNice}</h3>`;
+      html += `<div class="row"><span class="label">Zuletzt aktiv</span><span class="value">${deTime(item.ts)}</span></div>`;
+      html += `<hr/>`;
+      if (bat  !== null) html += `<div class="row"><span class="label">Batterie</span><span class="value">${deNum(bat,3)} V</span></div>`;
+      if (hum  !== null) html += `<div class="row"><span class="label">Luftfeuchte</span><span class="value">${deNum(hum,1)} %</span></div>`;
+      if (temp !== null) html += `<div class="row"><span class="label">Temperatur</span><span class="value">${deNum(temp,1)} °C</span></div>`;
+      if (lat  !== null && lon !== null) html += `<div class="row"><span class="label">Koordinaten</span><span class="value">${lat.toFixed(5)}, ${lon.toFixed(5)}</span></div>`;
+
+      html += `
+        <div class="qrrow">
+          <div id="qrcode-${idCanon}"></div>
+          <a class="openbtn" href="${url}" target="_blank" rel="noopener">Statistik<br/>öffnen</a>
+        </div>
+        <div class="hint">Link nutzt ID: <b>${idCanon}</b></div>
+      `;
+
+      return html + `</div>`;
+    }
+
+    function latestRecord(data){
+      let best = null, bestT = -Infinity;
+      for (const r of (data||[])){
+        if (!r || !r.ts) continue;
+        const t = new Date(r.ts).getTime();
+        if (!Number.isNaN(t) && t > bestT){ bestT = t; best = r; }
+      }
+      return best;
+    }
+
+    async function loadData(){
+      const res = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache:"no-store" });
+      if (!res.ok) throw new Error("fetch failed " + res.status);
+      return res.json();
+    }
+
+    function render(raw){
+      // IDs in den Daten ggf. bereinigen (nur Anzeige); für Links nehmen wir id.toLowerCase()
+      const data = (raw||[]).map(x => ({...x, id: String(x.id||'').trim()}));
+
+      markersLayer.clearLayers();
+      const bounds = [];
+
+      for (const item of data){
+        const coord = pickCoord(item);
+        if (!coord) continue;
+
+        const marker = L.marker(coord).bindPopup(popupHtml(item), {
+          maxWidth: 260,              // kompakter
+          keepInView: true,
+          autoPan: true,
+          autoPanPaddingTopLeft: [0, 80],    // Platz für obere Badges
+          autoPanPaddingBottomRight: [0, 40],
+          offset: [0, 10]
+        });
+
+        marker.on("popupopen", (ev) => {
+          // QR erst beim Öffnen rendern (kleiner: ~100 px)
+          const idCanon = String(item.id||'').toLowerCase();
+          const url = `/html/sensor.html?node=${encodeURIComponent(idCanon)}`;
+          const qrDiv = document.getElementById(`qrcode-${idCanon}`);
+          if (qrDiv && !qrDiv.hasChildNodes()) {
+            QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 100 }, (err, canvas) => {
+              if (!err) qrDiv.appendChild(canvas);
+            });
+          }
+
+          // Sanft in den sichtbaren Bereich pannen (wir wollen das Popup „mittig/sichtbar“)
+          try {
+            map.panInside(ev.popup.getLatLng(), {
+              paddingTopLeft: [0, 90],
+              paddingBottomRight: [0, 50],
+              animate: true,
+              duration: 0.35
+            });
+          } catch(_){}
+        });
+
+        marker.addTo(markersLayer);
+        bounds.push(coord);
+      }
+
+      if (bounds.length) map.fitBounds(L.latLngBounds(bounds).pad(0.12));
+
+      document.getElementById("stamp").textContent =
+        "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
+
+      const lastEl = document.getElementById("last");
+      const lastRec = latestRecord(data);
+      if (lastRec){
+        lastEl.textContent =
+          "Letzte Node-Meldung: " + deTime(lastRec.ts) + " — " + normalizeId(lastRec.id);
+      } else {
+        lastEl.textContent = "Letzte Node-Meldung: –";
+      }
+    }
+
+    async function run(){
+      try{ render(await loadData()); }
+      catch(err){
+        console.error(err);
+        document.getElementById("stamp").textContent =
+          "Letzte Aktualisierung: " + new Date().toLocaleTimeString("de-DE");
+      }
+    }
+
+    run();
+    setInterval(run, AUTO_REFRESH_MS);
   </script>
-</head>
-
-<body>
-
-<!-- Badges (nur Map-Modus sichtbar) -->
-<div id="badgeLeft" class="ws-badge ws-left" style="display:none">Letzte Aktualisierung: <span id="lastUp">–</span> <small>• Nodes: <span id="nodeCount">0</span></small></div>
-<div id="badgeRight" class="ws-badge ws-right" style="display:none">Letzte Node-Meldung: <span id="lastNode">–</span></div>
-
-<div id="map" style="display:none"></div>
-
-<!-- Statistik-Ansicht (wird bei ?stats=1 angezeigt) -->
-<div id="statsWrap" style="display:none;max-width:1180px;margin:0 auto;padding:20px">
-  <div style="margin-bottom:8px;"><a href="/v2.html" style="text-decoration:none;color:#2563eb;font-weight:700">← Zur Karte</a></div>
-  <h1 style="margin:6px 0 18px;font-weight:900;letter-spacing:.2px">Schulwaldsensor — <span id="s_title">…</span>
-    <small style="font-size:12px;font-weight:800;color:#94a3b8;margin-left:8px">v04</small>
-  </h1>
-
-  <div style="display:grid;gap:18px;grid-template-columns:1fr 1fr">
-    <div style="background:var(--card);border-radius:14px;padding:16px;box-shadow:0 1px 0 rgba(0,0,0,.04),0 10px 30px -20px rgba(0,0,0,.15)">
-      <div style="margin-bottom:10px"><span style="background:var(--ok);color:#0f5132;border-radius:999px;padding:6px 10px;font-weight:800">Stand: <span id="s_stand">—</span></span></div>
-      <div style="display:grid;gap:12px;grid-template-columns:1fr 1fr">
-        <div style="background:#eef2f7;border-radius:12px;padding:14px 16px">
-          <div style="color:var(--muted);font-size:14px;margin-bottom:6px">Temperatur</div>
-          <div id="s_temp" style="font-size:22px;font-weight:900">—</div>
-        </div>
-        <div style="background:#eef2f7;border-radius:12px;padding:14px 16px">
-          <div id="s_hum_label" style="color:var(--muted);font-size:14px;margin-bottom:6px">Luftfeuchte</div>
-          <div id="s_hum" style="font-size:22px;font-weight:900">—</div>
-        </div>
-        <div style="grid-column:1/-1;background:#eef2f7;border-radius:12px;padding:14px 16px">
-          <div style="color:var(--muted);font-size:14px;margin-bottom:6px">Batterie</div>
-          <div id="s_bat" style="font-size:22px;font-weight:900">—</div>
-        </div>
-      </div>
-      <div style="margin-top:8px;color:var(--muted);font-size:13px">Quelle: <span style="font-family:ui-monospace,Menlo,Consolas,monospace">/data/v2/latest/all.json</span></div>
-    </div>
-
-    <div style="background:var(--card);border-radius:14px;padding:16px;box-shadow:0 1px 0 rgba(0,0,0,.04),0 10px 30px -20px rgba(0,0,0,.15)">
-      <div style="font-weight:900;margin:0 0 10px">Netz &amp; Gateways</div>
-      <div id="s_net">—</div>
-      <div style="margin-top:8px;color:var(--muted);font-size:13px">Quelle: <span id="s_net_path" style="font-family:ui-monospace,Menlo,Consolas,monospace">—</span></div>
-    </div>
-  </div>
-
-  <div style="background:var(--card);border-radius:14px;padding:16px;margin-top:18px;box-shadow:0 1px 0 rgba(0,0,0,.04),0 10px 30px -20px rgba(0,0,0,.15)">
-    <div style="font-weight:900;margin:0 0 10px">📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</div>
-    <canvas id="s_hourly"></canvas>
-    <div style="margin-top:8px;color:var(--muted);font-size:13px">Sucht: <span id="s_hist_path" style="font-family:ui-monospace,Menlo,Consolas,monospace">/data/v2/history/&lt;node&gt;.json</span></div>
-    <div id="s_hist_err" style="display:none;color:#b91c1c;font-weight:800;margin-top:6px"></div>
-    <div id="s_no_hourly" style="display:none;color:var(--muted);font-size:13px;margin-top:6px">Kein Verlauf gefunden.</div>
-  </div>
-
-  <div style="background:var(--card);border-radius:14px;padding:16px;margin-top:18px;box-shadow:0 1px 0 rgba(0,0,0,.04),0 10px 30px -20px rgba(0,0,0,.15)">
-    <div style="font-weight:900;margin:0 0 10px">🗓️ 31 Tage — Tagesmittel (Temp / Feuchte)</div>
-    <canvas id="s_daily"></canvas>
-    <div id="s_no_daily" style="display:none;color:var(--muted);font-size:13px;margin-top:6px">Keine Tageswerte möglich (es fehlt Verlauf).</div>
-  </div>
-</div>
-
-<script>
-(async function main(){
-  const isStats = (qs("stats")==="1");
-  if(isStats){ return initStats(); }
-  $('map').style.display = 'block';
-  $('badgeLeft').style.display = 'inline-block';
-  $('badgeRight').style.display = 'inline-block';
-
-  // Map mit Auto-Pan Padding, damit Badges oben nicht verdecken
-  const map = L.map('map', {
-    zoomControl:true, preferCanvas:true,
-    center:[54.4, 9.7], zoom:9,
-    maxZoom:18, minZoom:6,
-    autoPanPaddingTopLeft: L.point(20, 80), // Platz für linke Badge
-    autoPanPaddingBottomRight: L.point(20, 20)
-  });
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'&copy; OpenStreetMap'
-  }).addTo(map);
-
-  // Daten laden
-  const r = await fetch('/data/v2/latest/all.json',{cache:'no-store'});
-  const data = r.ok ? await r.json() : [];
-  const nodes = Array.isArray(data) ? data : [];
-  $('nodeCount').textContent = String(nodes.length || 0);
-
-  // Neueste Meldung
-  let newest = null;
-  for(const it of nodes){
-    if(it?.ts){
-      const t = new Date(it.ts).getTime();
-      if(!newest || t > newest.t) newest = {id:it.id, t, ts:it.ts};
-    }
-  }
-  if(newest){
-    $('lastUp').textContent = new Date(newest.t).toLocaleTimeString('de-DE');
-    $('lastNode').textContent = new Date(newest.t).toLocaleString('de-DE') + ' — ' + (newest.id||'');
-  }
-
-  // Marker + Popups
-  const markers = [];
-  for(const it of nodes){
-    const id = it.id || '';
-    const lat = it.fields?.lat ?? it.lat;
-    const lon = it.fields?.lon ?? it.lon;
-    if(!(Number.isFinite(lat) && Number.isFinite(lon))) continue;
-
-    const pf = pickFieldsFromObj(it, id);
-    const title = prettyTitle(id);
-    const statsLink = `/v2.html?stats=1&id=${encodeURIComponent(id)}`;
-    const deepLink = `https://www.waldsensor.sh/v2.html?stats=1&id=${encodeURIComponent(id)}`;
-
-    const html = `
-      <div class="ws-popup">
-        <h3>Sensor: ${title}</h3>
-        <div class="meta">Zuletzt aktiv: ${it.ts ? new Date(it.ts).toLocaleString('de-DE') : '—'}</div>
-        <div class="kv">
-          <div class="k">Batterie</div><div class="v">${pf.bat!=null? fmt(pf.bat,3)+' V':'—'}</div>
-          <div class="k">${pf.humLabel}</div><div class="v">${pf.h!=null? fmt(pf.h,1)+' %':'—'}</div>
-          <div class="k">Temperatur</div><div class="v">${pf.t!=null? fmt(pf.t,1)+' °C':'—'}</div>
-        </div>
-        <div class="qr"><div id="qr_${CSS.escape(id)}"></div>
-          <div>
-            <a class="btn" href="${statsLink}">Statistik öffnen</a>
-            <div style="margin-top:6px;color:#64748b;font-size:12px">Link nutzt Node-ID: <span style="font-family:ui-monospace">${id}</span></div>
-          </div>
-        </div>
-      </div>
-    `;
-
-    const m = L.marker([lat, lon]).addTo(map);
-    m.bindPopup(html, {
-      className: 'ws-popup',
-      maxWidth: 320,
-      offset: L.point(0, 18) // Popup etwas weiter nach unten
-    }).on('popupopen', () => {
-      // QR erst rendern, wenn Container sicher im DOM
-      const el = document.querySelector(`#qr_${CSS.escape(id)}`);
-      if (el && !el.dataset.done) {
-        try {
-          new QRCode(el, { text: deepLink, width: 96, height: 96, correctLevel: QRCode.CorrectLevel.M });
-          el.dataset.done = '1';
-        } catch(e) {
-          // Fallback ohne Abbruch
-          el.innerHTML = '<div style="font-size:12px;color:#b91c1c">QR konnte nicht erzeugt werden</div>';
-        }
-      }
-    });
-    markers.push(m);
-  }
-
-  if(markers.length){
-    const g = L.featureGroup(markers);
-    map.fitBounds(g.getBounds().pad(0.2));
-  }
-})();
-
-// -------------------- Statistikmodus --------------------
-async function initStats(){
-  $('statsWrap').style.display = 'block';
-  const id = (qs('id') || qs('node') || '').trim();
-  const wanted = id || null;
-
-  // latest laden
-  const r = await fetch('/data/v2/latest/all.json',{cache:'no-store'});
-  const latest = r.ok ? await r.json() : [];
-  let entry = null;
-  if(wanted){
-    entry = latest.find(x=>x.id===wanted) || latest.find(x=> (x.id||'').toLowerCase()===wanted.toLowerCase());
-  }
-  if(!entry) entry = latest[0] || {};
-
-  const nodeId = entry.id || wanted || '—';
-  const soil = isSoilNode(nodeId);
-  $('s_title').textContent = prettyTitle(nodeId);
-  $('s_stand').textContent = entry.ts ? new Date(entry.ts).toLocaleString('de-DE') : '—';
-
-  const pf = pickFieldsFromObj(entry, nodeId);
-  $('s_temp').textContent = pf.t!=null ? fmt(pf.t,1)+' °C' : '—';
-  $('s_hum').textContent  = pf.h!=null ? fmt(pf.h,1)+(soil?' %':' %') : '—';
-  $('s_hum_label').textContent = pf.humLabel;
-  $('s_bat').textContent  = pf.bat!=null ? fmt(pf.bat,3)+' V' : '—';
-
-  // Netstats
-  const netUrl = `/data/v2/net/netstats_${encodeURIComponent(nodeId)}.json`;
-  $('s_net_path').textContent = netUrl;
-  try{
-    const nr = await fetch(netUrl,{cache:'no-store'});
-    if(nr.ok){
-      const d = await nr.json();
-      const ts = d.last_ts ? new Date(d.last_ts).toLocaleString('de-DE') : '—';
-      $('s_net').innerHTML = `Letzte 24 h: <b>${d.frames24||0}</b> Uplinks<br>Letzter Uplink: <b>${ts}</b>`;
-    }else{
-      $('s_net').textContent = 'nicht gefunden';
-    }
-  }catch(e){ $('s_net').textContent = 'Fehler beim Laden'; }
-
-  // History laden und in {ts,t,h} normieren
-  const hUrl = `/data/v2/history/${encodeURIComponent(nodeId)}.json`;
-  $('s_hist_path').textContent = hUrl;
-  let hist = [];
-  try{
-    const hr = await fetch(hUrl,{cache:'no-store'});
-    if(hr.ok){
-      const raw = await hr.json();
-      if(Array.isArray(raw)){
-        hist = raw.filter(x=>x&&x.ts).map(x=>{
-          const pf2 = pickFieldsFromObj(x, nodeId);
-          return { ts:x.ts, t:pf2.t, h:pf2.h };
-        }).sort((a,b)=> new Date(a.ts)-new Date(b.ts));
-      }
-    }else{
-      $('s_hist_err').style.display='block';
-      $('s_hist_err').textContent = `Fehler beim Laden (${hr.status}) von ${hUrl}`;
-    }
-  }catch(e){
-    $('s_hist_err').style.display='block';
-    $('s_hist_err').textContent = `Fehler: ${e?.message||e}`;
-  }
-
-  // 7 Tage Verlauf
-  const seven = Date.now() - 7*24*3600*1000;
-  const recent = hist.filter(x=> new Date(x.ts).getTime() >= seven);
-  if(recent.length){
-    $('s_no_hourly').style.display='none';
-    const ctx = $('s_hourly').getContext('2d');
-    const labels = recent.map(x=>x.ts);
-    const tLabel = soil? 'Bodentemperatur [°C]' : 'Temperatur [°C]';
-    const hLabel = soil? 'Bodenwasser [%]'      : 'Luftfeuchte [%]';
-    new Chart(ctx,{type:'line',data:{
-      labels,
-      datasets:[
-        {label:tLabel, data:recent.map(x=>x.t), yAxisID:'y1'},
-        {label:hLabel, data:recent.map(x=>x.h), yAxisID:'y2'}
-      ]},
-      options:{
-        responsive:true, interaction:{mode:'index',intersect:false},
-        scales:{
-          x:{ticks:{callback:(v,i)=>{const d=new Date(labels[i]);return d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('de-DE',{hour:'2-digit'})+'h'}}},
-          y1:{position:'left', grid:{drawOnChartArea:false}},
-          y2:{position:'right', min:0, max:100}
-        },
-        plugins:{legend:{position:'top'}}
-      }
-    });
-  }else{
-    $('s_no_hourly').style.display='block';
-  }
-
-  // 31 Tage Tagesmittel
-  const days = groupDaily(hist);
-  if(days.length){
-    $('s_no_daily').style.display='none';
-    const ctxD = $('s_daily').getContext('2d');
-    const labels = days.map(d=>d.day);
-    const tLabel = soil? 'Ø Bodentemperatur [°C]' : 'Ø Temperatur [°C]';
-    const hLabel = soil? 'Ø Bodenwasser [%]'      : 'Ø Luftfeuchte [%]';
-    new Chart(ctxD,{type:'bar',data:{
-      labels,
-      datasets:[
-        {type:'bar',  label:hLabel, data:days.map(d=>d.h), yAxisID:'y2'},
-        {type:'line', label:tLabel, data:days.map(d=>d.t), yAxisID:'y1'}
-      ]},
-      options:{
-        responsive:true, interaction:{mode:'index',intersect:false},
-        scales:{ y1:{position:'left', grid:{drawOnChartArea:false}}, y2:{position:'right', min:0, max:100} },
-        plugins:{legend:{position:'top'}}
-      }
-    });
-  }else{
-    $('s_no_daily').style.display='block';
-  }
-
-  function groupDaily(items){
-    const m = new Map();
-    for(const it of items){
-      const d = new Date(it.ts);
-      const key = d.getUTCFullYear()+"-"+String(d.getUTCMonth()+1).padStart(2,"0")+"-"+String(d.getUTCDate()).padStart(2,"0");
-      if(!m.has(key)) m.set(key,{n:0,tsum:0,hsum:0});
-      const o = m.get(key);
-      if(typeof it.t==='number') o.tsum += it.t;
-      if(typeof it.h==='number') o.hsum += it.h;
-      o.n++;
-    }
-    const out=[];
-    for(const [k,v] of m.entries()){
-      out.push({day:k, t: v.n? v.tsum/v.n : null, h: v.n? v.hsum/v.n : null});
-    }
-    out.sort((a,b)=> a.day.localeCompare(b.day));
-    return out.slice(-31);
-  }
-}
-</script>
 </body>
 </html>
