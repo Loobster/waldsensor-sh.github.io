@@ -3,193 +3,175 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Waldsensor.SH – Karte</title>
-  <!-- v2.html VERSION: v0.1 (nur: kompaktere Popups + SOIL-Felder/Statistik) -->
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="dns-prefetch" href="https://unpkg.com">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <title>WALDSENSOR.SH – Karte</title>
+  <!-- v2.html  |  Version: v0.10 (Shared-Popup/Overlay-Fix) -->
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
   <style>
     :root{
-      --ink:#0f172a; --muted:#64748b; --bg:#f8fafc; --card:#ffffff;
-      --pad:12px; --radius:12px;
-      --label:#334155; --val:#0b1324;
-      --chip:#eef2ff; --chipText:#3730a3;
+      --ink:#0f172a; --muted:#64748b; --ok:#16a34a; --bg:#f8fafc;
+      --card:#ffffff; --pad:12px; --radius:12px;
     }
-    html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
-    #app{display:flex;align-items:flex-start;gap:10px;padding:10px}
-    .topbar{position:fixed;left:10px;top:10px;right:10px;display:flex;justify-content:space-between;align-items:center;z-index:500}
-    .badge{background:var(--card);border-radius:999px;padding:6px 10px;box-shadow:0 2px 10px rgba(0,0,0,.06);font-weight:700}
-    .muted{color:var(--muted)}
-    #map{height:calc(100vh - 20px);width:100%;}
-    /* kompakteres Popup */
-    .leaflet-popup-content-wrapper{border-radius:12px;}
-    .popup{min-width:240px;max-width:320px}
-    .popup h3{margin:0 0 6px;font-size:16px;letter-spacing:.2px}
-    .kv{display:grid;grid-template-columns:1fr auto;gap:6px 10px;align-items:center}
-    .kv .k{color:var(--label);font-weight:600}
-    .kv .v{color:var(--val);font-weight:800}
-    .hr{height:1px;background:#e2e8f0;margin:8px 0}
-    .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .chip{background:var(--chip);color:var(--chipText);font-weight:700;border-radius:999px;padding:4px 8px;font-size:12px}
-    .btn{display:inline-block;text-decoration:none;background:#2563eb;color:#fff !important;padding:7px 10px;border-radius:8px;font-weight:700}
-    .btn:hover{ background:#3b82f6; }
-    .btn:visited{ color:#fff !important; text-decoration:none; }
+    html, body { margin:0; height:100%; background:var(--bg); color:var(--ink);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans","Helvetica Neue", sans-serif;
+    }
 
-    .coords{font-family:ui-monospace,Menlo,Consolas,monospace;color:#475569;font-size:12px}
+    /* Layout */
+    .topbar {
+      position: fixed; inset: 12px 12px auto 12px; z-index: 1000;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .badge {
+      background:var(--card); border-radius:999px; padding:6px 10px;
+      box-shadow:0 1px 0 rgba(0,0,0,.05), 0 10px 30px -20px rgba(0,0,0,.18);
+      font-weight:700; font-size:14px;
+    }
+    .muted { color:var(--muted); font-weight:600; }
+    .ok { color:var(--ok); }
+
+    #map { position:absolute; inset:0; }
+
+    /* Popup-Inhalt (kompakt) */
+    .popup { min-width: 260px; max-width: 320px; }
+    .popup h3 { margin: 0 0 6px; font-size: 16px; font-weight: 800; }
+    .row { display:flex; justify-content:space-between; gap:10px; font-size:14px; padding:2px 0; }
+    .label { color:#334155; font-weight:700;}
+    .value { font-variant-numeric: tabular-nums; font-weight:800; }
+    .kv { display:grid; grid-template-columns: 1fr 1fr; gap:6px 10px; }
+    .qrwrap { margin-top:8px; display:flex; justify-content:center; }
+    .actions { margin-top:6px; text-align:center; }
+    .actions a { text-decoration:none; font-weight:800; color:#1d4ed8; }
+
+    /* >>> Shared-Popup/Overlay-Fix <<< */
+    .leaflet-popup-content-wrapper { overflow: hidden; }
+    .leaflet-popup { pointer-events: auto; }
+    .leaflet-popup-pane { pointer-events: none; }
+    .leaflet-popup * { pointer-events: auto; }
   </style>
 </head>
 <body>
   <div class="topbar">
-    <div class="badge">WALDSENSOR.SH • <span id="nodeCount">–</span> Nodes</div>
-    <div class="badge">Letzte Meldung: <span id="lastTs">–</span> &nbsp;<span class="muted">| v0.1</span></div>
+    <div class="badge">WALDSENSOR.SH <span class="muted">/ v0.10</span></div>
+    <div class="badge">Nodes: <span id="nodeCount">–</span></div>
+    <div class="badge">Letzte Node-Meldung: <span id="lastTs" class="ok">–</span></div>
   </div>
-  <div id="app">
-    <div id="map"></div>
-  </div>
+  <div id="map"></div>
 
-<script>
-/* ===== Konfiguration (nur das Notwendige) ============================== */
-const VERSION = "v0.1";
-const DATA_URL = "/data/v2/latest/all.json";
-const DENY = new Set(["lsn50"]); // dauerhaft ausblenden
+  <script>
+    // ------------------- Konstante Quellen -------------------
+    const DATA_URL = "/data/v2/latest/all.json";
 
-// Manuelle Koordinaten (Fallback, werden nur genutzt, wenn im Datensatz lat/lon fehlen)
-const MANUAL_LOC = {
-  "hooge": [54.5582, 8.5464],
-  "kropp": [54.4093988908855, 9.5285027323752],
-  "neumuenstertl": [54.07586, 9.98926],
-  "s31": [54.651105744662, 8.95686194107564]
-};
+    // ------------------- Hilfen -------------------
+    const deTime = (iso) => {
+      try { return new Date(iso).toLocaleString("de-DE"); } catch { return "–"; }
+    };
+    function deNum(n, digits=1){
+      return (typeof n==="number" && Number.isFinite(n))
+        ? n.toLocaleString("de-DE",{minimumFractionDigits:digits, maximumFractionDigits:digits})
+        : "–";
+    }
+    const normId = (s)=> String(s||"").trim();
 
-// se01/se01lb erkennen (auch mit Prefix wie bredstedt-, Suffix _se01lb)
-const isSoilNode = (id)=>/(^|[-_])se01(lb)?$/i.test(String(id||""));
+    // se01/se01lb erkennen (auch mit Prefix wie bredstedt-, Suffix _se01lb)
+    const isSoilNode = (id)=>/(^|[-_])se01(lb)?$/i.test(String(id||""));
 
-/* ===== Helfer ========================================================== */
-const byId = (s)=>document.getElementById(s);
-const deTime = (ts)=>{
-  if(!ts) return "–";
-  try { return new Date(ts).toLocaleString("de-DE"); } catch { return "–"; }
-};
-const deNum = (n,d=1)=>{
-  return (typeof n==="number" && Number.isFinite(n))
-    ? n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d})
-    : "–";
-};
-const displayName = (id)=>{
-  if(!id) return "";
-  let s = String(id);
-  s = s.replace(/_/g,"-");                    // Schacht_audorf → Schacht-audorf
-  s = s.split("-").map(p=>p? p[0].toUpperCase()+p.slice(1) : p).join("-"); // Title-Case
-  return s;
-};
-const normalizeId = (id)=>String(id||"").trim();
+    // ------------------- Popup HTML -------------------
+    function popupHtml(item){
+      const id = normId(item.id);
+      const f  = item.fields || {};
+      const soil = isSoilNode(id);
 
-/* ===== Popup HTML (kompakt) =========================================== */
-function popupHtml(item){
-  const id = normalizeId(item.id);
-  const f = item.fields || {};
-  const soil = isSoilNode(id);
+      // Werte
+      const bat  = (typeof f.BatV === "number") ? f.BatV : null;
+      const temp = soil ? (typeof f.temp_SOIL === "string" ? parseFloat(f.temp_SOIL.replace(",",".")) : (typeof f.temp_SOIL==="number"?f.temp_SOIL:null))
+                        : (typeof f.TempC_SHT === "number" ? f.TempC_SHT
+                           : (typeof f.TempC_SHT31 === "number" ? f.TempC_SHT31 : null));
+      const hum  = soil ? (typeof f.water_SOIL === "string" ? parseFloat(f.water_SOIL.replace(",",".")) : (typeof f.water_SOIL==="number"?f.water_SOIL:null))
+                        : (typeof f.Hum_SHT   === "number" ? f.Hum_SHT
+                           : (typeof f.Hum_SHT31 === "number" ? f.Hum_SHT31 : null));
 
-  // Wertezuordnung nach Node-Typ
-  const temp = soil ? (typeof f.temp_SOIL==="number" ? f.temp_SOIL : null)
-                    : (typeof f.TempC_SHT==="number" ? f.TempC_SHT
-                       : (typeof f.TempC_SHT31==="number" ? f.TempC_SHT31 : null));
-  const hum  = soil ? (typeof f.water_SOIL==="number" ? f.water_SOIL : null)
-                    : (typeof f.Hum_SHT==="number" ? f.Hum_SHT
-                       : (typeof f.Hum_SHT31==="number" ? f.Hum_SHT31 : null));
-  const bat  = (typeof f.BatV==="number") ? f.BatV : null;
+      // QR: Link zur Statistik (Achte auf /html/)
+      const statsUrl = `/html/sensor.html?node=${encodeURIComponent(id)}`;
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=84x84&data=${encodeURIComponent(location.origin+statsUrl)}`;
 
-  const lat = (typeof f.lat==="number") ? f.lat : (MANUAL_LOC[id]?.[0] ?? null);
-  const lon = (typeof f.lon==="number") ? f.lon : (MANUAL_LOC[id]?.[1] ?? null);
+      return `
+        <div class="popup">
+          <h3>Sensor: ${id}</h3>
+          <div class="row"><span class="label">Zuletzt aktiv</span><span class="value">${deTime(item.ts)}</span></div>
+          <div class="kv" style="margin-top:6px;">
+            <div class="label">Batterie</div><div class="value">${bat!==null? deNum(bat,3)+" V":"–"}</div>
+            <div class="label">${soil?"Bodenwasser":"Luftfeuchte"}</div><div class="value">${hum!==null? deNum(hum,1)+" %":"–"}</div>
+            <div class="label">${soil?"Bodentemperatur":"Temperatur"}</div><div class="value">${temp!==null? deNum(temp,1)+" °C":"–"}</div>
+          </div>
+          <div class="row" style="margin-top:4px;"><span class="label">Koordinaten</span><span class="value">${deNum(f.lat,5)} / ${deNum(f.lon,5)}</span></div>
+          <div class="qrwrap"><img src="${qrUrl}" alt="QR zur Statistik" width="84" height="84" decoding="async" /></div>
+          <div class="actions"><a href="${statsUrl}">Statistik öffnen</a></div>
+        </div>
+      `;
+    }
 
-  const tLabel = soil ? "Bodentemperatur" : "Temperatur";
-  const hLabel = soil ? "Bodenfeuchte"    : "Luftfeuchte";
+    // ------------------- Map -------------------
+    const map = L.map('map', { zoomControl: true }).setView([54.3, 9.7], 8);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:'&copy; OpenStreetMap'
+    }).addTo(map);
 
-  const nice = displayName(id);
-
-  let html = `<div class="popup">
-    <h3>Sensor: ${nice}</h3>
-    <div class="row">
-      <span class="chip">Zuletzt: ${deTime(item.ts)}</span>
-      <a class="btn" href="/html/sensor.html?node=${encodeURIComponent(id)}">Statistik öffnen</a>
-    </div>
-    <div class="hr"></div>
-    <div class="kv">
-      <div class="k">BatV</div><div class="v">${bat!==null? deNum(bat,3)+" V":"–"}</div>
-      <div class="k">${hLabel}</div><div class="v">${hum!==null? deNum(hum,1)+" %":"–"}</div>
-      <div class="k">${tLabel}</div><div class="v">${temp!==null? deNum(temp,1)+" °C":"–"}</div>
-    </div>
-    <div class="hr"></div>
-    <div class="coords">Koordinaten: ${lat!=null?lat.toFixed(5):"–"}, ${lon!=null?lon.toFixed(5):"–"}</div>
-  </div>`;
-  return html;
-}
-
-/* ===== Daten laden ===================================================== */
-async function fetchLatest(){
-  const url = `${DATA_URL}?_=${Date.now()}`; // Cache-Buster
-  const r = await fetch(url,{cache:"no-store"});
-  if(!r.ok) throw new Error("Datenquelle nicht erreichbar: "+r.status);
-  const arr = await r.json();
-  // Denylist anwenden + IDs normieren
-  const list = (Array.isArray(arr) ? arr : []).map(it=>({...it,id:normalizeId(it.id)}))
-    .filter(it=>!DENY.has(it.id.toLowerCase()));
-  return list;
-}
-
-/* ===== Karte =========================================================== */
-(async function main(){
-  // Leaflet-Map
-  const map = L.map('map',{zoomControl:true}).setView([54.3,9.6],8);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    maxZoom:19, attribution:'© OpenStreetMap'
-  }).addTo(map);
-
-  // Daten
-  let data=[];
-  try{
-    data = await fetchLatest();
-  }catch(e){
-    console.error(e);
-  }
-
-  // Letzte Meldung + Node-Zahl
-  byId("nodeCount").textContent = data.length || "0";
-  const latestTs = data.reduce((m,x)=> x?.ts && (!m || x.ts>m)? x.ts : m, null);
-  byId("lastTs").textContent = deTime(latestTs);
-
-  // Marker anlegen
-  const group = L.featureGroup().addTo(map);
-  data.forEach(item=>{
-    const id = item.id;
-    const f  = item.fields || {};
-    let lat = (typeof f.lat==="number") ? f.lat : (MANUAL_LOC[id]?.[0] ?? null);
-    let lon = (typeof f.lon==="number") ? f.lon : (MANUAL_LOC[id]?.[1] ?? null);
-    if(lat==null || lon==null) return; // ohne Koordinaten kein Marker
-
-    const marker = L.marker([lat,lon]).addTo(group);
-
-    // Popup – mit autoPanPadding, damit nichts hinter dem oberen Rand verschwindet
-    const pop = L.popup({
-      maxWidth: 340,
+    // >>> Shared Popup (Fix) <<<
+    const sharedPopup = L.popup({
+      maxWidth: 320,
       autoPan: true,
-      autoPanPaddingTopLeft: [10, 60], // oben Platz lassen (Topbar)
-      autoPanPaddingBottomRight: [10, 20],
-      className: 'ws-popup'
-    }).setContent(popupHtml(item));
-
-    marker.on('click', ()=>{
-      marker.bindPopup(pop).openPopup();
+      autoPanPaddingTopLeft: [10, 60], // verhindert Überdeckung unter der Topbar
+      closeButton: true,
+      closeOnClick: false
     });
-  });
 
-  if(group.getLayers().length){
-    map.fitBounds(group.getBounds().pad(0.2));
-  }
-})();
-</script>
+    function openSharedPopup(lat, lon, html){
+      map.closePopup(); // stale Popups beseitigen
+      sharedPopup.setLatLng([lat,lon]).setContent(html).openOn(map);
+    }
+
+    // ------------------- Daten laden & Marker -------------------
+    async function loadLatest(){
+      const r = await fetch(DATA_URL, { cache: "no-store" });
+      if(!r.ok) throw new Error("Quelle nicht erreichbar: "+r.status);
+      const arr = await r.json();
+      return Array.isArray(arr) ? arr : [];
+    }
+
+    function placeMarkers(nodes){
+      nodes.forEach(n=>{
+        // nur Marker mit Koordinaten
+        const lat = n?.fields?.lat, lon = n?.fields?.lon;
+        if(typeof lat!=="number" || typeof lon!=="number") return;
+
+        const m = L.marker([lat,lon], { riseOnHover: true, zIndexOffset: 1000 }).addTo(map);
+
+        // Marker-Klick → geteiltes Popup (Fix)
+        m.on('click', ()=> openSharedPopup(lat, lon, popupHtml(n)));
+      });
+    }
+
+    // ------------------- Start -------------------
+    (async ()=>{
+      try{
+        const nodes = await loadLatest();
+
+        // Badge: Anzahl & letzte Meldung
+        document.getElementById("nodeCount").textContent = nodes.length.toString();
+        const newest = nodes.reduce((a,b)=> (a && a.ts && new Date(a.ts) > new Date(b.ts)) ? a : b, nodes[0]);
+        document.getElementById("lastTs").textContent = newest?.ts ? deTime(newest.ts) : "–";
+
+        placeMarkers(nodes);
+      }catch(e){
+        console.error(e);
+        document.getElementById("lastTs").textContent = "Fehler";
+      }
+    })();
+  </script>
 </body>
 </html>
