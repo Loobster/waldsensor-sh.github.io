@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <title>WALDSENSOR.SH – Interaktive Karte</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+    <style>
+        html, body, #map { height: 100%; margin: 0; font-family: sans-serif; }
+        .info-box.layer-control-container { max-width: 260px; width: fit-content; }
+        .info-box {
+            position: absolute; z-index: 1000; background: white;
+            padding: 10px; border-radius: 5px; box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+        .area-control { top: 10px; left: 10px; width: 230px; }
+        .layer-control-container { top: 10px; right: 10px; width: 225px; word-wrap: break-word; }
+        .coord-input { bottom: 10px; right: 10px; }
+        #status-message { margin-top: 10px; font-style: italic; font-size: 0.9em; }
+        button { margin-top: 8px; padding: 6px 10px; width: 100%; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <div class="info-box area-control">
+        <label for="area-select"><b>Gebiet auswählen:</b></label>
+        <select id="area-select" disabled>
+            <option value="">-- Lade Gebiete --</option>
+        </select>
+        <div id="status-message"></div>
+        <hr style="margin: 15px 0 10px 0;">
+        <button id="stats-selected-btn" disabled>Statistik für Auswahl</button>
+    </div>
+
+    <div class="info-box layer-control-container">
+        <div style="margin-bottom: 6px; font-size: 0.78em; color: #444; line-height: 1.3;">
+            💡 <b>Neu:</b><br>Klick auf die Karte setzt ein<br>virtuelles Gateway.
+        </div>
+        <div id="layer-control-container"></div>
+    </div>
+
+    <div class="info-box coord-input">
+        <input id="coordInput" type="text" size="25" placeholder="Koordinaten: 54.3, 10.1" />
+    </div>
+
+    <script src="data/gateways_SH_NETZ.js"></script>
+    <script src="data/mint_schulen.js"></script>
+    <script src="data/schulen_SH.js"></script>
+    <script src="data/schulwaelder_mit_popup.js"></script>
+    <script src="data/feuerwehren.js"></script>
+    <script src="data/geplante_nodes.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+    <script src="https://tyrasd.github.io/osmtogeojson/osmtogeojson.js"></script>
+
+    <script>
+        // Definition der Marker-Icons für die verschiedenen Datentypen
+        const iconMap = {
+            'Gateways': L.icon({ iconUrl: 'icons/gateway.png', iconSize: [30, 30], iconAnchor: [15, 15] }),
+            'Schulen mit MINT-Profil': L.icon({ iconUrl: 'icons/mintschule.png', iconSize: [30, 30], iconAnchor: [15, 15] }),
+            'Schulen': L.icon({ iconUrl: 'icons/schule.png', iconSize: [30, 30], iconAnchor: [15, 15] }),
+            'Schulwälder': L.icon({ iconUrl: 'icons/schulwald.png', iconSize: [30, 30], iconAnchor: [15, 15] }),
+            'Feuerwehren': L.icon({ iconUrl: 'icons/feuerwehr.png', iconSize: [30, 30], iconAnchor: [15, 15] }),
+            'Virtuelles GW': L.icon({ iconUrl: 'icons/gateway_virtual.png', iconSize: [30, 30], iconAnchor: [15, 15] }),
+            'Geplante Nodes (EC)': L.icon({ iconUrl: 'icons/node_ec.png', iconSize: [30, 30], iconAnchor: [15, 15] }),
+            'Geplante Nodes': L.icon({ iconUrl: 'icons/node.png', iconSize: [30, 30], iconAnchor: [15, 15] }),
+        };
+
+        // Initialisierung der Leaflet-Karte mit Startposition und Zoom
+        const map = L.map('map').setView([54.2, 9.8], 8);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // Deklaration der globalen Variablen
+        const areas = {};
+        let shOutline = null;
+        let currentAreaLayer = null;
+        let searchMarker = null, gwLine = null;
+        let virtualGWMarker = null;
+        let virtualGWCoords = null;
+        let currentFilterPolygon = null;
+
+        const selectElement = document.getElementById('area-select');
+        const statusElement = document.getElementById('status-message');
+
+        // Funktion zur Umwandlung der geplanten Nodes in GeoJSON
+        function transformNodesToGeoJSON(nodes) {
+            return {
+                type: "FeatureCollection",
+                features: nodes.map(n => ({
+                    type: "Feature",
+                    geometry: {
+                        type: "Point",
+                        coordinates: [n.lon, n.lat]
+                    },
+                    properties: {
+                        name: n.name,
+                        ec: n.ec
+                    }
+                }))
+            };
+        }
+
+        // Umwandlung der rohen Daten beim Laden
+        const geplanteNodesGeoJSON = typeof geplante_nodes !== 'undefined' ? transformNodesToGeoJSON(geplante_nodes) : null;
+
+        const dataSources = [
+            { name: "Gateways", data: typeof gateways !== 'undefined' ? gateways : null, layer: L.markerClusterGroup() },
+            { name: "Schulen mit MINT-Profil", data: typeof mint_schulen !== 'undefined' ? mint_schulen : null, layer: L.markerClusterGroup() },
+            { name: "Schulen", data: typeof schulen !== 'undefined' ? schulen : null, layer: L.markerClusterGroup() },
+            { name: "Schulwälder", data: typeof schulwaelder !== 'undefined' ? schulwaelder : null, layer: L.markerClusterGroup() },
+            { name: "Feuerwehren", data: typeof feuerwehren !== 'undefined' ? feuerwehren : null, layer: L.markerClusterGroup() },
+            { name: "Geplante Nodes", data: geplanteNodesGeoJSON, layer: L.markerClusterGroup() }
+        ];
+
+        const overlayMaps = {};
+        dataSources.forEach(s => { if (s.data) overlayMaps[s.name] = s.layer; });
+        const layerControl = L.control.layers(null, overlayMaps, { collapsed: false }).addTo(map);
+        document.getElementById('layer-control-container').appendChild(layerControl.getContainer());
+        
+        const shOutlineStyle = {
+            color: "#000000",
+            weight: 2, 
+            fillOpacity: 0.0
+        };
+
+        const kreisStyle = {
+            color: "#3388ff",
+            weight: 2,
+            fillOpacity: 0.1
+        };
+
+        function findNearestGateway(lat, lon) {
+            const gatewaysSource = dataSources.find(s => s.name === 'Gateways');
+            if (!gatewaysSource?.data?.features?.length) return null;
+            const target = turf.point([lon, lat]);
+            const allGW = turf.featureCollection(gatewaysSource.data.features.filter(f => f.geometry?.type === 'Point'));
+            const nearest = turf.nearestPoint(target, allGW);
+            const dist = turf.distance(target, nearest, { units: 'kilometers' });
+            return { name: nearest.properties?.name || 'Unbenannt', distKm: dist.toFixed(1), coords: nearest.geometry.coordinates };
+        }
+
+        function displayPoints(filterPolygon = currentFilterPolygon) {
+    dataSources.forEach(s => {
+        s.layer.clearLayers();
+        if (!s.data) return;
+
+        const markers = [];
+        s.data.features.forEach(f => {
+            if (f.geometry?.type !== 'Point') return;
+            const inside = filterPolygon ? turf.booleanPointInPolygon(turf.point(f.geometry.coordinates), filterPolygon) : true;
+            if (!inside) return;
+            const lat = f.geometry.coordinates[1];
+            const lon = f.geometry.coordinates[0];
+            const latLng = [lat, lon];
+            let popup = '';
+            let iconKey = s.name;
+
+            if (s.name === 'Geplante Nodes') {
+                iconKey = f.properties.ec ? 'Geplante Nodes (EC)' : 'Geplante Nodes';
+                const realGW = findNearestGateway(lat, lon);
+                const realText = realGW ? `${realGW.name} (${realGW.distKm} km)` : 'N/A';
+                let virtualText = '';
+                if (virtualGWCoords) {
+                    const distVirtual = turf.distance(turf.point([lon, lat]), turf.point(virtualGWCoords), { units: 'kilometers' });
+                    const improvement = realGW ? (parseFloat(realGW.distKm) - distVirtual) : 0;
+                    const impStr = improvement > 0 ? `→ Verbesserung: –${improvement.toFixed(1)} km` : '';
+                    virtualText = `<br><b>💡 Virtuelles GW:</b> ${distVirtual.toFixed(1)} km ${impStr}`;
+                }
+                popup = `<b>📍 Geplanter Node</b><br><b>Name:</b> ${f.properties.name}<br><b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br><b>📡 Echtes GW:</b> ${realText}${virtualText}`;
+            } else if (s.name === 'Gateways') {
+                // HIER IST DIE GEÄNDERTE LOGIK FÜR GATEWAYS
+                const alt = f.properties.alt;
+                const updated = f.properties.updated;
+                popup = `<b>📡 Gateway:</b> ${f.properties?.name || 'Unbenannt'}<br>
+                         <b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br>
+                         <b>🗻 Höhe:</b> ${alt} m<br>
+                         <b>🕒 Letztes Update:</b> ${updated}`;
+            } else {
+                const realGW = findNearestGateway(lat, lon);
+                const realText = realGW ? `${realGW.name} (${realGW.distKm} km)` : 'N/A';
+                let virtualText = '';
+                if (virtualGWCoords) {
+                    const distVirtual = turf.distance(turf.point([lon, lat]), turf.point(virtualGWCoords), { units: 'kilometers' });
+                    const improvement = realGW ? (parseFloat(realGW.distKm) - distVirtual) : 0;
+                    const impStr = improvement > 0 ? `→ Verbesserung: –${improvement.toFixed(1)} km` : '';
+                    virtualText = `<br><b>💡 Virtuelles GW:</b> ${distVirtual.toFixed(1)} km ${impStr}`;
+                }
+                const icon = { "MINT-Schulen": "🏫", "Schulen": "🏫", "Schulwälder": "🌳", "Feuerwehren": "🚒" }[s.name] || "📍";
+                popup = `<b>${icon} ${f.properties?.name || 'Unbenannt'}</b><br><b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br><b>📡 Echtes GW:</b> ${realText}${virtualText}`;
+            }
+            markers.push(L.marker(latLng, { icon: iconMap[iconKey] }).bindPopup(popup));
+        });
+        s.layer.addLayers(markers);
+    });
+}
+    
+
+        /**
+         * Generiert den CSV-Inhalt für ein einzelnes ausgewähltes Gebiet.
+         * @param {string} areaName Name des Gebiets (Kreis oder Stadt)
+         * @param {object} filterPolygon GeoJSON-Polygon zur Filterung
+         * @returns {string} Der generierte CSV-String für dieses Gebiet.
+         */
+        function generateCsvForArea(areaName, filterPolygon) {
+            const plannedNodesInArea = geplanteNodesGeoJSON.features.filter(f => 
+                !filterPolygon || turf.booleanPointInPolygon(turf.point(f.geometry.coordinates), filterPolygon)
+            );
+            
+            // Einheitliche Überschrift, auch wenn 0 Standorte vorhanden sind
+            const areaHeader = `${areaName} (${plannedNodesInArea.length} Standort${plannedNodesInArea.length !== 1 ? 'e' : ''})`;
+            let csv = `${areaHeader}\n\n`;
+
+            const headers = ["Kategorie", "Gesamt", "≤2 km vom GW", "Abdeckung [%]"];
+            const rows = [];
+            
+            const filteredSources = dataSources.filter(s => s.name !== "Gateways" && s.name !== "Geplanter Nodes");
+
+            filteredSources.forEach(s => {
+                let features = s.data.features.filter(f =>
+                    !filterPolygon || turf.booleanPointInPolygon(turf.point(f.geometry.coordinates), filterPolygon)
+                );
+                const data = { ...s, data: { features } };
+                const dist = s.name === "Schulwälder" ? 1 : 2;
+                const [total, covered, percent] = calculateCoverage(data, dist);
+                rows.push([s.name, total, covered, percent]);
+            });
+
+            csv += [headers.join(";")].concat(rows.map(r => r.join(";"))).join("\n");
+            
+            if (plannedNodesInArea.length > 0) {
+                csv += `\n\nStandort;Breitengrad;Längengrad;Entfernung zum nächsten GW [km]\n`;
+                
+                plannedNodesInArea.forEach(node => {
+                    const lat = node.geometry.coordinates[1];
+                    const lon = node.geometry.coordinates[0];
+                    const nearestGW = findNearestGateway(lat, lon);
+                    const distKm = nearestGW ? nearestGW.distKm : 'N/A';
+                    csv += `"${node.properties.name}";${lat.toFixed(5)};${lon.toFixed(5)};${distKm}\n`;
+                });
+            }
+            return csv;
+        }
+
+        /**
+         * Die Hauptfunktion zum Exportieren der Statistik.
+         * Ruft generateCsvForArea() auf, um den finalen Inhalt zu erstellen.
+         */
+        function exportStatsForSelectedArea() {
+            const selected = selectElement.value;
+            let finalCsv = "";
+            let filename = "";
+
+            if (selected) {
+                // Ein spezifisches Gebiet wurde ausgewählt
+                finalCsv = generateCsvForArea(selected, areas[selected].geojson);
+                filename = selected;
+            } else {
+                // "Gesamt-SH" wurde ausgewählt, verarbeite alle Gebiete
+                let areasWithNodesCount = 0;
+                const allAreaNames = Object.keys(areas).sort();
+                allAreaNames.forEach(areaName => {
+                    const plannedNodesInArea = geplanteNodesGeoJSON.features.filter(f =>
+                        turf.booleanPointInPolygon(turf.point(f.geometry.coordinates), areas[areaName].geojson)
+                    );
+                    if (plannedNodesInArea.length > 0) {
+                        areasWithNodesCount++;
+                    }
+                });
+
+                // Füge die Gesamtzusammenfassung am Anfang der CSV hinzu
+                const totalAreas = allAreaNames.length;
+                finalCsv += `Insgesamt haben wir ${areasWithNodesCount} von ${totalAreas} Standorten mit Nodes versorgt.\n\n`;
+
+                allAreaNames.forEach(areaName => {
+                    const areaGeojson = areas[areaName].geojson;
+                    finalCsv += generateCsvForArea(areaName, areaGeojson);
+                    finalCsv += "\n\n" + "---" + "\n\n"; // Trennlinie zwischen den Gebieten
+                });
+                // Letzte Trennlinie entfernen
+                finalCsv = finalCsv.slice(0, -10);
+                filename = "Gesamt_SH";
+            }
+
+            const blob = new Blob([finalCsv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = filename + "_Statistik.csv";
+            link.click();
+        }
+
+        document.getElementById("stats-selected-btn").addEventListener("click", exportStatsForSelectedArea);
+
+        document.getElementById("coordInput").addEventListener("change", e => {
+            const parts = e.target.value.trim().split(/[,;\s]+/);
+            if (parts.length !== 2) return;
+            const lat = parseFloat(parts[0]), lon = parseFloat(parts[1]);
+            if (isNaN(lat) || isNaN(lon)) return;
+            const nearest = findNearestGateway(lat, lon);
+            let popup = `<b>📍 Punkt</b><br><b>🌍 Koordinaten:</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}`;
+            if (nearest) popup += `<br>📡 Nächstes GW: ${nearest.name} (${nearest.distKm} km)`;
+            if (searchMarker) map.removeLayer(searchMarker);
+            if (gwLine) map.removeLayer(gwLine);
+            searchMarker = L.marker([lat, lon]).addTo(map).bindPopup(popup).openPopup();
+            if (nearest) gwLine = L.polyline([[lat, lon], [nearest.coords[1], nearest.coords[0]]], { color: 'black', dashArray: '5,5' }).addTo(map);
+            map.setView([lat, lon], 13);
+        });
+
+        map.on('click', function (e) {
+            const lat = e.latlng.lat;
+            const lon = e.latlng.lng;
+            if (virtualGWMarker) map.removeLayer(virtualGWMarker);
+            virtualGWCoords = [lon, lat];
+            virtualGWMarker = L.marker([lat, lon], { icon: iconMap['Virtuelles GW'] }).addTo(map)
+                .bindPopup(`<b>📍 Virtuelles Gateway</b><br>🌍 ${lat.toFixed(5)}, ${lon.toFixed(5)}`).openPopup();
+            displayPoints();
+        });
+
+        const removeBtn = L.control({ position: 'bottomleft' });
+        removeBtn.onAdd = function () {
+            const btn = L.DomUtil.create('button', 'info-box');
+            btn.textContent = '❌ Virtuelles Gateway entfernen';
+            btn.style.background = '#fff';
+            btn.style.border = '1px solid #aaa';
+            btn.style.padding = '6px 10px';
+            btn.style.cursor = 'pointer';
+            btn.onclick = () => {
+                if (virtualGWMarker) map.removeLayer(virtualGWMarker);
+                virtualGWMarker = null;
+                virtualGWCoords = null;
+                displayPoints();
+            };
+            return btn;
+        };
+        removeBtn.addTo(map);
+
+        // Lade alle Landkreise und kreisfreien Städte aus SH
+        const query = `[out:json][timeout:60];
+        (
+          relation(27021);    // Kiel (Stadt)
+          relation(27020);    // Lübeck (Stadt)
+          relation(62528);    // Flensburg (Stadt)
+          relation(27027);    // Neumünster (Stadt)
+          relation(27028);    // Dithmarschen
+          relation(62703);    // Herzogtum Lauenburg
+          relation(27019);    // Nordfriesland
+          relation(27025);    // Ostholstein
+          relation(62408);    // Pinneberg
+          relation(27026);    // Plön
+          relation(27017);    // Rendsburg-Eckernförde
+          relation(27014);    // Schleswig-Flensburg
+          relation(62733);    // Segeberg
+          relation(27016);    // Steinburg
+          relation(62546);    // Stormarn
+        );
+        out body;
+        >;
+        out skel qt;`;
+        const url = 'https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(query);
+        statusElement.textContent = "Lade Gebietsgrenzen...";
+
+        fetch(url)
+            .then(res => res.json())
+            .then(json => {
+                const geojson = osmtogeojson(json);
+                const allPolygons = [];
+                geojson.features.forEach(f => {
+                    if (f.properties?.name) {
+                        areas[f.properties.name] = { geojson: f };
+                        allPolygons.push(f);
+                    }
+                });
+
+                if (allPolygons.length > 0) {
+                    let mergedPolygons = allPolygons[0];
+                    for (let i = 1; i < allPolygons.length; i++) {
+                        mergedPolygons = turf.union(mergedPolygons, allPolygons[i]);
+                    }
+                    if (mergedPolygons) {
+                        shOutline = L.geoJSON(mergedPolygons, { style: shOutlineStyle }).addTo(map);
+                        console.log("Landesgrenze aus Landkreis-Polygonen erfolgreich erstellt.");
+                    } else {
+                        console.error("Fehler bei der Erstellung der Landesgrenze (turf.union).");
+                    }
+                } else {
+                    console.warn("Keine Landkreis-Polygone zum Zusammenführen gefunden.");
+                }
+
+                selectElement.querySelector('option').textContent = "-- Gesamt-SH anzeigen --";
+                Object.keys(areas).sort().forEach(name => {
+                    const o = document.createElement("option"); o.value = name; o.textContent = name;
+                    selectElement.appendChild(o);
+                });
+                selectElement.disabled = false;
+                document.getElementById("stats-selected-btn").disabled = false;
+                statusElement.textContent = "Bereit.";
+                displayPoints();
+            })
+            .catch(error => {
+                console.error("Fehler beim Laden der Gebietsgrenzen:", error);
+                statusElement.textContent = "Fehler beim Laden der Gebietsgrenzen.";
+            });
+
+        selectElement.addEventListener("change", function () {
+            if (currentAreaLayer) map.removeLayer(currentAreaLayer);
+            const sel = this.value;
+            if (!sel) {
+                map.setView([54.2, 9.8], 8);
+                currentFilterPolygon = null;
+                if (shOutline) { shOutline.addTo(map); }
+                displayPoints();
+                return;
+            }
+            const area = areas[sel];
+            if (area?.geojson) {
+                currentAreaLayer = L.geoJSON(area.geojson, { style: kreisStyle }).addTo(map);
+                map.fitBounds(currentAreaLayer.getBounds());
+                currentFilterPolygon = area.geojson;
+                if (shOutline) { map.removeLayer(shOutline); }
+                displayPoints();
+            }
+        });
+
+        function calculateCoverage(source, maxDistKm) {
+            let covered = 0;
+            const points = source.data.features;
+            
+            points.forEach(f => {
+                const lat = f.geometry.coordinates[1];
+                const lon = f.geometry.coordinates[0];
+                const nearest = findNearestGateway(lat, lon);
+                if (nearest && parseFloat(nearest.distKm) <= maxDistKm) covered++;
+            });
+            const total = points.length;
+            const percent = total ? ((covered / total) * 100).toFixed(1) + ' %' : '0 %';
+            return [total, covered, percent];
+        }
+    </script>
+</body>
+</html>
