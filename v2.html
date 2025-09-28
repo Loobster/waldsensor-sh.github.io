@@ -47,17 +47,24 @@
     const isSoilNode = (id)=>/(^|[-_])se01([-_]|$)/i.test(id||"");
     const num = (v)=> (v==null?null:Number(String(v).replace(",", ".")));
 
-    function pickFieldsFromObj(source,nodeId){
-      const f = source?.fields || source || {};
-      if(isSoilNode(nodeId)){
-        return { t:num(f.temp_SOIL), h:num(f.water_SOIL), bat:num(f.BatV), humLabel:"Bodenwasser" };
-      }
-      // SN50v3, S31-LB, Fallback LSN50v2
-      const temp = f.TempC_SHT ?? f.TempC_SHT31 ?? f.TempC1 ?? null;
-      const hum  = f.Hum_SHT   ?? f.Hum_SHT31   ?? null;
-      return { t:num(temp), h:num(hum), bat:num(f.BatV), humLabel:"Luftfeuchte" };
-    }
+function pickFieldsFromObj(obj) {
+  let t = null, h = null, b = null;
 
+  // Batterie
+  b = obj.BatV || obj.bat || obj.battery || null;
+
+  // Luft- oder Bodenfeuchte
+  if (obj.Hum_SHT !== undefined) h = obj.Hum_SHT;
+  if (obj.SoilHum !== undefined) h = obj.SoilHum;
+  if (obj.h !== undefined) h = obj.h;
+
+  // Temperatur
+  if (obj.TempC_SHT !== undefined) t = obj.TempC_SHT;
+  if (obj.SoilTemp !== undefined) t = obj.SoilTemp;
+  if (obj.t !== undefined) t = obj.t;
+
+  return { t, h, b };
+}
     function qs(k){const u=new URL(location.href);return u.searchParams.get(k)}
   </script>
 </head>
