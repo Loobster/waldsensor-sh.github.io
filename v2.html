@@ -1,327 +1,183 @@
+
 <!doctype html>
 <html lang="de">
 <head>
-  <!-- v2.html v09 | 2025-09-28 | Fix: SE01LB Felder + Popup-Autopan unten -->
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WALDSENSOR.SH – Karte (V2)</title>
-
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WALDSENSOR.SH – Karte (v06)</title>
   <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <!-- QRCode -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
+    /* v06 */
     :root{
-      --pill-bg:#fff; --pill-text:#0b4da2; --pill-shadow:0 2px 10px rgba(0,0,0,.15);
-      --ink:#0d1b2a; --muted:#64748b; --line:#eaecef;
-      --pop-w: 280px; /* kompakter als vorher */
+      --ink:#1f2937; --muted:#6b7280; --green:#065f46; --greenbg:#e6f9ef;
+      --blue:#1d4ed8; --badge:#ffffff; --badge-shadow:0 8px 22px rgba(0,0,0,.12);
+      --radius:16px
     }
-    html, body { height:100%; margin:0; background:#f6f8fb; color:var(--ink); }
-    #map { height:100%; width:100%; }
+    html,body{height:100%;margin:0}
+    #map{height:100%;width:100%}
 
-    /* Info-Badges */
-    .pill {
-      position: fixed; z-index: 1001; top: 12px; left: 12px;
-      background: var(--pill-bg); color: var(--pill-text);
-      padding: 8px 12px; border-radius: 14px;
-      font: 700 14px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      box-shadow: var(--pill-shadow); border: 1px solid #e8e8e8;
+    .badge{
+      position:fixed; z-index:999; background:var(--badge); color:var(--ink);
+      padding:12px 16px; border-radius:999px; box-shadow:var(--badge-shadow);
+      font:600 15px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif
     }
-    .last-node {
-      position: fixed; z-index: 1001; top: 12px; right: 12px;
-      background: #eef4ff; color: #0b4da2;
-      padding: 8px 12px; border-radius: 14px;
-      font: 700 13px/1.2 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      box-shadow: var(--pill-shadow); border: 1px solid #d6e6ff;
-      max-width: 44ch; text-align: right;
-    }
+    .badge small{color:var(--muted);font-weight:700}
+    .badge-left{top:18px;left:18px}
+    .badge-right{top:18px;right:18px}
 
-    /* Popup kompakt + gut lesbar */
-    .leaflet-popup { z-index: 1002; }
-    .popup { width: var(--pop-w); }
+    .leaflet-popup-content{margin:14px 18px}
     .popup h3{
-      margin:0 0 .35rem 0; font:800 18px/1.25 system-ui;
-      letter-spacing:.2px; color:#0f172a;
-      word-break: break-word;
+      margin:0 0 8px; font:800 26px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif;
+      color:#0f172a
     }
-    .popup hr{ border:0; height:1px; background:var(--line); margin:.5rem 0 .6rem; }
-    .popup .row {
-      display:grid; grid-template-columns: 1fr auto; align-items:center;
-      gap:10px; margin:.35rem 0;
-      font:600 14px/1.25 system-ui;
+    .kv{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:8px 0 14px}
+    .k{color:#334155;font-weight:700}
+    .v{color:#0f172a;font-weight:800}
+    .hr{height:1px;background:#e5e7eb;margin:10px 0 14px}
+    .qr-wrap{display:flex;align-items:center;gap:14px}
+    .qr{width:128px;height:128px;border-radius:12px;overflow:hidden}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;min-width:220px;
+      background:#e8f0fe;color:#0b3dd9;font:800 20px/1.15 system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif;
+      padding:16px 18px;border-radius:14px;text-decoration:none;border:2px solid #cfe0ff
     }
-    .popup .row .k { color: var(--muted); }
-    .popup .row .v { font-weight:800; }
-    .popup .kv { margin:.35rem 0; color:var(--muted); font:600 13px/1.3 system-ui; }
-    .popup .qrrow {
-      display:flex; gap:10px; align-items:center; margin-top:8px;
-    }
-    .popup .openbtn {
-      display:inline-block; padding:10px 12px; border-radius:12px;
-      background:#eef4ff; color:#0b4da2; font:800 16px/1.1 system-ui;
-      text-decoration:none; border:1px solid #d6e6ff; white-space:nowrap;
-    }
-    .popup .hint { color:#6b7280; font:600 12px/1.3 system-ui; margin-top:6px; }
-    .popup small.mono { font-family: ui-monospace, Menlo, Consolas, monospace; color:#475569; }
-
-    /* Marker-Icon (Standard Leaflet belassen) */
+    .foot{margin-top:10px;color:#475569;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
   </style>
+  <!-- v06 -->
 </head>
 <body>
-  <div class="pill" id="stamp">Nodes: – • Letzte Aktualisierung: –</div>
-  <div class="last-node" id="last">Letzte Node-Meldung: –</div>
+  <div class="badge badge-left" id="badgel">
+    <small>Letzte Aktualisierung:</small> &nbsp;<span id="lastUpd">–</span> &nbsp;•&nbsp; <small>Nodes:</small> <span id="count">0</span>
+  </div>
+  <div class="badge badge-right" id="badger">
+    <small>Letzte Node-Meldung:</small> &nbsp;<span id="lastNode">–</span>
+  </div>
+
   <div id="map"></div>
 
   <script>
-  // =================== Konfiguration ===================
-  const DATA_URL = "/data/v2/latest/all.json";
-  const AUTO_REFRESH_MS = 60_000;
-  const FETCH_TIMEOUT_MS = 12_000;
+  // ===== Helpers (nur das Nötige, v06) =======================================
+  const $ = (id)=>document.getElementById(id);
+  const fmt = (n,d=1)=> (n==null||Number.isNaN(n)) ? "–" : Number(n).toFixed(d).replace(".",",");
 
-  // dauerhaft ausschließen (Alt-/Test-Nodes)
-  const DENYLIST = new Set(["lsn50"]);
+  // se01/se01lb erkennen (auch mit Prefix wie bredstedt-, Suffix _se01lb)
+  const isSoilNode = (id)=>/(^|[-_])se01(lb)?$/i.test(String(id||""));
 
-  // =================== Utils ===================
-  const $ = (id) => document.getElementById(id);
-  const deTime = (ts) => {
-    try {
-      return new Date(ts).toLocaleString("de-DE", {
-        year:"numeric", month:"2-digit", day:"2-digit",
-        hour:"2-digit", minute:"2-digit", second:"2-digit"
-      });
-    } catch(_){ return ts || "–"; }
-  };
-  const deNum = (n, d=1) => (typeof n==="number" && Number.isFinite(n))
-      ? n.toLocaleString("de-DE",{minimumFractionDigits:d, maximumFractionDigits:d})
-      : "–";
-  const toNum = (v) => {
-    if (v == null) return null;
-    if (typeof v === "number") return Number.isFinite(v) ? v : null;
-    if (typeof v === "string") {
-      const x = parseFloat(v.replace(',', '.').trim());
-      return Number.isFinite(x) ? x : null;
-    }
-    return null;
-  };
-  const isSoilNode = (id) => /\bse01\b/i.test(id) || /\bse01lb\b/i.test(id);
+  // Name hübsch: _ → -, Wörter groß
+  const displayName = (id)=> String(id||"")
+      .replace(/_/g,"-")
+      .replace(/\b([a-z])/gi,m=>m.toUpperCase());
 
-  // =================== Leaflet Setup ===================
-  const map = L.map("map", { zoomSnap: 0.25 });
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+  const statLinkFor = (id)=> `/html/sensor.html?node=${encodeURIComponent(id)}`;
+
+  // ===== Karte ===============================================================
+  const map = L.map('map',{zoomControl:true}).setView([54.5,9.5], 8);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'&copy; OpenStreetMap'
   }).addTo(map);
-  map.setView([54.4, 9.6], 8.25);
 
-  // Layer für Marker
-  let markers = new Map(); // id -> L.Marker
-  let lastGood = null;     // letzte valide Datensatzliste (gegen Flicker)
+  // ===== Daten laden und Marker setzen ======================================
+  async function loadAll(){
+    const r = await fetch('/data/v2/latest/all.json',{cache:'no-store'});
+    if(!r.ok) throw new Error('all.json nicht erreichbar: '+r.status);
+    const arr = await r.json();
 
-  // =================== Daten laden ===================
-  async function fetchWithTimeout(url, timeoutMs){
-    const ctl = new AbortController();
-    const t = setTimeout(()=>ctl.abort(new Error("timeout")), timeoutMs);
-    try {
-      const res = await fetch(url, { cache:"no-store", signal: ctl.signal });
-      return res;
-    } finally {
-      clearTimeout(t);
-    }
-  }
+    // Nur Einträge mit Koordinaten
+    const nodes = arr.filter(x => x && x.fields && typeof x.fields.lat==='number' && typeof x.fields.lon==='number');
 
-  async function loadLatest(){
-    const res = await fetchWithTimeout(`${DATA_URL}?t=${Date.now()}`, FETCH_TIMEOUT_MS);
-    if (!res.ok) throw new Error(`fetch failed ${res.status}`);
-    const raw = await res.json();
-    if (!Array.isArray(raw)) throw new Error("keine Array-Antwort");
-    // IDs säubern, Denylist anwenden
-    const arr = raw
-      .map(r => ({...r, id: String(r.id||"").replace(/[\r\n]+/g,"").trim()}))
-      .filter(r => r.id && !DENYLIST.has(r.id.toLowerCase()));
-    return arr;
-  }
+    // Badges
+    $('count').textContent = String(nodes.length);
+    // Letzte Aktualisierung (größtes ts in all.json oder jetzt)
+    const newest = nodes
+      .map(n=>new Date(n.ts||0).getTime())
+      .reduce((a,b)=>Math.max(a,b),0);
+    $('lastUpd').textContent = newest ? new Date(newest).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'}) : '–';
 
-  function latestRecord(data){
-    let best=null, bestT=-Infinity;
-    for (const r of data){
-      const t = new Date(r.ts||0).getTime();
-      if (!Number.isNaN(t) && t>bestT){ bestT=t; best=r; }
-    }
-    return best;
-  }
-
-  function pickCoord(item){
-    const f = item?.fields || {};
-    const la = toNum(f.lat), lo = toNum(f.lon);
-    if (la!=null && lo!=null) return [la, lo];
-    return null; // keine manuellen Fallbacks mehr nötig – V2 setzt Koordinaten im TTN
-  }
-
-  function popupHtml(item){
-    const id = item.id;
-    const f  = item.fields || {};
-
-    // Standard-Felder (SN50V3 / S31-LB)
-    let temp = toNum(f.TempC_SHT);
-    if (temp==null) temp = toNum(f.TempC_SHT31);
-
-    let hum  = toNum(f.Hum_SHT);
-    if (hum==null) hum = toNum(f.Hum_SHT31);
-
-    let bat  = toNum(f.BatV);
-
-    // SE01LB-Mapping (Boden)
-    let soilTemp = null, soilWater = null, soilCond = null;
-    if (isSoilNode(id)) {
-      soilTemp  = toNum(f.temp_SOIL);
-      soilWater = toNum(f.water_SOIL);
-      soilCond  = toNum(f.conduct_SOIL);
-      // Bei SE01 zeigen wir Bodenwerte an und ignorieren Luftwerte
-      temp = null; hum = null;
+    // Letzte Node-Meldung als „Datum, Uhrzeit — id“
+    if(newest){
+      const last = nodes.find(n=>new Date(n.ts||0).getTime()===newest) || null;
+      const when = new Date(newest).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+      $('lastNode').textContent = last ? `${when} — ${last.id}` : when;
+    }else{
+      $('lastNode').textContent = '–';
     }
 
-    const coord = pickCoord(item);
-    const latlon = coord ? `${coord[0].toFixed(5)}, ${coord[1].toFixed(5)}` : "—";
+    // Marker
+    nodes.forEach(n=>{
+      const lat = n.fields.lat, lon = n.fields.lon;
+      const m = L.marker([lat,lon]).addTo(map);
 
-    const encId = encodeURIComponent(id);
-    const statsUrl = `/html/sensor.html?node=${encId}`;
+      // Werte je nach Node-Typ
+      const soil = isSoilNode(n.id);
+      const f = n.fields||{};
+      const temp = soil ? (f.temp_SOIL ?? null) : (f.TempC_SHT ?? f.TempC_SHT31 ?? null);
+      const hum  = soil ? (f.water_SOIL ?? null) : (f.Hum_SHT   ?? f.Hum_SHT31   ?? null);
+      const bat  = f.BatV ?? null;
 
-    let html = `<div class="popup">`;
-    html += `<h3>Sensor: ${id}</h3>`;
-    html += `<div class="kv">Zuletzt aktiv: <b>${deTime(item.ts)||"—"}</b></div>`;
-    html += `<div class="kv">Koordinaten: <small class="mono">${latlon}</small></div>`;
-    html += `<hr/>`;
+      // Popup HTML
+      const pretty = displayName(n.id);
+      const html = `
+        <div class="popup">
+          <h3>Sensor: ${pretty}</h3>
+          <div class="kv">
+            <div class="k">Zuletzt aktiv</div>
+            <div class="v">${n.ts ? new Date(n.ts).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'}) : '–'}</div>
 
-    if (isSoilNode(id)) {
-      html += rowKV("Bodentemperatur", soilTemp!=null? `${deNum(soilTemp,1)} °C` : "—");
-      html += rowKV("Bodenfeuchte",    soilWater!=null? `${deNum(soilWater,1)} %` : "—");
-      if (soilCond!=null) html += rowKV("Leitfähigkeit", `${deNum(soilCond,0)} µS/cm`);
-      if (bat!=null)      html += rowKV("Batterie",      `${deNum(bat,3)} V`);
-    } else {
-      html += rowKV("Temperatur", temp!=null? `${deNum(temp,1)} °C` : "—");
-      html += rowKV("Luftfeuchte", hum!=null? `${deNum(hum,1)} %` : "—");
-      if (bat!=null) html += rowKV("Batterie", `${deNum(bat,3)} V`);
-    }
+            <div class="k">Koordinaten</div>
+            <div class="v">${fmt(lat,5)},&nbsp;${fmt(lon,5)}</div>
+          </div>
 
-    html += `
-      <div class="qrrow">
-        <div id="qrcode-${encId}"></div>
-        <a class="openbtn" href="${statsUrl}" target="_blank" rel="noopener">Statistik öffnen</a>
-      </div>
-      <div class="hint">Seite: <small class="mono">${statsUrl}</small></div>
-    `;
-    html += `</div>`;
-    return html;
-  }
+          <div class="hr"></div>
 
-  function rowKV(k, v){
-    return `<div class="row"><div class="k">${k}</div><div class="v">${v}</div></div>`;
-  }
+          <div class="kv">
+            <div class="k">${soil?'Bodentemperatur':'Temperatur'}</div>
+            <div class="v">${temp!=null ? fmt(temp,1)+' °C' : '–'}</div>
 
-  function ensureQRCode(id){
-    const encId = encodeURIComponent(id);
-    const div = document.getElementById(`qrcode-${encId}`);
-    if (!div || div.hasChildNodes()) return;
-    const url = `/html/sensor.html?node=${encId}`;
-    QRCode.toCanvas(url, { errorCorrectionLevel: 'M', width: 120 }, (err, canvas) => {
-      if (!err) div.appendChild(canvas);
+            <div class="k">${soil?'Bodenwasser':'Luftfeuchte'}</div>
+            <div class="v">${hum!=null ? fmt(hum,1)+' %' : '–'}</div>
+
+            <div class="k">Batterie</div>
+            <div class="v">${bat!=null ? fmt(bat,3)+' V' : '–'}</div>
+          </div>
+
+          <div class="qr-wrap">
+            <div class="qr" id="qr_${CSS.escape(n.id)}"></div>
+            <a class="btn" href="${statLinkFor(n.id)}">Statistik öffnen</a>
+          </div>
+
+          <div class="foot">Link nutzt ID: ${n.id}</div>
+        </div>
+      `;
+
+      m.bindPopup(html,{autoPan:true,autoPanPadding:[30,30],keepInView:true,closeButton:true,maxWidth:420});
+
+      m.on('popupopen', (e)=>{
+        // QR in vorhandenes Div malen
+        const divId = `qr_${n.id}`;
+        const el = document.getElementById(divId);
+        if(el && !el.dataset.ok){
+          try{
+            new QRCode(el, { text: statLinkFor(n.id), width:128, height:128, correctLevel: QRCode.CorrectLevel.M });
+            el.dataset.ok = "1";
+          }catch{}
+        }
+        // Popup mittig ins Sichtfenster holen (leichter Offset nach oben)
+        setTimeout(()=> {
+          const ll = e.popup.getLatLng();
+          map.panTo(ll,{animate:true,duration:0.25});
+        }, 10);
+      });
     });
   }
 
-  // Popup beim Öffnen „nach unten“ schieben, damit nichts oben verdeckt
-  function panPopupDown(e){
-    try{
-      const pos = e.popup.getLatLng();
-      const px = map.project(pos);
-      // schiebe die Karte ~20% der Viewhöhe nach oben, damit Popup tiefer sitzt
-      px.y -= map.getSize().y * 0.20;
-      map.panTo(map.unproject(px), {animate:true});
-    }catch(_){}
-  }
-
-  function render(data){
-    if (!Array.isArray(data) || data.length===0) return;
-
-    // Marker hinzufügen/aktualisieren
-    const seen = new Set();
-    const bounds = [];
-
-    for (const item of data){
-      const id = item.id;
-      const coord = pickCoord(item);
-      if (!coord) continue; // ohne Koordinaten nicht platzieren
-
-      seen.add(id);
-      bounds.push(coord);
-
-      const html = popupHtml(item);
-
-      if (markers.has(id)){
-        const m = markers.get(id);
-        m.setLatLng(coord);
-        m.setPopupContent(html);
-      } else {
-        const m = L.marker(coord).bindPopup(html, { keepInView: true, autoPan: true });
-        m.on("popupopen", (e) => {
-          ensureQRCode(id);
-          panPopupDown(e);
-        });
-        m.addTo(map);
-        markers.set(id, m);
-      }
-    }
-
-    // nicht mehr vorhandene Marker entfernen
-    for (const [id, m] of markers.entries()){
-      if (!seen.has(id)){
-        map.removeLayer(m);
-        markers.delete(id);
-      }
-    }
-
-    // Bounds nur anpassen, wenn wir neue Marker haben (kein „Springen“)
-    if (bounds.length && markers.size){
-      const bb = L.latLngBounds(bounds).pad(0.12);
-      // nur beim ersten Render fitBounds; danach nicht mehr auf jedem Refresh
-      if (!render._didFit){ map.fitBounds(bb); render._didFit = true; }
-    }
-
-    // Infobanner
-    const last = latestRecord(data);
-    const nodesCount = data.length;
-    $("stamp").textContent = `Nodes: ${nodesCount} • Letzte Aktualisierung: ${new Date().toLocaleTimeString("de-DE")}`;
-    $("last").textContent = last
-      ? `Letzte Node-Meldung: ${deTime(last.ts)} — ${last.id}`
-      : "Letzte Node-Meldung: –";
-  }
-
-  async function runOnce(){
-    try{
-      const data = await loadLatest();
-      if (data.length){
-        lastGood = data;      // nur bei valider Antwort übernehmen
-        render(data);
-      } else if (lastGood){
-        // leere Antwort → alte Anzeige behalten
-      }
-    } catch(err){
-      // Fehler → alte Anzeige behalten (no flicker)
-      console.error(err);
-    } finally {
-      // Zeitstempel im linken Badge trotzdem aktualisieren (sichtbares „lebt“)
-      const t = new Date().toLocaleTimeString("de-DE");
-      const txt = $("stamp").textContent;
-      const m = txt.match(/^Nodes:\s*\d+/);
-      $("stamp").textContent = `${m ? m[0] : "Nodes: –"} • Letzte Aktualisierung: ${t}`;
-    }
-  }
-
-  // Initial + Auto-Refresh
-  runOnce();
-  setInterval(runOnce, AUTO_REFRESH_MS);
+  loadAll().catch(err=>{
+    console.error(err);
+    $('lastUpd').textContent = 'Fehler';
+  });
   </script>
 </body>
 </html>
