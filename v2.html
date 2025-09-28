@@ -1,195 +1,191 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>WALDSENSOR.SH – Karte</title>
-
-<!-- Leaflet -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- QRCode -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-<style>
-  :root{
-    --ink:#111827; --muted:#6b7280; --ok:#e6f9ef;
-    --brand:#2563eb; --bg:rgba(255,255,255,.92);
-  }
-  html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
-  #map{height:100%;}
-
-  /* Badges */
-  .badge{position:absolute; z-index:500; background:#fff; border-radius:14px;
-         box-shadow:0 6px 20px rgba(0,0,0,.12); padding:10px 14px; font-weight:700}
-  .badge small{font-weight:600;color:var(--muted)}
-  #meta-left{left:18px; top:18px; color:#065f46; background:#e7f7ef; border:1px solid #c5ecd9}
-  #meta-right{right:18px; top:18px; color:#1e3a8a; background:#eaf1ff; border:1px solid #d7e3ff}
-
-  /* Popup kompakt */
-  .ws-popup .leaflet-popup-content{margin:10px 14px;}
-  .ws-popup .leaflet-popup-content-wrapper{
-    border-radius:16px; padding:0; background:var(--bg);
-    box-shadow:0 18px 50px rgba(0,0,0,.18); max-width:420px; width:min(60vw,420px);
-  }
-  .ws-popup .leaflet-popup-tip{background:var(--bg)}
-  .p-title{font-size:28px; font-weight:900; letter-spacing:.2px; margin:14px 0 8px; color:#0f172a}
-  .p-kv{display:grid; grid-template-columns:auto 1fr; gap:4px 16px; align-items:baseline}
-  .k{color:var(--muted); font-weight:700}
-  .v{font-weight:800}
-  .p-hr{height:1px; background:#e5e7eb; margin:10px 0 14px}
-  .qr-wrap{display:flex; gap:16px; align-items:center; margin-top:8px}
-  .btn{display:inline-block; text-decoration:none; font-weight:800; color:#0f3b67;
-       background:#eaf2ff; border:2px solid #d7e6ff; padding:14px 18px; border-radius:16px}
-  .p-foot{margin-top:10px; color:#334155; font-family:ui-monospace,Menlo,Consolas,monospace}
-
-  /* kleinere Bildschirme */
-  @media (max-width:480px){
-    .p-title{font-size:22px}
-    .ws-popup .leaflet-popup-content-wrapper{width:min(88vw,420px)}
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Waldsensor.SH – Karte</title>
+  <!-- v2.html VERSION: v0.1 (nur: kompaktere Popups + SOIL-Felder/Statistik) -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <style>
+    :root{
+      --ink:#0f172a; --muted:#64748b; --bg:#f8fafc; --card:#ffffff;
+      --pad:12px; --radius:12px;
+      --label:#334155; --val:#0b1324;
+      --chip:#eef2ff; --chipText:#3730a3;
+    }
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
+    #app{display:flex;align-items:flex-start;gap:10px;padding:10px}
+    .topbar{position:fixed;left:10px;top:10px;right:10px;display:flex;justify-content:space-between;align-items:center;z-index:500}
+    .badge{background:var(--card);border-radius:999px;padding:6px 10px;box-shadow:0 2px 10px rgba(0,0,0,.06);font-weight:700}
+    .muted{color:var(--muted)}
+    #map{height:calc(100vh - 20px);width:100%;}
+    /* kompakteres Popup */
+    .leaflet-popup-content-wrapper{border-radius:12px;}
+    .popup{min-width:240px;max-width:320px}
+    .popup h3{margin:0 0 6px;font-size:16px;letter-spacing:.2px}
+    .kv{display:grid;grid-template-columns:1fr auto;gap:6px 10px;align-items:center}
+    .kv .k{color:var(--label);font-weight:600}
+    .kv .v{color:var(--val);font-weight:800}
+    .hr{height:1px;background:#e2e8f0;margin:8px 0}
+    .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .chip{background:var(--chip);color:var(--chipText);font-weight:700;border-radius:999px;padding:4px 8px;font-size:12px}
+    .btn{display:inline-block;text-decoration:none;background:#111827;color:#fff;padding:7px 10px;border-radius:8px;font-weight:700}
+    .coords{font-family:ui-monospace,Menlo,Consolas,monospace;color:#475569;font-size:12px}
+  </style>
 </head>
 <body>
-<div id="map"></div>
-
-<!-- Badges -->
-<div id="meta-left" class="badge"><small>Letzte Aktualisierung:</small> <span id="lastUpdate">–</span> &nbsp; • &nbsp;<small>Nodes:</small> <span id="nodeCount">0</span></div>
-<div id="meta-right" class="badge"><small>Letzte Node-Meldung:</small> <span id="lastNode">–</span></div>
+  <div class="topbar">
+    <div class="badge">WALDSENSOR.SH • <span id="nodeCount">–</span> Nodes</div>
+    <div class="badge">Letzte Meldung: <span id="lastTs">–</span> &nbsp;<span class="muted">| v0.1</span></div>
+  </div>
+  <div id="app">
+    <div id="map"></div>
+  </div>
 
 <script>
-(function(){
-  const fmtDE = (n,d=1)=> (n==null||Number.isNaN(+n)) ? "—" : (+n).toFixed(d).replace(".",",");
-  const toTitle = (s)=> {
-    if(!s) return "";
-    // schacht_audorf -> Schacht-Audorf, bredstedt_se01lb -> Bredstedt-Se01lb
-    return String(s).replace(/_/g,"-").split("-").map(w=>{
-      if (/^(se0?1lb|s\d{2}lb|lsn50v2)$/i.test(w)) return w[0].toUpperCase()+w.slice(1);
-      return w.charAt(0).toUpperCase()+w.slice(1);
-    }).join("-");
-  };
-  const isSoilNode = (id)=>/(^|[-_])se01(lb)?$/i.test(String(id||""));
+/* ===== Konfiguration (nur das Notwendige) ============================== */
+const VERSION = "v0.1";
+const DATA_URL = "/data/v2/latest/all.json";
+const DENY = new Set(["lsn50"]); // dauerhaft ausblenden
 
-  const map = L.map('map',{ zoomControl:true }).setView([54.5, 9.5], 8);
+// Manuelle Koordinaten (Fallback, werden nur genutzt, wenn im Datensatz lat/lon fehlen)
+const MANUAL_LOC = {
+  "hooge": [54.5582, 8.5464],
+  "kropp": [54.4093988908855, 9.5285027323752],
+  "neumuenstertl": [54.07586, 9.98926],
+  "s31": [54.651105744662, 8.95686194107564]
+};
+
+// se01/se01lb erkennen (auch mit Prefix wie bredstedt-, Suffix _se01lb)
+const isSoilNode = (id)=>/(^|[-_])se01(lb)?$/i.test(String(id||""));
+
+/* ===== Helfer ========================================================== */
+const byId = (s)=>document.getElementById(s);
+const deTime = (ts)=>{
+  if(!ts) return "–";
+  try { return new Date(ts).toLocaleString("de-DE"); } catch { return "–"; }
+};
+const deNum = (n,d=1)=>{
+  return (typeof n==="number" && Number.isFinite(n))
+    ? n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d})
+    : "–";
+};
+const displayName = (id)=>{
+  if(!id) return "";
+  let s = String(id);
+  s = s.replace(/_/g,"-");                    // Schacht_audorf → Schacht-audorf
+  s = s.split("-").map(p=>p? p[0].toUpperCase()+p.slice(1) : p).join("-"); // Title-Case
+  return s;
+};
+const normalizeId = (id)=>String(id||"").trim();
+
+/* ===== Popup HTML (kompakt) =========================================== */
+function popupHtml(item){
+  const id = normalizeId(item.id);
+  const f = item.fields || {};
+  const soil = isSoilNode(id);
+
+  // Wertezuordnung nach Node-Typ
+  const temp = soil ? (typeof f.temp_SOIL==="number" ? f.temp_SOIL : null)
+                    : (typeof f.TempC_SHT==="number" ? f.TempC_SHT
+                       : (typeof f.TempC_SHT31==="number" ? f.TempC_SHT31 : null));
+  const hum  = soil ? (typeof f.water_SOIL==="number" ? f.water_SOIL : null)
+                    : (typeof f.Hum_SHT==="number" ? f.Hum_SHT
+                       : (typeof f.Hum_SHT31==="number" ? f.Hum_SHT31 : null));
+  const bat  = (typeof f.BatV==="number") ? f.BatV : null;
+
+  const lat = (typeof f.lat==="number") ? f.lat : (MANUAL_LOC[id]?.[0] ?? null);
+  const lon = (typeof f.lon==="number") ? f.lon : (MANUAL_LOC[id]?.[1] ?? null);
+
+  const tLabel = soil ? "Bodentemperatur" : "Temperatur";
+  const hLabel = soil ? "Bodenfeuchte"    : "Luftfeuchte";
+
+  const nice = displayName(id);
+
+  let html = `<div class="popup">
+    <h3>Sensor: ${nice}</h3>
+    <div class="row">
+      <span class="chip">Zuletzt: ${deTime(item.ts)}</span>
+      <a class="btn" href="/sensor.html?node=${encodeURIComponent(id)}">Statistik öffnen</a>
+    </div>
+    <div class="hr"></div>
+    <div class="kv">
+      <div class="k">BatV</div><div class="v">${bat!==null? deNum(bat,3)+" V":"–"}</div>
+      <div class="k">${hLabel}</div><div class="v">${hum!==null? deNum(hum,1)+" %":"–"}</div>
+      <div class="k">${tLabel}</div><div class="v">${temp!==null? deNum(temp,1)+" °C":"–"}</div>
+    </div>
+    <div class="hr"></div>
+    <div class="coords">Koordinaten: ${lat!=null?lat.toFixed(5):"–"}, ${lon!=null?lon.toFixed(5):"–"}</div>
+  </div>`;
+  return html;
+}
+
+/* ===== Daten laden ===================================================== */
+async function fetchLatest(){
+  const url = `${DATA_URL}?_=${Date.now()}`; // Cache-Buster
+  const r = await fetch(url,{cache:"no-store"});
+  if(!r.ok) throw new Error("Datenquelle nicht erreichbar: "+r.status);
+  const arr = await r.json();
+  // Denylist anwenden + IDs normieren
+  const list = (Array.isArray(arr) ? arr : []).map(it=>({...it,id:normalizeId(it.id)}))
+    .filter(it=>!DENY.has(it.id.toLowerCase()));
+  return list;
+}
+
+/* ===== Karte =========================================================== */
+(async function main(){
+  // Leaflet-Map
+  const map = L.map('map',{zoomControl:true}).setView([54.3,9.6],8);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'&copy; OpenStreetMap'
+    maxZoom:19, attribution:'© OpenStreetMap'
   }).addTo(map);
 
-  let all = [];
-
-  function buildPopupHTML(n){
-    const f = n.fields||{};
-    const soil = isSoilNode(n.id);
-
-    const temp = soil ? (f.temp_SOIL ?? f.soil_temp ?? f.temp_soil ?? null)
-                      : (f.TempC_SHT ?? f.TempC_SHT31 ?? f.temp ?? null);
-    const hum  = soil ? (f.water_SOIL ?? f.soil_water ?? f.SOILWater ?? f.water_soil ?? null)
-                      : (f.Hum_SHT   ?? f.Hum_SHT31   ?? f.hum  ?? null);
-    const bat  = f.BatV ?? f.battery ?? null;
-
-    const humLabel = soil ? "Bodenwasser" : "Luftfeuchte";
-    const tLabel   = soil ? "Bodentemperatur" : "Temperatur";
-
-    const ts = n.ts ? new Date(n.ts) : null;
-    const lastTs = ts ? ts.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"})
-                      + ", " + ts.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit",second:"2-digit"}) : "—";
-
-    const lat = f.lat, lon = f.lon;
-
-    const href = `/html/sensor.html?node=${encodeURIComponent(n.id)}`;
-
-    // Container + QR-Target (wird bei popupopen befüllt)
-    return `
-      <div class="p">
-        <div class="p-title">Sensor: ${toTitle(n.id)}</div>
-
-        <div class="p-kv" style="margin-bottom:4px">
-          <div class="k">Zuletzt aktiv</div><div class="v">${lastTs}</div>
-          <div class="k">Koordinaten</div><div class="v">${fmtDE(lat,5)}, ${fmtDE(lon,5)}</div>
-        </div>
-
-        <div class="p-hr"></div>
-
-        <div class="p-kv" style="row-gap:10px">
-          <div class="k">${tLabel}</div><div class="v">${temp!=null? fmtDE(temp,1)+" °C":"—"}</div>
-          <div class="k">${humLabel}</div><div class="v">${hum!=null? fmtDE(hum,1)+" %":"—"}</div>
-          <div class="k">Batterie</div><div class="v">${bat!=null? fmtDE(bat,3)+" V":"—"}</div>
-        </div>
-
-        <div class="qr-wrap">
-          <div id="qr-${n.id}" style="width:150px;height:150px;"></div>
-          <a class="btn" href="${href}">Statistik öffnen</a>
-        </div>
-
-        <div class="p-foot">Link nutzt ID: ${n.id}</div>
-      </div>
-    `;
+  // Daten
+  let data=[];
+  try{
+    data = await fetchLatest();
+  }catch(e){
+    console.error(e);
   }
 
-  function addMarkers(){
-    all.forEach(n=>{
-      const f = n.fields||{};
-      if (typeof f.lat!=="number" || typeof f.lon!=="number") return;
-      const m = L.marker([f.lat,f.lon]).addTo(map);
+  // Letzte Meldung + Node-Zahl
+  byId("nodeCount").textContent = data.length || "0";
+  const latestTs = data.reduce((m,x)=> x?.ts && (!m || x.ts>m)? x.ts : m, null);
+  byId("lastTs").textContent = deTime(latestTs);
 
-      const pop = L.popup({
-        closeButton:true,
-        autoPan:true,
-        className:'ws-popup'
-      }).setContent( buildPopupHTML(n) );
+  // Marker anlegen
+  const group = L.featureGroup().addTo(map);
+  data.forEach(item=>{
+    const id = item.id;
+    const f  = item.fields || {};
+    let lat = (typeof f.lat==="number") ? f.lat : (MANUAL_LOC[id]?.[0] ?? null);
+    let lon = (typeof f.lon==="number") ? f.lon : (MANUAL_LOC[id]?.[1] ?? null);
+    if(lat==null || lon==null) return; // ohne Koordinaten kein Marker
 
-      m.on('click', ()=>{
-        // Popup öffnen und gleichzeitig den Marker in die Mitte holen
-        map.setView(m.getLatLng(), map.getZoom(), {animate:false});
-        m.bindPopup(pop).openPopup();
-      });
+    const marker = L.marker([lat,lon]).addTo(group);
 
-      // QR befüllen, sobald Popup sichtbar
-      m.on('popupopen', (ev)=>{
-        const nodeId = n.id;
-        const el = document.getElementById(`qr-${nodeId}`);
-        if (el && !el.dataset.done){
-          const url = `${location.origin}/html/sensor.html?node=${encodeURIComponent(nodeId)}`;
-          try { new QRCode(el,{text:url,width:150,height:150}); el.dataset.done="1"; } catch(_){}
-        }
-      });
+    // Popup – mit autoPanPadding, damit nichts hinter dem oberen Rand verschwindet
+    const pop = L.popup({
+      maxWidth: 340,
+      autoPan: true,
+      autoPanPaddingTopLeft: [10, 60], // oben Platz lassen (Topbar)
+      autoPanPaddingBottomRight: [10, 20],
+      className: 'ws-popup'
+    }).setContent(popupHtml(item));
+
+    marker.on('click', ()=>{
+      marker.bindPopup(pop).openPopup();
     });
+  });
+
+  if(group.getLayers().length){
+    map.fitBounds(group.getBounds().pad(0.2));
   }
-
-  function updateBadges(){
-    // Nodes-Anzahl
-    document.getElementById('nodeCount').textContent = all.length;
-
-    // Letzte Aktualisierung = max(ts)
-    let newest = null, newestNode = null;
-    for(const n of all){
-      if(!n.ts) continue;
-      const t = +new Date(n.ts);
-      if (!newest || t>newest){ newest = t; newestNode = n; }
-    }
-    const dt = newest ? new Date(newest) : null;
-    document.getElementById('lastUpdate').textContent = dt
-      ? dt.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit",second:"2-digit"})
-      : "–";
-
-    document.getElementById('lastNode').textContent = newestNode
-      ? dt.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"})
-        + ", " + dt.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"})
-        + " — " + toTitle(newestNode.id)
-      : "–";
-  }
-
-  async function load(){
-    const r = await fetch("/data/v2/latest/all.json",{cache:"no-store"});
-    const a = await r.json();
-    // Normalize ids (trim)
-    all = a.map(x=>({...x,id:String(x.id||"").trim()}));
-    updateBadges();
-    addMarkers();
-  }
-
-  load().catch(console.error);
 })();
 </script>
 </body>
