@@ -5,26 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Schulwaldsensor — …</title>
 
-  <!-- Charts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-
-  <!-- (Optional) simple server-side include helper, falls genutzt -->
   <script src="/html/js/ssi.js" defer></script>
 
   <style>
-    :root{--bg:#f6f8fb;--card:#fff;--muted:#8a93a3;--ink:#0d1b2a;--ok:#dff6e5;--pad:16px;--radius:14px}
-    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
+    :root{
+      --bg:#f6f8fb;--card:#fff;--muted:#8a93a3;--ink:#0d1b2a;
+      --ok:#dff6e5;--pad:16px;--radius:14px
+    }
+    html,body{margin:0;background:var(--bg);color:var(--ink);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
     .wrap{max-width:1180px;margin:0 auto;padding:20px}
     h1{font-weight:800;letter-spacing:.2px;margin:6px 0 18px;font-size:clamp(26px,4vw,40px)}
     .ver{font-size:12px;font-weight:700;color:#94a3b8;margin-left:8px}
     .row{display:grid;gap:18px;grid-template-columns:1fr}
-    @media(min-width:980px){.row{grid-template-columns:1.1fr .9fr}}
-    .card{background:var(--card);border-radius:var(--radius);box-shadow:0 1px 0 rgba(0,0,0,.04),0 10px 30px -20px rgba(0,0,0,.15);padding:var(--pad)}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--ok);color:#115e59;font-weight:700;font-size:14px}
-    .grid3{display:grid;gap:12px;grid-template-columns:1fr}
-    @media(min-width:700px){.grid3{grid-template-columns:repeat(2,1fr)}}
-    @media(min-width:980px){.grid3{grid-template-columns:repeat(3,1fr)}}
-    .tile{background:#eef2f7;border-radius:12px;padding:14px 16px;min-height:86px;display:flex;flex-direction:column;justify-content:center}
+    @media(min-width:980px){.row{grid-template-columns:1.15fr .85fr}}
+    .card{background:var(--card);border-radius:var(--radius);
+      box-shadow:0 1px 0 rgba(0,0,0,.04),0 10px 30px -20px rgba(0,0,0,.15);padding:var(--pad)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--ok);
+      color:#115e59;font-weight:700;font-size:14px}
+    .tiles{display:grid;gap:12px;grid-template-columns:1fr}
+    @media(min-width:700px){.tiles{grid-template-columns:repeat(3,1fr)}}
+    .tile{background:#eef2f7;border-radius:12px;padding:14px 16px;min-height:86px;
+      display:flex;flex-direction:column;justify-content:center}
     .k{color:var(--muted);font-size:14px;margin-bottom:6px}
     .v{font-size:22px;font-weight:800;letter-spacing:.2px}
     .muted{color:var(--muted)} .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
@@ -33,40 +36,41 @@
     .section-title{font-weight:800;margin:0 0 10px}
     a.back{text-decoration:none;color:#2563eb;font-weight:600}
     .err{color:#b91c1c;font-weight:700}
-    .netgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .netrow{display:flex;justify-content:space-between;border-bottom:1px dashed #e5e7eb;padding:6px 2px}
-    .netk{color:#64748b}
+    .kv{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;align-items:center}
+    .kv .label{color:var(--muted)}
+    .kv .value{font-weight:700}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div style="margin-bottom:8px;"><a class="back" href="/v2.html">← Zur Karte</a></div>
-    <h1>Schulwaldsensor — <span id="nodeTitle">…</span><small class="ver">v0.6</small></h1>
+    <h1>Schulwaldsensor — <span id="nodeTitle">…</span><small class="ver">v0.7</small></h1>
 
     <div class="row">
+      <!-- Linke kompakte Karte -->
       <div class="card">
         <div style="margin-bottom:10px;">
           <span class="pill">Stand: <span id="stand">—</span></span>
         </div>
-        <div class="grid3">
-          <div class="tile"><div class="k">Temperatur</div><div class="v" id="temp">—</div></div>
+        <div class="tiles">
+          <div class="tile"><div class="k" id="tempLabel">Temperatur</div><div class="v" id="temp">—</div></div>
           <div class="tile"><div class="k" id="humLabel">Luftfeuchte</div><div class="v" id="hum">—</div></div>
-          <div class="tile" style="grid-column:1/-1"><div class="k">Batterie</div><div class="v" id="bat">—</div></div>
+          <div class="tile"><div class="k">Batterie</div><div class="v" id="bat">—</div></div>
         </div>
         <div class="hint">Quelle: <span class="mono">/data/v2/latest/all.json</span></div>
       </div>
 
+      <!-- Rechte Netzkarte -->
       <div class="card">
         <div class="section-title">Netz &amp; Gateways</div>
-        <div class="netgrid">
-          <div class="netrow"><span class="netk">Letzte 24 h</span><span id="netFrames">—</span></div>
-          <div class="netrow"><span class="netk">Letzter Uplink</span><span id="netLast">—</span></div>
-          <div class="netrow"><span class="netk">Gateways</span><span id="netGws">—</span></div>
-          <div class="netrow"><span class="netk">Bestes Signal</span><span id="netBest">—</span></div>
-          <div class="netrow"><span class="netk">ADR</span><span id="netAdr">—</span></div>
+        <div class="kv">
+          <div class="label">Letzte 24 h</div><div class="value" id="net24h">— Uplinks</div>
+          <div class="label">Letzter Uplink</div><div class="value" id="netLast">—</div>
+          <div class="label">Gateways</div><div class="value" id="netGws">—</div>
+          <div class="label">Bestes Signal</div><div class="value" id="netBest">—</div>
+          <div class="label">ADR</div><div class="value" id="netADR">—</div>
         </div>
         <div class="hint">Quelle: <span class="mono" id="netPath">—</span></div>
-        <div class="hint err" id="netErr" style="display:none"></div>
       </div>
     </div>
 
@@ -86,11 +90,10 @@
   </div>
 
   <script>
-    // Helpers
-    const byId = (id) => document.getElementById(id);
+    const $ = (id) => document.getElementById(id);
     const fmt = (n, d=1) => (n==null || Number.isNaN(n)) ? "—" : Number(n).toFixed(d).replace(".",",");
 
-    // erkennt se01 / se01lb (auch mit Präfix/Suffix, z.B. bredstedt_se01lb)
+    // erkennt se01 und se01lb – auch mit Präfix/Suffix (z.B. bredstedt_se01lb)
     const isSoilNode = (id) => /(se01(lb)?)/i.test(String(id||""));
 
     function detectNode(){
@@ -114,106 +117,86 @@
       return arr.map(x=>({...x,id:(x.id||"").replace(/[\r\n]+/g,"").trim()}));
     }
 
-    // ---------- Netz & Gateways ----------
-    function renderNetStats(d){
-      // frames letzte 24h
-      byId("netFrames").textContent = `${d.frames24 ?? 0} Uplinks`;
-
-      // letzter uplink
-      const last = d.last_ts ? new Date(d.last_ts) : null;
-      byId("netLast").textContent = last ? last.toLocaleString("de-DE") : "—";
-
-      // gateways (Liste kürzen)
-      let gws = "—";
-      const list = d.gateways || d.gws || d.last_gateways || null; // tolerant
-      if (Array.isArray(list) && list.length){
-        const ids = list.map(g => g?.id || g?.gateway_id || g?.gtw_id || g?.name).filter(Boolean);
-        gws = ids.length ? ids.slice(0,3).join(", ")+(ids.length>3?` +${ids.length-3}`:"") : "1+ GW";
-      }
-      byId("netGws").textContent = gws;
-
-      // bestes Signal (RSSI/SNR)
-      let bestLabel = "—";
-      const sig = d.best || d.best_signal || d.top || null;
-      if (sig && (sig.rssi!=null || sig.snr!=null)){
-        const rssi = (sig.rssi!=null)? `${sig.rssi} dBm` : null;
-        const snr  = (sig.snr!=null)? `${sig.snr} dB`  : null;
-        bestLabel = [rssi,snr].filter(Boolean).join(" / ");
-      }
-      byId("netBest").textContent = bestLabel || "—";
-
-      // ADR
-      let adr = d.adr;
-      if (adr==null && typeof d.adr_enabled === "boolean") adr = d.adr_enabled;
-      byId("netAdr").textContent = (adr==null) ? "—" : (adr ? "aktiv" : "aus");
-    }
-
+    // Netzstatistiken – robust parsen
     async function loadNetstats(node){
       const url = `/data/v2/net/netstats_${encodeURIComponent(node)}.json`;
-      byId("netPath").textContent = url;
-      byId("netErr").style.display = "none";
+      $("netPath").textContent = url;
       try{
         const r = await fetch(url,{cache:"no-store"});
-        if(!r.ok) throw new Error("HTTP "+r.status);
+        if(!r.ok) throw new Error("Netz-Quelle nicht erreichbar");
         const d = await r.json();
-        if (!d || typeof d!=="object") throw new Error("Ungültiges Format");
-        renderNetStats(d);
+
+        $("net24h").textContent = `${d.frames24 ?? 0} Uplinks`;
+
+        const last = d.last_ts ? new Date(d.last_ts) : null;
+        $("netLast").textContent = last ? last.toLocaleString("de-DE") : "—";
+
+        // Gateways als Anzahl oder Liste
+        const gws = Array.isArray(d.gateways) ? d.gateways
+                 : Array.isArray(d.last_gateways) ? d.last_gateways
+                 : [];
+        $("netGws").textContent = gws.length ? `${gws.length} GW` : "—";
+
+        // Bestes Signal
+        const bestRssi = d.best_rssi ?? (d.last_rssi ?? null);
+        const bestSnr  = d.best_snr  ?? (d.last_snr  ?? null);
+        $("netBest").textContent = (bestRssi!=null || bestSnr!=null)
+          ? `${bestRssi!=null?bestRssi+" dBm":"—"} / ${bestSnr!=null?bestSnr+" dB":"—"}`
+          : "—";
+
+        $("netADR").textContent = (d.adr==null) ? "—" : (d.adr ? "Ein" : "Aus");
       }catch(e){
-        byId("netErr").style.display = "block";
-        byId("netErr").textContent = "Fehler: Netz-Quelle nicht erreichbar";
-        // Felder neutral lassen
-        byId("netFrames").textContent = "—";
-        byId("netLast").textContent   = "—";
-        byId("netGws").textContent    = "—";
-        byId("netBest").textContent   = "—";
-        byId("netAdr").textContent    = "—";
+        $("net24h").textContent = "— Uplinks";
+        $("netLast").textContent = "—";
+        $("netGws").textContent  = "—";
+        $("netBest").textContent = "—";
+        $("netADR").textContent  = "—";
       }
     }
 
-    // ---------- Werte / Verlauf ----------
+    // aktuelle Felder je Node-Typ
     function pickFields(entry){
       const f = entry.fields||{};
-      if(isSoilNode(entry.id)){
-        return {temp: f.temp_SOIL ?? null, hum: f.water_SOIL ?? null, bat: f.BatV ?? null, humLabel:"Bodenwasser"};
+      const soil = isSoilNode(entry.id);
+      if(soil){
+        $("tempLabel").textContent = "Bodentemperatur";
+        $("humLabel").textContent  = "Bodenwasser";
+        return {temp: f.temp_SOIL ?? null, hum: f.water_SOIL ?? null, bat: f.BatV ?? null};
       }
+      $("tempLabel").textContent = "Temperatur";
+      $("humLabel").textContent  = "Luftfeuchte";
       return {
         temp: f.TempC_SHT ?? f.TempC_SHT31 ?? null,
         hum:  f.Hum_SHT   ?? f.Hum_SHT31   ?? null,
-        bat:  f.BatV ?? null,
-        humLabel:"Luftfeuchte"
+        bat:  f.BatV ?? null
       };
     }
 
-    // History-Item -> {ts, t, h}
+    // History-Item in {ts, t, h} für Charts mappen
     function mapHistoryItem(it, soil){
       const f = it?.fields || {};
       if(soil){
         return { ts: it.ts, t: f.temp_SOIL ?? null, h: f.water_SOIL ?? null };
       }
-      return {
-        ts: it.ts,
-        t: f.TempC_SHT ?? f.TempC_SHT31 ?? null,
-        h: f.Hum_SHT   ?? f.Hum_SHT31   ?? null
-      };
+      return { ts: it.ts, t: f.TempC_SHT ?? f.TempC_SHT31 ?? null, h: f.Hum_SHT ?? f.Hum_SHT31 ?? null };
     }
 
     async function loadHistory(node){
       const url = `/data/v2/history/${encodeURIComponent(node)}.json`;
-      byId("histPath").textContent = url;
+      $("histPath").textContent = url;
       const r = await fetch(url,{cache:"no-store"});
       if(!r.ok){
-        byId("histErr").style.display="block";
-        byId("histErr").textContent = `Fehler beim Laden (${r.status}) von ${url}`;
+        $("histErr").style.display="block";
+        $("histErr").textContent = `Fehler beim Laden (${r.status}) von ${url}`;
         return [];
       }
-      byId("histErr").style.display="none";
+      $("histErr").style.display="none";
       let data = await r.json();
       if(!Array.isArray(data)) return [];
       data = data.filter(x=>x && x.ts).sort((a,b)=>new Date(a.ts)-new Date(b.ts));
       return data;
     }
 
-    let chH, chD;
     function makeHourlyChart(ctx, items, soil){
       const labels = items.map(x=>x.ts);
       const temps  = items.map(x=>x.t);
@@ -227,7 +210,11 @@
       },options:{
         responsive:true,interaction:{mode:'index',intersect:false},
         scales:{
-          x:{ticks:{callback:(v,i)=>{const d=new Date(labels[i]);return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"})+" "+d.toLocaleTimeString("de-DE",{hour:"2-digit"})+"h"}}},
+          x:{ticks:{callback:(v,i)=>{
+            const d=new Date(labels[i]);
+            return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"})+" "+
+                   d.toLocaleTimeString("de-DE",{hour:"2-digit"})+"h";
+          }}},
           y1:{position:'left',title:{display:true,text:tLabel},grid:{drawOnChartArea:false}},
           y2:{position:'right',title:{display:true,text:hLabel},min:0,max:100}
         },plugins:{legend:{position:'top'}}
@@ -245,7 +232,8 @@
         datasets:[{type:'bar',label:hLabel,data:hums,yAxisID:'y2'},{type:'line',label:tLabel,data:temps,yAxisID:'y1'}]
       },options:{
         responsive:true,interaction:{mode:'index',intersect:false},
-        scales:{y1:{position:'left',title:{display:true,text:tLabel},grid:{drawOnChartArea:false}},y2:{position:'right',title:{display:true,text:hLabel},min:0,max:100}},
+        scales:{y1:{position:'left',title:{display:true,text:tLabel},grid:{drawOnChartArea:false}},
+                y2:{position:'right',title:{display:true,text:hLabel},min:0,max:100}},
         plugins:{legend:{position:'top'}}
       }});
       return ctx._chart;
@@ -268,32 +256,32 @@
       return out.slice(-31);
     }
 
-    // ---------- Boot ----------
     (async ()=>{
       try{
         const wanted = detectNode();
         const latest = await loadLatest();
+
+        // passenden Eintrag finden (case-insensitive Fallback)
         let entry = null;
         if(wanted){
           entry = latest.find(x=>x.id===wanted) || latest.find(x=>x.id.toLowerCase()===wanted.toLowerCase());
         }
         if(!entry) entry = latest[0];
+
         const node = entry.id;
         const soil = isSoilNode(node);
 
-        byId("nodeTitle").textContent = node;
-        byId("stand").textContent = entry.ts ? new Date(entry.ts).toLocaleString("de-DE") : "—";
+        $("nodeTitle").textContent = node;
+        $("stand").textContent = entry.ts ? new Date(entry.ts).toLocaleString("de-DE") : "—";
 
-        const {temp,hum,bat,humLabel} = pickFields(entry);
-        byId("temp").textContent = temp!=null ? fmt(temp,1)+" °C" : "—";
-        byId("hum").textContent  = hum!=null  ? fmt(hum,1)+" %"  : "—";
-        byId("humLabel").textContent = humLabel;
-        byId("bat").textContent  = bat!=null  ? fmt(bat,3)+" V"  : "—";
+        const {temp,hum,bat} = pickFields(entry);
+        $("temp").textContent = temp!=null ? fmt(temp,1)+" °C" : "—";
+        $("hum").textContent  = hum!=null  ? fmt(hum,1)+" %"  : "—";
+        $("bat").textContent  = bat!=null  ? fmt(bat,3)+" V"  : "—";
 
-        // Netz
         await loadNetstats(node);
 
-        // Verlauf laden & mappen
+        // Verlauf laden & auf (t,h) mappen
         let hist = await loadHistory(node);
         hist = hist.map(x => mapHistoryItem(x, soil));
 
@@ -301,24 +289,24 @@
         const seven = Date.now() - 7*24*3600*1000;
         const recent = hist.filter(x=>new Date(x.ts).getTime() >= seven);
         if(recent.length){
-          byId("noHourly").style.display="none";
-          makeHourlyChart(byId("chartHourly").getContext("2d"), recent, soil);
+          $("noHourly").style.display="none";
+          makeHourlyChart($("chartHourly").getContext("2d"), recent, soil);
         }else{
-          byId("noHourly").style.display="block";
+          $("noHourly").style.display="block";
         }
 
         // Tagesmittel 31 Tage
         const days = groupDaily(hist);
         if(days.length){
-          byId("noDaily").style.display="none";
-          makeDailyChart(byId("chartDaily").getContext("2d"), days, soil);
+          $("noDaily").style.display="none";
+          makeDailyChart($("chartDaily").getContext("2d"), days, soil);
         }else{
-          byId("noDaily").style.display="block";
+          $("noDaily").style.display="block";
         }
       }catch(e){
         console.error(e);
-        byId("histErr").style.display="block";
-        byId("histErr").textContent = "Fehler: "+(e?.message||e);
+        $("histErr").style.display="block";
+        $("histErr").textContent = "Fehler: "+(e?.message||e);
       }
     })();
   </script>
