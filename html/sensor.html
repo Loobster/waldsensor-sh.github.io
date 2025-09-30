@@ -1,266 +1,141 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Schulwaldsensor — …</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <meta charset="UTF-8">
+  <title>WALDSENSOR.SH – Sensordetails</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.css">
   <style>
-    :root{--bg:#f6f8fb;--card:#fff;--muted:#8a93a3;--ink:#0d1b2a;--ok:#dff6e5;--pad:16px;--radius:14px}
-    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
-    .wrap{max-width:1180px;margin:0 auto;padding:20px}
-    h1{font-weight:800;letter-spacing:.2px;margin:6px 0 18px;font-size:clamp(26px,4vw,40px)}
-    .ver{font-size:12px;font-weight:700;color:#94a3b8;margin-left:8px}
-    .row{display:grid;gap:18px;grid-template-columns:1fr}
-    @media(min-width:980px){.row{grid-template-columns:1.1fr .9fr}}
-    .card{background:var(--card);border-radius:var(--radius);box-shadow:0 1px 0 rgba(0,0,0,.04),0 10px 30px -20px rgba(0,0,0,.15);padding:var(--pad)}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--ok);color:#115e59;font-weight:700;font-size:14px}
-    .grid3{display:grid;gap:12px;grid-template-columns:1fr}
-    @media(min-width:700px){.grid3{grid-template-columns:repeat(2,1fr)}}
-    @media(min-width:980px){.grid3{grid-template-columns:repeat(3,1fr)}}
-    .tile{background:#eef2f7;border-radius:12px;padding:14px 16px;min-height:86px;display:flex;flex-direction:column;justify-content:center}
-    .k{color:var(--muted);font-size:14px;margin-bottom:6px}
-    .v{font-size:22px;font-weight:800;letter-spacing:.2px}
-    .muted{color:var(--muted)} .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
-    canvas{max-height:360px} .hint{margin-top:8px;font-size:13px;color:var(--muted)}
-    .section-title{font-weight:800;margin:0 0 10px}
-    a.back{text-decoration:none;color:#2563eb;font-weight:600}
-    .err{color:#b91c1c;font-weight:700}
+    body{font-family:sans-serif;margin:0;padding:0;background:#f9f9f9;color:#222}
+    header{background:#005f73;color:white;padding:0.5em 1em;font-size:1.2em}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:1em;padding:1em}
+    .card{background:white;padding:1em;border-radius:0.6em;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+    .section-title{font-size:1.1em;margin-bottom:0.5em;color:#005f73}
+    .muted{color:#666;font-size:0.9em}
+    .mono{font-family:monospace}
+    canvas{max-width:100%;height:260px}
+    .hint{font-size:0.8em;color:#777;margin-top:0.4em}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div style="margin-bottom:8px;"><a class="back" href="/v2.html">← Zur Karte</a></div>
-    <h1>Schulwaldsensor — <span id="nodeTitle">…</span><small class="ver">v0.5</small></h1>
-
-    <div class="row">
-      <div class="card">
-        <div style="margin-bottom:10px;">
-          <span class="pill">Stand: <span id="stand">—</span></span>
-        </div>
-        <div class="grid3">
-          <div class="tile"><div class="k">Temperatur</div><div class="v" id="temp">—</div></div>
-          <div class="tile"><div class="k" id="humLabel">Luftfeuchte</div><div class="v" id="hum">—</div></div>
-          <div class="tile" style="grid-column:1/-1"><div class="k">Batterie</div><div class="v" id="bat">—</div></div>
-        </div>
-        <div class="hint">Quelle: <span class="mono">/data/v2/latest/all.json</span></div>
-      </div>
-
-      <div class="card">
-        <div class="section-title">Netz &amp; Gateways</div>
-        <div class="muted" id="netinfo">—</div>
-        <div class="hint">Quelle: <span class="mono" id="netPath">—</span></div>
-      </div>
+  <header>🌲 WALDSENSOR.SH – Sensordetails</header>
+  <div class="grid">
+    <div class="card">
+      <div class="section-title">Aktuelle Werte</div>
+      <div>Temperatur: <span id="valTemp">—</span></div>
+      <div>Feuchte: <span id="valHum">—</span></div>
+      <div>Batterie: <span id="valBat">—</span></div>
+      <div class="muted">Letzte Meldung: <span id="valTs">—</span></div>
     </div>
 
-    <div class="card" style="margin-top:18px;">
-      <div class="section-title">📊 Verlauf Temperatur &amp; Luftfeuchtigkeit</div>
-      <canvas id="chartHourly"></canvas>
-      <div class="hint">Sucht: <span id="histPath" class="mono">/data/v2/history/&lt;node&gt;.json</span></div>
-      <div class="hint err" id="histErr" style="display:none"></div>
-      <div class="hint" id="noHourly" style="display:none">Kein Verlauf gefunden.</div>
-    </div>
-
-    <div class="card" style="margin-top:18px;">
-      <div class="section-title">🗓️ 31 Tage — Tagesmittel (Temp / Feuchte)</div>
-      <canvas id="chartDaily"></canvas>
-      <div class="hint" id="noDaily" style="display:none">Keine Tageswerte möglich (es fehlt Verlauf).</div>
+    <div class="card">
+      <div class="section-title">Netz &amp; Gateways</div>
+      <div id="netinfo">—</div>
+      <div class="hint">Quelle: <span class="mono" id="netPath">—</span></div>
     </div>
   </div>
 
-  <script>
-    const byId = (id) => document.getElementById(id);
-    const fmt = (n, d=1) => (n==null || Number.isNaN(n)) ? "—" : Number(n).toFixed(d).replace(".",",");
+  <div class="grid">
+    <div class="card"><div class="section-title">Verlauf Temperatur/Feuchte</div>
+      <canvas id="chartTH"></canvas></div>
+    <div class="card"><div class="section-title">Verlauf Batterie</div>
+      <canvas id="chartBat"></canvas></div>
+  </div>
 
-    // erkennt se01 und se01lb – auch mit Präfix/Suffix (z.B. bredstedt_se01lb)
-    const isSoilNode = (id) => /(se01(lb)?)/i.test(String(id||""));
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+// Hilfsfunktionen
+const qs = k => new URLSearchParams(location.search).get(k);
+const node = qs('node')||'';
+function isSoilNode(id){ return /(^|[-_])se01(lb)?$/i.test(String(id||'')); }
+function ago(ts){ if(!ts) return '—'; const d=new Date(ts); if(isNaN(d)) return '—';
+  const diff=(Date.now()-d)/60000; if(diff<60) return `${Math.round(diff)} min`;
+  if(diff<1440) return `${Math.round(diff/60)} h`; return `${Math.round(diff/1440)} d`;
+}
 
-    function detectNode(){
-      const u = new URL(location.href);
-      let raw = (u.searchParams.get("node")||u.searchParams.get("id")||"").trim();
-      if(!raw && location.hash){
-        const sp = new URLSearchParams(location.hash.slice(1));
-        raw = (sp.get("node")||"").trim();
-      }
-      if(!raw){
-        let p = (location.pathname.split("/").pop()||"").replace(/\.html?$/,"");
-        raw = (p==="sensor") ? "" : p;
-      }
-      return (raw||"").replace(/[\r\n]+/g,"").trim() || null;
+// Netzwerk laden
+async function loadNetstats(nodeId){
+  const url=`/data/v2/net/netstats_${encodeURIComponent(nodeId)}.json`;
+  const elInfo=document.getElementById('netinfo');
+  const elPath=document.getElementById('netPath');
+  if(elPath) elPath.textContent=url;
+  try{
+    const r=await fetch(url,{cache:'no-store'});
+    if(!r.ok) throw new Error(`(${r.status})`);
+    const d=await r.json();
+    const last=d.last_ts||d.last_uplink||d.updated||d.timestamp||null;
+    const frames=d.frames24??d.uplinks_24h??d.count24??0;
+    let gwName='';
+    if(d.top_gateway&&(d.top_gateway.name||d.top_gateway.id))
+      gwName=d.top_gateway.name||d.top_gateway.id;
+    else if(d.gateways&&typeof d.gateways==='object'){
+      const firstGw=Object.keys(d.gateways)[0]; if(firstGw) gwName=firstGw;
     }
+    const ts=last?new Date(last).toLocaleString('de-DE'):'—';
+    elInfo.innerHTML=
+      `Letzte 24 h: <b>${frames}</b> Uplinks<br>`+
+      `Letzter Uplink: <b>${ts}</b> (${ago(last)})`+
+      (gwName?`<br>Top-GW: <b>${gwName}</b>`:'');
+  }catch(e){ elInfo.textContent=`Fehler: ${e.message}`; }
+}
 
-    async function loadLatest(){
-      const r = await fetch("/data/v2/latest/all.json",{cache:"no-store"});
-      if(!r.ok) throw new Error("Live-Quelle nicht erreichbar: "+r.status);
-      const arr = await r.json();
-      return arr.map(x=>({...x,id:(x.id||"").replace(/[\r\n]+/g,"").trim()}));
-    }
+// Aktuelle Werte laden
+async function loadLatest(nodeId){
+  const url='/data/v2/latest/all.json';
+  const r=await fetch(url,{cache:'no-store'});
+  const arr=await r.json();
+  const obj=arr.find(x=>(x.id||'').toLowerCase()===nodeId.toLowerCase());
+  if(!obj) return;
+  const f=obj.fields||{};
+  const soil=isSoilNode(obj.id);
+  const t=soil?(f.temp_SOIL??null):(f.TempC_SHT??f.TempC_SHT31??null);
+  const h=soil?(f.water_SOIL??null):(f.Hum_SHT??f.Hum_SHT31??null);
+  document.getElementById('valTemp').textContent=t?`${t} °C`:'—';
+  document.getElementById('valHum').textContent=h?`${h} %`:'—';
+  document.getElementById('valBat').textContent=f.BatV?`${f.BatV} V`:'—';
+  document.getElementById('valTs').textContent=obj.ts?new Date(obj.ts).toLocaleString('de-DE'):'—';
+}
 
-    async function loadNetstats(node){
-      const url = `/data/v2/net/netstats_${encodeURIComponent(node)}.json`;
-      byId("netPath").textContent = url;
-      try{
-        const r = await fetch(url,{cache:"no-store"});
-        if(!r.ok) throw new Error("Netz-Quelle nicht erreichbar");
-        const d = await r.json();
-        if(d && typeof d==="object"){
-          const ts = d.last_ts ? new Date(d.last_ts).toLocaleString("de-DE") : "—";
-          byId("netinfo").innerHTML =
-            `Letzte 24 h: <b>${d.frames24||0}</b> Uplinks<br>`+
-            `Letzter Uplink: <b>${ts}</b>`;
-        }
-      }catch(e){
-        byId("netinfo").textContent = "Fehler: "+e.message;
-      }
-    }
+// History laden + Charts
+function mapHistoryItem(e){
+  const f=e.fields||{}; const soil=isSoilNode(e.id);
+  return {
+    ts:e.ts,
+    t:soil?(f.temp_SOIL??null):(f.TempC_SHT??f.TempC_SHT31??null),
+    h:soil?(f.water_SOIL??null):(f.Hum_SHT??f.Hum_SHT31??null),
+    b:f.BatV??null
+  };
+}
 
-    function pickFields(entry){
-      const f = entry.fields||{};
-      if(isSoilNode(entry.id)){
-        return {temp: f.temp_SOIL ?? null, hum: f.water_SOIL ?? null, bat: f.BatV ?? null, humLabel:"Bodenwasser"};
-      }
-      return {
-        temp: f.TempC_SHT ?? f.TempC_SHT31 ?? null,
-        hum:  f.Hum_SHT   ?? f.Hum_SHT31   ?? null,
-        bat:  f.BatV ?? null,
-        humLabel:"Luftfeuchte"
-      };
-    }
+async function loadHistory(nodeId){
+  const url=`/data/v2/history/history_${encodeURIComponent(nodeId)}.json`;
+  const r=await fetch(url,{cache:'no-store'}); if(!r.ok) return;
+  const arr=await r.json();
+  const vals=arr.map(mapHistoryItem);
+  const labels=vals.map(v=>new Date(v.ts).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}));
+  const chartTH=new Chart(document.getElementById('chartTH'),{
+    type:'line',
+    data:{labels,
+      datasets:[
+        {label:isSoilNode(node)?'Boden-Temp':'Temp',data:vals.map(v=>v.t),borderColor:'#d62828',fill:false},
+        {label:isSoilNode(node)?'Boden-Feuchte':'Feuchte',data:vals.map(v=>v.h),borderColor:'#1d3557',fill:false}
+      ]},
+    options:{responsive:true,plugins:{legend:{position:'bottom'}}}
+  });
+  const chartBat=new Chart(document.getElementById('chartBat'),{
+    type:'line',
+    data:{labels,datasets:[{label:'Batterie (V)',data:vals.map(v=>v.b),borderColor:'#2a9d8f',fill:false}]},
+    options:{responsive:true,plugins:{legend:{position:'bottom'}}}
+  });
+}
 
-    // History-Item in ein {ts, t, h}-Objekt mappen – Boden vs. Luft
-    function mapHistoryItem(it, soil){
-      const f = it?.fields || {};
-      if(soil){
-        return { ts: it.ts, t: f.temp_SOIL ?? null, h: f.water_SOIL ?? null };
-      }
-      return {
-        ts: it.ts,
-        t: f.TempC_SHT ?? f.TempC_SHT31 ?? null,
-        h: f.Hum_SHT   ?? f.Hum_SHT31   ?? null
-      };
-    }
-
-    async function loadHistory(node){
-      const url = `/data/v2/history/${encodeURIComponent(node)}.json`;
-      byId("histPath").textContent = url;
-      const r = await fetch(url,{cache:"no-store"});
-      if(!r.ok){
-        byId("histErr").style.display="block";
-        byId("histErr").textContent = `Fehler beim Laden (${r.status}) von ${url}`;
-        return [];
-      }
-      byId("histErr").style.display="none";
-      let data = await r.json();
-      if(!Array.isArray(data)) return [];
-      data = data.filter(x=>x && x.ts).sort((a,b)=>new Date(a.ts)-new Date(b.ts));
-      return data;
-    }
-
-    function makeHourlyChart(ctx, items, soil){
-      const labels = items.map(x=>x.ts);
-      const temps  = items.map(x=>x.t);
-      const hums   = items.map(x=>x.h);
-      const tLabel = soil? "Bodentemperatur [°C]":"Temperatur [°C]";
-      const hLabel = soil? "Bodenwasser [%]"    :"Luftfeuchte [%]";
-      if(ctx._chart) ctx._chart.destroy();
-      ctx._chart = new Chart(ctx,{type:'line',data:{
-        labels,
-        datasets:[{label:tLabel,data:temps,yAxisID:'y1'},{label:hLabel,data:hums,yAxisID:'y2'}]
-      },options:{
-        responsive:true,interaction:{mode:'index',intersect:false},
-        scales:{
-          x:{ticks:{callback:(v,i)=>{const d=new Date(labels[i]);return d.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"})+" "+d.toLocaleTimeString("de-DE",{hour:"2-digit"})+"h"}}},
-          y1:{position:'left',title:{display:true,text:tLabel},grid:{drawOnChartArea:false}},
-          y2:{position:'right',title:{display:true,text:hLabel},min:0,max:100}
-        },plugins:{legend:{position:'top'}}
-      }});
-      return ctx._chart;
-    }
-
-    function makeDailyChart(ctx, days, soil){
-      const labels = days.map(x=>x.day), temps=days.map(x=>x.t), hums=days.map(x=>x.h);
-      const tLabel = soil? "Ø Bodentemperatur [°C]":"Ø Temperatur [°C]";
-      const hLabel = soil? "Ø Bodenwasser [%]"    :"Ø Luftfeuchte [%]";
-      if(ctx._chart) ctx._chart.destroy();
-      ctx._chart = new Chart(ctx,{type:'bar',data:{
-        labels,
-        datasets:[{type:'bar',label:hLabel,data:hums,yAxisID:'y2'},{type:'line',label:tLabel,data:temps,yAxisID:'y1'}]
-      },options:{
-        responsive:true,interaction:{mode:'index',intersect:false},
-        scales:{y1:{position:'left',title:{display:true,text:tLabel},grid:{drawOnChartArea:false}},y2:{position:'right',title:{display:true,text:hLabel},min:0,max:100}},
-        plugins:{legend:{position:'top'}}
-      }});
-      return ctx._chart;
-    }
-
-    function groupDaily(items){
-      const m = new Map();
-      for(const it of items){
-        const d = new Date(it.ts);
-        const key = d.getUTCFullYear()+"-"+String(d.getUTCMonth()+1).padStart(2,"0")+"-"+String(d.getUTCDate()).padStart(2,"0");
-        if(!m.has(key)) m.set(key,{n:0,tsum:0,hsum:0});
-        const o = m.get(key);
-        if(typeof it.t==="number") o.tsum+=it.t;
-        if(typeof it.h==="number") o.hsum+=it.h;
-        o.n++;
-      }
-      const out=[];
-      for(const [k,v] of m.entries()) out.push({day:k,t:v.n? v.tsum/v.n:null,h:v.n? v.hsum/v.n:null});
-      out.sort((a,b)=>a.day.localeCompare(b.day));
-      return out.slice(-31);
-    }
-
-    (async ()=>{
-      try{
-        const wanted = detectNode();
-        const latest = await loadLatest();
-        let entry = null;
-        if(wanted){
-          entry = latest.find(x=>x.id===wanted) || latest.find(x=>x.id.toLowerCase()===wanted.toLowerCase());
-        }
-        if(!entry) entry = latest[0];
-        const node = entry.id;
-        const soil = isSoilNode(node);
-
-        byId("nodeTitle").textContent = node;
-        byId("stand").textContent = entry.ts ? new Date(entry.ts).toLocaleString("de-DE") : "—";
-
-        const {temp,hum,bat,humLabel} = pickFields(entry);
-        byId("temp").textContent = temp!=null ? fmt(temp,1)+" °C" : "—";
-        byId("hum").textContent  = hum!=null  ? fmt(hum,1)+" %"  : "—";
-        byId("humLabel").textContent = humLabel;
-        byId("bat").textContent  = bat!=null  ? fmt(bat,3)+" V"  : "—";
-
-        await loadNetstats(node);
-
-        // Verlauf laden & auf (t,h) mappen
-        let hist = await loadHistory(node);
-        hist = hist.map(x => mapHistoryItem(x, soil));
-
-        // Verlauf 7 Tage
-        const seven = Date.now() - 7*24*3600*1000;
-        const recent = hist.filter(x=>new Date(x.ts).getTime() >= seven);
-        if(recent.length){
-          byId("noHourly").style.display="none";
-          makeHourlyChart(byId("chartHourly").getContext("2d"), recent, soil);
-        }else{
-          byId("noHourly").style.display="block";
-        }
-
-        // Tagesmittel 31 Tage
-        const days = groupDaily(hist);
-        if(days.length){
-          byId("noDaily").style.display="none";
-          makeDailyChart(byId("chartDaily").getContext("2d"), days, soil);
-        }else{
-          byId("noDaily").style.display="block";
-        }
-      }catch(e){
-        console.error(e);
-        byId("histErr").style.display="block";
-        byId("histErr").textContent = "Fehler: "+(e?.message||e);
-      }
-    })();
-  </script>
+// Main
+(async()=>{
+  if(!node){ alert("Kein Node angegeben (?node=...)"); return; }
+  await loadLatest(node);
+  await loadNetstats(node);
+  await loadHistory(node);
+})();
+</script>
 </body>
 </html>
