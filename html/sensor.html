@@ -71,7 +71,9 @@
   <script>
     const byId = (id) => document.getElementById(id);
     const fmt = (n, d=1) => (n==null || Number.isNaN(n)) ? "—" : Number(n).toFixed(d).replace(".",",");
-    const isSoilNode = (id) => id === "se01";
+
+    // erkennt se01 und se01lb – auch mit Präfix/Suffix (z.B. bredstedt_se01lb)
+    const isSoilNode = (id) => /(se01(lb)?)/i.test(String(id||""));
 
     function detectNode(){
       const u = new URL(location.href);
@@ -125,6 +127,19 @@
       };
     }
 
+    // History-Item in ein {ts, t, h}-Objekt mappen – Boden vs. Luft
+    function mapHistoryItem(it, soil){
+      const f = it?.fields || {};
+      if(soil){
+        return { ts: it.ts, t: f.temp_SOIL ?? null, h: f.water_SOIL ?? null };
+      }
+      return {
+        ts: it.ts,
+        t: f.TempC_SHT ?? f.TempC_SHT31 ?? null,
+        h: f.Hum_SHT   ?? f.Hum_SHT31   ?? null
+      };
+    }
+
     async function loadHistory(node){
       const url = `/data/v2/history/${encodeURIComponent(node)}.json`;
       byId("histPath").textContent = url;
@@ -141,7 +156,6 @@
       return data;
     }
 
-    let chH, chD;
     function makeHourlyChart(ctx, items, soil){
       const labels = items.map(x=>x.ts);
       const temps  = items.map(x=>x.t);
@@ -219,7 +233,9 @@
 
         await loadNetstats(node);
 
-        const hist = await loadHistory(node);
+        // Verlauf laden & auf (t,h) mappen
+        let hist = await loadHistory(node);
+        hist = hist.map(x => mapHistoryItem(x, soil));
 
         // Verlauf 7 Tage
         const seven = Date.now() - 7*24*3600*1000;
