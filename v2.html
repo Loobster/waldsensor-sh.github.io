@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WALDSENSOR.SH – Karte</title>
 
-  <!-- v0.12 -->
-  <!-- Änderungen ggü. v0.11: (1) sichere Zeitformatierung, (2) Badge "Letzte Node-Meldung" ermittelt jüngsten gültigen ts -->
-  <meta name="version" content="v0.12" />
+  <!-- v0.13 -->
+  <!-- Fix: tolerantes Lat/Lon-Parsing; robustes ts; Fetch mit Cache-Bust + Fallback -->
+  <meta name="version" content="v0.13" />
 
   <link
     rel="stylesheet"
@@ -25,56 +25,25 @@
     :root{
       --ink:#0f172a;
       --muted:#64748b;
-      --ok:#10b981;
       --bg:#f6f8fb;
       --card:#ffffff;
     }
     html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
     #map{position:absolute;inset:0}
 
-    .hud{
-      position:fixed;left:12px;top:12px;z-index:500;
-      display:flex;flex-direction:column;gap:8px
-    }
-    .badge{
-      background:var(--card);
-      box-shadow:0 8px 30px -16px rgba(0,0,0,.25), 0 1px 0 rgba(0,0,0,.06);
-      border-radius:12px;padding:8px 12px;
-      font-size:14px;font-weight:700;color:var(--ink)
-    }
+    .hud{position:fixed;left:12px;top:12px;z-index:500;display:flex;flex-direction:column;gap:8px}
+    .badge{background:var(--card);box-shadow:0 8px 30px -16px rgba(0,0,0,.25),0 1px 0 rgba(0,0,0,.06);border-radius:12px;padding:8px 12px;font-size:14px;font-weight:700;color:var(--ink)}
     .badge small{display:block;font-weight:600;color:var(--muted);margin-top:2px}
-
-    /* rechte Badge bewusst weiter nach innen, damit sie nicht verdeckt wird */
-    .hud-right{
-      position:fixed;right:16px;top:16px;z-index:500;
-    }
-
-    /* kompaktes, sauberes Popup */
-    .leaflet-popup-content-wrapper{
-      border-radius:12px;
-      box-shadow:0 12px 40px -18px rgba(0,0,0,.35), 0 1px 0 rgba(0,0,0,.06);
-    }
-    .popup{
-      min-width:240px;max-width:280px;
-      font-size:13px;line-height:1.35;
-    }
-    .popup h3{
-      margin:0 0 8px;font-size:16px;font-weight:800;letter-spacing:.2px
-    }
+    .hud-right{position:fixed;right:16px;top:16px;z-index:500}
+    .leaflet-popup-content-wrapper{border-radius:12px;box-shadow:0 12px 40px -18px rgba(0,0,0,.35),0 1px 0 rgba(0,0,0,.06)}
+    .popup{min-width:240px;max-width:280px;font-size:13px;line-height:1.35}
+    .popup h3{margin:0 0 8px;font-size:16px;font-weight:800;letter-spacing:.2px}
     .row{display:flex;justify-content:space-between;gap:12px;margin:4px 0}
     .label{color:var(--muted);font-weight:700}
     .value{font-weight:800}
-    .qr{
-      display:flex;align-items:center;gap:10px;margin-top:8px;padding-top:8px;border-top:1px solid #e5e7eb
-    }
-    .popup a.btn{
-      display:inline-block;margin-top:6px;
-      font-weight:700;text-decoration:none;color:#1d4ed8;
-    }
-    .ver{
-      position:fixed;left:12px;bottom:10px;color:#94a3b8;font-size:12px;font-weight:700;background:rgba(255,255,255,.85);
-      padding:4px 8px;border-radius:999px;box-shadow:0 1px 0 rgba(0,0,0,.05)
-    }
+    .qr{display:flex;align-items:center;gap:10px;margin-top:8px;padding-top:8px;border-top:1px solid #e5e7eb}
+    .popup a.btn{display:inline-block;margin-top:6px;font-weight:700;text-decoration:none;color:#1d4ed8}
+    .ver{position:fixed;left:12px;bottom:10px;color:#94a3b8;font-size:12px;font-weight:700;background:rgba(255,255,255,.85);padding:4px 8px;border-radius:999px;box-shadow:0 1px 0 rgba(0,0,0,.05)}
   </style>
 </head>
 <body>
@@ -86,95 +55,85 @@
   <div class="hud-right">
     <div class="badge" id="lastBadge">Letzte Node-Meldung: –<small id="lastBadgeAge">—</small></div>
   </div>
-  <div class="ver">v0.12</div>
+  <div class="ver">v0.13</div>
 
   <script>
-    // ----------------- Hilfsfunktionen (NEU/ROBUST) -----------------
-    function isValidISO(ts){
+    // ---------- Hilfsfunktionen ----------
+    const NUM = x => {
+      const n = typeof x === "number" ? x : (typeof x === "string" ? Number(x.replace(",", ".")) : NaN);
+      return Number.isFinite(n) ? n : null;
+    };
+    const isValidISO = ts => {
       if(!ts || typeof ts!=="string") return false;
-      // akzeptiere "YYYY-MM-DDTHH:MM:SS(.sss)Z"
-      const d = new Date(ts);
-      return !Number.isNaN(d.getTime());
-    }
-    function formatDE(ts){
+      const t = Date.parse(ts);
+      return Number.isFinite(t);
+    };
+    const formatDE = ts => isValidISO(ts)
+      ? new Date(ts).toLocaleString("de-DE",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"})
+      : "—";
+    const relAge = ts => {
       if(!isValidISO(ts)) return "—";
-      const d = new Date(ts);
-      return d.toLocaleString("de-DE", { year:"numeric", month:"2-digit", day:"2-digit",
-                                         hour:"2-digit", minute:"2-digit", second:"2-digit" });
-    }
-    function relAge(ts){
-      if(!isValidISO(ts)) return "—";
-      const ms = Date.now() - (new Date(ts)).getTime();
+      const ms = Date.now() - Date.parse(ts);
       if(ms < 0) return "0 min";
-      const min = Math.floor(ms/60000);
-      if(min < 60) return `${min} min`;
-      const h = Math.floor(min/60);
-      const r = min % 60;
+      const m = Math.floor(ms/60000);
+      if(m < 60) return `${m} min`;
+      const h = Math.floor(m/60), r = m%60;
       return `${h} h ${r} min`;
-    }
-    function deNum(n, digits=1){
-      return (typeof n === "number" && Number.isFinite(n))
-        ? n.toLocaleString("de-DE",{minimumFractionDigits:digits, maximumFractionDigits:digits})
-        : "–";
-    }
-    function normId(id){
-      // Anzeige: Bindestriche schön, Unterstriche zu Minus; groß/klein wie geliefert
-      const s = String(id||"").trim().replace(/_/g,"-");
-      // Spezialfall Schacht-Audorf korrekt
-      return s.replace(/schacht[-_]?audorf/i,"Schacht-Audorf");
-    }
-    function isSoilNode(id){
-      // se01 / se01lb, auch mit Prefix/Suffix (bredstedt-se01lb, ...):
-      return /(^|[-_])se01(lb)?$/i.test(String(id||""));
+    };
+    const deNum = (n,d=1) => (typeof n==="number" && Number.isFinite(n))
+      ? n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d})
+      : "–";
+    const normId = id => String(id||"").trim().replace(/_/g,"-").replace(/schacht[-_]?audorf/i,"Schacht-Audorf");
+    const isSoilNode = id => /(^|[-_])se01(lb)?$/i.test(String(id||""));
+
+    // ---------- Datenquelle mit Fallback ----------
+    async function fetchJsonWithFallback(urlA, urlB){
+      const bust = `_=${Date.now()}`;
+      const u1 = urlA + (urlA.includes("?") ? "&" : "?") + bust;
+      try{
+        const r = await fetch(u1, { cache: "no-store" });
+        if(r.ok) return await r.json();
+        throw new Error(`HTTP ${r.status}`);
+      }catch(e){
+        if(!urlB) throw e;
+        const u2 = urlB + (urlB.includes("?") ? "&" : "?") + bust;
+        const r2 = await fetch(u2, { cache: "no-store" });
+        if(!r2.ok) throw new Error(`HTTP ${r2.status}`);
+        return await r2.json();
+      }
     }
 
-    // ----------------- Datenquelle -----------------
-    const DATA_URL = "/data/v2/latest/all.json";
+    const DATA_ABS = "/data/v2/latest/all.json";
+    const DATA_REL = "data/v2/latest/all.json";
 
     async function loadLatest(){
-      const r = await fetch(DATA_URL, { cache:"no-store" });
-      if(!r.ok) throw new Error(`Quelle nicht erreichbar (${r.status})`);
-      const arr = await r.json();
+      const arr = await fetchJsonWithFallback(DATA_ABS, DATA_REL);
       return Array.isArray(arr) ? arr : [];
     }
 
-    // ----------------- Karte -----------------
-    const map = L.map('map', {
-      zoomControl: true,
-      minZoom: 5
-    }).setView([54.3, 9.7], 8);
+    // ---------- Karte ----------
+    const map = L.map('map', { zoomControl:true, minZoom:5 }).setView([54.3, 9.7], 8);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19, attribution:'&copy; OpenStreetMap' }).addTo(map);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap'
-    }).addTo(map);
-
-    // Popup-Tuning: kompakt, AutoPan, leichter Offset nach unten
-    const popupOpts = {
-      maxWidth: 280,
-      autoPan: true,
-      offset: L.point(0, 10),
-      closeButton: true,
-      className: '' // wir stylen innerhalb .popup
-    };
+    const popupOpts = { maxWidth: 280, autoPan: true, offset: L.point(0, 10), closeButton: true, className: '' };
 
     function popupHtml(item){
-      const f = item.fields || {};
+      const f = item.fields||{};
       const soil = isSoilNode(item.id);
 
-      // Werte passend zum Node-Typ auswählen
-      const temp = soil ? (typeof f.temp_SOIL === "number" ? f.temp_SOIL : null)
-                        : (typeof f.TempC_SHT === "number" ? f.TempC_SHT
-                           : typeof f.TempC_SHT31 === "number" ? f.TempC_SHT31 : null);
+      const temp = soil
+        ? NUM(f.temp_SOIL)
+        : (NUM(f.TempC_SHT) ?? NUM(f.TempC_SHT31));
 
-      const hum  = soil ? (typeof f.water_SOIL === "number" ? f.water_SOIL : null)
-                        : (typeof f.Hum_SHT === "number" ? f.Hum_SHT
-                           : typeof f.Hum_SHT31 === "number" ? f.Hum_SHT31 : null);
+      const hum  = soil
+        ? NUM(f.water_SOIL)
+        : (NUM(f.Hum_SHT) ?? NUM(f.Hum_SHT31));
 
-      const bat  = (typeof f.BatV === "number") ? f.BatV : null;
+      const bat  = NUM(f.BatV);
 
       const title = normId(item.id);
-      const when  = formatDE(item.ts); // **Fix: nie "Invalid Date"**
+      const ts = item.ts || item.updated || item.last_ts || "";
+      const when = formatDE(ts);
 
       let html = `<div class="popup">`;
       html += `<h3>Sensor: ${title}</h3>`;
@@ -185,72 +144,69 @@
       if (hum  !== null) html += `<div class="row"><span class="label">${soil ? "Bodenfeuchte" : "Luftfeuchte"}</span><span class="value">${deNum(hum,1)} %</span></div>`;
       if (temp !== null) html += `<div class="row"><span class="label">${soil ? "Bodentemperatur" : "Temperatur"}</span><span class="value">${deNum(temp,1)} °C</span></div>`;
 
-      if (typeof f.lat === "number" && typeof f.lon === "number"){
-        html += `<div class="row"><span class="label">Koordinaten</span><span class="value">${deNum(f.lat,5)} / ${deNum(f.lon,5)}</span></div>`;
+      const lat = NUM(f.lat), lon = NUM(f.lon);
+      if (lat !== null && lon !== null){
+        html += `<div class="row"><span class="label">Koordinaten</span><span class="value">${deNum(lat,5)} / ${deNum(lon,5)}</span></div>`;
       }
 
-      // Statistik-Link (Pfad /html/sensor.html – wie besprochen)
       const statHref = `/html/sensor.html?node=${encodeURIComponent(item.id)}`;
       html += `<div class="qr"><div><a class="btn" href="${statHref}" target="_blank" rel="noopener">Statistik öffnen ↗</a></div></div>`;
-
       html += `</div>`;
       return html;
     }
 
     function latestOfAll(nodes){
-      // **Fix**: zuverlässig jüngsten gültigen ts bestimmen
       let best = null;
       for(const n of nodes){
-        if(isValidISO(n.ts)){
-          if(!best || new Date(n.ts) > new Date(best)) best = n.ts;
+        const ts = n.ts || n.updated || n.last_ts || null;
+        if(isValidISO(ts)){
+          if(!best || Date.parse(ts) > Date.parse(best)) best = ts;
         }
       }
       return best;
     }
 
     async function render(){
+      const nodesBadge = document.getElementById("nodesBadge");
+      const lastBadge = document.getElementById("lastBadge");
+      const lastBadgeAge = document.getElementById("lastBadgeAge");
+
       try{
         const nodes = await loadLatest();
 
-        // HUD: Anzahl
-        document.getElementById("nodesBadge").textContent = `Nodes: ${nodes.length}`;
+        nodesBadge.textContent = `Nodes: ${nodes.length}`;
 
-        // HUD rechts: letzte Node-Meldung (jüngster gültiger ts)
         const lastTs = latestOfAll(nodes);
-        const right = document.getElementById("lastBadge");
-        const rightAge = document.getElementById("lastBadgeAge");
-        right.firstChild.nodeValue = `Letzte Node-Meldung: ${formatDE(lastTs)}`;
-        rightAge.textContent = isValidISO(lastTs) ? `vor ${relAge(lastTs)}` : "—";
+        lastBadge.firstChild.nodeValue = `Letzte Node-Meldung: ${formatDE(lastTs)}`;
+        lastBadgeAge.textContent = isValidISO(lastTs) ? `vor ${relAge(lastTs)}` : "—";
 
-        // Marker zeichnen
-        const group = [];
+        const pts = [];
         nodes.forEach(n=>{
-          const f = n.fields || {};
-          const lat = f.lat, lon = f.lon;
-          if (typeof lat !== "number" || typeof lon !== "number") return;
+          const f = n.fields||{};
+          const lat = NUM(f.lat ?? n.lat);
+          const lon = NUM(f.lon ?? n.lon);
+          if (lat === null || lon === null) return;
 
           const m = L.marker([lat,lon]).addTo(map);
           m.bindPopup(popupHtml(n), popupOpts);
-          group.push([lat,lon]);
+          pts.push([lat,lon]);
         });
 
-        if (group.length){
-          const b = L.latLngBounds(group);
+        if (pts.length){
+          const b = L.latLngBounds(pts);
           map.fitBounds(b.pad(0.15));
         }
-      } catch (e){
+      }catch(e){
         console.error(e);
-        document.getElementById("nodesBadge").textContent = "Fehler beim Laden";
-        const right = document.getElementById("lastBadge");
-        right.firstChild.nodeValue = "Letzte Node-Meldung: —";
-        document.getElementById("lastBadgeAge").textContent = "—";
+        nodesBadge.textContent = `Fehler beim Laden (${e.message||e})`;
+        lastBadge.firstChild.nodeValue = "Letzte Node-Meldung: —";
+        lastBadgeAge.textContent = "—";
       }
     }
 
     render();
-
-    // Optional: periodisch sanft nachladen (flickerfrei, keine Karte leeren)
-    // setInterval(render, 60_000);
+    // Optionales Auto-Refresh:
+    // setInterval(render, 60000);
   </script>
 </body>
 </html>
