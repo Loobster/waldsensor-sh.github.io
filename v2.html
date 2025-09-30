@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WALDSENSOR.SH – Karte</title>
 
-  <!-- v0.13 -->
-  <!-- Fix: tolerantes Lat/Lon-Parsing; robustes ts; Fetch mit Cache-Bust + Fallback -->
-  <meta name="version" content="v0.13" />
+  <!-- v0.14 -->
+  <meta name="version" content="v0.14" />
 
   <link
     rel="stylesheet"
@@ -31,10 +30,19 @@
     html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
     #map{position:absolute;inset:0}
 
-    .hud{position:fixed;left:12px;top:12px;z-index:500;display:flex;flex-direction:column;gap:8px}
+    /* Badges */
     .badge{background:var(--card);box-shadow:0 8px 30px -16px rgba(0,0,0,.25),0 1px 0 rgba(0,0,0,.06);border-radius:12px;padding:8px 12px;font-size:14px;font-weight:700;color:var(--ink)}
     .badge small{display:block;font-weight:600;color:var(--muted);margin-top:2px}
+
+    /* Linke HUD – weiter rechts, damit sie nicht vom Zoom verdeckt wird */
+    .hud-left{position:fixed;left:64px;top:12px;z-index:500;display:flex;flex-direction:column;gap:8px}
+
+    /* Rechte HUD (letzte Meldung) unverändert rechts oben */
     .hud-right{position:fixed;right:16px;top:16px;z-index:500}
+
+    /* Zentrale Versions-Badge */
+    .hud-center{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:500}
+
     .leaflet-popup-content-wrapper{border-radius:12px;box-shadow:0 12px 40px -18px rgba(0,0,0,.35),0 1px 0 rgba(0,0,0,.06)}
     .popup{min-width:240px;max-width:280px;font-size:13px;line-height:1.35}
     .popup h3{margin:0 0 8px;font-size:16px;font-weight:800;letter-spacing:.2px}
@@ -43,19 +51,25 @@
     .value{font-weight:800}
     .qr{display:flex;align-items:center;gap:10px;margin-top:8px;padding-top:8px;border-top:1px solid #e5e7eb}
     .popup a.btn{display:inline-block;margin-top:6px;font-weight:700;text-decoration:none;color:#1d4ed8}
-    .ver{position:fixed;left:12px;bottom:10px;color:#94a3b8;font-size:12px;font-weight:700;background:rgba(255,255,255,.85);padding:4px 8px;border-radius:999px;box-shadow:0 1px 0 rgba(0,0,0,.05)}
   </style>
 </head>
 <body>
   <div id="map"></div>
 
-  <div class="hud">
+  <!-- Linke Badges -->
+  <div class="hud-left">
     <div class="badge" id="nodesBadge">Nodes: –</div>
   </div>
+
+  <!-- Zentrale Versions-Badge -->
+  <div class="hud-center">
+    <div class="badge">v0.14</div>
+  </div>
+
+  <!-- Rechte Badge -->
   <div class="hud-right">
     <div class="badge" id="lastBadge">Letzte Node-Meldung: –<small id="lastBadgeAge">—</small></div>
   </div>
-  <div class="ver">v0.13</div>
 
   <script>
     // ---------- Hilfsfunktionen ----------
@@ -205,7 +219,6 @@
     }
 
     render();
-    // Optionales Auto-Refresh:
     // setInterval(render, 60000);
   </script>
 </body>
