@@ -3,178 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <title>WALDSENSOR.SH – Sensordetails</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- WALDSENSOR.SH sensor.html v0.081 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: system-ui, sans-serif;
-      margin: 0;
-      background: #f5f7fa;
-      color: #222;
-    }
-    header {
-      background: #044;
-      color: #fff;
-      padding: 0.6em 1em;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    header a {
-      color: #9cf;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    h1 {
-      margin: 0;
-      font-size: 1.4em;
-    }
-    h1 small {
-      font-size: 0.7em;
-      color: #ccc;
-      margin-left: .4em;
-    }
-    main {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      padding: 1rem;
-    }
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,.1);
-    }
-    .stand {
-      display: inline-block;
-      background: #cfeedd;
-      color: #044;
-      padding: .2em .8em;
-      border-radius: 1em;
-      font-size: .9em;
-      margin-bottom: .6em;
-    }
-    .tiles {
-      display: flex;
-      gap: .6rem;
-    }
-    .tile {
-      flex: 1;
-      background: #f1f4f9;
-      border-radius: 10px;
-      padding: .8rem;
-      text-align: center;
-    }
-    .tile h2 {
-      margin: 0;
-      font-size: .9em;
-      color: #555;
-    }
-    .tile p {
-      margin: .3em 0 0 0;
-      font-size: 1.3em;
-      font-weight: bold;
-    }
-    footer {
-      text-align: center;
-      color: #666;
-      font-size: .8em;
-      padding: 1em;
-    }
+    body { font-family: system-ui, sans-serif; margin:0; background:#f6f8fa; }
+    header { background:#004d46; color:#fff; padding:0.8em 1em; font-weight:bold; display:flex; justify-content:space-between; }
+    header a { color:#fff; text-decoration:none; }
+    main { padding:1em; display:grid; grid-template-columns:1fr 1fr; gap:1em; }
+    .card { background:#fff; border-radius:12px; padding:1em; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .pill { display:inline-block; background:#e6f4ea; color:#1a6334; padding:0.2em 0.8em; border-radius:999px; font-size:0.9em; margin-bottom:0.5em; }
+    .tiles { display:flex; gap:0.8em; }
+    .tile { flex:1; background:#f4f6f8; border-radius:8px; padding:0.8em; text-align:center; }
+    .tile h3 { margin:0; font-size:0.9em; color:#555; }
+    .tile p { margin:0.2em 0 0; font-size:1.2em; font-weight:bold; }
+    footer { text-align:center; color:#666; padding:1em; font-size:0.9em; }
   </style>
 </head>
 <body>
   <header>
-    <a href="/v2.html">← Zur Karte</a>
-    <h1>Schulwaldsensor — <span id="nodeName">?</span><small>v0.081</small></h1>
+    <a href="../v2.html">&larr; Zur Karte</a>
+    <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.082</small></div>
   </header>
-
   <main>
-    <!-- Linkes Feld: kompakter -->
     <div class="card">
-      <div id="stand" class="stand">Stand: —</div>
+      <div id="stand" class="pill">Stand: —</div>
       <div class="tiles">
         <div class="tile">
-          <h2 id="labelTemp">Temperatur</h2>
-          <p id="valTemp">—</p>
+          <h3>Temperatur</h3>
+          <p id="temp">—</p>
         </div>
         <div class="tile">
-          <h2 id="labelHum">Feuchte</h2>
-          <p id="valHum">—</p>
+          <h3>Luftfeuchte</h3>
+          <p id="hum">—</p>
         </div>
         <div class="tile">
-          <h2>Batterie</h2>
-          <p id="valBat">—</p>
+          <h3>Batterie</h3>
+          <p id="bat">—</p>
         </div>
       </div>
-      <div style="margin-top:.5em; font-size:.8em; color:#777;">
-        Quelle: /data/v2/latest/all.json
-      </div>
+      <small>Quelle: /data/v2/latest/all.json</small>
     </div>
-
-    <!-- Rechtes Feld: Netz & Gateways -->
     <div class="card">
       <h3>Netz & Gateways</h3>
-      <div>Letzte 24 h: <span id="frames24">—</span> Uplinks</div>
-      <div>Letzter Uplink: <span id="lastUplink">—</span></div>
-      <div>Gateways: <span id="gateways">—</span></div>
-      <div>Bestes Signal: <span id="bestSignal">—</span></div>
-      <div>ADR: <span id="adr">—</span></div>
-      <div style="margin-top:.5em; font-size:.8em; color:#777;">
-        Quelle: <span id="netSrc">—</span>
-      </div>
+      <p>Letzte 24 h: <span id="frames24">—</span> Uplinks</p>
+      <p>Letzter Uplink: <span id="lastUplink">—</span></p>
+      <p>Gateways: <span id="gwCount">—</span></p>
+      <p>Bestes Signal: <span id="bestSig">—</span></p>
+      <p>ADR: <span id="adr">—</span></p>
+      <small id="netSource">Quelle: —</small>
     </div>
   </main>
-
-  <footer>
-    WALDSENSOR.SH – Sensordetails
-  </footer>
+  <footer>WALDSENSOR.SH – Sensordetails</footer>
 
   <script>
-    // Hilfsfunktionen
-    function isSoilNode(id){
-      return /se01(lb)?$/i.test(id);
+    const urlParams = new URLSearchParams(location.search);
+    const nodeId = urlParams.get("node") || "unknown";
+    document.getElementById("nodeName").textContent = nodeId;
+
+    function fmtDate(ts){
+      if(!ts) return "—";
+      const d = new Date(ts);
+      if(isNaN(d)) return "—";
+      return d.toLocaleString("de-DE");
     }
-    function fmt(v, unit=""){
-      if(v==null) return "—";
-      return (typeof v==="number"? v.toLocaleString("de-DE",{maximumFractionDigits:1}): v) + (unit? " "+unit:"");
-    }
 
-    // Node-ID aus URL
-    const params = new URLSearchParams(location.search);
-    const node = params.get("node")||"";
-    document.getElementById("nodeName").textContent = node;
+    // Aktuelle Werte laden
+    fetch("/data/v2/latest/all.json",{cache:"no-store"})
+      .then(r=>r.json())
+      .then(all=>{
+        const n = all.find(x=>x.id===nodeId);
+        if(!n){ return; }
+        document.getElementById("stand").textContent = "Stand: " + fmtDate(n.time || n.ts);
+        document.getElementById("temp").textContent = n.fields?.TempC_SHT?.toFixed(1)+" °C" || "—";
+        document.getElementById("hum").textContent = (n.fields?.Hum_SHT?.toFixed(0))+" %" || "—";
+        document.getElementById("bat").textContent = n.fields?.BatV?.toFixed(2)+" V" || "—";
+      })
+      .catch(err=>console.error("Fehler beim Laden all.json",err));
 
-    async function loadLatest(){
-      try {
-        const r = await fetch("/data/v2/latest/all.json",{cache:"no-store"});
-        const all = await r.json();
-        const n = all.find(x=>x.id===node);
-        if(!n) return;
-        const f = n.fields||{};
-        const soil = isSoilNode(node);
-
-        const t = soil ? f.temp_SOIL : (f.TempC_SHT ?? f.TempC_SHT31);
-        const h = soil ? f.water_SOIL : (f.Hum_SHT ?? f.Hum_SHT31);
-        const b = f.BatV;
-
-        document.getElementById("valTemp").textContent = fmt(t, soil?"°C":"°C");
-        document.getElementById("valHum").textContent  = fmt(h, soil?"%":"%");
-        document.getElementById("valBat").textContent  = fmt(b,"V");
-        document.getElementById("labelTemp").textContent = soil?"Bodentemperatur":"Temperatur";
-        document.getElementById("labelHum").textContent  = soil?"Bodenwasser":"Luftfeuchte";
-
-        if(n.time){
-          const dt = new Date(n.time);
-          document.getElementById("stand").textContent = "Stand: "+dt.toLocaleString("de-DE");
+    // Netzstatistik laden
+    const netUrl = `/data/v2/net/netstats_${nodeId}.json`;
+    document.getElementById("netSource").textContent = "Quelle: "+netUrl;
+    fetch(netUrl,{cache:"no-store"})
+      .then(r=>r.json())
+      .then(ns=>{
+        document.getElementById("frames24").textContent = ns.frames24 ?? "—";
+        document.getElementById("lastUplink").textContent = fmtDate(ns.last_ts);
+        document.getElementById("gwCount").textContent = ns.gateways?.length ?? "—";
+        if(ns.best){
+          document.getElementById("bestSig").textContent = `${ns.best.rssi} dBm / ${ns.best.snr} dB`;
         }
-      } catch(e){
-        console.error(e);
-      }
-    }
-
-    loadLatest();
+        document.getElementById("adr").textContent = ns.adr ?? ns.adr_enabled ?? "—";
+      })
+      .catch(_=>{
+        document.getElementById("frames24").textContent="—";
+      });
   </script>
 </body>
 </html>
