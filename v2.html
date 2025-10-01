@@ -5,221 +5,195 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WALDSENSOR.SH – Karte</title>
 
-  <!-- v0.14 -->
-  <meta name="version" content="v0.14" />
-
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
-  />
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-  ></script>
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <style>
     :root{
-      --ink:#0f172a;
-      --muted:#64748b;
-      --bg:#f6f8fb;
-      --card:#ffffff;
+      --bg:#f6f8fb; --ink:#0d1b2a; --muted:#64748b; --good:#16a34a;
+      --card:#fff; --radius:14px; --pad:12px;
     }
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
-    #map{position:absolute;inset:0}
-
-    /* Badges */
-    .badge{background:var(--card);box-shadow:0 8px 30px -16px rgba(0,0,0,.25),0 1px 0 rgba(0,0,0,.06);border-radius:12px;padding:8px 12px;font-size:14px;font-weight:700;color:var(--ink)}
-    .badge small{display:block;font-weight:600;color:var(--muted);margin-top:2px}
-
-    /* Linke HUD – weiter rechts, damit sie nicht vom Zoom verdeckt wird */
-    .hud-left{position:fixed;left:64px;top:12px;z-index:500;display:flex;flex-direction:column;gap:8px}
-
-    /* Rechte HUD (letzte Meldung) unverändert rechts oben */
-    .hud-right{position:fixed;right:16px;top:16px;z-index:500}
-
-    /* Zentrale Versions-Badge */
-    .hud-center{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:500}
-
-    .leaflet-popup-content-wrapper{border-radius:12px;box-shadow:0 12px 40px -18px rgba(0,0,0,.35),0 1px 0 rgba(0,0,0,.06)}
-    .popup{min-width:240px;max-width:280px;font-size:13px;line-height:1.35}
-    .popup h3{margin:0 0 8px;font-size:16px;font-weight:800;letter-spacing:.2px}
-    .row{display:flex;justify-content:space-between;gap:12px;margin:4px 0}
-    .label{color:var(--muted);font-weight:700}
-    .value{font-weight:800}
-    .qr{display:flex;align-items:center;gap:10px;margin-top:8px;padding-top:8px;border-top:1px solid #e5e7eb}
-    .popup a.btn{display:inline-block;margin-top:6px;font-weight:700;text-decoration:none;color:#1d4ed8}
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
+    #map{position:absolute; inset:0}
+    .hud{position:absolute; left:12px; top:12px; display:flex; gap:10px; z-index:1000}
+    .hud .card{background:var(--card); border-radius:var(--radius); box-shadow:0 10px 30px -20px rgba(0,0,0,.25), 0 1px 0 rgba(0,0,0,.06); padding:10px 12px; min-width:220px}
+    .hud .k{font-size:12px; color:var(--muted); margin-bottom:4px}
+    .hud .v{font-weight:800; letter-spacing:.2px}
+    .ver{position:absolute; left:50%; transform:translateX(-50%); top:12px; z-index:1000; background:var(--card); border-radius:999px; padding:5px 10px; font-size:12px; color:#475569; box-shadow:0 1px 0 rgba(0,0,0,.06)}
+    .last{position:absolute; right:12px; top:12px; z-index:1000; background:var(--card); border-radius:var(--radius); padding:10px 12px; min-width:260px; box-shadow:0 10px 30px -20px rgba(0,0,0,.25), 0 1px 0 rgba(0,0,0,.06)}
+    .last .line{display:flex; justify-content:space-between; gap:10px}
+    .ok{color:var(--good); font-weight:700}
+    .err{color:#b91c1c; font-weight:700}
+    /* Popup kompakt & mittig (auf Mobile nicht vom Browser-UI verdecken) */
+    .leaflet-popup-content{margin:8px 10px; min-width: 220px; max-width: 280px; font-size:14px}
+    .pop h3{margin:.2rem 0 .4rem; font-size:16px}
+    .pop .m{color:var(--muted); font-size:12px}
+    .btn{display:inline-block; margin-top:6px; text-decoration:none; font-weight:700; color:#2563eb}
+    .qr{display:block; margin-top:6px; font-size:12px; color:#475569; text-decoration:none}
+    @media (min-width:900px){ .leaflet-popup-content{max-width:320px} }
   </style>
 </head>
 <body>
   <div id="map"></div>
 
-  <!-- Linke Badges -->
-  <div class="hud-left">
-    <div class="badge" id="nodesBadge">Nodes: –</div>
+  <!-- Version in der Mitte oben -->
+  <div class="ver">v0.14.1 · ZDL</div>
+
+  <!-- HUD links -->
+  <div class="hud">
+    <div class="card">
+      <div class="k">Aktive Sensoren</div>
+      <div class="v"><span id="count">—</span></div>
+    </div>
+    <div class="card">
+      <div class="k">Stand</div>
+      <div class="v" id="stand">—</div>
+    </div>
   </div>
 
-  <!-- Zentrale Versions-Badge -->
-  <div class="hud-center">
-    <div class="badge">v0.14</div>
-  </div>
-
-  <!-- Rechte Badge -->
-  <div class="hud-right">
-    <div class="badge" id="lastBadge">Letzte Node-Meldung: –<small id="lastBadgeAge">—</small></div>
+  <!-- HUD rechts (letzte Meldung) -->
+  <div class="last">
+    <div class="k">Letzte Node-Meldung</div>
+    <div class="line"><div id="last_id">—</div><div id="last_ts">—</div></div>
+    <div id="last_age" class="m">—</div>
   </div>
 
   <script>
-    // ---------- Hilfsfunktionen ----------
-    const NUM = x => {
-      const n = typeof x === "number" ? x : (typeof x === "string" ? Number(x.replace(",", ".")) : NaN);
-      return Number.isFinite(n) ? n : null;
-    };
-    const isValidISO = ts => {
-      if(!ts || typeof ts!=="string") return false;
-      const t = Date.parse(ts);
-      return Number.isFinite(t);
-    };
-    const formatDE = ts => isValidISO(ts)
-      ? new Date(ts).toLocaleString("de-DE",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"})
-      : "—";
-    const relAge = ts => {
-      if(!isValidISO(ts)) return "—";
-      const ms = Date.now() - Date.parse(ts);
-      if(ms < 0) return "0 min";
-      const m = Math.floor(ms/60000);
-      if(m < 60) return `${m} min`;
-      const h = Math.floor(m/60), r = m%60;
-      return `${h} h ${r} min`;
-    };
-    const deNum = (n,d=1) => (typeof n==="number" && Number.isFinite(n))
-      ? n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d})
-      : "–";
-    const normId = id => String(id||"").trim().replace(/_/g,"-").replace(/schacht[-_]?audorf/i,"Schacht-Audorf");
-    const isSoilNode = id => /(^|[-_])se01(lb)?$/i.test(String(id||""));
+    // ---------- Utils ----------
+    const byId = (x)=>document.getElementById(x);
+    const safeStr = (s)=> String(s ?? "").trim();
+    const isSoil = (id)=>/(^|[-_])se01(lb)?$/i.test(String(id||""));
+    const fmtNum = (v, d=1)=> (v==null || Number.isNaN(Number(v))) ? "—" : Number(v).toFixed(d).replace(".",",");
 
-    // ---------- Datenquelle mit Fallback ----------
-    async function fetchJsonWithFallback(urlA, urlB){
-      const bust = `_=${Date.now()}`;
-      const u1 = urlA + (urlA.includes("?") ? "&" : "?") + bust;
+    function fmtDate(ts){
+      if(!ts) return "—";
+      const d = new Date(ts);
+      if(Number.isNaN(+d)) return "—";
+      return d.toLocaleString("de-DE");
+    }
+    function ageStr(ts){
+      if(!ts) return "—";
+      const d = new Date(ts);
+      if(Number.isNaN(+d)) return "—";
+      const sec = Math.max(0, (Date.now()-d.getTime())/1000);
+      if (sec < 90) return "vor " + Math.round(sec) + " s";
+      const min = sec/60;
+      if (min < 90) return "vor " + Math.round(min) + " min";
+      const h = min/60;
+      return "vor " + Math.round(h) + " h";
+    }
+
+    // ---------- Leaflet Karte ----------
+    const map = L.map('map', { zoomControl: true }).setView([54.3, 9.8], 8);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19, attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+    const markers = L.layerGroup().addTo(map);
+
+    // ---------- Rendering ----------
+    function renderMarkers(list){
+      markers.clearLayers();
+
+      // letzte Meldung bestimmen
+      let lastItem = null;
+      for(const e of list){
+        const t = e.ts ? new Date(e.ts).getTime() : 0;
+        if(!lastItem || t > (lastItem.ts? new Date(lastItem.ts).getTime() : 0)) lastItem = e;
+      }
+
+      // HUD links/rechts
+      byId("count").textContent = list.length;
+      byId("stand").textContent = lastItem?.ts ? fmtDate(lastItem.ts) : "—";
+      byId("last_id").textContent = lastItem?.id || "—";
+      byId("last_ts").textContent = lastItem?.ts ? fmtDate(lastItem.ts) : "—";
+      byId("last_age").textContent = lastItem?.ts ? ageStr(lastItem.ts) : "—";
+
+      // Marker zeichnen
+      list.forEach(e=>{
+        const f = e.fields || {};
+        const lat = f.lat ?? e.lat, lon = f.lon ?? e.lon;
+        if(typeof lat !== "number" || typeof lon !== "number") return;
+
+        const soil = isSoil(e.id);
+        const temp = soil ? (f.temp_SOIL_num ?? f.temp_SOIL ?? null) : (f.TempC_SHT ?? f.TempC_SHT31 ?? null);
+        const hum  = soil ? (f.water_SOIL_num ?? f.water_SOIL ?? null) : (f.Hum_SHT   ?? f.Hum_SHT31   ?? null);
+        const bat  = f.BatV ?? null;
+
+        const tTxt = soil ? (temp!=null? fmtNum(temp,1)+" °C (Boden)" : "—") : (temp!=null? fmtNum(temp,1)+" °C" : "—");
+        const hTxt = soil ? (hum!=null?  fmtNum(hum,1)+" % Bodenwasser" : "—") : (hum!=null?  fmtNum(hum,0)+" %" : "—");
+        const bTxt = bat!=null? fmtNum(bat,3)+" V" : "—";
+
+        const sensorUrl = `/html/sensor.html?node=${encodeURIComponent(e.id)}`;
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=${encodeURIComponent(location.origin+sensorUrl)}`;
+
+        const html = `
+          <div class="pop">
+            <h3>Sensor: ${safeStr(e.id).replace(/_/g,"_").replace(/-/g,"-")}</h3>
+            <div class="m">Zuletzt aktiv: ${fmtDate(e.ts)}</div>
+            <div style="margin-top:6px;">
+              <div>🌡️ ${tTxt}</div>
+              <div>💧 ${hTxt}</div>
+              <div>🔋 ${bTxt}</div>
+            </div>
+            <a class="btn" href="${sensorUrl}">Statistik öffnen</a>
+            <a class="qr" href="${sensorUrl}" target="_blank" rel="noopener">
+              <img src="${qrUrl}" alt="QR zum Sensor" width="90" height="90" />
+            </a>
+          </div>
+        `;
+
+        const m = L.marker([lat, lon]).addTo(markers);
+        m.bindPopup(html, {autoPan:true, keepInView:true, maxWidth: 360});
+      });
+    }
+
+    // ---------- Zero-Downtime Loader ----------
+    window._lastAll = window._lastAll || [];
+
+    async function loadLatestAndRender(){
+      const prev = Array.isArray(window._lastAll) ? window._lastAll : [];
       try{
-        const r = await fetch(u1, { cache: "no-store" });
-        if(r.ok) return await r.json();
-        throw new Error(`HTTP ${r.status}`);
-      }catch(e){
-        if(!urlB) throw e;
-        const u2 = urlB + (urlB.includes("?") ? "&" : "?") + bust;
-        const r2 = await fetch(u2, { cache: "no-store" });
-        if(!r2.ok) throw new Error(`HTTP ${r2.status}`);
-        return await r2.json();
-      }
-    }
+        const url = `/data/v2/latest/all.json?v=${Date.now()}`;
+        const r = await fetch(url, {cache: 'no-store'});
+        if(!r.ok) throw new Error(`HTTP ${r.status}`);
+        const arr = await r.json();
 
-    const DATA_ABS = "/data/v2/latest/all.json";
-    const DATA_REL = "data/v2/latest/all.json";
-
-    async function loadLatest(){
-      const arr = await fetchJsonWithFallback(DATA_ABS, DATA_REL);
-      return Array.isArray(arr) ? arr : [];
-    }
-
-    // ---------- Karte ----------
-    const map = L.map('map', { zoomControl:true, minZoom:5 }).setView([54.3, 9.7], 8);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19, attribution:'&copy; OpenStreetMap' }).addTo(map);
-
-    const popupOpts = { maxWidth: 280, autoPan: true, offset: L.point(0, 10), closeButton: true, className: '' };
-
-    function popupHtml(item){
-      const f = item.fields||{};
-      const soil = isSoilNode(item.id);
-
-      const temp = soil
-        ? NUM(f.temp_SOIL)
-        : (NUM(f.TempC_SHT) ?? NUM(f.TempC_SHT31));
-
-      const hum  = soil
-        ? NUM(f.water_SOIL)
-        : (NUM(f.Hum_SHT) ?? NUM(f.Hum_SHT31));
-
-      const bat  = NUM(f.BatV);
-
-      const title = normId(item.id);
-      const ts = item.ts || item.updated || item.last_ts || "";
-      const when = formatDE(ts);
-
-      let html = `<div class="popup">`;
-      html += `<h3>Sensor: ${title}</h3>`;
-      html += `<div class="row"><span class="label">Zuletzt aktiv</span><span class="value">${when}</span></div>`;
-      html += `<hr/>`;
-
-      if (bat  !== null) html += `<div class="row"><span class="label">Batterie</span><span class="value">${deNum(bat,3)} V</span></div>`;
-      if (hum  !== null) html += `<div class="row"><span class="label">${soil ? "Bodenfeuchte" : "Luftfeuchte"}</span><span class="value">${deNum(hum,1)} %</span></div>`;
-      if (temp !== null) html += `<div class="row"><span class="label">${soil ? "Bodentemperatur" : "Temperatur"}</span><span class="value">${deNum(temp,1)} °C</span></div>`;
-
-      const lat = NUM(f.lat), lon = NUM(f.lon);
-      if (lat !== null && lon !== null){
-        html += `<div class="row"><span class="label">Koordinaten</span><span class="value">${deNum(lat,5)} / ${deNum(lon,5)}</span></div>`;
-      }
-
-      const statHref = `/html/sensor.html?node=${encodeURIComponent(item.id)}`;
-      html += `<div class="qr"><div><a class="btn" href="${statHref}" target="_blank" rel="noopener">Statistik öffnen ↗</a></div></div>`;
-      html += `</div>`;
-      return html;
-    }
-
-    function latestOfAll(nodes){
-      let best = null;
-      for(const n of nodes){
-        const ts = n.ts || n.updated || n.last_ts || null;
-        if(isValidISO(ts)){
-          if(!best || Date.parse(ts) > Date.parse(best)) best = ts;
-        }
-      }
-      return best;
-    }
-
-    async function render(){
-      const nodesBadge = document.getElementById("nodesBadge");
-      const lastBadge = document.getElementById("lastBadge");
-      const lastBadgeAge = document.getElementById("lastBadgeAge");
-
-      try{
-        const nodes = await loadLatest();
-
-        nodesBadge.textContent = `Nodes: ${nodes.length}`;
-
-        const lastTs = latestOfAll(nodes);
-        lastBadge.firstChild.nodeValue = `Letzte Node-Meldung: ${formatDE(lastTs)}`;
-        lastBadgeAge.textContent = isValidISO(lastTs) ? `vor ${relAge(lastTs)}` : "—";
-
-        const pts = [];
-        nodes.forEach(n=>{
-          const f = n.fields||{};
-          const lat = NUM(f.lat ?? n.lat);
-          const lon = NUM(f.lon ?? n.lon);
-          if (lat === null || lon === null) return;
-
-          const m = L.marker([lat,lon]).addTo(map);
-          m.bindPopup(popupHtml(n), popupOpts);
-          pts.push([lat,lon]);
-        });
-
-        if (pts.length){
-          const b = L.latLngBounds(pts);
-          map.fitBounds(b.pad(0.15));
+        if (Array.isArray(arr) && arr.length > 0){
+          window._lastAll = sanitizeAll(arr);
+          renderMapSafe(window._lastAll);
+        } else if (prev.length > 0){
+          console.warn("all.json leer – behalte vorherige Marker.");
+          renderMapSafe(prev);
+        } else {
+          console.warn("Keine Daten verfügbar.");
         }
       }catch(e){
-        console.error(e);
-        nodesBadge.textContent = `Fehler beim Laden (${e.message||e})`;
-        lastBadge.firstChild.nodeValue = "Letzte Node-Meldung: —";
-        lastBadgeAge.textContent = "—";
+        console.error("Fetch all.json fehlgeschlagen:", e);
+        if (prev.length > 0){
+          renderMapSafe(prev);
+        }
       }
     }
 
-    render();
-    // setInterval(render, 60000);
+    function sanitizeAll(arr){
+      // IDs säubern (keine Zeilenumbrüche, trim)
+      return arr.map(x => {
+        const id = safeStr(x.id||"");
+        // TS in ISO lassen, sonst unverändert
+        return {...x, id};
+      });
+    }
+
+    function renderMapSafe(list){
+      if (!Array.isArray(list) || list.length===0) return;
+      renderMarkers(list);
+    }
+
+    // Initial + zyklisch
+    loadLatestAndRender();
+    setInterval(loadLatestAndRender, 120000); // alle 2 Minuten
+
   </script>
 </body>
 </html>
