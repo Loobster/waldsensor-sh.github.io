@@ -1,199 +1,196 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
   <title>WALDSENSOR.SH – Karte</title>
-
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
   <style>
     :root{
-      --bg:#f6f8fb; --ink:#0d1b2a; --muted:#64748b; --good:#16a34a;
-      --card:#fff; --radius:14px; --pad:12px;
+      --bg:#f6f8fb; --ink:#0d1b2a; --muted:#64748b; --ok:#e6f4ea; --ok-ink:#166534;
+      --card:#fff; --radius:16px; --shadow:0 6px 30px -18px rgba(0,0,0,.25), 0 1px 0 rgba(0,0,0,.06);
+      --accent:#0b6b61;
     }
-    html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
-    #map{position:absolute; inset:0}
-    .hud{position:absolute; left:12px; top:12px; display:flex; gap:10px; z-index:1000}
-    .hud .card{background:var(--card); border-radius:var(--radius); box-shadow:0 10px 30px -20px rgba(0,0,0,.25), 0 1px 0 rgba(0,0,0,.06); padding:10px 12px; min-width:220px}
-    .hud .k{font-size:12px; color:var(--muted); margin-bottom:4px}
-    .hud .v{font-weight:800; letter-spacing:.2px}
-    .ver{position:absolute; left:50%; transform:translateX(-50%); top:12px; z-index:1000; background:var(--card); border-radius:999px; padding:5px 10px; font-size:12px; color:#475569; box-shadow:0 1px 0 rgba(0,0,0,.06)}
-    .last{position:absolute; right:12px; top:12px; z-index:1000; background:var(--card); border-radius:var(--radius); padding:10px 12px; min-width:260px; box-shadow:0 10px 30px -20px rgba(0,0,0,.25), 0 1px 0 rgba(0,0,0,.06)}
-    .last .line{display:flex; justify-content:space-between; gap:10px}
-    .ok{color:var(--good); font-weight:700}
-    .err{color:#b91c1c; font-weight:700}
-    /* Popup kompakt & mittig (auf Mobile nicht vom Browser-UI verdecken) */
-    .leaflet-popup-content{margin:8px 10px; min-width: 220px; max-width: 280px; font-size:14px}
-    .pop h3{margin:.2rem 0 .4rem; font-size:16px}
-    .pop .m{color:var(--muted); font-size:12px}
-    .btn{display:inline-block; margin-top:6px; text-decoration:none; font-weight:700; color:#2563eb}
-    .qr{display:block; margin-top:6px; font-size:12px; color:#475569; text-decoration:none}
-    @media (min-width:900px){ .leaflet-popup-content{max-width:320px} }
+    html,body{height:100%; margin:0; background:var(--bg); color:var(--ink);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif}
+    #map{position:absolute; inset:64px 0 0 0}
+
+    /* Top bar */
+    .topbar{position:fixed; inset:0 0 auto 0; height:64px; background:#063e39; color:#fff;
+      display:flex; align-items:center; gap:14px; padding:10px 14px; z-index:1000}
+    .brand{font-weight:900; letter-spacing:.2px}
+    .spacer{flex:1}
+
+    /* Badges */
+    .badge{background:var(--card); color:var(--ink); border-radius:16px; box-shadow:var(--shadow);
+      display:flex; flex-direction:column; justify-content:center; padding:10px 14px; min-width:210px}
+    .badge h4{margin:0 0 6px; font-size:14px; color:var(--muted); font-weight:800}
+    .badge .big{font-size:24px; font-weight:900}
+    .badge.small{min-width:auto; padding:8px 12px}
+    .badge.small .big{font-size:14px; font-weight:800}
+    .row{position:fixed; display:flex; gap:12px; z-index:900}
+    .row.left{top:76px; left:10px}
+    .row.center{top:76px; left:50%; transform:translateX(-50%)}
+    .row.right{top:76px; right:10px; max-width:46vw}
+
+    /* Link-Stil */
+    a.clean{color:#0b6b61; text-decoration:none; font-weight:700}
+    a.clean:hover{text-decoration:underline}
+
+    /* Popup (Leaflet) feinjustieren */
+    .leaflet-popup-content{margin:10px 12px; line-height:1.25}
+    .popup-head{font-weight:800; margin-bottom:6px}
+    .popup-grid{font-size:13px; color:var(--muted)}
+    .popup-grid b{color:var(--ink)}
   </style>
 </head>
 <body>
+  <div class="topbar">
+    <a href="/index.html" class="clean" style="color:#fff;text-decoration:none;">← Zur Startseite</a>
+    <div class="brand">Schulwaldsensor</div>
+    <div class="spacer"></div>
+    <div class="badge small"><div class="big" id="version">v0.14.1 · ZDL</div></div>
+  </div>
+
+  <!-- Badges oben links / rechts -->
+  <div class="row left">
+    <div class="badge">
+      <h4>Aktive Sensoren</h4>
+      <div class="big" id="nodesCount">—</div>
+    </div>
+    <div class="badge">
+      <h4>Stand</h4>
+      <div class="big" id="standNow">—</div>
+    </div>
+  </div>
+  <div class="row right">
+    <div class="badge" style="min-width:360px;">
+      <h4><b>Letzte Node-Meldung</b></h4>
+      <div class="big"><span id="lastNode">—</span></div>
+      <div style="font-size:14px; color:var(--muted)"><span id="lastTs">—</span> · <span id="lastAgo">—</span></div>
+    </div>
+  </div>
+
   <div id="map"></div>
 
-  <!-- Version in der Mitte oben -->
-  <div class="ver">v0.14.1 · ZDL</div>
-
-  <!-- HUD links -->
-  <div class="hud">
-    <div class="card">
-      <div class="k">Aktive Sensoren</div>
-      <div class="v"><span id="count">—</span></div>
-    </div>
-    <div class="card">
-      <div class="k">Stand</div>
-      <div class="v" id="stand">—</div>
-    </div>
-  </div>
-
-  <!-- HUD rechts (letzte Meldung) -->
-  <div class="last">
-    <div class="k">Letzte Node-Meldung</div>
-    <div class="line"><div id="last_id">—</div><div id="last_ts">—</div></div>
-    <div id="last_age" class="m">—</div>
-  </div>
-
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
   <script>
-    // ---------- Utils ----------
-    const byId = (x)=>document.getElementById(x);
-    const safeStr = (s)=> String(s ?? "").trim();
-    const isSoil = (id)=>/(^|[-_])se01(lb)?$/i.test(String(id||""));
-    const fmtNum = (v, d=1)=> (v==null || Number.isNaN(Number(v))) ? "—" : Number(v).toFixed(d).replace(".",",");
-
-    function fmtDate(ts){
+    // ---------- kleine Helfer ----------
+    const $ = id => document.getElementById(id);
+    const sleep = ms => new Promise(r=>setTimeout(r, ms));
+    const deDate = ts => {
       if(!ts) return "—";
       const d = new Date(ts);
-      if(Number.isNaN(+d)) return "—";
+      if(isNaN(d)) return "—";
       return d.toLocaleString("de-DE");
-    }
-    function ageStr(ts){
+    };
+    const ago = ts => {
       if(!ts) return "—";
-      const d = new Date(ts);
-      if(Number.isNaN(+d)) return "—";
-      const sec = Math.max(0, (Date.now()-d.getTime())/1000);
-      if (sec < 90) return "vor " + Math.round(sec) + " s";
-      const min = sec/60;
-      if (min < 90) return "vor " + Math.round(min) + " min";
-      const h = min/60;
-      return "vor " + Math.round(h) + " h";
-    }
+      const t = new Date(ts).getTime();
+      if(!isFinite(t)) return "—";
+      const s = Math.max(0, Math.floor((Date.now()-t)/1000));
+      if(s<60) return `${s}s`;
+      const m = Math.floor(s/60);
+      if(m<60) return `vor ${m} min`;
+      const h = Math.floor(m/60);
+      return `vor ${h} h`;
+    };
 
-    // ---------- Leaflet Karte ----------
-    const map = L.map('map', { zoomControl: true }).setView([54.3, 9.8], 8);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19, attribution: '&copy; OpenStreetMap'
-    }).addTo(map);
-    const markers = L.layerGroup().addTo(map);
+    // ---------- Map ----------
+    const map = L.map('map',{attributionControl:true}).setView([54.40, 9.75], 8);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
 
-    // ---------- Rendering ----------
+    let markersLayer = L.layerGroup().addTo(map);
+
     function renderMarkers(list){
-      markers.clearLayers();
-
-      // letzte Meldung bestimmen
-      let lastItem = null;
-      for(const e of list){
-        const t = e.ts ? new Date(e.ts).getTime() : 0;
-        if(!lastItem || t > (lastItem.ts? new Date(lastItem.ts).getTime() : 0)) lastItem = e;
-      }
-
-      // HUD links/rechts
-      byId("count").textContent = list.length;
-      byId("stand").textContent = lastItem?.ts ? fmtDate(lastItem.ts) : "—";
-      byId("last_id").textContent = lastItem?.id || "—";
-      byId("last_ts").textContent = lastItem?.ts ? fmtDate(lastItem.ts) : "—";
-      byId("last_age").textContent = lastItem?.ts ? ageStr(lastItem.ts) : "—";
-
-      // Marker zeichnen
-      list.forEach(e=>{
-        const f = e.fields || {};
-        const lat = f.lat ?? e.lat, lon = f.lon ?? e.lon;
+      // komplette Schicht neu aufbauen – aber Erst NACH erfolgreichem Fetch!
+      const layer = L.layerGroup();
+      list.forEach(rec=>{
+        const lat = rec.fields?.lat ?? rec.lat;
+        const lon = rec.fields?.lon ?? rec.lon;
         if(typeof lat !== "number" || typeof lon !== "number") return;
+        const m = L.marker([lat,lon]);
+        const t = rec.fields || {};
+        const temp = (t.TempC_SHT ?? t.TempC_SHT31);
+        const hum  = (t.Hum_SHT ?? t.Hum_SHT31);
+        const bat  = (t.BatV ?? t.bat ?? null);
 
-        const soil = isSoil(e.id);
-        const temp = soil ? (f.temp_SOIL_num ?? f.temp_SOIL ?? null) : (f.TempC_SHT ?? f.TempC_SHT31 ?? null);
-        const hum  = soil ? (f.water_SOIL_num ?? f.water_SOIL ?? null) : (f.Hum_SHT   ?? f.Hum_SHT31   ?? null);
-        const bat  = f.BatV ?? null;
-
-        const tTxt = soil ? (temp!=null? fmtNum(temp,1)+" °C (Boden)" : "—") : (temp!=null? fmtNum(temp,1)+" °C" : "—");
-        const hTxt = soil ? (hum!=null?  fmtNum(hum,1)+" % Bodenwasser" : "—") : (hum!=null?  fmtNum(hum,0)+" %" : "—");
-        const bTxt = bat!=null? fmtNum(bat,3)+" V" : "—";
-
-        const sensorUrl = `/html/sensor.html?node=${encodeURIComponent(e.id)}`;
-        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=${encodeURIComponent(location.origin+sensorUrl)}`;
-
-        const html = `
-          <div class="pop">
-            <h3>Sensor: ${safeStr(e.id).replace(/_/g,"_").replace(/-/g,"-")}</h3>
-            <div class="m">Zuletzt aktiv: ${fmtDate(e.ts)}</div>
-            <div style="margin-top:6px;">
-              <div>🌡️ ${tTxt}</div>
-              <div>💧 ${hTxt}</div>
-              <div>🔋 ${bTxt}</div>
-            </div>
-            <a class="btn" href="${sensorUrl}">Statistik öffnen</a>
-            <a class="qr" href="${sensorUrl}" target="_blank" rel="noopener">
-              <img src="${qrUrl}" alt="QR zum Sensor" width="90" height="90" />
-            </a>
-          </div>
-        `;
-
-        const m = L.marker([lat, lon]).addTo(markers);
-        m.bindPopup(html, {autoPan:true, keepInView:true, maxWidth: 360});
+        const lines = [];
+        lines.push(`<div class="popup-head">Sensor: <b>${rec.id}</b></div>`);
+        lines.push(`<div class="popup-grid">Zuletzt aktiv: <b>${deDate(rec.ts || rec.time)}</b></div>`);
+        if(bat!=null) lines.push(`<div class="popup-grid">Batterie: <b>${Number(bat).toFixed(3)} V</b></div>`);
+        if(hum!=null) lines.push(`<div class="popup-grid">Luftfeuchte: <b>${Number(hum).toFixed(1)}%</b></div>`);
+        if(temp!=null) lines.push(`<div class="popup-grid">Temperatur: <b>${Number(temp).toFixed(1)} °C</b></div>`);
+        lines.push(`<div style="margin-top:6px;"><a class="clean" href="/html/sensor.html?node=${encodeURIComponent(rec.id)}">Statistik öffnen ↗</a></div>`);
+        m.bindPopup(lines.join(""));
+        layer.addLayer(m);
       });
+      // vorhandene Marker austauschen (kein Flackern)
+      map.removeLayer(markersLayer);
+      markersLayer = layer.addTo(map);
     }
 
-    // ---------- Zero-Downtime Loader ----------
-    window._lastAll = window._lastAll || [];
+    // ---------- Daten laden – robust ----------
+    const DATA_URL = "/data/v2/latest/all.json";
+    let lastGood = null;     // zuletzt gute Daten (werden bei Fehler NICHT überschrieben)
 
-    async function loadLatestAndRender(){
-      const prev = Array.isArray(window._lastAll) ? window._lastAll : [];
+    async function fetchLatest(){
+      const ctrl = new AbortController();
+      const to = setTimeout(()=>ctrl.abort(), 8000);
       try{
-        const url = `/data/v2/latest/all.json?v=${Date.now()}`;
-        const r = await fetch(url, {cache: 'no-store'});
-        if(!r.ok) throw new Error(`HTTP ${r.status}`);
+        const r = await fetch(DATA_URL,{cache:"no-store",signal:ctrl.signal});
+        clearTimeout(to);
+        if(!r.ok) throw new Error("HTTP "+r.status);
         const arr = await r.json();
-
-        if (Array.isArray(arr) && arr.length > 0){
-          window._lastAll = sanitizeAll(arr);
-          renderMapSafe(window._lastAll);
-        } else if (prev.length > 0){
-          console.warn("all.json leer – behalte vorherige Marker.");
-          renderMapSafe(prev);
-        } else {
-          console.warn("Keine Daten verfügbar.");
-        }
+        if(!Array.isArray(arr) || arr.length===0) throw new Error("empty array");
+        // Minimale Plausibilität: muss id + ts haben
+        const sane = arr.filter(x => x && x.id && (x.ts||x.time));
+        if(sane.length===0) throw new Error("no sane records");
+        lastGood = sane;                         // nur jetzt ersetzen
+        updateUI(sane);
       }catch(e){
-        console.error("Fetch all.json fehlgeschlagen:", e);
-        if (prev.length > 0){
-          renderMapSafe(prev);
-        }
+        console.warn("fetchLatest: fallback to lastGood:", e.message||e);
+        if(lastGood) updateUI(lastGood);        // Stale zeigen
+        // sonst: UI nicht anrühren (kein Leeren!)
       }
     }
 
-    function sanitizeAll(arr){
-      // IDs säubern (keine Zeilenumbrüche, trim)
-      return arr.map(x => {
-        const id = safeStr(x.id||"");
-        // TS in ISO lassen, sonst unverändert
-        return {...x, id};
-      });
-    }
+    function updateUI(list){
+      // 1) Badges links
+      $("nodesCount").textContent = list.length;
+      $("standNow").textContent = deDate(Date.now());
 
-    function renderMapSafe(list){
-      if (!Array.isArray(list) || list.length===0) return;
+      // 2) Letzte Node-Meldung (max ts)
+      let last = null;
+      for(const it of list){
+        const t = new Date(it.ts||it.time).getTime();
+        if(!isFinite(t)) continue;
+        if(!last || t > last.t){ last = {id:it.id, t, ts:(it.ts||it.time)}; }
+      }
+      if(last){
+        $("lastNode").textContent = last.id;
+        $("lastTs").textContent   = deDate(last.ts);
+        $("lastAgo").textContent  = ago(last.ts);
+      }
+
+      // 3) Marker rendern
       renderMarkers(list);
     }
 
-    // Initial + zyklisch
-    loadLatestAndRender();
-    setInterval(loadLatestAndRender, 120000); // alle 2 Minuten
-
+    // initial & Polling
+    (async ()=>{
+      await fetchLatest();
+      // alle 60s versuchen – UI wird nur bei „guten“ Daten aktualisiert
+      setInterval(fetchLatest, 60000);
+    })();
   </script>
 </body>
 </html>
