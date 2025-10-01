@@ -4,47 +4,35 @@
   <meta charset="UTF-8">
   <title>WALDSENSOR.SH – Sensordetails</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
-    :root{
-      --bg:#f6f8fa; --ink:#0d1b2a; --card:#fff;
-      --muted:#64748b; --okbg:#e6f4ea; --okfg:#1a6334;
-      --radius:12px;
-    }
-    *{box-sizing:border-box}
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Helvetica Neue",sans-serif;margin:0;background:var(--bg);color:var(--ink)}
-    header{background:#004d46;color:#fff;padding:.8em 1em;font-weight:700;display:flex;justify-content:space-between;align-items:center}
-    header a{color:#fff;text-decoration:none}
-    main{padding:1em;display:grid;grid-template-columns:1fr 1fr;gap:1em}
-    @media (max-width:980px){main{grid-template-columns:1fr}}
-    .card{background:var(--card);border-radius:var(--radius);padding:1em;box-shadow:0 2px 6px rgba(0,0,0,.08)}
-    .pill{display:inline-block;background:var(--okbg);color:var(--okfg);padding:.2em .8em;border-radius:999px;font-size:.9em;margin-bottom:.5em}
-    .tiles{display:flex;gap:.8em}
-    .tile{flex:1;background:#f1f5f9;border-radius:8px;padding:.8em;text-align:center}
-    .tile h3{margin:0;font-size:.9em;color:#555}
-    .tile p{margin:.25em 0 0;font-size:1.2em;font-weight:800}
-    small.mono{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--muted)}
-    footer{text-align:center;color:#666;padding:1em;font-size:.9em}
-    .muted{color:var(--muted)}
+    body { font-family: system-ui, sans-serif; margin:0; background:#f6f8fa; }
+    header { background:#004d46; color:#fff; padding:0.8em 1em; font-weight:bold; display:flex; justify-content:space-between; }
+    header a { color:#fff; text-decoration:none; }
+    main { padding:1em; display:grid; grid-template-columns:1fr 1fr; gap:1em; }
+    .card { background:#fff; border-radius:12px; padding:1em; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .pill { display:inline-block; background:#e6f4ea; color:#1a6334; padding:0.2em 0.8em; border-radius:999px; font-size:0.9em; margin-bottom:0.5em; }
+    .tiles { display:flex; gap:0.8em; }
+    .tile { flex:1; background:#f4f6f8; border-radius:8px; padding:0.8em; text-align:center; }
+    .tile h3 { margin:0; font-size:0.9em; color:#555; }
+    .tile p { margin:0.2em 0 0; font-size:1.2em; font-weight:bold; }
+    footer { text-align:center; color:#666; padding:1em; font-size:0.9em; }
   </style>
 </head>
 <body>
   <header>
-    <a href="../v2.html">← Zur Karte</a>
-    <div>Schulwaldsensor — <span id="nodeName">…</span> <small>v0.085</small></div>
+    <a href="../v2.html">&larr; Zur Karte</a>
+    <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.082</small></div>
   </header>
-
   <main>
-    <!-- Linke Seite: aktuelle Messwerte -->
     <div class="card">
       <div id="stand" class="pill">Stand: —</div>
       <div class="tiles">
         <div class="tile">
-          <h3 id="tLabel">Temperatur</h3>
+          <h3>Temperatur</h3>
           <p id="temp">—</p>
         </div>
         <div class="tile">
-          <h3 id="hLabel">Luftfeuchte</h3>
+          <h3>Luftfeuchte</h3>
           <p id="hum">—</p>
         </div>
         <div class="tile">
@@ -52,32 +40,24 @@
           <p id="bat">—</p>
         </div>
       </div>
-      <small class="mono">Quelle: /data/v2/latest/all.json</small>
+      <small>Quelle: /data/v2/latest/all.json</small>
     </div>
-
-    <!-- Rechte Seite: Netz & Gateways -->
     <div class="card">
-      <h3>Netz &amp; Gateways</h3>
-      <p>Letzte 24&nbsp;h: <span id="frames24">—</span> Uplinks</p>
+      <h3>Netz & Gateways</h3>
+      <p>Letzte 24 h: <span id="frames24">—</span> Uplinks</p>
       <p>Letzter Uplink: <span id="lastUplink">—</span></p>
       <p>Gateways: <span id="gwCount">—</span></p>
-      <p>Bestes SNR: <span id="bestSig">—</span></p>
+      <p>Bestes Signal: <span id="bestSig">—</span></p>
       <p>ADR: <span id="adr">—</span></p>
-      <small id="netSource" class="mono">Quelle: —</small>
+      <small id="netSource">Quelle: —</small>
     </div>
   </main>
-
   <footer>WALDSENSOR.SH – Sensordetails</footer>
 
   <script>
-    // ---- Helpers -----------------------------------------------------------
-    const byId = (id) => document.getElementById(id);
     const urlParams = new URLSearchParams(location.search);
-    const nodeId = (urlParams.get("node") || urlParams.get("id") || "").trim();
-    byId("nodeName").textContent = nodeId || "—";
-
-    const fmt = (n, d=1) => (n==null || Number.isNaN(+n)) ? "—" :
-      Number(n).toFixed(d).replace(".",",");
+    const nodeId = urlParams.get("node") || "unknown";
+    document.getElementById("nodeName").textContent = nodeId;
 
     function fmtDate(ts){
       if(!ts) return "—";
@@ -86,73 +66,36 @@
       return d.toLocaleString("de-DE");
     }
 
-    const isSoilNode = (id) => /(se01(lb)?)/i.test(String(id||""));
+    // Aktuelle Werte laden
+    fetch("/data/v2/latest/all.json",{cache:"no-store"})
+      .then(r=>r.json())
+      .then(all=>{
+        const n = all.find(x=>x.id===nodeId);
+        if(!n){ return; }
+        document.getElementById("stand").textContent = "Stand: " + fmtDate(n.time || n.ts);
+        document.getElementById("temp").textContent = n.fields?.TempC_SHT?.toFixed(1)+" °C" || "—";
+        document.getElementById("hum").textContent = (n.fields?.Hum_SHT?.toFixed(0))+" %" || "—";
+        document.getElementById("bat").textContent = n.fields?.BatV?.toFixed(2)+" V" || "—";
+      })
+      .catch(err=>console.error("Fehler beim Laden all.json",err));
 
-    function pickFields(entry){
-      const f = entry?.fields || {};
-      if(isSoilNode(entry?.id)){
-        // Bodensensor (SE01/SE01LB)
-        return {
-          tLabel: "Bodentemperatur",
-          hLabel: "Bodenwasser",
-          temp: (f.temp_SOIL_num ?? f.temp_SOIL ?? null),
-          hum:  (f.water_SOIL_num ?? f.water_SOIL ?? null),
-          bat:  f.BatV ?? null
-        };
-      }
-      // Luft (SN50v3 / S31-LB)
-      const temp = f.TempC_SHT ?? f.TempC_SHT31 ?? null;
-      const hum  = f.Hum_SHT   ?? f.Hum_SHT31   ?? null;
-      const bat  = f.BatV ?? null;
-      return { tLabel:"Temperatur", hLabel:"Luftfeuchte", temp, hum, bat };
-    }
-
-    // ---- Livewerte laden (vorsichtig, nichts "leeren", wenn nicht gefunden) ----
-    (async ()=>{
-      try{
-        const r = await fetch("/data/v2/latest/all.json",{cache:"no-store"});
-        if(!r.ok) throw new Error("all.json n/a");
-        const all = await r.json();
-        const entry = (all||[]).find(x => String(x.id).toLowerCase() === nodeId.toLowerCase());
-        if(!entry) return;
-
-        // Zeit / Titel
-        byId("stand").textContent = "Stand: " + fmtDate(entry.time || entry.ts);
-
-        // Werte
-        const picked = pickFields(entry);
-        byId("tLabel").textContent = picked.tLabel;
-        byId("hLabel").textContent = picked.hLabel;
-
-        byId("temp").textContent = (picked.temp!=null) ? (fmt(picked.temp,1) + " °C") : "—";
-        // Für Bodenwasser / Luftfeuchte Prozent sinnvoll runden
-        byId("hum").textContent  = (picked.hum!=null)  ? (fmt(picked.hum, (isSoilNode(entry.id)?1:0)) + " %") : "—";
-        byId("bat").textContent  = (picked.bat!=null)  ? (fmt(picked.bat,2) + " V") : "—";
-      }catch(e){
-        console.warn("Livewerte-Load:", e.message);
-      }
-    })();
-
-    // ---- Netzstatistik laden ----------------------------------------------
-    (async ()=>{
-      const netUrl = `/data/v2/net/netstats_${encodeURIComponent(nodeId)}.json`;
-      byId("netSource").textContent = "Quelle: " + netUrl;
-
-      try{
-        const r = await fetch(netUrl,{cache:"no-store"});
-        if(!r.ok) throw new Error("netstats n/a");
-        const ns = await r.json();
-
-        byId("frames24").textContent  = (ns.frames24 ?? "—");
-        byId("lastUplink").textContent = fmtDate(ns.last_ts);
-        byId("gwCount").textContent    = (ns.gateways ?? "—"); // Zahl direkt
-        byId("bestSig").textContent    = (ns.best_snr!=null) ? (ns.best_snr + " dB") : "—";
-        byId("adr").textContent        = (ns.adr===true) ? "Ja" : (ns.adr===false ? "Nein" : "—");
-      }catch(e){
-        console.warn("Netz-Load:", e.message);
-        // Falls Quelle fehlt, Platzhalter beibehalten – nichts "löschen".
-      }
-    })();
+    // Netzstatistik laden
+    const netUrl = `/data/v2/net/netstats_${nodeId}.json`;
+    document.getElementById("netSource").textContent = "Quelle: "+netUrl;
+    fetch(netUrl,{cache:"no-store"})
+      .then(r=>r.json())
+      .then(ns=>{
+        document.getElementById("frames24").textContent = ns.frames24 ?? "—";
+        document.getElementById("lastUplink").textContent = fmtDate(ns.last_ts);
+        document.getElementById("gwCount").textContent = ns.gateways?.length ?? "—";
+        if(ns.best){
+          document.getElementById("bestSig").textContent = `${ns.best.rssi} dBm / ${ns.best.snr} dB`;
+        }
+        document.getElementById("adr").textContent = ns.adr ?? ns.adr_enabled ?? "—";
+      })
+      .catch(_=>{
+        document.getElementById("frames24").textContent="—";
+      });
   </script>
 </body>
 </html>
