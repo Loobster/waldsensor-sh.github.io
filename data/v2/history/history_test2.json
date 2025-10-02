@@ -3902,5 +3902,20 @@
       "snr2": 9.2,
       "rssi2": -42
     }
+  },
+  {
+    "ts": "2025-10-02T21:10:25.114Z",
+    "id": "test2",
+    "fields": {
+      "rssi1": -90,
+      "snr1": 7.8,
+      "rssi2": -48,
+      "gateway_count": 3,
+      "BatV": 3.636,
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw,sh-netz-5-1029",
+      "snr2": 6.2,
+      "gw1_id": "lora-gateway-fahrdorf",
+      "gw2_id": "laird-lorawan-gw"
+    }
   }
 ]
