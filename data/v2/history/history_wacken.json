@@ -4352,5 +4352,22 @@
       "gateway_count": 1,
       "rssi2": -42
     }
+  },
+  {
+    "id": "wacken",
+    "ts": "2025-10-02T19:13:36.659Z",
+    "fields": {
+      "lon": 9.37503,
+      "BatV": 3.66,
+      "lat": 54.02755,
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
+      "snr2": 9.2,
+      "gw2_id": "laird-lorawan-gw",
+      "gateway_count": 2,
+      "rssi2": -42,
+      "gw1_id": "lora-gateway-fahrdorf",
+      "snr1": 9.5,
+      "rssi1": -87
+    }
   }
 ]
