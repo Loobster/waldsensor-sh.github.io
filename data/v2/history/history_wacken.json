@@ -4794,5 +4794,22 @@
       "lon": 9.37503,
       "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw"
     }
+  },
+  {
+    "id": "wacken",
+    "fields": {
+      "snr1": 10.8,
+      "lat": 54.02755,
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
+      "rssi1": -87,
+      "gateway_count": 2,
+      "snr2": 10.5,
+      "gw1_id": "lora-gateway-fahrdorf",
+      "BatV": 3.66,
+      "rssi2": -41,
+      "gw2_id": "laird-lorawan-gw",
+      "lon": 9.37503
+    },
+    "ts": "2025-10-03T03:53:30.585Z"
   }
 ]
