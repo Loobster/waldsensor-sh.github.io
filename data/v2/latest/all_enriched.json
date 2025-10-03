@@ -1,25 +1,25 @@
 [
   {
-    "id": "bredstedt_s31lb",
     "fields": {
-      "rssi2": -110,
-      "gw2_id": "eui-00007076ff031372",
-      "TempC_SHT31": 11.9,
       "BatV": 3.606,
-      "lat": 54.64988,
-      "sf": 7,
-      "bw": 125000,
-      "Hum_SHT": 65.3,
-      "rssi1": -119,
-      "snr1": -5.5,
-      "gateway_ids": "eui-00007076ff031358,eui-00007076ff031372",
-      "gw1_id": "eui-00007076ff031358",
-      "Hum_SHT31": 65.3,
-      "gateway_count": 2,
-      "TempC_SHT": 11.9,
       "lon": 8.955,
-      "snr2": 4.5
+      "snr1": -5.5,
+      "gw1_id": "eui-00007076ff031358",
+      "rssi2": -110,
+      "Hum_SHT31": 65.3,
+      "gateway_ids": "eui-00007076ff031358,eui-00007076ff031372",
+      "sf": 7,
+      "snr2": 4.5,
+      "Hum_SHT": 65.3,
+      "TempC_SHT31": 11.9,
+      "lat": 54.64988,
+      "gateway_count": 2,
+      "bw": 125000,
+      "TempC_SHT": 11.9,
+      "rssi1": -119,
+      "gw2_id": "eui-00007076ff031372"
     },
+    "id": "bredstedt_s31lb",
     "ts": "2025-10-03T21:55:40.638Z",
     "gateway_details": [
       {
@@ -37,25 +37,25 @@
     ]
   },
   {
+    "ts": "2025-10-03T22:00:24.224Z",
     "id": "bredstedt_se01lb",
     "fields": {
-      "rssi2": -107,
-      "gw2_id": "eui-00007076ff031372",
-      "BatV": 3.326,
-      "lat": 54.64988,
-      "sf": 7,
-      "bw": 125000,
       "rssi1": -112,
-      "snr1": 4.2,
-      "gateway_ids": "eui-7076ff0056070bb4,eui-00007076ff031372",
-      "gw1_id": "eui-7076ff0056070bb4",
-      "water_SOIL": 13.48,
       "gateway_count": 2,
-      "lon": 8.957,
+      "bw": 125000,
+      "gw2_id": "eui-00007076ff031372",
+      "lat": 54.64988,
+      "water_SOIL": 13.48,
+      "snr2": 5.8,
       "temp_SOIL": 11.58,
-      "snr2": 5.8
+      "sf": 7,
+      "gw1_id": "eui-7076ff0056070bb4",
+      "gateway_ids": "eui-7076ff0056070bb4,eui-00007076ff031372",
+      "rssi2": -107,
+      "BatV": 3.326,
+      "snr1": 4.2,
+      "lon": 8.957
     },
-    "ts": "2025-10-03T22:00:24.224Z",
     "gateway_details": [
       {
         "id": "eui-7076ff0056070bb4",
@@ -72,25 +72,25 @@
     ]
   },
   {
-    "ts": "2025-10-03T22:02:20.989Z",
     "fields": {
-      "rssi1": -95,
-      "bw": 125000,
-      "Hum_SHT": 65.7,
+      "sf": 7,
+      "snr2": 7.2,
+      "lon": 9.5869,
       "snr1": 7.2,
+      "BatV": 3.582,
+      "rssi2": -75,
       "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw,eui-7076ff0056070bc0",
       "gw1_id": "lora-gateway-fahrdorf",
-      "rssi2": -75,
-      "BatV": 3.582,
-      "gw2_id": "laird-lorawan-gw",
-      "sf": 7,
       "lat": 54.50158,
-      "snr2": 7.2,
+      "gw2_id": "laird-lorawan-gw",
       "gateway_count": 3,
-      "lon": 9.5869,
-      "TempC_SHT": 11.7
+      "TempC_SHT": 11.7,
+      "bw": 125000,
+      "rssi1": -95,
+      "Hum_SHT": 65.7
     },
     "id": "fahrdorf",
+    "ts": "2025-10-03T22:02:20.989Z",
     "gateway_details": [
       {
         "id": "lora-gateway-fahrdorf",
@@ -110,19 +110,19 @@
     "ts": "2025-10-03T21:47:46.457Z",
     "id": "kappeln",
     "fields": {
-      "snr2": 10.5,
+      "BatV": 3.642,
       "lon": 9.92468,
-      "gateway_count": 2,
-      "gw1_id": "lora-gateway-fahrdorf",
       "snr1": 10.2,
+      "gw1_id": "lora-gateway-fahrdorf",
+      "rssi2": -41,
       "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
+      "sf": 7,
+      "snr2": 10.5,
+      "lat": 54.66205,
+      "gateway_count": 2,
       "bw": 125000,
       "rssi1": -93,
-      "lat": 54.66205,
-      "sf": 7,
-      "gw2_id": "laird-lorawan-gw",
-      "BatV": 3.642,
-      "rssi2": -41
+      "gw2_id": "laird-lorawan-gw"
     },
     "gateway_details": [
       {
@@ -140,25 +140,25 @@
     ]
   },
   {
+    "fields": {
+      "Hum_SHT": 50.1,
+      "gw2_id": "laird-lorawan-gw",
+      "rssi1": -89,
+      "gateway_count": 2,
+      "TempC_SHT": 24.4,
+      "bw": 125000,
+      "lat": 53.95655,
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
+      "rssi2": -36,
+      "gw1_id": "lora-gateway-fahrdorf",
+      "snr1": 11.5,
+      "lon": 9.71426,
+      "BatV": 3.409,
+      "snr2": 11.2,
+      "sf": 7
+    },
     "ts": "2025-10-03T21:54:34.799Z",
     "id": "kellinghusen_lsn50v2",
-    "fields": {
-      "snr2": 11.2,
-      "TempC_SHT": 24.4,
-      "lon": 9.71426,
-      "gateway_count": 2,
-      "snr1": 11.5,
-      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
-      "gw1_id": "lora-gateway-fahrdorf",
-      "rssi1": -89,
-      "bw": 125000,
-      "Hum_SHT": 50.1,
-      "sf": 7,
-      "lat": 53.95655,
-      "rssi2": -36,
-      "gw2_id": "laird-lorawan-gw",
-      "BatV": 3.409
-    },
     "gateway_details": [
       {
         "id": "lora-gateway-fahrdorf",
@@ -175,25 +175,25 @@
     ]
   },
   {
-    "id": "kropp",
     "fields": {
-      "sf": 7,
-      "lat": 54.4093988908855,
       "rssi2": -113,
-      "gw2_id": "sh-netz-5-1023",
-      "BatV": 3.636,
       "gateway_ids": "eui-00007076ff030d23",
-      "snr1": 6.5,
       "gw1_id": "eui-00007076ff030d23",
-      "rssi1": -106,
-      "bw": 125000,
-      "Hum_SHT": 64.7,
       "lon": 9.5285027323752,
+      "snr1": 6.5,
+      "BatV": 3.636,
+      "snr2": -0.5,
+      "sf": 7,
+      "Hum_SHT": 64.7,
+      "gw2_id": "sh-netz-5-1023",
       "TempC_SHT": 11.2,
       "gateway_count": 1,
-      "snr2": -0.5
+      "bw": 125000,
+      "rssi1": -106,
+      "lat": 54.4093988908855
     },
     "ts": "2025-10-03T21:58:05.552Z",
+    "id": "kropp",
     "gateway_details": [
       {
         "id": "eui-00007076ff030d23",
@@ -204,24 +204,24 @@
     ]
   },
   {
-    "id": "neumuenstertl",
     "fields": {
-      "snr2": -8.8,
-      "gateway_count": 1,
-      "TempC_SHT": 20.9,
-      "lon": 9.98926,
-      "rssi1": -103,
       "bw": 125000,
+      "TempC_SHT": 20.9,
+      "gateway_count": 1,
+      "rssi1": -103,
+      "gw2_id": "eui-00007076ff032842",
+      "lat": 54.07586,
       "Hum_SHT": 53.2,
-      "gateway_ids": "eui-7076ff0056070700",
-      "snr1": 0.8,
+      "snr2": -8.8,
+      "sf": 7,
       "gw1_id": "eui-7076ff0056070700",
       "rssi2": -122,
-      "gw2_id": "eui-00007076ff032842",
+      "gateway_ids": "eui-7076ff0056070700",
       "BatV": 3.642,
-      "sf": 7,
-      "lat": 54.07586
+      "lon": 9.98926,
+      "snr1": 0.8
     },
+    "id": "neumuenstertl",
     "ts": "2025-10-03T21:46:41.688Z",
     "gateway_details": [
       {
@@ -233,24 +233,24 @@
     ]
   },
   {
-    "ts": "2025-10-03T21:58:24.403Z",
     "fields": {
-      "Hum_SHT": 50.4,
-      "bw": 125000,
-      "rssi1": -92,
-      "gw1_id": "lora-gateway-fahrdorf",
-      "snr1": 9,
-      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
-      "gw2_id": "laird-lorawan-gw",
-      "BatV": 3.636,
-      "rssi2": -41,
-      "lat": 54.30687,
       "sf": 7,
       "snr2": 8.8,
+      "snr1": 9,
+      "lon": 9.7196,
+      "BatV": 3.636,
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
+      "rssi2": -41,
+      "gw1_id": "lora-gateway-fahrdorf",
+      "lat": 54.30687,
+      "gw2_id": "laird-lorawan-gw",
+      "rssi1": -92,
+      "bw": 125000,
       "gateway_count": 2,
       "TempC_SHT": 24,
-      "lon": 9.7196
+      "Hum_SHT": 50.4
     },
+    "ts": "2025-10-03T21:58:24.403Z",
     "id": "schacht_audorf",
     "gateway_details": [
       {
@@ -268,21 +268,21 @@
     ]
   },
   {
-    "ts": "2025-10-03T21:50:07.419Z",
     "fields": {
-      "rssi2": -47,
-      "BatV": 3.636,
-      "gw2_id": "laird-lorawan-gw",
-      "gateway_count": 2,
       "sf": 7,
-      "bw": 125000,
-      "rssi1": -93,
-      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
+      "snr2": 8.8,
+      "BatV": 3.636,
       "snr1": 9,
       "gw1_id": "lora-gateway-fahrdorf",
-      "snr2": 8.8
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
+      "rssi2": -47,
+      "rssi1": -93,
+      "gateway_count": 2,
+      "bw": 125000,
+      "gw2_id": "laird-lorawan-gw"
     },
     "id": "test2",
+    "ts": "2025-10-03T21:50:07.419Z",
     "gateway_details": [
       {
         "id": "lora-gateway-fahrdorf",
@@ -299,21 +299,21 @@
     ]
   },
   {
-    "ts": "2025-10-03T21:55:55.297Z",
-    "id": "test3",
     "fields": {
-      "rssi2": -87,
       "BatV": 3.642,
-      "gw2_id": "lora-gateway-fahrdorf",
-      "gateway_count": 2,
-      "sf": 7,
-      "rssi1": -45,
-      "bw": 125000,
-      "snr2": 9.8,
       "snr1": 9.8,
+      "gw1_id": "laird-lorawan-gw",
+      "rssi2": -87,
       "gateway_ids": "laird-lorawan-gw,lora-gateway-fahrdorf",
-      "gw1_id": "laird-lorawan-gw"
+      "sf": 7,
+      "snr2": 9.8,
+      "gateway_count": 2,
+      "bw": 125000,
+      "rssi1": -45,
+      "gw2_id": "lora-gateway-fahrdorf"
     },
+    "id": "test3",
+    "ts": "2025-10-03T21:55:55.297Z",
     "gateway_details": [
       {
         "id": "lora-gateway-fahrdorf",
@@ -330,23 +330,23 @@
     ]
   },
   {
-    "id": "wacken",
     "fields": {
       "snr2": 9.5,
-      "gateway_count": 2,
+      "sf": 7,
+      "gw1_id": "lora-gateway-fahrdorf",
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
+      "rssi2": -40,
+      "BatV": 3.66,
+      "snr1": 10.5,
       "lon": 9.37503,
       "rssi1": -85,
+      "gateway_count": 2,
       "bw": 125000,
-      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
-      "snr1": 10.5,
-      "gw1_id": "lora-gateway-fahrdorf",
-      "rssi2": -40,
       "gw2_id": "laird-lorawan-gw",
-      "BatV": 3.66,
-      "sf": 7,
       "lat": 54.02755
     },
     "ts": "2025-10-03T21:53:17.983Z",
+    "id": "wacken",
     "gateway_details": [
       {
         "id": "lora-gateway-fahrdorf",
