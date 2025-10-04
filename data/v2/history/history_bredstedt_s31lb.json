@@ -7760,5 +7760,28 @@
       "TempC_SHT31": 11.4,
       "TempC_SHT": 11.4
     }
+  },
+  {
+    "id": "bredstedt_s31lb",
+    "ts": "2025-10-04T09:15:33.741Z",
+    "fields": {
+      "gateway_count": 2,
+      "lon": 8.955,
+      "gw1_id": "eui-00007076ff031372",
+      "rssi2": -118,
+      "sf": 7,
+      "snr2": -6.5,
+      "BatV": 3.606,
+      "snr1": 7,
+      "bw": 125000,
+      "lat": 54.64988,
+      "gateway_ids": "eui-00007076ff031372,sh-netz-5-1022",
+      "TempC_SHT": 11.4,
+      "Hum_SHT": 100,
+      "gw2_id": "sh-netz-5-1022",
+      "TempC_SHT31": 11.4,
+      "Hum_SHT31": 100,
+      "rssi1": -105
+    }
   }
 ]

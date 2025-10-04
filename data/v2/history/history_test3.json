@@ -5628,5 +5628,22 @@
       "gw1_id": "lora-gateway-fahrdorf",
       "gateway_count": 2
     }
+  },
+  {
+    "id": "test3",
+    "fields": {
+      "bw": 125000,
+      "gateway_ids": "laird-lorawan-gw,lora-gateway-fahrdorf",
+      "gateway_count": 2,
+      "gw1_id": "laird-lorawan-gw",
+      "sf": 7,
+      "snr2": 9.5,
+      "rssi2": -92,
+      "BatV": 3.636,
+      "snr1": 10,
+      "rssi1": -48,
+      "gw2_id": "lora-gateway-fahrdorf"
+    },
+    "ts": "2025-10-04T09:15:47.606Z"
   }
 ]
