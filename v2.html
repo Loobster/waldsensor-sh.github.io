@@ -179,8 +179,13 @@
       html += `<div class="info-grid">`;
       html += `<div class="info-card"><span class="num">${gwCount}</span><span class="lbl">Gateways</span></div>`;
       html += `<div class="info-card"><span class="num">${NUM(f.BatV) ? deNum(NUM(f.BatV),2) : '–'}</span><span class="lbl">Batterie (V)</span></div>`;
-      html += `<div class="info-card"><span class="num">${NUM(f.TempC_SHT) ? deNum(NUM(f.TempC_SHT),1) : '–'}</span><span class="lbl">Temp (°C)</span></div>`;
-      html += `<div class="info-card"><span class="num">${NUM(f.Hum_SHT) ? deNum(NUM(f.Hum_SHT),1) : '–'}</span><span class="lbl">Feuchte (%)</span></div>`;
+      const temp = NUM(f.TempC_SHT) || NUM(f.temp_SOIL) || NUM(f.TempC_SHT31);
+      const tempLabel = f.temp_SOIL ? 'Bodentemp (°C)' : 'Temp (°C)';
+      html += `<div class="info-card"><span class="num">${temp ? deNum(temp,1) : '–'}</span><span class="lbl">${tempLabel}</span></div>`;
+
+      const hum = NUM(f.Hum_SHT) || NUM(f.water_SOIL) || NUM(f.Hum_SHT31);
+      const humLabel = f.water_SOIL ? 'Bodenfeuchte (%)' : 'Luftfeuchte (%)';
+      html += `<div class="info-card"><span class="num">${hum ? deNum(hum,1) : '–'}</span><span class="lbl">${humLabel}</span></div>`; 
       html += `</div>`;
       
       if (gws.length > 0) {
