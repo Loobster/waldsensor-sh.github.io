@@ -17023,5 +17023,26 @@
       "snr1": 8,
       "lat": 54.50158
     }
+  },
+  {
+    "id": "fahrdorf",
+    "fields": {
+      "gateway_count": 2,
+      "lat": 54.50158,
+      "bw": 125000,
+      "gw2_id": "laird-lorawan-gw",
+      "rssi2": -76,
+      "TempC_SHT": 12.2,
+      "gw1_id": "lora-gateway-fahrdorf",
+      "Hum_SHT": 99.7,
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
+      "sf": 7,
+      "BatV": 3.582,
+      "lon": 9.5869,
+      "snr2": 9.8,
+      "snr1": 7.5,
+      "rssi1": -103
+    },
+    "ts": "2025-10-05T12:21:55.208Z"
   }
 ]
