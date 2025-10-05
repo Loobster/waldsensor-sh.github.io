@@ -17149,5 +17149,26 @@
       "BatV": 3.582
     },
     "ts": "2025-10-05T14:01:54.077Z"
+  },
+  {
+    "id": "fahrdorf",
+    "fields": {
+      "BatV": 3.582,
+      "lat": 54.50158,
+      "rssi1": -99,
+      "sf": 7,
+      "lon": 9.5869,
+      "snr1": 7.8,
+      "Hum_SHT": 98.9,
+      "gw2_id": "eui-7076ff0056070bc0",
+      "snr2": -7.8,
+      "gateway_count": 2,
+      "rssi2": -118,
+      "bw": 125000,
+      "gw1_id": "lora-gateway-fahrdorf",
+      "TempC_SHT": 12,
+      "gateway_ids": "lora-gateway-fahrdorf,eui-7076ff0056070bc0"
+    },
+    "ts": "2025-10-05T14:21:53.849Z"
   }
 ]
