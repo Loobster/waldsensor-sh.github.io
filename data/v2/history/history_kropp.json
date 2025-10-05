@@ -1206,5 +1206,26 @@
       "snr2": 2.5,
       "TempC_SHT": 10.5
     }
+  },
+  {
+    "id": "kropp",
+    "fields": {
+      "gateway_count": 2,
+      "bw": 125000,
+      "lon": 9.5285027323752,
+      "rssi1": -116,
+      "Hum_SHT": 100,
+      "gw2_id": "sh-netz-5-1023",
+      "gw1_id": "eui-00007076ff030d23",
+      "snr1": 3.2,
+      "rssi2": -116,
+      "TempC_SHT": 10.4,
+      "BatV": 3.636,
+      "snr2": 2.5,
+      "gateway_ids": "eui-00007076ff030d23,sh-netz-5-1023",
+      "lat": 54.4093988908855,
+      "sf": 7
+    },
+    "ts": "2025-10-05T21:37:34.585Z"
   }
 ]
