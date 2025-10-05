@@ -7207,5 +7207,22 @@
       "rssi2": -89
     },
     "ts": "2025-10-05T16:49:36.553Z"
+  },
+  {
+    "id": "test2",
+    "ts": "2025-10-05T17:09:36.316Z",
+    "fields": {
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
+      "snr1": 10,
+      "gw2_id": "laird-lorawan-gw",
+      "BatV": 3.636,
+      "rssi2": -51,
+      "sf": 7,
+      "snr2": 10.2,
+      "rssi1": -91,
+      "bw": 125000,
+      "gateway_count": 2,
+      "gw1_id": "lora-gateway-fahrdorf"
+    }
   }
 ]
