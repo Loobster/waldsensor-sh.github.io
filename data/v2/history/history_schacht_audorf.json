@@ -10169,5 +10169,26 @@
       "rssi2": -43
     },
     "id": "schacht_audorf"
+  },
+  {
+    "ts": "2025-10-05T06:38:02.409Z",
+    "id": "schacht_audorf",
+    "fields": {
+      "lon": 9.7196,
+      "gateway_count": 2,
+      "TempC_SHT": 23.6,
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
+      "gw1_id": "lora-gateway-fahrdorf",
+      "snr2": 10.5,
+      "rssi1": -95,
+      "snr1": 9.8,
+      "sf": 7,
+      "Hum_SHT": 52.2,
+      "rssi2": -36,
+      "gw2_id": "laird-lorawan-gw",
+      "bw": 125000,
+      "BatV": 3.636,
+      "lat": 54.30687
+    }
   }
 ]
