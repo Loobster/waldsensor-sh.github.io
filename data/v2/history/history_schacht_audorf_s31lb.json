@@ -524,5 +524,28 @@
       "rssi1": -96
     },
     "ts": "2025-10-06T15:26:56.068Z"
+  },
+  {
+    "id": "schacht_audorf_s31lb",
+    "fields": {
+      "TempC_SHT31": 14.5,
+      "Hum_SHT31": 80.4,
+      "BatV": 3.6,
+      "bw": 125000,
+      "lon": 9.7196,
+      "gateway_ids": "eui-00007076ff038134,eui-7076ff00560706a2,eui-7076ff005607042d,sh-netz-6-1143",
+      "sf": 7,
+      "TempC_SHT": 14.5,
+      "lat": 54.30687,
+      "rssi1": -125,
+      "gw2_id": "eui-7076ff00560706a2",
+      "rssi2": -104,
+      "snr1": -5.2,
+      "gateway_count": 4,
+      "gw1_id": "eui-00007076ff038134",
+      "Hum_SHT": 80.4,
+      "snr2": 8
+    },
+    "ts": "2025-10-06T15:46:55.859Z"
   }
 ]
