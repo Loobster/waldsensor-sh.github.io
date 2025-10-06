@@ -1,3 +1,44 @@
 [
-{"id":"schacht_audorf_se01lb","ts":"2025-10-06T08:07:49.982Z","fields":{"lon":9.7196,"BatV":3.594,"snr1":-13,"gw1_id":"eui-7076ff005607042d","rssi2":-117,"temp_SOIL":19.33,"bw":125000,"gateway_ids":"eui-7076ff005607042d,eui-7076ff00560706a2,sh-netz-6-1143","sf":12,"gateway_count":3,"rssi1":-117,"lat":54.30687,"snr2":-4.2,"gw2_id":"eui-7076ff00560706a2","water_SOIL":0}}
+  {
+    "id": "schacht_audorf_se01lb",
+    "ts": "2025-10-06T08:07:49.982Z",
+    "fields": {
+      "lon": 9.7196,
+      "BatV": 3.594,
+      "snr1": -13,
+      "gw1_id": "eui-7076ff005607042d",
+      "rssi2": -117,
+      "temp_SOIL": 19.33,
+      "bw": 125000,
+      "gateway_ids": "eui-7076ff005607042d,eui-7076ff00560706a2,sh-netz-6-1143",
+      "sf": 12,
+      "gateway_count": 3,
+      "rssi1": -117,
+      "lat": 54.30687,
+      "snr2": -4.2,
+      "gw2_id": "eui-7076ff00560706a2",
+      "water_SOIL": 0
+    }
+  },
+  {
+    "fields": {
+      "water_SOIL": 0,
+      "lon": 9.7196,
+      "gw2_id": "addix-holzbunge",
+      "bw": 125000,
+      "snr1": -14,
+      "gateway_ids": "adx-sh-014,addix-holzbunge,eui-7076ff005607042d,eui-7076ff00560706a2,sh-netz-6-1143",
+      "gateway_count": 5,
+      "rssi2": -126,
+      "lat": 54.30687,
+      "temp_SOIL": 16.54,
+      "BatV": 3.594,
+      "gw1_id": "adx-sh-014",
+      "rssi1": -120,
+      "sf": 12,
+      "snr2": -14.5
+    },
+    "ts": "2025-10-06T08:27:20.596Z",
+    "id": "schacht_audorf_se01lb"
+  }
 ]
