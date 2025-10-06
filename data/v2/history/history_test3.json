@@ -8331,5 +8331,22 @@
       "snr2": 9.8
     },
     "id": "test3"
+  },
+  {
+    "id": "test3",
+    "ts": "2025-10-06T15:15:10.98Z",
+    "fields": {
+      "bw": 125000,
+      "rssi1": -54,
+      "snr2": 9.8,
+      "snr1": 10.2,
+      "gw2_id": "laird-lorawan-gw",
+      "gateway_count": 1,
+      "sf": 7,
+      "rssi2": -68,
+      "BatV": 3.642,
+      "gateway_ids": "laird-lorawan-gw",
+      "gw1_id": "laird-lorawan-gw"
+    }
   }
 ]
