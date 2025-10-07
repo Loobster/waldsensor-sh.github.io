@@ -1,1 +1,15 @@
-[{"fields":{"TempC_SHT":24.1,"BatV":3.636,"Hum_SHT":55.5},"ts":"2025-09-13T15:39:04.966Z","id":"breklum"},{"id":"fahrdorf","fields":{"TempC_SHT":16.9,"BatV":3.588,"Hum_SHT":76.6},"ts":"2025-09-13T15:47:51.888Z"},{"id":"hooge","fields":{"lon":8.5464,"lat":54.5582,"BatV":3.648},"ts":"2025-09-13T15:56:37.56Z"},{"id":"kropp","fields":{"lon":9.5285027323752,"lat":54.4093988908855,"Hum_SHT":83.1,"BatV":3.636,"TempC_SHT":16.1},"ts":"2025-09-13T15:43:22.933Z"},{"id":"lsn50","fields":{"lon":9.52719737520844,"Hum_SHT31":73.5,"lat":54.4098456794914,"BatV":3.407,"TempC_SHT31":17.3},"ts":"2025-09-13T15:39:41.304Z"},{"id":"neumuenstertl","ts":"2025-09-13T15:53:33.283Z","fields":{"Hum_SHT":55,"lat":54.07586,"lon":9.98926,"TempC_SHT":21.3,"BatV":3.642}},{"ts":"2025-09-13T15:40:24.237Z","fields":{"Hum_SHT31":79.9,"lon":8.95686194107564,"lat":54.651105744662,"TempC_SHT31":16.1,"BatV":3.612},"id":"s31"}]
+[
+{"device_id":"bredstedt_s31lb","ts_iso":"2025-10-07T13:14:47.091Z","lat":54.64988,"lon":8.955,"alt":18,"bat_v":3.606,"temp_c":14.9,"hum_pct":100,"temp_soil_c":null,"water_soil":null},
+{"device_id":"bredstedt_se01lb","ts_iso":"2025-10-07T13:20:05.36Z","lat":54.64988,"lon":8.957,"alt":18,"bat_v":3.326,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
+{"device_id":"fahrdorf","ts_iso":"2025-10-07T13:21:21.895Z","lat":54.50158,"lon":9.5869,"alt":5,"bat_v":3.582,"temp_c":15,"hum_pct":99,"temp_soil_c":null,"water_soil":null},
+{"device_id":"kappeln","ts_iso":"2025-10-07T13:06:36.723Z","lat":54.66205,"lon":9.92468,"alt":18,"bat_v":3.642,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
+{"device_id":"kellinghusen_lsn50v2","ts_iso":"2025-10-07T13:14:34.766Z","lat":53.95655,"lon":9.71426,"alt":18,"bat_v":3.412,"temp_c":24.3,"hum_pct":53.6,"temp_soil_c":null,"water_soil":null},
+{"device_id":"kropp","ts_iso":"2025-10-07T12:57:08.817Z","lat":54.40939889088546,"lon":9.5285027323752,"alt":null,"bat_v":3.63,"temp_c":14.7,"hum_pct":99.5,"temp_soil_c":null,"water_soil":null},
+{"device_id":"neumuenstertl","ts_iso":"2025-10-07T13:05:27.75Z","lat":54.07586,"lon":9.98926,"alt":null,"bat_v":3.636,"temp_c":19.6,"hum_pct":55.4,"temp_soil_c":null,"water_soil":null},
+{"device_id":"schacht_audorf_llms01","ts_iso":"2025-10-07T13:07:27.336Z","lat":54.30687,"lon":9.7196,"alt":18,"bat_v":null,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
+{"device_id":"schacht_audorf_s31lb","ts_iso":"2025-10-07T13:06:41.851Z","lat":54.30687,"lon":9.7196,"alt":18,"bat_v":3.6,"temp_c":15,"hum_pct":96.6,"temp_soil_c":null,"water_soil":null},
+{"device_id":"schacht_audorf_se01lb","ts_iso":"2025-10-07T13:06:57.495Z","lat":54.30687,"lon":9.7196,"alt":18,"bat_v":3.588,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
+{"device_id":"test2","ts_iso":"2025-10-07T13:09:04.729Z","lat":null,"lon":null,"alt":null,"bat_v":3.636,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
+{"device_id":"test3","ts_iso":"2025-10-07T13:14:56.041Z","lat":null,"lon":null,"alt":null,"bat_v":3.636,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null},
+{"device_id":"wacken","ts_iso":"2025-10-07T13:12:16.807Z","lat":54.02755,"lon":9.37503,"alt":18,"bat_v":3.66,"temp_c":null,"hum_pct":null,"temp_soil_c":null,"water_soil":null}
+]
