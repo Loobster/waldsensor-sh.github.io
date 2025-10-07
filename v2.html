@@ -172,6 +172,22 @@
     // Pattern: Name endet mit se01 oder se01lb (case-insensitive)
     const isSoilNode = id => /(^|[-_])se01(lb)?$/i.test(String(id||""));
 
+
+// === Multi-Sensor Erkennung ===
+function getLocationKey(id) {
+  const base = String(id).replace(/[-_](s31lb|se01lb|llms01)$/i, '');
+  return base.toLowerCase();
+}
+
+function isMultiSensorLocation(id) {
+  return /schacht[_-]?audorf/i.test(String(id));
+}
+
+function findRelatedNodes(nodes, baseId) {
+  const key = getLocationKey(baseId);
+  return nodes.filter(n => getLocationKey(n.id) === key);
+}
+
     // ===== Sensor-Daten-Extraktion =====
     
     /**
