@@ -1,37 +1,37 @@
 {
   "node": "s31lb_schachtaudorf",
   "position": {
-    "lat": 54.3674519691721,
-    "lon": 9.691721
+    "lat": 0.0,
+    "lon": 0.0
   },
-  "time": "2025-10-07T14:26:40.943425Z",
+  "time": "2025-10-07T14:46:40.721180Z",
   "gateways": [
     {
       "id": "addix-holzbunge",
-      "rssi": -113.0,
-      "snr": -1.8
+      "rssi": -118.0,
+      "snr": -6.5
     }
   ],
   "values": {
     "BatV": 3.6,
     "Door_status": "OPEN",
     "EXTI_Trigger": "FALSE",
-    "Hum_SHT31": 96.3,
+    "Hum_SHT31": 96.2,
     "TempC_SHT31": 15.1,
     "alt1": 112.0,
-    "alt2": 60.0,
-    "chan1": 0.0,
-    "f_cnt": 90.0,
+    "alt2": 0.0,
+    "chan1": 4.0,
+    "f_cnt": 91.0,
     "freq1": 0.0,
     "gw1": "addix-holzbunge",
-    "gw2": "adx-sh-014",
+    "gw2": "eui-7076ff005607042d",
     "lat1": 54.36749,
-    "lat2": 54.3674519691721,
+    "lat2": 0.0,
     "lon1": 9.69176,
-    "lon2": 9.691721,
-    "rssi1": -113.0,
-    "rx_time1": "2025-10-07T14:26:40.687427Z",
+    "lon2": 0.0,
+    "rssi1": -118.0,
+    "rx_time1": "2025-10-07T14:46:40.466696Z",
     "sf": 7.0,
-    "snr1": -1.8
+    "snr1": -6.5
   }
 }
