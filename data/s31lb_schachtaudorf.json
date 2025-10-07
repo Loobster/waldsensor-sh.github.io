@@ -4,24 +4,24 @@
     "lat": 54.3069,
     "lon": 9.71957
   },
-  "time": "2025-10-07T15:06:40.519126Z",
+  "time": "2025-10-07T15:26:40.285473Z",
   "gateways": [
     {
       "id": "addix-holzbunge",
       "rssi": -113.0,
-      "snr": -2.3
+      "snr": -2.0
     }
   ],
   "values": {
     "BatV": 3.6,
     "Door_status": "OPEN",
     "EXTI_Trigger": "FALSE",
-    "Hum_SHT31": 96.0,
+    "Hum_SHT31": 95.8,
     "TempC_SHT31": 15.1,
     "alt1": 112.0,
     "alt2": 60.0,
-    "chan1": 5.0,
-    "f_cnt": 92.0,
+    "chan1": 3.0,
+    "f_cnt": 93.0,
     "freq1": 0.0,
     "gw1": "addix-holzbunge",
     "gw2": "adx-sh-014",
@@ -30,8 +30,8 @@
     "lon1": 9.69176,
     "lon2": 9.691721,
     "rssi1": -113.0,
-    "rx_time1": "2025-10-07T15:06:40.249206Z",
+    "rx_time1": "2025-10-07T15:26:40.027879Z",
     "sf": 7.0,
-    "snr1": -2.3
+    "snr1": -2.0
   }
 }
