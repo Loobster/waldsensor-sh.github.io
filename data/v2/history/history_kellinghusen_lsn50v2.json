@@ -12854,5 +12854,26 @@
       "lon": 9.71426
     },
     "id": "kellinghusen_lsn50v2"
+  },
+  {
+    "fields": {
+      "gw1_id": "lora-gateway-fahrdorf",
+      "Hum_SHT": 52.5,
+      "BatV": 3.412,
+      "TempC_SHT": 23.9,
+      "lon": 9.71426,
+      "gateway_count": 2,
+      "bw": 125000,
+      "snr1": 9.8,
+      "gw2_id": "laird-lorawan-gw",
+      "sf": 7,
+      "lat": 53.95655,
+      "rssi2": -42,
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
+      "snr2": 9.8,
+      "rssi1": -89
+    },
+    "id": "kellinghusen_lsn50v2",
+    "ts": "2025-10-07T04:14:35.227Z"
   }
 ]
