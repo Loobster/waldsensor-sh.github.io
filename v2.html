@@ -273,7 +273,7 @@ function multiSensorPopupHtml(nodes) {
       html += `<div class="sensor-type">🍃 Blatt-Sensor</div>`;
       html += `<div class="row"><span class="label">Blatttemperatur</span><span class="value">${NUM(f.Leaf_Temperature) ? deNum(NUM(f.Leaf_Temperature),1) + ' °C' : '–'}</span></div>`;
       html += `<div class="row"><span class="label">Blattfeuchte</span><span class="value">${NUM(f.Leaf_Moisture) ? deNum(NUM(f.Leaf_Moisture),1) + ' %' : '–'}</span></div>`;
-i} else if (soil) {
+} else if (soil) {
       html += `<div class="sensor-type">🌱 Boden-Sensor</div>`;
       html += `<div class="row"><span class="label">Bodentemperatur</span><span class="value">${NUM(f.temp_SOIL) ? deNum(NUM(f.temp_SOIL),1) + ' °C' : '–'}</span></div>`;
       html += `<div class="row"><span class="label">Bodenfeuchte</span><span class="value">${NUM(f.water_SOIL) ? deNum(NUM(f.water_SOIL),1) + ' %' : '–'}</span></div>`;
