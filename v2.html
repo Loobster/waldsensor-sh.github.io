@@ -256,12 +256,54 @@ function findRelatedNodes(nodes, baseId) {
     }
 
     // ===== Popup-HTML-Generierung =====
+   
+function multiSensorPopupHtml(nodes) {
+  const title = normId(nodes[0].id).split('-')[0] + '-' + normId(nodes[0].id).split('-')[1];
+  let html = `<div class="popup">`;
+  html += `<h3>${title} <span class="status-badge status-excellent">${nodes.length} Sensoren</span></h3>`;
+  
+  nodes.forEach(n => {
+    const f = n.fields || {};
+    const soil = isSoilNode(n.id);
+    const isLeaf = /llms01/i.test(n.id);
     
+    html += `<hr/>`;
+    
+    if (isLeaf) {
+      html += `<div class="sensor-type">🍃 Blatt-Sensor</div>`;
+      html += `<div class="row"><span class="label">Blatttemperatur</span><span class="value">${NUM(f.Leaf_Temperature) ? deNum(NUM(f.Leaf_Temperature),1) + ' °C' : '–'}</span></div>`;
+      html += `<div class="row"><span class="label">Blattfeuchte</span><span class="value">${NUM(f.Leaf_Moisture) ? deNum(NUM(f.Leaf_Moisture),1) + ' %' : '–'}</span></div>`;
+i} else if (soil) {
+      html += `<div class="sensor-type">🌱 Boden-Sensor</div>`;
+      html += `<div class="row"><span class="label">Bodentemperatur</span><span class="value">${NUM(f.temp_SOIL) ? deNum(NUM(f.temp_SOIL),1) + ' °C' : '–'}</span></div>`;
+      html += `<div class="row"><span class="label">Bodenfeuchte</span><span class="value">${NUM(f.water_SOIL) ? deNum(NUM(f.water_SOIL),1) + ' %' : '–'}</span></div>`;
+
+} else {
+      html += `<div class="sensor-type">🌡️ Luft-Sensor</div>`;
+      const temp = NUM(f.TempC_SHT) || NUM(f.TempC_SHT31);
+      const hum = NUM(f.Hum_SHT) || NUM(f.Hum_SHT31);
+      html += `<div class="row"><span class="label">Lufttemperatur</span><span class="value">${temp ? deNum(temp,1) + ' °C' : '–'}</span></div>`;
+      html += `<div class="row"><span class="label">Luftfeuchte</span><span class="value">${hum ? deNum(hum,1) + ' %' : '–'}</span></div>`;
+    }
+      html += `<div class="row"><span class="label">Batterie</span><span class="value">${NUM(f.BatV) ? deNum(NUM(f.BatV),2) + ' V' : '–'}</span></div>`;
+      });
+  
+      html += `</div>`;
+      return html;
+} 
     /**
      * Erzeugt Popup-HTML für einen Node
      * Zeigt: Name, Status, Netzwerk-Stats, Sensor-Werte, Gateway-Liste
      */
-    function nodePopupHtml(item){
+    function nodePopupHtml(item, allNodes){
+
+// Multi-Sensor Check
+   if (isMultiSensorLocation(item.id)) {
+      const related = findRelatedNodes(allNodes || [item], item.id);
+   if (related.length > 1) {
+      return multiSensorPopupHtml(related);
+      }
+   }
       const f = item.fields||{};
       const title = normId(item.id);
       const when = formatDE(item.ts);
@@ -480,7 +522,7 @@ function findRelatedNodes(nodes, baseId) {
           if (!lat || !lon) return;
 
           const m = L.marker([lat, lon], { icon: createNodeIcon() }).addTo(map);
-          m.bindPopup(nodePopupHtml(n), { maxWidth: 320 });
+          m.bindPopup(nodePopupHtml(n, nodes), { maxWidth: 320 });
           pts.push([lat, lon]);
 
           // Zähle Gateway-Nutzung
