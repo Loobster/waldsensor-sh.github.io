@@ -11760,5 +11760,24 @@
       "snr2": 8,
       "rssi2": -36
     }
+  },
+  {
+    "ts": "2025-10-08T22:46:09.852Z",
+    "id": "kappeln",
+    "fields": {
+      "snr1": 7.5,
+      "gw2_id": "laird-lorawan-gw",
+      "lat": 54.66205,
+      "sf": 7,
+      "BatV": 3.642,
+      "rssi1": -87,
+      "gw1_id": "lora-gateway-fahrdorf",
+      "lon": 9.92468,
+      "bw": 125000,
+      "snr2": 7.8,
+      "gateway_count": 2,
+      "rssi2": -35,
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw"
+    }
   }
 ]
