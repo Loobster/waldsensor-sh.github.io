@@ -165,6 +165,9 @@
 
     html += `<div class="row"><span class="label">Batterie</span><span class="value">${NUM(f.BatV) ? deNum(NUM(f.BatV),2)+' V' : '–'}</span></div>`;
   });
+  // Abschluss-Button wie bei Einzelsensoren
+  const statHref = `/html/sensor.html?node=${encodeURIComponent(first.id)}`;
+  html += `<a class="btn" href="${statHref}" target="_blank" rel="noopener">Detailansicht öffnen →</a>`;
 
   html += `</div>`;
   return html;
