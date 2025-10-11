@@ -1,145 +1,167 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>WALDSENSOR.SH – Sensordetails</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: system-ui, sans-serif; margin:0; background:#f6f8fa; }
-    header { background:#004d46; color:#fff; padding:0.8em 1em; font-weight:bold; display:flex; justify-content:space-between; align-items:center; }
-    header a { color:#fff; text-decoration:none; }
-    main { padding:1em; display:grid; grid-template-columns:1fr 1fr; gap:1em; }
-    .card { background:#fff; border-radius:12px; padding:1em; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
-    .pill { display:inline-block; background:#e6f4ea; color:#1a6334; padding:0.2em 0.8em; border-radius:999px; font-size:0.9em; margin-bottom:0.5em; }
-    .tiles { display:flex; gap:0.8em; flex-wrap:wrap; }
-    .tile { flex:1 1 30%; background:#f4f6f8; border-radius:8px; padding:0.8em; text-align:center; }
-    .tile h3 { margin:0; font-size:0.9em; color:#555; }
-    .tile p { margin:0.2em 0 0; font-size:1.2em; font-weight:bold; }
-    .sensor-block { margin-top:0.8em; padding-top:0.6em; border-top:1px solid #eee; }
-    .sensor-block h4 { margin:0.3em 0; color:#004d46; font-size:1em; }
-    footer { text-align:center; color:#666; padding:1em; font-size:0.9em; }
-    .inactive { color:#999; background:#eee; padding:0.5em; border-radius:8px; }
-  </style>
+<meta charset="UTF-8">
+<title>WALDSENSOR.SH – Sensordetails</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { font-family: system-ui, sans-serif; margin:0; background:#f6f8fa; color:#111; }
+  header {
+    background:#004d46; color:#fff; padding:0.8em 1em;
+    font-weight:bold; display:flex; justify-content:space-between; align-items:center;
+  }
+  header a { color:#fff; text-decoration:none; }
+  main { padding:1em; display:grid; grid-template-columns:1fr 1fr; gap:1em; }
+  .card {
+    background:#fff; border-radius:12px; padding:1em;
+    box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  }
+  .pill {
+    display:inline-block; background:#e6f4ea; color:#1a6334;
+    padding:0.2em 0.8em; border-radius:999px; font-size:0.9em; margin-bottom:0.8em;
+  }
+
+  /* Sensorblöcke */
+  .sensor-block {
+    border-radius:10px; padding:0.8em 0.9em; margin-bottom:1em;
+    box-shadow:0 2px 4px rgba(0,0,0,0.06);
+  }
+  .sensor-block h4 {
+    margin:0 0 0.4em; font-size:1em; font-weight:700;
+    display:flex; align-items:center; gap:6px;
+  }
+  .tiles {
+    display:flex; gap:0.6em; flex-wrap:wrap;
+  }
+  .tile {
+    flex:1 1 30%; background:rgba(255,255,255,0.65);
+    border-radius:8px; padding:0.6em; text-align:center;
+  }
+  .tile h3 { margin:0; font-size:0.8em; color:#333; font-weight:600; }
+  .tile p { margin:0.2em 0 0; font-size:1.1em; font-weight:700; }
+
+  /* Farben für Sensortypen */
+  .sensor-leaf   { background:#e8f6ec; }
+  .sensor-air    { background:#eaf3fa; }
+  .sensor-soil   { background:#f5f1e7; }
+  .sensor-weather{ background:#eceff1; }
+
+  footer { text-align:center; color:#666; padding:1em; font-size:0.9em; }
+  .inactive { color:#999; background:#eee; padding:0.5em; border-radius:8px; }
+</style>
 </head>
 <body>
-  <header>
-    <a href="../v2.html">&larr; Zur Karte</a>
-    <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.091</small></div>
-  </header>
+<header>
+  <a href="../v2.html">&larr; Zur Karte</a>
+  <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.10 Color</small></div>
+</header>
 
-  <main>
-    <div class="card" id="sensorCard">
-      <div id="stand" class="pill">Stand: —</div>
-      <div id="sensorContainer"></div>
-      <small>Quelle: /data/v2/latest/all.json</small>
-    </div>
+<main>
+  <div class="card" id="sensorCard">
+    <div id="stand" class="pill">Stand: —</div>
+    <div id="sensorContainer"></div>
+    <small>Quelle: /data/v2/latest/all.json</small>
+  </div>
 
-    <div class="card">
-      <h3>Netz & Gateways</h3>
-      <p>Letzte 24 h: <span id="frames24">—</span> Uplinks</p>
-      <p>Letzter Uplink: <span id="lastUplink">—</span></p>
-      <p>Gateways: <span id="gwCount">—</span></p>
-      <p>Ø Batterie: <span id="avgBat">—</span></p>
-      <p>Bestes Signal: <span id="bestSig">—</span></p>
-      <p>ADR: <span id="adr">—</span></p>
-      <small id="netSource">Quelle: —</small>
-    </div>
-  </main>
+  <div class="card">
+    <h3>Netz & Gateways</h3>
+    <p>Letzte 24 h: <span id="frames24">—</span> Uplinks</p>
+    <p>Letzter Uplink: <span id="lastUplink">—</span></p>
+    <p>Gateways: <span id="gwCount">—</span></p>
+    <p>Ø Batterie: <span id="avgBat">—</span></p>
+    <p>Bestes Signal: <span id="bestSig">—</span></p>
+    <p>ADR: <span id="adr">—</span></p>
+    <small id="netSource">Quelle: —</small>
+  </div>
+</main>
 
-  <footer>WALDSENSOR.SH – Sensordetails</footer>
+<footer>WALDSENSOR.SH – Sensordetails</footer>
 
-  <script>
-    const byId = id => document.getElementById(id);
-    const safeSet = (id, text) => { const el = byId(id); if(el) el.textContent = text; };
-    const fmtNum = (v, d=1, suf="") => (v==null || Number.isNaN(+v)) ? "—" : Number(v).toFixed(d).replace(".",",")+suf;
-    const fmtDate = ts => ts ? new Date(ts).toLocaleString("de-DE") : "—";
+<script>
+const byId = id => document.getElementById(id);
+const safeSet = (id, txt) => { const el=byId(id); if(el) el.textContent=txt; };
+const fmtNum = (v,d=1,suf="") => (v==null||Number.isNaN(+v))?"—":Number(v).toFixed(d).replace(".",",")+suf;
+const fmtDate = ts => ts?new Date(ts).toLocaleString("de-DE"):"—";
 
-    const urlParams = new URLSearchParams(location.search);
-    const nodeId = (urlParams.get("node") || "unknown");
-    safeSet("nodeName", nodeId);
+const urlParams = new URLSearchParams(location.search);
+const nodeId = (urlParams.get("node") || "unknown");
+safeSet("nodeName", nodeId);
 
-    const baseId = nodeId.replace(/[-_](llms01|s31lb|se01lb|sn50v3|lsn50v2|s2120)$/i,"");
-    const isMulti = /schacht[_-]?audorf/i.test(nodeId);
+const baseId = nodeId.replace(/[-_](llms01|s31lb|se01lb|sn50v3|lsn50v2|s2120)$/i,"");
+const isMulti = /schacht[_-]?audorf/i.test(nodeId);
 
-    // === Daten laden ===
-    fetch("/data/v2/latest/all.json", { cache:"no-store" })
-      .then(r => r.json())
-      .then(all => {
-        if(!Array.isArray(all)) return;
+// === Daten laden ===
+fetch("/data/v2/latest/all.json",{cache:"no-store"})
+.then(r=>r.json())
+.then(all=>{
+  if(!Array.isArray(all)) return;
 
-        const related = isMulti
-          ? all.filter(x => (x.device_id||"").replace(/[-_]/g,"").includes(baseId.replace(/[-_]/g,"")))
-          : all.filter(x => (x.device_id||"").toLowerCase() === nodeId.toLowerCase());
+  const related = isMulti
+    ? all.filter(x => (x.device_id||"").replace(/[-_]/g,"").includes(baseId.replace(/[-_]/g,"")))
+    : all.filter(x => (x.device_id||"").toLowerCase() === nodeId.toLowerCase());
+  if(related.length===0) return;
 
-        if(related.length === 0) return;
+  const latest = related.reduce((a,b)=>Date.parse(a.ts_iso||0)>Date.parse(b.ts_iso||0)?a:b);
+  safeSet("stand","Stand: "+fmtDate(latest.ts_iso));
 
-        // Neuester Zeitstempel
-        const latest = related.reduce((a,b)=> Date.parse(a.ts_iso||0)>Date.parse(b.ts_iso||0)?a:b);
-        safeSet("stand", "Stand: "+fmtDate(latest.ts_iso));
+  const container = byId("sensorContainer"); container.innerHTML="";
 
-        // Sensor-Blöcke
-        const container = byId("sensorContainer");
-        container.innerHTML = "";
+  related.forEach(n=>{
+    const f=n;
+    const id=(n.device_id||"").toLowerCase();
+    let type="Unbekannt",cls="";
+    if(/llms01/.test(id)){type="🍃 Blatt-Sensor";cls="sensor-leaf";}
+    else if(/se01/.test(id)){type="🌱 Boden-Sensor";cls="sensor-soil";}
+    else if(/s31|sn50|lsn50/.test(id)){type="🌡️ Luft-Sensor";cls="sensor-air";}
+    else if(/s2120/.test(id)){type="🌦 Wetterstation (8-in-1)";cls="sensor-weather";}
 
-        related.forEach(n => {
-          const f = n;
-          const id = n.device_id.toLowerCase();
-          let type = "Unbekannt";
-          if(/llms01/.test(id)) type = "🍃 Blatt-Sensor";
-          else if(/se01/.test(id)) type = "🌱 Boden-Sensor";
-          else if(/s31|sn50|lsn50/.test(id)) type = "🌡️ Luft-Sensor";
-          else if(/s2120/.test(id)) type = "🌦 Wetterstation (8-in-1)";
+    const block=document.createElement("div");
+    block.className=`sensor-block ${cls}`;
+    block.innerHTML=`
+      <h4>${type}</h4>
+      <div class="tiles">
+        <div class="tile"><h3>Temperatur</h3><p>${fmtNum(f.temp_c||f.temp_soil_c||f.leaf_temp_c,1," °C")}</p></div>
+        <div class="tile"><h3>Feuchte</h3><p>${fmtNum(f.hum_pct||f.water_soil||f.leaf_moist_pct,1," %")}</p></div>
+        <div class="tile"><h3>Batterie</h3><p>${fmtNum(f.bat_v,2," V")}</p></div>
+      </div>`;
+    container.appendChild(block);
+  });
 
-          const block = document.createElement("div");
-          block.className = "sensor-block";
-          block.innerHTML = `
-            <h4>${type}</h4>
-            <div class="tiles">
-              <div class="tile"><h3>Temperatur</h3><p>${fmtNum(f.temp_c || f.temp_soil_c || f.leaf_temp_c,1," °C")}</p></div>
-              <div class="tile"><h3>Feuchte</h3><p>${fmtNum(f.hum_pct || f.water_soil || f.leaf_moist_pct,1," %")}</p></div>
-              <div class="tile"><h3>Batterie</h3><p>${fmtNum(f.bat_v,2," V")}</p></div>
-            </div>`;
-          container.appendChild(block);
-        });
+  if(isMulti && !related.some(x=>/s2120/.test(x.device_id))){
+    const ph=document.createElement("div");
+    ph.className="sensor-block sensor-weather inactive";
+    ph.innerHTML=`<h4>🌦 Wetterstation (SenseCAP S2120)</h4>
+    <p>Noch keine Daten verfügbar – Schlüssel ausstehend.</p>`;
+    container.appendChild(ph);
+  }
 
-        // Wetterstation-Platzhalter
-        if(isMulti && !related.some(x=>/s2120/.test(x.device_id))){
-          const ph = document.createElement("div");
-          ph.className = "sensor-block inactive";
-          ph.innerHTML = `<h4>🌦 Wetterstation (SenseCAP S2120)</h4>
-            <p>Noch keine Daten verfügbar – Schlüssel ausstehend.</p>`;
-          container.appendChild(ph);
-        }
+  const bats=related.map(r=>+r.bat_v||0).filter(v=>v>0);
+  const avgBat=bats.length?bats.reduce((a,b)=>a+b,0)/bats.length:null;
+  safeSet("avgBat",fmtNum(avgBat,2," V"));
 
-        // Durchschnitt Batterie & Gateways
-        const bats = related.map(r => +r.bat_v || 0).filter(v => v>0);
-        const avgBat = bats.length ? bats.reduce((a,b)=>a+b,0)/bats.length : null;
-        safeSet("avgBat", fmtNum(avgBat,2," V"));
+  const gws=new Set();
+  related.forEach(n=>(n.gateway_ids||"").split(",").forEach(id=>gws.add(id.trim())));
+  safeSet("gwCount",gws.size||"—");
+})
+.catch(e=>console.warn("Fehler all.json",e));
 
-        const gws = new Set();
-        related.forEach(n => (n.gateway_ids||"").split(",").forEach(id => gws.add(id.trim())));
-        safeSet("gwCount", gws.size || "—");
-      })
-      .catch(e => console.warn("Fehler beim Laden all.json", e));
-
-    // === Netzstatistik ===
-    const netUrl = `/data/v2/net/netstats_${encodeURIComponent(nodeId)}.json`;
-    safeSet("netSource", "Quelle: "+netUrl);
-
-    fetch(netUrl,{cache:"no-store"})
-      .then(r=>r.json())
-      .then(ns=>{
-        if(!ns) return;
-        safeSet("frames24", ns.frames24 ?? "—");
-        safeSet("lastUplink", fmtDate(ns.last_ts));
-        if(ns.best){
-          const rssi = ns.best.rssi!=null?`${ns.best.rssi} dBm`:"—";
-          const snr = ns.best.snr!=null?`${ns.best.snr} dB`:"—";
-          safeSet("bestSig", `${rssi} / ${snr}`);
-        }
-        safeSet("adr", ns.adr ?? ns.adr_enabled ?? "—");
-      })
-      .catch(e=>console.warn("Fehler beim Laden netstats", e));
-  </script>
+// === Netzstatistik ===
+const netUrl=`/data/v2/net/netstats_${encodeURIComponent(nodeId)}.json`;
+safeSet("netSource","Quelle: "+netUrl);
+fetch(netUrl,{cache:"no-store"})
+.then(r=>r.json())
+.then(ns=>{
+  if(!ns)return;
+  safeSet("frames24",ns.frames24??"—");
+  safeSet("lastUplink",fmtDate(ns.last_ts));
+  if(ns.best){
+    const rssi=ns.best.rssi!=null?`${ns.best.rssi} dBm`:"—";
+    const snr =ns.best.snr !=null?`${ns.best.snr} dB` :"—";
+    safeSet("bestSig",`${rssi} / ${snr}`);
+  }
+  safeSet("adr",ns.adr??ns.adr_enabled??"—");
+})
+.catch(e=>console.warn("Fehler netstats",e));
+</script>
 </body>
 </html>
