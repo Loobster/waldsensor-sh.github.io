@@ -28,10 +28,11 @@
 <body>
 <header>
   <a href="../v2.html">&larr; Zur Karte</a>
-  <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.16</small></div>
+  <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.17</small></div>
 </header>
 
 <main>
+  <!-- Linke Seite -->
   <div class="card">
     <div id="stand" class="pill">Stand: —</div>
 
@@ -70,6 +71,7 @@
     <small>Quelle: /data/v2/latest/all.json</small>
   </div>
 
+  <!-- Rechte Seite -->
   <div class="card">
     <h3>Netz & Ranking</h3>
     <p>Letzte 24 h: <span id="frames24">—</span> Uplinks<br>
@@ -78,6 +80,7 @@
     <p>Gateways: <span id="gwCount">—</span></p>
     <p>Signal (SNR): <span id="snr">—</span></p>
     <p>ADR: <span id="adr">—</span></p>
+
     <hr>
     <h4>🏆 WALDSENSOR.SH-Liga</h4>
     <p id="rankInfo">Berechne Ranking …</p>
@@ -90,6 +93,7 @@
 <footer>WALDSENSOR.SH – Sensordetails</footer>
 
 <script>
+// ===== Helper =====
 const $ = id => document.getElementById(id);
 const set = (id,v)=>{const el=$(id);if(el&&v!=null)el.textContent=v;}
 const fmtNum=(v,d=1,s="")=>v==null||isNaN(+v)?null:(+v).toFixed(d).replace(".",",")+s;
@@ -99,54 +103,62 @@ const params=new URLSearchParams(location.search);
 const nodeId=params.get("node")||"unknown";
 set("nodeName",nodeId);
 
-// Basis-Id ohne Sensortyp
-const baseKey=id=>String(id||"").toLowerCase().replace(/[-_](llms01|s31lb|se01lb|sn50v3|lsn50v2)$/i,"");
+// ===== Normalisierung =====
+const norm = s => String(s||"").toLowerCase().replace(/[-_]/g,"");
 
-// Multi-Standorte
-const isMulti=id=>/schacht[_-]?audorf/i.test(id)||/bredstedt/i.test(id);
+// ===== Multi-Sets =====
+const multiSets = {
+  "schachtaudorf": ["llms01","s31lb","se01lb"],
+  "bredstedt": ["s31lb","se01lb"]
+};
+const isMulti = id => Object.keys(multiSets).some(k => norm(id).includes(k));
+const getMultiKey = id => Object.keys(multiSets).find(k => norm(id).includes(k)) || null;
 
-// Sensortyp
-const kind=id=>{
-  const x=String(id||"").toLowerCase();
-  if(x.includes("llms"))return"leaf";
-  if(x.includes("se01"))return"soil";
-  return"air";
+const kind = id => {
+  const x = norm(id);
+  if(x.includes("llms")) return "leaf";
+  if(x.includes("se01")) return "soil";
+  return "air";
 };
 
-// Sichtbarkeit
-const show=k=>{$("blockLeaf").classList.toggle("hidden",!k.includes("leaf"));
-$("blockAir").classList.toggle("hidden",!k.includes("air"));
-$("blockSoil").classList.toggle("hidden",!k.includes("soil"));};
+const show = kinds => {
+  $("#blockLeaf").classList.toggle("hidden",!kinds.includes("leaf"));
+  $("#blockAir").classList.toggle("hidden",!kinds.includes("air"));
+  $("#blockSoil").classList.toggle("hidden",!kinds.includes("soil"));
+};
 
-// --- Sensor-Daten ---
+// ===== Daten laden =====
 fetch("/data/v2/latest/all.json",{cache:"no-store"})
 .then(r=>r.json()).then(all=>{
   const arr=Array.isArray(all)?all:[];
-  const me=arr.find(n=>(n.id||n.device_id||"").toLowerCase().includes(nodeId.toLowerCase()));
-  const ts=fmtDate(me?.ts_iso||me?.ts);if(ts)set("stand","Stand: "+ts);
+  const tsAll = arr.map(n=>n.ts_iso||n.ts).filter(Boolean).sort().pop();
+  if(tsAll) set("stand","Stand: "+fmtDate(tsAll));
 
   if(isMulti(nodeId)){
-    const key=baseKey(nodeId);
-    const rel=arr.filter(n=>baseKey(n.id||n.device_id)===key);
-    const leaf=rel.find(n=>kind(n.id)==="leaf");
-    const air=rel.find(n=>kind(n.id)==="air");
-    const soil=rel.find(n=>kind(n.id)==="soil");
+    const key = getMultiKey(nodeId);
+    const wanted = multiSets[key];
+    const group = arr.filter(n => norm(n.id||n.device_id).includes(key));
+    const leaf = group.find(n => wanted.includes("llms01") && norm(n.id).includes("llms"));
+    const air  = group.find(n => wanted.includes("s31lb")  && norm(n.id).includes("s31"));
+    const soil = group.find(n => wanted.includes("se01lb") && norm(n.id).includes("se01"));
     show(["leaf","air","soil"].filter(k=>({leaf,air,soil}[k])));
+
     if(leaf){set("leafTemp",fmtNum(leaf.leaf_temp_c,1," °C"));set("leafHum",fmtNum(leaf.leaf_moist_pct,1," %"));set("leafBat",fmtNum(leaf.bat_v,2," V"));}
-    if(air){set("airTemp",fmtNum(air.temp_c,1," °C"));set("airHum",fmtNum(air.hum_pct,1," %"));set("airBat",fmtNum(air.bat_v,2," V"));}
+    if(air){ set("airTemp",fmtNum(air.temp_c,1," °C"));set("airHum",fmtNum(air.hum_pct,1," %"));set("airBat",fmtNum(air.bat_v,2," V"));}
     if(soil){set("soilTemp",fmtNum(soil.temp_soil_c,1," °C"));set("soilHum",fmtNum(soil.water_soil,1," %"));set("soilBat",fmtNum(soil.bat_v,2," V"));}
   } else {
-    const type=kind(me?.id||me?.device_id||nodeId);
-    show([type]);
-    const f=me||{};
-    if(type==="leaf"){set("leafTemp",fmtNum(f.leaf_temp_c,1," °C"));set("leafHum",fmtNum(f.leaf_moist_pct,1," %"));set("leafBat",fmtNum(f.bat_v,2," V"));}
-    else if(type==="soil"){set("soilTemp",fmtNum(f.temp_soil_c,1," °C"));set("soilHum",fmtNum(f.water_soil,1," %"));set("soilBat",fmtNum(f.bat_v,2," V"));}
-    else{set("airTemp",fmtNum(f.temp_c,1," °C"));set("airHum",fmtNum(f.hum_pct,1," %"));set("airBat",fmtNum(f.bat_v,2," V"));}
+    const me = arr.find(n => norm(n.id||n.device_id).includes(norm(nodeId)));
+    const t = kind(me?.id||nodeId);
+    show([t]);
+    if(!me) return;
+    if(t==="leaf"){set("leafTemp",fmtNum(me.leaf_temp_c,1," °C"));set("leafHum",fmtNum(me.leaf_moist_pct,1," %"));set("leafBat",fmtNum(me.bat_v,2," V"));}
+    else if(t==="soil"){set("soilTemp",fmtNum(me.temp_soil_c,1," °C"));set("soilHum",fmtNum(me.water_soil,1," %"));set("soilBat",fmtNum(me.bat_v,2," V"));}
+    else{set("airTemp",fmtNum(me.temp_c,1," °C"));set("airHum",fmtNum(me.hum_pct,1," %"));set("airBat",fmtNum(me.bat_v,2," V"));}
   }
 })
 .catch(e=>console.warn("Fehler all.json:",e));
 
-// --- Netz / Ranking ---
+// ===== Netz / Ranking =====
 const netUrl=`/data/v2/net/netstats_${encodeURIComponent(nodeId)}.json`;
 set("netSource","Quelle: "+netUrl);
 
@@ -176,7 +188,7 @@ Promise.all([
    return {...n,score:tx*0.7+snr*0.2+bat*0.1};
  }).sort((a,b)=>b.score-a.score);
 
- const me=scored.find(s=>(s.id||s.device_id).toLowerCase()===nodeId.toLowerCase());
+ const me=scored.find(s=>(s.id||s.device_id||"").toLowerCase()===nodeId.toLowerCase());
  const rank=me?scored.indexOf(me)+1:null;
  if(me&&rank)set("rankInfo",`🏆 Rang ${rank} von ${scored.length} (${fmtNum(me.score,1)} Punkte)`);
  const top3=scored.slice(0,3).map((s,i)=>`<li>${["🥇","🥈","🥉"][i]} ${s.id||s.device_id} – ${fmtNum(s.score,1)} P</li>`).join("")||"<li>–</li>";
