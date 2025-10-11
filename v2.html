@@ -174,9 +174,15 @@ nd 0.2s}
     const deNum = (n,d=1) => (typeof n==="number" && Number.isFinite(n)) 
       ? n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d}) 
       : "–"; 
-     
-    // Normalisiert Node-IDs (Unterstriche zu Bindestrichen) const normId = id => String(id||"").trim().replace(/_/g,"-").replace(/schacht[-_]?audorf/i,"Schacht-Audorf"); 
-     
+    
+    // Normalisiert Node-IDs (Unterstriche zu Bindestrichen) 
+    // Normalisiert Node-IDs (Unterstriche zu Bindestrichen, Sonderfall Schacht-Audorf)
+    function normId(id) {
+      return String(id || "")
+        .trim()
+        .replace(/_/g, "-")
+        .replace(/schacht[-_]?audorf/i, "Schacht-Audorf");
+} 
     // Erkennt Boden-Sensoren (SE01-LB) anhand der ID 
     // Pattern: Name endet mit se01 oder se01lb (case-insensitive) 
     const isSoilNode = id => /(^|[-_])se01(lb)?$/i.test(String(id||"")); 
