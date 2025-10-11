@@ -1,244 +1,188 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <title>WALDSENSOR.SH – Sensordetails</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body { font-family: system-ui, sans-serif; margin:0; background:#f6f8fa; }
-    header { background:#004d46; color:#fff; padding:0.8em 1em; font-weight:bold; display:flex; justify-content:space-between; }
-    header a { color:#fff; text-decoration:none; }
-    main { padding:1em; display:grid; grid-template-columns:1fr 1fr; gap:1em; }
-    .card { background:#fff; border-radius:12px; padding:1em; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
-    .pill { display:inline-block; background:#e6f4ea; color:#1a6334; padding:0.2em 0.8em; border-radius:999px; font-size:0.9em; margin-bottom:0.5em; }
-    .sensorBlock { margin-bottom:1em; border-radius:10px; padding:0.6em; }
-    .sensorBlock h4 { margin:0.2em 0 0.4em; }
-    .tiles { display:flex; gap:0.5em; }
-    .tile { flex:1; background:#f4f6f8; border-radius:8px; padding:0.5em; text-align:center; }
-    .tile h3 { margin:0; font-size:0.8em; color:#555; }
-    .tile p { margin:0.2em 0 0; font-size:1.1em; font-weight:bold; }
-    .hidden { display:none; }
-    .blatt { background:#e6f4ea; }
-    .luft  { background:#eaf1fb; }
-    .boden { background:#fdf3e7; }
-    .sensecap { background:#e9ecef; }
-    .ampel { font-weight:bold; padding:0.3em 0.6em; border-radius:6px; color:#fff; display:inline-block; }
-    .ampel.red { background:#e11d48; }
-    .ampel.yellow { background:#f59e0b; }
-    .ampel.green { background:#16a34a; }
-    footer { text-align:center; color:#666; padding:1em; font-size:0.9em; }
-    ol { padding-left:1.2em; margin:0.4em 0; }
-  </style>
+<meta charset="UTF-8">
+<title>WALDSENSOR.SH – Sensordetails</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body{font-family:system-ui,sans-serif;margin:0;background:#f6f8fa}
+  header{background:#004d46;color:#fff;padding:0.8em 1em;font-weight:bold;display:flex;justify-content:space-between}
+  header a{color:#fff;text-decoration:none}
+  main{padding:1em;display:grid;grid-template-columns:1fr 1fr;gap:1em}
+  .card{background:#fff;border-radius:12px;padding:1em;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
+  .pill{display:inline-block;background:#e6f4ea;color:#1a6334;padding:0.2em 0.8em;border-radius:999px;font-size:0.9em;margin-bottom:0.5em}
+  .sensorBlock{margin-bottom:1em;border-radius:10px;padding:0.6em}
+  .sensorBlock h4{margin:0.2em 0 0.4em}
+  .tiles{display:flex;gap:0.5em}
+  .tile{flex:1;background:#f4f6f8;border-radius:8px;padding:0.5em;text-align:center}
+  .tile h3{margin:0;font-size:0.8em;color:#555}
+  .tile p{margin:0.2em 0 0;font-size:1.1em;font-weight:bold}
+  .hidden{display:none}
+  .blatt{background:#e6f4ea}.luft{background:#eaf1fb}.boden{background:#fdf3e7}.sensecap{background:#e9ecef}
+  .ampel{font-weight:bold;padding:0.3em 0.6em;border-radius:6px;color:#fff;display:inline-block}
+  .ampel.red{background:#e11d48}.ampel.yellow{background:#f59e0b}.ampel.green{background:#16a34a}
+  footer{text-align:center;color:#666;padding:1em;font-size:0.9em}
+  ol{padding-left:1.2em;margin:0.4em 0}
+</style>
 </head>
 <body>
-  <header>
-    <a href="../v2.html">&larr; Zur Karte</a>
-    <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.15</small></div>
-  </header>
+<header>
+  <a href="../v2.html">&larr; Zur Karte</a>
+  <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.16</small></div>
+</header>
 
-  <main>
-    <!-- Linke Seite -->
-    <div class="card">
-      <div id="stand" class="pill">Stand: —</div>
+<main>
+  <div class="card">
+    <div id="stand" class="pill">Stand: —</div>
 
-      <div id="blockLeaf" class="sensorBlock blatt">
-        <h4>🌿 Blatt-Sensor</h4>
-        <div class="tiles">
-          <div class="tile"><h3>Temperatur</h3><p id="leafTemp">—</p></div>
-          <div class="tile"><h3>Feuchte</h3><p id="leafHum">—</p></div>
-          <div class="tile"><h3>Batterie</h3><p id="leafBat">—</p></div>
-        </div>
+    <div id="blockLeaf" class="sensorBlock blatt">
+      <h4>🌿 Blatt-Sensor</h4>
+      <div class="tiles">
+        <div class="tile"><h3>Temperatur</h3><p id="leafTemp">—</p></div>
+        <div class="tile"><h3>Feuchte</h3><p id="leafHum">—</p></div>
+        <div class="tile"><h3>Batterie</h3><p id="leafBat">—</p></div>
       </div>
-
-      <div id="blockAir" class="sensorBlock luft">
-        <h4>🌡️ Luft-Sensor</h4>
-        <div class="tiles">
-          <div class="tile"><h3>Temperatur</h3><p id="airTemp">—</p></div>
-          <div class="tile"><h3>Feuchte</h3><p id="airHum">—</p></div>
-          <div class="tile"><h3>Batterie</h3><p id="airBat">—</p></div>
-        </div>
-      </div>
-
-      <div id="blockSoil" class="sensorBlock boden">
-        <h4>🌱 Boden-Sensor</h4>
-        <div class="tiles">
-          <div class="tile"><h3>Temperatur</h3><p id="soilTemp">—</p></div>
-          <div class="tile"><h3>Feuchte</h3><p id="soilHum">—</p></div>
-          <div class="tile"><h3>Batterie</h3><p id="soilBat">—</p></div>
-        </div>
-      </div>
-
-      <div class="sensorBlock sensecap">
-        <h4>☁️ Wetterstation (SenseCAP S2120)</h4>
-        <p><small>Noch keine Daten verfügbar – Schlüssel ausstehend.</small></p>
-      </div>
-
-      <small>Quelle: /data/v2/latest/all.json</small>
     </div>
 
-    <!-- Rechte Seite -->
-    <div class="card">
-      <h3>Netz & Ranking</h3>
-      <p>Letzte 24 h: <span id="frames24">—</span> Uplinks<br>
-      Übertragungsrate: <span id="txRate" class="ampel">—</span></p>
-      <p>Letzter Uplink: <span id="lastUplink">—</span></p>
-      <p>Gateways: <span id="gwCount">—</span></p>
-      <p>Signal (SNR): <span id="snr">—</span></p>
-      <p>ADR: <span id="adr">—</span></p>
-
-      <hr>
-      <h4>🏆 WALDSENSOR.SH-Liga</h4>
-      <p id="rankInfo">Berechne Ranking …</p>
-      <ol id="rankingTop3"><li>–</li></ol>
-      <small>70 % Übertragung + 20 % Signal + 10 % Batterie</small><br>
-      <small id="netSource">Quelle: —</small>
+    <div id="blockAir" class="sensorBlock luft">
+      <h4>🌡️ Luft-Sensor</h4>
+      <div class="tiles">
+        <div class="tile"><h3>Temperatur</h3><p id="airTemp">—</p></div>
+        <div class="tile"><h3>Feuchte</h3><p id="airHum">—</p></div>
+        <div class="tile"><h3>Batterie</h3><p id="airBat">—</p></div>
+      </div>
     </div>
-  </main>
 
-  <footer>WALDSENSOR.SH – Sensordetails</footer>
+    <div id="blockSoil" class="sensorBlock boden">
+      <h4>🌱 Boden-Sensor</h4>
+      <div class="tiles">
+        <div class="tile"><h3>Temperatur</h3><p id="soilTemp">—</p></div>
+        <div class="tile"><h3>Feuchte</h3><p id="soilHum">—</p></div>
+        <div class="tile"><h3>Batterie</h3><p id="soilBat">—</p></div>
+      </div>
+    </div>
 
-  <script>
-    // ========== Helpers ==========
-    const $ = id => document.getElementById(id);
-    const set = (id, v) => { const el = $(id); if (el && v!=null) el.textContent = v; };
-    const fmtNum = (v,d=1,s="") => v==null||isNaN(+v)?null:(+v).toFixed(d).replace(".",",")+s;
-    const fmtDate = ts => !ts?null:(new Date(ts)).toLocaleString("de-DE");
+    <div class="sensorBlock sensecap">
+      <h4>☁️ Wetterstation (SenseCAP S2120)</h4>
+      <p><small>Noch keine Daten verfügbar – Schlüssel ausstehend.</small></p>
+    </div>
 
-    const params = new URLSearchParams(location.search);
-    const nodeId = params.get("node") || "unknown";
-    set("nodeName", nodeId);
+    <small>Quelle: /data/v2/latest/all.json</small>
+  </div>
 
-    // Location-Key: Basis-ID ohne Sensortyp-Suffix
-    const baseKey = id => String(id||"")
-      .toLowerCase()
-      .replace(/[-_](llms01|s31lb|se01lb|sn50v3|lsn50v2)$/i,"");
+  <div class="card">
+    <h3>Netz & Ranking</h3>
+    <p>Letzte 24 h: <span id="frames24">—</span> Uplinks<br>
+       Übertragungsrate: <span id="txRate" class="ampel">—</span></p>
+    <p>Letzter Uplink: <span id="lastUplink">—</span></p>
+    <p>Gateways: <span id="gwCount">—</span></p>
+    <p>Signal (SNR): <span id="snr">—</span></p>
+    <p>ADR: <span id="adr">—</span></p>
+    <hr>
+    <h4>🏆 WALDSENSOR.SH-Liga</h4>
+    <p id="rankInfo">Berechne Ranking …</p>
+    <ol id="rankingTop3"><li>–</li></ol>
+    <small>70 % Übertragung + 20 % Signal + 10 % Batterie</small><br>
+    <small id="netSource">Quelle: —</small>
+  </div>
+</main>
 
-    // Welche IDs zählen als Multi-Standort?
-    const isMultiLocation = id => /schacht[_-]?audorf/i.test(String(id||""));
+<footer>WALDSENSOR.SH – Sensordetails</footer>
 
-    // Sensortyp bestimmen
-    const kindOf = id => {
-      const x = String(id||"").toLowerCase();
-      if (x.includes("llms")) return "leaf";
-      if (x.includes("se01")) return "soil";
-      return "air"; // s31/lsn50/sn50 → Luft
-    };
+<script>
+const $ = id => document.getElementById(id);
+const set = (id,v)=>{const el=$(id);if(el&&v!=null)el.textContent=v;}
+const fmtNum=(v,d=1,s="")=>v==null||isNaN(+v)?null:(+v).toFixed(d).replace(".",",")+s;
+const fmtDate=ts=>!ts?null:(new Date(ts)).toLocaleString("de-DE");
 
-    // Sichtbarkeit der Blöcke steuern
-    const showOnly = kinds => {
-      $("#blockLeaf").classList.toggle("hidden", !kinds.includes("leaf"));
-      $("#blockAir").classList.toggle("hidden",  !kinds.includes("air"));
-      $("#blockSoil").classList.toggle("hidden", !kinds.includes("soil"));
-    };
+const params=new URLSearchParams(location.search);
+const nodeId=params.get("node")||"unknown";
+set("nodeName",nodeId);
 
-    // ========== Linke Seite: Sensordaten ==========
-    fetch("/data/v2/latest/all.json",{cache:"no-store"})
-      .then(r=>r.json())
-      .then(all=>{
-        const list = Array.isArray(all)?all:[];
-        const me = list.find(n => (n.id||n.device_id||"").toLowerCase() === nodeId.toLowerCase());
+// Basis-Id ohne Sensortyp
+const baseKey=id=>String(id||"").toLowerCase().replace(/[-_](llms01|s31lb|se01lb|sn50v3|lsn50v2)$/i,"");
 
-        // Fallback: wenn der direkte Treffer nicht existiert, mit startsWith
-        const me2 = me || list.find(n => (n.id||n.device_id||"").toLowerCase().startsWith(nodeId.toLowerCase()));
-        const ts = fmtDate(me2?.ts_iso || me2?.ts || null);
-        if (ts) set("stand", "Stand: " + ts);
+// Multi-Standorte
+const isMulti=id=>/schacht[_-]?audorf/i.test(id)||/bredstedt/i.test(id);
 
-        if (isMultiLocation(nodeId)) {
-          // Multi: alle Nodes mit gleichem Base-Key einsammeln
-          const key = baseKey(nodeId);
-          const related = list.filter(n => baseKey(n.id||n.device_id) === key);
+// Sensortyp
+const kind=id=>{
+  const x=String(id||"").toLowerCase();
+  if(x.includes("llms"))return"leaf";
+  if(x.includes("se01"))return"soil";
+  return"air";
+};
 
-          // Zuordnen
-          const leaf = related.find(n => kindOf(n.id||n.device_id) === "leaf");
-          const air  = related.find(n => kindOf(n.id||n.device_id) === "air");
-          const soil = related.find(n => kindOf(n.id||n.device_id) === "soil");
+// Sichtbarkeit
+const show=k=>{$("blockLeaf").classList.toggle("hidden",!k.includes("leaf"));
+$("blockAir").classList.toggle("hidden",!k.includes("air"));
+$("blockSoil").classList.toggle("hidden",!k.includes("soil"));};
 
-          showOnly(["leaf","air","soil"].filter(k => ({leaf,air,soil}[k]))); // nur vorhandene zeigen
+// --- Sensor-Daten ---
+fetch("/data/v2/latest/all.json",{cache:"no-store"})
+.then(r=>r.json()).then(all=>{
+  const arr=Array.isArray(all)?all:[];
+  const me=arr.find(n=>(n.id||n.device_id||"").toLowerCase().includes(nodeId.toLowerCase()));
+  const ts=fmtDate(me?.ts_iso||me?.ts);if(ts)set("stand","Stand: "+ts);
 
-          // Blatt
-          if (leaf) {
-            set("leafTemp", fmtNum(leaf.leaf_temp_c,1," °C"));
-            set("leafHum",  fmtNum(leaf.leaf_moist_pct,1," %"));
-            set("leafBat",  fmtNum(leaf.bat_v,2," V"));
-          }
-          // Luft
-          if (air) {
-            set("airTemp", fmtNum(air.temp_c ?? air.TempC_SHT ?? air.TempC_SHT31,1," °C"));
-            set("airHum",  fmtNum(air.hum_pct ?? air.Hum_SHT ?? air.Hum_SHT31,1," %"));
-            set("airBat",  fmtNum(air.bat_v ?? air.BatV,2," V"));
-          }
-          // Boden
-          if (soil) {
-            set("soilTemp", fmtNum(soil.temp_soil_c ?? soil.temp_SOIL,1," °C"));
-            set("soilHum",  fmtNum(soil.water_soil,1," %"));
-            set("soilBat",  fmtNum(soil.bat_v ?? soil.BatV,2," V"));
-          }
-        } else {
-          // Single-Node: nur der eigene Sensorblock bleibt sichtbar
-          const type = kindOf(me2?.id || me2?.device_id || nodeId);
-          showOnly([type]);
+  if(isMulti(nodeId)){
+    const key=baseKey(nodeId);
+    const rel=arr.filter(n=>baseKey(n.id||n.device_id)===key);
+    const leaf=rel.find(n=>kind(n.id)==="leaf");
+    const air=rel.find(n=>kind(n.id)==="air");
+    const soil=rel.find(n=>kind(n.id)==="soil");
+    show(["leaf","air","soil"].filter(k=>({leaf,air,soil}[k])));
+    if(leaf){set("leafTemp",fmtNum(leaf.leaf_temp_c,1," °C"));set("leafHum",fmtNum(leaf.leaf_moist_pct,1," %"));set("leafBat",fmtNum(leaf.bat_v,2," V"));}
+    if(air){set("airTemp",fmtNum(air.temp_c,1," °C"));set("airHum",fmtNum(air.hum_pct,1," %"));set("airBat",fmtNum(air.bat_v,2," V"));}
+    if(soil){set("soilTemp",fmtNum(soil.temp_soil_c,1," °C"));set("soilHum",fmtNum(soil.water_soil,1," %"));set("soilBat",fmtNum(soil.bat_v,2," V"));}
+  } else {
+    const type=kind(me?.id||me?.device_id||nodeId);
+    show([type]);
+    const f=me||{};
+    if(type==="leaf"){set("leafTemp",fmtNum(f.leaf_temp_c,1," °C"));set("leafHum",fmtNum(f.leaf_moist_pct,1," %"));set("leafBat",fmtNum(f.bat_v,2," V"));}
+    else if(type==="soil"){set("soilTemp",fmtNum(f.temp_soil_c,1," °C"));set("soilHum",fmtNum(f.water_soil,1," %"));set("soilBat",fmtNum(f.bat_v,2," V"));}
+    else{set("airTemp",fmtNum(f.temp_c,1," °C"));set("airHum",fmtNum(f.hum_pct,1," %"));set("airBat",fmtNum(f.bat_v,2," V"));}
+  }
+})
+.catch(e=>console.warn("Fehler all.json:",e));
 
-          const f = me2 || {};
-          if (type === "leaf") {
-            set("leafTemp", fmtNum(f.leaf_temp_c,1," °C"));
-            set("leafHum",  fmtNum(f.leaf_moist_pct,1," %"));
-            set("leafBat",  fmtNum(f.bat_v ?? f.BatV,2," V"));
-          } else if (type === "soil") {
-            set("soilTemp", fmtNum(f.temp_soil_c ?? f.temp_SOIL,1," °C"));
-            set("soilHum",  fmtNum(f.water_soil,1," %"));
-            set("soilBat",  fmtNum(f.bat_v ?? f.BatV,2," V"));
-          } else {
-            // air
-            set("airTemp", fmtNum(f.temp_c ?? f.TempC_SHT ?? f.TempC_SHT31,1," °C"));
-            set("airHum",  fmtNum(f.hum_pct ?? f.Hum_SHT ?? f.Hum_SHT31,1," %"));
-            set("airBat",  fmtNum(f.bat_v ?? f.BatV,2," V"));
-          }
-        }
-      })
-      .catch(e=>console.warn("Fehler all.json:",e));
+// --- Netz / Ranking ---
+const netUrl=`/data/v2/net/netstats_${encodeURIComponent(nodeId)}.json`;
+set("netSource","Quelle: "+netUrl);
 
-    // ========== Rechte Seite: Netz / Ranking ==========
-    const netUrl = `/data/v2/net/netstats_${encodeURIComponent(nodeId)}.json`;
-    set("netSource","Quelle: "+netUrl);
+Promise.all([
+ fetch(netUrl,{cache:"no-store"}).then(r=>r.json()).catch(()=>null),
+ fetch("/data/v2/net/all.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>[])
+])
+.then(([ns,all])=>{
+ if(ns){
+   if(ns.frames24!=null)set("frames24",ns.frames24);
+   const last=fmtDate(ns.last_ts);if(last)set("lastUplink",last);
+   const gw=typeof ns.gateways==="number"?ns.gateways:(Array.isArray(ns.gateways)?ns.gateways.length:"—");
+   set("gwCount",gw);
+   if(ns.best?.snr!=null)set("snr",fmtNum(ns.best.snr,1," dB"));
+   if(ns.adr!=null)set("adr",String(ns.adr));
+   const rate=Math.min(100,(ns.frames24/72)*100);
+   const badge=$("txRate");
+   badge.textContent=fmtNum(rate,0,"%");
+   badge.className="ampel "+(rate<40?"red":rate<75?"yellow":"green");
+ }
 
-    Promise.all([
-      fetch(netUrl,{cache:"no-store"}).then(r=>r.json()).catch(()=>null),
-      fetch("/data/v2/net/all.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>[])
-    ])
-    .then(([ns,all])=>{
-      if(ns){
-        if(ns.frames24!=null) set("frames24", ns.frames24);
-        const last = fmtDate(ns.last_ts); if(last) set("lastUplink", last);
-        const gw = typeof ns.gateways==="number" ? ns.gateways : (Array.isArray(ns.gateways)?ns.gateways.length:"—");
-        set("gwCount", gw);
-        if(ns.best?.snr!=null) set("snr", fmtNum(ns.best.snr,1," dB"));
-        if(ns.adr!=null) set("adr", String(ns.adr));
+ const arr=Array.isArray(all)?all:[];
+ const scored=arr.map(n=>{
+   const tx=Math.min(100,(n.frames24/72)*100);
+   const snr=Math.min(100,((n.best?.snr??0)+10)/20*100);
+   const bat=Math.min(100,((n.BatV??n.bat_v??0)/4.2)*100);
+   return {...n,score:tx*0.7+snr*0.2+bat*0.1};
+ }).sort((a,b)=>b.score-a.score);
 
-        // Ampel
-        const rate = Math.min(100, (ns.frames24/72)*100);
-        const badge = document.getElementById("txRate");
-        badge.textContent = fmtNum(rate,0,"%");
-        badge.className = "ampel " + (rate<40?"red":rate<75?"yellow":"green");
-      }
-
-      // Ranking
-      const arr = Array.isArray(all)?all:[];
-      const scored = arr.map(n=>{
-        const tx  = Math.min(100, (n.frames24/72)*100);
-        const snr = Math.min(100, ((n.best?.snr??0)+10)/20*100); // -10..+10 → 0..100
-        const bat = Math.min(100, ((n.BatV??n.bat_v??0)/4.2)*100);
-        const score = tx*0.7 + snr*0.2 + bat*0.1;
-        return {...n, score};
-      }).sort((a,b)=>b.score-a.score);
-
-      const me = scored.find(s => (s.id||s.device_id) === nodeId);
-      const rank = me ? scored.findIndex(s=>s===me)+1 : null;
-      if (me && rank) set("rankInfo", `🏆 Rang ${rank} von ${scored.length} (${fmtNum(me.score,1)} Punkte)`);
-
-      const top3 = scored.slice(0,3).map((s,i)=>`<li>${["🥇","🥈","🥉"][i]} ${(s.id||s.device_id)} – ${fmtNum(s.score,1)} P</li>`).join("") || "<li>–</li>";
-      document.getElementById("rankingTop3").innerHTML = top3;
-    })
-    .catch(e=>console.warn("Fehler Ranking:",e));
-  </script>
+ const me=scored.find(s=>(s.id||s.device_id).toLowerCase()===nodeId.toLowerCase());
+ const rank=me?scored.indexOf(me)+1:null;
+ if(me&&rank)set("rankInfo",`🏆 Rang ${rank} von ${scored.length} (${fmtNum(me.score,1)} Punkte)`);
+ const top3=scored.slice(0,3).map((s,i)=>`<li>${["🥇","🥈","🥉"][i]} ${s.id||s.device_id} – ${fmtNum(s.score,1)} P</li>`).join("")||"<li>–</li>";
+ $("rankingTop3").innerHTML=top3;
+})
+.catch(e=>console.warn("Fehler Ranking:",e));
+</script>
 </body>
 </html>
