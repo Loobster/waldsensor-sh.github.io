@@ -273,8 +273,6 @@ function findRelatedNodes(nodes, baseId) {
     // ===== Popup-HTML-Generierung ===== 
    
 
-<script>
-
 function multiSensorPopupHtml(nodes) {
   // Titel aus Basis-ID ableiten (Suffixe -s31lb/-se01lb/-llms01 entfernen)
   const baseName = normId(String(nodes[0].id).replace(/[-_](s31lb|se01lb|llms01)$/i, ""));
