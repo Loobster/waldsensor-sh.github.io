@@ -92,31 +92,85 @@
     function getLocationKey(id){return String(id).replace(/[-_](s31lb|se01lb|llms01)$/i,'').toLowerCase();}
     function isMultiSensorLocation(id){return /schacht[_-]?audorf/i.test(String(id));}
     function findRelatedNodes(nodes,baseId){const key=getLocationKey(baseId);return nodes.filter(n=>getLocationKey(n.id)===key);}
+// Multisensor
 
-    function multiSensorPopupHtml(nodes){
-      const title=normId(nodes[0].id).split('-').slice(0,2).join('-');
-      let html=`<div class="popup"><h3>${title} <span class="status-badge">${nodes.length} Sensoren</span></h3>`;
-      nodes.forEach(n=>{
-        const f=n.fields||{};const soil=isSoilNode(n.id);const leaf=/llms01/i.test(n.id);
-        html+=`<hr/>`;
-        if(leaf){
-          html+=`<div class="sensor-type">🍃 Blatt-Sensor</div>
-          <div class="row"><span class="label">Blatttemperatur</span><span class="value">${NUM(f.Leaf_Temperature)?deNum(NUM(f.Leaf_Temperature),1)+' °C':'–'}</span></div>
-          <div class="row"><span class="label">Blattfeuchte</span><span class="value">${NUM(f.Leaf_Moisture)?deNum(NUM(f.Leaf_Moisture),1)+' %':'–'}</span></div>`;
-        } else if(soil){
-          html+=`<div class="sensor-type">🌱 Boden-Sensor</div>
-          <div class="row"><span class="label">Bodentemperatur</span><span class="value">${NUM(f.temp_SOIL)?deNum(NUM(f.temp_SOIL),1)+' °C':'–'}</span></div>
-          <div class="row"><span class="label">Bodenfeuchte</span><span class="value">${NUM(f.water_SOIL)?deNum(NUM(f.water_SOIL),1)+' %':'–'}</span></div>`;
-        } else {
-          html+=`<div class="sensor-type">🌡️ Luft-Sensor</div>
-          <div class="row"><span class="label">Lufttemperatur</span><span class="value">${NUM(f.TempC_SHT)||NUM(f.TempC_SHT31)?deNum(NUM(f.TempC_SHT)||NUM(f.TempC_SHT31),1)+' °C':'–'}</span></div>
-          <div class="row"><span class="label">Luftfeuchte</span><span class="value">${NUM(f.Hum_SHT)||NUM(f.Hum_SHT31)?deNum(NUM(f.Hum_SHT)||NUM(f.Hum_SHT31),1)+' %':'–'}</span></div>`;
-        }
-        html+=`<div class="row"><span class="label">Batterie</span><span class="value">${NUM(f.BatV)?deNum(NUM(f.BatV),2)+' V':'–'}</span></div>`;
-      });
-      html+=`</div>`;return html;
+   function multiSensorPopupHtml(nodes) {
+     const first = nodes[0];
+     const f = first.fields || {};
+     const title = normId(first.id).split('-')[0] + '-' + normId(first.id).split('-')[1];
+
+     const lastTs = first.ts ? formatDE(first.ts) : "—";
+     const gwCount = f.gateway_count || 0;
+     const batAvg = deNum(
+      nodes.map(n => NUM(n.fields?.BatV)).filter(v => v).reduce((a,b)=>a+b,0) / nodes.length,
+    2
+  );
+
+  let html = `<div class="popup">`;
+  html += `<h3>${title} <span class="status-badge status-excellent">${nodes.length} Sensoren</span></h3>`;
+  html += `<div class="row"><span class="label">Letzter Kontakt</span><span class="value">${lastTs}</span></div>`;
+  html += `<hr/>`;
+
+  // Netzwerkblock (wie beim Einzelsensor)
+  html += `<div class="info-grid">`;
+  html += `<div class="info-card"><span class="num">${gwCount}</span><span class="lbl">Gateways</span></div>`;
+  html += `<div class="info-card"><span class="num">${batAvg}</span><span class="lbl">Ø Batterie (V)</span></div>`;
+
+  const sf = NUM(f.sf);
+  if (sf) html += `<div class="info-card"><span class="num">SF${sf}</span><span class="lbl">Spreading Factor</span></div>`;
+  const bw = f.bw ? (f.bw/1000)+'kHz' : '–';
+  html += `<div class="info-card"><span class="num">${bw}</span><span class="lbl">Bandwidth</span></div>`;
+  html += `</div>`;
+
+  // Empfangende Gateways (wenn vorhanden)
+  const gws = first.gateway_details || [];
+  if (gws.length > 0) {
+    html += `<hr/><strong style="font-size:12px;color:var(--gateway)">Empfangende Gateways:</strong>`;
+    html += `<div class="gw-list">`;
+    gws.forEach((gw, i) => {
+      const rssi = f[`rssi${i+1}`];
+      const snr  = f[`snr${i+1}`];
+      html += `<div class="gw-item">`;
+      html += `<strong>${gw.name || gw.id}</strong>`;
+      if (rssi !== undefined || snr !== undefined) {
+        html += `<div class="signal"><span>RSSI: ${rssi ? rssi+' dBm' : '–'}</span><span>SNR: ${snr ? snr+' dB' : '–'}</span></div>`;
+      }
+      html += `</div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Sensorblöcke
+  nodes.forEach(n => {
+    const f = n.fields || {};
+    const soil = isSoilNode(n.id);
+    const isLeaf = /llms01/i.test(n.id);
+
+    html += `<hr/>`;
+    if (isLeaf) {
+      html += `<div class="sensor-type">🍃 Blatt-Sensor</div>`;
+      html += `<div class="row"><span class="label">Blatttemperatur</span><span class="value">${NUM(f.Leaf_Temperature) ? deNum(NUM(f.Leaf_Temperature),1)+' °C' : '–'}</span></div>`;
+      html += `<div class="row"><span class="label">Blattfeuchte</span><span class="value">${NUM(f.Leaf_Moisture) ? deNum(NUM(f.Leaf_Moisture),1)+' %' : '–'}</span></div>`;
+    } else if (soil) {
+      html += `<div class="sensor-type">🌱 Boden-Sensor</div>`;
+      html += `<div class="row"><span class="label">Bodentemperatur</span><span class="value">${NUM(f.temp_SOIL) ? deNum(NUM(f.temp_SOIL),1)+' °C' : '–'}</span></div>`;
+      html += `<div class="row"><span class="label">Bodenfeuchte</span><span class="value">${NUM(f.water_SOIL) ? deNum(NUM(f.water_SOIL),1)+' %' : '–'}</span></div>`;
+    } else {
+      html += `<div class="sensor-type">🌡️ Luft-Sensor</div>`;
+      const temp = NUM(f.TempC_SHT) || NUM(f.TempC_SHT31);
+      const hum  = NUM(f.Hum_SHT) || NUM(f.Hum_SHT31);
+      html += `<div class="row"><span class="label">Lufttemperatur</span><span class="value">${temp ? deNum(temp,1)+' °C' : '–'}</span></div>`;
+      html += `<div class="row"><span class="label">Luftfeuchte</span><span class="value">${hum ? deNum(hum,1)+' %' : '–'}</span></div>`;
     }
 
+    html += `<div class="row"><span class="label">Batterie</span><span class="value">${NUM(f.BatV) ? deNum(NUM(f.BatV),2)+' V' : '–'}</span></div>`;
+  });
+
+  html += `</div>`;
+  return html;
+}
+
+// multiPopup  
     function nodePopupHtml(item,all){
       if(isMultiSensorLocation(item.id)){
         const rel=findRelatedNodes(all||[item],item.id);
