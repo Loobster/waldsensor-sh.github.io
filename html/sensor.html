@@ -1,51 +1,111 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>WALDSENSOR.SH – Sensordetails</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  body{font-family:system-ui,sans-serif;margin:0;background:#f6f8fa}
-  header{background:#004d46;color:#fff;padding:0.8em 1em;font-weight:bold;display:flex;justify-content:space-between}
-  header a{color:#fff;text-decoration:none}
-  main{padding:1em;display:grid;grid-template-columns:1fr 1fr;gap:1em}
-  .card{background:#fff;border-radius:12px;padding:1em;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
-  .pill{display:inline-block;background:#e6f4ea;color:#1a6334;padding:0.2em 0.8em;border-radius:999px;font-size:0.9em;margin-bottom:0.5em}
-  .sensorBlock{margin-bottom:1em;border-radius:10px;padding:0.6em}
-  .sensorBlock h4{margin:0.2em 0 0.4em}
-  .tiles{display:flex;gap:0.5em}
-  .tile{flex:1;background:#f4f6f8;border-radius:8px;padding:0.5em;text-align:center}
-  .tile h3{margin:0;font-size:0.8em;color:#555}
-  .tile p{margin:0.2em 0 0;font-size:1.1em;font-weight:bold}
-  .hidden{display:none}
-  .blatt{background:#e6f4ea}.luft{background:#eaf1fb}.boden{background:#fdf3e7}.sensecap{background:#e9ecef}
-  .ampel{font-weight:bold;padding:0.3em 0.6em;border-radius:6px;color:#fff;display:inline-block}
-  .ampel.red{background:#e11d48}.ampel.yellow{background:#f59e0b}.ampel.green{background:#16a34a}
-  footer{text-align:center;color:#666;padding:1em;font-size:0.9em}
-  ol{padding-left:1.2em;margin:0.4em 0}
-</style>
+  <meta charset="UTF-8">
+  <title>WALDSENSOR.SH – Sensordetails</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="version" content="v0.12 Hybrid" />
+  <style>
+    :root{
+      --ink:#0f172a;
+      --muted:#64748b;
+      --bg:#f6f8fa;
+      --card:#ffffff;
+      --leaf:#e6f4ea;
+      --air:#eaf2ff;
+      --soil:#f7f1e6;
+      --shadow:0 2px 6px rgba(0,0,0,.08);
+      --tile-bg:#f4f6f8;
+    }
+    html,body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif
+    }
+    header{
+      background:#004d46;
+      color:#fff;
+      padding:.8em 1em;
+      font-weight:700;
+      display:flex;
+      justify-content:space-between;
+      align-items:center
+    }
+    header a{color:#fff;text-decoration:none}
+    main{
+      padding:1em;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:1em
+    }
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      padding:1em;
+      box-shadow:var(--shadow)
+    }
+    .pill{
+      display:inline-block;
+      background:#dff6e6;
+      color:#135e3d;
+      padding:.25em .8em;
+      border-radius:999px;
+      font-size:.9em;
+      margin-bottom:.6em
+    }
+    .section{border-radius:10px;padding:.8em 1em;margin:.6em 0}
+    .section.leaf{background:var(--leaf)}
+    .section.air{background:var(--air)}
+    .section.soil{background:var(--soil)}
+    .section h4{margin:.2em 0 .6em;font-size:1.05em}
+    .tiles{display:flex;gap:12px;flex-wrap:nowrap}
+    .tile{
+      flex:1 1 0;
+      background:var(--tile-bg);
+      border-radius:8px;
+      padding:.7em;
+      text-align:center;
+      min-width:120px
+    }
+    .tile h3{
+      margin:0 0 .25em;
+      font-size:.85em;
+      color:#4b5563;
+      font-weight:600
+    }
+    .tile p{margin:0;font-size:1.1em;font-weight:800}
+    .small-note{font-size:.85em;color:#6b7280}
+    footer{
+      margin-top:8px;
+      text-align:center;
+      color:#666;
+      padding:1em;
+      font-size:.9em
+    }
+    @media (max-width:980px){main{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
 <header>
   <a href="../v2.html">&larr; Zur Karte</a>
-  <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.17</small></div>
+  <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.12</small></div>
 </header>
 
 <main>
-  <!-- Linke Seite -->
-  <div class="card">
+  <div class="card" id="leftCard">
     <div id="stand" class="pill">Stand: —</div>
 
-    <div id="blockLeaf" class="sensorBlock blatt">
+    <div class="section leaf" id="secLeaf" style="display:none">
       <h4>🌿 Blatt-Sensor</h4>
       <div class="tiles">
         <div class="tile"><h3>Temperatur</h3><p id="leafTemp">—</p></div>
-        <div class="tile"><h3>Feuchte</h3><p id="leafHum">—</p></div>
+        <div class="tile"><h3>Feuchte</h3><p id="leafMoist">—</p></div>
         <div class="tile"><h3>Batterie</h3><p id="leafBat">—</p></div>
       </div>
     </div>
 
-    <div id="blockAir" class="sensorBlock luft">
+    <div class="section air" id="secAir" style="display:none">
       <h4>🌡️ Luft-Sensor</h4>
       <div class="tiles">
         <div class="tile"><h3>Temperatur</h3><p id="airTemp">—</p></div>
@@ -54,147 +114,132 @@
       </div>
     </div>
 
-    <div id="blockSoil" class="sensorBlock boden">
+    <div class="section soil" id="secSoil" style="display:none">
       <h4>🌱 Boden-Sensor</h4>
       <div class="tiles">
-        <div class="tile"><h3>Temperatur</h3><p id="soilTemp">—</p></div>
-        <div class="tile"><h3>Feuchte</h3><p id="soilHum">—</p></div>
+        <div class="tile"><h3>Bodentemperatur</h3><p id="soilTemp">—</p></div>
+        <div class="tile"><h3>Bodenfeuchte</h3><p id="soilWater">—</p></div>
         <div class="tile"><h3>Batterie</h3><p id="soilBat">—</p></div>
       </div>
     </div>
 
-    <div class="sensorBlock sensecap">
-      <h4>☁️ Wetterstation (SenseCAP S2120)</h4>
-      <p><small>Noch keine Daten verfügbar – Schlüssel ausstehend.</small></p>
+    <div class="section" id="secWx" style="display:none;background:#eef2f7">
+      <h4>⛅ Wetterstation (SenseCAP S2120)</h4>
+      <div class="small-note">Noch keine Daten verfügbar – Schlüssel ausstehend.</div>
     </div>
 
-    <small>Quelle: /data/v2/latest/all.json</small>
+    <div class="small-note">Quelle: /data/v2/latest/all.json</div>
   </div>
 
-  <!-- Rechte Seite -->
   <div class="card">
-    <h3>Netz & Ranking</h3>
-    <p>Letzte 24 h: <span id="frames24">—</span> Uplinks<br>
-       Übertragungsrate: <span id="txRate" class="ampel">—</span></p>
+    <h3>Netz & Gateways</h3>
+    <p>Letzte 24 h: <span id="frames24">—</span> Uplinks</p>
     <p>Letzter Uplink: <span id="lastUplink">—</span></p>
     <p>Gateways: <span id="gwCount">—</span></p>
-    <p>Signal (SNR): <span id="snr">—</span></p>
+    <p>Ø Batterie: <span id="avgBat">—</span></p>
+    <p>Bestes Signal: <span id="bestSig">—</span></p>
     <p>ADR: <span id="adr">—</span></p>
-
-    <hr>
-    <h4>🏆 WALDSENSOR.SH-Liga</h4>
-    <p id="rankInfo">Berechne Ranking …</p>
-    <ol id="rankingTop3"><li>–</li></ol>
-    <small>70 % Übertragung + 20 % Signal + 10 % Batterie</small><br>
-    <small id="netSource">Quelle: —</small>
+    <div class="small-note" id="netSource">Quelle: —</div>
   </div>
 </main>
 
 <footer>WALDSENSOR.SH – Sensordetails</footer>
 
 <script>
-// ===== Helper =====
-const $ = id => document.getElementById(id);
-const set = (id,v)=>{const el=$(id);if(el&&v!=null)el.textContent=v;}
-const fmtNum=(v,d=1,s="")=>v==null||isNaN(+v)?null:(+v).toFixed(d).replace(".",",")+s;
-const fmtDate=ts=>!ts?null:(new Date(ts)).toLocaleString("de-DE");
+const $=id=>document.getElementById(id);
+const setTxt=(id,v)=>{const el=$(id);if(el)el.textContent=v;};
+const fmtNum=(v,d=1,s="")=>v==null||!isFinite(+v)?"—":(+v).toFixed(d).replace(".",",")+s;
+const fmtDate=ts=>{if(!ts)return"—";const d=new Date(ts);return isNaN(d)? "—":d.toLocaleString("de-DE");};
+const qp=new URLSearchParams(location.search);
+const nodeIdRaw=qp.get("node")||"unknown";
+const nodeId=nodeIdRaw.toLowerCase();
+setTxt("nodeName",nodeIdRaw);
 
-const params=new URLSearchParams(location.search);
-const nodeId=params.get("node")||"unknown";
-set("nodeName",nodeId);
-
-// ===== Normalisierung =====
-const norm = s => String(s||"").toLowerCase().replace(/[-_]/g,"");
-
-// ===== Multi-Sets =====
-const multiSets = {
-  "schachtaudorf": ["llms01","s31lb","se01lb"],
-  "bredstedt": ["s31lb","se01lb"]
-};
-const isMulti = id => Object.keys(multiSets).some(k => norm(id).includes(k));
-const getMultiKey = id => Object.keys(multiSets).find(k => norm(id).includes(k)) || null;
-
-const kind = id => {
-  const x = norm(id);
-  if(x.includes("llms")) return "leaf";
-  if(x.includes("se01")) return "soil";
-  return "air";
-};
-
-const show = kinds => {
-  $("#blockLeaf").classList.toggle("hidden",!kinds.includes("leaf"));
-  $("#blockAir").classList.toggle("hidden",!kinds.includes("air"));
-  $("#blockSoil").classList.toggle("hidden",!kinds.includes("soil"));
-};
-
-// ===== Daten laden =====
-fetch("/data/v2/latest/all.json",{cache:"no-store"})
-.then(r=>r.json()).then(all=>{
-  const arr=Array.isArray(all)?all:[];
-  const tsAll = arr.map(n=>n.ts_iso||n.ts).filter(Boolean).sort().pop();
-  if(tsAll) set("stand","Stand: "+fmtDate(tsAll));
-
-  if(isMulti(nodeId)){
-    const key = getMultiKey(nodeId);
-    const wanted = multiSets[key];
-    const group = arr.filter(n => norm(n.id||n.device_id).includes(key));
-    const leaf = group.find(n => wanted.includes("llms01") && norm(n.id).includes("llms"));
-    const air  = group.find(n => wanted.includes("s31lb")  && norm(n.id).includes("s31"));
-    const soil = group.find(n => wanted.includes("se01lb") && norm(n.id).includes("se01"));
-    show(["leaf","air","soil"].filter(k=>({leaf,air,soil}[k])));
-
-    if(leaf){set("leafTemp",fmtNum(leaf.leaf_temp_c,1," °C"));set("leafHum",fmtNum(leaf.leaf_moist_pct,1," %"));set("leafBat",fmtNum(leaf.bat_v,2," V"));}
-    if(air){ set("airTemp",fmtNum(air.temp_c,1," °C"));set("airHum",fmtNum(air.hum_pct,1," %"));set("airBat",fmtNum(air.bat_v,2," V"));}
-    if(soil){set("soilTemp",fmtNum(soil.temp_soil_c,1," °C"));set("soilHum",fmtNum(soil.water_soil,1," %"));set("soilBat",fmtNum(soil.bat_v,2," V"));}
-  } else {
-    const me = arr.find(n => norm(n.id||n.device_id).includes(norm(nodeId)));
-    const t = kind(me?.id||nodeId);
-    show([t]);
-    if(!me) return;
-    if(t==="leaf"){set("leafTemp",fmtNum(me.leaf_temp_c,1," °C"));set("leafHum",fmtNum(me.leaf_moist_pct,1," %"));set("leafBat",fmtNum(me.bat_v,2," V"));}
-    else if(t==="soil"){set("soilTemp",fmtNum(me.temp_soil_c,1," °C"));set("soilHum",fmtNum(me.water_soil,1," %"));set("soilBat",fmtNum(me.bat_v,2," V"));}
-    else{set("airTemp",fmtNum(me.temp_c,1," °C"));set("airHum",fmtNum(me.hum_pct,1," %"));set("airBat",fmtNum(me.bat_v,2," V"));}
+// --- robuster JSON-Fetch mit Fallback ---
+async function fetchJson(){
+  const urls=["/data/v2/latest/all_enriched.json","/data/v2/latest/all.json"];
+  for(const u of urls){
+    try{
+      const r=await fetch(u+"?_="+Date.now(),{cache:"no-store"});
+      if(!r.ok)continue;
+      const data=await r.json();
+      if(Array.isArray(data)&&data.length>0)return{data,url:u};
+    }catch(e){}
   }
-})
-.catch(e=>console.warn("Fehler all.json:",e));
+  throw new Error("keine Daten gefunden");
+}
+const getId=o=>(o?.id||o?.device_id||"").toLowerCase();
+const pick=(o,...keys)=>{for(const k of keys)if(o&&o[k]!=null)return o[k];return null;};
 
-// ===== Netz / Ranking =====
-const netUrl=`/data/v2/net/netstats_${encodeURIComponent(nodeId)}.json`;
-set("netSource","Quelle: "+netUrl);
+function extractValues(n){
+  const f=n.fields||n;
+  return{
+    leafTemp:pick(f,"Leaf_Temperature","leaf_temp_c"),
+    leafMoist:pick(f,"Leaf_Moisture","leaf_moist_pct"),
+    airTemp:pick(f,"TempC_SHT","TempC_SHT31","temp_c"),
+    airHum:pick(f,"Hum_SHT","Hum_SHT31","hum_pct"),
+    soilTemp:pick(f,"temp_SOIL","temp_soil_c"),
+    soilWater:pick(f,"water_SOIL","water_soil"),
+    bat:pick(f,"BatV","bat_v"),
+    ts:pick(n,"ts","ts_iso","time")
+  };
+}
 
-Promise.all([
- fetch(netUrl,{cache:"no-store"}).then(r=>r.json()).catch(()=>null),
- fetch("/data/v2/net/all.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>[])
-])
-.then(([ns,all])=>{
- if(ns){
-   if(ns.frames24!=null)set("frames24",ns.frames24);
-   const last=fmtDate(ns.last_ts);if(last)set("lastUplink",last);
-   const gw=typeof ns.gateways==="number"?ns.gateways:(Array.isArray(ns.gateways)?ns.gateways.length:"—");
-   set("gwCount",gw);
-   if(ns.best?.snr!=null)set("snr",fmtNum(ns.best.snr,1," dB"));
-   if(ns.adr!=null)set("adr",String(ns.adr));
-   const rate=Math.min(100,(ns.frames24/72)*100);
-   const badge=$("txRate");
-   badge.textContent=fmtNum(rate,0,"%");
-   badge.className="ampel "+(rate<40?"red":rate<75?"yellow":"green");
+// --- Rendering ---
+(async()=>{
+ try{
+   const {data,url}=await fetchJson();
+   const isMulti=/schacht[_-]?audorf/.test(nodeId);
+   const nodes=data.filter(o=>getId(o).includes(nodeId));
+
+   if(nodes.length===0)throw new Error("kein Node gefunden");
+
+   const values={leaf:{},air:{},soil:{}};
+   const byId=id=>data.find(o=>getId(o)===id);
+
+   if(isMulti){
+     const leaf=byId("schacht_audorf_llms01"), air=byId("schacht_audorf_s31lb"), soil=byId("schacht_audorf_se01lb");
+     if(leaf){$("secLeaf").style.display="";Object.assign(values.leaf,extractValues(leaf));}
+     if(air){$("secAir").style.display="";Object.assign(values.air,extractValues(air));}
+     if(soil){$("secSoil").style.display="";Object.assign(values.soil,extractValues(soil));}
+     $("secWx").style.display="";
+   }else{
+     const single=nodes[0];
+     Object.assign(values.air,extractValues(single));
+     $("secAir").style.display="";
+   }
+
+   const latestTs=[values.leaf.ts,values.air.ts,values.soil.ts].filter(Boolean).sort((a,b)=>new Date(b)-new Date(a))[0];
+   if(latestTs)setTxt("stand","Stand: "+fmtDate(latestTs));
+
+   setTxt("leafTemp",fmtNum(values.leaf.leafTemp,1," °C"));
+   setTxt("leafMoist",fmtNum(values.leaf.leafMoist,1," %"));
+   setTxt("leafBat",fmtNum(values.leaf.bat,2," V"));
+   setTxt("airTemp",fmtNum(values.air.airTemp,1," °C"));
+   setTxt("airHum",fmtNum(values.air.airHum,1," %"));
+   setTxt("airBat",fmtNum(values.air.bat,2," V"));
+   setTxt("soilTemp",fmtNum(values.soil.soilTemp,1," °C"));
+   setTxt("soilWater",fmtNum(values.soil.soilWater,1," %"));
+   setTxt("soilBat",fmtNum(values.soil.bat,2," V"));
+ }catch(e){
+   console.warn(e);
  }
+})();
 
- const arr=Array.isArray(all)?all:[];
- const scored=arr.map(n=>{
-   const tx=Math.min(100,(n.frames24/72)*100);
-   const snr=Math.min(100,((n.best?.snr??0)+10)/20*100);
-   const bat=Math.min(100,((n.BatV??n.bat_v??0)/4.2)*100);
-   return {...n,score:tx*0.7+snr*0.2+bat*0.1};
- }).sort((a,b)=>b.score-a.score);
-
- const me=scored.find(s=>(s.id||s.device_id||"").toLowerCase()===nodeId.toLowerCase());
- const rank=me?scored.indexOf(me)+1:null;
- if(me&&rank)set("rankInfo",`🏆 Rang ${rank} von ${scored.length} (${fmtNum(me.score,1)} Punkte)`);
- const top3=scored.slice(0,3).map((s,i)=>`<li>${["🥇","🥈","🥉"][i]} ${s.id||s.device_id} – ${fmtNum(s.score,1)} P</li>`).join("")||"<li>–</li>";
- $("rankingTop3").innerHTML=top3;
-})
-.catch(e=>console.warn("Fehler Ranking:",e));
+// --- Netzstats ---
+const netUrl=`/data/v2/net/netstats_${encodeURIComponent(nodeIdRaw)}.json`;
+setTxt("netSource","Quelle: "+netUrl);
+fetch(netUrl,{cache:"no-store"})
+.then(r=>r.ok?r.json():null)
+.then(ns=>{
+ if(!ns)return;
+ if(ns.frames24!=null)setTxt("frames24",ns.frames24);
+ setTxt("lastUplink",fmtDate(ns.last_ts));
+ if(typeof ns.gateways==="number")setTxt("gwCount",ns.gateways);
+ if(ns.best)setTxt("bestSig",`${ns.best.rssi??"—"} dBm / ${ns.best.snr??"—"} dB`);
+ if(ns.adr!=null)setTxt("adr",String(ns.adr));
+ if(ns.avg_bat_v!=null)setTxt("avgBat",fmtNum(ns.avg_bat_v,2," V"));
+});
 </script>
 </body>
 </html>
