@@ -175,9 +175,7 @@ nd 0.2s}
       ? n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d}) 
       : "–"; 
      
-    // Normalisiert Node-IDs (Unterstriche zu Bindestrichen) 
-    const normId = id => String(id||"").trim().replace(/_/g,"-").replace(/schacht[-_]?audorf/i,"Sc 
-hacht-Audorf"); 
+    // Normalisiert Node-IDs (Unterstriche zu Bindestrichen) const normId = id => String(id||"").trim().replace(/_/g,"-").replace(/schacht[-_]?audorf/i,"Schacht-Audorf"); 
      
     // Erkennt Boden-Sensoren (SE01-LB) anhand der ID 
     // Pattern: Name endet mit se01 oder se01lb (case-insensitive) 
