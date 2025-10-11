@@ -11,36 +11,71 @@
     main { padding:1em; display:grid; grid-template-columns:1fr 1fr; gap:1em; }
     .card { background:#fff; border-radius:12px; padding:1em; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
     .pill { display:inline-block; background:#e6f4ea; color:#1a6334; padding:0.2em 0.8em; border-radius:999px; font-size:0.9em; margin-bottom:0.5em; }
-    .tiles { display:flex; gap:0.6em; }
-    .tile { flex:1; background:#f4f6f8; border-radius:8px; padding:0.6em; text-align:center; }
+    .sensorBlock { margin-bottom:1em; border-radius:10px; padding:0.6em; }
+    .sensorBlock h4 { margin:0.2em 0 0.4em; }
+    .sensorBlock .tiles { display:flex; gap:0.5em; }
+    .sensorBlock .tile { flex:1; background:#f4f6f8; border-radius:8px; padding:0.5em; text-align:center; }
     .tile h3 { margin:0; font-size:0.8em; color:#555; }
-    .tile p { margin:0.2em 0 0; font-size:1.2em; font-weight:bold; }
-    .ampel { font-weight:bold; padding:0.4em 0.8em; border-radius:6px; color:#fff; display:inline-block; }
+    .tile p { margin:0.2em 0 0; font-size:1.1em; font-weight:bold; }
+    .ampel { font-weight:bold; padding:0.3em 0.6em; border-radius:6px; color:#fff; display:inline-block; }
     .ampel.red { background:#e11d48; }
     .ampel.yellow { background:#f59e0b; }
     .ampel.green { background:#16a34a; }
     footer { text-align:center; color:#666; padding:1em; font-size:0.9em; }
     ol { padding-left:1.2em; margin:0.4em 0; }
+    .blatt { background:#e6f4ea; }
+    .luft { background:#eaf1fb; }
+    .boden { background:#fdf3e7; }
+    .sensecap { background:#e9ecef; }
   </style>
 </head>
 <body>
   <header>
     <a href="../v2.html">&larr; Zur Karte</a>
-    <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.13</small></div>
+    <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.14</small></div>
   </header>
+
   <main>
-    <!-- Sensorwerte -->
+    <!-- linke Seite -->
     <div class="card">
       <div id="stand" class="pill">Stand: —</div>
-      <div class="tiles">
-        <div class="tile"><h3>Temperatur</h3><p id="temp">—</p></div>
-        <div class="tile"><h3>Luftfeuchte</h3><p id="hum">—</p></div>
-        <div class="tile"><h3>Batterie</h3><p id="bat">—</p></div>
+
+      <div class="sensorBlock blatt">
+        <h4>🌿 Blatt-Sensor</h4>
+        <div class="tiles">
+          <div class="tile"><h3>Temperatur</h3><p id="leafTemp">—</p></div>
+          <div class="tile"><h3>Feuchte</h3><p id="leafHum">—</p></div>
+          <div class="tile"><h3>Batterie</h3><p id="leafBat">—</p></div>
+        </div>
       </div>
+
+      <div class="sensorBlock luft">
+        <h4>🌡️ Luft-Sensor</h4>
+        <div class="tiles">
+          <div class="tile"><h3>Temperatur</h3><p id="airTemp">—</p></div>
+          <div class="tile"><h3>Feuchte</h3><p id="airHum">—</p></div>
+          <div class="tile"><h3>Batterie</h3><p id="airBat">—</p></div>
+        </div>
+      </div>
+
+      <div class="sensorBlock boden">
+        <h4>🌱 Boden-Sensor</h4>
+        <div class="tiles">
+          <div class="tile"><h3>Temperatur</h3><p id="soilTemp">—</p></div>
+          <div class="tile"><h3>Feuchte</h3><p id="soilHum">—</p></div>
+          <div class="tile"><h3>Batterie</h3><p id="soilBat">—</p></div>
+        </div>
+      </div>
+
+      <div class="sensorBlock sensecap">
+        <h4>☁️ Wetterstation (SenseCAP S2120)</h4>
+        <p><small>Noch keine Daten verfügbar – Schlüssel ausstehend.</small></p>
+      </div>
+
       <small>Quelle: /data/v2/latest/all.json</small>
     </div>
 
-    <!-- Netz & Ranking -->
+    <!-- rechte Seite -->
     <div class="card">
       <h3>Netz & Ranking</h3>
       <p>Letzte 24 h: <span id="frames24">—</span> Uplinks<br>
@@ -54,40 +89,56 @@
       <h4>🏆 WALDSENSOR.SH-Liga</h4>
       <p id="rankInfo">Berechne Ranking …</p>
       <ol id="rankingTop3"><li>–</li></ol>
-      <small>70 % Übertragung  +  20 % Signal  +  10 % Batterie</small><br>
+      <small>70 % Übertragung + 20 % Signal + 10 % Batterie</small><br>
       <small id="netSource">Quelle: —</small>
     </div>
   </main>
+
   <footer>WALDSENSOR.SH – Sensordetails</footer>
 
   <script>
     const byId = id => document.getElementById(id);
-    const safeSet = (id, t) => { const e=byId(id); if(e&&t!=null) e.textContent=t; };
+    const safeSet = (id, val) => { const el = byId(id); if(el && val!=null) el.textContent = val; };
     const fmtNum = (v,d=1,s="")=>v==null||isNaN(+v)?null:(+v).toFixed(d).replace(".",",")+s;
-    const fmtDate = ts=>!ts?null:(new Date(ts)).toLocaleString("de-DE");
-    const urlParams = new URLSearchParams(location.search);
-    const nodeId = (urlParams.get("node")||"unknown");
-    safeSet("nodeName",nodeId);
+    const fmtDate = ts => !ts?null:(new Date(ts)).toLocaleString("de-DE");
 
-    // === Sensorwerte laden ===
+    const params = new URLSearchParams(location.search);
+    const nodeId = params.get("node") || "unknown";
+    safeSet("nodeName", nodeId);
+
+    // === SENSORWERTE ===
     fetch("/data/v2/latest/all.json",{cache:"no-store"})
       .then(r=>r.json())
       .then(all=>{
-        const n = all.find(x=>(x.id||x.device_id||"").toLowerCase()===nodeId.toLowerCase());
-        if(!n) return;
-        const f=n.fields||n;
-        const ts=fmtDate(n.ts||n.time||n.ts_iso);
-        if(ts) safeSet("stand","Stand: "+ts);
-        const t=f.TempC_SHT??f.TempC_SHT31??f.temp_c??f.temp_SOIL??null;
-        const h=f.Hum_SHT??f.Hum_SHT31??f.hum_pct??f.water_SOIL??null;
-        const b=f.BatV??f.bat_v??null;
-        if(t!=null) safeSet("temp",fmtNum(t,1," °C"));
-        if(h!=null) safeSet("hum",fmtNum(h,0," %"));
-        if(b!=null) safeSet("bat",fmtNum(b,2," V"));
-      });
+        const nodes = Array.isArray(all)?all:[];
+        const get = id => nodes.find(n => (n.id||n.device_id||"").toLowerCase().includes(id.toLowerCase())) || {};
 
-    // === Netzwerte + Ranking ===
-    const netUrl=`/data/v2/net/netstats_${encodeURIComponent(nodeId)}.json`;
+        const llms = get("llms");   // Blatt
+        const s31  = get("s31");    // Luft
+        const se01 = get("se01");   // Boden
+
+        const ts = fmtDate(llms.ts_iso || s31.ts_iso || se01.ts_iso);
+        if(ts) safeSet("stand", "Stand: " + ts);
+
+        // Blatt
+        safeSet("leafTemp", fmtNum(llms.leaf_temp_c,1," °C"));
+        safeSet("leafHum",  fmtNum(llms.leaf_moist_pct,1," %"));
+        safeSet("leafBat",  fmtNum(llms.bat_v,2," V"));
+
+        // Luft
+        safeSet("airTemp", fmtNum(s31.temp_c,1," °C"));
+        safeSet("airHum",  fmtNum(s31.hum_pct,1," %"));
+        safeSet("airBat",  fmtNum(s31.bat_v,2," V"));
+
+        // Boden
+        safeSet("soilTemp", fmtNum(se01.temp_soil_c,1," °C"));
+        safeSet("soilHum",  fmtNum(se01.water_soil,1," %"));
+        safeSet("soilBat",  fmtNum(se01.bat_v,2," V"));
+      })
+      .catch(e=>console.warn("Fehler all.json:",e));
+
+    // === NETZWERK UND RANKING ===
+    const netUrl = `/data/v2/net/netstats_${encodeURIComponent(nodeId)}.json`;
     safeSet("netSource","Quelle: "+netUrl);
 
     Promise.all([
@@ -96,38 +147,36 @@
     ])
     .then(([ns,all])=>{
       if(!ns) return;
+      if(ns.frames24!=null) safeSet("frames24", ns.frames24);
+      const last = fmtDate(ns.last_ts); if(last) safeSet("lastUplink", last);
+      const gw = typeof ns.gateways==="number" ? ns.gateways : (Array.isArray(ns.gateways)?ns.gateways.length:"—");
+      safeSet("gwCount", gw);
+      if(ns.best?.snr!=null) safeSet("snr", fmtNum(ns.best.snr,1," dB"));
+      if(ns.adr!=null) safeSet("adr", String(ns.adr));
 
-      if(ns.frames24!=null) safeSet("frames24",ns.frames24);
-      const last=fmtDate(ns.last_ts); if(last) safeSet("lastUplink",last);
-      const gw=(typeof ns.gateways==="number")?ns.gateways:(Array.isArray(ns.gateways)?ns.gateways.length:"—");
-      safeSet("gwCount",gw);
-      if(ns.best?.snr!=null) safeSet("snr",fmtNum(ns.best.snr,1," dB"));
-      if(ns.adr!=null) safeSet("adr",String(ns.adr));
+      // Ampel
+      const rate = Math.min(100, (ns.frames24/72)*100);
+      const ampel = byId("txRate");
+      ampel.textContent = fmtNum(rate,0,"%");
+      ampel.className = "ampel " + (rate<40?"red":rate<75?"yellow":"green");
 
-      // Ampel Übertragungsrate
-      const rate=Math.min(100,(ns.frames24/72)*100);
-      const ampel=byId("txRate");
-      if(rate<40) ampel.className="ampel red";
-      else if(rate<75) ampel.className="ampel yellow";
-      else ampel.className="ampel green";
-      ampel.textContent=fmtNum(rate,0,"%");
-
-      // === Ranking berechnen ===
-      const scores=(Array.isArray(all)?all:[]).map(n=>{
-        const tx=Math.min(100,(n.frames24/72)*100);
-        const snr=Math.min(100,((n.best?.snr??0)+10)/20*100);
-        const bat=Math.min(100,((n.BatV??n.bat_v??0)/4.2)*100);
-        const score=tx*0.7+snr*0.2+bat*0.1;
-        return {...n,score};
+      // === RANKING ===
+      const scores = (Array.isArray(all)?all:[]).map(n=>{
+        const tx = Math.min(100, (n.frames24/72)*100);
+        const snr = Math.min(100, ((n.best?.snr??0)+10)/20*100);
+        const bat = Math.min(100, ((n.BatV??n.bat_v??0)/4.2)*100);
+        const score = tx*0.7 + snr*0.2 + bat*0.1;
+        return {...n, score};
       }).sort((a,b)=>b.score-a.score);
-      const me=scores.find(s=>s.id===nodeId||s.device_id===nodeId);
-      const rank=me?scores.findIndex(s=>s===me)+1:null;
-      if(me&&rank){
-        safeSet("rankInfo",`🏆 Rang ${rank} von ${scores.length} (${fmtNum(me.score,1)} Punkte)`);
+
+      const me = scores.find(s=>s.id===nodeId||s.device_id===nodeId);
+      const rank = me ? scores.findIndex(s=>s===me)+1 : null;
+
+      if(me && rank){
+        safeSet("rankInfo", `🏆 Rang ${rank} von ${scores.length} (${fmtNum(me.score,1)} Punkte)`);
       }
-      const top=scores.slice(0,3).map((s,i)=>
-        `<li>${["🥇","🥈","🥉"][i]||""} ${s.id||s.device_id} – ${fmtNum(s.score,1)} P</li>`).join("");
-      byId("rankingTop3").innerHTML=top;
+      const top = scores.slice(0,3).map((s,i)=>`<li>${["🥇","🥈","🥉"][i]} ${s.id||s.device_id} – ${fmtNum(s.score,1)} P</li>`).join("");
+      byId("rankingTop3").innerHTML = top;
     })
     .catch(e=>console.warn("Fehler Ranking:",e));
   </script>
