@@ -281,28 +281,21 @@ function multiSensorPopupHtml(nodes) {
      
     if (isLeaf) { 
       html += `<div class="sensor-type">🍃 Blatt-Sensor</div>`; 
-      html += `<div class="row"><span class="label">Blatttemperatur</span><span class="value">${NU 
-M(f.Leaf_Temperature) ? deNum(NUM(f.Leaf_Temperature),1) + ' °C' : '–'}</span></div>`; 
-      html += `<div class="row"><span class="label">Blattfeuchte</span><span class="value">${NUM(f 
-.Leaf_Moisture) ? deNum(NUM(f.Leaf_Moisture),1) + ' %' : '–'}</span></div>`; 
+      html += `<div class="row"><span class="label">Blatttemperatur</span><span class="value">${NUM(f.Leaf_Temperature) ? deNum(NUM(f.Leaf_Temperature),1) + ' °C' : '–'}</span></div>`; 
+      html += `<div class="row"><span class="label">Blattfeuchte</span><span class="value">${NUM(f.Leaf_Moisture) ? deNum(NUM(f.Leaf_Moisture),1) + ' %' : '–'}</span></div>`; 
 } else if (soil) { 
       html += `<div class="sensor-type">🌱 Boden-Sensor</div>`; 
-      html += `<div class="row"><span class="label">Bodentemperatur</span><span class="value">${NU 
-M(f.temp_SOIL) ? deNum(NUM(f.temp_SOIL),1) + ' °C' : '–'}</span></div>`; 
-      html += `<div class="row"><span class="label">Bodenfeuchte</span><span class="value">${NUM(f 
-.water_SOIL) ? deNum(NUM(f.water_SOIL),1) + ' %' : '–'}</span></div>`; 
+      html += `<div class="row"><span class="label">Bodentemperatur</span><span class="value">${NUM(f.temp_SOIL) ? deNum(NUM(f.temp_SOIL),1) + ' °C' : '–'}</span></div>`; 
+      html += `<div class="row"><span class="label">Bodenfeuchte</span><span class="value">${NUM(f.water_SOIL) ? deNum(NUM(f.water_SOIL),1) + ' %' : '–'}</span></div>`; 
  
 } else { 
       html += `<div class="sensor-type">🌡️ Luft-Sensor</div>`; 
       const temp = NUM(f.TempC_SHT) || NUM(f.TempC_SHT31); 
       const hum = NUM(f.Hum_SHT) || NUM(f.Hum_SHT31); 
-      html += `<div class="row"><span class="label">Lufttemperatur</span><span class="value">${tem 
-p ? deNum(temp,1) + ' °C' : '–'}</span></div>`; 
-      html += `<div class="row"><span class="label">Luftfeuchte</span><span class="value">${hum ?  
-deNum(hum,1) + ' %' : '–'}</span></div>`; 
+      html += `<div class="row"><span class="label">Lufttemperatur</span><span class="value">${temp ? deNum(temp,1) + ' °C' : '–'}</span></div>`; 
+      html += `<div class="row"><span class="label">Luftfeuchte</span><span class="value">${hum ? deNum(hum,1) + ' %' : '–'}</span></div>`; 
     } 
-      html += `<div class="row"><span class="label">Batterie</span><span class="value">${NUM(f.Bat 
-V) ? deNum(NUM(f.BatV),2) + ' V' : '–'}</span></div>`; 
+      html += `<div class="row"><span class="label">Batterie</span><span class="value">${NUM(f.BatV) ? deNum(NUM(f.BatV),2) + ' V' : '–'}</span></div>`; 
       }); 
    
       html += `</div>`; 
@@ -336,22 +329,17 @@ V) ? deNum(NUM(f.BatV),2) + ' V' : '–'}</span></div>`;
  
       let html = `<div class="popup">`; 
       html += `<h3>${title} <span class="status-badge status-excellent">Aktiv</span></h3>`; 
-      html += `<div class="row"><span class="label">Letzter Kontakt</span><span class="value">${wh 
-en}</span></div>`; 
+      html += `<div class="row"><span class="label">Letzter Kontakt</span><span class="value">${when}</span></div>`; 
       html += `<hr/>`; 
        
       // Netzwerk-Statistiken Grid 
       html += `<div class="info-grid">`; 
-      html += `<div class="info-card"><span class="num">${gwCount}</span><span class="lbl">Gateway 
-s</span></div>`; 
-      html += `<div class="info-card"><span class="num">${bat ? deNum(bat,2) : '–'}</span><span cl 
-ass="lbl">Batterie (V)</span></div>`; 
+      html += `<div class="info-card"><span class="num">${gwCount}</span><span class="lbl">Gateways</span></div>`; 
+      html += `<div class="info-card"><span class="num">${bat ? deNum(bat,2) : '–'}</span><span class="lbl">Batterie (V)</span></div>`; 
       if (sf) { 
-        html += `<div class="info-card"><span class="num">SF${sf}</span><span class="lbl">Spreadin 
-g Factor</span></div>`; 
+        html += `<div class="info-card"><span class="num">SF${sf}</span><span class="lbl">Spreading Factor</span></div>`; 
       } 
-      html += `<div class="info-card"><span class="num">${f.bw ? (f.bw/1000)+'kHz' : '–'}</span><s 
-pan class="lbl">Bandwidth</span></div>`; 
+      html += `<div class="info-card"><span class="num">${f.bw ? (f.bw/1000)+'kHz' : '–'}</span><span class="lbl">Bandwidth</span></div>`; 
       html += `</div>`; 
        
       html += `<hr/>`; 
@@ -359,18 +347,15 @@ pan class="lbl">Bandwidth</span></div>`;
       // Sensor-Werte (Boden oder Luft) 
       html += `<div class="sensor-type">${soil ? '🌱 Boden-Sensor' : '🌡️ Luft-Sensor'}</div>`; 
       if (temp !== null) { 
-        html += `<div class="row"><span class="label">${getTempLabel(soil)}</span><span class="val 
-ue">${deNum(temp,1)} °C</span></div>`; 
+        html += `<div class="row"><span class="label">${getTempLabel(soil)}</span><span class="value">${deNum(temp,1)} °C</span></div>`; 
       } 
       if (hum !== null) { 
-        html += `<div class="row"><span class="label">${getHumLabel(soil)}</span><span class="valu 
-e">${deNum(hum,1)} %</span></div>`; 
+        html += `<div class="row"><span class="label">${getHumLabel(soil)}</span><span class="value">${deNum(hum,1)} %</span></div>`; 
       } 
        
       // Gateway-Liste mit Signal-Stärken 
       if (gws.length > 0) { 
-        html += `<hr/><strong style="font-size:12px;color:var(--gateway)">Empfangende Gateways:</s 
-trong>`; 
+        html += `<hr/><strong style="font-size:12px;color:var(--gateway)">Empfangende Gateways:</strong>`; 
         html += `<div class="gw-list">`; 
         gws.forEach((gw, i) => { 
           const rssi = f[`rssi${i+1}`]; 
@@ -390,8 +375,7 @@ trong>`;
        
       // Link zur Detail-Seite 
       const statHref = `/html/sensor.html?node=${encodeURIComponent(item.id)}`; 
-      html += `<a class="btn" href="${statHref}" target="_blank" rel="noopener">Detailansicht öffn 
-en →</a>`; 
+      html += `<a class="btn" href="${statHref}" target="_blank" rel="noopener">Detailansicht öffnen →</a>`; 
       html += `</div>`; 
       return html; 
     } 
@@ -402,10 +386,8 @@ en →</a>`;
     function gatewayPopupHtml(gw, nodeCount){ 
       let html = `<div class="popup">`; 
       html += `<h3 style="color:var(--gateway)">Gateway: ${gw.name || gw.id}</h3>`; 
-      html += `<div class="row"><span class="label">Aktive Nodes</span><span class="value">${nodeC 
-ount}</span></div>`; 
-      html += `<div class="row"><span class="label">Position</span><span class="value">${deNum(gw. 
-lat,5)} / ${deNum(gw.lon,5)}</span></div>`; 
+      html += `<div class="row"><span class="label">Aktive Nodes</span><span class="value">${nodeCount}</span></div>`; 
+      html += `<div class="row"><span class="label">Position</span><span class="value">${deNum(gw.lat,5)} / ${deNum(gw.lon,5)}</span></div>`; 
       html += `</div>`; 
       return html; 
     } 
@@ -609,4 +591,3 @@ lat,5)} / ${deNum(gw.lon,5)}</span></div>`;
   </script> 
 </body> 
 </html> 
- 
