@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>WALDSENSOR.SH – Sensordetails</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="version" content="v0.22" />
+  <meta name="version" content="v0.23" />
   <style>
     :root{
       --ink:#0f172a;
@@ -41,17 +41,16 @@
     @media (max-width:980px){main{grid-template-columns:1fr}}
     .score-box{display:inline-block;padding:.2em .5em;border-radius:6px;font-weight:700}
     .score-red{background:#fee2e2;color:#b91c1c}
-    .score-yellow{background:#fef9c3;color:#92400e}
-    .score-green{background:#dcfce7;color:#14532d}
   </style>
 </head>
 <body>
 <header>
   <a href="../v2.html">&larr; Zur Karte</a>
-  <div>📶 Schulwaldsensor — <span id="nodeName"></span> <small>v0.22</small></div>
+  <div>📶 Schulwaldsensor — <span id="nodeName"></span> <small>v0.23</small></div>
 </header>
 
 <main>
+  <!-- Linke Karte: Sensorwerte -->
   <div class="card" id="leftCard">
     <div id="stand" class="pill">Stand: —</div>
 
@@ -90,6 +89,7 @@
     <div class="small-note">Quelle: /data/v2/latest/all.json</div>
   </div>
 
+  <!-- Rechte Karte: Netz & Ranking -->
   <div class="card">
     <h3>Netz & Ranking</h3>
     <p>Letzte 24 h: <span id="frames24">—</span> Uplinks</p>
@@ -119,7 +119,7 @@ const nodeIdRaw=qp.get("node")||"unknown";
 const nodeId=nodeIdRaw.toLowerCase();
 setTxt("nodeName",nodeIdRaw);
 
-// === Daten laden (unverändert aus v0.12) ===
+// === Daten laden (v0.12 unverändert) ===
 async function fetchJson(){
   const urls=["/data/v2/latest/all.json"];
   for(const u of urls){
@@ -150,7 +150,7 @@ function extractValues(n){
   };
 }
 
-// === Rendering wie v0.12 ===
+// === Rendering unverändert aus v0.12 ===
 (async()=>{
  try{
    const {data}=await fetchJson();
@@ -183,7 +183,7 @@ function extractValues(n){
  }catch(e){console.warn(e);}
 })();
 
-// === Netz & Ranking ===
+// === Netz & Ranking (rein Anzeige, keine Berechnung) ===
 const netUrl=`/data/v2/net/netstats_${encodeURIComponent(nodeIdRaw)}.json`;
 setTxt("netSource","Quelle: "+netUrl);
 fetch(netUrl,{cache:"no-store"})
@@ -195,11 +195,6 @@ fetch(netUrl,{cache:"no-store"})
  if(typeof ns.gateways==="number")setTxt("gwCount",ns.gateways);
  if(ns.best)setTxt("bestSig",`${ns.best.rssi??"—"} dBm / ${ns.best.snr??"—"} dB`);
  if(ns.adr!=null)setTxt("adr",String(ns.adr));
-
- // Dummywerte für Ranking (nur Anzeige)
- const score=0;const rank="— / —";
- setTxt("score",score+" Punkte");
- setTxt("rank",rank);
 });
 </script>
 </body>
