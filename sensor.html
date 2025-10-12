@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="version" content="0.20">
+  <title>WALDSENSOR.SH – Sensordetails</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: system-ui, sans-serif; margin:0; background:#f6f8fa; }
+    header { background:#004d46; color:#fff; padding:0.8em 1em; font-weight:bold; display:flex; justify-content:space-between; align-items:center; }
+    header a { color:#fff; text-decoration:none; }
+    main { padding:1em; display:grid; grid-template-columns:1fr 1fr; gap:1em; }
+    .card { background:#fff; border-radius:12px; padding:1em; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .pill { display:inline-block; background:#e6f4ea; color:#1a6334; padding:0.2em 0.8em; border-radius:999px; font-size:0.9em; margin-bottom:0.5em; }
+    .tiles { display:flex; flex-wrap:wrap; gap:0.8em; }
+    .tile { flex:1 1 30%; background:#f4f6f8; border-radius:8px; padding:0.8em; text-align:center; min-width:90px; }
+    .tile h3 { margin:0; font-size:0.85em; color:#555; }
+    .tile p { margin:0.2em 0 0; font-size:1.2em; font-weight:bold; }
+    footer { text-align:center; color:#666; padding:1em; font-size:0.9em; }
+    .score-green { color:#1a7f37; font-weight:bold; }
+    .score-yellow { color:#d97706; font-weight:bold; }
+    .score-red { color:#b91c1c; font-weight:bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="../v2.html">⬅️ Zur Karte</a>
+    <div>📶 Schulwaldsensor — <span id="nodeName"></span> <small>v0.20</small></div>
+  </header>
+
+  <main>
+    <!-- Sensorwerte -->
+    <div class="card" id="sensorCard">
+      <div id="stand" class="pill">Stand: —</div>
+      <div class="tiles" id="sensorTiles">
+        <!-- Sensorwerte werden dynamisch gefüllt -->
+      </div>
+      <small>Quelle: /data/v2/latest/all.json</small>
+    </div>
+
+    <!-- Netzstatistik -->
+    <div class="card">
+      <h3>Netz & Gateways</h3>
+      <p>Letzte 24 h: <span id="frames24">—</span> Uplinks</p>
+      <p>Letzter Uplink: <span id="lastUplink">—</span></p>
+      <p>Gateways: <span id="gwCount">—</span></p>
+      <p>Bestes Signal: <span id="bestSig">—</span></p>
+      <p>ADR: <span id="adr">—</span></p>
+      <small id="netSource">Quelle: —</small>
+    </div>
+
+    <!-- Ranking -->
+    <div class="card" style="grid-column: span 2;">
+      <h3>🏆 Netzwerk-Ranking</h3>
+      <p>Rang: <span id="rank">—</span></p>
+      <p>Gesamt-Score: <span id="score">—</span></p>
+      <p>Übertragung: <span id="transmission">—</span></p>
+      <p>Signal: <span id="signal">—</span></p>
+      <p>Batterie: <span id="battery">—</span></p>
+    </div>
+  </main>
+
+  <footer>WALDSENSOR.SH – Sensordetails</footer>
+
+  <script>
+    // --- Hilfsfunktionen -----------------------------------------------------
+    const byId = id => document.getElementById(id);
+    const safeSet = (id, text) => { const el = byId(id); if(el && text!=null) el.textContent = text; };
+    const fmtNum = (v, d=1, suf="") => (v==null||Number.isNaN(+v)) ? null : (Number(v).toFixed(d).replace(".",",")+(suf||""));
+    const fmtDate = ts => (!ts) ? null : new Date(ts).toLocaleString("de-DE");
+
+    const urlParams = new URLSearchParams(location.search);
+    const nodeId = (urlParams.get("node") || "unknown").toLowerCase();
+    const baseNode = nodeId.replace(/_(s31lb|se01lb|llms01)$/,"");
+    safeSet("nodeName", baseNode);
+
+    // --- Sensor-Daten --------------------------------------------------------
+    fetch("/data/v2/latest/all.json",{cache:"no-store"})
+    .then(r=>r.json())
+    .then(all=>{
+      const sensors = all.filter(x => (x.id||"").toLowerCase().startsWith(baseNode));
+      if(!sensors.length) return;
+      const tiles = byId("sensorTiles");
+      tiles.innerHTML = "";
+
+      // für jeden Sensor entsprechende Werte
+      sensors.forEach(s=>{
+        const f = s.fields || {};
+        const vals = [];
+        if(f.TempC_SHT31!=null) vals.push(["Lufttemp.", fmtNum(f.TempC_SHT31,1," °C")]);
+        if(f.Hum_SHT31!=null) vals.push(["Luftfeuchte", fmtNum(f.Hum_SHT31,0," %")]);
+        if(f.temp_SOIL!=null) vals.push(["Bodentemp.", fmtNum(f.temp_SOIL,1," °C")]);
+        if(f.water_SOIL!=null) vals.push(["Bodenfeuchte", fmtNum(f.water_SOIL,1," %")]);
+        if(f.Leaf_Temperature!=null) vals.push(["Blatt-Temp.", fmtNum(f.Leaf_Temperature,1," °C")]);
+        if(f.Leaf_Moisture!=null) vals.push(["Blatt-Feuchte", fmtNum(f.Leaf_Moisture,1," %")]);
+        if(f.BatV!=null) vals.push(["Batterie", fmtNum(f.BatV,2," V")]);
+
+        vals.forEach(([label,val])=>{
+          const d=document.createElement("div");
+          d.className="tile";
+          d.innerHTML=`<h3>${label}</h3><p>${val||"—"}</p>`;
+          tiles.appendChild(d);
+        });
+      });
+
+      const ts = sensors[0].time || sensors[0].ts;
+      const tStr = fmtDate(ts);
+      if(tStr) safeSet("stand","Stand: "+tStr);
+    })
+    .catch(err=>console.warn("Fehler all.json:",err));
+
+    // --- Netzstatistik -------------------------------------------------------
+    const netUrl=`/data/v2/net/netstats_${baseNode}.json`;
+    safeSet("netSource","Quelle: "+netUrl);
+
+    fetch(netUrl,{cache:"no-store"})
+    .then(r=>r.json())
+    .then(ns=>{
+      if(!ns) return;
+      safeSet("frames24", ns.frames24 ?? "—");
+      safeSet("lastUplink", fmtDate(ns.last_ts));
+      safeSet("gwCount", ns.gateways ?? "—");
+      if(ns.best_snr!=null) safeSet("bestSig", ns.best_snr+" dB");
+      if(ns.adr!=null) safeSet("adr", String(ns.adr));
+
+      // Ranking-Berechnung
+      const transmission = Math.min(100, (100*(ns.frames24/(ns.expected24||72))).toFixed(0));
+      const signal = Math.min(100, (10*(ns.best_snr||0)).toFixed(0)); // grob skaliert
+      const battery = Math.min(100, (ns.bat_v ? ns.bat_v/4.2*100 : 0).toFixed(0));
+      const score = (0.7*transmission + 0.2*signal + 0.1*battery).toFixed(0);
+
+      // Dummy-Rank (hier Platzhalter bis Gesamtvergleich)
+      const rankPos = ns.rank || "—";
+      const rankTotal = ns.rank_total || "—";
+
+      // Farbcode
+      const colorClass = score>=80?"score-green":(score>=50?"score-yellow":"score-red");
+
+      safeSet("rank", `${rankPos} / ${rankTotal}`);
+      byId("score").innerHTML = `<span class="${colorClass}">${score} Punkte</span>`;
+      safeSet("transmission", transmission+" %");
+      safeSet("signal", signal+" %");
+      safeSet("battery", battery+" %");
+    })
+    .catch(err=>console.warn("Fehler netstats:",err));
+  </script>
+</body>
+</html>
