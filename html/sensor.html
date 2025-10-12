@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>WALDSENSOR.SH – Sensordetails</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="version" content="v0.23" />
+  <meta name="version" content="v0.24" />
   <style>
     :root{
       --ink:#0f172a;
@@ -46,11 +46,11 @@
 <body>
 <header>
   <a href="../v2.html">&larr; Zur Karte</a>
-  <div>📶 Schulwaldsensor — <span id="nodeName"></span> <small>v0.23</small></div>
+  <div>📶 Schulwaldsensor — <span id="nodeName"></span> <small>v0.24</small></div>
 </header>
 
 <main>
-  <!-- Linke Karte: Sensorwerte -->
+  <!-- Linke Seite -->
   <div class="card" id="leftCard">
     <div id="stand" class="pill">Stand: —</div>
 
@@ -89,7 +89,7 @@
     <div class="small-note">Quelle: /data/v2/latest/all.json</div>
   </div>
 
-  <!-- Rechte Karte: Netz & Ranking -->
+  <!-- Rechte Seite -->
   <div class="card">
     <h3>Netz & Ranking</h3>
     <p>Letzte 24 h: <span id="frames24">—</span> Uplinks</p>
@@ -116,26 +116,20 @@ const fmtNum=(v,d=1,s="")=>v==null||!isFinite(+v)?"—":(+v).toFixed(d).replace(
 const fmtDate=ts=>{if(!ts)return"—";const d=new Date(ts);return isNaN(d)? "—":d.toLocaleString("de-DE");};
 const qp=new URLSearchParams(location.search);
 const nodeIdRaw=qp.get("node")||"unknown";
-const nodeId=nodeIdRaw.toLowerCase();
 setTxt("nodeName",nodeIdRaw);
 
-// === Daten laden (v0.12 unverändert) ===
+// === Original v0.12 Logik ===
 async function fetchJson(){
-  const urls=["/data/v2/latest/all.json"];
-  for(const u of urls){
-    try{
-      const r=await fetch(u+"?_="+Date.now(),{cache:"no-store"});
-      if(!r.ok)continue;
-      const data=await r.json();
-      if(Array.isArray(data)&&data.length>0)return{data,url:u};
-    }catch(e){}
-  }
-  throw new Error("keine Daten gefunden");
+  try{
+    const r=await fetch("/data/v2/latest/all.json?_="+Date.now(),{cache:"no-store"});
+    if(!r.ok)throw new Error("fetch fehlgeschlagen");
+    const data=await r.json();
+    if(!Array.isArray(data))throw new Error("kein Array");
+    return data;
+  }catch(e){console.warn(e);return[];}
 }
 
-const getId=o=>(o?.id||o?.device_id||"").toLowerCase();
-const pick=(o,...keys)=>{for(const k of keys)if(o&&o[k]!=null)return o[k];return null;};
-
+function pick(o,...keys){for(const k of keys)if(o&&o[k]!=null)return o[k];return null;}
 function extractValues(n){
   const f=n.fields||n;
   return{
@@ -150,40 +144,34 @@ function extractValues(n){
   };
 }
 
-// === Rendering unverändert aus v0.12 ===
 (async()=>{
- try{
-   const {data}=await fetchJson();
-   const nodes=data.filter(o=>getId(o).includes(nodeId.replace(/-/g,"_")));
-   if(nodes.length===0)throw new Error("kein Node gefunden");
+ const data=await fetchJson();
+ const values={leaf:{},air:{},soil:{}};
+ const nodeBase=nodeIdRaw.replace(/[-_]?llms01.*/i,"schacht_audorf");
 
-   const values={leaf:{},air:{},soil:{}};
-   for(const n of nodes){
-     const id=getId(n);
-     if(id.includes("llms")){Object.assign(values.leaf,extractValues(n));$("secLeaf").style.display="";}
-     else if(id.includes("s31")){Object.assign(values.air,extractValues(n));$("secAir").style.display="";}
-     else if(id.includes("se01")){Object.assign(values.soil,extractValues(n));$("secSoil").style.display="";}
-   }
+ for(const n of data){
+   const id=(n.device_id||"").toLowerCase();
+   if(id.includes(nodeBase+"_llms01")){$("secLeaf").style.display="";Object.assign(values.leaf,extractValues(n));}
+   if(id.includes(nodeBase+"_s31lb")){$("secAir").style.display="";Object.assign(values.air,extractValues(n));}
+   if(id.includes(nodeBase+"_se01lb")){$("secSoil").style.display="";Object.assign(values.soil,extractValues(n));}
+ }
+ $("secWx").style.display="";
 
-   $("secWx").style.display="";
+ const latestTs=[values.leaf.ts,values.air.ts,values.soil.ts].filter(Boolean).sort((a,b)=>new Date(b)-new Date(a))[0];
+ if(latestTs)setTxt("stand","Stand: "+fmtDate(latestTs));
 
-   const latestTs=[values.leaf.ts,values.air.ts,values.soil.ts]
-     .filter(Boolean).sort((a,b)=>new Date(b)-new Date(a))[0];
-   if(latestTs)setTxt("stand","Stand: "+fmtDate(latestTs));
-
-   setTxt("leafTemp",fmtNum(values.leaf.leafTemp,1," °C"));
-   setTxt("leafMoist",fmtNum(values.leaf.leafMoist,1," %"));
-   setTxt("leafBat",fmtNum(values.leaf.bat,2," V"));
-   setTxt("airTemp",fmtNum(values.air.airTemp,1," °C"));
-   setTxt("airHum",fmtNum(values.air.airHum,1," %"));
-   setTxt("airBat",fmtNum(values.air.bat,2," V"));
-   setTxt("soilTemp",fmtNum(values.soil.soilTemp,1," °C"));
-   setTxt("soilWater",fmtNum(values.soil.soilWater,1," %"));
-   setTxt("soilBat",fmtNum(values.soil.bat,2," V"));
- }catch(e){console.warn(e);}
+ setTxt("leafTemp",fmtNum(values.leaf.leafTemp,1," °C"));
+ setTxt("leafMoist",fmtNum(values.leaf.leafMoist,1," %"));
+ setTxt("leafBat",fmtNum(values.leaf.bat,2," V"));
+ setTxt("airTemp",fmtNum(values.air.airTemp,1," °C"));
+ setTxt("airHum",fmtNum(values.air.airHum,1," %"));
+ setTxt("airBat",fmtNum(values.air.bat,2," V"));
+ setTxt("soilTemp",fmtNum(values.soil.soilTemp,1," °C"));
+ setTxt("soilWater",fmtNum(values.soil.soilWater,1," %"));
+ setTxt("soilBat",fmtNum(values.soil.bat,2," V"));
 })();
 
-// === Netz & Ranking (rein Anzeige, keine Berechnung) ===
+// === Netzstats (wie in 0.18) ===
 const netUrl=`/data/v2/net/netstats_${encodeURIComponent(nodeIdRaw)}.json`;
 setTxt("netSource","Quelle: "+netUrl);
 fetch(netUrl,{cache:"no-store"})
