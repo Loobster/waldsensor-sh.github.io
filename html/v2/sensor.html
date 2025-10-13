@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="version" content="v2.0-base" />
+  <title>WALDSENSOR.SH – Modular v2</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f6f8fa;
+      color: #0f172a;
+      font-family: system-ui, Arial, sans-serif;
+    }
+    header {
+      background: #004d46;
+      color: #fff;
+      padding: 0.8em 1em;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1em;
+      padding: 1em;
+    }
+    .slot {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      padding: 1em;
+    }
+    footer {
+      text-align: center;
+      color: #666;
+      font-size: 0.9em;
+      padding: 1em;
+    }
+    @media(max-width: 980px){
+      main{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span>🌲 WALDSENSOR.SH – v2 Modular</span>
+    <small id="version">v2.0-base</small>
+  </header>
+
+  <main id="main">
+    <div id="mod-sensor" class="slot"></div>
+    <div id="mod-net" class="slot"></div>
+  </main>
+
+  <footer>WALDSENSOR.SH – v2 Plattform</footer>
+
+  <script type="module">
+    async function loadModule(slotId, path) {
+      try {
+        const mod = await import(`./modules/${path}`);
+        if (mod.initModule) mod.initModule(slotId);
+      } catch (err) {
+        console.warn(`❌ Modul ${path} nicht gefunden:`, err);
+      }
+    }
+
+    // Module aktivieren
+    loadModule("mod-sensor", "sensor_block.js"); // linkes Modul
+    // loadModule("mod-net", "net_block.js");    // rechtes Modul (später)
+  </script>
+</body>
+</html>
