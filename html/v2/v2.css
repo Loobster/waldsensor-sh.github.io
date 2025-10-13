@@ -1,0 +1,36 @@
+/* === WALDSENSOR.SH – v2 Styles === */
+
+body {
+  font-family: system-ui, sans-serif;
+  background-color: #f7f9fa;
+  color: #111;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2, h3 {
+  margin-top: 0;
+}
+
+/* Farben für Verlustquote */
+.loss-high {
+  color: #d93025;
+  font-weight: bold;
+}
+.loss-ok {
+  color: #2e7d32;
+  font-weight: bold;
+}
