@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="version" content="v2.0-sensorblock" />
+  <title>WALDSENSOR.SH – Sensorblock</title>
+  <link rel="stylesheet" href="../css/v2.css">
+  <style>
+    .sensor-card {
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 1em;
+      margin-bottom: 1em;
+    }
+    .section {
+      border-radius: 10px;
+      padding: .8em 1em;
+      margin: .6em 0;
+    }
+    .leaf { background: var(--leaf); }
+    .air { background: var(--air); }
+    .soil { background: var(--soil); }
+    .wx { background: #eef2f7; }
+    .tiles { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tile {
+      flex: 1 1 0;
+      background: var(--tile-bg);
+      border-radius: 8px;
+      padding: .6em;
+      text-align: center;
+      min-width: 100px;
+    }
+    .tile h3 { font-size: .85em; margin: 0; color: #444; }
+    .tile p { font-weight: 700; margin: .25em 0 0; }
+    .small-note { font-size: .85em; color: #6b7280; margin-top: .4em; }
+  </style>
+</head>
+<body>
+<div class="sensor-card">
+  <div id="stand" class="pill">Stand: —</div>
+  <div id="sensorContainer"></div>
+  <div class="small-note">Quelle: /data/v2/latest/all.json</div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const fmtNum = (v, d=1, s="") => v==null || !isFinite(+v) ? "—" : (+v).toFixed(d).replace(".", ",") + s;
+const fmtDate = ts => { if (!ts) return "—"; const d=new Date(ts); return isNaN(d)? "—" : d.toLocaleString("de-DE"); };
+const qp = new URLSearchParams(location.search);
+const nodeId = (qp.get("node") || "unknown").toLowerCase();
+
+(async ()=>{
+  try {
+    const resp = await fetch("/data/v2/latest/all.json?_" + Date.now(), {cache:"no-store"});
+    const data = await resp.json();
+
+    // 🔍 gemeinsame Standort-ID erkennen (z. B. schacht_audorf)
+    const baseId = nodeId.replace(/[_-]?(llms01|s31lb|se01lb|sn50v3|lsn50v2)$/,"");
+    const nodes = data.filter(o => (o.id || o.device_id || "").toLowerCase().includes(baseId));
+
+    if (!nodes.length) throw new Error("Keine passenden Sensoren gefunden");
+
+    // 📦 Container leeren
+    const cont = $("sensorContainer");
+    cont.innerHTML = "";
+
+    const types = {
+      leaf: { match:/llms/i, label:"🌿 Blatt-Sensor", cls:"leaf", fields:["Leaf_Temperature","Leaf_Moisture","BatV"], names:["Temperatur","Feuchte","Batterie"], units:["°C","%","V"] },
+      air:  { match:/s31/i,   label:"🌤 Luft-Sensor", cls:"air",  fields:["TempC_SHT31","Hum_SHT31","BatV"], names:["Temperatur","Feuchte","Batterie"], units:["°C","%","V"] },
+      soil: { match:/se01/i,  label:"🌱 Boden-Sensor", cls:"soil", fields:["temp_SOIL","water_SOIL","BatV"], names:["Bodentemperatur","Bodenfeuchte","Batterie"], units:["°C","%","V"] },
+      wx:   { match:/s2120/i, label:"⛅ Wetterstation (SenseCAP S2120)", cls:"wx", fields:[], names:[], units:[] }
+    };
+
+    let latestTs = null;
+
+    nodes.forEach(n=>{
+      const id = (n.id || n.device_id || "").toLowerCase();
+      const f = n.fields || n;
+      let type = null;
+      for (const [k,v] of Object.entries(types)) if (v.match.test(id)) type = v;
+      if (!type) return;
+
+      const section = document.createElement("div");
+      section.className = "section " + type.cls;
+      const h = document.createElement("h4");
+      h.textContent = type.label;
+      section.appendChild(h);
+
+      const tiles = document.createElement("div");
+      tiles.className = "tiles";
+      type.fields.forEach((key,i)=>{
+        const val = f[key];
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        const h3 = document.createElement("h3");
+        h3.textContent = type.names[i];
+        const p = document.createElement("p");
+        p.textContent = fmtNum(val,1," "+type.units[i]);
+        tile.appendChild(h3); tile.appendChild(p);
+        tiles.appendChild(tile);
+      });
+      section.appendChild(tiles);
+      cont.appendChild(section);
+
+      if (f.ts && (!latestTs || new Date(f.ts) > new Date(latestTs))) latestTs = f.ts;
+    });
+
+    if (latestTs) $("stand").textContent = "Stand: " + fmtDate(latestTs);
+
+  } catch(e) {
+    console.error("Sensorblock-Fehler:", e);
+    $("sensorContainer").innerHTML = "<div class='small-note'>Keine Daten gefunden.</div>";
+  }
+})();
+</script>
+</body>
+</html>
