@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>WALDSENSOR.SH – Sensordetails</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="version" content="v0.19" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="version" content="v0.19-fix" />
   <style>
     :root{
-      --ink:#0f172a;--muted:#64748b;--bg:#f6f8fa;--card:#fff;
+      --ink:#0f172a;--muted:#64748b;--bg:#f6f8fa;--card:#ffffff;
+      --leaf:#e6f4ea;--air:#eaf2ff;--soil:#f7f1e6;--tile:#f4f6f8;
       --shadow:0 2px 6px rgba(0,0,0,.08);
-      --leaf:#e6f4ea;--air:#eaf2ff;--soil:#f7f1e6;
       --badge-green:#22c55e;--badge-yellow:#eab308;--badge-red:#ef4444;
     }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);}
-    header{background:#004d46;color:#fff;padding:.8em 1em;display:flex;justify-content:space-between;align-items:center;font-weight:700}
+    html,body{margin:0;background:var(--bg);color:var(--ink);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    header{background:#004d46;color:#fff;padding:.8em 1em;font-weight:700;
+      display:flex;justify-content:space-between;align-items:center}
     header a{color:#fff;text-decoration:none}
-    main{display:grid;grid-template-columns:1fr 1fr;gap:1em;padding:1em}
-    .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:1em;}
-    .pill{display:inline-block;background:#dff6e6;color:#135e3d;padding:.25em .8em;border-radius:999px;font-size:.9em;margin-bottom:.6em}
-    .section{border-radius:10px;padding:.8em 1em;margin:.6em 0;}
-    .tiles{display:flex;gap:12px;flex-wrap:nowrap;justify-content:space-between;}
-    .tile{flex:1;background:#f4f6f8;border-radius:8px;padding:.7em;text-align:center;min-width:90px;}
+    main{padding:1em;display:grid;grid-template-columns:1fr 1fr;gap:1em}
+    .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:1em}
+    .pill{display:inline-block;background:#dff6e6;color:#135e3d;
+      padding:.25em .8em;border-radius:999px;font-size:.9em;margin-bottom:.6em}
+    .section{border-radius:10px;padding:.8em 1em;margin:.8em 0}
+    .section.leaf{background:var(--leaf)} .section.air{background:var(--air)} .section.soil{background:var(--soil)}
+    .section h4{margin:.2em 0 .6em;font-size:1.05em}
+    .tiles{display:flex;gap:12px;flex-wrap:nowrap}
+    .tile{flex:1;background:var(--tile);border-radius:8px;padding:.7em;text-align:center;min-width:120px}
     .tile h3{margin:0 0 .25em;font-size:.85em;color:#4b5563;font-weight:600}
     .tile p{margin:0;font-size:1.1em;font-weight:800}
     .small-note{font-size:.85em;color:#6b7280}
-    footer{text-align:center;padding:1em;color:#666;font-size:.9em}
-    .badge{
-      display:inline-block;padding:.2em .6em;border-radius:6px;
-      color:#fff;font-weight:700;font-size:.85em;
-    }
-    .divider{border-top:1px solid #e5e7eb;margin:1em 0;}
-    @media(max-width:980px){main{grid-template-columns:1fr}}
+    footer{margin-top:8px;text-align:center;color:#666;padding:1em;font-size:.9em}
+    .divider{border-top:1px solid #e5e7eb;margin:1em 0}
+    .badge{display:inline-block;padding:.2em .55em;border-radius:6px;color:#fff;font-weight:700;font-size:.85em}
+    @media (max-width:980px){main{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -40,15 +42,49 @@
 </header>
 
 <main>
-  <div class="card" id="sensorCard">
+  <!-- LINKER BLOCK – UNVERÄNDERT WIE v0.12 -->
+  <div class="card" id="leftCard">
     <div id="stand" class="pill">Stand: —</div>
-    <div id="sensorSections"></div>
+
+    <div class="section leaf" id="secLeaf" style="display:none">
+      <h4>🌿 Blatt-Sensor</h4>
+      <div class="tiles">
+        <div class="tile"><h3>Temperatur</h3><p id="leafTemp">—</p></div>
+        <div class="tile"><h3>Feuchte</h3><p id="leafMoist">—</p></div>
+        <div class="tile"><h3>Batterie</h3><p id="leafBat">—</p></div>
+      </div>
+    </div>
+
+    <div class="section air" id="secAir" style="display:none">
+      <h4>🌡️ Luft-Sensor</h4>
+      <div class="tiles">
+        <div class="tile"><h3>Temperatur</h3><p id="airTemp">—</p></div>
+        <div class="tile"><h3>Feuchte</h3><p id="airHum">—</p></div>
+        <div class="tile"><h3>Batterie</h3><p id="airBat">—</p></div>
+      </div>
+    </div>
+
+    <div class="section soil" id="secSoil" style="display:none">
+      <h4>🌱 Boden-Sensor</h4>
+      <div class="tiles">
+        <div class="tile"><h3>Bodentemperatur</h3><p id="soilTemp">—</p></div>
+        <div class="tile"><h3>Bodenfeuchte</h3><p id="soilWater">—</p></div>
+        <div class="tile"><h3>Batterie</h3><p id="soilBat">—</p></div>
+      </div>
+    </div>
+
+    <div class="section" id="secWx" style="display:none;background:#eef2f7">
+      <h4>⛅ Wetterstation (SenseCAP S2120)</h4>
+      <div class="small-note">Noch keine Daten verfügbar – Schlüssel ausstehend.</div>
+    </div>
+
     <div class="small-note">Quelle: /data/v2/latest/all.json</div>
   </div>
 
+  <!-- RECHTER BLOCK – NUR HIER ERWEITERT -->
   <div class="card" id="netCard">
     <h3>Netz & Gateways</h3>
-    <p>Letzte 24 h: <span id="uplinks">—</span></p>
+    <p>Letzte 24 h: <span id="uplinks">—</span> / 72 Uplinks</p>
     <p>Verlustquote: <span id="lossBadge" class="badge" style="background:var(--badge-red)">—</span></p>
     <p>Letzter Uplink: <span id="lastUplink">—</span></p>
     <p>Gateways: <span id="gwCount">—</span></p>
@@ -70,48 +106,139 @@
 <footer>WALDSENSOR.SH – Sensordetails</footer>
 
 <script>
+/* ===== Utilities ===== */
 const $=id=>document.getElementById(id);
-const fmtNum=(v,d=1,s="")=>v==null||!isFinite(+v)?"—":(+v).toFixed(d).replace(".",",")+s;
-const fmtDate=ts=>!ts?"—":new Date(ts).toLocaleString("de-DE");
-const qp=new URLSearchParams(location.search);
-const nodeIdRaw=qp.get("node")||"unknown"; $("nodeName").textContent=nodeIdRaw;
+const setTxt=(id,v)=>{const el=$(id); if(el) el.textContent=v;}
+const fmtNum=(v,d=1,s="")=>v==null||!isFinite(+v)?"—":(+v).toFixed(d).replace(".",",")+(s||"");
+const fmtDate=ts=>{if(!ts) return "—"; const d=new Date(ts); return isNaN(d)? "—" : d.toLocaleString("de-DE")}
+const qp = new URLSearchParams(location.search);
+const nodeIdRaw = qp.get("node") || "unknown";
+const nodeId = nodeIdRaw.toLowerCase();
+setTxt("nodeName", nodeIdRaw);
 
-// --- Netzstatistiken ---
-const netUrl=`/data/v2/net/netstats_${encodeURIComponent(nodeIdRaw)}.json`;
-$("netSource").textContent="Quelle: "+netUrl;
+/* ===== Links: IDENTISCH ZU v0.12 ===== */
+const fetchJson = async ()=>{
+  const urls = ["/data/v2/latest/all_enriched.json","/data/v2/latest/all.json"];
+  for(const u of urls){
+    try{
+      const r = await fetch(u+"?_="+Date.now(),{cache:"no-store"});
+      if(!r.ok) continue;
+      const data = await r.json();
+      if(Array.isArray(data) && data.length) return {data,url:u};
+    }catch(e){}
+  }
+  throw new Error("keine Daten gefunden");
+}
+const getId = o => (o?.id || o?.device_id || "").toLowerCase();
+const pick = (o,...keys)=>{for(const k of keys){ if(o&&o[k]!=null) return o[k]; } return null; };
 
-fetch(netUrl).then(r=>r.ok?r.json():null).then(ns=>{
-  if(!ns)return;
-  // 24h-Daten
-  const frames=ns.frames24||0;
-  const possible=72;
-  const loss=Math.max(0,possible-frames);
-  const lossPct=possible?Math.round((loss/possible)*100):0;
-  $("uplinks").textContent=`${frames} / ${possible} Uplinks`;
-  // Farbige Anzeige
-  const badge=$("lossBadge");
-  badge.textContent=`${lossPct} %`;
-  badge.style.background=lossPct<10?"var(--badge-green)":lossPct<30?"var(--badge-yellow)":"var(--badge-red)";
-  // Restliche Felder
-  $("lastUplink").textContent=fmtDate(ns.last_ts);
-  $("gwCount").textContent=ns.gateways??"—";
-  $("bestSig").textContent=ns.best?`${ns.best.rssi??"—"} dBm / ${ns.best.snr??"—"} dB`:"—";
-  $("adr").textContent=ns.adr??"—";
-  $("avgBat").textContent=fmtNum(ns.avg_bat_v,2," V");
+function extractValues(n){
+  const f = n.fields || n;
+  return {
+    leafTemp: pick(f,"Leaf_Temperature","leaf_temp_c"),
+    leafMoist: pick(f,"Leaf_Moisture","leaf_moist_pct"),
+    airTemp : pick(f,"TempC_SHT","TempC_SHT31","temp_c"),
+    airHum  : pick(f,"Hum_SHT","Hum_SHT31","hum_pct"),
+    soilTemp: pick(f,"temp_SOIL","temp_soil_c"),
+    soilWater:pick(f,"water_SOIL","water_soil"),
+    bat     : pick(f,"BatV","bat_v"),
+    ts      : pick(n,"ts","ts_iso","time")
+  };
+}
 
-  // Ranking
-  const sigScore=(ns.best?.rssi&&ns.best?.snr)?Math.min(100,((ns.best.snr+20)*2)):50;
-  const batScore=(ns.avg_bat_v?Math.min(100,(ns.avg_bat_v-3.0)*200):50);
-  const score=Math.round(0.7*(100-lossPct)+0.2*sigScore+0.1*batScore);
-  $("score").textContent=score+" Punkte";
-  $("rank").textContent="Berechne...";
-  // Beispielhaft: Ranking simuliert (später per netstats_all.json)
-  fetch("/data/v2/net/netstats_all.json").then(r=>r.ok?r.json():null).then(list=>{
-    if(!list)return;
-    const arr=list.map(o=>({id:o.id,score:o.score??0})).sort((a,b)=>b.score-a.score);
-    const pos=arr.findIndex(x=>x.id===nodeIdRaw);
-    $("rank").textContent=pos>=0?(pos+1)+" / "+arr.length:"–";
-  });
+(async ()=>{
+  try{
+    const {data} = await fetchJson();
+
+    const values={leaf:{},air:{},soil:{}};
+    const byId = id => data.find(o => getId(o)===id);
+
+    // Schacht-Audorf: Multi-Sensor
+    if(/schacht[_-]?audorf/.test(nodeId)){
+      const leaf = byId("schacht_audorf_llms01");
+      const air  = byId("schacht_audorf_s31lb");
+      const soil = byId("schacht_audorf_se01lb");
+      if(leaf){ $("secLeaf").style.display=""; Object.assign(values.leaf,extractValues(leaf)); }
+      if(air ){ $("secAir").style.display=""; Object.assign(values.air ,extractValues(air )); }
+      if(soil){ $("secSoil").style.display=""; Object.assign(values.soil,extractValues(soil)); }
+      $("secWx").style.display="";
+    }else{
+      // Single-Node Anzeige
+      const single = data.find(o => getId(o).includes(nodeId));
+      if(single){ $("secAir").style.display=""; Object.assign(values.air,extractValues(single)); }
+    }
+
+    const latestTs=[values.leaf.ts,values.air.ts,values.soil.ts].filter(Boolean).sort((a,b)=>new Date(b)-new Date(a))[0];
+    if(latestTs) setTxt("stand","Stand: "+fmtDate(latestTs));
+
+    setTxt("leafTemp", fmtNum(values.leaf.leafTemp,1," °C"));
+    setTxt("leafMoist",fmtNum(values.leaf.leafMoist,1," %"));
+    setTxt("leafBat",  fmtNum(values.leaf.bat,2," V"));
+
+    setTxt("airTemp",  fmtNum(values.air.airTemp,1," °C"));
+    setTxt("airHum",   fmtNum(values.air.airHum,1," %"));
+    setTxt("airBat",   fmtNum(values.air.bat,2," V"));
+
+    setTxt("soilTemp", fmtNum(values.soil.soilTemp,1," °C"));
+    setTxt("soilWater",fmtNum(values.soil.soilWater,1," %"));
+    setTxt("soilBat",  fmtNum(values.soil.bat,2," V"));
+  }catch(e){
+    console.warn("Left block error:", e);
+  }
+})();
+
+/* ===== Rechts: NETZ + RANKING (NEU) ===== */
+const netUrl = `/data/v2/net/netstats_${encodeURIComponent(nodeIdRaw)}.json`;
+setTxt("netSource","Quelle: "+netUrl);
+
+fetch(netUrl,{cache:"no-store"})
+.then(r=>r.ok?r.json():null)
+.then(ns=>{
+  if(!ns) return;
+
+  const possible = 72;
+  const frames = Number(ns.frames24||0);
+  const loss = Math.max(0, possible-frames);
+  const lossPct = possible ? Math.round((loss/possible)*100) : 0;
+
+  setTxt("uplinks", String(frames));
+  const b = $("lossBadge");
+  b.textContent = `${lossPct} %`;
+  b.style.background = lossPct<10 ? "var(--badge-green)" : (lossPct<30 ? "var(--badge-yellow)" : "var(--badge-red)");
+
+  setTxt("lastUplink", fmtDate(ns.last_ts));
+  setTxt("gwCount", ns.gateways!=null ? String(ns.gateways) : "—");
+  setTxt("avgBat", fmtNum(ns.avg_bat_v,2," V"));
+  setTxt("bestSig", ns.best ? `${ns.best.rssi??"—"} dBm / ${ns.best.snr??"—"} dB` : "—");
+  setTxt("adr", ns.adr!=null ? String(ns.adr) : "—");
+
+  // Score
+  const sigScore = (ns.best && isFinite(ns.best.snr))
+    ? Math.max(0, Math.min(100, 60 + ns.best.snr*4)) // grobe Skala: 0..100
+    : 50;
+  const batScore = isFinite(ns.avg_bat_v) ? Math.max(0, Math.min(100, (ns.avg_bat_v-3.0)*200)) : 50;
+  const score = Math.round(0.7*(100-lossPct) + 0.2*sigScore + 0.1*batScore);
+  setTxt("score", score+" Punkte");
+
+  // Ranking (optional, falls Datei vorhanden)
+  fetch("/data/v2/net/netstats_all.json",{cache:"no-store"})
+    .then(r=>r.ok?r.json():null)
+    .then(list=>{
+      if(!Array.isArray(list)||!list.length){ setTxt("rank","—"); return; }
+      // Erwartet: [{id, score}] – wenn kein score, simple Recompute
+      const arr = list.map(o=>{
+        if(typeof o.score==="number") return {id:o.id,score:o.score};
+        const lp = Number(o.frames24||0);
+        const lLossPct = Math.max(0, (72-lp)/72*100);
+        const lSig = (o.best && isFinite(o.best.snr)) ? Math.max(0, Math.min(100, 60 + o.best.snr*4)) : 50;
+        const lBat = isFinite(o.avg_bat_v) ? Math.max(0, Math.min(100, (o.avg_bat_v-3.0)*200)) : 50;
+        const lScore = Math.round(0.7*(100-lLossPct) + 0.2*lSig + 0.1*lBat);
+        return {id:o.id,score:lScore};
+      }).sort((a,b)=>b.score-a.score);
+
+      const pos = arr.findIndex(x => (x.id||"").toLowerCase()===nodeId);
+      setTxt("rank", pos>=0 ? `${pos+1} / ${arr.length}` : "—");
+    });
 });
 </script>
 </body>
