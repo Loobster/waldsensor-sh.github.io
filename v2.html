@@ -1,14 +1,129 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WALDSENSOR.SH – Gateway-Karte</title>
+  <meta name="version" content="v0.20" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <style>
+    :root {
+      --ink:#0f172a;
+      --muted:#64748b;
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --success:#10b981;
+      --gateway:#8b5cf6;
+    }
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    #map{position:absolute;inset:0}
+
+    .badge{background:var(--card);box-shadow:0 8px 30px -16px rgba(0,0,0,.25),0 1px 0 rgba(0,0,0,.06);
+      border-radius:12px;padding:8px 12px;font-size:14px;font-weight:700;color:var(--ink)}
+    .badge small{display:block;font-weight:600;color:var(--muted);margin-top:2px;font-size:12px}
+    .hud-left{position:fixed;left:64px;top:12px;z-index:500;display:flex;flex-direction:column;gap:8px}
+    .hud-right{position:fixed;right:16px;top:16px;z-index:500;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+    .hud-center{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:500}
+
+    .leaflet-popup-content-wrapper{border-radius:12px;box-shadow:0 12px 40px -18px rgba(0,0,0,.35)}
+    .leaflet-popup-content{margin:16px}
+    .popup{min-width:280px;max-width:320px;font-size:13px;line-height:1.4}
+    .popup h3{margin:0 0 12px;font-size:17px;font-weight:800;display:flex;align-items:center;gap:8px}
+    .popup hr{border:none;border-top:1px solid #e5e7eb;margin:12px 0}
+    .row{display:flex;justify-content:space-between;gap:12px;margin:6px 0;align-items:center}
+    .label{color:var(--muted);font-weight:600;font-size:12px}
+    .value{font-weight:700;font-size:13px}
+    .status-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;
+      font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;background:#d1fae5;color:#065f46}
+    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+    .info-card{background:#f9fafb;padding:8px;border-radius:6px;text-align:center}
+    .info-card .num{font-size:18px;font-weight:800;color:var(--ink);display:block}
+    .info-card .lbl{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;margin-top:2px}
+    .gw-list{margin:8px 0}
+    .gw-item{background:#f9fafb;padding:6px;border-radius:6px;margin:4px 0;font-size:12px}
+    .gw-item strong{display:block;color:var(--gateway);font-size:11px;margin-bottom:2px}
+    .gw-item .signal{display:flex;justify-content:space-between;font-size:11px}
+    .sensor-type{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;margin:8px 0 4px}
+    .popup .btn{display:block;margin-top:12px;padding:10px;background:#1d4ed8;color:white;border-radius:8px;font-weight:700;text-decoration:none;text-align:center}
+    .marker-node{width:22px;height:22px;background:var(--success);border:4px solid white;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.2);animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse {0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.6)}50%{box-shadow:0 0 0 8px rgba(16,185,129,0)}}
+    .marker-gateway{width:20px;height:20px;background:var(--gateway);border:3px solid white;border-radius:4px;transform:rotate(45deg);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+    .hop-line{stroke:var(--gateway);stroke-width:2;stroke-dasharray:8,4;fill:none;opacity:0.6;animation:dash 20s linear infinite}
+    @keyframes dash{to{stroke-dashoffset:-1000}}
+
+    /* Gateway Icon Styles */
+    .gateway-icon {
+      background-color: var(--gateway);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .gateway-marker {
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <div class="hud-left">
+    <div class="badge" id="nodesBadge">Nodes: –</div>
+    <div class="badge" id="gatewaysBadge">Gateways: –</div>
+  </div>
+
+  <div class="hud-center">
+    <div class="badge">v0.20 Multi-Sensor</div>
+  </div>
+
+  <div class="hud-right">
+    <div class="badge" id="lastBadge">Letzte Meldung: –<small id="lastBadgeAge">—</small></div>
+    <div class="badge" id="packetBadge">Verbindungen: –<small id="packetDetail">—</small></div>
+  </div>
+
+  <script>
+    // --- Hilfsfunktionen ---
+    const NUM = x => { const n = typeof x==="number"?x:(typeof x==="string"?Number(x.replace(",",".")):NaN); return Number.isFinite(n)?n:null; };
+    const isValidISO = ts => !!ts && typeof ts==="string" && Number.isFinite(Date.parse(ts));
+    const formatDE = ts => isValidISO(ts)?new Date(ts).toLocaleString("de-DE",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}):"—";
+    const relAge = ts => { if(!isValidISO(ts))return"—"; const m=Math.floor((Date.now()-Date.parse(ts))/60000); if(m<0)return"0 min"; if(m<60)return`${m} min`; const h=Math.floor(m/60),r=m%60; return`${h} h ${r} min`; };
+    const deNum=(n,d=1)=>(typeof n==="number"&&Number.isFinite(n))?n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d}):"–";
+    const normId=id=>String(id||"").trim().replace(/_/g,"-").replace(/schacht[-_]?audorf/i,"Schacht-Audorf");
+    const isSoilNode=id=>/(^|[-_])se01(lb)?$/i.test(String(id||""));
+    const getTemperature=(f,s)=>s?NUM(f.temp_SOIL):NUM(f.TempC_SHT)??NUM(f.TempC_SHT31);
+    const getHumidity=(f,s)=>s?NUM(f.water_SOIL):NUM(f.Hum_SHT)??NUM(f.Hum_SHT31);
+    const getTempLabel=s=>s?"Bodentemperatur":"Temperatur";
+    const getHumLabel=s=>s?"Bodenfeuchte":"Luftfeuchte";
+
+    function getLocationKey(id){return String(id).replace(/[-_](s31lb|se01lb|llms01)$/i,'').toLowerCase();}
+    function isMultiSensorLocation(id){return /schacht[_-]?audorf/i.test(String(id));}
+    function findRelatedNodes(nodes,baseId){const key=getLocationKey(baseId);return nodes.filter(n=>getLocationKey(n.id)===key);}
+
+    // Multisensor
+
+    function multiSensorPopupHtml(nodes) {
+      const first = nodes[0];
+      const f = first.fields || {};
       const title = normId(first.id).split('-')[0] + '-' + normId(first.id).split('-')[1];
 
       const lastTs = first.ts ? formatDE(first.ts) : "—";
       const gwCount = f.gateway_count || 0;
       const batAvg = deNum(
-        nodes.map(n => NUM(n.fields?.BatV)).filter(v => v).reduce((a,b)=>a+b,0) / nodes.length,
-      2
-    );
-
+        nodes.map(n => NUM(n.fields?.BatV)).filter(v => v).reduce((a,b)=>a+b,0) / nodes.length,2);
     let html = `<div class="popup">`;
-    html += `<h3>${title} 
+    html += `<h3>${title} <span class="status-badge status-excellent">${ 
     html += `<h3>${title} <span class="status-badge status-excellent">${gwCount} Gateways</span></h3>`;
     html += `<div class="row"><span class="label">Letzte Meldung</span><span class="value">${lastTs}</span></div>`;
     html += `<div class="row"><span class="label">Durchschnittliche Batteriekapazität</span><span class="value">${batAvg} V</span></div>`;
