@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>WALDSENSOR.SH – Sensordetails</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="version" content="v0.14" />
+  <meta name="version" content="v0.15" />
   <style>
     :root{
       --ink:#0f172a;--muted:#64748b;--bg:#f6f8fa;--card:#fff;
@@ -37,7 +37,7 @@
 <body>
 <header>
   <a href="../v2.html">&larr; Zur Karte</a>
-  <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.14</small></div>
+  <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.15</small></div>
 </header>
 
 <main>
@@ -103,7 +103,7 @@ const nodeIdRaw=qp.get("node")||"unknown";
 const nodeId=nodeIdRaw.toLowerCase();
 setTxt("nodeName",nodeIdRaw);
 
-// robustes Laden der Latest-Daten
+// Daten laden (enriched -> fallback normal)
 async function fetchJson(){
   const urls=["/data/v2/latest/all_enriched.json","/data/v2/latest/all.json"];
   for(const u of urls){
@@ -119,7 +119,7 @@ async function fetchJson(){
 const getId=o=>(o?.id||o?.device_id||"").toLowerCase();
 const pick=(o,...keys)=>{for(const k of keys)if(o&&o[k]!=null)return o[k];return null;};
 
-// 🧩 erweitertes Mapping für alle Varianten
+// erweitertes Field-Mapping
 function extractValues(n){
   const f=n.fields||n;
   return{
@@ -134,48 +134,63 @@ function extractValues(n){
   };
 }
 
+// Typ-Erkennung für Einzelsensoren
+function guessType(id, vals){
+  id = (id||"").toLowerCase();
+  if (/llms01$/.test(id)) return "leaf";
+  if (/s31lb$|sn50|lsn50/.test(id)) return "air";
+  if (/se01lb$/.test(id)) return "soil";
+  // Fallback nach Feldern
+  if (vals.soilTemp!=null || vals.soilWater!=null) return "soil";
+  if (vals.leafTemp!=null || vals.leafMoist!=null) return "leaf";
+  return "air";
+}
+
 // --- Rendering ---
 (async()=>{
  try{
-   const {data,url}=await fetchJson();
+   const {data}=await fetchJson();
+
    const isMulti=/schacht[_-]?audorf/.test(nodeId);
-   const nodes=data.filter(o=>getId(o).includes(nodeId));
-
-   if(nodes.length===0)throw new Error("kein Node gefunden");
-
    const values={leaf:{},air:{},soil:{}};
-   const byId=id=>data.find(o=>getId(o)===id);
 
    if(isMulti){
-     const leaf=byId("schacht_audorf_llms01"), air=byId("schacht_audorf_s31lb"), soil=byId("schacht_audorf_se01lb");
+     const byId=id=>data.find(o=>getId(o)===id);
+     const leaf=byId("schacht_audorf_llms01");
+     const air =byId("schacht_audorf_s31lb");
+     const soil=byId("schacht_audorf_se01lb");
      if(leaf){$("secLeaf").style.display="";Object.assign(values.leaf,extractValues(leaf));}
-     if(air){$("secAir").style.display="";Object.assign(values.air,extractValues(air));}
+     if(air ){ $("secAir").style.display=""; Object.assign(values.air ,extractValues(air ));}
      if(soil){$("secSoil").style.display="";Object.assign(values.soil,extractValues(soil));}
      $("secWx").style.display="";
    }else{
-     const single=nodes[0];
-     Object.assign(values.air,extractValues(single));
-     $("secAir").style.display="";
+     const node = data.find(o=>getId(o)===nodeId) || data.find(o=>getId(o).includes(nodeId));
+     if(node){
+       const v = extractValues(node);
+       const type = guessType(getId(node), v);
+       if(type==="leaf"){ $("secLeaf").style.display=""; Object.assign(values.leaf,v); }
+       else if(type==="soil"){ $("secSoil").style.display=""; Object.assign(values.soil,v); }
+       else { $("secAir").style.display=""; Object.assign(values.air,v); }
+     }
    }
 
-   const latestTs=[values.leaf.ts,values.air.ts,values.soil.ts].filter(Boolean).sort((a,b)=>new Date(b)-new Date(a))[0];
+   const latestTs=[values.leaf.ts,values.air.ts,values.soil.ts]
+     .filter(Boolean).sort((a,b)=>new Date(b)-new Date(a))[0];
    if(latestTs)setTxt("stand","Stand: "+fmtDate(latestTs));
 
-   setTxt("leafTemp",fmtNum(values.leaf.leafTemp,1," °C"));
+   setTxt("leafTemp", fmtNum(values.leaf.leafTemp,1," °C"));
    setTxt("leafMoist",fmtNum(values.leaf.leafMoist,1," %"));
-   setTxt("leafBat",fmtNum(values.leaf.bat,2," V"));
-   setTxt("airTemp",fmtNum(values.air.airTemp,1," °C"));
-   setTxt("airHum",fmtNum(values.air.airHum,1," %"));
-   setTxt("airBat",fmtNum(values.air.bat,2," V"));
-   setTxt("soilTemp",fmtNum(values.soil.soilTemp,1," °C"));
+   setTxt("leafBat",  fmtNum(values.leaf.bat,2," V"));
+   setTxt("airTemp",  fmtNum(values.air.airTemp,1," °C"));
+   setTxt("airHum",   fmtNum(values.air.airHum,1," %"));
+   setTxt("airBat",   fmtNum(values.air.bat,2," V"));
+   setTxt("soilTemp", fmtNum(values.soil.soilTemp,1," °C"));
    setTxt("soilWater",fmtNum(values.soil.soilWater,1," %"));
-   setTxt("soilBat",fmtNum(values.soil.bat,2," V"));
- }catch(e){
-   console.warn(e);
- }
+   setTxt("soilBat",  fmtNum(values.soil.bat,2," V"));
+ }catch(e){ console.warn(e); }
 })();
 
-// --- Netzstats ---
+// --- Netzstats (unverändert zum letzten Stand) ---
 const netUrl=`/data/v2/net/netstats_${encodeURIComponent(nodeIdRaw)}.json`;
 setTxt("netSource","Quelle: "+netUrl);
 fetch(netUrl,{cache:"no-store"})
