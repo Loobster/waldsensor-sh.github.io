@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>WALDSENSOR.SH – Sensordetails</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="version" content="v0.17" />
+  <meta name="version" content="v0.18" />
   <style>
     :root{
       --ink:#0f172a; --muted:#64748b; --bg:#f6f8fa;
@@ -19,13 +19,29 @@
     .pill{display:inline-block;background:#dff6e6;color:#135e3d;padding:.25em .8em;border-radius:999px;font-size:.9em;margin-bottom:.6em}
     .section{border-radius:10px;padding:.8em 1em;margin:.6em 0;}
     .section h4{margin:.2em 0 .6em;font-size:1.05em}
-    .tiles{display:flex;gap:12px;flex-wrap:wrap}
-    .tile{flex:1 1 30%;background:#f4f6f8;border-radius:8px;padding:.7em;text-align:center;min-width:110px}
+    /* korrigierte tile-Zeilen */
+    .tiles{
+      display:flex;
+      gap:12px;
+      flex-wrap:nowrap;              /* Kein automatischer Umbruch */
+      justify-content:space-between; /* Gleiche Abstände */
+    }
+    .tile{
+      flex:1;
+      background:#f4f6f8;
+      border-radius:8px;
+      padding:.7em;
+      text-align:center;
+      min-width:90px;                /* schmal genug für 3 nebeneinander */
+    }
+    @media(max-width:400px){
+      .tiles{flex-wrap:wrap;}        /* Nur auf sehr schmalen Geräten */
+    }
     .tile h3{margin:0 0 .25em;font-size:.85em;color:#4b5563;font-weight:600}
     .tile p{margin:0;font-size:1.1em;font-weight:800}
     .small-note{font-size:.85em;color:#6b7280}
     footer{text-align:center;padding:1em;color:#666;font-size:.9em}
-    /* Neues Layout: max. 3 Sensorblöcke pro Spalte */
+    /* Grid: max. 3 Sensorblöcke pro Spalte */
     #sensorSections{
       display:grid;
       grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
@@ -37,11 +53,8 @@
 <body>
 <header>
   <a href="../v2.html">&larr; Zur Karte</a>
-  <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.17</small></div>
+  <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.18</small></div>
 </header>
-    
-
-
 
 <main>
   <div class="card" id="sensorCard">
@@ -101,11 +114,11 @@ function detectType(id,fields){
   return "other";
 }
 
-// Farben pro Typ
+// Farben + Titel
 const colors={leaf:"var(--leaf)",air:"var(--air)",soil:"var(--soil)",other:"var(--other)"};
 const titles={leaf:"🌿 Blatt-Sensor",air:"🌡️ Luft-Sensor",soil:"🌱 Boden-Sensor",other:"🧩 Sonstige Sensorik"};
 
-// Render dynamisch
+// Rendering
 (async()=>{
   try{
     const all=await fetchJson();
@@ -130,7 +143,6 @@ const titles={leaf:"🌿 Blatt-Sensor",air:"🌡️ Luft-Sensor",soil:"🌱 Bode
     container.innerHTML="";
     const typesOrder=["leaf","air","soil","other"]; // sortiert anzeigen
 
-    let count=0;
     for(const typ of typesOrder){
       const arr=grouped[typ];
       if(!arr) continue;
@@ -147,7 +159,6 @@ const titles={leaf:"🌿 Blatt-Sensor",air:"🌡️ Luft-Sensor",soil:"🌱 Bode
             <div class="tile"><h3>Batterie</h3><p>${fmtNum(vals.bat,2," V")}</p></div>
           </div>`;
         container.appendChild(sec);
-        count++;
       }
     }
   }catch(e){console.error(e);}
