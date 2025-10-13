@@ -1,118 +1,112 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="version" content="v2.0-sensorblock" />
-  <title>WALDSENSOR.SH – Sensorblock</title>
-  <link rel="stylesheet" href="../css/v2.css">
-  <style>
-    .sensor-card {
-      background: var(--card);
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-      padding: 1em;
-      margin-bottom: 1em;
-    }
-    .section {
-      border-radius: 10px;
-      padding: .8em 1em;
-      margin: .6em 0;
-    }
-    .leaf { background: var(--leaf); }
-    .air { background: var(--air); }
-    .soil { background: var(--soil); }
-    .wx { background: #eef2f7; }
-    .tiles { display: flex; gap: 10px; flex-wrap: wrap; }
-    .tile {
-      flex: 1 1 0;
-      background: var(--tile-bg);
-      border-radius: 8px;
-      padding: .6em;
-      text-align: center;
-      min-width: 100px;
-    }
-    .tile h3 { font-size: .85em; margin: 0; color: #444; }
-    .tile p { font-weight: 700; margin: .25em 0 0; }
-    .small-note { font-size: .85em; color: #6b7280; margin-top: .4em; }
-  </style>
-</head>
-<body>
-<div class="sensor-card">
+<!-- html/v2/modules/sensor_block.html -->
+<div id="sensor-block" class="card">
   <div id="stand" class="pill">Stand: —</div>
-  <div id="sensorContainer"></div>
+
+  <div class="section leaf" id="secLeaf" style="display:none">
+    <h4>🌿 Blatt-Sensor</h4>
+    <div class="tiles">
+      <div class="tile"><h3>Temperatur</h3><p id="leafTemp">—</p></div>
+      <div class="tile"><h3>Feuchte</h3><p id="leafMoist">—</p></div>
+      <div class="tile"><h3>Batterie</h3><p id="leafBat">—</p></div>
+    </div>
+  </div>
+
+  <div class="section air" id="secAir" style="display:none">
+    <h4>🌤️ Luft-Sensor</h4>
+    <div class="tiles">
+      <div class="tile"><h3>Temperatur</h3><p id="airTemp">—</p></div>
+      <div class="tile"><h3>Feuchte</h3><p id="airHum">—</p></div>
+      <div class="tile"><h3>Batterie</h3><p id="airBat">—</p></div>
+    </div>
+  </div>
+
+  <div class="section soil" id="secSoil" style="display:none">
+    <h4>🌱 Boden-Sensor</h4>
+    <div class="tiles">
+      <div class="tile"><h3>Bodentemperatur</h3><p id="soilTemp">—</p></div>
+      <div class="tile"><h3>Bodenfeuchte</h3><p id="soilWater">—</p></div>
+      <div class="tile"><h3>Batterie</h3><p id="soilBat">—</p></div>
+    </div>
+  </div>
+
   <div class="small-note">Quelle: /data/v2/latest/all.json</div>
 </div>
 
 <script>
-const $ = id => document.getElementById(id);
-const fmtNum = (v, d=1, s="") => v==null || !isFinite(+v) ? "—" : (+v).toFixed(d).replace(".", ",") + s;
-const fmtDate = ts => { if (!ts) return "—"; const d=new Date(ts); return isNaN(d)? "—" : d.toLocaleString("de-DE"); };
-const qp = new URLSearchParams(location.search);
-const nodeId = (qp.get("node") || "unknown").toLowerCase();
+const $=id=>document.getElementById(id);
+const setTxt=(id,v)=>{const el=$(id);if(el)el.textContent=v;};
+const fmtNum=(v,d=1,s="")=>v==null||!isFinite(+v)?"—":(+v).toFixed(d).replace(".",",")+s;
+const fmtDate=ts=>{if(!ts)return"—";const d=new Date(ts);return isNaN(d)? "—":d.toLocaleString("de-DE");};
+const qp=new URLSearchParams(location.search);
+const nodeIdRaw=qp.get("node")||"unknown";
+const nodeId=nodeIdRaw.toLowerCase();
 
-(async ()=>{
-  try {
-    const resp = await fetch("/data/v2/latest/all.json?_" + Date.now(), {cache:"no-store"});
-    const data = await resp.json();
-
-    // 🔍 gemeinsame Standort-ID erkennen (z. B. schacht_audorf)
-    const baseId = nodeId.replace(/[_-]?(llms01|s31lb|se01lb|sn50v3|lsn50v2)$/,"");
-    const nodes = data.filter(o => (o.id || o.device_id || "").toLowerCase().includes(baseId));
-
-    if (!nodes.length) throw new Error("Keine passenden Sensoren gefunden");
-
-    // 📦 Container leeren
-    const cont = $("sensorContainer");
-    cont.innerHTML = "";
-
-    const types = {
-      leaf: { match:/llms/i, label:"🌿 Blatt-Sensor", cls:"leaf", fields:["Leaf_Temperature","Leaf_Moisture","BatV"], names:["Temperatur","Feuchte","Batterie"], units:["°C","%","V"] },
-      air:  { match:/s31/i,   label:"🌤 Luft-Sensor", cls:"air",  fields:["TempC_SHT31","Hum_SHT31","BatV"], names:["Temperatur","Feuchte","Batterie"], units:["°C","%","V"] },
-      soil: { match:/se01/i,  label:"🌱 Boden-Sensor", cls:"soil", fields:["temp_SOIL","water_SOIL","BatV"], names:["Bodentemperatur","Bodenfeuchte","Batterie"], units:["°C","%","V"] },
-      wx:   { match:/s2120/i, label:"⛅ Wetterstation (SenseCAP S2120)", cls:"wx", fields:[], names:[], units:[] }
-    };
-
-    let latestTs = null;
-
-    nodes.forEach(n=>{
-      const id = (n.id || n.device_id || "").toLowerCase();
-      const f = n.fields || n;
-      let type = null;
-      for (const [k,v] of Object.entries(types)) if (v.match.test(id)) type = v;
-      if (!type) return;
-
-      const section = document.createElement("div");
-      section.className = "section " + type.cls;
-      const h = document.createElement("h4");
-      h.textContent = type.label;
-      section.appendChild(h);
-
-      const tiles = document.createElement("div");
-      tiles.className = "tiles";
-      type.fields.forEach((key,i)=>{
-        const val = f[key];
-        const tile = document.createElement("div");
-        tile.className = "tile";
-        const h3 = document.createElement("h3");
-        h3.textContent = type.names[i];
-        const p = document.createElement("p");
-        p.textContent = fmtNum(val,1," "+type.units[i]);
-        tile.appendChild(h3); tile.appendChild(p);
-        tiles.appendChild(tile);
-      });
-      section.appendChild(tiles);
-      cont.appendChild(section);
-
-      if (f.ts && (!latestTs || new Date(f.ts) > new Date(latestTs))) latestTs = f.ts;
-    });
-
-    if (latestTs) $("stand").textContent = "Stand: " + fmtDate(latestTs);
-
-  } catch(e) {
-    console.error("Sensorblock-Fehler:", e);
-    $("sensorContainer").innerHTML = "<div class='small-note'>Keine Daten gefunden.</div>";
+// JSON laden
+async function fetchJson(){
+  const urls=["/data/v2/latest/all_enriched.json","/data/v2/latest/all.json"];
+  for(const u of urls){
+    try{
+      const r=await fetch(u+"?_="+Date.now(),{cache:"no-store"});
+      if(r.ok){
+        const data=await r.json();
+        if(Array.isArray(data)&&data.length>0)return data;
+      }
+    }catch(e){}
   }
+  return [];
+}
+
+// Hilfsfunktionen wie in v0.12
+const pick=(o,...keys)=>{for(const k of keys)if(o&&o[k]!=null)return o[k];return null;};
+const getId=o=>(o?.id||o?.device_id||"").toLowerCase();
+
+function extractValues(n){
+  const f=n.fields||n;
+  return{
+    leafTemp:pick(f,"Leaf_Temperature","leaf_temp_c"),
+    leafMoist:pick(f,"Leaf_Moisture","leaf_moist_pct"),
+    airTemp:pick(f,"TempC_SHT","TempC_SHT31","temp_c"),
+    airHum:pick(f,"Hum_SHT","Hum_SHT31","hum_pct"),
+    soilTemp:pick(f,"temp_SOIL","temp_soil_c"),
+    soilWater:pick(f,"water_SOIL","water_soil"),
+    bat:pick(f,"BatV","bat_v"),
+    ts:pick(n,"ts","ts_iso","time")
+  };
+}
+
+// Anzeige
+(async()=>{
+  const data=await fetchJson();
+  const nodes=data.filter(o=>getId(o).includes(nodeId));
+  if(nodes.length===0)return;
+
+  const values={leaf:{},air:{},soil:{}};
+  const byId=id=>data.find(o=>getId(o)===id);
+
+  // automatische Zusammenführung mehrerer Sensoren
+  const possibleTypes=["llms","s31","se01","lls","bee"];
+  for(const t of possibleTypes){
+    const m=data.find(o=>getId(o).includes(`${nodeId.split("_")[0]}_${t}`));
+    if(!m)continue;
+    const val=extractValues(m);
+    if(/llms/.test(t)){$("secLeaf").style.display="";Object.assign(values.leaf,val);}
+    if(/s31/.test(t)){$("secAir").style.display="";Object.assign(values.air,val);}
+    if(/se01/.test(t)){$("secSoil").style.display="";Object.assign(values.soil,val);}
+  }
+
+  const latestTs=[values.leaf.ts,values.air.ts,values.soil.ts].filter(Boolean).sort((a,b)=>new Date(b)-new Date(a))[0];
+  if(latestTs)setTxt("stand","Stand: "+fmtDate(latestTs));
+
+  setTxt("leafTemp",fmtNum(values.leaf.leafTemp,1," °C"));
+  setTxt("leafMoist",fmtNum(values.leaf.leafMoist,1," %"));
+  setTxt("leafBat",fmtNum(values.leaf.bat,2," V"));
+
+  setTxt("airTemp",fmtNum(values.air.airTemp,1," °C"));
+  setTxt("airHum",fmtNum(values.air.airHum,1," %"));
+  setTxt("airBat",fmtNum(values.air.bat,2," V"));
+
+  setTxt("soilTemp",fmtNum(values.soil.soilTemp,1," °C"));
+  setTxt("soilWater",fmtNum(values.soil.soilWater,1," %"));
+  setTxt("soilBat",fmtNum(values.soil.bat,2," V"));
 })();
 </script>
-</body>
-</html>
