@@ -1,181 +1,147 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <title>WALDSENSOR.SH – Sensordetails</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="version" content="v0.18" />
-  <style>
-    :root{
-      --ink:#0f172a; --muted:#64748b; --bg:#f6f8fa;
-      --card:#fff; --shadow:0 2px 6px rgba(0,0,0,.08);
-      --leaf:#e6f4ea; --air:#eaf2ff; --soil:#f7f1e6; --other:#f2f2f2;
-    }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);}
-    header{background:#004d46;color:#fff;padding:.8em 1em;display:flex;justify-content:space-between;align-items:center;font-weight:700}
-    header a{color:#fff;text-decoration:none}
-    main{display:grid;grid-template-columns:1fr 1fr;gap:1em;padding:1em}
-    .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:1em;}
-    .pill{display:inline-block;background:#dff6e6;color:#135e3d;padding:.25em .8em;border-radius:999px;font-size:.9em;margin-bottom:.6em}
-    .section{border-radius:10px;padding:.8em 1em;margin:.6em 0;}
-    .section h4{margin:.2em 0 .6em;font-size:1.05em}
-    /* korrigierte tile-Zeilen */
-    .tiles{
-      display:flex;
-      gap:12px;
-      flex-wrap:nowrap;              /* Kein automatischer Umbruch */
-      justify-content:space-between; /* Gleiche Abstände */
-    }
-    .tile{
-      flex:1;
-      background:#f4f6f8;
-      border-radius:8px;
-      padding:.7em;
-      text-align:center;
-      min-width:90px;                /* schmal genug für 3 nebeneinander */
-    }
-    @media(max-width:400px){
-      .tiles{flex-wrap:wrap;}        /* Nur auf sehr schmalen Geräten */
-    }
-    .tile h3{margin:0 0 .25em;font-size:.85em;color:#4b5563;font-weight:600}
-    .tile p{margin:0;font-size:1.1em;font-weight:800}
-    .small-note{font-size:.85em;color:#6b7280}
-    footer{text-align:center;padding:1em;color:#666;font-size:.9em}
-    /* Grid: max. 3 Sensorblöcke pro Spalte */
-    #sensorSections{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
-      gap:0.8em;
-    }
-    @media(max-width:980px){main{grid-template-columns:1fr}}
-  </style>
-</head>
-<body>
-<header>
-  <a href="../v2.html">&larr; Zur Karte</a>
-  <div>Schulwaldsensor — <span id="nodeName"></span> <small>v0.18</small></div>
-</header>
-
-<main>
-  <div class="card" id="sensorCard">
-    <div id="stand" class="pill">Stand: —</div>
-    <div id="sensorSections"></div>
-    <div class="small-note">Quelle: /data/v2/latest/all.json</div>
-  </div>
-
-  <div class="card" id="netCard">
-    <h3>Netz & Gateways</h3>
-    <p>Letzte 24 h: <span id="frames24">—</span> Uplinks</p>
-    <p>Letzter Uplink: <span id="lastUplink">—</span></p>
-    <p>Gateways: <span id="gwCount">—</span></p>
-    <p>Ø Batterie: <span id="avgBat">—</span></p>
-    <p>Bestes Signal: <span id="bestSig">—</span></p>
-    <p>ADR: <span id="adr">—</span></p>
-    <div class="small-note" id="netSource">Quelle: —</div>
-  </div>
-</main>
-
-<footer>WALDSENSOR.SH – Sensordetails</footer>
-
 <script>
-const $=id=>document.getElementById(id);
-const fmtNum=(v,d=1,s="")=>v==null||!isFinite(+v)?"—":(+v).toFixed(d).replace(".",",")+s;
-const fmtDate=ts=>!ts?"—":new Date(ts).toLocaleString("de-DE");
-const qp=new URLSearchParams(location.search);
-const nodeIdRaw=qp.get("node")||"unknown"; $("nodeName").textContent=nodeIdRaw;
+(() => {
+  // ------- Hilfen (nicht an der linken Logik rütteln) -------
+  const $ = id => document.getElementById(id);
+  const fmt = (v,d=1,s="") => (v==null || !isFinite(+v)) ? "—" : (+v).toFixed(d).replace(".",",")+s;
+  const fmtDate = ts => { if(!ts) return "—"; const d=new Date(ts); return isNaN(d)? "—" : d.toLocaleString("de-DE"); };
+  const clamp = (x,a,b)=>Math.max(a,Math.min(b,x));
 
-// Lade Daten
-async function fetchJson(){
-  const urls=["/data/v2/latest/all_enriched.json","/data/v2/latest/all.json"];
-  for(const u of urls){
-    try{const r=await fetch(u+"?_="+Date.now()); if(r.ok){const j=await r.json(); if(Array.isArray(j))return j;}}catch(e){}
-  } throw new Error("keine Daten");
-}
+  // Den Node-Namen wie in v0.18 (unverändert) aus der URL holen
+  const qp = new URLSearchParams(location.search);
+  const nodeIdRaw = qp.get("node") || "unknown";
+  const nodeId = nodeIdRaw.toLowerCase();
 
-// Sensorwerte extrahieren
-const pick=(o,...keys)=>{for(const k of keys)if(o&&o[k]!=null)return o[k];return null;};
-function extractValues(n){
-  const f=n.fields||n;
-  return{
-    temp:pick(f,"TempC_SHT","TempC_SHT31","temp_c","Leaf_Temperature","temp_SOIL"),
-    hum :pick(f,"Hum_SHT","Hum_SHT31","hum_pct","Leaf_Moisture","water_SOIL"),
-    bat :pick(f,"BatV","bat_v"),
-    ts  :pick(n,"ts","ts_iso","time")
-  };
-}
+  // ------- Netz & Gateways (per-node) -------
+  const netUrl = `/data/v2/net/netstats_${encodeURIComponent(nodeIdRaw)}.json`;
+  $("netSource").textContent = "Quelle: " + netUrl;
 
-// Kategorie anhand Feldnamen oder IDs
-function detectType(id,fields){
-  id=id.toLowerCase();
-  const f=Object.keys(fields||{}).join(" ").toLowerCase();
-  if(/leaf|llms/.test(id+f)) return "leaf";
-  if(/sht|air|s31|sn50/.test(id+f)) return "air";
-  if(/soil|se01|water/.test(id+f)) return "soil";
-  return "other";
-}
+  fetch(netUrl, { cache:"no-store" })
+    .then(r => r.ok ? r.json() : null)
+    .then(ns => {
+      if(!ns) return;
 
-// Farben + Titel
-const colors={leaf:"var(--leaf)",air:"var(--air)",soil:"var(--soil)",other:"var(--other)"};
-const titles={leaf:"🌿 Blatt-Sensor",air:"🌡️ Luft-Sensor",soil:"🌱 Boden-Sensor",other:"🧩 Sonstige Sensorik"};
+      // Uplinks (24h) + Verlustquote Badge
+      const frames = Number(ns.frames24 ?? ns.uplinks24 ?? 0);
+      $("u24").textContent = isFinite(frames) ? frames : "—";
 
-// Rendering
-(async()=>{
-  try{
-    const all=await fetchJson();
-    const base=nodeIdRaw.toLowerCase().split(/[_-]/)[0];  // Standortbasis
-    const nodes=all.filter(o=>o.id?.toLowerCase().startsWith(base));
-    if(nodes.length===0) throw new Error("kein Node gefunden");
+      const loss = clamp( (72 - (isFinite(frames)?frames:0)) / 72 * 100, 0, 100);
+      const badge = $("lossBadge");
+      badge.textContent = `${Math.round(loss)} %`;
+      badge.classList.remove("loss-ok","loss-mid","loss-bad");
+      if (loss < 10)      badge.classList.add("loss-ok");
+      else if (loss <30)  badge.classList.add("loss-mid");
+      else                badge.classList.add("loss-bad");
 
-    // Gruppiere nach Typ
-    const grouped={};
-    for(const n of nodes){
-      const t=detectType(n.id,n.fields);
-      grouped[t]=grouped[t]||[];
-      grouped[t].push(n);
-    }
+      // Letzter Uplink
+      $("lastUplink").textContent = fmtDate(ns.last_ts || ns.lastTs || ns.last);
 
-    // Zeit bestimmen
-    const latestTs=nodes.map(n=>extractValues(n).ts).filter(Boolean).sort((a,b)=>new Date(b)-new Date(a))[0];
-    if(latestTs)$("stand").textContent="Stand: "+fmtDate(latestTs);
+      // Gateways (Zahl oder Array)
+      let gw = "—";
+      if (typeof ns.gateways === "number") gw = ns.gateways;
+      else if (Array.isArray(ns.gateways)) gw = ns.gateways.length;
+      $("gwCount").textContent = gw;
 
-    // Rendering
-    const container=$("sensorSections");
-    container.innerHTML="";
-    const typesOrder=["leaf","air","soil","other"]; // sortiert anzeigen
+      // Ø Batterie
+      $("avgBat").textContent = fmt(ns.avg_bat_v ?? ns.avg_bat ?? ns.bat_v, 2, " V");
 
-    for(const typ of typesOrder){
-      const arr=grouped[typ];
-      if(!arr) continue;
-      for(const n of arr){
-        const vals=extractValues(n);
-        const sec=document.createElement("div");
-        sec.className="section";
-        sec.style.background=colors[typ]||"var(--other)";
-        sec.innerHTML=`
-          <h4>${titles[typ]||typ}</h4>
-          <div class="tiles">
-            <div class="tile"><h3>Temperatur</h3><p>${fmtNum(vals.temp,1," °C")}</p></div>
-            <div class="tile"><h3>Feuchte</h3><p>${fmtNum(vals.hum,1," %")}</p></div>
-            <div class="tile"><h3>Batterie</h3><p>${fmtNum(vals.bat,2," V")}</p></div>
-          </div>`;
-        container.appendChild(sec);
+      // Bestes Signal
+      const best = ns.best || {};
+      const rssi = (best.rssi ?? ns.best_rssi);
+      const snr  = (best.snr  ?? ns.best_snr);
+      let bestTxt = "—";
+      if (rssi!=null || snr!=null) {
+        const r = (rssi!=null) ? `${rssi} dBm` : "–";
+        const s = (snr !=null) ? `${snr} dB`  : "–";
+        bestTxt = `${r} / ${s}`;
       }
-    }
-  }catch(e){console.error(e);}
-})();
+      $("bestSig").textContent = bestTxt;
 
-// Netzdaten
-const netUrl=`/data/v2/net/netstats_${encodeURIComponent(nodeIdRaw)}.json`;
-$("netSource").textContent="Quelle: "+netUrl;
-fetch(netUrl).then(r=>r.ok?r.json():null).then(ns=>{
-  if(!ns)return;
-  if(ns.frames24!=null)$("frames24").textContent=ns.frames24;
-  $("lastUplink").textContent=fmtDate(ns.last_ts);
-  if(typeof ns.gateways==="number")$("gwCount").textContent=ns.gateways;
-  if(ns.best)$("bestSig").textContent=`${ns.best.rssi??"—"} dBm / ${ns.best.snr??"—"} dB`;
-  if(ns.adr!=null)$("adr").textContent=String(ns.adr);
-  if(ns.avg_bat_v!=null)$("avgBat").textContent=fmtNum(ns.avg_bat_v,2," V");
-});
+      // ADR
+      const adr = (ns.adr!=null) ? String(ns.adr) :
+                  (ns.adr_enabled!=null) ? String(ns.adr_enabled) : "—";
+      $("adr").textContent = adr;
+
+      // Punkte für diesen Node berechnen (gleich wie Liga)
+      const scoreSelf = computeScore({
+        frames24: frames,
+        rssi: rssi, snr: snr,
+        bat: (ns.avg_bat_v ?? ns.bat_v)
+      });
+      $("ligaScore").textContent = `${scoreSelf} Punkte`;
+    })
+    .catch(()=>{ /* still ok */ });
+
+  // ------- Liga / Landesvergleich (Top-10) -------
+  const allUrl = "/data/v2/net/netstats_all.json";
+  $("ligaSource").textContent = "Quelle: " + allUrl;
+
+  fetch(allUrl, { cache:"no-store" })
+    .then(r => r.ok ? r.json() : null)
+    .then(all => {
+      if(!all || !Array.isArray(all)) return;
+
+      // Robustes Mapping jedes Eintrags
+      const rows = all.map(x => {
+        const id = (x.id || x.device_id || x.node || "").toLowerCase();
+        const frames24 = Number(x.frames24 ?? x.uplinks24 ?? 0);
+        const rssi = (x.best?.rssi ?? x.rssi ?? x.best_rssi);
+        const snr  = (x.best?.snr  ?? x.snr  ?? x.best_snr);
+        const bat  = (x.avg_bat_v ?? x.bat_v ?? x.avg_battery);
+        return { id, name: (x.name || x.id || x.device_id || id), frames24, rssi, snr, bat };
+      });
+
+      // Scoring & Sortierung
+      rows.forEach(r => r.score = computeScore(r));
+      rows.sort((a,b) => b.score - a.score);
+
+      // Platz meines Nodes + Top-10
+      const total = rows.length;
+      const place = Math.max(1, rows.findIndex(r => r.id.includes(nodeId)) + 1);
+      $("ligaPlace").textContent = `${place} / ${total}`;
+
+      const top = rows.slice(0,10);
+      const ol = $("ligaTop");
+      ol.innerHTML = "";
+      top.forEach((r, i) => {
+        const li = document.createElement("li");
+        const isMe = r.id.includes(nodeId);
+        li.className = isMe ? "liga-me" : "";
+        const details = [];
+        if (isFinite(r.frames24)) details.push(`${r.frames24}/72`);
+        if (r.rssi!=null) details.push(`RSSI ${r.rssi} dBm`);
+        if (r.snr !=null) details.push(`SNR ${r.snr} dB`);
+        if (r.bat !=null) details.push(`${r.bat.toFixed ? r.bat.toFixed(2) : r.bat} V`);
+        li.textContent = `${i+1}. ${r.name} — ${r.score} Pkt (${details.join(", ")})`;
+        ol.appendChild(li);
+      });
+    })
+    .catch(()=>{ /* still ok */ });
+
+  // ------- Scoring (70 % Tx, 20 % Signal, 10 % Batterie) -------
+  function computeScore({frames24=0,rssi=null,snr=null,bat=null}){
+    // Übertragung (0..100)
+    const tx = clamp(frames24/72, 0, 1) * 100;
+
+    // Signal: RSSI (-130..-60) & SNR (-20..10) -> 0..1
+    let sigParts = [];
+    if (rssi!=null && isFinite(+rssi)) {
+      const r = clamp((+rssi - (-130)) / ( -60 - (-130) ), 0, 1); // -130 schlechter -> 0, -60 gut -> 1
+      sigParts.push(r);
+    }
+    if (snr!=null && isFinite(+snr)) {
+      const s = clamp((+snr - (-20)) / ( 10 - (-20) ), 0, 1); // -20 schlecht -> 0, 10 gut -> 1
+      sigParts.push(s);
+    }
+    const sig = (sigParts.length ? (sigParts.reduce((a,b)=>a+b,0)/sigParts.length) : 0) * 100;
+
+    // Batterie: 2.8..3.8 V -> 0..1
+    let batPct = 0;
+    if (bat!=null && isFinite(+bat)) {
+      batPct = clamp((+bat - 2.8) / (3.8 - 2.8), 0, 1) * 100;
+    }
+
+    const total = 0.7*tx + 0.2*sig + 0.1*batPct;
+    return Math.round(total);
+  }
+})();
 </script>
-</body>
-</html>
