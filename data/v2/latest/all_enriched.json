@@ -143,22 +143,22 @@
   },
   {
     "id": "kellinghusen_lsn50v2",
-    "ts": "2025-10-14T13:14:36.261Z",
+    "ts": "2025-10-14T13:34:35.735Z",
     "fields": {
       "lat": 53.95655,
       "lon": 9.71426,
       "alt": 18.0,
-      "BatV": 3.414,
-      "TempC_SHT": 24.1,
-      "Hum_SHT": 55.8,
-      "gateway_ids": "lora-gateway-fahrdorf,sh-netz-5-1029",
+      "BatV": 3.412,
+      "TempC_SHT": 24.0,
+      "Hum_SHT": 56.0,
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
       "gateway_count": 2.0,
       "gw1_id": "lora-gateway-fahrdorf",
-      "gw2_id": "sh-netz-5-1029",
-      "rssi1": -99.0,
-      "rssi2": -118.0,
-      "snr1": 6.8,
-      "snr2": -7.0,
+      "gw2_id": "laird-lorawan-gw",
+      "rssi1": -105.0,
+      "rssi2": -43.0,
+      "snr1": 9.5,
+      "snr2": 10.8,
       "sf": 7.0,
       "bw": 125000.0
     },
@@ -168,6 +168,12 @@
         "name": "lora-gateway-fahrdorf",
         "lat": 54.503115,
         "lon": 9.587998
+      },
+      {
+        "id": "laird-lorawan-gw",
+        "name": "laird-lorawan-gw",
+        "lat": 54.501576,
+        "lon": 9.58695
       }
     ]
   },
