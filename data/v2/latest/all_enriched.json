@@ -1,38 +1,23 @@
 [
   {
     "id": "bredstedt_s31lb",
-    "ts": "2025-10-14T13:53:03.145Z",
+    "ts": "2025-10-14T14:13:02.945Z",
     "fields": {
       "lat": 54.64988,
       "lon": 8.955,
       "alt": 18.0,
-      "BatV": 3.612,
+      "BatV": 3.606,
       "TempC_SHT": 13.7,
-      "Hum_SHT": 97.4,
-      "gateway_ids": "eui-00007076ff031358,eui-00007076ff031372,eui-7076ff0056070bb4",
-      "gateway_count": 3.0,
-      "gw1_id": "eui-00007076ff031358",
-      "gw2_id": "eui-00007076ff031372",
-      "rssi1": -120.0,
-      "rssi2": -102.0,
-      "snr1": -7.8,
-      "snr2": 9.0,
+      "Hum_SHT": 97.7,
+      "gateway_ids": "eui-00007076ff031372",
+      "gateway_count": 1.0,
+      "gw1_id": "eui-00007076ff031372",
+      "rssi1": -100.0,
+      "snr1": 8.5,
       "sf": 7.0,
       "bw": 125000.0
     },
     "gateway_details": [
-      {
-        "id": "eui-00007076ff031358",
-        "name": "eui-00007076ff031358",
-        "lat": 54.706596,
-        "lon": 9.048604
-      },
-      {
-        "id": "eui-7076ff0056070bb4",
-        "name": "eui-7076ff0056070bb4",
-        "lat": 54.67984,
-        "lon": 8.935159
-      },
       {
         "id": "eui-00007076ff031372",
         "name": "eui-00007076ff031372",
@@ -347,9 +332,9 @@
   },
   {
     "id": "test3",
-    "ts": "2025-10-14T13:53:01.662Z",
+    "ts": "2025-10-14T14:13:01.434Z",
     "fields": {
-      "BatV": 3.636,
+      "BatV": 3.642,
       "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
       "gateway_count": 2.0,
       "gw1_id": "lora-gateway-fahrdorf",
@@ -357,7 +342,7 @@
       "rssi1": -100.0,
       "rssi2": -43.0,
       "snr1": 7.2,
-      "snr2": 8.0,
+      "snr2": 7.5,
       "sf": 7.0,
       "bw": 125000.0
     },
@@ -378,20 +363,20 @@
   },
   {
     "id": "wacken",
-    "ts": "2025-10-14T13:50:18.812Z",
+    "ts": "2025-10-14T14:10:18.582Z",
     "fields": {
       "lat": 54.02755,
       "lon": 9.37503,
       "alt": 18.0,
-      "BatV": 3.66,
-      "gateway_ids": "laird-lorawan-gw,lora-gateway-fahrdorf",
+      "BatV": 3.654,
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw",
       "gateway_count": 2.0,
-      "gw1_id": "laird-lorawan-gw",
-      "gw2_id": "lora-gateway-fahrdorf",
-      "rssi1": -47.0,
-      "rssi2": -89.0,
-      "snr1": 7.0,
-      "snr2": 6.8,
+      "gw1_id": "lora-gateway-fahrdorf",
+      "gw2_id": "laird-lorawan-gw",
+      "rssi1": -90.0,
+      "rssi2": -46.0,
+      "snr1": 10.2,
+      "snr2": 9.8,
       "sf": 7.0,
       "bw": 125000.0
     },
