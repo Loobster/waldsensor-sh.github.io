@@ -28,26 +28,32 @@
   },
   {
     "id": "bredstedt_se01lb",
-    "ts": "2025-10-15T03:37:57.94Z",
+    "ts": "2025-10-15T03:57:57.692Z",
     "fields": {
       "lat": 54.64988,
       "lon": 8.957,
       "alt": 18.0,
       "BatV": 3.326,
       "temp_SOIL": 12.31,
-      "water_SOIL": 15.79,
-      "gateway_ids": "eui-00007076ff031372,sh-netz-5-1022,sh-netz-5-1016",
-      "gateway_count": 3.0,
-      "gw1_id": "eui-00007076ff031372",
-      "gw2_id": "sh-netz-5-1022",
-      "rssi1": -120.0,
-      "rssi2": -119.0,
-      "snr1": -5.2,
-      "snr2": -4.8,
+      "water_SOIL": 15.8,
+      "gateway_ids": "eui-7076ff0056070bb4,eui-00007076ff031372",
+      "gateway_count": 2.0,
+      "gw1_id": "eui-7076ff0056070bb4",
+      "gw2_id": "eui-00007076ff031372",
+      "rssi1": -111.0,
+      "rssi2": -110.0,
+      "snr1": 6.2,
+      "snr2": 6.5,
       "sf": 7.0,
       "bw": 125000.0
     },
     "gateway_details": [
+      {
+        "id": "eui-7076ff0056070bb4",
+        "name": "eui-7076ff0056070bb4",
+        "lat": 54.67984,
+        "lon": 8.935159
+      },
       {
         "id": "eui-00007076ff031372",
         "name": "eui-00007076ff031372",
@@ -128,7 +134,7 @@
   },
   {
     "id": "kellinghusen_lsn50v2",
-    "ts": "2025-10-15T03:34:36.345Z",
+    "ts": "2025-10-15T03:54:36.352Z",
     "fields": {
       "lat": 53.95655,
       "lon": 9.71426,
@@ -140,9 +146,9 @@
       "gateway_count": 2.0,
       "gw1_id": "lora-gateway-fahrdorf",
       "gw2_id": "laird-lorawan-gw",
-      "rssi1": -105.0,
-      "rssi2": -42.0,
-      "snr1": 8.0,
+      "rssi1": -111.0,
+      "rssi2": -40.0,
+      "snr1": 3.8,
       "snr2": 9.5,
       "sf": 7.0,
       "bw": 125000.0
