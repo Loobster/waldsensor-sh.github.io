@@ -64,23 +64,32 @@
   },
   {
     "id": "fahrdorf",
-    "ts": "2025-10-15T04:39:17.167Z",
+    "ts": "2025-10-15T04:59:16.94Z",
     "fields": {
       "lat": 54.50158,
       "lon": 9.5869,
       "alt": 5.0,
       "BatV": 3.582,
-      "TempC_SHT": 10.8,
+      "TempC_SHT": 11.0,
       "Hum_SHT": 99.8,
-      "gateway_ids": "laird-lorawan-gw",
-      "gateway_count": 1.0,
-      "gw1_id": "laird-lorawan-gw",
-      "rssi1": -76.0,
-      "snr1": 9.5,
+      "gateway_ids": "lora-gateway-fahrdorf,laird-lorawan-gw,eui-7076ff0056070bc0",
+      "gateway_count": 3.0,
+      "gw1_id": "lora-gateway-fahrdorf",
+      "gw2_id": "laird-lorawan-gw",
+      "rssi1": -99.0,
+      "rssi2": -75.0,
+      "snr1": 9.2,
+      "snr2": 10.0,
       "sf": 7.0,
       "bw": 125000.0
     },
     "gateway_details": [
+      {
+        "id": "lora-gateway-fahrdorf",
+        "name": "lora-gateway-fahrdorf",
+        "lat": 54.503115,
+        "lon": 9.587998
+      },
       {
         "id": "laird-lorawan-gw",
         "name": "laird-lorawan-gw",
@@ -161,7 +170,7 @@
   },
   {
     "id": "neumuenstertl",
-    "ts": "2025-10-15T04:22:52.425Z",
+    "ts": "2025-10-15T05:02:51.859Z",
     "fields": {
       "lat": 54.07586,
       "lon": 9.98926,
@@ -171,8 +180,8 @@
       "gateway_ids": "eui-7076ff0056070700",
       "gateway_count": 1.0,
       "gw1_id": "eui-7076ff0056070700",
-      "rssi1": -112.0,
-      "snr1": 3.0,
+      "rssi1": -103.0,
+      "snr1": 2.0,
       "sf": 7.0,
       "bw": 125000.0
     },
