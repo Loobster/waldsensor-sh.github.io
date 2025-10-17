@@ -1,120 +1,146 @@
 [
   {
-    "id": "bredstedt_s31lb",
-    "ts": "2025-10-16T09:12:36.535Z",
+    "id": "waldsensor_bredstedt_s31lb",
+    "ts": "2025-10-17T15:52:17.801Z",
     "fields": {
       "lat": 54.64988,
       "lon": 8.955,
       "alt": 18.0,
       "BatV": 3.606,
-      "TempC_SHT": 13.8,
-      "Hum_SHT": 90.5
+      "TempC_SHT": 9.2,
+      "Hum_SHT": 84.4
     }
   },
   {
-    "id": "bredstedt_se01lb",
-    "ts": "2025-10-16T09:17:37.231Z",
+    "id": "waldsensor_bredstedt_se01lb",
+    "ts": "2025-10-17T15:37:16.184Z",
     "fields": {
       "lat": 54.64988,
       "lon": 8.957,
       "alt": 18.0,
       "BatV": 3.326,
-      "temp_SOIL": 12.32,
-      "water_SOIL": 15.56
+      "TempC_SHT": null,
+      "Hum_SHT": null
     }
   },
   {
-    "id": "fahrdorf",
-    "ts": "2025-10-16T09:18:57.734Z",
+    "id": "waldsensor_fahrdorf",
+    "ts": "2025-10-17T15:38:37.233Z",
     "fields": {
       "lat": 54.50158,
       "lon": 9.5869,
       "alt": 5.0,
       "BatV": 3.582,
-      "TempC_SHT": 14.1,
-      "Hum_SHT": 85.3
+      "TempC_SHT": 10.4,
+      "Hum_SHT": 78.3
     }
   },
   {
-    "id": "kappeln",
-    "ts": "2025-10-16T09:23:47.333Z",
+    "id": "waldsensor_kappeln",
+    "ts": "2025-10-17T15:43:23.12Z",
     "fields": {
       "lat": 54.66205,
       "lon": 9.92468,
       "alt": 18.0,
-      "BatV": 3.648
+      "BatV": 3.648,
+      "TempC_SHT": null,
+      "Hum_SHT": null
     }
   },
   {
-    "id": "kellinghusen_lsn50v2",
-    "ts": "2025-10-16T09:14:36.538Z",
+    "id": "waldsensor_kellinghusen_lsn50v2",
+    "ts": "2025-10-17T15:34:36.73Z",
     "fields": {
       "lat": 53.95655,
       "lon": 9.71426,
       "alt": 18.0,
-      "BatV": 3.409,
-      "TempC_SHT": 22.7,
-      "Hum_SHT": 56.0
+      "BatV": 3.412,
+      "TempC_SHT": 23.3,
+      "Hum_SHT": 52.8
     }
   },
   {
-    "id": "schacht_audorf_llms01",
-    "ts": "2025-10-16T09:07:02.21Z",
+    "id": "waldsensor_neumuenstertl",
+    "ts": "2025-10-17T15:42:02.151Z",
+    "fields": {
+      "lat": 54.07586,
+      "lon": 9.98926,
+      "alt": null,
+      "BatV": 3.642,
+      "TempC_SHT": 20.4,
+      "Hum_SHT": 56.5
+    }
+  },
+  {
+    "id": "waldsensor_schacht_audorf_llms01",
+    "ts": "2025-10-17T15:46:58.684Z",
     "fields": {
       "lat": 54.30687,
       "lon": 9.7196,
       "alt": 18.0,
-      "BatV": 3.33,
-      "Leaf_Temperature": 13.7,
-      "Leaf_Moisture": 4.3
+      "BatV": null,
+      "TempC_SHT": null,
+      "Hum_SHT": null
     }
   },
   {
-    "id": "schacht_audorf_s31lb",
-    "ts": "2025-10-16T09:24:23.277Z",
+    "id": "waldsensor_schacht_audorf_s31lb",
+    "ts": "2025-10-17T15:44:03.683Z",
     "fields": {
       "lat": 54.30687,
       "lon": 9.7196,
       "alt": 18.0,
-      "BatV": 3.6,
-      "TempC_SHT": 13.9,
-      "Hum_SHT": 82.1
+      "BatV": 3.594,
+      "TempC_SHT": 10.3,
+      "Hum_SHT": 74.2
     }
   },
   {
-    "id": "schacht_audorf_se01lb",
-    "ts": "2025-10-16T09:24:17.747Z",
+    "id": "waldsensor_schacht_audorf_se01lb",
+    "ts": "2025-10-17T15:43:55.132Z",
     "fields": {
       "lat": 54.30687,
       "lon": 9.7196,
       "alt": 18.0,
-      "BatV": 3.564,
-      "temp_SOIL": 12.77,
-      "water_SOIL": 3.17
+      "BatV": 3.558,
+      "TempC_SHT": null,
+      "Hum_SHT": null
     }
   },
   {
-    "id": "test2",
-    "ts": "2025-10-16T09:26:32.34Z",
+    "id": "waldsensor_test2",
+    "ts": "2025-10-17T15:46:10.593Z",
     "fields": {
-      "BatV": 3.636
+      "lat": null,
+      "lon": null,
+      "alt": null,
+      "BatV": 3.636,
+      "TempC_SHT": null,
+      "Hum_SHT": null
     }
   },
   {
-    "id": "test3",
-    "ts": "2025-10-16T09:12:32.299Z",
+    "id": "waldsensor_test3",
+    "ts": "2025-10-17T15:52:11.514Z",
     "fields": {
-      "BatV": 3.636
+      "lat": null,
+      "lon": null,
+      "alt": null,
+      "BatV": 3.636,
+      "TempC_SHT": null,
+      "Hum_SHT": null
     }
   },
   {
-    "id": "wacken",
-    "ts": "2025-10-16T09:09:48.516Z",
+    "id": "waldsensor_wacken",
+    "ts": "2025-10-17T15:49:27.066Z",
     "fields": {
       "lat": 54.02755,
       "lon": 9.37503,
       "alt": 18.0,
-      "BatV": 3.654
+      "BatV": 3.66,
+      "TempC_SHT": null,
+      "Hum_SHT": null
     }
   }
 ]
