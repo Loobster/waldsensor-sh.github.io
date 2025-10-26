@@ -1,0 +1,345 @@
+<!--
+==========================================================
+ DigitalRegion Karte Schleswig-Holstein – Version 0.1 (005)
+==========================================================
+ Projekt: WALDSENSOR.SH / SmartRegion.SH
+ Projektleitung: Heinrich Rode
+ Datum: 26.10.2025
+
+ Änderungen ggü. v0_1_004:
+ - Dropdown nach Kreisen getrennt (SL-FL / NF), Kreis-Header im Menü
+ - Getrennte Overpass-Abfragen je Kreis
+ - Whitelisting nur der freigegebenen Relationen (keine „Extra“-Einträge)
+ - Schmaler Info-Banner oben mit kurzer Bedienhilfe
+
+ Alles andere unverändert (Layer-Logik, Icons, CSV, Suche).
+==========================================================
+-->
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>DigitalRegion Karte SH</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
+
+  <style>
+    html, body, #map { height: 100%; margin: 0; font-family: system-ui, sans-serif; }
+    .info-box {
+      position: absolute; z-index: 1000; background: #fff;
+      padding: 10px; border-radius: 6px; box-shadow: 0 0 10px rgba(0,0,0,.2);
+    }
+    .banner { top: 10px; left: 50%; transform: translateX(-50%); max-width: 720px; }
+    .banner small { color:#444 }
+    .area-control { top: 70px; left: 10px; width: 260px; }
+    .layer-control-container { top: 70px; right: 10px; }
+    .coord-input { bottom: 10px; right: 10px; }
+    .addr-input { bottom: 10px; left: 10px; }
+    #status-message { margin-top: 8px; font-style: italic; font-size: .9em; }
+    button { margin-top: 8px; padding: 6px 10px; width: 100%; cursor: pointer; }
+    optgroup[label] { font-weight: 700; }
+  </style>
+</head>
+
+<body>
+<div id="map"></div>
+
+<!-- Kurzer Banner oben -->
+<div class="info-box banner">
+  <b>DigitalRegion.SH – Offene IoT-Planungskarte</b><br>
+  <small>1) Kreis wählen → 2) Amt wählen. Unten links: Adresse suchen. Unten rechts: Koordinaten eingeben.
+  Rechts oben: Ebenen (Gateways, Schulen mit MINT-Profil, Schulen, Schulwälder, Feuerwehren).</small>
+</div>
+
+<!-- Auswahl -->
+<div class="info-box area-control">
+  <label for="area-select"><b>Gebiet auswählen:</b></label>
+  <select id="area-select" disabled>
+    <option value="">-- Lade Ämter / Kreise --</option>
+  </select>
+  <div id="status-message"></div>
+  <hr style="margin: 12px 0 10px;">
+  <button id="stats-selected-btn" disabled>📊 Statistik exportieren</button>
+</div>
+
+<!-- Layer rechts -->
+<div class="info-box layer-control-container" id="layer-control-container"></div>
+
+<!-- Eingaben -->
+<div class="info-box coord-input">
+  <input id="coordInput" type="text" size="25" placeholder="Koordinaten: 54.3, 10.1"/>
+</div>
+<div class="info-box addr-input">
+  <input id="addrInput" type="text" size="30" placeholder="Adresse: Kiel, Rathausplatz"/>
+</div>
+
+<!-- Datenquellen -->
+<script src="data/gateways_SH_NETZ.js"></script>
+<script src="data/mint_schulen.js"></script>
+<script src="data/schulen_SH.js"></script>
+<script src="data/schulwaelder_mit_popup.js"></script>
+<script src="data/feuerwehren.js"></script>
+
+<!-- Libs -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+<script src="https://tyrasd.github.io/osmtogeojson/osmtogeojson.js"></script>
+
+<script>
+window.onload = function () {
+  const map = L.map('map').setView([54.65, 9.0], 8);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+  const statusEl = document.getElementById('status-message');
+  const selectEl = document.getElementById('area-select');
+  let currentAreaLayer = null, searchMarker = null, gwLine = null;
+
+  // Icons (unverändert)
+  const iconPath = "icons/";
+  const customIcons = {
+    "Gateways": L.icon({ iconUrl: iconPath + "gateway.png", iconSize: [24,24], iconAnchor: [12,12] }),
+    "Schulen mit MINT-Profil": L.icon({ iconUrl: iconPath + "mintschule.png", iconSize: [28,28], iconAnchor: [14,14] }),
+    "Schulen": L.icon({ iconUrl: iconPath + "schule.png", iconSize: [26,26], iconAnchor: [13,13] }),
+    "Schulwälder": L.icon({ iconUrl: iconPath + "schulwald.png", iconSize: [28,28], iconAnchor: [14,14] }),
+    "Feuerwehren": L.icon({ iconUrl: iconPath + "feuerwehr.png", iconSize: [28,28], iconAnchor: [14,14] })
+  };
+
+  // Layer (unverändert, standardmäßig aus)
+  const dataSources = [
+    { name: "Gateways", data: (typeof gateways !== 'undefined') ? gateways : null, layer: L.markerClusterGroup() },
+    { name: "Schulen mit MINT-Profil", data: (typeof mint_schulen !== 'undefined') ? mint_schulen : null, layer: L.markerClusterGroup() },
+    { name: "Schulen", data: (typeof schulen !== 'undefined') ? schulen : null, layer: L.markerClusterGroup() },
+    { name: "Schulwälder", data: (typeof schulwaelder !== 'undefined') ? schulwaelder : null, layer: L.markerClusterGroup() },
+    { name: "Feuerwehren", data: (typeof feuerwehren !== 'undefined') ? feuerwehren : null, layer: L.markerClusterGroup() }
+  ];
+  const overlayMaps = {};
+  dataSources.forEach(s => { if (s.data) overlayMaps[s.name] = s.layer; });
+  const layerControl = L.control.layers(null, overlayMaps, { collapsed: false }).addTo(map);
+  document.getElementById('layer-control-container').appendChild(layerControl.getContainer());
+
+  // Hilfsfunktionen wie gehabt
+  function findNearestGateway(lat, lon) {
+    const gwSrc = dataSources.find(s => s.name === 'Gateways');
+    if (!gwSrc?.data?.features?.length) return null;
+    const target = turf.point([lon, lat]);
+    const gwPoints = turf.featureCollection(gwSrc.data.features.filter(f => f.geometry?.type === 'Point'));
+    if (!gwPoints.features.length) return null;
+    const nearest = turf.nearestPoint(target, gwPoints);
+    const dist = turf.distance(target, nearest, { units: 'kilometers' });
+    return { name: nearest.properties.name || nearest.properties.id, distKm: dist.toFixed(1), coords: nearest.geometry.coordinates };
+  }
+
+  function displayPoints(filterPolygon = null) {
+    dataSources.forEach(s => {
+      s.layer.clearLayers();
+      if (!s.data) return;
+      const add = [];
+      s.data.features.forEach(f => {
+        if (f.geometry?.type !== 'Point') return;
+        const [lon, lat] = f.geometry.coordinates;
+        const inside = filterPolygon ? turf.booleanPointInPolygon(turf.point([lon, lat]), filterPolygon) : true;
+        if (!inside) return;
+
+        let popup = "";
+        if (s.name === "Gateways") {
+          popup = `<b>📡 Gateway</b><br>${f.properties?.name || 'Unbenannt'}`;
+        } else {
+          const near = findNearestGateway(lat, lon);
+          const nearInfo = near ? `${near.name} (${near.distKm} km)` : 'N/A';
+          const label = s.name === "Schulen mit MINT-Profil" ? "🏫 MINT-Profil" :
+                        s.name === "Schulen" ? "🏫 Schule" :
+                        s.name === "Schulwälder" ? "🌳 Schulwald" :
+                        s.name === "Feuerwehren" ? "🚒 Feuerwehr" : "📍 Punkt";
+          popup = `<b>${label}</b><br><b>🌍</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}<br><b>📡 Nächstes GW:</b> ${nearInfo}`;
+        }
+
+        const marker = L.marker([lat, lon], { icon: customIcons[s.name] }).bindPopup(popup);
+
+        if (s.name !== "Gateways") {
+          marker.on('popupopen', () => {
+            if (gwLine) map.removeLayer(gwLine);
+            const near = findNearestGateway(lat, lon);
+            if (near) gwLine = L.polyline([[lat, lon], [near.coords[1], near.coords[0]]], { color: 'black', dashArray: '5,5' }).addTo(map);
+          });
+          marker.on('popupclose', () => { if (gwLine) map.removeLayer(gwLine); });
+        }
+
+        add.push(marker);
+      });
+      s.layer.addLayers(add);
+    });
+  }
+
+  // Whitelists (nur freigegebene Relationen)
+  const WL_SLFL = [1156160,1156153,1157846,1157540,1156155,1157847,1157799,1156159,1157850,1156156,1156150,1157849,1157848,1149288,1149297,1149296,1145350,904512];
+  const WL_NF   = [1573499,1428589,1428696,1574209,1573497,1573498,1574208,1574210,1402987,1405432,1416815,1106363];
+
+  // Datencontainers
+  const areasByName = {};     // name -> feature
+  const kreisGroups = { "Schleswig-Flensburg": [], "Nordfriesland": [] };
+
+  // Lädt einen Kreis separat und füllt Dropdown-Gruppe
+  async function loadKreis(kreisName, ids) {
+    const query = `[out:json][timeout:60];(${ids.map(id => `relation(${id});`).join("")});out body;>;out skel qt;`;
+    const res = await fetch('https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(query));
+    const json = await res.json();
+    const gj = osmtogeojson(json);
+
+    // nur administrative Grenzen (admin_level 7/8) + nur Whitelist-IDs
+    const uniq = new Map();
+    gj.features.forEach(f => {
+      const id = f?.properties?.id;
+      const ok = id && ids.includes(id) && f.properties?.type === 'boundary' && f.properties?.boundary === 'administrative';
+      if (ok && !uniq.has(id) && f.geometry) {
+        uniq.set(id, f);
+      }
+    });
+
+    // Sortiert nach Name, in Gruppenliste + globales Namensregister
+    const list = [...uniq.values()].sort((a,b) => (a.properties.name || "").localeCompare(b.properties.name || ""));
+    list.forEach(f => { kreisGroups[kreisName].push(f); areasByName[f.properties.name] = f; });
+
+    // Dropdown auffüllen (optgroup)
+    const og = document.createElement('optgroup');
+    og.label = `— ${kreisName} —`;
+    kreisGroups[kreisName].forEach(f => {
+      const opt = document.createElement('option');
+      opt.value = `amt:${f.properties.name}`;
+      opt.textContent = f.properties.name;
+      og.appendChild(opt);
+    });
+    selectEl.appendChild(og);
+  }
+
+  // Kreis-Zoom berechnen (Union der Ämter)
+  function fitToKreis(kreisName) {
+    const feats = kreisGroups[kreisName];
+    if (!feats.length) return;
+    const groupLayer = L.geoJSON(feats);
+    const b = groupLayer.getBounds();
+    groupLayer.remove();
+    if (currentAreaLayer) { map.removeLayer(currentAreaLayer); currentAreaLayer = null; }
+    map.fitBounds(b);
+  }
+
+  // Initial laden
+  (async () => {
+    statusEl.textContent = 'Lade Ämter Schleswig-Flensburg...';
+    await loadKreis("Schleswig-Flensburg", WL_SLFL);
+    statusEl.textContent = 'Lade Ämter Nordfriesland...';
+    await loadKreis("Nordfriesland", WL_NF);
+    statusEl.textContent = 'Bereit.';
+    selectEl.disabled = false;
+
+    // Beim Start: noch keine Flächen, aber Layer sind aktivierbar
+  })();
+
+  // Auswahl-Logik: Kreis-Header klicken → Kreiszoom; Amt → Flächen + Filter
+  selectEl.addEventListener('change', function() {
+    const val = this.value;
+    if (!val) { if (currentAreaLayer) { map.removeLayer(currentAreaLayer); currentAreaLayer = null; } map.setView([54.65,9.0], 8); displayPoints(null); return; }
+
+    // Wenn der User einen Kreis-Header anklickt, passiert nichts (optgroup ist nicht auswählbar).
+    // Deshalb implementieren wir Kreiszoom über Doppelklick auf die Label-Box nicht – bleibt wie bisher.
+
+    // Amt-Fall:
+    if (val.startsWith('amt:')) {
+      const name = val.substring(4);
+      const f = areasByName[name];
+      if (currentAreaLayer) map.removeLayer(currentAreaLayer);
+      currentAreaLayer = L.geoJSON(f, { style: { color:'#3388ff', weight:2, fillOpacity:0 } }).addTo(map);
+      map.fitBounds(currentAreaLayer.getBounds());
+      displayPoints(f); // Punkte innerhalb des Amts filtern
+    }
+  });
+
+  // Koordinaten-Eingabe
+  document.getElementById("coordInput").addEventListener("change", e => {
+    const parts = e.target.value.trim().split(/[,;\s]+/);
+    if (parts.length === 2) {
+      const lat = parseFloat(parts[0]), lon = parseFloat(parts[1]);
+      if (!isNaN(lat) && !isNaN(lon)) {
+        let txt = `<b>📍 Punkt</b><br><b>🌍</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}`;
+        const n = findNearestGateway(lat, lon);
+        if (n) txt += `<br>📡 Nächstes GW: ${n.name} (${n.distKm} km)`;
+        if (searchMarker) map.removeLayer(searchMarker);
+        if (gwLine) map.removeLayer(gwLine);
+        searchMarker = L.marker([lat, lon]).addTo(map).bindPopup(txt).openPopup();
+        if (n) gwLine = L.polyline([[lat, lon], [n.coords[1], n.coords[0]]], { color:'black', dashArray:'5,5' }).addTo(map);
+        map.setView([lat, lon], 13);
+      }
+    }
+  });
+
+  // Adresssuche
+  document.getElementById("addrInput").addEventListener("change", e => {
+    const q = encodeURIComponent(e.target.value.trim());
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${q}`)
+      .then(r => r.json())
+      .then(data => {
+        if (!data.length) { alert("Adresse nicht gefunden."); return; }
+        const place = data[0];
+        const lat = parseFloat(place.lat), lon = parseFloat(place.lon);
+        let txt = `<b>🔍 ${place.display_name}</b><br><b>🌍</b> ${lat.toFixed(5)}, ${lon.toFixed(5)}`;
+        const n = findNearestGateway(lat, lon);
+        if (n) txt += `<br>📡 Nächstes GW: ${n.name} (${n.distKm} km)`;
+        if (searchMarker) map.removeLayer(searchMarker);
+        if (gwLine) map.removeLayer(gwLine);
+        searchMarker = L.marker([lat, lon]).addTo(map).bindPopup(txt).openPopup();
+        if (n) gwLine = L.polyline([[lat, lon], [n.coords[1], n.coords[0]]], { color:'black', dashArray:'5,5' }).addTo(map);
+        map.setView([lat, lon], 13);
+      });
+  });
+
+  // CSV-Export (unverändert)
+  document.getElementById('stats-selected-btn').disabled = false;
+  document.getElementById('stats-selected-btn').addEventListener('click', function exportStats() {
+    const selected = selectEl.value;
+    const rows = [["Kategorie","Gesamt","<= 1 km","<= 2 km","<= 5 km","Abdeckung [%]"]];
+    const categories = ["Schulen mit MINT-Profil","Schulen","Schulwälder","Feuerwehren"];
+
+    function within(feature, polygonGeoJSON) {
+      if (!polygonGeoJSON) return true;
+      const [lon, lat] = feature.geometry.coordinates;
+      return turf.booleanPointInPolygon(turf.point([lon,lat]), polygonGeoJSON);
+    }
+
+    const poly = (selected && selected.startsWith('amt:')) ? areasByName[selected.substring(4)] : null;
+
+    function nearestKm(lat, lon) {
+      const n = findNearestGateway(lat, lon);
+      return n ? parseFloat(n.distKm) : Infinity;
+    }
+
+    categories.forEach(cat => {
+      const src = dataSources.find(s => s.name === cat);
+      if (!src?.data?.features) return;
+      const pts = src.data.features.filter(f => f.geometry?.type === 'Point' && within(f, poly));
+      const total = pts.length;
+      const counts = {1:0, 2:0, 5:0};
+      pts.forEach(f => {
+        const [lon, lat] = f.geometry.coordinates;
+        const d = nearestKm(lat, lon);
+        if (d <= 1) counts[1]++; if (d <= 2) counts[2]++; if (d <= 5) counts[5]++;
+      });
+      const abdeckung = total ? ((counts[5]/total)*100).toFixed(1)+" %" : "0.0 %";
+      rows.push([cat, total, counts[1]||0, counts[2]||0, counts[5]||0, abdeckung]);
+    });
+
+    const csv = rows.map(r => r.join(";")).join("\n");
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = selected ? `${selected.substring(4).replace(/\s+/g,"_")}_Statistik.csv` : `Gesamt_Statistik.csv`;
+    document.body.appendChild(link); link.click(); document.body.removeChild(link);
+  });
+};
+</script>
+
+</body>
+</html>
