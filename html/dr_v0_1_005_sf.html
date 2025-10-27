@@ -306,7 +306,7 @@ window.onload = function() {
     relation(1573499);relation(1428589);relation(1428696);
     relation(1574209);relation(1573497);relation(1573498);
     relation(1574208);relation(1574210);
-    relation(1402987);relation(1405432);relation(1416815);relation(1106363)
+    relation(1402987);relation(1405432);relation(1416815);relation(1106363);
   );out body;>;out skel qt;`;
 
   Promise.all([
@@ -317,6 +317,7 @@ window.onload = function() {
         const gj = osmtogeojson(slfl);
         gj.features.forEach(f => {
           if (!f.geometry) return;
+          if (f.id && !String(f.id).startsWith('relation/')) return; // ⬅️ filtert node/… & way/…
           const rawId = f.id || f.properties?.id;
           const name = f.properties?.name || f.properties?.tags?.name || (rawId ? `Relation ${rawId}` : null);
           if (name) areasByKreis["SL-FL"][name] = { geojson: f };
@@ -326,6 +327,7 @@ window.onload = function() {
         const gj = osmtogeojson(nf);
         gj.features.forEach(f => {
           if (!f.geometry) return;
+          if (f.id && !String(f.id).startsWith('relation/')) return;
           const rawId = f.id || f.properties?.id;
           const name = f.properties?.name || f.properties?.tags?.name || (rawId ? `Relation ${rawId}` : null);
           if (name) areasByKreis["NF"][name] = { geojson: f };
