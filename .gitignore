@@ -10,3 +10,8 @@ data/v2/history/*
 logs/
 build_netstats.run.*.log
 .ops/ampel_watch.log
+
+# WALDSENSOR.SH lokale Betriebsdateien
+.ops/ampel.flag
+.ops/ampel_watch.log
+.ops/*.lock
