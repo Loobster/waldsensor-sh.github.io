@@ -217,8 +217,7 @@ floor(m/60),r=m%60; return`${h} h ${r} min`; };
       <div class="row"><span class="label">Position</span><span class="value">${deNum(gw.lat,5)} / ${deNum(gw.lon,5)}</span></div></div>`;
     }
 
-    async function fetchJson(url){const bust=`_=${Date.now()}`;const u=url+(url.includes("?")?"&":"?")+bust;const r=await fetch(u,{cache:"no-store"});if(!r.ok)throw new Erro
-r(r.status);const d=await r.json();if(!Array.isArray(d)||!d.length)throw new Error("empty");return d;}
+    async function fetchJson(url){const bust=`_=${Date.now()}`;const u=url+(url.includes("?")?"&":"?")+bust;const r=await fetch(u,{cache:"no-store"});if(!r.ok)throw new Error(r.status);const d=await r.json();if(!Array.isArray(d)||!d.length)throw new Error("empty");return d;}
     const latestOfAll=n=>n.reduce((a,c)=>!isValidISO(c.ts)?a:(!a||Date.parse(c.ts)>Date.parse(a)?c.ts:a),null);
 
     const map=L.map('map',{zoomControl:true,minZoom:5}).setView([54.3,9.7],8);
