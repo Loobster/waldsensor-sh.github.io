@@ -1,8 +1,26 @@
-dr_v0_1_004_sf.html<!DOCTYPE html>
+<!--
+  Projekt: DigitalRegion.SH / WALDSENSOR.SH
+  Datei: dr_v0_1_xxx.html
+  Version: 0.1 (Oktober 2025)
+  Autor / Projektleitung: Heinrich Rode
+  Lizenz:
+    Dieses Projekt kombiniert offene Datenquellen mit eigenen Inhalten.
+    - Kartengrundlage: © OpenStreetMap-Mitwirkende, Lizenz: ODbL 1.0
+    - Bibliotheken: Leaflet (BSD-2-Clause), Turf.js (MIT), osmtogeojson (MIT)
+    - Eigene Datensätze: © WALDSENSOR.SH / DigitalRegion.SH, Lizenz: CC BY 4.0
+
+  Hinweis:
+    Die Nutzung, Vervielfältigung und Weitergabe der Anwendung ist unter Nennung
+    der Quelle ("DigitalRegion.SH / WALDSENSOR.SH – Heinrich Rode") gestattet.
+    Änderungen am Code sind mit Quellenangabe und Hinweis auf die Originalversion
+    zu dokumentieren.
+-->
+
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
-<title>DigitalRegion.SH – v0.1 (004) – SL-FL & NF</title>
+<title>DigitalRegion.SH – v0.1 (005) – SL-FL & NF</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Leaflet & MarkerCluster -->
@@ -12,13 +30,13 @@ dr_v0_1_004_sf.html<!DOCTYPE html>
 
 <style>
   :root{
-    --bg: #f8fafc;            /* sehr helles Grau */
-    --card: #f1f5f9;          /* Karten/Box-Hintergrund */
-    --border: #e2e8f0;        /* Rahmen */
-    --text: #1e293b;          /* Anthrazitblau */
-    --muted: #64748b;         /* Sekundärtext */
-    --accent: #0073b7;        /* SH-Blau für Buttons */
-    --accent-2:#1d9bef;       /* Hover */
+    --bg: #f8fafc;
+    --card: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --accent: #0073b7;
+    --accent-2:#1d9bef;
   }
   html, body, #map { height: 100%; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color: var(--text); background: var(--bg); }
   .info-box {
@@ -76,7 +94,7 @@ dr_v0_1_004_sf.html<!DOCTYPE html>
 <div id="loading-screen">
   <div class="loading-card">
     <div class="loading-title">🌍 DigitalRegion.SH</div>
-    <div class="loading-sub">Version 0.1 (004) • Projektleitung: Heinrich Rode</div>
+    <div class="loading-sub">Version 0.1 (005) • Projektleitung: Heinrich Rode</div>
     <div style="margin-bottom:10px; font-weight:600;">Initialisiere Karte …</div>
     <div class="dot"></div>
   </div>
@@ -125,7 +143,7 @@ dr_v0_1_004_sf.html<!DOCTYPE html>
   </div>
 </div>
 
-<div class="footer">DigitalRegion.SH – Version 0.1 (004) • Projektleitung: Heinrich Rode</div>
+<div class="footer">DigitalRegion.SH – Version 0.1 (005) • Projektleitung: Heinrich Rode</div>
 
 <!-- Datensätze -->
 <script src="../data/gateways_SH_NETZ.js"></script>
@@ -222,7 +240,7 @@ window.onload = function() {
         }
 
         let useIcon = icon.SCHULE;
-        if (which === 'GW') useIcon = icon.GW;
+        if (which === 'GW') useIcon = icon.GW; /* deliberately left as-is for data layers */
         else if (which === 'MINT') useIcon = icon.MINT;
         else if (which === 'SCHULE') useIcon = icon.SCHULE;
         else if (which === 'WALD') useIcon = icon.WALD;
@@ -242,24 +260,55 @@ window.onload = function() {
     addPoints((typeof feuerwehren !== 'undefined' ? feuerwehren : null), layers["Feuerwehren"], 'FW');
   }
 
-  /* Klick auf Karte → Marker + Linie zum nächsten GW */
-  let searchMarker = null, gwLine = null;
+  /* ===== Klick-Logik nur im gewählten Amt ===== */
+  let klickAktiv = false;
+  let currentAreaLayer = null;
+  let currentAreaPolygon = null;  // GeoJSON-Polygon für Prüfungen
+  let clickMarker = null;         // letzter Klickmarker (neutral)
+  let gwLine = null;              // Linie zum nächsten GW
+
+  function withinSelectedArea(lat, lon){
+    if (!klickAktiv || !currentAreaPolygon) return false;
+    const pt = turf.point([lon, lat]);
+    try { return turf.booleanPointInPolygon(pt, currentAreaPolygon); }
+    catch { return false; }
+  }
+
   function showPoint(lat, lon, title="📍 Punkt"){
+    if (!withinSelectedArea(lat, lon)) return; // außerhalb ignorieren
+
     const n = nearestGateway(lat, lon);
     let txt = `<div style="font-weight:700">${title}</div><div>🌍 ${lat.toFixed(5)}, ${lon.toFixed(5)}</div>`;
     if (n) txt += `<div>📡 Nächstes Gateway: ${n.name} (${n.distKm} km)</div>`;
 
-    if (searchMarker) map.removeLayer(searchMarker);
+    // vorherige Objekte entfernen
+    if (clickMarker) map.removeLayer(clickMarker);
     if (gwLine) map.removeLayer(gwLine);
 
-    searchMarker = L.marker([lat, lon], { icon: icon.SCHULE }).addTo(map).bindPopup(txt).openPopup();
-    if (n) gwLine = L.polyline([[lat, lon],[n.coords[1], n.coords[0]]], { color: 'black', dashArray: '5,5', opacity: .7 }).addTo(map);
-    map.setView([lat, lon], 13);
-  }
-  map.on('click', e => showPoint(e.latlng.lat, e.latlng.lng));
+    // neutraler Klickmarker (roter Punkt)
+    const neutralIcon = L.divIcon({
+      className: 'custom-click-icon',
+      html: '<div style="width:14px;height:14px;background:red;border-radius:50%;border:2px solid white;box-shadow:0 0 4px rgba(0,0,0,.5);"></div>',
+      iconSize: [16,16],
+      iconAnchor: [8,8]
+    });
 
-  /* Suche: Adresse (Nominatim) */
+    clickMarker = L.marker([lat, lon], { icon: neutralIcon }).addTo(map).bindPopup(txt).openPopup();
+
+    if (n) {
+      gwLine = L.polyline([[lat, lon],[n.coords[1], n.coords[0]]], { color:'black', dashArray:'5,5', opacity:.7 }).addTo(map);
+    }
+  }
+
+  // Karte reagiert nur, wenn klickAktiv true und Punkt im Polygon
+  map.on('click', e => {
+    if (!klickAktiv) return;
+    showPoint(e.latlng.lat, e.latlng.lng);
+  });
+
+  /* Suche: Adresse (Nominatim) – nutzt ebenfalls showPoint (respektiert Polygon) */
   function searchAddress(){
+    if (!klickAktiv) { alert("Bitte zuerst Kreis und Amt auswählen."); return; }
     const q = document.getElementById("addrInput").value.trim();
     if (!q) return;
     fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`)
@@ -267,7 +316,9 @@ window.onload = function() {
       .then(data => {
         if (!data.length) return alert("Adresse nicht gefunden.");
         const p = data[0]; const lat = parseFloat(p.lat), lon = parseFloat(p.lon);
+        if (!withinSelectedArea(lat, lon)) { alert("Adresse liegt außerhalb des gewählten Amts."); return; }
         showPoint(lat, lon, `🔍 ${p.display_name}`);
+        map.setView([lat, lon], 13);
       });
   }
   document.getElementById("addrBtn").addEventListener("click", searchAddress);
@@ -275,12 +326,15 @@ window.onload = function() {
 
   /* Suche: Koordinaten */
   function searchCoords(){
+    if (!klickAktiv) { alert("Bitte zuerst Kreis und Amt auswählen."); return; }
     const raw = document.getElementById("coordInput").value.trim();
     const parts = raw.split(/[,;\s]+/);
     if (parts.length !== 2) return alert("Bitte als 'lat, lon' eingeben.");
     const lat = parseFloat(parts[0]), lon = parseFloat(parts[1]);
     if (Number.isNaN(lat) || Number.isNaN(lon)) return alert("Koordinaten ungültig.");
+    if (!withinSelectedArea(lat, lon)) { alert("Punkt liegt außerhalb des gewählten Amts."); return; }
     showPoint(lat, lon);
+    map.setView([lat, lon], 13);
   }
   document.getElementById("coordBtn").addEventListener("click", searchCoords);
   document.getElementById("coordInput").addEventListener("keyup", e => { if (e.key === 'Enter') searchCoords(); });
@@ -288,9 +342,7 @@ window.onload = function() {
   /* ===== Kreis-/Ämterdaten – Overpass laden (pro Kreis) ===== */
   statusEl.textContent = 'Lade Gebietsgrenzen…';
   const areasByKreis = { "SL-FL": {}, "NF": {} };
-  let currentAreaLayer = null;
 
-  /* Relationen laut deiner geprüften Listen */
   const overpassSLFL = `[out:json][timeout:60];
   (
     relation(1156160);relation(1156153);relation(1157846);
@@ -301,13 +353,15 @@ window.onload = function() {
     relation(1149296);relation(1145350);relation(904512);
   );out body;>;out skel qt;`;
 
+  
   const overpassNF = `[out:json][timeout:60];
   (
-    relation(1573499);relation(1428589);relation(1428696);
-    relation(1574209);relation(1573497);relation(1573498);
-    relation(1574208);relation(1574210);
-    relation(1402987);relation(1405432);relation(1416815);relation(1106363);
+    relation(569772);relation(569761);relation(569763);
+    relation(569751);relation(569759);relation(569760);
+    relation(310405);relation(310411);
+    relation(310403);relation(310402);relation(310389);relation(310382);
   );out body;>;out skel qt;`;
+
 
   Promise.all([
     fetch('https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(overpassSLFL)).then(r=>r.json()).catch(()=>null),
@@ -317,7 +371,7 @@ window.onload = function() {
         const gj = osmtogeojson(slfl);
         gj.features.forEach(f => {
           if (!f.geometry) return;
-          if (f.id && !String(f.id).startsWith('relation/')) return; // ⬅️ filtert node/… & way/…
+          if (f.id && !String(f.id).startsWith('relation/')) return;
           const rawId = f.id || f.properties?.id;
           const name = f.properties?.name || f.properties?.tags?.name || (rawId ? `Relation ${rawId}` : null);
           if (name) areasByKreis["SL-FL"][name] = { geojson: f };
@@ -333,7 +387,6 @@ window.onload = function() {
           if (name) areasByKreis["NF"][name] = { geojson: f };
         });
       }
-      // Default: Kreis SL-FL
       populateAreaSelect("SL-FL");
       areaSelect.disabled = false;
       statusEl.textContent = 'Bereit.';
@@ -365,6 +418,8 @@ window.onload = function() {
     });
 
     if (currentAreaLayer) { map.removeLayer(currentAreaLayer); currentAreaLayer = null; }
+    currentAreaPolygon = null;
+    klickAktiv = false; // bis Amt gewählt
 
     const b = boundsOfKreis(kreisKey);
     if (b) map.fitBounds(b, { padding: [20,20] });
@@ -381,6 +436,8 @@ window.onload = function() {
 
   areaSelect.addEventListener('change', function(){
     if (currentAreaLayer) { map.removeLayer(currentAreaLayer); currentAreaLayer = null; }
+    currentAreaPolygon = null;
+    klickAktiv = false;
 
     const kreisKey = kreisSelect.value;
     const name = this.value;
@@ -394,13 +451,18 @@ window.onload = function() {
 
     const area = areasByKreis[kreisKey][name];
     if (area?.geojson){
-      currentAreaLayer = L.geoJSON(area.geojson, { style:{ color:"#3388ff", weight:2, fillOpacity:0 }}).addTo(map);
+      currentAreaPolygon = area.geojson; // für Punktprüfung
+      currentAreaLayer = L.geoJSON(area.geojson, {
+        style:{ color:"#3388ff", weight:2, fillOpacity:0 },
+        interactive: false // Klicks „durch“ das Polygon erlauben
+      }).addTo(map);
       map.fitBounds(currentAreaLayer.getBounds());
       renderMarkers(area.geojson);
+      klickAktiv = true; // ab hier Klicks erlauben
     }
   });
 
-  /* Statistik-Export (CSV) – per Gebiet oder gesamter Kreis (Union) */
+  /* ===== Statistik-Export (CSV) – per Gebiet oder gesamter Kreis (Union) ===== */
   const statsBtn = document.getElementById('stats-selected-btn');
   statsBtn.disabled = false;
   statsBtn.addEventListener('click', exportStats);
