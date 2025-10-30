@@ -304,12 +304,16 @@ addPoints((typeof feuerwehren !== 'undefined' ? feuerwehren : null),            
       return;
     }
     const area=areasByKreis[kreisKey][name];
-    if(area?.geojson){
-      currentAreaLayer=L.geoJSON(area.geojson,{style:{color:"#3388ff",weight:2,fillOpacity:0}}).addTo(map);
-      map.fitBounds(currentAreaLayer.getBounds());
-      renderMarkers(area.geojson);
-      klickAktiv=true; // Klicks erst jetzt aktivieren
-    }
+  
+   if (area?.geojson){
+      currentAreaLayer = L.geoJSON(area.geojson, {
+      style: { color:"#3388ff", weight:2, fillOpacity:0 },
+    interactive: false   // ← neu: erlaubt Klicks „durch“ das Polygon
+  }).addTo(map);
+  map.fitBounds(currentAreaLayer.getBounds());
+  renderMarkers(area.geojson);
+  klickAktiv = true; // Klicks erst jetzt aktivieren
+}
   });
 };
 </script>
