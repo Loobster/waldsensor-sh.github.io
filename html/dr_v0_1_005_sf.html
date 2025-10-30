@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
-<title>DigitalRegion.SH – v0.1 (005) – SL-FL & NF</title>
+<title>DigitalRegion.SH – v0.1 (005b) – SL-FL & NF</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Leaflet & MarkerCluster -->
@@ -12,77 +12,53 @@
 
 <style>
   :root{
-    --bg: #f8fafc;
-    --card: #f1f5f9;
-    --border: #e2e8f0;
-    --text: #1e293b;
-    --muted: #64748b;
-    --accent: #0073b7;
-    --accent-2:#1d9bef;
+    --bg:#f8fafc;--card:#f1f5f9;--border:#e2e8f0;
+    --text:#1e293b;--muted:#64748b;
+    --accent:#0073b7;--accent-2:#1d9bef;
   }
-  html, body, #map { height: 100%; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color: var(--text); background: var(--bg); }
-  .info-box {
-    position: absolute; z-index: 1000; background: #fff; border: 1px solid var(--border);
-    padding: 12px; border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-    backdrop-filter: blur(2px);
-  }
-  .area-control { top: 10px; left: 10px; width: 300px; }
-  .layer-control-container { top: 10px; right: 10px; }
-  .coord-input { bottom: 10px; right: 10px; width: 310px; }
-  .addr-input  { bottom: 10px; left: 10px; width: 340px; }
-  .footer {
-    position: absolute; left: 0; right: 0; bottom: 0; z-index: 900;
-    background: rgba(30,41,59,0.7); color: #fff; font-size: 12px; padding: 6px 12px;
-    display: flex; justify-content: center; letter-spacing: .2px;
-  }
-  label { font-weight: 600; }
-  select, input[type="text"]{
-    width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
-    outline: none; font-size: 14px; background: #fff; color: var(--text);
-  }
-  .row { display: flex; gap: 8px; margin-top: 8px; }
-  button {
-    padding: 8px 12px; border: 0; border-radius: 8px; background: var(--accent);
-    color: #fff; cursor: pointer; font-weight: 600; letter-spacing: .2px;
-    box-shadow: 0 4px 16px rgba(0,115,183,0.2);
-  }
-  button:hover { background: var(--accent-2); }
-  button:disabled { opacity: .6; cursor: not-allowed; }
-  hr { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
-
-  #loading-screen{
-    position: fixed; inset: 0; background: var(--bg); z-index: 2000;
-    display: grid; place-items: center; transition: opacity 1s ease;
-  }
-  .loading-card{
-    background: #fff; border: 1px solid var(--border); border-radius: 16px;
-    padding: 28px 36px; box-shadow: 0 16px 48px rgba(0,0,0,0.12); text-align: center;
-  }
-  .loading-title{ font-size: 20px; font-weight: 800; margin-bottom: 6px; }
-  .loading-sub{ color: var(--muted); margin-bottom: 14px; }
-  .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; margin: 0 auto;
-    animation: pulse 1s infinite ease-in-out; }
-  @keyframes pulse { 0%,100%{ transform: scale(0.7); opacity:.6 } 50%{ transform: scale(1); opacity:1 } }
-
-  .leaflet-popup-content-wrapper { border-radius: 10px; }
-  .leaflet-popup-content { margin: 10px 12px; line-height: 1.35; }
+  html,body,#map{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);background:var(--bg)}
+  .info-box{position:absolute;z-index:1000;background:#fff;border:1px solid var(--border);
+    padding:12px;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,0.08)}
+  .area-control{top:10px;left:10px;width:300px}
+  .layer-control-container{top:10px;right:10px}
+  .coord-input{bottom:10px;right:10px;width:310px}
+  .addr-input{bottom:10px;left:10px;width:340px}
+  .footer{position:absolute;left:0;right:0;bottom:0;z-index:900;
+    background:rgba(30,41,59,0.7);color:#fff;font-size:12px;padding:6px 12px;
+    display:flex;justify-content:center;letter-spacing:.2px}
+  label{font-weight:600}
+  select,input[type="text"]{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;outline:none;font-size:14px;background:#fff;color:var(--text)}
+  .row{display:flex;gap:8px;margin-top:8px}
+  button{padding:8px 12px;border:0;border-radius:8px;background:var(--accent);
+    color:#fff;cursor:pointer;font-weight:600;letter-spacing:.2px;box-shadow:0 4px 16px rgba(0,115,183,0.2)}
+  button:hover{background:var(--accent-2)}button:disabled{opacity:.6;cursor:not-allowed}
+  hr{border:none;border-top:1px solid var(--border);margin:12px 0}
+  #loading-screen{position:fixed;inset:0;background:var(--bg);z-index:2000;
+    display:grid;place-items:center;transition:opacity 1s ease}
+  .loading-card{background:#fff;border:1px solid var(--border);border-radius:16px;
+    padding:28px 36px;box-shadow:0 16px 48px rgba(0,0,0,0.12);text-align:center}
+  .loading-title{font-size:20px;font-weight:800;margin-bottom:6px}
+  .loading-sub{color:var(--muted);margin-bottom:14px}
+  .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;margin:0 auto;
+    animation:pulse 1s infinite ease-in-out}
+  @keyframes pulse{0%,100%{transform:scale(0.7);opacity:.6}50%{transform:scale(1);opacity:1}}
+  .leaflet-popup-content-wrapper{border-radius:10px}
+  .leaflet-popup-content{margin:10px 12px;line-height:1.35}
 </style>
 </head>
 
 <body>
-
 <div id="loading-screen">
   <div class="loading-card">
     <div class="loading-title">🌍 DigitalRegion.SH</div>
-    <div class="loading-sub">Version 0.1 (005) • Projektleitung: Heinrich Rode</div>
-    <div style="margin-bottom:10px; font-weight:600;">Initialisiere Karte …</div>
+    <div class="loading-sub">Version 0.1 (005b) • Projektleitung: Heinrich Rode</div>
+    <div style="margin-bottom:10px;font-weight:600;">Initialisiere Karte …</div>
     <div class="dot"></div>
   </div>
 </div>
 
 <div id="map"></div>
 
-<!-- Auswahlboxen -->
 <div class="info-box area-control">
   <label for="kreis-select">Kreis auswählen</label>
   <select id="kreis-select">
@@ -97,12 +73,13 @@
     <option value="">-- Lade Gebietsgrenzen --</option>
   </select>
 
-  <div id="status-message" style="margin-top:10px; font-style: italic; color: var(--muted);"></div>
+  <div id="status-message" style="margin-top:10px;font-style:italic;color:var(--muted);"></div>
   <hr>
   <button id="stats-selected-btn" disabled>📊 Statistik (CSV) exportieren</button>
 </div>
 
 <div class="info-box layer-control-container" id="layer-control-container"></div>
+
 <div class="info-box coord-input">
   <div><b>Koordinaten</b></div>
   <div class="row">
@@ -119,119 +96,211 @@
   </div>
 </div>
 
-<div class="footer">DigitalRegion.SH – Version 0.1 (005) • Projektleitung: Heinrich Rode</div>
+<div class="footer">DigitalRegion.SH – Version 0.1 (005b) • Projektleitung: Heinrich Rode</div>
 
-<!-- Datensätze -->
+<!-- Datenquellen -->
 <script src="../data/gateways_SH_NETZ.js"></script>
 <script src="../data/schulen_SH.js"></script>
 <script src="../data/mint_schulen.js"></script>
 <script src="../data/schulwaelder_mit_popup.js"></script>
 <script src="../data/feuerwehren.js"></script>
 
-<!-- Bibliotheken -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
 <script src="https://tyrasd.github.io/osmtogeojson/osmtogeojson.js"></script>
 
 <script>
-window.onload = function() {
-  const map = L.map('map').setView([54.6, 9.0], 8);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ attribution: '&copy; OpenStreetMap' }).addTo(map);
+window.onload = function(){
+  const map=L.map('map').setView([54.6,9.0],8);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              {attribution:'&copy; OpenStreetMap'}).addTo(map);
 
-  const kreisSelect = document.getElementById('kreis-select');
-  const areaSelect  = document.getElementById('area-select');
-  const statusEl    = document.getElementById('status-message');
+  const kreisSelect=document.getElementById('kreis-select');
+  const areaSelect=document.getElementById('area-select');
+  const statusEl=document.getElementById('status-message');
 
-  /* Intro */
-  setTimeout(() => {
-    const scr = document.getElementById('loading-screen');
-    if (scr) { scr.style.opacity = 0; setTimeout(()=> scr.remove(), 1000); }
-  }, 1500);
+  setTimeout(()=>{const scr=document.getElementById('loading-screen');
+    if(scr){scr.style.opacity=0;setTimeout(()=>scr.remove(),1000);} },1500);
 
-  const icon = {
-    GW: L.icon({ iconUrl: '../icons/gateway.png', iconSize: [30,30], iconAnchor: [15,15] }),
-    SCHULE: L.icon({ iconUrl: '../icons/schule.png', iconSize: [30,30], iconAnchor: [15,15] }),
-    MINT: L.icon({ iconUrl: '../icons/mintschule.png', iconSize: [30,30], iconAnchor: [15,15] }),
-    WALD: L.icon({ iconUrl: '../icons/schulwald.png', iconSize: [30,30], iconAnchor: [15,15] }),
-    FW: L.icon({ iconUrl: '../icons/feuerwehr.png', iconSize: [30,30], iconAnchor: [15,15] })
+  const icon={
+    GW:L.icon({iconUrl:'../icons/gateway.png',iconSize:[30,30],iconAnchor:[15,15]}),
+    SCHULE:L.icon({iconUrl:'../icons/schule.png',iconSize:[30,30],iconAnchor:[15,15]}),
+    MINT:L.icon({iconUrl:'../icons/mintschule.png',iconSize:[30,30],iconAnchor:[15,15]}),
+    WALD:L.icon({iconUrl:'../icons/schulwald.png',iconSize:[30,30],iconAnchor:[15,15]}),
+    FW:L.icon({iconUrl:'../icons/feuerwehr.png',iconSize:[30,30],iconAnchor:[15,15]})
   };
 
-  const layers = {
-    "Gateways": L.markerClusterGroup(),
-    "Schulen mit MINT-Profil": L.markerClusterGroup(),
-    "Schulen": L.markerClusterGroup(),
-    "Schulwälder": L.markerClusterGroup(),
-    "Feuerwehren": L.markerClusterGroup()
+  const layers={
+    "Gateways":L.markerClusterGroup(),
+    "Schulen mit MINT-Profil":L.markerClusterGroup(),
+    "Schulen":L.markerClusterGroup(),
+    "Schulwälder":L.markerClusterGroup(),
+    "Feuerwehren":L.markerClusterGroup()
   };
-  const overlayMaps = {};
-  Object.keys(layers).forEach(k => overlayMaps[k] = layers[k]);
-  const lc = L.control.layers(null, overlayMaps, { collapsed: false }).addTo(map);
+  const overlayMaps={};Object.keys(layers).forEach(k=>overlayMaps[k]=layers[k]);
+  const lc=L.control.layers(null,overlayMaps,{collapsed:false}).addTo(map);
   document.getElementById('layer-control-container').appendChild(lc.getContainer());
 
-  const gwFeatures = (typeof gateways !== 'undefined' && gateways?.features) ? gateways.features.filter(f => f.geometry?.type === 'Point') : [];
-
-  function nearestGateway(lat, lon){
-    if (!gwFeatures.length) return null;
-    const collection = turf.featureCollection(gwFeatures);
-    const target = turf.point([lon, lat]);
-    const n = turf.nearestPoint(target, collection);
-    const dist = turf.distance(target, n, { units: 'kilometers' });
-    return { name: (n.properties?.name || n.properties?.id || 'Gateway'),
-             distKm: dist.toFixed(1), coords: n.geometry.coordinates };
+  const gwFeatures=(typeof gateways!=='undefined'&&gateways?.features)?
+    gateways.features.filter(f=>f.geometry?.type==='Point'):[];
+  function nearestGateway(lat,lon){
+    if(!gwFeatures.length)return null;
+    const collection=turf.featureCollection(gwFeatures);
+    const target=turf.point([lon,lat]);
+    const n=turf.nearestPoint(target,collection);
+    const dist=turf.distance(target,n,{units:'kilometers'});
+    return {name:(n.properties?.name||n.properties?.id||'Gateway'),
+            distKm:dist.toFixed(1),coords:n.geometry.coordinates};
   }
 
-  function renderMarkers(filterPolygon = null){
-    Object.values(layers).forEach(l => l.clearLayers());
-    function addPoints(data, layer, which){
-      if (!data?.features) return;
-      const ms = [];
-      data.features.forEach(f => {
-        if (f.geometry?.type !== 'Point') return;
-        const [lon, lat] = f.geometry.coordinates;
-        if (filterPolygon) {
-          const inside = turf.booleanPointInPolygon(turf.point([lon, lat]), filterPolygon);
-          if (!inside) return;
+  function renderMarkers(filterPolygon=null){
+    Object.values(layers).forEach(l=>l.clearLayers());
+    function addPoints(data,layer,which){
+      if(!data?.features)return;
+      const ms=[];
+      data.features.forEach(f=>{
+        if(f.geometry?.type!=='Point')return;
+        const [lon,lat]=f.geometry.coordinates;
+        if(filterPolygon){
+          const inside=turf.booleanPointInPolygon(turf.point([lon,lat]),filterPolygon);
+          if(!inside)return;
         }
-        let popup = `<div style="font-weight:700">${f.properties?.name || 'Unbenannt'}</div>`;
-        popup += `<div>🌍 ${lat.toFixed(5)}, ${lon.toFixed(5)}</div>`;
-        if (which !== 'GW') {
-          const n = nearestGateway(lat, lon);
-          if (n) popup += `<div>📡 Nächstes Gateway: ${n.name} (${n.distKm} km)</div>`;
+        let popup=`<div style="font-weight:700">${f.properties?.name||'Unbenannt'}</div>
+                    <div>🌍 ${lat.toFixed(5)}, ${lon.toFixed(5)}</div>`;
+        if(which!=='GW'){
+          const n=nearestGateway(lat,lon);
+          if(n)popup+=`<div>📡 Nächstes Gateway: ${n.name} (${n.distKm} km)</div>`;
         }
-        let useIcon = icon.SCHULE;
-        if (which === 'GW') useIcon = icon.GW;
-        else if (which === 'MINT') useIcon = icon.MINT;
-        else if (which === 'SCHULE') useIcon = icon.SCHULE;
-        else if (which === 'WALD') useIcon = icon.WALD;
-        else if (which === 'FW') useIcon = icon.FW;
-        const m = L.marker([lat, lon], { icon: useIcon }).bindPopup(popup);
+        let useIcon=icon.SCHULE;
+        if(which==='GW')useIcon=icon.GW;
+        else if(which==='MINT')useIcon=icon.MINT;
+        else if(which==='WALD')useIcon=icon.WALD;
+        else if(which==='FW')useIcon=icon.FW;
+        const m=L.marker([lat,lon],{icon:useIcon}).bindPopup(popup);
         ms.push(m);
       });
       layer.addLayers(ms);
     }
-    addPoints(gateways, layers["Gateways"], 'GW');
-    addPoints(mint_schulen, layers["Schulen mit MINT-Profil"], 'MINT');
-    addPoints(schulen, layers["Schulen"], 'SCHULE');
-    addPoints(schulwaelder, layers["Schulwälder"], 'WALD');
-    addPoints(feuerwehren, layers["Feuerwehren"], 'FW');
+    addPoints(gateways,layers["Gateways"],'GW');
+    addPoints(mint_schulen,layers["Schulen mit MINT-Profil"],'MINT');
+    addPoints(schulen_SH||schulen,layers["Schulen"],'SCHULE');
+    addPoints(schulwaelder,layers["Schulwälder"],'WALD');
+    addPoints(feuerwehren,layers["Feuerwehren"],'FW');
   }
 
-  let clickEnabled = false;
-  let searchMarker = null, gwLine = null;
-  function showPoint(lat, lon, title="📍 Punkt"){
-    const n = nearestGateway(lat, lon);
-    let txt = `<div style="font-weight:700">${title}</div><div>🌍 ${lat.toFixed(5)}, ${lon.toFixed(5)}</div>`;
-    if (n) txt += `<div>📡 Nächstes Gateway: ${n.name} (${n.distKm} km)</div>`;
-    if (searchMarker) map.removeLayer(searchMarker);
-    if (gwLine) map.removeLayer(gwLine);
-    searchMarker = L.marker([lat, lon], { icon: icon.SCHULE }).addTo(map).bindPopup(txt).openPopup();
-    if (n) gwLine = L.polyline([[lat, lon],[n.coords[1], n.coords[0]]], { color: 'black', dashArray: '5,5', opacity: .7 }).addTo(map);
+  let searchMarker=null,gwLine=null;
+  function showPoint(lat,lon,title="📍 Punkt"){
+    const n=nearestGateway(lat,lon);
+    let txt=`<div style="font-weight:700">${title}</div>
+             <div>🌍 ${lat.toFixed(5)}, ${lon.toFixed(5)}</div>`;
+    if(n)txt+=`<div>📡 Nächstes Gateway: ${n.name} (${n.distKm} km)</div>`;
+    if(searchMarker)map.removeLayer(searchMarker);
+    if(gwLine)map.removeLayer(gwLine);
+    searchMarker=L.marker([lat,lon],{icon:icon.SCHULE}).addTo(map).bindPopup(txt).openPopup();
+    if(n)gwLine=L.polyline([[lat,lon],[n.coords[1],n.coords[0]]],
+              {color:'black',dashArray:'5,5',opacity:.7}).addTo(map);
+    map.setView([lat,lon],13);
   }
-  map.on('click', e => { if (clickEnabled) showPoint(e.latlng.lat, e.latlng.lng); });
 
-  /* (Restlicher Code identisch, inkl. Statistik-Export mit neuer Distanzlogik)
-     ... */
+  /* --- Klicksteuerung --- */
+  let klickAktiv=false;
+  map.on('click',e=>{ if(!klickAktiv)return; showPoint(e.latlng.lat,e.latlng.lng); });
+
+  /* === Overpass-Laden (identisch zu 004) === */
+  statusEl.textContent='Lade Gebietsgrenzen…';
+  const areasByKreis={"SL-FL":{},"NF":{}};
+  let currentAreaLayer=null;
+
+  const overpassSLFL=`[out:json][timeout:60];
+  (relation(1156160);relation(1156153);relation(1157846);
+   relation(1157540);relation(1156155);relation(1157847);
+   relation(1157799);relation(1156159);relation(1157850);
+   relation(1156156);relation(1156150);relation(1157849);
+   relation(1157848);relation(1149288);relation(1149297);
+   relation(1149296);relation(1145350);relation(904512);
+  );out body;>;out skel qt;`;
+
+  const overpassNF=`[out:json][timeout:60];
+  (relation(1573499);relation(1428589);relation(1428696);
+   relation(1574209);relation(1573497);relation(1573498);
+   relation(1574208);relation(1574210);
+   relation(1402987);relation(1405432);relation(1416815);relation(1106363);
+  );out body;>;out skel qt;`;
+
+  Promise.all([
+    fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(overpassSLFL)).then(r=>r.json()).catch(()=>null),
+    fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(overpassNF)).then(r=>r.json()).catch(()=>null)
+  ]).then(([slfl,nf])=>{
+    if(slfl){const gj=osmtogeojson(slfl);
+      gj.features.forEach(f=>{
+        if(!f.geometry)return;
+        if(f.id&&!String(f.id).startsWith('relation/'))return;
+        const name=f.properties?.name||f.properties?.tags?.name;
+        if(name)areasByKreis["SL-FL"][name]={geojson:f};
+      });}
+    if(nf){const gj=osmtogeojson(nf);
+      gj.features.forEach(f=>{
+        if(!f.geometry)return;
+        if(f.id&&!String(f.id).startsWith('relation/'))return;
+        const name=f.properties?.name||f.properties?.tags?.name;
+        if(name)areasByKreis["NF"][name]={geojson:f};
+      });}
+    populateAreaSelect("SL-FL");
+    areaSelect.disabled=false;
+    statusEl.textContent='Bereit.';
+    renderMarkers(null);
+  }).catch(err=>{
+    statusEl.textContent='Fehler beim Laden der Gebietsgrenzen: '+(err?.message||err);
+    statusEl.style.color='crimson';
+    renderMarkers(null);
+  });
+
+  function boundsOfKreis(kreisKey){
+    const all=Object.values(areasByKreis[kreisKey]||{}).map(a=>a.geojson);
+    if(!all.length)return null;
+    const g=L.geoJSON(all,{style:{color:"#3388ff",weight:1,fillOpacity:0}});
+    const b=g.getBounds();g.remove();return b;
+  }
+
+  function populateAreaSelect(kreisKey){
+    areaSelect.innerHTML='';
+    const placeholder=document.createElement('option');
+    placeholder.value='';placeholder.textContent='-- Gesamter Kreis anzeigen --';
+    areaSelect.appendChild(placeholder);
+    Object.keys(areasByKreis[kreisKey]||{}).sort().forEach(name=>{
+      const opt=document.createElement('option');
+      opt.value=name;opt.textContent=name;areaSelect.appendChild(opt);
+    });
+    if(currentAreaLayer){map.removeLayer(currentAreaLayer);currentAreaLayer=null;}
+    const b=boundsOfKreis(kreisKey);
+    if(b)map.fitBounds(b,{padding:[20,20]});else map.setView([54.6,9.0],8);
+    renderMarkers(null);
+  }
+
+  kreisSelect.addEventListener('change',e=>{
+    const key=e.target.value;if(!key)return;populateAreaSelect(key);
+  });
+
+  areaSelect.addEventListener('change',function(){
+    if(currentAreaLayer){map.removeLayer(currentAreaLayer);currentAreaLayer=null;}
+    const kreisKey=kreisSelect.value;
+    const name=this.value;
+    if(!name){
+      const b=boundsOfKreis(kreisKey);
+      if(b)map.fitBounds(b,{padding:[20,20]});
+      renderMarkers(null);
+      klickAktiv=false; // Klicks deaktivieren, wenn kein Amt
+      return;
+    }
+    const area=areasByKreis[kreisKey][name];
+    if(area?.geojson){
+      currentAreaLayer=L.geoJSON(area.geojson,{style:{color:"#3388ff",weight:2,fillOpacity:0}}).addTo(map);
+      map.fitBounds(currentAreaLayer.getBounds());
+      renderMarkers(area.geojson);
+      klickAktiv=true; // Klicks erst jetzt aktivieren
+    }
+  });
 };
 </script>
 </body>
