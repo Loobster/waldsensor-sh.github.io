@@ -182,12 +182,14 @@ window.onload = function(){
       });
       layer.addLayers(ms);
     }
-    addPoints(gateways,layers["Gateways"],'GW');
-    addPoints(mint_schulen,layers["Schulen mit MINT-Profil"],'MINT');
-    addPoints(schulen_SH||schulen,layers["Schulen"],'SCHULE');
-    addPoints(schulwaelder,layers["Schulwälder"],'WALD');
-    addPoints(feuerwehren,layers["Feuerwehren"],'FW');
-  }
+addPoints((typeof gateways !== 'undefined' ? gateways : null),                     layers["Gateways"], 'GW');
+addPoints((typeof mint_schulen !== 'undefined' ? mint_schulen : null),            layers["Schulen mit MINT-Profil"], 'MINT');
+addPoints((typeof schulen !== 'undefined' ? schulen : (typeof schulen_SH !== 'undefined' ? schulen_SH : null)), layers["Schulen"], 'SCHULE');
+addPoints((typeof schulwaelder !== 'undefined' ? schulwaelder : null),            layers["Schulwälder"], 'WALD');
+addPoints((typeof feuerwehren !== 'undefined' ? feuerwehren : null),              layers["Feuerwehren"], 'FW');  
+
+
+}
 
   let searchMarker=null,gwLine=null;
   function showPoint(lat,lon,title="📍 Punkt"){
