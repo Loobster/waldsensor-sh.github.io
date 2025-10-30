@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
-<title>DigitalRegion.SH – v0.1 (003) – SL-FL & NF</title>
+<title>DigitalRegion.SH – v0.1 (005) – SL-FL & NF</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Leaflet & MarkerCluster -->
@@ -12,13 +12,13 @@
 
 <style>
   :root{
-    --bg: #f8fafc;            /* sehr helles Grau */
-    --card: #f1f5f9;          /* Karten/Box-Hintergrund */
-    --border: #e2e8f0;        /* Rahmen */
-    --text: #1e293b;          /* Anthrazitblau */
-    --muted: #64748b;         /* Sekundärtext */
-    --accent: #0073b7;        /* SH-Blau für Buttons */
-    --accent-2:#1d9bef;       /* Hover */
+    --bg: #f8fafc;
+    --card: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --accent: #0073b7;
+    --accent-2:#1d9bef;
   }
   html, body, #map { height: 100%; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color: var(--text); background: var(--bg); }
   .info-box {
@@ -65,7 +65,6 @@
     animation: pulse 1s infinite ease-in-out; }
   @keyframes pulse { 0%,100%{ transform: scale(0.7); opacity:.6 } 50%{ transform: scale(1); opacity:1 } }
 
-  /* Marker-Popups optisch ruhiger */
   .leaflet-popup-content-wrapper { border-radius: 10px; }
   .leaflet-popup-content { margin: 10px 12px; line-height: 1.35; }
 </style>
@@ -77,7 +76,7 @@
 <div id="loading-screen">
   <div class="loading-card">
     <div class="loading-title">🌍 DigitalRegion.SH</div>
-    <div class="loading-sub">Version 0.1 (003) • Projektleitung: Heinrich Rode</div>
+    <div class="loading-sub">Version 0.1 (005) • Projektleitung: Heinrich Rode</div>
     <div style="margin-bottom:10px; font-weight:600;">Initialisiere Karte …</div>
     <div class="dot"></div>
   </div>
@@ -126,7 +125,7 @@
   </div>
 </div>
 
-<div class="footer">DigitalRegion.SH – Version 0.1 (003) • Projektleitung: Heinrich Rode</div>
+<div class="footer">DigitalRegion.SH – Version 0.1 (005) • Projektleitung: Heinrich Rode</div>
 
 <!-- Datensätze -->
 <script src="../data/gateways_SH_NETZ.js"></script>
@@ -161,18 +160,16 @@ window.onload = function() {
 
   /* Marker-Icons (aus ROOT /icons/) */
   const icon = {
-    GW:      L.icon({ iconUrl: '../icons/gateway.png',          iconSize: [30,30], iconAnchor: [15,15] }),
-    GWV:     L.icon({ iconUrl: '../icons/gateway_virtual.png',  iconSize: [30,30], iconAnchor: [15,15] }),
-    SCHULE:  L.icon({ iconUrl: '../icons/schule.png',           iconSize: [30,30], iconAnchor: [15,15] }),
-    MINT:    L.icon({ iconUrl: '../icons/mintschule.png',       iconSize: [30,30], iconAnchor: [15,15] }),
-    WALD:    L.icon({ iconUrl: '../icons/schulwald.png',        iconSize: [30,30], iconAnchor: [15,15] }),
-    FW:      L.icon({ iconUrl: '../icons/feuerwehr.png',        iconSize: [30,30], iconAnchor: [15,15] })
+    GW:      L.icon({ iconUrl: '../icons/gateway.png',     iconSize: [30,30], iconAnchor: [15,15] }),
+    SCHULE:  L.icon({ iconUrl: '../icons/schule.png',      iconSize: [30,30], iconAnchor: [15,15] }),
+    MINT:    L.icon({ iconUrl: '../icons/mintschule.png',  iconSize: [30,30], iconAnchor: [15,15] }),
+    WALD:    L.icon({ iconUrl: '../icons/schulwald.png',   iconSize: [30,30], iconAnchor: [15,15] }),
+    FW:      L.icon({ iconUrl: '../icons/feuerwehr.png',   iconSize: [30,30], iconAnchor: [15,15] })
   };
 
-  /* Datenquellen (MarkerCluster), Startzustand: AUS (nicht sofort addTo(map)) */
+  /* Datenquellen (MarkerCluster), Startzustand: AUS */
   const layers = {
     "Gateways": L.markerClusterGroup(),
-    
     "Schulen mit MINT-Profil": L.markerClusterGroup(),
     "Schulen": L.markerClusterGroup(),
     "Schulwälder": L.markerClusterGroup(),
@@ -201,7 +198,6 @@ window.onload = function() {
 
   /* Marker zeichnen – optional gefiltert durch Polygon */
   function renderMarkers(filterPolygon = null){
-    // Clear
     Object.values(layers).forEach(l => l.clearLayers());
 
     function addPoints(data, layer, which){
@@ -212,7 +208,6 @@ window.onload = function() {
         if (f.geometry?.type !== 'Point') return;
         const [lon, lat] = f.geometry.coordinates;
 
-        // Sichtbarkeit optional am Polygon begrenzen
         if (filterPolygon) {
           const inside = turf.booleanPointInPolygon(turf.point([lon, lat]), filterPolygon);
           if (!inside) return;
@@ -227,15 +222,13 @@ window.onload = function() {
         }
 
         let useIcon = icon.SCHULE;
-        if (which === 'GW') useIcon = icon.GW;
-        else if (which === 'GWV') useIcon = icon.GWV;
+        if (which === 'GW) useIcon = icon.GW; /* deliberately left as-is for data layers */
         else if (which === 'MINT') useIcon = icon.MINT;
         else if (which === 'SCHULE') useIcon = icon.SCHULE;
         else if (which === 'WALD') useIcon = icon.WALD;
         else if (which === 'FW') useIcon = icon.FW;
 
         const m = L.marker([lat, lon], { icon: useIcon }).bindPopup(popup);
-        // dezenter Shadow via CSS nicht nötig; Leaflet-Schatten optional
         ms.push(m);
       });
 
@@ -249,24 +242,55 @@ window.onload = function() {
     addPoints((typeof feuerwehren !== 'undefined' ? feuerwehren : null), layers["Feuerwehren"], 'FW');
   }
 
-  /* Klick auf Karte → Marker + Linie zum nächsten GW */
-  let searchMarker = null, gwLine = null;
+  /* ===== Klick-Logik nur im gewählten Amt ===== */
+  let klickAktiv = false;
+  let currentAreaLayer = null;
+  let currentAreaPolygon = null;  // GeoJSON-Polygon für Prüfungen
+  let clickMarker = null;         // letzter Klickmarker (neutral)
+  let gwLine = null;              // Linie zum nächsten GW
+
+  function withinSelectedArea(lat, lon){
+    if (!klickAktiv || !currentAreaPolygon) return false;
+    const pt = turf.point([lon, lat]);
+    try { return turf.booleanPointInPolygon(pt, currentAreaPolygon); }
+    catch { return false; }
+  }
+
   function showPoint(lat, lon, title="📍 Punkt"){
+    if (!withinSelectedArea(lat, lon)) return; // außerhalb ignorieren
+
     const n = nearestGateway(lat, lon);
     let txt = `<div style="font-weight:700">${title}</div><div>🌍 ${lat.toFixed(5)}, ${lon.toFixed(5)}</div>`;
     if (n) txt += `<div>📡 Nächstes Gateway: ${n.name} (${n.distKm} km)</div>`;
 
-    if (searchMarker) map.removeLayer(searchMarker);
+    // vorherige Objekte entfernen
+    if (clickMarker) map.removeLayer(clickMarker);
     if (gwLine) map.removeLayer(gwLine);
 
-    searchMarker = L.marker([lat, lon], { icon: icon.SCHULE }).addTo(map).bindPopup(txt).openPopup();
-    if (n) gwLine = L.polyline([[lat, lon],[n.coords[1], n.coords[0]]], { color: 'black', dashArray: '5,5', opacity: .7 }).addTo(map);
-    map.setView([lat, lon], 13);
-  }
-  map.on('click', e => showPoint(e.latlng.lat, e.latlng.lng));
+    // neutraler Klickmarker (roter Punkt)
+    const neutralIcon = L.divIcon({
+      className: 'custom-click-icon',
+      html: '<div style="width:14px;height:14px;background:red;border-radius:50%;border:2px solid white;box-shadow:0 0 4px rgba(0,0,0,.5);"></div>',
+      iconSize: [16,16],
+      iconAnchor: [8,8]
+    });
 
-  /* Suche: Adresse (Nominatim) */
+    clickMarker = L.marker([lat, lon], { icon: neutralIcon }).addTo(map).bindPopup(txt).openPopup();
+
+    if (n) {
+      gwLine = L.polyline([[lat, lon],[n.coords[1], n.coords[0]]], { color:'black', dashArray:'5,5', opacity:.7 }).addTo(map);
+    }
+  }
+
+  // Karte reagiert nur, wenn klickAktiv true und Punkt im Polygon
+  map.on('click', e => {
+    if (!klickAktiv) return;
+    showPoint(e.latlng.lat, e.latlng.lng);
+  });
+
+  /* Suche: Adresse (Nominatim) – nutzt ebenfalls showPoint (respektiert Polygon) */
   function searchAddress(){
+    if (!klickAktiv) { alert("Bitte zuerst Kreis und Amt auswählen."); return; }
     const q = document.getElementById("addrInput").value.trim();
     if (!q) return;
     fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`)
@@ -274,7 +298,9 @@ window.onload = function() {
       .then(data => {
         if (!data.length) return alert("Adresse nicht gefunden.");
         const p = data[0]; const lat = parseFloat(p.lat), lon = parseFloat(p.lon);
+        if (!withinSelectedArea(lat, lon)) { alert("Adresse liegt außerhalb des gewählten Amts."); return; }
         showPoint(lat, lon, `🔍 ${p.display_name}`);
+        map.setView([lat, lon], 13);
       });
   }
   document.getElementById("addrBtn").addEventListener("click", searchAddress);
@@ -282,22 +308,23 @@ window.onload = function() {
 
   /* Suche: Koordinaten */
   function searchCoords(){
+    if (!klickAktiv) { alert("Bitte zuerst Kreis und Amt auswählen."); return; }
     const raw = document.getElementById("coordInput").value.trim();
     const parts = raw.split(/[,;\s]+/);
     if (parts.length !== 2) return alert("Bitte als 'lat, lon' eingeben.");
     const lat = parseFloat(parts[0]), lon = parseFloat(parts[1]);
     if (Number.isNaN(lat) || Number.isNaN(lon)) return alert("Koordinaten ungültig.");
+    if (!withinSelectedArea(lat, lon)) { alert("Punkt liegt außerhalb des gewählten Amts."); return; }
     showPoint(lat, lon);
+    map.setView([lat, lon], 13);
   }
   document.getElementById("coordBtn").addEventListener("click", searchCoords);
   document.getElementById("coordInput").addEventListener("keyup", e => { if (e.key === 'Enter') searchCoords(); });
 
-  /* Ämter/Kommunen – Overpass laden (pro Kreis) */
+  /* ===== Kreis-/Ämterdaten – Overpass laden (pro Kreis) ===== */
   statusEl.textContent = 'Lade Gebietsgrenzen…';
   const areasByKreis = { "SL-FL": {}, "NF": {} };
-  let currentAreaLayer = null;
 
-  // Relationen laut deiner geprüften Listen
   const overpassSLFL = `[out:json][timeout:60];
   (
     relation(1156160);relation(1156153);relation(1157846);
@@ -313,7 +340,7 @@ window.onload = function() {
     relation(1573499);relation(1428589);relation(1428696);
     relation(1574209);relation(1573497);relation(1573498);
     relation(1574208);relation(1574210);
-    relation(1402987);relation(1405432);relation(1416815);relation(1106363)
+    relation(1402987);relation(1405432);relation(1416815);relation(1106363);
   );out body;>;out skel qt;`;
 
   Promise.all([
@@ -322,23 +349,41 @@ window.onload = function() {
   ]).then(([slfl, nf]) => {
       if (slfl){
         const gj = osmtogeojson(slfl);
-        gj.features.forEach(f => { if (f.properties?.name && f.geometry) areasByKreis["SL-FL"][f.properties.name] = { geojson: f }; });
+        gj.features.forEach(f => {
+          if (!f.geometry) return;
+          if (f.id && !String(f.id).startsWith('relation/')) return;
+          const rawId = f.id || f.properties?.id;
+          const name = f.properties?.name || f.properties?.tags?.name || (rawId ? `Relation ${rawId}` : null);
+          if (name) areasByKreis["SL-FL"][name] = { geojson: f };
+        });
       }
       if (nf){
         const gj = osmtogeojson(nf);
-        gj.features.forEach(f => { if (f.properties?.name && f.geometry) areasByKreis["NF"][f.properties.name] = { geojson: f }; });
+        gj.features.forEach(f => {
+          if (!f.geometry) return;
+          if (f.id && !String(f.id).startsWith('relation/')) return;
+          const rawId = f.id || f.properties?.id;
+          const name = f.properties?.name || f.properties?.tags?.name || (rawId ? `Relation ${rawId}` : null);
+          if (name) areasByKreis["NF"][name] = { geojson: f };
+        });
       }
-      // Default: Kreis SL-FLF
       populateAreaSelect("SL-FL");
       areaSelect.disabled = false;
       statusEl.textContent = 'Bereit.';
-      // Erst-Rendering ohne Filter
       renderMarkers(null);
   }).catch(err => {
-      statusEl.textContent = 'Fehler beim Laden der Gebietsgrenzen: ' + err?.message;
+      statusEl.textContent = 'Fehler beim Laden der Gebietsgrenzen: ' + (err?.message || err);
       statusEl.style.color = 'crimson';
       renderMarkers(null);
   });
+
+  function boundsOfKreis(kreisKey){
+    const all = Object.values(areasByKreis[kreisKey] || {}).map(a => a.geojson);
+    if (!all.length) return null;
+    const g = L.geoJSON(all, { style:{ color:"#3388ff", weight:1, fillOpacity:0 }});
+    const b = g.getBounds(); g.remove();
+    return b;
+  }
 
   function populateAreaSelect(kreisKey){
     areaSelect.innerHTML = '';
@@ -351,17 +396,15 @@ window.onload = function() {
       opt.value = name; opt.textContent = name;
       areaSelect.appendChild(opt);
     });
-    // Karte etwas auf den Kreis setzen
+
     if (currentAreaLayer) { map.removeLayer(currentAreaLayer); currentAreaLayer = null; }
-    const all = Object.values(areasByKreis[kreisKey] || {}).map(a => a.geojson);
-    if (all.length){
-      const g = L.geoJSON(all, { style:{ color:"#3388ff", weight:1, fillOpacity:0 }});
-      const b = g.getBounds(); g.remove();
-      map.fitBounds(b, { padding: [20,20] });
-    } else {
-      map.setView([54.6, 9.0], 8);
-    }
-    // Marker neu (ohne Filter)
+    currentAreaPolygon = null;
+    klickAktiv = false; // bis Amt gewählt
+
+    const b = boundsOfKreis(kreisKey);
+    if (b) map.fitBounds(b, { padding: [20,20] });
+    else map.setView([54.6, 9.0], 8);
+
     renderMarkers(null);
   }
 
@@ -372,39 +415,34 @@ window.onload = function() {
   });
 
   areaSelect.addEventListener('change', function(){
-    // alte Grenze weg
     if (currentAreaLayer) { map.removeLayer(currentAreaLayer); currentAreaLayer = null; }
+    currentAreaPolygon = null;
+    klickAktiv = false;
 
     const kreisKey = kreisSelect.value;
     const name = this.value;
 
     if (!name){
-      // Gesamter Kreis
-      const all = Object.values(areasByKreis[kreisKey] || {}).map(a => a.geojson);
-      if (all.length){
-        const g = L.geoJSON(all, { style:{ color:"#3388ff", weight:1, fillOpacity:0 }}).addTo(map);
-        currentAreaLayer = g;
-        map.fitBounds(g.getBounds(), { padding: [20,20] });
-        // Für das reine Anzeigen nutzen wir nur die Bounds,
-        // beim Statistik-Export bauen wir eine Union.
-        renderMarkers(null); // keine Filterung, Anzeige komplett
-      } else {
-        map.setView([54.6,9.0],8);
-        renderMarkers(null);
-      }
+      const b = boundsOfKreis(kreisKey);
+      if (b) map.fitBounds(b, { padding: [20,20] });
+      renderMarkers(null);
       return;
     }
 
     const area = areasByKreis[kreisKey][name];
     if (area?.geojson){
-      currentAreaLayer = L.geoJSON(area.geojson, { style:{ color:"#3388ff", weight:2, fillOpacity:0 }}).addTo(map);
+      currentAreaPolygon = area.geojson; // für Punktprüfung
+      currentAreaLayer = L.geoJSON(area.geojson, {
+        style:{ color:"#3388ff", weight:2, fillOpacity:0 },
+        interactive: false // Klicks „durch“ das Polygon erlauben
+      }).addTo(map);
       map.fitBounds(currentAreaLayer.getBounds());
-      // Filter: nur Punkte im gewählten Polygon
       renderMarkers(area.geojson);
+      klickAktiv = true; // ab hier Klicks erlauben
     }
   });
 
-  /* Statistik-Export (CSV) – per Gebiet oder gesamter Kreis (Union) */
+  /* ===== Statistik-Export (CSV) – per Gebiet oder gesamter Kreis (Union) ===== */
   const statsBtn = document.getElementById('stats-selected-btn');
   statsBtn.disabled = false;
   statsBtn.addEventListener('click', exportStats);
@@ -416,7 +454,6 @@ window.onload = function() {
     let polygonForFilter = null;
     let filenameLabel = '';
 
-    // Fall A: ganzes Kreisgebiet (Union bilden)
     if (!selectedAreaName){
       const feats = Object.values(areasByKreis[kreisKey] || {}).map(a => a.geojson).filter(Boolean);
       if (feats.length){
@@ -428,13 +465,11 @@ window.onload = function() {
           polygonForFilter = unionPoly;
           filenameLabel = kreisKey === 'SL-FL' ? 'Schleswig-Flensburg' : 'Nordfriesland';
         }catch(e){
-          // Falls Union scheitert (komplexe MultiPolys), fallback: kein Polygon-Filter
           polygonForFilter = null;
           filenameLabel = kreisKey === 'SL-FL' ? 'Schleswig-Flensburg' : 'Nordfriesland';
         }
       }
     } else {
-      // Fall B: einzelnes Amt / Stadt
       const a = areasByKreis[kreisKey][selectedAreaName];
       if (a?.geojson){
         polygonForFilter = a.geojson;
@@ -442,9 +477,8 @@ window.onload = function() {
       }
     }
 
-    // Hilfsfunktionen
     function pointInPolyFeature(f){
-      if (!polygonForFilter) return true; // keine Filterung
+      if (!polygonForFilter) return true;
       if (f.geometry?.type !== 'Point') return false;
       const [lon, lat] = f.geometry.coordinates;
       return turf.booleanPointInPolygon(turf.point([lon, lat]), polygonForFilter);
@@ -486,7 +520,7 @@ window.onload = function() {
     const csv = rows.map(r => r.join(";")).join("\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const link = document.createElement("a");
-    const filename = (filenameLabel || "Gesamt_SH") + "_Statistik.csv";
+    const filename = (filenameLabel || "Gesamt_Kreis") + "_Statistik.csv";
     link.href = URL.createObjectURL(blob);
     link.download = filename.replace(/\s+/g,'_');
     link.style.display = "none";
@@ -494,9 +528,6 @@ window.onload = function() {
     link.click();
     document.body.removeChild(link);
   }
-
-  /* Hinweis: Layer bleiben beim Start AUS – Nutzer schaltet gezielt zu.
-     (Wenn du Defaults willst, z. B. Gateways an, dann: map.addLayer(layers["Gateways"]); ) */
 };
 </script>
 </body>
