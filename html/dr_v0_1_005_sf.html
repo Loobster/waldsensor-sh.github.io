@@ -207,7 +207,15 @@ addPoints((typeof feuerwehren !== 'undefined' ? feuerwehren : null),            
 
   /* --- Klicksteuerung --- */
   let klickAktiv=false;
-  map.on('click',e=>{ if(!klickAktiv)return; showPoint(e.latlng.lat,e.latlng.lng); });
+
+  map.on('click', e => {
+     if (!klickAktiv || !currentAreaLayer) return;
+     const lat = e.latlng.lat, lon = e.latlng.lng;
+     const poly = currentAreaLayer.toGeoJSON();
+     const inside = turf.booleanPointInPolygon(turf.point([lon, lat]), poly);
+     if (!inside) return; // Klick ignorieren, wenn außerhalb des Amts
+     showPoint(lat, lon);
+   });
 
   /* === Overpass-Laden (identisch zu 004) === */
   statusEl.textContent='Lade Gebietsgrenzen…';
