@@ -1,13 +1,13 @@
 [
   {
     "id": "waldsensor_bredstedt_s31lb",
-    "ts": "2025-11-02T16:08:25.621Z",
+    "ts": "2025-11-02T16:28:25.402Z",
     "fields": {
-      "BatV": 3.6,
-      "Hum_SHT": 96.7,
-      "Hum_SHT31": 96.7,
-      "TempC_SHT": 9.6,
-      "TempC_SHT31": 9.6,
+      "BatV": 3.606,
+      "Hum_SHT": 97.4,
+      "Hum_SHT31": 97.4,
+      "TempC_SHT": 9.3,
+      "TempC_SHT31": 9.3,
       "alt": 18.0,
       "lat": 54.64988,
       "lon": 8.955
@@ -15,23 +15,23 @@
   },
   {
     "id": "waldsensor_bredstedt_se01lb",
-    "ts": "2025-11-02T16:12:51.563Z",
+    "ts": "2025-11-02T16:32:51.335Z",
     "fields": {
       "BatV": 3.326,
       "alt": 18.0,
       "lat": 54.64988,
       "lon": 8.957,
       "temp_SOIL": 10.59,
-      "water_SOIL": 19.0
+      "water_SOIL": 18.97
     }
   },
   {
     "id": "waldsensor_fahrdorf",
-    "ts": "2025-11-02T16:14:20.991Z",
+    "ts": "2025-11-02T16:34:20.77Z",
     "fields": {
       "ADC1_V": 0.0,
-      "BatV": 3.576,
-      "Hum_SHT": 99.1,
+      "BatV": 3.582,
+      "Hum_SHT": 98.0,
       "TempC_SHT": 9.2,
       "alt": 5.0,
       "lat": 54.50158,
@@ -40,7 +40,7 @@
   },
   {
     "id": "waldsensor_kappeln",
-    "ts": "2025-11-02T16:18:15.665Z",
+    "ts": "2025-11-02T16:38:15.395Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.648,
@@ -51,11 +51,11 @@
   },
   {
     "id": "waldsensor_kellinghusen_lsn50v2",
-    "ts": "2025-11-02T16:14:38.875Z",
+    "ts": "2025-11-02T16:34:38.88Z",
     "fields": {
-      "ADC1_V": 0.247,
+      "ADC1_V": 0.248,
       "BatV": 3.412,
-      "Hum_SHT": 51.9,
+      "Hum_SHT": 52.0,
       "TempC_SHT": 24.0,
       "alt": 18.0,
       "lat": 53.95655,
@@ -64,11 +64,11 @@
   },
   {
     "id": "waldsensor_kropp",
-    "ts": "2025-11-02T16:18:38.853Z",
+    "ts": "2025-11-02T16:38:38.629Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.636,
-      "Hum_SHT": 52.3,
+      "Hum_SHT": 52.6,
       "TempC_SHT": 24.2,
       "lat": 54.40939889088546,
       "lon": 9.5285027323752
@@ -76,7 +76,7 @@
   },
   {
     "id": "waldsensor_neumuenstertl",
-    "ts": "2025-11-02T15:56:37.094Z",
+    "ts": "2025-11-02T16:36:36.524Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.642,
@@ -88,25 +88,25 @@
   },
   {
     "id": "waldsensor_schacht_audorf_llms01",
-    "ts": "2025-11-02T16:06:18.171Z",
+    "ts": "2025-11-02T16:26:18.138Z",
     "fields": {
-      "Leaf_Moisture": 2.3,
-      "Leaf_Temperature": 10.1,
+      "Leaf_Moisture": 2.5,
+      "Leaf_Temperature": 9.7,
       "alt": 18.0,
       "lat": 54.30687,
       "lon": 9.7196,
-      "BatV": 3.304
+      "BatV": 3.306
     }
   },
   {
     "id": "waldsensor_schacht_audorf_s31lb",
-    "ts": "2025-11-02T16:19:58.219Z",
+    "ts": "2025-11-02T16:39:58.008Z",
     "fields": {
-      "BatV": 3.6,
-      "Hum_SHT": 89.6,
-      "Hum_SHT31": 89.6,
-      "TempC_SHT": 10.0,
-      "TempC_SHT31": 10.0,
+      "BatV": 3.594,
+      "Hum_SHT": 91.0,
+      "Hum_SHT31": 91.0,
+      "TempC_SHT": 9.4,
+      "TempC_SHT31": 9.4,
       "alt": 18.0,
       "lat": 54.30687,
       "lon": 9.7196
@@ -114,35 +114,35 @@
   },
   {
     "id": "waldsensor_schacht_audorf_se01lb",
-    "ts": "2025-11-02T16:19:11.91Z",
+    "ts": "2025-11-02T16:39:11.646Z",
     "fields": {
       "BatV": 3.552,
       "alt": 18.0,
       "lat": 54.30687,
       "lon": 9.7196,
-      "temp_SOIL": 10.88,
+      "temp_SOIL": 10.89,
       "water_SOIL": 7.89
     }
   },
   {
     "id": "waldsensor_test2",
-    "ts": "2025-11-02T16:21:34.314Z",
-    "fields": {
-      "ADC1_V": 0.0,
-      "BatV": 3.63
-    }
-  },
-  {
-    "id": "waldsensor_test3",
-    "ts": "2025-11-02T16:07:50.684Z",
+    "ts": "2025-11-02T16:41:34.069Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.636
     }
   },
   {
+    "id": "waldsensor_test3",
+    "ts": "2025-11-02T16:27:50.466Z",
+    "fields": {
+      "ADC1_V": 0.0,
+      "BatV": 3.642
+    }
+  },
+  {
     "id": "waldsensor_wacken",
-    "ts": "2025-11-02T16:24:57.572Z",
+    "ts": "2025-11-02T16:44:57.344Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.66,
