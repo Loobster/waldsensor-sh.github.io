@@ -108,7 +108,28 @@ function multiSensorPopupHtml(nodes){
       <div class="row"><span class="label">Batterie</span><span class="value">${deNum(NUM(f.BatV),2)} V</span></div>`;
   });
 
-  html+=`<a class="btn" href="/html/sensor.html?site=${encodeURIComponent(getLocationKey(nodes[0].id))}" target="_blank">Detailansicht öffnen →</a></div>`;
+// --- Ergänze Bandwidth & Gateways über Netstats-Datei, falls leer ---
+if ((!sf || bw === '–' || gws.length === 0) && nodes.length) {
+  const nid = nodes[0].id;
+  const netUrl = `/data/v2/net/netstats_${nid}.json`;
+  try {
+    const nd = await fetch(netUrl).then(r=>r.json());
+    if (nd.gateways && nd.gateways.length) {
+      html = html.replace('0</span><span class="lbl">Gateways',''+nd.gateways.length+'</span><span class="lbl">Gateways');
+    }
+    if (nd.bw) {
+      html = html.replace('–</span><span class="lbl">Bandwidth',''+nd.bw+' kHz</span><span class="lbl">Bandwidth');
+    }
+  } catch(e){
+    console.warn('Kein Netstats-Fallback für', nid);
+  }
+}
+
+html+=`<a class="btn" href="/html/sensor.html?node=${encodeURIComponent(nodes[0].id)}" target="_blank" rel="noopener">Detailansicht öffnen →</a>`;
+return html;  
+
+html+=`<a class="btn" href="/html/sensor.html?site=${encodeURIComponent(getLocationKey(nodes[0].id))}" target="_blank">Detailansicht öffnen →</a></div>`;
+
   return html;
 }
 function nodePopupHtml(item,all){const rel=findRelatedNodes(all||[item],item.id);if(rel.length>1)return multiSensorPopupHtml(rel);
