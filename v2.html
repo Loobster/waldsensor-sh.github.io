@@ -90,12 +90,12 @@
     const getHumLabel=s=>s?"Bodenfeuchte":"Luftfeuchte";
 
     // Basis-Schlüssel eines Standortes (z. B. "waldsensor-bredstedt")
-    function getLocationKey(id){
-      return String(id||"")
-        .replace(/_/g,"-")
-        .replace(/[-_](s31lb|se01lb|llms01)$/i,'')
-        .toLowerCase();
-    }
+    
+function getLocationKey(id) {
+  const parts = String(id || "").toLowerCase().replace(/_/g, "-").split("-");
+  return parts.length > 1 ? parts.slice(0, -1).join("-") : parts[0];
+}
+}
     function findRelatedNodes(nodes,baseId){
       const key=getLocationKey(baseId);
       return nodes.filter(n=>getLocationKey(n.id)===key);
