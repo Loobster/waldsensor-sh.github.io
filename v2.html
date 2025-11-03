@@ -108,6 +108,12 @@ function multiSensorPopupHtml(nodes){
       <div class="row"><span class="label">Batterie</span><span class="value">${deNum(NUM(f.BatV),2)} V</span></div>`;
   });
 
+// Sicherstellen, dass sf und bw definiert sind
+const f0 = nodes[0].fields || {};
+const sf = NUM(f0.sf);
+const bw = f0.bw ? (f0.bw/1000)+'kHz' : '–';
+
+
 // --- Ergänze Bandwidth & Gateways über Netstats-Datei, falls leer ---
 if ((!sf || bw === '–' || gws.length === 0) && nodes.length) {
   const nid = nodes[0].id;
