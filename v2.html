@@ -129,8 +129,7 @@
 function multiSensorPopupHtml(nodes) {
       // Titel = "waldsensor-" + <basis>
       const baseRaw = getLocationKey(nodes[0].id).replace(/^waldsensor-?/i,'');
-      const title = waldsensor-${baseRaw};
-
+      const title = `waldsensor-${baseRaw}`;
       // letzter Kontakt = max(ts)
       const lastTs = nodes.reduce((acc,n)=>{
         return !isValidISO(n.ts) ? acc : (!acc || Date.parse(n.ts)>Date.parse(acc) ? n.ts : acc);
