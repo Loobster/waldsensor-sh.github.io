@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WALDSENSOR.SH – Gateway-Karte</title>
-  <meta name="version" content="v0.21b+3 (logic patch)" />
+  <meta name="version" content="v0.21b" />
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
@@ -83,49 +83,29 @@
     const relAge = ts => { if(!isValidISO(ts))return"—"; const m=Math.floor((Date.now()-Date.parse(ts))/60000); if(m<0)return"0 min"; if(m<60)return`${m} min`; const h=Math.floor(m/60),r=m%60; return`${h} h ${r} min`; };
     const deNum=(n,d=1)=>(typeof n==="number"&&Number.isFinite(n))?n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d}):"–";
     const normId=id=>String(id||"").trim().replace(/_/g,"-").replace(/schacht[-_]?audorf/i,"Schacht-Audorf");
+    const isSoilNode=id=>/(^|[-_])se01(lb)?$/i.test(String(id||""));
+    const getTemperature=(f,s)=>s?NUM(f.temp_SOIL):NUM(f.TempC_SHT)??NUM(f.TempC_SHT31);
+    const getHumidity=(f,s)=>s?NUM(f.water_SOIL):NUM(f.Hum_SHT)??NUM(f.Hum_SHT31);
+    const getTempLabel=s=>s?"Bodentemperatur":"Temperatur";
+    const getHumLabel=s=>s?"Bodenfeuchte":"Luftfeuchte";
 
-    // Site-Key = alles vor dem letzten "-" (Zero-Touch, keine Modell-Whitelists)
-    function siteKey(id){
-      const s=String(id||'').trim().toLowerCase().replace(/_/g,'-');
-      const parts=s.split('-');
-      return parts.length>1 ? parts.slice(0,-1).join('-') : s;
+    // Basis-Schlüssel eines Standortes (z. B. "waldsensor-bredstedt")
+    function getLocationKey(id){
+      return String(id||"")
+        .replace(/_/g,"-")
+        .replace(/[-_](s31lb|se01lb|llms01)$/i,'')
+        .toLowerCase();
     }
-    function findRelatedNodes(nodes, baseId){
-      const key=siteKey(baseId);
-      return nodes.filter(n=>siteKey(n.id)===key);
-    }
-
-    // Feld-Normalisierung: fängt Dragino-/Modell-Varianten robust ab
-    function normalizeFields(f){
-      const g = f || {};
-      // Rohwerte
-      const tempAir = NUM(g.TempC_SHT) ?? NUM(g.TempC_SHT31) ?? NUM(g.temperature) ?? NUM(g.temp);
-      const humAir  = NUM(g.Hum_SHT)   ?? NUM(g.Hum_SHT31)   ?? NUM(g.humidity)   ?? NUM(g.hum);
-      const tempSoil= NUM(g.temp_SOIL);
-      const moistSoil=NUM(g.water_SOIL);
-      const leafT   = NUM(g.Leaf_Temperature);
-      const leafM   = NUM(g.Leaf_Moisture);
-      const bat     = NUM(g.BatV) ?? NUM(g.battery) ?? NUM(g.batt) ?? NUM(g.battery_voltage);
-      const sf      = NUM(g.sf) ?? NUM(g.spreading_factor);
-      const bwHz    = NUM(g.bw) ?? NUM(g.bandwidth_hz);
-      const bwTxt   = bwHz ? (bwHz/1000)+'kHz' : '–';
-
-      // Heuristische Typen
-      const isLeaf  = leafT!==null || leafM!==null;
-      const isSoil  = tempSoil!==null || moistSoil!==null;
-
-      // Fallback: wenn weder leaf noch soil → Luft
-      const temp = isSoil ? tempSoil : (isLeaf ? leafT : tempAir);
-      const hum  = isSoil ? moistSoil : (isLeaf ? leafM : humAir);
-
-      return { temp, hum, bat, sf, bwTxt, isLeaf, isSoil,
-               leafT, leafM, tempSoil, moistSoil };
+    function findRelatedNodes(nodes,baseId){
+      const key=getLocationKey(baseId);
+      return nodes.filter(n=>getLocationKey(n.id)===key);
     }
 
     // -------------------- Multi-Sensor Popup --------------------
     function multiSensorPopupHtml(nodes) {
-      const titleBase = siteKey(nodes[0].id);
-      const title = normId(titleBase);
+      // Titel = "waldsensor-" + <basis>
+      const baseRaw = getLocationKey(nodes[0].id).replace(/^waldsensor-?/i,'');
+      const title = `waldsensor-${baseRaw}`;
 
       // letzter Kontakt = max(ts)
       const lastTs = nodes.reduce((acc,n)=>{
@@ -133,7 +113,7 @@
       }, null);
 
       // Ø Batterie
-      const batVals = nodes.map(n=>normalizeFields(n.fields).bat).filter(v=>Number.isFinite(v));
+      const batVals = nodes.map(n=>NUM(n.fields?.BatV)).filter(v=>Number.isFinite(v));
       const batAvg = batVals.length ? batVals.reduce((a,b)=>a+b,0)/batVals.length : null;
 
       // Gateways aller Nodes zusammenführen (nach ID deduplizieren)
@@ -145,6 +125,7 @@
             gwMap.set(id, { id, name: gw.name||gw.id, lat: gw.lat, lon: gw.lon,
               rssi: [], snr: [] });
           }
+          // RSSI/SNR ggf. aus Feldern rssi1/snr1... des jeweiligen Datensatzes ziehen
           const f=n.fields||{};
           const idx = i+1;
           const rssi = NUM(f[`rssi${idx}`]); if(Number.isFinite(rssi)) gwMap.get(id).rssi.push(rssi);
@@ -157,22 +138,24 @@
         snr:  g.snr.length  ? Math.round((g.snr.reduce((a,b)=>a+b,0)/g.snr.length)*10)/10 : null
       }));
 
-      // Netzwerk-Basis (erstes Element, das sf/bw hat; sonst nodes[0])
-      const fPick = (nodes.find(n=>normalizeFields(n.fields).sf || normalizeFields(n.fields).bwTxt!=='–')||nodes[0]).fields||{};
-      const n0 = normalizeFields(fPick);
+      // Netzwerk-Basisinfos (von erstem Datensatz, falls vorhanden)
+      const f0 = nodes[0].fields||{};
+      const sf = NUM(f0.sf);
+      const bw = f0.bw ? (f0.bw/1000)+'kHz' : '–';
 
       let html = `<div class="popup">`;
-      html += `<h3>${title} <span class="status-badge">${nodes.length} Sensoren</span></h3>`;
+      html += `<h3>${normId(title)} <span class="status-badge">${nodes.length} Sensoren</span></h3>`;
       html += `<div class="row"><span class="label">Letzter Kontakt</span><span class="value">${formatDE(lastTs)}</span></div>`;
       html += `<hr/>`;
 
       html += `<div class="info-grid">`;
       html += `<div class="info-card"><span class="num">${gws.length}</span><span class="lbl">Gateways</span></div>`;
       html += `<div class="info-card"><span class="num">${batAvg!==null?deNum(batAvg,2):'–'}</span><span class="lbl">Ø Batterie (V)</span></div>`;
-      if (n0.sf) html += `<div class="info-card"><span class="num">SF${n0.sf}</span><span class="lbl">Spreading Factor</span></div>`;
-      html += `<div class="info-card"><span class="num">${n0.bwTxt}</span><span class="lbl">Bandwidth</span></div>`;
+      if (sf) html += `<div class="info-card"><span class="num">SF${sf}</span><span class="lbl">Spreading Factor</span></div>`;
+      html += `<div class="info-card"><span class="num">${bw}</span><span class="lbl">Bandwidth</span></div>`;
       html += `</div>`;
 
+      // Gateways-Liste
       if (gws.length){
         html += `<hr/><strong style="font-size:12px;color:var(--gateway)">Empfangende Gateways:</strong>`;
         html += `<div class="gw-list">`;
@@ -187,27 +170,30 @@
 
       // Sensorblöcke
       nodes.forEach(n => {
-        const nf = normalizeFields(n.fields||{});
-        const isLeaf = nf.isLeaf;
-        const isSoil = nf.isSoil;
+        const f = n.fields || {};
+        const soil = isSoilNode(n.id);
+        const isLeaf = /llms01/i.test(n.id);
 
         html += `<hr/>`;
         if (isLeaf) {
           html += `<div class="sensor-type">🍃 Blatt-Sensor</div>`;
-          html += `<div class="row"><span class="label">Blatttemperatur</span><span class="value">${Number.isFinite(nf.leafT) ? deNum(nf.leafT,1)+' °C' : '–'}</span></div>`;
-          html += `<div class="row"><span class="label">Blattfeuchte</span><span class="value">${Number.isFinite(nf.leafM) ? deNum(nf.leafM,1)+' %' : '–'}</span></div>`;
-        } else if (isSoil) {
+          html += `<div class="row"><span class="label">Blatttemperatur</span><span class="value">${NUM(f.Leaf_Temperature) ? deNum(NUM(f.Leaf_Temperature),1)+' °C' : '–'}</span></div>`;
+          html += `<div class="row"><span class="label">Blattfeuchte</span><span class="value">${NUM(f.Leaf_Moisture) ? deNum(NUM(f.Leaf_Moisture),1)+' %' : '–'}</span></div>`;
+        } else if (soil) {
           html += `<div class="sensor-type">🌱 Boden-Sensor</div>`;
-          html += `<div class="row"><span class="label">Bodentemperatur</span><span class="value">${Number.isFinite(nf.tempSoil) ? deNum(nf.tempSoil,1)+' °C' : '–'}</span></div>`;
-          html += `<div class="row"><span class="label">Bodenfeuchte</span><span class="value">${Number.isFinite(nf.moistSoil) ? deNum(nf.moistSoil,1)+' %' : '–'}</span></div>`;
+          html += `<div class="row"><span class="label">Bodentemperatur</span><span class="value">${NUM(f.temp_SOIL) ? deNum(NUM(f.temp_SOIL),1)+' °C' : '–'}</span></div>`;
+          html += `<div class="row"><span class="label">Bodenfeuchte</span><span class="value">${NUM(f.water_SOIL) ? deNum(NUM(f.water_SOIL),1)+' %' : '–'}</span></div>`;
         } else {
           html += `<div class="sensor-type">🌡️ Luft-Sensor</div>`;
-          html += `<div class="row"><span class="label">Lufttemperatur</span><span class="value">${Number.isFinite(nf.temp)?deNum(nf.temp,1)+' °C':'–'}</span></div>`;
-          html += `<div class="row"><span class="label">Luftfeuchte</span><span class="value">${Number.isFinite(nf.hum)?deNum(nf.hum,1)+' %':'–'}</span></div>`;
+          const temp = NUM(f.TempC_SHT) ?? NUM(f.TempC_SHT31);
+          const hum  = NUM(f.Hum_SHT) ?? NUM(f.Hum_SHT31);
+          html += `<div class="row"><span class="label">Lufttemperatur</span><span class="value">${Number.isFinite(temp)?deNum(temp,1)+' °C':'–'}</span></div>`;
+          html += `<div class="row"><span class="label">Luftfeuchte</span><span class="value">${Number.isFinite(hum)?deNum(hum,1)+' %':'–'}</span></div>`;
         }
-        html += `<div class="row"><span class="label">Batterie</span><span class="value">${Number.isFinite(nf.bat) ? deNum(nf.bat,2)+' V' : '–'}</span></div>`;
+        html += `<div class="row"><span class="label">Batterie</span><span class="value">${NUM(f.BatV) ? deNum(NUM(f.BatV),2)+' V' : '–'}</span></div>`;
       });
 
+      // Detail-Button (zeigt irgendeinen beteiligten Node)
       const statHref = `/html/sensor.html?node=${encodeURIComponent(nodes[0].id)}`;
       html += `<a class="btn" href="${statHref}" target="_blank" rel="noopener">Detailansicht öffnen →</a>`;
       html += `</div>`;
@@ -216,35 +202,31 @@
 
     // -------------------- Standard-Popup --------------------
     function nodePopupHtml(item, all){
+      // Neu: Multi-Sensor prüfung GENERALISIERT (nicht mehr auf festen Ortsnamen begrenzt)
       const rel = findRelatedNodes(all||[item], item.id);
       if (rel.length > 1) return multiSensorPopupHtml(rel);
 
       const f=item.fields||{};
-      const nf=normalizeFields(f);
       const title=normId(item.id);
       const when=formatDE(item.ts);
       const gwCount=(item.gateway_details||[]).length;
+      const soil=isSoilNode(item.id);
+      const temp=getTemperature(f,soil);
+      const hum=getHumidity(f,soil);
+      const bat=NUM(f.BatV);const sf=NUM(f.sf);
 
       let html=`<div class="popup"><h3>${title} <span class="status-badge">AKTIV</span></h3>
       <div class="row"><span class="label">Letzter Kontakt</span><span class="value">${when}</span></div><hr/>
       <div class="info-grid">
         <div class="info-card"><span class="num">${gwCount}</span><span class="lbl">Gateways</span></div>
-        <div class="info-card"><span class="num">${Number.isFinite(nf.bat)?deNum(nf.bat,2):'–'}</span><span class="lbl">Batterie (V)</span></div>
-        ${nf.sf?`<div class="info-card"><span class="num">SF${nf.sf}</span><span class="lbl">Spreading Factor</span></div>`:''}
-        <div class="info-card"><span class="num">${nf.bwTxt}</span><span class="lbl">Bandwidth</span></div>
+        <div class="info-card"><span class="num">${bat?deNum(bat,2):'–'}</span><span class="lbl">Batterie (V)</span></div>
+        ${sf?`<div class="info-card"><span class="num">SF${sf}</span><span class="lbl">Spreading Factor</span></div>`:''}
+        <div class="info-card"><span class="num">${f.bw?(f.bw/1000)+'kHz':'–'}</span><span class="lbl">Bandwidth</span></div>
       </div>`;
 
-      html+=`<hr/><div class="sensor-type">${nf.isSoil?'🌱 Boden-Sensor':(nf.isLeaf?'🍃 Blatt-Sensor':'🌡️ Luft-Sensor')}</div>`;
-      if(nf.isLeaf){
-        html+=`<div class="row"><span class="label">Blatttemperatur</span><span class="value">${Number.isFinite(nf.leafT)?deNum(nf.leafT,1)+' °C':'–'}</span></div>`;
-        html+=`<div class="row"><span class="label">Blattfeuchte</span><span class="value">${Number.isFinite(nf.leafM)?deNum(nf.leafM,1)+' %':'–'}</span></div>`;
-      } else if (nf.isSoil){
-        html+=`<div class="row"><span class="label">Bodentemperatur</span><span class="value">${Number.isFinite(nf.tempSoil)?deNum(nf.tempSoil,1)+' °C':'–'}</span></div>`;
-        html+=`<div class="row"><span class="label">Bodenfeuchte</span><span class="value">${Number.isFinite(nf.moistSoil)?deNum(nf.moistSoil,1)+' %':'–'}</span></div>`;
-      } else {
-        if(nf.temp!==null) html+=`<div class="row"><span class="label">Lufttemperatur</span><span class="value">${deNum(nf.temp,1)} °C</span></div>`;
-        if(nf.hum!==null)  html+=`<div class="row"><span class="label">Luftfeuchte</span><span class="value">${deNum(nf.hum,1)} %</span></div>`;
-      }
+      html+=`<hr/><div class="sensor-type">${soil?'🌱 Boden-Sensor':'🌡️ Luft-Sensor'}</div>`;
+      if(temp!==null)html+=`<div class="row"><span class="label">${getTempLabel(soil)}</span><span class="value">${deNum(temp,1)} °C</span></div>`;
+      if(hum!==null)html+=`<div class="row"><span class="label">${getHumLabel(soil)}</span><span class="value">${deNum(hum,1)} %</span></div>`;
 
       const gws=item.gateway_details||[];
       if(gws.length>0){
@@ -254,7 +236,7 @@
         });
         html+=`</div>`;
       }
-      html+=`<a class="btn" href="/html/sensor.html?node=${encodeURIComponent(item.id)}" target="_blank" rel="noopener">Detailansicht öffnen →</a></div>`;
+      html+=`<a class="btn" href="/html/sensor.html?node=${encodeURIComponent(item.id)}" target="_blank">Detailansicht öffnen →</a></div>`;
       return html;
     }
 
