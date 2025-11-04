@@ -83,7 +83,19 @@
     const deNum=(n,d=1)=>(typeof n==="number"&&Number.isFinite(n))?n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d}):"–";
     const normId=id=>String(id||"").trim().replace(/_/g,"-");
     const isSoilNode=id=>/(^|[-_])se01(lb)?$/i.test(String(id||""));
-    const getLocationKey=id=>String(id||"").toLowerCase().replace(/_/g,"-").split("-").slice(0,-1).join("-");
+   
+const getLocationKey = id => {
+  const s = String(id || "").toLowerCase().replace(/_/g, "-");
+  const parts = s.split("-");
+  // keine Clusterbildung bei nur 1 Segment
+  if (parts.length < 3) return s;
+  // wenn letztes Segment Hardwaretyp (sn50v3, lsn50v2, s31lb, se01lb, llms01) ist → abschneiden
+  if (/^(sn50v3|lsn50v2|s31lb|se01lb|llms01)$/.test(parts[parts.length - 1])) {
+    return parts.slice(0, -1).join("-");
+  }
+  return s; // sonst unverändert
+};
+
     const getTemperature=(f,s)=>s?NUM(f.temp_SOIL):NUM(f.TempC_SHT)||NUM(f.TempC_SHT31);
     const getHumidity=(f,s)=>s?NUM(f.water_SOIL):NUM(f.Hum_SHT)||NUM(f.Hum_SHT31);
 
