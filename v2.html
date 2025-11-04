@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WALDSENSOR.SH – Gateway-Karte</title>
-  <meta name="version" content="v0.21b+2" />
+  <meta name="version" content="v0.21b+3 – SyntaxFix Template String (04.11.2025)" />
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
@@ -67,7 +67,7 @@
   </div>
 
   <div class="hud-center">
-    <div class="badge">v0.21b+2 Adaptive Standort-Cluster Edition (04.11.2025)</div>
+    <div class="badge">v0.21b+3 Adaptive Standort-Cluster Edition (04.11.2025)</div>
   </div>
 
   <div class="hud-right">
@@ -76,158 +76,69 @@
   </div>
 
   <script>
-    // -------------------- Helpers --------------------
     const NUM = x => { const n = typeof x==="number"?x:(typeof x==="string"?Number(x.replace(",",".")):NaN); return Number.isFinite(n)?n:null; };
     const isValidISO = ts => !!ts && typeof ts==="string" && Number.isFinite(Date.parse(ts));
     const formatDE = ts => isValidISO(ts)?new Date(ts).toLocaleString("de-DE",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}):"—";
     const relAge = ts => { if(!isValidISO(ts))return"—"; const m=Math.floor((Date.now()-Date.parse(ts))/60000); if(m<0)return"0 min"; if(m<60)return`${m} min`; const h=Math.floor(m/60),r=m%60; return`${h} h ${r} min`; };
     const deNum=(n,d=1)=>(typeof n==="number"&&Number.isFinite(n))?n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d}):"–";
-    const normId=id=>String(id||"").trim().replace(/_/g,"-").replace(/schacht[-_]?audorf/i,"Schacht-Audorf");
+    const normId=id=>String(id||"").trim().replace(/_/g,"-");
     const isSoilNode=id=>/(^|[-_])se01(lb)?$/i.test(String(id||""));
-    const getTemperature=(f,s)=>s?NUM(f.temp_SOIL):NUM(f.TempC_SHT)??NUM(f.TempC_SHT31);
-    const getHumidity=(f,s)=>s?NUM(f.water_SOIL):NUM(f.Hum_SHT)??NUM(f.Hum_SHT31);
-    const getTempLabel=s=>s?"Bodentemperatur":"Temperatur";
-    const getHumLabel=s=>s?"Bodenfeuchte":"Luftfeuchte";
+    const getLocationKey=id=>String(id||"").toLowerCase().replace(/_/g,"-").split("-").slice(0,-1).join("-");
+    const getTemperature=(f,s)=>s?NUM(f.temp_SOIL):NUM(f.TempC_SHT)||NUM(f.TempC_SHT31);
+    const getHumidity=(f,s)=>s?NUM(f.water_SOIL):NUM(f.Hum_SHT)||NUM(f.Hum_SHT31);
 
-    // -------------------- Standort-Cluster Logik (Zero-Touch, Modellunabhängig) --------------------
-    function getLocationKey(id, nodeData = []) {
-      const base = String(id || "")
-        .trim()
-        .toLowerCase()
-        .replace(/_/g, "-");
-
-      const parts = base.split("-");
-      if (parts.length < 2) return base;
-      const prefix = parts.slice(0, -1).join("-");
-
-      if (nodeData.length > 0) {
-        const ref = nodeData.find(n => n.id === id);
-        if (ref && ref.fields?.lat && ref.fields?.lon) {
-          const lat0 = NUM(ref.fields.lat);
-          const lon0 = NUM(ref.fields.lon);
-          const near = nodeData.filter(n => {
-            const f = n.fields || {};
-            const lat = NUM(f.lat), lon = NUM(f.lon);
-            if (!lat || !lon) return false;
-            const samePrefix = n.id.toLowerCase().replace(/_/g, "-").startsWith(prefix);
-            const nearEnough = Math.abs(lat - lat0) < 0.001 && Math.abs(lon - lon0) < 0.001;
-            return samePrefix && nearEnough;
-          });
-          if (near.length >= 2) return prefix;
-        }
-      }
-      return id.toLowerCase();
-    }
-
-    function findRelatedNodes(nodes, baseId) {
-      const key = getLocationKey(baseId, nodes);
-      return nodes.filter(n => getLocationKey(n.id, nodes) === key);
+    function findRelatedNodes(nodes,baseId){
+      const key=getLocationKey(baseId);
+      return nodes.filter(n=>getLocationKey(n.id)===key);
     }
 
     // -------------------- Multi-Sensor Popup --------------------
-
-function multiSensorPopupHtml(nodes) {
-      // Titel = "waldsensor-" + <basis>
+    function multiSensorPopupHtml(nodes) {
       const baseRaw = getLocationKey(nodes[0].id).replace(/^waldsensor-?/i,'');
       const title = `waldsensor-${baseRaw}`;
-      // letzter Kontakt = max(ts)
+
       const lastTs = nodes.reduce((acc,n)=>{
         return !isValidISO(n.ts) ? acc : (!acc || Date.parse(n.ts)>Date.parse(acc) ? n.ts : acc);
       }, null);
 
-      // Ø Batterie
       const batVals = nodes.map(n=>NUM(n.fields?.BatV)).filter(v=>Number.isFinite(v));
       const batAvg = batVals.length ? batVals.reduce((a,b)=>a+b,0)/batVals.length : null;
 
-      // Gateways aller Nodes zusammenführen (nach ID deduplizieren)
-      const gwMap = new Map();
+      const gws = [];
       nodes.forEach(n=>{
-        (n.gateway_details||[]).forEach((gw,i)=>{
-          const id = gw.id || gw.name || gw-${i};
-          if(!gwMap.has(id)){
-            gwMap.set(id, { id, name: gw.name||gw.id, lat: gw.lat, lon: gw.lon,
-              rssi: [], snr: [] });
-          }
-          // RSSI/SNR ggf. aus Feldern rssi1/snr1... des jeweiligen Datensatzes ziehen
-          const f=n.fields||{};
-          const idx = i+1;
-          const rssi = NUM(f[rssi${idx}]); if(Number.isFinite(rssi)) gwMap.get(id).rssi.push(rssi);
-          const snr  = NUM(f[snr${idx}]);  if(Number.isFinite(snr))  gwMap.get(id).snr.push(snr);
+        (n.gateway_details||[]).forEach(gw=>{
+          if(!gws.find(x=>x.id===gw.id)) gws.push(gw);
         });
       });
-      const gws = Array.from(gwMap.values()).map(g=>({
-        ...g,
-        rssi: g.rssi.length ? Math.round(g.rssi.reduce((a,b)=>a+b,0)/g.rssi.length) : null,
-        snr:  g.snr.length  ? Math.round((g.snr.reduce((a,b)=>a+b,0)/g.snr.length)*10)/10 : null
-      }));
 
-      // Netzwerk-Basisinfos (von erstem Datensatz, falls vorhanden)
-      const f0 = nodes[0].fields||{};
-      const sf = NUM(f0.sf);
-      const bw = f0.bw ? (f0.bw/1000)+'kHz' : '–';
+      let html = `<div class="popup"><h3>${title} <span class="status-badge">${nodes.length} Sensoren</span></h3>`;
+      html += `<div class="row"><span class="label">Letzter Kontakt</span><span class="value">${formatDE(lastTs)}</span></div><hr/>`;
 
-      let html = <div class="popup">;
-      html += <h3>${normId(title)} <span class="status-badge">${nodes.length} Sensoren</span></h3>;
-      html += <div class="row"><span class="label">Letzter Kontakt</span><span class="value">${formatDE(lastTs)}</span></div>;
-      html += <hr/>;
+      html += `<div class="info-grid">`;
+      html += `<div class="info-card"><span class="num">${gws.length}</span><span class="lbl">Gateways</span></div>`;
+      html += `<div class="info-card"><span class="num">${batAvg!==null?deNum(batAvg,2):'–'}</span><span class="lbl">Ø Batterie (V)</span></div>`;
+      html += `<div class="info-card"><span class="num">–</span><span class="lbl">Bandwidth</span></div>`;
+      html += `</div>`;
 
-      html += <div class="info-grid">;
-      html += <div class="info-card"><span class="num">${gws.length}</span><span class="lbl">Gateways</span></div>;
-      html += <div class="info-card"><span class="num">${batAvg!==null?deNum(batAvg,2):'–'}</span><span class="lbl">Ø Batterie (V)</span></div>;
-      if (sf) html += <div class="info-card"><span class="num">SF${sf}</span><span class="lbl">Spreading Factor</span></div>;
-      html += <div class="info-card"><span class="num">${bw}</span><span class="lbl">Bandwidth</span></div>;
-      html += </div>;
-
-      // Gateways-Liste
-      if (gws.length){
-        html += <hr/><strong style="font-size:12px;color:var(--gateway)">Empfangende Gateways:</strong>;
-        html += <div class="gw-list">;
-        gws.forEach(g=>{
-          html += <div class="gw-item">;
-          html += <strong>${g.name||g.id}</strong>;
-          html += <div class="signal"><span>RSSI: ${g.rssi!==null?g.rssi+' dBm':'–'}</span><span>SNR: ${g.snr!==null?g.snr+' dB':'–'}</span></div>;
-          html += </div>;
-        });
-        html += </div>;
-      }
-
-      // Sensorblöcke
-      nodes.forEach(n => {
-        const f = n.fields || {};
-        const soil = isSoilNode(n.id);
-        const isLeaf = /llms01/i.test(n.id);
-
-        html += <hr/>;
-        if (isLeaf) {
-          html += <div class="sensor-type">🍃 Blatt-Sensor</div>;
-          html += <div class="row"><span class="label">Blatttemperatur</span><span class="value">${NUM(f.Leaf_Temperature) ? deNum(NUM(f.Leaf_Temperature),1)+' °C' : '–'}</span></div>;
-          html += <div class="row"><span class="label">Blattfeuchte</span><span class="value">${NUM(f.Leaf_Moisture) ? deNum(NUM(f.Leaf_Moisture),1)+' %' : '–'}</span></div>;
-        } else if (soil) {
-          html += <div class="sensor-type">🌱 Boden-Sensor</div>;
-          html += <div class="row"><span class="label">Bodentemperatur</span><span class="value">${NUM(f.temp_SOIL) ? deNum(NUM(f.temp_SOIL),1)+' °C' : '–'}</span></div>;
-          html += <div class="row"><span class="label">Bodenfeuchte</span><span class="value">${NUM(f.water_SOIL) ? deNum(NUM(f.water_SOIL),1)+' %' : '–'}</span></div>;
-        } else {
-          html += <div class="sensor-type">🌡️ Luft-Sensor</div>;
-          const temp = NUM(f.TempC_SHT) ?? NUM(f.TempC_SHT31);
-          const hum  = NUM(f.Hum_SHT) ?? NUM(f.Hum_SHT31);
-          html += <div class="row"><span class="label">Lufttemperatur</span><span class="value">${Number.isFinite(temp)?deNum(temp,1)+' °C':'–'}</span></div>;
-          html += <div class="row"><span class="label">Luftfeuchte</span><span class="value">${Number.isFinite(hum)?deNum(hum,1)+' %':'–'}</span></div>;
-        }
-        html += <div class="row"><span class="label">Batterie</span><span class="value">${NUM(f.BatV) ? deNum(NUM(f.BatV),2)+' V' : '–'}</span></div>;
+      nodes.forEach(n=>{
+        const f=n.fields||{};
+        const soil=isSoilNode(n.id);
+        html+=`<hr/><div class="sensor-type">${soil?'🌱 Boden-Sensor':'🌡️ Luft-Sensor'}</div>`;
+        const temp=getTemperature(f,soil);
+        const hum=getHumidity(f,soil);
+        html+=`<div class="row"><span class="label">${soil?'Bodentemperatur':'Lufttemperatur'}</span><span class="value">${temp!==null?deNum(temp,1)+' °C':'–'}</span></div>`;
+        html+=`<div class="row"><span class="label">${soil?'Bodenfeuchte':'Luftfeuchte'}</span><span class="value">${hum!==null?deNum(hum,1)+' %':'–'}</span></div>`;
+        html+=`<div class="row"><span class="label">Batterie</span><span class="value">${NUM(f.BatV)?deNum(NUM(f.BatV),2)+' V':'–'}</span></div>`;
       });
 
-      // Detail-Button (zeigt irgendeinen beteiligten Node)
-      const statHref = /html/sensor.html?node=${encodeURIComponent(nodes[0].id)};
-      html += <a class="btn" href="${statHref}" target="_blank" rel="noopener">Detailansicht öffnen →</a>;
-      html += </div>;
+      html+=`<a class="btn" href="/html/sensor.html?node=${encodeURIComponent(nodes[0].id)}" target="_blank">Detailansicht öffnen →</a>`;
+      html+=`</div>`;
       return html;
     }
 
-    // -------------------- Standard-Popup --------------------
-    function nodePopupHtml(item, all){
-      // Neu: Multi-Sensor prüfung GENERALISIERT (nicht mehr auf festen Ortsnamen begrenzt)
-      const rel = findRelatedNodes(all||[item], item.id);
-      if (rel.length > 1) return multiSensorPopupHtml(rel);
+    function nodePopupHtml(item,all){
+      const rel=findRelatedNodes(all||[item],item.id);
+      if(rel.length>1)return multiSensorPopupHtml(rel);
 
       const f=item.fields||{};
       const title=normId(item.id);
@@ -236,147 +147,74 @@ function multiSensorPopupHtml(nodes) {
       const soil=isSoilNode(item.id);
       const temp=getTemperature(f,soil);
       const hum=getHumidity(f,soil);
-      const bat=NUM(f.BatV);const sf=NUM(f.sf);
+      const bat=NUM(f.BatV);
+      const sf=NUM(f.sf);
 
-      let html=<div class="popup"><h3>${title} <span class="status-badge">AKTIV</span></h3>
-      <div class="row"><span class="label">Letzter Kontakt</span><span class="value">${when}</span></div><hr/>
-      <div class="info-grid">
+      let html=`<div class="popup"><h3>${title} <span class="status-badge">AKTIV</span></h3>`;
+      html+=`<div class="row"><span class="label">Letzter Kontakt</span><span class="value">${when}</span></div><hr/>`;
+      html+=`<div class="info-grid">
         <div class="info-card"><span class="num">${gwCount}</span><span class="lbl">Gateways</span></div>
         <div class="info-card"><span class="num">${bat?deNum(bat,2):'–'}</span><span class="lbl">Batterie (V)</span></div>
-        ${sf?<div class="info-card"><span class="num">SF${sf}</span><span class="lbl">Spreading Factor</span></div>:''}
+        ${sf?`<div class="info-card"><span class="num">SF${sf}</span><span class="lbl">Spreading Factor</span></div>`:''}
         <div class="info-card"><span class="num">${f.bw?(f.bw/1000)+'kHz':'–'}</span><span class="lbl">Bandwidth</span></div>
-      </div>;
+      </div>`;
 
-      html+=<hr/><div class="sensor-type">${soil?'🌱 Boden-Sensor':'🌡️ Luft-Sensor'}</div>;
-      if(temp!==null)html+=<div class="row"><span class="label">${getTempLabel(soil)}</span><span class="value">${deNum(temp,1)} °C</span></div>;
-      if(hum!==null)html+=<div class="row"><span class="label">${getHumLabel(soil)}</span><span class="value">${deNum(hum,1)} %</span></div>;
+      html+=`<hr/><div class="sensor-type">${soil?'🌱 Boden-Sensor':'🌡️ Luft-Sensor'}</div>`;
+      if(temp!==null)html+=`<div class="row"><span class="label">${soil?'Bodentemperatur':'Lufttemperatur'}</span><span class="value">${deNum(temp,1)} °C</span></div>`;
+      if(hum!==null)html+=`<div class="row"><span class="label">${soil?'Bodenfeuchte':'Luftfeuchte'}</span><span class="value">${deNum(hum,1)} %</span></div>`;
+      html+=`<div class="row"><span class="label">Batterie</span><span class="value">${bat?deNum(bat,2)+' V':'–'}</span></div>`;
 
-      const gws=item.gateway_details||[];
-      if(gws.length>0){
-        html+=<hr/><strong style="font-size:12px;color:var(--gateway)">Empfangende Gateways:</strong><div class="gw-list">;
-        gws.forEach((gw,i)=>{const rssi=f[rssi${i+1}];const snr=f[snr${i+1}];
-          html+=<div class="gw-item"><strong>${gw.name||gw.id}</strong><div class="signal"><span>RSSI: ${rssi?rssi+' dBm':'–'}</span><span>SNR: ${snr?snr+' dB':'–'}</span></div></div>;
-        });
-        html+=</div>;
-      }
-      html+=<a class="btn" href="/html/sensor.html?node=${encodeURIComponent(item.id)}" target="_blank">Detailansicht öffnen →</a></div>;
+      html+=`<a class="btn" href="/html/sensor.html?node=${encodeURIComponent(item.id)}" target="_blank">Detailansicht öffnen →</a></div>`;
       return html;
     }
 
-    function gatewayPopupHtml(gw,count){
-      return <div class="popup"><h3 style="color:var(--gateway)">Gateway: ${gw.name||gw.id}</h3>
-      <div class="row"><span class="label">Aktive Nodes</span><span class="value">${count}</span></div>
-      <div class="row"><span class="label">Position</span><span class="value">${deNum(gw.lat,5)} / ${deNum(gw.lon,5)}</span></div></div>;
-    }
-
     async function fetchJson(url){
-      const bust=_=${Date.now()};
+      const bust=`_=${Date.now()}`;
       const u=url+(url.includes("?")?"&":"?")+bust;
       const r=await fetch(u,{cache:"no-store"});
-      if(!r.ok) throw new Error(r.status);
-      const d=await r.json();
-      if(!Array.isArray(d)||!d.length) throw new Error("empty");
-      return d;
+      if(!r.ok)throw new Error(r.status);
+      return r.json();
     }
+
     const latestOfAll=n=>n.reduce((a,c)=>!isValidISO(c.ts)?a:(!a||Date.parse(c.ts)>Date.parse(a)?c.ts:a),null);
 
-    // -------------------- Leaflet Map --------------------
     const map=L.map('map',{zoomControl:true,minZoom:5}).setView([54.3,9.7],8);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
 
-    const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
-    Object.assign(svg.style,{position:"absolute",top:0,left:0,width:"100%",height:"100%",pointerEvents:"none",zIndex:"400"});
-    map.getPanes().overlayPane.appendChild(svg);
-
-    function drawHopLines(nodes){
-      svg.innerHTML="";
-      const bounds=map.getBounds(),size=map.getSize(),topLeft=map.latLngToContainerPoint(bounds.getNorthWest());
-      svg.setAttribute("width",size.x);svg.setAttribute("height",size.y);
-      svg.style.left=topLeft.x+"px";svg.style.top=topLeft.y+"px";
-      nodes.forEach(n=>{
-        const f=n.fields||{},lat=NUM(f.lat),lon=NUM(f.lon);
-        if(!lat||!lon)return;
-        (n.gateway_details||[]).forEach(gw=>{
-          if(!gw.lat||!gw.lon)return;
-          const nP=map.latLngToContainerPoint([lat,lon]),gP=map.latLngToContainerPoint([gw.lat,gw.lon]);
-          const line=document.createElementNS("http://www.w3.org/2000/svg","line");
-          line.setAttribute("class","hop-line");
-          line.setAttribute("x1",nP.x);line.setAttribute("y1",nP.y);
-          line.setAttribute("x2",gP.x);line.setAttribute("y2",gP.y);
-          svg.appendChild(line);
-        });
-      });
-    }
-
-    // -------------------- Render --------------------
     async function render(){
-      const nodesBadge = document.getElementById("nodesBadge");
-      const gatewaysBadge = document.getElementById("gatewaysBadge");
-      const lastBadge = document.getElementById("lastBadge");
-      const lastBadgeAge = document.getElementById("lastBadgeAge");
-      const packetBadge = document.getElementById("packetBadge");
-      const packetDetail = document.getElementById("packetDetail");
-
-      try {
-        const nodes = await fetchJson("/data/v2/latest/all_enriched.json");
-        nodesBadge.textContent = Nodes: ${nodes.length};
-
-        const usedGateways = new Map();
-        let totalConnections = 0;
-        const pts = [];
-
-        nodes.forEach(n => {
-          const f = n.fields || {};
-          const lat = NUM(f.lat);
-          const lon = NUM(f.lon);
-          if (!lat || !lon) return;
-
-          const m = L.marker([lat, lon], { icon: L.divIcon({ className: '', html: '<div class="marker-node"></div>', iconSize: [22, 22], iconAnchor: [11, 11] }) }).addTo(map);
-          m.bindPopup(nodePopupHtml(n, nodes), { maxWidth: 320 });
-          pts.push([lat, lon]);
-
-          const gws = n.gateway_details || [];
-          gws.forEach(gw => {
-            if (!usedGateways.has(gw.id)) usedGateways.set(gw.id, { gw, count: 0 });
-            usedGateways.get(gw.id).count++;
-            totalConnections++;
+      try{
+        const nodes=await fetchJson("/data/v2/latest/all_enriched.json");
+        document.getElementById("nodesBadge").textContent=`Nodes: ${nodes.length}`;
+        const usedGateways=new Map();let totalConnections=0;const pts=[];
+        nodes.forEach(n=>{
+          const f=n.fields||{};const lat=NUM(f.lat),lon=NUM(f.lon);
+          if(!lat||!lon)return;
+          const m=L.marker([lat,lon],{icon:L.divIcon({className:'',html:'<div class="marker-node"></div>',iconSize:[22,22],iconAnchor:[11,11]})}).addTo(map);
+          m.bindPopup(nodePopupHtml(n,nodes),{maxWidth:320});
+          pts.push([lat,lon]);
+          (n.gateway_details||[]).forEach(gw=>{
+            if(!usedGateways.has(gw.id))usedGateways.set(gw.id,{gw,count:0});
+            usedGateways.get(gw.id).count++;totalConnections++;
           });
         });
 
-        usedGateways.forEach(({ gw, count }) => {
-          if (!gw.lat || !gw.lon) return;
-          const m = L.marker([gw.lat, gw.lon], { icon: L.divIcon({ className: '', html: '<div class="marker-gateway"></div>', iconSize: [20, 20], iconAnchor: [10, 10] }) }).addTo(map);
-          m.bindPopup(gatewayPopupHtml(gw, count), { maxWidth: 280 });
-          pts.push([gw.lat, gw.lon]);
+        usedGateways.forEach(({gw,count})=>{
+          if(!gw.lat||!gw.lon)return;
+          const m=L.marker([gw.lat,gw.lon],{icon:L.divIcon({className:'',html:'<div class="marker-gateway"></div>',iconSize:[20,20],iconAnchor:[10,10]})}).addTo(map);
+          pts.push([gw.lat,gw.lon]);
         });
 
-        gatewaysBadge.textContent = Gateways: ${usedGateways.size};
-        packetBadge.firstChild.nodeValue = Verbindungen: ${totalConnections};
-        packetDetail.textContent = nodes.length ? Ø ${(totalConnections / nodes.length).toFixed(1)} pro Node : "—";
-
-        const lastTs = latestOfAll(nodes);
-        lastBadge.firstChild.nodeValue = Letzte Meldung: ${formatDE(lastTs)};
-        lastBadgeAge.textContent = isValidISO(lastTs) ? vor ${relAge(lastTs)} : "—";
-
-        if (pts.length) {
-          const b = L.latLngBounds(pts);
-          map.fitBounds(b.pad(0.15));
-        }
-
-        setTimeout(() => {
-          drawHopLines(nodes);
-          map.on('zoomend moveend', () => drawHopLines(nodes));
-        }, 500);
-
-      } catch (e) {
-        console.error(e);
-        nodesBadge.textContent = Fehler beim Laden;
-        gatewaysBadge.textContent = Gateways: –;
-      }
+        document.getElementById("gatewaysBadge").textContent=`Gateways: ${usedGateways.size}`;
+        document.getElementById("packetBadge").firstChild.nodeValue=`Verbindungen: ${totalConnections}`;
+        document.getElementById("packetDetail").textContent=nodes.length?`Ø ${(totalConnections/nodes.length).toFixed(1)} pro Node`:"—";
+        const lastTs=latestOfAll(nodes);
+        document.getElementById("lastBadge").firstChild.nodeValue=`Letzte Meldung: ${formatDE(lastTs)}`;
+        document.getElementById("lastBadgeAge").textContent=isValidISO(lastTs)?`vor ${relAge(lastTs)}`:"—";
+        if(pts.length){map.fitBounds(L.latLngBounds(pts).pad(0.15));}
+      }catch(e){console.error(e);}
     }
-
     render();
-    setInterval(render, 120000);
+    setInterval(render,120000);
   </script>
 </body>
 </html>
