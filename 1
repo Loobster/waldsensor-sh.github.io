@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+import os
+import json
+from datetime import datetime, timezone
+from influxdb import InfluxDBClient
+
+# InfluxDB-Konfiguration
+client = InfluxDBClient(host='localhost', port=8086)
+client.switch_database('langenhorn')
+
+# Verzeichnis für JSON-Ausgabe
+data_dir = "/home/heiner/waldsensor-sh.github.io/data"
+
+# Positionen für feste Nodes, falls keine Koordinaten in der DB oder bewusst übersteuert
+fallback_positions = {
+    "se01lb_bredstedt": {"lat": 54.64988, "lon": 8.957},
+    "se01lb_schachtaudorf": {"lat": 54.30690, "lon": 9.7195},
+    "s31lb_bredstedt": {"lat": 54.64988, "lon": 8.953},
+    "s31lb_schachtaudorf": {"lat": 54.30690, "lon": 9.7145},
+    "llms01_schachtaudorf": {"lat": 54.30690, "lon": 9.7095},
+    "sn50v3": {"lat": 54.5032, "lon": 9.6019},
+    "sn50v3_kropp": {"lat": 54.41018, "lon":9.52839}, 
+    "sn50v3_fahrdorf": {"lat": 54.50158, "lon":9.5869}, 
+    "sn50v3_neumuenstertl": {"lat": 54.07568, "lon":9.98926} 
+#    "sn50v3_breklum": {"lat": 54.60669, "lon":8.98195} 
+#    "lsn50v2": {"lat": 54.41018, "lon":9.52839} 
+}
+
+# Technische Felder, die nicht als Nutzdaten angezeigt werden sollen
+fields_to_ignore = {
+    "lsn50v2": ["alt1", "alt2", "bw", "chan1", "f_cnt", "freq1", "gw1", "gw2",
+                "lat1", "lat2", "lon1", "lon2", "rssi1", "rssi2", "rx_time1", "sf", "snr1", "snr2"],
+    "s31lb_bredstedt": ["Door_status", "EXTI_Trigger", "alt1", "alt2", "bw", "chan1", "f_cnt", "freq1", "gw1",
+              "gw2", "lat1", "lat2", "lon1", "lon2", "rssi1", "rssi2", "rx_time1", "sf", "snr1", "snr2"],
+    "se01lb_bredstedt": ["Mod", "conduct_SOIL", "temp_DS18B20", "s_flag", "i_flag", "alt1", "alt2", "bw", "chan1",
+               "f_cnt", "freq1", "gw1", "gw2", "lat1", "lat2", "lon1", "lon2", "rssi1", "rssi2",
+               "rx_time1", "sf", "snr1", "snr2"],
+    "sn50v3": ["ADC1_V", "Digital_IStatus", "Door_status", "EXTI_Trigger", "TempC1", "Work_mode",
+               "alt1", "alt2", "bw", "chan1", "f_cnt", "freq1", "gw1", "gw2", "lat1", "lat2",
+               "lon1", "lon2", "rssi1", "rx_time1", "sf", "snr1"],
+    "sn50v3_kropp": ["ADC1_V", "Digital_IStatus", "Door_status", "EXTI_Trigger", "TempC1", "Work_mode",
+               "alt1", "alt2", "bw", "chan1", "f_cnt", "freq1", "gw1", "gw2", "lat1", "lat2",
+               "lon1", "lon2", "rssi1", "rx_time1", "sf", "snr1"],
+    "sn50v3_fahrdorf": ["ADC1_V", "Digital_IStatus", "Door_status", "EXTI_Trigger", "TempC1", "Work_mode",
+               "alt1", "alt2", "bw", "chan1", "f_cnt", "freq1", "gw1", "gw2", "lat1", "lat2",
+               "lon1", "lon2", "rssi1", "rx_time1", "sf", "snr1"],
+    "sn50v3_neumuenstertl": ["ADC1_V", "Digital_IStatus", "Door_status", "EXTI_Trigger", "TempC1", "Work_mode",
+               "alt1", "alt2", "bw", "chan1", "f_cnt", "freq1", "gw1", "gw2", "lat1", "lat2",
+               "lon1", "lon2", "rssi1", "rx_time1", "sf", "snr1"],
+    "sn50v3_breklum": ["ADC1_V", "Digital_IStatus", "Door_status", "EXTI_Trigger", "TempC1", "Work_mode",
+               "alt1", "alt2", "bw", "chan1", "f_cnt", "freq1", "gw1", "gw2", "lat1", "lat2",
+               "lon1", "lon2", "rssi1", "rx_time1", "sf", "snr1"]
+}
+# Alle Measurements aus der InfluxDB ermitteln
+measurements = [m['name'] for m in client.get_list_measurements()]
+measurements = [m for m in measurements if not m.startswith("gateway")]
+
+for node_id in measurements:
+    query = f"SELECT * FROM {node_id} ORDER BY time DESC LIMIT 1"
+    result = list(client.query(query).get_points())
+
+    if not result:
+        print(f"⚠️ Keine Daten gefunden für {node_id}")
+        continue
+
+    data = result[0]
+    node_time = data.get("time", datetime.now(timezone.utc).isoformat())
+
+    # Gateway-Infos extrahieren (bis zu 2 Gateways)
+    gateways = []
+    for i in [1, 2]:
+        gw_id = data.get(f"gw{i}")
+        rssi = data.get(f"rssi{i}")
+        snr = data.get(f"snr{i}")
+        if gw_id and isinstance(rssi, (int, float)) and isinstance(snr, (int, float)):
+            gateways.append({
+                "id": gw_id,
+                "rssi": round(rssi, 1),
+                "snr": round(snr, 1)
+            })
+
+    # Immer feste Position verwenden, falls definiert
+    if node_id in fallback_positions:
+        position = fallback_positions[node_id]
+        print(f"📌 {node_id}: Erzwinge feste Position {position['lat']}, {position['lon']}")
+    else:
+        position = {
+            "lat": float(data.get("lat2", 0)),
+            "lon": float(data.get("lon2", 0))
+        }
+
+    # Werte aus Payload übernehmen (Nutzdaten)
+    values = {}
+    ignored = set(fields_to_ignore.get(node_id, []))
+    for key, val in data.items():
+        if key in ignored or key == "time":
+            continue
+        if isinstance(val, (int, float)) and abs(val) > 1000:
+            continue
+        values[key] = val
+
+    # JSON-Ergebnis zusammensetzen
+    result_json = {
+        "node": node_id,
+        "position": position,
+        "time": node_time,
+        "gateways": gateways,
+    }
+
+    if values:
+        result_json["values"] = values
+
+    # Schreiben in Datei
+    out_path = os.path.join(data_dir, f"{node_id}.json")
+    with open(out_path, "w") as f:
+        json.dump(result_json, f, indent=2)
+        print(f"✅ Datei geschrieben: {out_path}")
+        print(f"📊 {node_id}: " + ", ".join(f"{k}={v}" for k, v in values.items()))
+        if ignored:
+            print(f"🧹 {node_id}: Ignorierte Felder → " + ", ".join(ignored))
