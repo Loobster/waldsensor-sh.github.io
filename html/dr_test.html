@@ -236,7 +236,7 @@ window.onload = async function() {
   }
 
   // === JSON-Relationen laden ===
-  const res = await fetch("data/kreis_relations_SH_v0_1.json");
+  const res = await fetch("/data/kreis_relations_SH_v0_1.json");
   const kreisRelations = await res.json();
   const areasByKreis = {};
   let currentAreaLayer = null;
