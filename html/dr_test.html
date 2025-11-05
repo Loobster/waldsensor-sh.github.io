@@ -1,0 +1,402 @@
+<!--
+  Projekt: DigitalRegion.SH / WALDSENSOR.SH
+  Datei: dr_v0_1_xxx.html
+  Version: 0.1 (Oktober 2025)
+  Autor / Projektleitung: Heinrich Rode
+  Lizenz:
+    Dieses Projekt kombiniert offene Datenquellen mit eigenen Inhalten.
+    - Kartengrundlage: © OpenStreetMap-Mitwirkende, Lizenz: ODbL 1.0
+    - Bibliotheken: Leaflet (BSD-2-Clause), Turf.js (MIT), osmtogeojson (MIT)
+    - Eigene Datensätze: © WALDSENSOR.SH / DigitalRegion.SH, Lizenz: CC BY 4.0
+
+  Hinweis:
+    Die Nutzung, Vervielfältigung und Weitergabe der Anwendung ist unter Nennung
+    der Quelle ("DigitalRegion.SH / WALDSENSOR.SH – Heinrich Rode") gestattet.
+    Änderungen am Code sind mit Quellenangabe und Hinweis auf die Originalversion
+    zu dokumentieren.
+-->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<title>DigitalRegion.SH – v0.1 (008_test2) – dynamisch (2 Kreise)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!--
+  Version: v0.1 (008_test2)
+  Datum: 27.10.2025
+  Autor: Heinrich Rode / WALDSENSOR.SH
+  Zweck: Test der dynamischen Kreis-Relationen via JSON-Datei (2 Kreise: SL-FL & NF)
+  Quelle: data/kreis_relations_SH_v0_1.json
+-->
+
+<!-- Leaflet & MarkerCluster -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+<style>
+  :root{
+    --bg: #f8fafc;
+    --card: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --accent: #0073b7;
+    --accent-2:#1d9bef;
+  }
+  html, body, #map { height: 100%; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color: var(--text); background: var(--bg); }
+  .info-box {
+    position: absolute; z-index: 1000; background: #fff; border: 1px solid var(--border);
+    padding: 12px; border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    backdrop-filter: blur(2px);
+  }
+  .area-control { top: 10px; left: 10px; width: 300px; }
+  .layer-control-container { top: 10px; right: 10px; }
+  .coord-input { bottom: 10px; right: 10px; width: 310px; }
+  .addr-input  { bottom: 10px; left: 10px; width: 340px; }
+  .footer {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 900;
+    background: rgba(30,41,59,0.7); color: #fff; font-size: 12px; padding: 6px 12px;
+    display: flex; justify-content: center; letter-spacing: .2px;
+  }
+  label { font-weight: 600; }
+  select, input[type="text"]{
+    width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
+    outline: none; font-size: 14px; background: #fff; color: var(--text);
+  }
+  .row { display: flex; gap: 8px; margin-top: 8px; }
+  button {
+    padding: 8px 12px; border: 0; border-radius: 8px; background: var(--accent);
+    color: #fff; cursor: pointer; font-weight: 600; letter-spacing: .2px;
+    box-shadow: 0 4px 16px rgba(0,115,183,0.2);
+  }
+  button:hover { background: var(--accent-2); }
+  button:disabled { opacity: .6; cursor: not-allowed; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+
+  #loading-screen{
+    position: fixed; inset: 0; background: var(--bg); z-index: 2000;
+    display: grid; place-items: center; transition: opacity 1s ease;
+  }
+  .loading-card{
+    background: #fff; border: 1px solid var(--border); border-radius: 16px;
+    padding: 28px 36px; box-shadow: 0 16px 48px rgba(0,0,0,0.12); text-align: center;
+  }
+  .loading-title{ font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+  .loading-sub{ color: var(--muted); margin-bottom: 14px; }
+  .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; margin: 0 auto;
+    animation: pulse 1s infinite ease-in-out; }
+  @keyframes pulse { 0%,100%{ transform: scale(0.7); opacity:.6 } 50%{ transform: scale(1); opacity:1 } }
+</style>
+</head>
+
+<body>
+
+<!-- Intro-Fade -->
+<div id="loading-screen">
+  <div class="loading-card">
+    <div class="loading-title">🌍 DigitalRegion.SH</div>
+    <div class="loading-sub">Projektleitung: Heinrich Rode</div>
+    <div style="margin-bottom:10px; font-weight:600;">Initialisiere Karte …</div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<!-- Auswahl -->
+<div class="info-box area-control">
+  <label for="kreis-select">Kreis auswählen</label>
+  <select id="kreis-select">
+    <option value="Schleswig-Flensburg">Schleswig-Flensburg</option>
+    <option value="Rendsburg-Eckernförde">Rendsburg-Eckernförde</option>
+    <option value="Nordfriesland">Nordfriesland</option>
+    <option value="Dithmarschen">Dithmarschen</option>
+    <option value="Steinburg">Steinburg</option>
+    <option value="Pinneberg">Pinneberg</option>
+    <option value="Herzogtum Lauenburg">Herzogtum Lauenburg</option>
+    <option value="Stormarn">Stormarn</option>
+    <option value="Segeberg">Segeberg</option>
+    <option value="Ostholstein">Ostholstein</option>
+    <option value="Plön">Plön</option>
+    <option value="Kiel">Kiel</option>
+    <option value="Lübeck">Lübeck</option>
+    <option value="Flensburg">Flensburg</option>
+    <option value="Neumünster">Neumünster</option>
+  </select>
+
+  <div style="height:8px;"></div>
+  <label for="area-select">Amt / Stadt auswählen</label>
+  <select id="area-select" disabled>
+    <option value="">-- Lade Gebietsgrenzen --</option>
+  </select>
+
+  <div id="status-message" style="margin-top:10px; font-style: italic; color: var(--muted);"></div>
+  <hr>
+  <button id="stats-selected-btn" disabled>📊 Statistik (CSV) exportieren</button>
+</div>
+
+<!-- Layer-Checkboxen -->
+<div class="info-box layer-control-container" id="layer-control-container"></div>
+
+<!-- Eingabefelder -->
+<div class="info-box coord-input">
+  <div><b>Koordinaten</b></div>
+  <div class="row">
+    <input id="coordInput" type="text" placeholder="z. B. 54.5203, 9.5702" />
+    <button id="coordBtn">Suchen</button>
+  </div>
+</div>
+
+<div class="info-box addr-input">
+  <div><b>Adresse</b></div>
+  <div class="row">
+    <input id="addrInput" type="text" placeholder="z. B. Husum, Markt" />
+    <button id="addrBtn">Suchen</button>
+  </div>
+</div>
+
+<div class="footer">DigitalRegion.SH – Projektleitung: Heinrich Rode</div>
+
+<!-- Datensätze -->
+<script src="../data/gateways_SH_NETZ.js"></script>
+<script src="../data/schulen_SH.js"></script>
+<script src="../data/mint_schulen.js"></script>
+<script src="../data/schulwaelder_mit_popup.js"></script>
+<script src="../data/feuerwehren.js"></script>
+
+<!-- Bibliotheken -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+<script src="https://tyrasd.github.io/osmtogeojson/osmtogeojson.js"></script>
+
+<script>
+window.onload = async function() {
+  const map = L.map('map').setView([54.6, 9.0], 8);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
+
+  const kreisSelect = document.getElementById('kreis-select');
+  const areaSelect  = document.getElementById('area-select');
+  const statusEl    = document.getElementById('status-message');
+
+  setTimeout(() => {
+    const scr = document.getElementById('loading-screen');
+    if (scr) { scr.style.opacity = 0; setTimeout(()=> scr.remove(), 1000); }
+  }, 1500);
+
+  const icon = {
+    GW: L.icon({ iconUrl: '../icons/gateway.png', iconSize: [30,30], iconAnchor: [15,15] }),
+    SCHULE: L.icon({ iconUrl: '../icons/schule.png', iconSize: [30,30], iconAnchor: [15,15] }),
+    MINT: L.icon({ iconUrl: '../icons/mintschule.png', iconSize: [30,30], iconAnchor: [15,15] }),
+    WALD: L.icon({ iconUrl: '../icons/schulwald.png', iconSize: [30,30], iconAnchor: [15,15] }),
+    FW: L.icon({ iconUrl: '../icons/feuerwehr.png', iconSize: [30,30], iconAnchor: [15,15] })
+  };
+
+  const layers = {
+    "Gateways": L.markerClusterGroup(),
+    "Schulen mit MINT-Profil": L.markerClusterGroup(),
+    "Schulen": L.markerClusterGroup(),
+    "Schulwälder": L.markerClusterGroup(),
+    "Feuerwehren": L.markerClusterGroup()
+  };
+  const overlayMaps = {}; Object.keys(layers).forEach(k => overlayMaps[k] = layers[k]);
+  const lc = L.control.layers(null, overlayMaps, { collapsed: false }).addTo(map);
+  document.getElementById('layer-control-container').appendChild(lc.getContainer());
+
+  const gwFeatures = gateways?.features?.filter(f => f.geometry?.type === 'Point') || [];
+
+  function nearestGateway(lat, lon){
+    if (!gwFeatures.length) return null;
+    const n = turf.nearestPoint(turf.point([lon, lat]), turf.featureCollection(gwFeatures));
+    const dist = turf.distance(turf.point([lon, lat]), n, { units: 'kilometers' });
+    return { name: n.properties?.name || 'Gateway', distKm: dist.toFixed(1), coords: n.geometry.coordinates };
+  }
+
+  function renderMarkers(filterPolygon = null){
+    Object.values(layers).forEach(l => l.clearLayers());
+    function addPoints(data, layer, which){
+      if (!data?.features) return;
+      data.features.forEach(f => {
+        if (f.geometry?.type !== 'Point') return;
+        const [lon, lat] = f.geometry.coordinates;
+        if (filterPolygon && !turf.booleanPointInPolygon(turf.point([lon, lat]), filterPolygon)) return;
+        const n = nearestGateway(lat, lon);
+        const popup = `<b>${f.properties?.name || 'Unbenannt'}</b><br>🌍 ${lat.toFixed(5)}, ${lon.toFixed(5)}${n ? `<br>📡 ${n.name} (${n.distKm} km)` : ''}`;
+        const ic = icon[which] || icon.SCHULE;
+        L.marker([lat, lon], { icon: ic }).bindPopup(popup).addTo(layer);
+      });
+    }
+    addPoints(gateways, layers["Gateways"], 'GW');
+    addPoints(mint_schulen, layers["Schulen mit MINT-Profil"], 'MINT');
+    addPoints(schulen, layers["Schulen"], 'SCHULE');
+    addPoints(schulwaelder, layers["Schulwälder"], 'WALD');
+    addPoints(feuerwehren, layers["Feuerwehren"], 'FW');
+  }
+
+  // === JSON-Relationen laden ===
+  const res = await fetch("data/kreis_relations_SH_v0_1.json");
+  const kreisRelations = await res.json();
+  const areasByKreis = {};
+  let currentAreaLayer = null;
+  let currentAreaPolygon = null;  // aktuelles GeoJSON für Gebiet
+  
+   async function loadKreis(kreisName){
+    areaSelect.disabled = true;
+    statusEl.textContent = `Lade Ämter für ${kreisName} …`;
+
+    const rels = kreisRelations[kreisName];
+    if (!rels) return alert("Keine Relationen für diesen Kreis.");
+
+    const overpass = `[out:json][timeout:60];(${rels.map(id => `relation(${id});`).join('')});out body;>;out skel qt;`;
+    const data = await fetch('https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(overpass)).then(r=>r.json());
+    const gj = osmtogeojson(data);
+    areasByKreis[kreisName] = {};
+
+    gj.features.forEach(f => {
+      if (!f.geometry) return;
+
+      // Nur gültige Verwaltungsobjekte mit Namen
+      const rawName = f.properties?.name || f.properties?.tags?.name || "";
+      if (!rawName.trim()) return;
+      if (/relation|node|way/i.test(rawName)) return;  // 🧹 Entfernt technische Einträge
+
+      areasByKreis[kreisName][rawName] = { geojson: f };
+    });
+
+    populateAreaSelect(kreisName);
+    areaSelect.disabled = false;
+    statusEl.textContent = `Bereit (${Object.keys(areasByKreis[kreisName]).length} Ämter).`;
+    renderMarkers();
+  }
+
+  // 🧭 Klick in Karte → Marker mit Gateway-Linie
+  let searchMarker = null, gwLine = null;
+  
+  function withinSelectedArea(lat, lon){
+  if (!currentAreaPolygon) return false;
+  try {
+    const pt = turf.point([lon, lat]);
+    return turf.booleanPointInPolygon(pt, currentAreaPolygon);
+  } catch {
+    return false;
+  }
+}
+  
+  function showPoint(lat, lon, title="📍 Punkt"){
+    // 🛑 Klick außerhalb des gewählten Gebiets ignorieren
+    if (!withinSelectedArea(lat, lon)) {
+  // console.log("Klick außerhalb des gewählten Gebiets – ignoriert.");
+      alert("Dieser Punkt liegt außerhalb des ausgewählten Gebiets.");
+    return;
+    }
+    
+    const n = nearestGateway(lat, lon);
+    let txt = `<b>${title}</b><br>🌍 ${lat.toFixed(5)}, ${lon.toFixed(5)}`;
+    if (n) txt += `<br>📡 Nächstes Gateway: ${n.name} (${n.distKm} km)`;
+
+    if (searchMarker) map.removeLayer(searchMarker);
+    if (gwLine) map.removeLayer(gwLine);
+
+    searchMarker = L.marker([lat, lon], { icon: icon.SCHULE }).addTo(map).bindPopup(txt).openPopup();
+    if (n) gwLine = L.polyline([[lat, lon], [n.coords[1], n.coords[0]]], { color: 'black', dashArray: '5,5', opacity: .7 }).addTo(map);
+    map.setView([lat, lon], 13);
+  }
+  map.on('click', e => showPoint(e.latlng.lat, e.latlng.lng));
+
+    /* === Adresssuche (unten links) === */
+function searchAddress() {
+  const q = document.getElementById("addrInput").value.trim();
+  if (!q) return;
+
+  fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`)
+    .then(r => r.json())
+    .then(data => {
+      if (!data.length) {
+        alert("Adresse nicht gefunden.");
+        return;
+      }
+      const p = data[0];
+      const lat = parseFloat(p.lat);
+      const lon = parseFloat(p.lon);
+      showPoint(lat, lon, `🔍 ${p.display_name}`);
+    })
+    .catch(() => alert("Adressdienst aktuell nicht erreichbar."));
+}
+
+/* === Koordinatensuche (unten rechts) === */
+function searchCoords() {
+  const raw = document.getElementById("coordInput").value.trim();
+  const parts = raw.split(/[,;\s]+/);
+  if (parts.length !== 2) {
+  
+    alert("Bitte Koordinaten als 'lat, lon' eingeben (z. B. 54.5203, 9.5702).");
+    return;
+  }
+  const lat = parseFloat(parts[0]);
+  const lon = parseFloat(parts[1]);
+  if (Number.isNaN(lat) || Number.isNaN(lon)) {
+    alert("Koordinaten ungültig.");
+    return;
+  }
+  showPoint(lat, lon);
+}
+
+/* === Suchfelder aktivieren === */
+document.getElementById("addrBtn").addEventListener("click", searchAddress);
+document.getElementById("addrInput").addEventListener("keyup", e => {
+  if (e.key === "Enter") searchAddress();
+});
+
+document.getElementById("coordBtn").addEventListener("click", searchCoords);
+document.getElementById("coordInput").addEventListener("keyup", e => {
+  if (e.key === "Enter") searchCoords();
+});
+    
+    
+  function boundsOfKreis(k){
+    const all = Object.values(areasByKreis[k]||{}).map(a=>a.geojson);
+    if (!all.length) return null;
+    const g = L.geoJSON(all); const b = g.getBounds(); g.remove(); return b;
+  }
+
+  function populateAreaSelect(k){
+    areaSelect.innerHTML = '';
+    const opt0 = document.createElement('option');
+    opt0.textContent = '-- Gesamter Kreis anzeigen --'; opt0.value = '';
+    areaSelect.appendChild(opt0);
+    Object.keys(areasByKreis[k]||{}).sort().forEach(n=>{
+      const o=document.createElement('option'); o.value=n; o.textContent=n; areaSelect.appendChild(o);
+    });
+    if (currentAreaLayer){ map.removeLayer(currentAreaLayer); currentAreaLayer=null; }
+    const b=boundsOfKreis(k); if (b) map.fitBounds(b,{padding:[20,20]});
+  }
+
+  kreisSelect.addEventListener("change", e=>loadKreis(e.target.value));
+
+  areaSelect.addEventListener("change", e=>{
+  if (currentAreaLayer){ map.removeLayer(currentAreaLayer); currentAreaLayer=null; }
+  currentAreaPolygon = null; // reset
+  const k=kreisSelect.value, name=e.target.value;
+  if (!name){ 
+    const b=boundsOfKreis(k); 
+    if (b) map.fitBounds(b); 
+    renderMarkers(); 
+    return; 
+  }
+  const a=areasByKreis[k][name]; 
+  if (!a) return;
+  currentAreaPolygon = a.geojson; // 🟢 wichtig: speichern fürs Klicken!
+  currentAreaLayer=L.geoJSON(a.geojson,{style:{color:"#3388ff",weight:2,fillOpacity:0}}).addTo(map);
+  map.fitBounds(currentAreaLayer.getBounds()); 
+  renderMarkers(a.geojson);
+});
+  
+
+  // Initial Kreis SL-FL laden
+  loadKreis("Schleswig-Flensburg");
+};
+</script>
+</body>
+</html>
