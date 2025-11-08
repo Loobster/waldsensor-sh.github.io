@@ -1,13 +1,13 @@
 [
   {
     "id": "waldsensor_bredstedt_s31lb",
-    "ts": "2025-11-08T11:07:01.314Z",
+    "ts": "2025-11-08T11:27:01.09Z",
     "fields": {
       "BatV": 3.6,
-      "Hum_SHT": 96.0,
-      "Hum_SHT31": 96.0,
-      "TempC_SHT": 7.1,
-      "TempC_SHT31": 7.1,
+      "Hum_SHT": 95.1,
+      "Hum_SHT31": 95.1,
+      "TempC_SHT": 7.2,
+      "TempC_SHT31": 7.2,
       "alt": 18.0,
       "lat": 54.64988,
       "lon": 8.955
@@ -15,7 +15,7 @@
   },
   {
     "id": "waldsensor_bredstedt_se01lb",
-    "ts": "2025-11-08T11:11:15.659Z",
+    "ts": "2025-11-08T11:31:15.426Z",
     "fields": {
       "BatV": 3.326,
       "alt": 18.0,
@@ -27,12 +27,12 @@
   },
   {
     "id": "waldsensor_fahrdorf",
-    "ts": "2025-11-08T11:12:48.337Z",
+    "ts": "2025-11-08T11:32:48.118Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.576,
-      "Hum_SHT": 89.8,
-      "TempC_SHT": 8.1,
+      "Hum_SHT": 89.3,
+      "TempC_SHT": 8.0,
       "alt": 5.0,
       "lat": 54.50158,
       "lon": 9.5869
@@ -40,7 +40,7 @@
   },
   {
     "id": "waldsensor_kappeln",
-    "ts": "2025-11-08T11:16:24.573Z",
+    "ts": "2025-11-08T11:36:24.303Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.648,
@@ -51,12 +51,12 @@
   },
   {
     "id": "waldsensor_kellinghusen_lsn50v2",
-    "ts": "2025-11-08T11:14:39.62Z",
+    "ts": "2025-11-08T11:34:39.625Z",
     "fields": {
-      "ADC1_V": 0.245,
-      "BatV": 3.414,
-      "Hum_SHT": 47.7,
-      "TempC_SHT": 24.3,
+      "ADC1_V": 0.246,
+      "BatV": 3.412,
+      "Hum_SHT": 47.9,
+      "TempC_SHT": 24.4,
       "alt": 18.0,
       "lat": 53.95655,
       "lon": 9.71426
@@ -64,12 +64,12 @@
   },
   {
     "id": "waldsensor_kropp",
-    "ts": "2025-11-08T11:17:05.701Z",
+    "ts": "2025-11-08T11:37:05.401Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.63,
-      "Hum_SHT": 45.0,
-      "TempC_SHT": 24.7,
+      "Hum_SHT": 45.4,
+      "TempC_SHT": 24.8,
       "lat": 54.40939889088546,
       "lon": 9.5285027323752
     }
@@ -88,10 +88,10 @@
   },
   {
     "id": "waldsensor_schacht_audorf_llms01",
-    "ts": "2025-11-08T11:06:03.493Z",
+    "ts": "2025-11-08T11:26:03.888Z",
     "fields": {
       "Leaf_Moisture": 1.4,
-      "Leaf_Temperature": 7.6,
+      "Leaf_Temperature": 7.7,
       "alt": 18.0,
       "lat": 54.30687,
       "lon": 9.7196,
@@ -100,12 +100,12 @@
   },
   {
     "id": "waldsensor_schacht_audorf_lsn50v2",
-    "ts": "2025-11-08T11:09:53.45Z",
+    "ts": "2025-11-08T11:29:53.498Z",
     "fields": {
       "ADC1_V": 0.297,
       "BatV": 3.686,
-      "Hum_SHT": 47.3,
-      "TempC_SHT": 24.0,
+      "Hum_SHT": 47.4,
+      "TempC_SHT": 24.1,
       "alt": 18.0,
       "lat": 54.30687,
       "lon": 9.7196
@@ -113,11 +113,11 @@
   },
   {
     "id": "waldsensor_schacht_audorf_s31lb",
-    "ts": "2025-11-08T11:18:29.509Z",
+    "ts": "2025-11-08T11:38:29.301Z",
     "fields": {
       "BatV": 3.594,
-      "Hum_SHT": 86.5,
-      "Hum_SHT31": 86.5,
+      "Hum_SHT": 86.1,
+      "Hum_SHT31": 86.1,
       "TempC_SHT": 7.6,
       "TempC_SHT31": 7.6,
       "alt": 18.0,
@@ -127,7 +127,7 @@
   },
   {
     "id": "waldsensor_schacht_audorf_se01lb",
-    "ts": "2025-11-08T11:17:29.52Z",
+    "ts": "2025-11-08T11:37:29.245Z",
     "fields": {
       "BatV": 3.546,
       "alt": 18.0,
@@ -139,26 +139,26 @@
   },
   {
     "id": "waldsensor_test2",
-    "ts": "2025-11-08T11:19:54.434Z",
-    "fields": {
-      "ADC1_V": 0.0,
-      "BatV": 3.63
-    }
-  },
-  {
-    "id": "waldsensor_test3",
-    "ts": "2025-11-08T11:06:16.322Z",
+    "ts": "2025-11-08T11:39:54.194Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.636
     }
   },
   {
-    "id": "waldsensor_wacken",
-    "ts": "2025-11-08T11:23:20.191Z",
+    "id": "waldsensor_test3",
+    "ts": "2025-11-08T11:26:16.093Z",
     "fields": {
       "ADC1_V": 0.0,
-      "BatV": 3.66,
+      "BatV": 3.642
+    }
+  },
+  {
+    "id": "waldsensor_wacken",
+    "ts": "2025-11-08T11:43:19.965Z",
+    "fields": {
+      "ADC1_V": 0.0,
+      "BatV": 3.654,
       "alt": 18.0,
       "lat": 54.02755,
       "lon": 9.37503
