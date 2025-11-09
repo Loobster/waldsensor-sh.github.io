@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>HMG SH v0.05b – Reichweitenkarte</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- MarkerCluster -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+<script src="../data/gateways_SH_NETZ.js"></script>
+<script src="../data/sh_outline.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+
+<style>
+html, body { height: 100%; margin: 0; }
+#map { width: 100%; height: 100%; }
+.info {
+    padding: 8px 10px;
+    background: white;
+    background: rgba(255,255,255,0.85);
+    border-radius: 6px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    font-size: 14px;
+}
+.legend {
+    line-height: 18px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 6px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.8;
+}
+</style>
+
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+
+// Karte initialisieren
+var map = L.map('map').setView([54.3, 9.8], 8);
+
+// Hintergrundkarte
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; OSM contributors'
+}).addTo(map);
+
+// Info-Panel oben links
+var info = L.control({position: 'topleft'});
+info.onAdd = function () {
+    var div = L.DomUtil.create('div', 'info');
+    div.innerHTML =
+        "<b>ℹ️ Hinweis</b><br>" +
+        "Klicke irgendwo in Schleswig-Holstein,<br>" +
+        "um die Reichweite zum nächsten LoRaWAN-Gateway zu sehen.<br>" +
+        "Die farbige Bewertung zeigt die Eignung für einen neuen Sensorstandort.<br>" +
+        "<br><b>Aktuell:</b> Entfernung zum nächsten Gateway<br>" +
+        "<b>Demnächst:</b> Geländeprofil und Bebauungsdichte";
+    return div;
+};
+info.addTo(map);
+
+// Score Pane
+map.createPane('scorePane');
+map.getPane('scorePane').style.pointerEvents = 'none';
+
+var lastCircle = null;
+
+// GW Cluster-Layer
+var gwLayer = L.markerClusterGroup();
+
+// Gateways laden
+gateways.features.forEach(function(gw) {
+    var icon = L.icon({
+        iconUrl: '../icons/gateway.png',
+        iconSize: [28, 28]
+    });
+
+    L.marker([gw.geometry.coordinates[1], gw.geometry.coordinates[0]], {icon: icon})
+        .bindPopup("<b>Gateway:</b> " + gw.properties.name + "<br>Höhe: " + gw.properties.alt + " m")
+        .addTo(gwLayer);
+});
+
+// Gateways standardmäßig aktiv
+gwLayer.addTo(map);
+
+// Layer Control
+L.control.layers({}, {"Gateways": gwLayer}, {collapsed: true}).addTo(map);
+
+// Klickfunktion
+map.on('click', function(e) {
+
+    // SH-Grenzcheck
+    const lonlat = [e.latlng.lng, e.latlng.lat];
+
+    if (!turf.booleanPointInPolygon(lonlat, sh_outline)) {
+        L.popup()
+          .setLatLng(e.latlng)
+          .setContent("📍 Außerhalb von Schleswig-Holstein.")
+          .openOn(map);
+        return;
+    }
+
+    // Nächsten Gateway bestimmen
+    var minDist = Infinity;
+    var nearestGW = null;
+
+    gateways.features.forEach(function(gw) {
+        var gwLat = gw.geometry.coordinates[1];
+        var gwLon = gw.geometry.coordinates[0];
+        var dist = map.distance([e.latlng.lat, e.latlng.lng], [gwLat, gwLon]);
+        if (dist < minDist) {
+            minDist = dist;
+            nearestGW = gw;
+        }
+    });
+
+    var distKm = (minDist / 1000).toFixed(2);
+
+    // Score-Farbe bestimmen
+    var scoreColor = "#d73027"; // schwach
+    var scoreText = "schwach";
+
+    if (distKm <= 6)      { scoreColor = "#1a9850"; scoreText = "gut"; }
+    else if (distKm <= 10) { scoreColor = "#fee08b"; scoreText = "ok"; }
+
+    // alten Kreis entfernen
+    if (lastCircle) { lastCircle.remove(); }
+
+    // neuen Kreis zeichnen (sichtbarer)
+    lastCircle = L.circle(e.latlng, {
+        radius: 1000,
+        color: scoreColor,
+        fillColor: scoreColor,
+        fillOpacity: 0.5,
+        weight: 2,
+        pane: 'scorePane'
+    }).addTo(map);
+
+    // Popup
+    L.popup()
+        .setLatLng(e.latlng)
+        .setContent(
+            "<b>📍 Potenzieller Sensor-Standort</b><br>" +
+            "Entfernung zum nächsten Gateway: <b>" + distKm + " km</b><br>" +
+            "Bewertung: <b>" + scoreText + "</b><br>" +
+            "Gateway: " + nearestGW.properties.name
+        )
+        .openOn(map);
+});
+
+// Ampel-Legende unten rechts
+var legend = L.control({position: 'bottomright'});
+legend.onAdd = function () {
+    var div = L.DomUtil.create('div', 'legend');
+    div.innerHTML =
+        '<i style="background:#1a9850"></i> gut<br>' +
+        '<i style="background:#fee08b"></i> ok<br>' +
+        '<i style="background:#d73027"></i> schwach<br>';
+    return div;
+};
+legend.addTo(map);
+
+</script>
+
+</body>
+</html>
