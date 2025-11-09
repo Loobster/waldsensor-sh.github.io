@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<title>HMG Schleswig-Holstein – Demo v0.04</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  html, body { height: 100%; margin: 0; }
+  #map { width: 100%; height: 100%; }
+  .legend, .panel {
+    background: #fff;
+    padding: 8px 10px;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.25);
+    line-height: 1.4;
+    font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  }
+  .legend .dot { font-size: 16px; vertical-align: middle; margin-right: 6px; }
+  .legend .row { white-space: nowrap; }
+  .panel label { display:block; margin: 4px 0 0; }
+  .panel .group { margin-bottom: 6px; }
+  .panel .opt { display:inline-block; margin-right: 8px; }
+  .panel small { color:#666; }
+  .btnbar { margin-top: 6px; }
+  .btnbar button {
+    font: inherit; padding: 4px 8px; border-radius: 6px;
+    border: 1px solid #ccc; background:#f6f6f6; cursor:pointer;
+  }
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Gateways laden (liefert globales 'gateways' GeoJSON) -->
+<script src="../data/gateways_SH_NETZ.js"></script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ------------------ Basiskarten ------------------
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19, attribution: '© OpenStreetMap'
+});
+const otm = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+  maxZoom: 17, attribution: '© OpenTopoMap'
+});
+
+// Karte initial: OSM aktiv, OTM nicht aktiv
+const map = L.map('map', {
+  center: [54.2, 9.8],
+  zoom: 8,
+  layers: [osm]
+});
+
+// ------------------ Panes ------------------
+map.createPane('scorePane');
+map.getPane('scorePane').style.pointerEvents = 'none';  // <<< KREISE BLOCKIEREN KEINE KLICKS
+
+// ------------------ Overlays (start: aus) ------------------
+const gwLayer = L.layerGroup();                       // Gateways – aus
+const clickScoreLayer = L.layerGroup().addTo(map);    // für Kreise
+const overlays = {
+  "Gateways (TTN)": gwLayer,
+  "Klick-Score": clickScoreLayer
+};
+
+// ------------------ Layer Control ------------------
+L.control.layers(
+  { "OSM Standard": osm, "OpenTopoMap": otm },   // Basemap
+  overlays,
+  { collapsed: false }
+).addTo(map);
+
+// ------------------ Gateways anzeigen ------------------
+if (typeof gateways !== "undefined" && gateways.features) {
+  gateways.features.forEach(gw => {
+    const lat = gw.geometry.coordinates[1];
+    const lon = gw.geometry.coordinates[0];
+    const name = gw.properties.name || gw.properties.id || "Gateway";
+    const alt  = (gw.properties.alt ?? gw.properties.altitude ?? "–");
+    const updated = gw.properties.updated || "–";
+
+    const m = L.marker([lat, lon], { title: name });
+    m.bindPopup(`
+      <b>${name}</b><br/>
+      📡 ID: ${gw.properties.id}<br/>
+      🌍 ${lat.toFixed(5)}, ${lon.toFixed(5)}<br/>
+      ⛰️ Höhe: ${alt} m<br/>
+      ⏱️ Updated: ${updated}
+    `);
+    gwLayer.addLayer(m);
+  });
+} else {
+  console.warn("Gateways-Daten nicht gefunden oder leer.");
+}
+
+// ------------------ Distanzberechnung ------------------
+function haversineKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const toRad = d => d * Math.PI / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat/2)**2 +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+            Math.sin(dLon/2)**2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}
+
+// ------------------ Modell v0.04 ------------------
+const BASELINE_KM = 10.0;       // konservative SH-Basis
+const NODE_BONUS_KM = 0.2;      // 3 m AGL fix
+function gwHeightBonusKm(altM) {
+  const alt = Math.max(0, Number(altM) || 0);
+  return Math.min(0.005 * alt, 2.0);
+}
+
+// Landschaftsfaktoren
+const LAND = {
+  marsch: 1.10,
+  geest: 1.00,
+  huegelland: 0.90
+};
+
+// Urban-Faktor: dämpft Dmax um max 20 %
+function urbanDamp(uf) {
+  uf = Math.min(1, Math.max(0, Number(uf)||0));
+  return (1 - 0.2 * uf);
+}
+
+// Default-Einstellungen
+let currentLandscape = "geest";
+let currentUrban = 0.5;
+
+function effectiveDmaxKm(altM, landKey, urbanFactor) {
+  const base = BASELINE_KM + NODE_BONUS_KM + gwHeightBonusKm(altM);
+  const lfac = LAND[landKey] ?? 1.0;
+  const ufac = urbanDamp(urbanFactor);
+  return base * lfac * ufac;
+}
+
+function scoreFrom(distanceKm, altM, landKey, urbanFactor) {
+  const dmax = effectiveDmaxKm(altM, landKey, urbanFactor);
+  const raw = 1 - (distanceKm / dmax);
+  return Math.max(0, Math.min(1, raw));
+}
+
+function scoreColor(s) {
+  if (s >= 0.70) return "green";
+  if (s >= 0.40) return "goldenrod";
+  return "red";
+}
+function scoreAmpel(s) {
+  if (s >= 0.70) return "🟢";
+  if (s >= 0.40) return "🟡";
+  return "🔴";
+}
+
+// ------------------ Kreisverwaltung – nur ein Kreis ------------------
+let lastCircle = null;
+
+// ------------------ Klick auf Karte ------------------
+map.on('click', (e) => {
+  if (!gateways || !gateways.features || gateways.features.length === 0) return;
+
+  const lat = e.latlng.lat;
+  const lon = e.latlng.lng;
+
+  // Nächstes GW finden
+  let nearest = null, bestDist = Infinity;
+  for (const gw of gateways.features) {
+    const glat = gw.geometry.coordinates[1];
+    const glon = gw.geometry.coordinates[0];
+    const d = haversineKm(lat, lon, glat, glon);
+    if (d < bestDist) { bestDist = d; nearest = gw; }
+  }
+  if (!nearest) return;
+
+  const nName = nearest.properties.name || nearest.properties.id || "Gateway";
+  const nAlt  = (nearest.properties.alt ?? nearest.properties.altitude ?? 0);
+  const distKm = bestDist;
+
+  const score = scoreFrom(distKm, nAlt, currentLandscape, currentUrban);
+  const color = scoreColor(score);
+
+  // Alten Kreis entfernen — nur EIN Kreis sichtbar
+  if (lastCircle) clickScoreLayer.removeLayer(lastCircle);
+
+  lastCircle = L.circle(e.latlng, {
+    radius: 1000,
+    color,
+    weight: 2,
+    fillColor: color,
+    fillOpacity: 0.35,
+    pane: 'scorePane'
+  }).addTo(clickScoreLayer);
+
+  const landLabel = {
+    marsch: "Marsch",
+    geest: "Geest",
+    huegelland: "Hügelland"
+  }[currentLandscape] || currentLandscape;
+
+  const urbanLabel = (currentUrban === 0 ? "rural" :
+                     currentUrban === 0.5 ? "gemischt" :
+                     currentUrban === 1 ? "urban" : currentUrban);
+
+  const dmaxNow = effectiveDmaxKm(nAlt, currentLandscape, currentUrban);
+
+  L.popup()
+    .setLatLng(e.latlng)
+    .setContent(`
+      📍 <b>Potentieller Sensor-Standort</b><br/>
+      🌍 ${lat.toFixed(5)}, ${lon.toFixed(5)}<br/>
+      📡 Nächstes Gateway: <b>${nName}</b> (${distKm.toFixed(2)} km)<br/>
+      ⛰️ Höhe Gateway: ${nAlt} m<br/>
+      🗺️ Landschaft: ${landLabel} • 🏙️ Umgebung: ${urbanLabel}<br/>
+      📏 Eff. Reichweite Dmax: ${dmaxNow.toFixed(2)} km<br/>
+      🎚️ Score: <b>${score.toFixed(2)}</b> ${scoreAmpel(score)}
+    `)
+    .openOn(map);
+});
+
+// ------------------ Ampel-Legende ------------------
+const legend = L.control({ position: "bottomright" });
+legend.onAdd = function() {
+  const div = L.DomUtil.create("div", "legend");
+  div.innerHTML = `
+    <div><b>Ampel – Modell v0.04</b></div>
+    <div class="row"><span class="dot" style="color:green">●</span> gut (≥ 0.70)</div>
+    <div class="row"><span class="dot" style="color:goldenrod">●</span> ok (0.40–0.69)</div>
+    <div class="row"><span class="dot" style="color:red">●</span> schwach (&lt; 0.40)</div>
+    <hr style="border:none;border-top:1px solid #eee;margin:6px 0;">
+    <div>Overlays oben rechts</div>
+  `;
+  return div;
+};
+legend.addTo(map);
+
+// ------------------ Steuer-Panel (H/M/G & Urban) ------------------
+const PanelControl = L.Control.extend({
+  onAdd: function() {
+    const div = L.DomUtil.create('div', 'panel');
+    div.innerHTML = `
+      <div class="group"><b>Landschaftsprofil</b><br/>
+        <label class="opt"><input type="radio" name="hmg" value="marsch"> Marsch</label>
+        <label class="opt"><input type="radio" name="hmg" value="geest" checked> Geest</label>
+        <label class="opt"><input type="radio" name="hmg" value="huegelland"> Hügelland</label>
+      </div>
+      <div class="group"><b>Umgebung</b><br/>
+        <label class="opt"><input type="radio" name="urban" value="0"> rural</label>
+        <label class="opt"><input type="radio" name="urban" value="0.5" checked> gemischt</label>
+        <label class="opt"><input type="radio" name="urban" value="1"> urban</label>
+        <div><small>Wirkt als Dämpfung auf Dmax ( −20% bei urban )</small></div>
+      </div>
+    `;
+    L.DomEvent.disableClickPropagation(div);
+    return div;
+  }
+});
+map.addControl(new PanelControl({ position: 'topright' }));
+
+// Events für Panel
+document.addEventListener('change', (ev) => {
+  if (ev.target && ev.target.name === 'hmg') {
+    currentLandscape = ev.target.value;
+  }
+  if (ev.target && ev.target.name === 'urban') {
+    currentUrban = Number(ev.target.value);
+  }
+});
+
+</script>
+
+</body>
+</html>
