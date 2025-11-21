@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigitalRegion.SH – Relief & DEM & Tools (v0.18.5)</title>
+
+<!--
+  REMARK 01: Copernicus DEM (10 m, TerrainRGB) für Höhenabfragen, Profile & Hochwasser.
+  REMARK 02: Klick auf die Karte → DEM-Höhe im Popup (TerrainRGB-Auswertung im Browser).
+  REMARK 03: Werkzeugkasten (unten, zentriert) steuert:
+              – Höhenprofil A→B (DEM-Profil)
+              – Line-of-Sight A→B (Sichtlinie vs. Gelände)
+              – Hochwasser-Simulation (Pegel unten rechts).
+  REMARK 04: Hochwasser-Simulation: farbige Flächen für Höhen <= Pegel, nur auf Land (SH-Outline).
+  REMARK 05: Profil-Panel zeigt Höhenprofil bzw. LOS-Profil, inkl. neon-grüner Linie & Hindernissen.
+-->
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background: #1a1a1a;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    #map {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* --- STARTSCREEN --- */
+    #startscreen {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #1a1a1a;
+        z-index: 9999;
+        color: white;
+        opacity: 1;
+        transition: opacity 1.2s ease;
+    }
+    #startscreen.fadeout {
+        opacity: 0;
+        pointer-events: none;
+    }
+    .loader-ring {
+        width: 80px;
+        height: 80px;
+        border: 5px solid #3a3a3a;
+        border-top-color: #4da3ff;
+        border-radius: 50%;
+        animation: spin 1.1s linear infinite;
+        margin-bottom: 22px;
+    }
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .start-title {
+        font-size: 26px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        letter-spacing: 0.5px;
+    }
+    .start-sub {
+        font-size: 15px;
+        opacity: 0.75;
+    }
+
+    .leaflet-control-layers-expanded {
+        max-height: 420px;
+        overflow-y: auto;
+    }
+
+    /* Popup für Höheninfo */
+    .height-popup-title {
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+    .height-popup-body {
+        font-size: 13px;
+        line-height: 1.3;
+    }
+    .height-popup-body code {
+        font-size: 12px;
+    }
+
+    /* --- INFO-PANEL (verschiebbar) --- */
+    #info-panel {
+        position: fixed;
+        top: 16px;
+        left: 90px;
+        max-width: 320px;
+        background: rgba(255, 255, 255, 0.96);
+        color: #111;
+        padding: 10px 14px 12px;
+        border-radius: 10px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+        font-size: 13px;
+        z-index: 900;
+        cursor: move;
+        user-select: none;
+    }
+    #info-panel h1 {
+        font-size: 15px;
+        margin: 0 0 4px;
+        font-weight: 600;
+    }
+    #info-panel p {
+        margin: 2px 0;
+    }
+    #info-panel .hint {
+        font-size: 12px;
+        opacity: 0.9;
+    }
+
+    /* --- PROFIL-PANEL --- */
+    #profile-container {
+        position: fixed;
+        left: 16px;
+        bottom: 80px;
+        width: 360px;
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 12px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+        z-index: 900;
+        overflow: hidden;
+        backdrop-filter: blur(4px);
+    }
+    #profile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        background: linear-gradient(90deg, #f7f7f7, #ffffff);
+        font-size: 13px;
+    }
+    #profile-header div:first-child {
+        font-weight: 600;
+    }
+    #profile-meta {
+        font-size: 11px;
+        color: #555;
+        text-align: right;
+    }
+    #profile-svg {
+        display: block;
+        width: 100%;
+        height: 120px;
+        background: #fafafa;
+    }
+
+    /* --- Werkzeug-Button (🧰) --- */
+    .toolbox-toggle {
+        position: fixed;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 46px;
+        height: 46px;
+        border-radius: 999px;
+        background: #ffffff;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+        font-size: 22px;
+        user-select: none;
+    }
+
+    /* --- Werkzeugkasten-Panel --- */
+    .toolbox-panel {
+        position: fixed;
+        bottom: 72px;
+        left: 50%;
+        transform: translateX(-50%) translateY(150%);
+        transition: transform 0.55s ease;
+        z-index: 999;
+        background: rgba(255, 255, 255, 0.98);
+        padding: 12px;
+        border-radius: 12px;
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+        width: 260px;
+    }
+    .toolbox-panel.open {
+        transform: translateX(-50%) translateY(-75%);
+    }
+    .toolbox-entry {
+        padding: 9px 10px;
+        margin-bottom: 6px;
+        background: #f5f5f5;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .toolbox-entry:last-child {
+        margin-bottom: 0;
+    }
+    .toolbox-entry:hover {
+        background: #e9e9e9;
+    }
+    .toolbox-entry span.icon {
+        width: 20px;
+        text-align: center;
+    }
+    .toolbox-entry span.label {
+        flex: 1;
+    }
+
+    /* --- Hochwasser-Pegel-Panel --- */
+    #flood-panel {
+        position: fixed;
+        right: 16px;
+        bottom: 20px;
+        width: 260px;
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+        padding: 8px 10px 10px;
+        font-size: 12px;
+        z-index: 900;
+    }
+    #flood-panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    #flood-panel-header span.small {
+        font-size: 11px;
+        font-weight: 400;
+        color: #555;
+    }
+    #flood-slider {
+        width: 100%;
+    }
+    #flood-level-label {
+        font-size: 11px;
+        color: #333;
+        margin-top: 2px;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- STARTSCREEN -->
+<div id="startscreen">
+    <div class="loader-ring"></div>
+    <div class="start-title">DigitalRegion.SH</div>
+    <div class="start-sub">Testversion PlanNeo</div>
+    <div class="start-sub">Höhenprofil &amp; Line-of-Sight werden geladen …</div>
+</div>
+
+<div id="map"></div>
+
+<!-- Info-Panel (verschiebbar) -->
+<div id="info-panel">
+    <h1>Relief &amp; DEM-Tools (v0.18.5)</h1>
+    <p>Klick auf die Karte → <b>Geländehöhe (DEM)</b> im Popup.</p>
+    <p class="hint">
+        Werkzeugkasten (🧰) unten anklicken →<br>
+        <b>Höhenprofil</b>, <b>Line-of-Sight</b> oder <b>Hochwasser</b> wählen.<br>
+        Pegel für Hochwasser unten rechts.
+    </p>
+</div>
+
+<!-- Profil-Panel (für Höhenprofil & LOS-Profil) -->
+<div id="profile-container">
+    <div id="profile-header">
+        <div>Profil</div>
+        <div id="profile-meta">Noch kein Profil berechnet</div>
+    </div>
+    <svg id="profile-svg" viewBox="0 0 500 120" preserveAspectRatio="none"></svg>
+</div>
+
+<!-- Werkzeug-Button -->
+<div class="toolbox-toggle" id="toolboxToggle" title="Werkzeuge öffnen/schließen">🧰</div>
+
+<!-- Werkzeugkasten -->
+<div class="toolbox-panel" id="toolboxPanel">
+    <div class="toolbox-entry" data-tool="heightProfile">
+        <span class="icon">⛰️</span>
+        <span class="label">Höhenprofil A → B</span>
+    </div>
+    <div class="toolbox-entry" data-tool="lineOfSight">
+        <span class="icon">👁️</span>
+        <span class="label">Line-of-Sight prüfen</span>
+    </div>
+
+    <!-- Hochwasser-Simulation deaktiviert für PlanNeo -->
+    
+    <div class="toolbox-entry" data-tool="flood" style="opacity:0.35; pointer-events:none;">
+        <span class="icon">🌊</span>
+        <span class="label">Hochwasser-Simulation</span>
+    </div>
+</div>
+
+<!-- Hochwasser-Pegel-Panel -->
+<div id="flood-panel">
+    <div id="flood-panel-header">
+        <span>Hochwasser-Pegel</span>
+        <span class="small">DEM-basiert (Land)</span>
+    </div>
+    <input id="flood-slider" type="range" min="0" max="10" step="0.5" value="0">
+    <div id="flood-level-label">Aktueller Pegel: 0,0 m</div>
+    <div style="font-size:11px; color:#666; margin-top:2px;">
+        Orientierungswerte: 1,5 m · 3,0 m · 3,5 m · 4,0 m
+    </div>
+    
+    <div class="toolbox-entry" data-tool="none">
+    <span class="icon">🧹</span>
+    <span class="label">Werkzeug deaktivieren</span>
+</div>
+</div>
+
+<!-- GeoJSON -->
+<script src="/data/sh_outline.js"></script>
+<script src="/data/forest_sh_1ha.js"></script>
+<script src="/data/gateways_SH_NETZ.js"></script>
+
+<script>
+// ---------------------------------------------------------
+// STARTSCREEN
+// ---------------------------------------------------------
+setTimeout(() => {
+    document.getElementById("startscreen").classList.add("fadeout");
+}, 1500);
+
+// ---------------------------------------------------------
+// MAP INIT
+// ---------------------------------------------------------
+var map = L.map('map', {
+    center: [54.3, 9.6],
+    zoom: 9,
+    minZoom: 9,
+    maxZoom: 19,
+    zoomControl: true,
+});
+
+// OpenStreetMap Layer
+var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap',
+}).addTo(map);
+
+// ---------------------------------------------------------
+// RELIEF-TILES (v2-Server)
+// ---------------------------------------------------------
+
+// 1) FARBE (DEM-Colorized)
+var reliefFarbig = L.tileLayer('/data/v2/elevation_relief/farbig/{z}/{x}/{y}.png', {
+    tms: true,
+    minZoom: 8,
+    maxZoom: 12,
+    opacity: 0.75,
+    attribution: 'DEM-Relief © Copernicus / DigitalRegion.SH'
+});
+
+// 2) GRAU (Hillshade)
+var reliefGrau = L.tileLayer('/data/v2/elevation_relief/relief/{z}/{x}/{y}.png', {
+    tms: true,
+    minZoom: 8,
+    maxZoom: 12,
+    opacity: 0.85,
+    attribution: 'Hillshade © Copernicus / DigitalRegion.SH'
+});
+
+// 3) NEUES Hillshade (v3, Copernicus 10 m)
+const hillshade = L.tileLayer('/data/v3/hillshade_tiles_terrain_8_12/{z}/{x}/{y}.png', {
+    minZoom: 9,
+    maxZoom: 12,
+    tileSize: 256,
+    opacity: 1.0,
+    attribution: 'Hillshade 10 m © Copernicus / DigitalRegion.SH'
+});
+
+// ---------------------------------------------------------
+// TerrainRGB-Tiles (SH DEM, für Höhenberechnung + optional sichtbar)
+// ---------------------------------------------------------
+const terrainRGB = L.tileLayer('/data/v3/terrainrgb_tiles_8_12/{z}/{x}/{y}.png', {
+    minZoom: 8,
+    maxZoom: 12,
+    tileSize: 256,
+    attribution: 'TerrainRGB © Heiner / Copernicus'
+});
+
+// Standard: TerrainRGB + Hillshade aktiv
+terrainRGB.addTo(map);
+hillshade.addTo(map);
+
+// ---------------------------------------------------------
+// SCHLESWIG-HOLSTEIN OUTLINE
+// ---------------------------------------------------------
+var shOutlineLayer = L.layerGroup();
+
+var shOutlineWhite = L.geoJSON(sh_outline, {
+    style: {
+        color: "#ffffff",
+        weight: 6,
+        opacity: 0.8,
+        fillOpacity: 0
+    }
+}).addTo(shOutlineLayer);
+
+var shOutlineBlue = L.geoJSON(sh_outline, {
+    style: {
+        color: "#0033cc",
+        weight: 2,
+        opacity: 0.9,
+        fillOpacity: 0
+    }
+}).addTo(shOutlineLayer);
+
+shOutlineLayer.addTo(map);
+
+// ---------------------------------------------------------
+// FOREST (1 ha)
+// ---------------------------------------------------------
+var forest = L.geoJSON(forest_sh_1ha, {
+    style: {
+        color: "#228833",
+        weight: 1,
+        fillOpacity: 0.25
+    }
+});
+
+// ---------------------------------------------------------
+// GATEWAYS
+// ---------------------------------------------------------
+var gwIcon = L.icon({
+    iconUrl: '/icons/gateway.png',
+    iconSize: [22, 22]
+});
+
+var gatewaysLayer = L.layerGroup();
+
+if (typeof gateways !== "undefined" && gateways.features) {
+    gateways.features.forEach(f => {
+        const [lon, lat] = f.geometry.coordinates;
+        L.marker([lat, lon], { icon: gwIcon }).addTo(gatewaysLayer);
+    });
+} else {
+    console.error("❌ Gateways-Objekt nicht geladen oder ungültig.");
+}
+
+// ---------------------------------------------------------
+// LAYER CONTROL
+// ---------------------------------------------------------
+var baseMaps = {
+    "OpenStreetMap": osm
+};
+
+var overlayMaps = {
+    "Relief (Farbig v2)": reliefFarbig,
+    "Relief (Grau v2)": reliefGrau,
+    "Hillshade 10 m (v3)": hillshade,
+    "Schleswig-Holstein Umriss": shOutlineLayer,
+    "Waldflächen (≥ 1 ha)": forest,
+    "LoRaWAN Gateways": gatewaysLayer,
+    "DEM (TerrainRGB, SH / versteckt)": terrainRGB
+};
+
+L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
+
+// ---------------------------------------------------------
+// TerrainRGB-Hilfsfunktionen für DEM-Höhen
+// ---------------------------------------------------------
+function clampZoom(z) {
+    if (z < 8) return 8;
+    if (z > 12) return 12;
+    return z;
+}
+
+function latLonToTile(lat, lon, z) {
+    var latRad = lat * Math.PI / 180;
+    var n = Math.pow(2, z);
+    var xTile = Math.floor((lon + 180.0) / 360.0 * n);
+    var yTile = Math.floor(
+        (1.0 - Math.log(Math.tan(latRad) + 1.0 / Math.cos(latRad)) / Math.PI) / 2.0 * n
+    );
+    return { x: xTile, y: yTile };
+}
+
+function latLonToPixelInTile(lat, lon, z) {
+    var latRad = lat * Math.PI / 180;
+    var n = Math.pow(2, z);
+    var x = (lon + 180.0) / 360.0 * n * 256.0;
+    var y = (1.0 - Math.log(Math.tan(latRad) + 1.0 / Math.cos(latRad)) / Math.PI) / 2.0 * n * 256.0;
+    var px = Math.floor(x) % 256;
+    var py = Math.floor(y) % 256;
+    if (px < 0) px += 256;
+    if (py < 0) py += 256;
+    return { px: px, py: py };
+}
+
+function decodeTerrainRGB(r, g, b) {
+    var value = (r * 256 * 256 + g * 256 + b);
+    var height = value / 10.0 - 10000.0;
+    return height;
+}
+
+// Canvas-Cache pro Tile (für Profil-, LOS- und Flood-Sampling)
+const tileCanvasCache = new Map();
+
+function getTileContext(z, x, y) {
+    const key = z + "/" + x + "/" + y;
+    if (tileCanvasCache.has(key)) {
+        return Promise.resolve(tileCanvasCache.get(key));
+    }
+    const url = '/data/v3/terrainrgb_tiles_8_12/' + z + '/' + x + '/' + y + '.png';
+
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.onload = function () {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            tileCanvasCache.set(key, ctx);
+            resolve(ctx);
+        };
+        img.onerror = function () {
+            reject(new Error("Tile konnte nicht geladen werden: " + url));
+        };
+        img.src = url;
+    });
+}
+
+async function sampleElevation(lat, lon, z) {
+    z = clampZoom(z);
+    const tile = latLonToTile(lat, lon, z);
+    const pix = latLonToPixelInTile(lat, lon, z);
+
+    try {
+        const ctx = await getTileContext(z, tile.x, tile.y);
+        const imageData = ctx.getImageData(pix.px, pix.py, 1, 1);
+        const r = imageData.data[0];
+        const g = imageData.data[1];
+        const b = imageData.data[2];
+        const a = imageData.data[3];
+
+        if (a === 0) return null;
+
+        return decodeTerrainRGB(r, g, b);
+    } catch (err) {
+        console.error("DEM-Sampling-Fehler:", err);
+        return null;
+    }
+}
+
+// ---------------------------------------------------------
+// Punkt-in-Polygon für SH-Outline (um Meer auszublenden)
+// ---------------------------------------------------------
+function pointInRing(pt, ring) {
+    const x = pt[0];
+    const y = pt[1];
+    let inside = false;
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const xi = ring[i][0], yi = ring[i][1];
+        const xj = ring[j][0], yj = ring[j][1];
+
+        const intersect =
+            ((yi > y) !== (yj > y)) &&
+            (x < (xj - xi) * (y - yi) / ((yj - yi) || 1e-12) + xi);
+        if (intersect) inside = !inside;
+    }
+    return inside;
+}
+
+function pointInSH(lat, lon) {
+    try {
+        if (!window.sh_outline) return true; // Fallback: nichts filtern
+        const pt = [lon, lat];
+
+        const features = Array.isArray(sh_outline.features)
+            ? sh_outline.features
+            : [{ geometry: sh_outline }];
+
+        for (let f of features) {
+            const geom = f.geometry;
+            if (!geom) continue;
+
+            if (geom.type === "Polygon") {
+                const rings = geom.coordinates;
+                for (let ring of rings) {
+                    if (pointInRing(pt, ring)) return true;
+                }
+            } else if (geom.type === "MultiPolygon") {
+                const polys = geom.coordinates;
+                for (let poly of polys) {
+                    for (let ring of poly) {
+                        if (pointInRing(pt, ring)) return true;
+                    }
+                }
+            }
+        }
+        return false;
+    } catch (e) {
+        console.error("pointInSH-Fehler:", e);
+        return true; // im Fehlerfall lieber nicht filtern
+    }
+}
+
+// ---------------------------------------------------------
+// GLOBALER TOOL-STATUS
+// ---------------------------------------------------------
+let activeTool      = null;   // "heightProfile" | "lineOfSight" | "flood" | null
+
+// Höhenprofil
+let profilePoints   = [];     // [LatLng, LatLng]
+let profileLine     = null;   // Leaflet polyline
+
+// Line-of-Sight
+let losPoints       = [];
+let losLine         = null;
+let losObstaclesLayer = L.layerGroup().addTo(map);
+
+// Flood
+let floodActive       = false;
+let floodLevelMeters  = 0.0;
+let floodLayer        = L.layerGroup().addTo(map);
+
+// Profil-SVG
+const profileSvg  = document.getElementById("profile-svg");
+const profileMeta = document.getElementById("profile-meta");
+
+function updateProfileMeta(text) {
+    profileMeta.textContent = text;
+}
+
+// ---------------------------------------------------------
+// KLICK-HANDLER: DEM-Popup + Tool-Handling
+// ---------------------------------------------------------
+map.on('click', async function (e) {
+    const lat = e.latlng.lat;
+    const lon = e.latlng.lng;
+
+    // DEM-Popup (immer aktiv)
+    const z = clampZoom(map.getZoom());
+    const popup = L.popup()
+        .setLatLng(e.latlng)
+        .setContent('<div class="height-popup-body">Höhe wird geladen …</div>')
+        .openOn(map);
+
+    try {
+        const h = await sampleElevation(lat, lon, z);
+        if (h === null) {
+            popup.setContent(
+                '<div class="height-popup-body">' +
+                '<div class="height-popup-title">Höhe nicht verfügbar</div>' +
+                '<div>Für diesen Punkt liegen keine DEM-Daten vor.</div>' +
+                '<div style="margin-top:6px;"><code>' +
+                'Lat: ' + lat.toFixed(5) + '°, Lon: ' + lon.toFixed(5) + '°' +
+                '</code></div>' +
+                '</div>'
+            );
+        } else {
+            const hRounded = Math.round(h);
+            popup.setContent(
+                '<div class="height-popup-body">' +
+                '<div class="height-popup-title">Geländehöhe (DEM)</div>' +
+                '<div><b>' + hRounded + ' m</b> über Meer (Copernicus DEM)</div>' +
+                '<div style="margin-top:6px;"><code>' +
+                'Lat: ' + lat.toFixed(5) + '°, Lon: ' + lon.toFixed(5) + '°<br>' +
+                'Zoom (DEM): ' + z +
+                '</code></div>' +
+                '</div>'
+            );
+        }
+    } catch (err) {
+        console.error('Fehler bei TerrainRGB-Auswertung:', err);
+        popup.setContent(
+            '<div class="height-popup-body">' +
+            '<div class="height-popup-title">Höhe konnte nicht berechnet werden</div>' +
+            '<div>Es gab ein Problem beim Lesen der DEM-Daten.</div>' +
+            '<div style="margin-top:6px;"><code>' +
+            'Lat: ' + lat.toFixed(5) + '°, Lon: ' + lon.toFixed(5) + '°' +
+            '</code></div>' +
+            '</div>'
+        );
+    }
+
+    // Tool-Logik: zusätzlich
+    if (activeTool === "heightProfile") {
+        handleHeightProfileClick(e.latlng);
+    } else if (activeTool === "lineOfSight") {
+        handleLineOfSightClick(e.latlng);
+    } else if (activeTool === "flood") {
+        // Flood-Tool nutzt Klicks aktuell nicht – nur Slider + Mapbewegung.
+    }
+});
+
+// ---------------------------------------------------------
+// WERKZEUGKASTEN-LOGIK
+// ---------------------------------------------------------
+const toolboxToggle = document.getElementById("toolboxToggle");
+const toolboxPanel  = document.getElementById("toolboxPanel");
+
+toolboxToggle.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    toolboxPanel.classList.toggle("open");
+});
+
+// Schließen bei Klick außerhalb
+document.addEventListener("click", (ev) => {
+    if (!toolboxPanel.contains(ev.target) && ev.target !== toolboxToggle) {
+        toolboxPanel.classList.remove("open");
+    }
+});
+
+// Tool-Auswahl
+document.querySelectorAll(".toolbox-entry").forEach(entry => {
+    entry.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        const tool = entry.getAttribute("data-tool");
+        setActiveTool(tool);
+        toolboxPanel.classList.remove("open");
+    });
+});
+
+function setActiveTool(toolName) {
+    // TOOL-CLEANUP beim Wechsel
+    map.closePopup();
+
+    // Höhenprofil-Linie löschen
+    if (profileLine) {
+        map.removeLayer(profileLine);
+        profileLine = null;
+    }
+    profilePoints = [];
+
+    // LOS-Linie + Marker löschen
+    if (losLine) {
+        map.removeLayer(losLine);
+        losLine = null;
+    }
+    losPoints = [];
+    losObstaclesLayer.clearLayers();
+
+    // Flood-Overlay ggf. leeren (wird bei Flood-Tool wieder befüllt)
+    if (toolName !== "flood") {
+        floodActive = false;
+        floodLayer.clearLayers();
+    }
+
+    activeTool = toolName;
+
+    // Höhenprofil
+    if (toolName === "heightProfile") {
+        updateProfileMeta("Höhenprofil: erster Punkt …");
+        return;
+    }
+
+    // Line-of-Sight
+    if (toolName === "lineOfSight") {
+        updateProfileMeta("Line-of-Sight: erster Punkt …");
+        return;
+    }
+
+    // Hochwasser
+    if (toolName === "flood") {
+        floodActive = true;
+        activeTool = "flood";   // ← DIE entscheidende fehlende Zeile
+        updateProfileMeta(
+            "Hochwasser: Pegel unten rechts wählen – Flächen ≤ Pegel werden eingefärbt."
+        );
+        recomputeFloodOverlay();
+        return;
+    }
+
+    updateProfileMeta("Noch kein Profil berechnet");
+}
+
+// ---------------------------------------------------------
+// HÖHENPROFIL-LOGIK
+// ---------------------------------------------------------
+function handleHeightProfileClick(latlng) {
+    profilePoints.push(latlng);
+
+    if (profilePoints.length === 1) {
+        updateProfileMeta("Startpunkt gesetzt – jetzt Zielpunkt wählen …");
+    } else if (profilePoints.length === 2) {
+        // Linie zeichnen
+        if (profileLine) {
+            map.removeLayer(profileLine);
+        }
+        profileLine = L.polyline(profilePoints, {
+            color: "#00ff88",
+            weight: 3,
+            opacity: 0.9
+        }).addTo(map);
+
+        // Profil berechnen
+        computeHeightProfile(profilePoints[0], profilePoints[1]);
+        // Reset für nächstes Profil
+        profilePoints = [];
+    } else {
+        // Zu viele Klicks → neu starten
+        profilePoints = [latlng];
+        if (profileLine) {
+            map.removeLayer(profileLine);
+            profileLine = null;
+        }
+        updateProfileMeta("Startpunkt neu gesetzt – jetzt Zielpunkt wählen …");
+    }
+}
+
+// Haversine-Distanz (Meter)
+function haversineDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371000; // Meter
+    const toRad = Math.PI / 180;
+    const dLat = (lat2 - lat1) * toRad;
+    const dLon = (lon2 - lon1) * toRad;
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * toRad) * Math.cos(lat2 * toRad) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+}
+
+async function computeHeightProfile(a, b) {
+    const lat1 = a.lat;
+    const lon1 = a.lng;
+    const lat2 = b.lat;
+    const lon2 = b.lng;
+
+    const totalDist = haversineDistance(lat1, lon1, lat2, lon2);
+    const samples   = 160;
+
+    const distances = [];
+    const heights   = [];
+
+    updateProfileMeta("Profil wird berechnet …");
+
+    const z = clampZoom(map.getZoom());
+
+    for (let i = 0; i <= samples; i++) {
+        const t   = i / samples;
+        const lat = lat1 + (lat2 - lat1) * t;
+        const lon = lon1 + (lon2 - lon1) * t;
+        const d   = totalDist * t;
+
+        const h = await sampleElevation(lat, lon, z);
+
+        distances.push(d);
+        heights.push(h);
+    }
+
+    renderHeightProfile(distances, heights, totalDist);
+
+    const validHeights = heights.filter(h => h !== null);
+    if (validHeights.length > 0) {
+        const minH = Math.min.apply(null, validHeights);
+        const maxH = Math.max.apply(null, validHeights);
+        updateProfileMeta(
+            "Höhenprofil · Distanz: " + (totalDist / 1000).toFixed(2) + " km · " +
+            "min: " + Math.round(minH) + " m · max: " + Math.round(maxH) + " m"
+        );
+    } else {
+        updateProfileMeta("Keine DEM-Daten entlang der Linie verfügbar.");
+    }
+}
+
+function renderHeightProfile(distances, heights, totalDist) {
+    const width  = 500;
+    const height = 120;
+    const paddingTop    = 8;
+    const paddingBottom = 14;
+    const paddingLeft   = 8;
+    const paddingRight  = 8;
+
+    const validHeights = heights.filter(h => h !== null);
+    if (validHeights.length === 0) {
+        profileSvg.innerHTML = "";
+        return;
+    }
+
+    let minH = Math.min.apply(null, validHeights);
+    let maxH = Math.max.apply(null, validHeights);
+
+    const margin = 5;
+    minH = minH - margin;
+    maxH = maxH + margin;
+
+    const hRange = Math.max(5, maxH - minH);
+
+    const innerWidth  = width  - paddingLeft - paddingRight;
+    const innerHeight = height - paddingTop  - paddingBottom;
+
+    let dAttr = "";
+    let first = true;
+
+    for (let i = 0; i < distances.length; i++) {
+        const h = heights[i];
+        if (h === null) continue;
+
+        const x = paddingLeft + (distances[i] / totalDist) * innerWidth;
+        const y = paddingTop + (1 - (h - minH) / hRange) * innerHeight;
+
+        if (first) {
+            dAttr += "M " + x.toFixed(2) + " " + y.toFixed(2);
+            first = false;
+        } else {
+            dAttr += " L " + x.toFixed(2) + " " + y.toFixed(2);
+        }
+    }
+
+    const baselineY = paddingTop + innerHeight;
+
+    let svg = '';
+    svg += '<rect x="0" y="0" width="' + width + '" height="' + height + '" fill="#fafafa" />';
+    svg += '<line x1="' + paddingLeft + '" y1="' + baselineY + '" x2="' + (width - paddingRight) +
+           '" y2="' + baselineY + '" stroke="#dddddd" stroke-width="1" />';
+    svg += '<path d="' + dAttr + '" ' +
+           'stroke="#39ff14" stroke-width="2.2" fill="none" ' +
+           'stroke-linejoin="round" stroke-linecap="round" />';
+
+    profileSvg.innerHTML = svg;
+}
+
+// ---------------------------------------------------------
+// LINE OF SIGHT – Tool
+// ---------------------------------------------------------
+async function handleLineOfSightClick(latlng) {
+    losPoints.push(latlng);
+
+    if (losPoints.length === 1) {
+        updateProfileMeta("LOS: Startpunkt gesetzt – jetzt Zielpunkt wählen …");
+    } else if (losPoints.length === 2) {
+        // Linie zeichnen
+        if (losLine) {
+            map.removeLayer(losLine);
+        }
+        losObstaclesLayer.clearLayers();
+
+        losLine = L.polyline(losPoints, {
+            color: "#39ff14",
+            weight: 3,
+            opacity: 0.9,
+            dashArray: "6,4"
+        }).addTo(map);
+
+        await computeLineOfSight(losPoints[0], losPoints[1]);
+        losPoints = [];
+    } else {
+        // neu starten
+        losPoints = [latlng];
+        if (losLine) {
+            map.removeLayer(losLine);
+            losLine = null;
+        }
+        losObstaclesLayer.clearLayers();
+        updateProfileMeta("LOS: Startpunkt neu gesetzt – jetzt Zielpunkt wählen …");
+    }
+}
+
+// Vereinfachte LOS-Berechnung: Gelände vs. Sichtlinie (ohne Erdkrümmung in dieser Version)
+async function computeLineOfSight(a, b) {
+    const lat1 = a.lat;
+    const lon1 = a.lng;
+    const lat2 = b.lat;
+    const lon2 = b.lng;
+
+    const totalDist = haversineDistance(lat1, lon1, lat2, lon2);
+    const samples   = 160;
+    const z         = clampZoom(map.getZoom());
+
+    const distances      = [];
+    const terrainHeights = [];
+    const losHeights     = [];
+    const obstacles      = [];
+
+    updateProfileMeta("Line-of-Sight: Profil wird berechnet …");
+
+    // Antennenhöhe (einfacher Standardwert)
+    const antennaTx = 10; // m
+    const antennaRx = 10; // m
+
+    const hTx = await sampleElevation(lat1, lon1, z);
+    const hRx = await sampleElevation(lat2, lon2, z);
+
+    const hTxTop = (hTx === null ? 0 : hTx) + antennaTx;
+    const hRxTop = (hRx === null ? 0 : hRx) + antennaRx;
+
+    for (let i = 0; i <= samples; i++) {
+        const t   = i / samples;
+        const lat = lat1 + (lat2 - lat1) * t;
+        const lon = lon1 + (lon2 - lon1) * t;
+        const d   = totalDist * t;
+
+        const hTerrain = await sampleElevation(lat, lon, z);
+        const hLos = hTxTop + (hRxTop - hTxTop) * (d / totalDist);
+
+        distances.push(d);
+        terrainHeights.push(hTerrain);
+        losHeights.push(hLos);
+
+        if (i > 0 && i < samples && hTerrain !== null && hTerrain > hLos) {
+            obstacles.push({ lat, lon, d, hTerrain, hLos });
+        }
+    }
+
+    renderLineOfSightProfile(distances, terrainHeights, losHeights, totalDist, obstacles);
+
+    if (obstacles.length === 0) {
+        updateProfileMeta(
+            "Line-of-Sight: frei · Distanz: " + (totalDist / 1000).toFixed(2) + " km"
+        );
+    } else {
+        updateProfileMeta(
+            "Line-of-Sight: blockiert (" + obstacles.length + " Hindernis(se)) · Distanz: " +
+            (totalDist / 1000).toFixed(2) + " km"
+        );
+
+        // Hindernisse in der Karte markieren
+        obstacles.forEach(o => {
+            const m = L.circleMarker([o.lat, o.lon], {
+                radius: 4,
+                color: "#ff0000",
+                weight: 2,
+                fillColor: "#ff0000",
+                fillOpacity: 0.8
+            }).addTo(losObstaclesLayer);
+            m.bindPopup(
+                "<b>Hindernis</b><br>" +
+                "Entfernung: " + (o.d / 1000).toFixed(2) + " km<br>" +
+                "Gelände: " + Math.round(o.hTerrain) + " m<br>" +
+                "Sichtlinie: " + Math.round(o.hLos) + " m"
+            );
+        });
+    }
+}
+
+function renderLineOfSightProfile(distances, terrainHeights, losHeights, totalDist, obstacles) {
+    const width  = 500;
+    const height = 120;
+    const paddingTop    = 8;
+    const paddingBottom = 14;
+    const paddingLeft   = 8;
+    const paddingRight  = 8;
+
+    const validTerrain = terrainHeights.filter(h => h !== null);
+    const allHeights   = validTerrain.concat(losHeights.filter(h => isFinite(h)));
+
+    if (allHeights.length === 0) {
+        profileSvg.innerHTML = "";
+        return;
+    }
+
+    let minH = Math.min.apply(null, allHeights);
+    let maxH = Math.max.apply(null, allHeights);
+
+    const margin = 5;
+    minH -= margin;
+    maxH += margin;
+
+    const hRange = Math.max(5, maxH - minH);
+
+    const innerWidth  = width  - paddingLeft - paddingRight;
+    const innerHeight = height - paddingTop  - paddingBottom;
+
+    let dTerrain = "";
+    let dLos     = "";
+    let firstT   = true;
+    let firstL   = true;
+
+    for (let i = 0; i < distances.length; i++) {
+        const d = distances[i];
+
+        // Gelände
+        const hT = terrainHeights[i];
+        if (hT !== null) {
+            const xT = paddingLeft + (d / totalDist) * innerWidth;
+            const yT = paddingTop + (1 - (hT - minH) / hRange) * innerHeight;
+
+            if (firstT) {
+                dTerrain += "M " + xT.toFixed(2) + " " + yT.toFixed(2);
+                firstT = false;
+            } else {
+                dTerrain += " L " + xT.toFixed(2) + " " + yT.toFixed(2);
+            }
+        }
+
+        // Sichtlinie
+        const hL = losHeights[i];
+        if (isFinite(hL)) {
+            const xL = paddingLeft + (d / totalDist) * innerWidth;
+            const yL = paddingTop + (1 - (hL - minH) / hRange) * innerHeight;
+
+            if (firstL) {
+                dLos += "M " + xL.toFixed(2) + " " + yL.toFixed(2);
+                firstL = false;
+            } else {
+                dLos += " L " + xL.toFixed(2) + " " + yL.toFixed(2);
+            }
+        }
+    }
+
+    const baselineY = paddingTop + innerHeight;
+
+    let svg = '';
+    svg += '<rect x="0" y="0" width="' + width + '" height="' + height + '" fill="#fafafa" />';
+    svg += '<line x1="' + paddingLeft + '" y1="' + baselineY + '" x2="' + (width - paddingRight) +
+           '" y2="' + baselineY + '" stroke="#dddddd" stroke-width="1" />';
+    // Gelände-Profil (dunkelgrau)
+    svg += '<path d="' + dTerrain + '" ' +
+           'stroke="#555555" stroke-width="1.6" fill="none" ' +
+           'stroke-linejoin="round" stroke-linecap="round" />';
+    // Sichtlinie (neon-grün)
+    svg += '<path d="' + dLos + '" ' +
+           'stroke="#39ff14" stroke-width="1.8" fill="none" ' +
+           'stroke-linejoin="round" stroke-linecap="round" />';
+
+    // Hindernis-Punkte (rote Kreise)
+    obstacles.forEach(o => {
+        const x = paddingLeft + (o.d / totalDist) * innerWidth;
+        const y = paddingTop + (1 - (o.hTerrain - minH) / hRange) * innerHeight;
+        svg += '<circle cx="' + x.toFixed(2) + '" cy="' + y.toFixed(2) +
+               '" r="3" fill="#ff0000" />';
+    });
+
+    profileSvg.innerHTML = svg;
+}
+
+// ---------------------------------------------------------
+// HOCHWASSER-SIMULATION
+// ---------------------------------------------------------
+const floodSlider = document.getElementById("flood-slider");
+const floodLabel  = document.getElementById("flood-level-label");
+
+floodSlider.addEventListener("input", () => {
+    const val = parseFloat(floodSlider.value);
+    floodLevelMeters = val;
+    floodLabel.textContent = "Aktueller Pegel: " +
+        val.toFixed(1).replace(".", ",") + " m";
+
+    if (activeTool === "flood") {
+        recomputeFloodOverlay();
+    }
+});
+
+// Overlay neu berechnen bei Kartenbewegung
+map.on("moveend", () => {
+    if (activeTool === "flood" && floodActive) {
+        recomputeFloodOverlay();
+    }
+});
+
+let floodComputationId = 0;
+
+async function recomputeFloodOverlay() {
+    const myId = ++floodComputationId;
+
+    floodLayer.clearLayers();
+
+    if (floodLevelMeters <= 0) {
+        return;
+    }
+
+    const bounds = map.getBounds();
+    const south = bounds.getSouth();
+    const north = bounds.getNorth();
+    const west  = bounds.getWest();
+    const east  = bounds.getEast();
+
+    // Gitterauflösung abhängig vom Zoom
+    const zoom = clampZoom(map.getZoom());
+    const gridCount = (zoom >= 11) ? 48 : 32;  // feinere Auflösung bei höherem Zoom
+
+    const stepLat = (north - south) / gridCount;
+    const stepLon = (east  - west)  / gridCount;
+
+    const z = clampZoom(map.getZoom());
+
+    updateProfileMeta(
+        "Hochwasser: berechne Flächen ≤ " + floodLevelMeters.toFixed(1) + " m …"
+    );
+
+    for (let i = 0; i <= gridCount; i++) {
+        const lat = south + stepLat * i;
+        for (let j = 0; j <= gridCount; j++) {
+            const lon = west + stepLon * j;
+
+            // Falls in der Zwischenzeit ein neuer Lauf gestartet wurde → abbrechen
+            if (myId !== floodComputationId) {
+                return;
+            }
+
+            // Nur Punkte innerhalb SH berücksichtigen (Meer ausschließen)
+            if (!pointInSH(lat, lon)) continue;
+
+            const h = await sampleElevation(lat, lon, z);
+            if (h === null) continue;
+
+            if (h <= floodLevelMeters) {
+                const halfLat = stepLat / 2;
+                const halfLon = stepLon / 2;
+
+                const rectBounds = [
+                    [lat - halfLat, lon - halfLon],
+                    [lat + halfLat, lon + halfLon]
+                ];
+
+                L.rectangle(rectBounds, {
+                    stroke: false,
+                    fillColor: "#ff0077",
+                    fillOpacity: 0.35
+                }).addTo(floodLayer);
+            }
+        }
+    }
+
+    updateProfileMeta(
+        "Hochwasser: Pegel " + floodLevelMeters.toFixed(1).replace(".", ",") +
+        " m – gefährdete Flächen sind hervorgehoben."
+    );
+}
+
+// ---------------------------------------------------------
+// VERSCHIEBBARES INFO-PANEL
+// ---------------------------------------------------------
+(function () {
+    const panel = document.getElementById("info-panel");
+    let isDown = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    panel.addEventListener("mousedown", (e) => {
+        isDown = true;
+        offsetX = e.clientX - panel.offsetLeft;
+        offsetY = e.clientY - panel.offsetTop;
+        panel.style.transition = "none";
+    });
+
+    document.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
+        const x = e.clientX - offsetX;
+        const y = e.clientY - offsetY;
+        panel.style.left = x + "px";
+        panel.style.top  = y + "px";
+    });
+
+    document.addEventListener("mouseup", () => {
+        isDown = false;
+    });
+})();
+</script>
+
+</body>
+</html>
