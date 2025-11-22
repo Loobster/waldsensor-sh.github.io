@@ -1,13 +1,13 @@
 [
   {
     "id": "waldsensor_bredstedt_s31lb",
-    "ts": "2025-11-22T01:23:48.971Z",
+    "ts": "2025-11-22T15:43:40.637Z",
     "fields": {
       "BatV": 3.594,
       "Hum_SHT": 100.0,
       "Hum_SHT31": 100.0,
-      "TempC_SHT": 2.0,
-      "TempC_SHT31": 2.0,
+      "TempC_SHT": 3.1,
+      "TempC_SHT31": 3.1,
       "alt": 18.0,
       "lat": 54.64988,
       "lon": 8.955
@@ -15,24 +15,24 @@
   },
   {
     "id": "waldsensor_bredstedt_se01lb",
-    "ts": "2025-11-22T01:27:35.595Z",
+    "ts": "2025-11-22T15:27:26.265Z",
     "fields": {
       "BatV": 3.326,
       "alt": 18.0,
       "lat": 54.64988,
       "lon": 8.957,
-      "temp_SOIL": 6.2,
-      "water_SOIL": 18.62
+      "temp_SOIL": 6.61,
+      "water_SOIL": 18.67
     }
   },
   {
     "id": "waldsensor_fahrdorf",
-    "ts": "2025-11-22T01:29:15.901Z",
+    "ts": "2025-11-22T15:29:07.073Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.576,
-      "Hum_SHT": 100.0,
-      "TempC_SHT": 0.8,
+      "Hum_SHT": 89.7,
+      "TempC_SHT": 2.1,
       "alt": 5.0,
       "lat": 54.50158,
       "lon": 9.5869
@@ -40,7 +40,7 @@
   },
   {
     "id": "waldsensor_kappeln",
-    "ts": "2025-11-22T01:32:03.555Z",
+    "ts": "2025-11-22T15:31:52.334Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.648,
@@ -51,12 +51,12 @@
   },
   {
     "id": "waldsensor_kellinghusen_lsn50v2",
-    "ts": "2025-11-22T01:34:41.58Z",
+    "ts": "2025-11-22T15:34:41.637Z",
     "fields": {
-      "ADC1_V": 0.246,
-      "BatV": 3.412,
-      "Hum_SHT": 47.2,
-      "TempC_SHT": 23.9,
+      "ADC1_V": 0.245,
+      "BatV": 3.414,
+      "Hum_SHT": 44.3,
+      "TempC_SHT": 23.7,
       "alt": 18.0,
       "lat": 53.95655,
       "lon": 9.71426
@@ -64,48 +64,48 @@
   },
   {
     "id": "waldsensor_kropp",
-    "ts": "2025-11-22T01:33:26.704Z",
+    "ts": "2025-11-22T15:33:18.077Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.63,
-      "Hum_SHT": 100.0,
-      "TempC_SHT": 0.2,
+      "Hum_SHT": 89.6,
+      "TempC_SHT": 1.4,
       "lat": 54.40939889088546,
       "lon": 9.5285027323752
     }
   },
   {
     "id": "waldsensor_neumuenstertl",
-    "ts": "2025-11-22T01:30:02.991Z",
+    "ts": "2025-11-22T15:29:51.164Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.642,
-      "Hum_SHT": 54.7,
-      "TempC_SHT": 18.6,
+      "Hum_SHT": 53.3,
+      "TempC_SHT": 17.6,
       "lat": 54.07586,
       "lon": 9.98926
     }
   },
   {
     "id": "waldsensor_schacht_audorf_llms01",
-    "ts": "2025-11-22T01:25:35.21Z",
+    "ts": "2025-11-22T15:45:33.852Z",
     "fields": {
-      "Leaf_Moisture": 27.0,
-      "Leaf_Temperature": 0.0,
+      "Leaf_Moisture": 0.8,
+      "Leaf_Temperature": 2.1,
       "alt": 18.0,
       "lat": 54.30687,
       "lon": 9.7196,
-      "BatV": 3.263
+      "BatV": 3.274
     }
   },
   {
     "id": "waldsensor_schacht_audorf_lsn50v2",
-    "ts": "2025-11-22T01:29:36.633Z",
+    "ts": "2025-11-22T15:29:35.954Z",
     "fields": {
       "ADC1_V": 0.298,
       "BatV": 3.683,
-      "Hum_SHT": 46.6,
-      "TempC_SHT": 23.9,
+      "Hum_SHT": 43.7,
+      "TempC_SHT": 23.4,
       "alt": 18.0,
       "lat": 54.30687,
       "lon": 9.7196
@@ -113,13 +113,13 @@
   },
   {
     "id": "waldsensor_schacht_audorf_s31lb",
-    "ts": "2025-11-22T01:35:06.531Z",
+    "ts": "2025-11-22T15:34:58.084Z",
     "fields": {
-      "BatV": 3.588,
-      "Hum_SHT": 98.6,
-      "Hum_SHT31": 98.6,
-      "TempC_SHT": 0.0,
-      "TempC_SHT31": 0.0,
+      "BatV": 3.594,
+      "Hum_SHT": 83.4,
+      "Hum_SHT31": 83.4,
+      "TempC_SHT": 2.3,
+      "TempC_SHT31": 2.3,
       "alt": 18.0,
       "lat": 54.30687,
       "lon": 9.7196
@@ -127,19 +127,19 @@
   },
   {
     "id": "waldsensor_schacht_audorf_se01lb",
-    "ts": "2025-11-22T01:33:34.781Z",
+    "ts": "2025-11-22T15:33:25.002Z",
     "fields": {
-      "BatV": 3.516,
+      "BatV": 3.522,
       "alt": 18.0,
       "lat": 54.30687,
       "lon": 9.7196,
-      "temp_SOIL": 5.95,
-      "water_SOIL": 13.23
+      "temp_SOIL": 6.05,
+      "water_SOIL": 13.01
     }
   },
   {
     "id": "waldsensor_test2",
-    "ts": "2025-11-22T01:35:59.861Z",
+    "ts": "2025-11-22T15:35:49.783Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.636
@@ -147,15 +147,15 @@
   },
   {
     "id": "waldsensor_test3",
-    "ts": "2025-11-22T01:22:34.624Z",
+    "ts": "2025-11-22T15:42:24.882Z",
     "fields": {
       "ADC1_V": 0.0,
-      "BatV": 3.642
+      "BatV": 3.636
     }
   },
   {
     "id": "waldsensor_wacken",
-    "ts": "2025-11-22T01:39:31.368Z",
+    "ts": "2025-11-22T15:39:21.533Z",
     "fields": {
       "ADC1_V": 0.0,
       "BatV": 3.66,
