@@ -1,116 +1,194 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <title>WALDSENSOR.SH – Sensorik und Kartenplattform</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="WALDSENSOR.SH verbindet reale LoRaWAN-Sensorik mit einer eigenen digitalen Kartenplattform. Sensorik plus Karten machen den digitalen Wald Schleswig-Holsteins sichtbar.">
-  <meta name="robots" content="index,follow">
+  <meta charset="UTF-8">
+  <title>WALDSENSOR.SH – Sensorik & Kartenplattform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Strukturierte Daten für Google (schema.org/Project) -->
+  <meta name="description" content="WALDSENSOR.SH verbindet reale Mikroklima-Sensorik mit einer eigenen leistungsfähigen Kartenplattform. Sensorik plus Karten – der digitale Wald Schleswig-Holsteins.">
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 840px;
+      margin: 2em auto;
+      padding: 0 1em;
+      line-height: 1.7;
+      color: #111;
+      background-color: #fff;
+    }
+
+    h1, h2 {
+      color: #2e5e2e;
+      margin-top: 1.4em;
+      margin-bottom: 0.5em;
+    }
+
+    h1 {
+      font-size: 2em;
+      border-bottom: 2px solid #2e5e2e;
+      padding-bottom: 0.3em;
+    }
+
+    a {
+      color: #0077cc;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      margin-top: 0.5em;
+      margin-bottom: 1em;
+      padding-left: 1.2em;
+    }
+
+    .content-box {
+      background-color: #f9f9f9;
+      padding: 1em 1.2em;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      margin-top: 2em;
+    }
+
+    footer {
+      margin-top: 4em;
+      font-size: 0.9em;
+      color: #666;
+      text-align: center;
+      border-top: 1px solid #ccc;
+      padding-top: 1em;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 0 0.8em;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      h2 {
+        font-size: 1.2em;
+      }
+    }
+  </style>
+
+  <!-- Strukturierte Daten für Google -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Project",
     "name": "WALDSENSOR.SH",
-    "url": "https://waldsensor.sh",
-    "description": "WALDSENSOR.SH ist ein Citizen-Science-Projekt in Schleswig-Holstein. Es verbindet reale LoRaWAN-Sensorik im Wald mit einer eigenen, offenen Kartenplattform. Sensorik plus Karten machen Mikroklima, Wald- und Umweltdaten sichtbar und nutzbar.",
-    "keywords": [
-      "WALDSENSOR.SH",
-      "Mikroklima",
-      "LoRaWAN",
-      "Citizen Science",
-      "Waldsensorik",
-      "digitale Kartenplattform",
-      "Schleswig-Holstein"
-    ],
+    "url": "https://www.waldsensor.sh",
+    "description": "WALDSENSOR.SH verbindet reale LoRaWAN-Sensorik mit einer modernen, offenen Kartenplattform. Sensorik plus Kartenplattform ergibt ein einzigartiges digitales Umwelt- und Mikroklima-Modell für Schleswig-Holstein.",
+    "keywords": ["LoRaWAN", "Mikroklima", "Waldsensorik", "Citizen Science", "Geodatenplattform", "Schleswig-Holstein"],
     "areaServed": "Schleswig-Holstein",
     "inLanguage": "de"
   }
   </script>
 </head>
+
 <body>
-  <main>
-    <article>
-      <header>
-        <h1>WALDSENSOR.SH – Sensorik und Kartenplattform</h1>
-        <p>WALDSENSOR.SH ist nicht nur Sensorik – es ist Sensorik <strong>plus</strong> Kartenplattform. Das Projekt besteht aus einem Gesamtsystem aus echten Messstellen, einer eigenen Datenpipeline und einer modernen, offenen Kartenplattform.</p>
-      </header>
 
-      <section>
-        <h2>1️⃣ Sensorik plus Kartenplattform – ein Gesamtsystem</h2>
-        <p>WALDSENSOR.SH ist ein Gesamtsystem aus:</p>
-        <ul>
-          <li>echten Messstellen (Nodes) im Wald, in Schulwäldern und auf kommunalen Flächen,</li>
-          <li>einer komplett eigenen Datenpipeline,</li>
-          <li>einer modernen, offenen Kartenplattform.</li>
-        </ul>
+<!-- Kopfbereich analog zu deinen anderen Seiten -->
+<div class="header-container" style="display: flex; flex-direction: column;">
+  <div class="header-top" style="display: flex; justify-content: space-between; align-items: center;">
+    <h1 style="margin: 0;">WALDSENSOR.SH</h1>
+    <img src="/images/logo_waldsensor.jpg" alt="WALDSENSOR.SH Logo" style="height:150px;">
+  </div>
 
-        <p>In Deutschland gibt es keinen zweiten Bürgerwissenschafts-Stack, der in dieser Form sowohl technisch als auch visuell kombiniert:</p>
-        <ul>
-          <li>Echtzeit-LoRaWAN-Daten,</li>
-          <li>automatisch generierte Historien,</li>
-          <li>lokale JSON- und CSV-Exporte,</li>
-          <li>interaktive Karten,</li>
-          <li>Heatmaps,</li>
-          <li>Gateway-Analysen,</li>
-          <li>topografische Layer,</li>
-          <li>ein 1-km-Raster,</li>
-          <li>Schulwald-Projekte,</li>
-          <li>räumliche Kombinationen von Luft-, Boden-, Blatt- und Winddaten.</li>
-        </ul>
+  <div class="header-subtitle">
+    <p><strong>„Der digitale Wald Schleswig-Holsteins – Sensorik & Kartenplattform“</strong></p>
+  </div>
+</div>
 
-        <p>Diese Kombination ist ein klares Alleinstellungsmerkmal von WALDSENSOR.SH.</p>
-      </section>
+<!-- NEUE GOOGLE-SEITE IM WALDSENSOR.SH OUTFIT -->
 
-      <section>
-        <h2>2️⃣ Die Karten als Zugangspunkt für Bildung und Kommunen</h2>
-        <p>Für Schulen, Ämter, Bürgerinnen und Bürger, Bürgermeister, Medien und Forschungseinrichtungen sind die Karten die sichtbare Oberfläche des Projekts.</p>
+<section class="content-box">
+  <h2>1️⃣ WALDSENSOR.SH ist Sensorik plus Kartenplattform</h2>
+  <p>WALDSENSOR.SH ist ein Gesamtsystem aus:</p>
 
-        <p>Die Sensoren bilden das Rückgrat. Die Karten sind das Gesicht, mit dem WALDSENSOR.SH wahrgenommen wird.</p>
+  <ul>
+    <li>realen Messstellen (Nodes) in Wald- und Schulwaldgebieten,</li>
+    <li>einer vollständig eigenen Datenpipeline,</li>
+    <li>einer modernen, offenen Kartenplattform.</li>
+  </ul>
 
-        <p>Ohne Karten wäre WALDSENSOR.SH nur eine Sammlung von Messwerten und CSV-Dateien. Mit den Karten wird daraus ein <strong>digitales Waldmodell Schleswig-Holsteins</strong>, das Zusammenhänge sichtbar macht und in Bildung und Verwaltung nutzbar ist.</p>
-      </section>
+  <p>In Deutschland gibt es kein zweites Bürgerwissenschaftsprojekt, das folgende Elemente gemeinsam abbildet:</p>
 
-      <section>
-        <h2>3️⃣ Neue Funktionen – von der Karte zur Geodatenplattform</h2>
-        <p>Alle neuen Funktionen, die aktuell entwickelt werden, sind ein großer Schritt nach vorne und gehören zur offiziellen Projektbeschreibung:</p>
-        <ul>
-          <li>Hochleistungs-Topografielayer,</li>
-          <li>Bodenmodell,</li>
-          <li>pixelgenaue Flood-Engine 2.0 für Starkregen- und Überflutungsszenarien,</li>
-          <li>Visualisierung von Wasserstand und Höhenprofil,</li>
-          <li>Multi-Layer-Schichten (Ämter, Gemeinden, Schulen, Schulwälder),</li>
-          <li>Mikroklima-Livewerte auf der Karte,</li>
-          <li>Gateway-Visualisierung (z. B. SH-NETZ, ADDIX, Kiel, TRK),</li>
-          <li>Klickscore und Distanz zum nächstgelegenen Gateway,</li>
-          <li>Lehrkräfte-Ansichten mit didaktischen Forscherfragen,</li>
-          <li>Offline-fähige Varianten wie Rescue-Stick und kommunaler Stick.</li>
-        </ul>
+  <ul>
+    <li>Echtzeit-LoRaWAN-Daten,</li>
+    <li>automatisch generierte Historien,</li>
+    <li>lokale JSON/CSV-Exporte,</li>
+    <li>interaktive Karten,</li>
+    <li>Heatmaps,</li>
+    <li>Gateway-Analysen,</li>
+    <li>topografische Layer,</li>
+    <li>1-km Raster,</li>
+    <li>Schulwald-Projekte,</li>
+    <li>Kombinationen aus Luft-, Boden-, Blatt- und Winddaten.</li>
+  </ul>
 
+  <p>Diese Verbindung ist ein echtes Alleinstellungsmerkmal.</p>
+</section>
 
+<section class="content-box">
+  <h2>2️⃣ Die Karten sind der Zugangspunkt für Bildung & Kommunen</h2>
 
+  <p>Für Schulen, Ämter, Bürgerinnen und Bürger, Medien, die Schleswig-Holstein-Zeitung und Forschungseinrichtungen sind die Karten die <strong>Oberfläche</strong> des Projekts.</p>
 
+  <p>Sensoren bilden das Rückgrat.</p>
+  <p>Aber die Karten sind das Gesicht, mit dem WALDSENSOR.SH wahrgenommen wird.</p>
 
+  <p>Ohne Karten wäre WALDSENSOR.SH nur eine Sammlung von Messwerten.</p>
+  <p>Mit Karten wird es zum <strong>digitalen Waldmodell von Schleswig-Holstein</strong>.</p>
+</section>
 
+<section class="content-box">
+  <h2>3️⃣ Neue Funktionen: Vom Kartenlayer zur Geodatenplattform</h2>
 
+  <p>Die aktuell entwickelten Funktionen gehören fest zur Projektbeschreibung:</p>
 
-        <p>Das ist keine kleine Karte. Es ist eine vollständige <strong>Geodatenplattform</strong>, die speziell für Umwelt, Mikroklima und Bildung in Schleswig-Holstein entwickelt wird.</p>
+  <ul>
+    <li>Hochleistungs-Topografielayer,</li>
+    <li>Bodenmodell,</li>
+    <li>pixelgenaue Flood-Engine 2.0,</li>
+    <li>Wasserstand & Höhenprofil,</li>
+    <li>Multi-Layer-Schichten (Ämter, Gemeinden, Schulen, Schulwälder),</li>
+    <li>Mikroklima-Livewerte,</li>
+    <li>Gateway-Visualisierung (SH-NETZ, ADDIX, Kiel, TRK),</li>
+    <li>Klickscore & Gateway-Distanz,</li>
+    <li>Lehrkräfte-Ansichten für Bildung/Unterricht,</li>
+    <li>Offline-Varianten wie Rescue-Stick & kommunaler Stick.</li>
+  </ul>
 
-        <p>Diese Karten bestimmen maßgeblich, wie WALDSENSOR.SH von außen wahrgenommen wird – als digitale und zugleich bürgernahe Infrastruktur.</p>
-      </section>
+  <p>Dies ist keine einfache Karte, sondern eine vollwertige <strong>Geodatenplattform</strong> für Schleswig-Holstein.</p>
+</section>
 
-      <section>
-        <h2>4️⃣ Zwei Säulen – Sensorik und Kartenplattform</h2>
-        <p>Die Karten gehören zwingend zur offiziellen Beschreibung von WALDSENSOR.SH. Sie sind nicht nur ein zusätzliches Feature, sondern eine der beiden tragenden Säulen des Systems:</p>
-        <ul>
-          <li><strong>Säule&nbsp;1:</strong> Reale Sensorik (Wald, Boden, Mikroklima, Wind).</li>
-          <li><strong>Säule&nbsp;2:</strong> Digitale Kartenplattform (Open-Source, interaktiv, kombinierbar, hoch performant).</li>
-        </ul>
+<section class="content-box">
+  <h2>4️⃣ Zwei Säulen – Sensorik & Kartenplattform</h2>
 
-        <p>Kein anderes Projekt in Schleswig-Holstein – und darüber hinaus – führt diese beiden Säulen so konsequent zusammen wie WALDSENSOR.SH.</p>
-      </section>
-    </article>
-  </main>
+  <p>Die Kartenplattform ist keine Zusatzfunktion, sondern eine eigene Säule des Systems:</p>
+
+  <ul>
+    <li><strong>Säule 1:</strong> reale Sensorik (Wald, Boden, Mikroklima, Wind)</li>
+    <li><strong>Säule 2:</strong> digitale Kartenplattform (open, interaktiv, kombinierbar, hoch performant)</li>
+  </ul>
+
+  <p>Kein anderes Projekt in Schleswig-Holstein – und darüber hinaus – verbindet diese beiden Säulen so konsequent wie WALDSENSOR.SH.</p>
+</section>
+
+<footer>
+  <p>© 2025 WALDSENSOR.SH – Digitaler Wald für alle. <a href="/impressum.html">Impressum</a></p>
+</footer>
+
 </body>
 </html>
