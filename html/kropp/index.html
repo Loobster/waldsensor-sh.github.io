@@ -135,16 +135,17 @@ async function fetchData(daysToShow = 30) {
     lines.forEach(line => {
       if (!line) return;
       const parts = line.split(',');
-      if (parts.length < 5) return;
+      if (parts.length < 6) return;
 
-      const timestamp = new Date(parts[0]);
-      if (timestamp >= startDate) {
-        labels.push(parts[0].slice(0, 16).replace('T', ' '));
-        wind.push(parseFloat(parts[1]));
-        temp.push(parseFloat(parts[2]));
-        hum.push(parseFloat(parts[3]));
-        bat.push(parseFloat(parts[4]));
-      }
+      const timestamp = new Date(parts[1]);
+
+if (timestamp >= startDate) {
+  labels.push(parts[1].slice(0, 16).replace('T', ' '));
+  temp.push(parseFloat(parts[2]));
+  hum.push(parseFloat(parts[3]));
+  wind.push(parseFloat(parts[4]));
+  bat.push(parseFloat(parts[5]));
+}}
     });
 
     createChart('tempChart', labels, temp, 'Temperatur (°C)', 'red');
