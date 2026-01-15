@@ -1,0 +1,44 @@
+{
+  "node": "lsn50v2_owschlag",
+  "position": {
+    "lat": 54.397076,
+    "lon": 9.591907
+  },
+  "time": "2026-01-15T17:49:56.676333Z",
+  "gateways": [
+    {
+      "id": "lora-gateway-fahrdorf",
+      "rssi": -114.0,
+      "snr": 1.0
+    },
+    {
+      "id": "laird-lorawan-gw",
+      "rssi": -51.0,
+      "snr": 9.5
+    }
+  ],
+  "values": {
+    "BatV": 3.414,
+    "Hum_SHT": 43.0,
+    "Hum_SHT31": null,
+    "TempC_SHT": 23.2,
+    "TempC_SHT31": null,
+    "alt1": 8.0,
+    "alt2": 0.0,
+    "chan1": 6.0,
+    "f_cnt": 16.0,
+    "freq1": 0.0,
+    "gw1": "lora-gateway-fahrdorf",
+    "gw2": "laird-lorawan-gw",
+    "lat1": 54.50311486,
+    "lat2": 54.501576317102,
+    "lon1": 9.58799756,
+    "lon2": 9.58694958832219,
+    "rssi1": -114.0,
+    "rssi2": -51.0,
+    "rx_time1": "2026-01-15T17:49:56.421149Z",
+    "sf": 7.0,
+    "snr1": 1.0,
+    "snr2": 9.5
+  }
+}
