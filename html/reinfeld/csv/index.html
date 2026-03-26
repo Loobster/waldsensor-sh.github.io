@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>CSV-Archiv Sensor Reinfeld</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+      margin: 2em;
+    }
+    h1 {
+      color: #333;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 0.5em;
+    }
+    a {
+      text-decoration: none;
+      color: #007bff;
+      font-size: 1.1em;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>CSV-Archiv Sensor Reinfeld</h1>
+  <p>Hier finden Sie die automatisch erstellten CSV-Dateien der vergangenen Monate.</p>
+  <ul id="csv-list"></ul>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const csvList = document.getElementById('csv-list');
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      let currentMonth = now.getMonth() + 1; // getMonth() ist 0-basiert
+      
+      // Liste der letzten 12 Monate generieren
+      for (let i = 0; i < 12; i++) {
+        const year = currentYear;
+        const month = (currentMonth).toString().padStart(2, '0');
+        const filename = `${year}-${month}.csv`;
+
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        
+        // Link zur Datei im aktuellen Verzeichnis
+        link.href = filename;
+        link.textContent = `CSV-Datei für ${year}-${month}`;
+        
+        listItem.appendChild(link);
+        csvList.appendChild(listItem);
+        
+        // Gehe zum vorherigen Monat
+        currentMonth--;
+        if (currentMonth === 0) {
+          currentMonth = 12;
+          currentYear--;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
