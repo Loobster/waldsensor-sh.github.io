@@ -5,14 +5,25 @@
     "lon": 8.957
   },
   "time": "2026-04-24T01:08:02.948625Z",
-  "gateways": [],
+  "gateways": [
+    {
+      "id": "eui-00007076ff031358",
+      "rssi": -119.0,
+      "snr": -7.0
+    },
+    {
+      "id": "eui-7076ff0056070bb4",
+      "rssi": -119.0,
+      "snr": -7.0
+    }
+  ],
   "values": {
-    "BatV": null,
-    "rx_time1": null,
-    "sf": null,
-    "snr1": null,
-    "snr2": null,
-    "temp_SOIL": null,
+    "BatV": 3.326,
+    "rx_time1": "2026-04-24T01:08:02.667Z",
+    "sf": 7.0,
+    "snr1": -7.0,
+    "snr2": -7.0,
+    "temp_SOIL": 7.43,
     "water_SOIL": 16.9
   }
 }
