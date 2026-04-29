@@ -1,15 +1,20 @@
 {
   "node": "sn50v3_kropp",
   "position": {
-    "lat": 54.503,
-    "lon": 9.6022
+    "lat": 54.41018,
+    "lon": 9.52839
   },
   "time": "2026-04-29T15:53:53.765317Z",
   "gateways": [
     {
-      "id": "eui-00007076ff031372",
-      "rssi": -99,
+      "id": "eui-00007076ff030d23",
+      "rssi": -100.0,
       "snr": 8.5
     }
-  ]
+  ],
+  "values": {
+    "BatV": 3.63,
+    "Hum_SHT": 34.6,
+    "TempC_SHT": 15.2
+  }
 }
