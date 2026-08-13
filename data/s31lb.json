@@ -1,15 +1,43 @@
 {
   "node": "s31lb",
   "position": {
-    "lat": 54.64988,
-    "lon": 8.956
+    "lat": 0.0,
+    "lon": 0.0
   },
   "time": "2025-09-25T10:37:29.679493Z",
   "gateways": [
     {
+      "id": "eui-7076ff0056070bb4",
+      "rssi": -119.0,
+      "snr": 1.2
+    },
+    {
       "id": "eui-00007076ff031372",
-      "rssi": -99,
-      "snr": 8.5
+      "rssi": -105.0,
+      "snr": 8.0
     }
-  ]
+  ],
+  "values": {
+    "BatV": 3.606,
+    "Door_status": "OPEN",
+    "EXTI_Trigger": "FALSE",
+    "Hum_SHT31": 71.6,
+    "TempC_SHT31": 14.4,
+    "alt1": 0.0,
+    "alt2": 0.0,
+    "chan1": 5.0,
+    "freq1": 0.0,
+    "gw1": "eui-7076ff0056070bb4",
+    "gw2": "eui-00007076ff031372",
+    "lat1": 0.0,
+    "lat2": 0.0,
+    "lon1": 0.0,
+    "lon2": 0.0,
+    "rssi1": -119.0,
+    "rssi2": -105.0,
+    "rx_time1": "2025-09-25T10:37:29.392Z",
+    "sf": 7.0,
+    "snr1": 1.2,
+    "snr2": 8.0
+  }
 }
